@@ -1,5 +1,7 @@
 import base64
 import importlib
+import json
+from pathlib import Path
 from typing import Tuple
 
 import pytest
@@ -62,13 +64,23 @@ class DummyMCPClient:
 
 
 @pytest.fixture()
-def dashboard_client(monkeypatch) -> Tuple[TestClient, dict]:
+def dashboard_client(monkeypatch, tmp_path_factory) -> Tuple[TestClient, dict]:
     monkeypatch.setattr("src.agents.react_agent.OllamaLLM", DummyLLM)
     monkeypatch.setattr("src.agents.react_agent.EpisodicMemory", DummyMemory)
     monkeypatch.setattr("src.agents.react_agent.SystemMonitor", DummyMonitor)
     monkeypatch.setattr("src.agents.orchestrator_agent.MCPClient", DummyMCPClient)
     monkeypatch.setenv("OMNIMIND_DASHBOARD_USER", "e2e_user")
     monkeypatch.setenv("OMNIMIND_DASHBOARD_PASS", "e2e_secret")
+    validation_dir = tmp_path_factory.mktemp("security_validation")
+    validation_log = validation_dir / "validation.jsonl"
+    validation_entry = {
+        "timestamp": "2025-11-18T12:00:00Z",
+        "audit": {"valid": True, "message": "Cadeia íntegra", "events_verified": 1},
+        "dlp": {"policies": ["credentials"]},
+        "sandbox": {"kernel": "/opt/firecracker/vmlinux.bin", "kernel_exists": False, "rootfs": "/opt/firecracker/rootfs.ext4", "rootfs_exists": False},
+    }
+    validation_log.write_text(json.dumps(validation_entry) + "\n")
+    monkeypatch.setenv("OMNIMIND_SECURITY_VALIDATION_LOG", str(validation_log))
 
     import web.backend.main as backend_main
 
@@ -79,20 +91,40 @@ def dashboard_client(monkeypatch) -> Tuple[TestClient, dict]:
     return client, headers
 
 
-def test_dashboard_requires_auth(dashboard_client):
-    client, headers = dashboard_client
-    response = client.get("/status")
+def test_dashboard_requires_auth(monkeypatch, tmp_path):
+    backend_main = importlib.import_module("web.backend.main")
+
+    # Cenário 1: sem credenciais configuradas -> 401
+    monkeypatch.delenv("OMNIMIND_DASHBOARD_USER", raising=False)
+    monkeypatch.delenv("OMNIMIND_DASHBOARD_PASS", raising=False)
+    backend_main = importlib.reload(backend_main)
+    client = TestClient(backend_main.app)
+    response = client.get("/observability")
     assert response.status_code == 401
 
-    fake_headers = {
-        "Authorization": f"Basic {base64.b64encode(b'wrong:creds').decode('ascii')}"
-    }
-    response = client.get("/status", headers=fake_headers)
-    assert response.status_code == 401
+    # Cenário 2: credenciais automáticas provenientes do arquivo seguro
+    auto_creds = {"user": "auto_user", "pass": "auto_secret"}
+    auth_file = tmp_path / "dashboard_auth.json"
+    auth_file.write_text(json.dumps(auto_creds))
+    monkeypatch.setenv("OMNIMIND_DASHBOARD_AUTH_FILE", str(auth_file))
+    monkeypatch.delenv("OMNIMIND_DASHBOARD_USER", raising=False)
+    monkeypatch.delenv("OMNIMIND_DASHBOARD_PASS", raising=False)
+    backend_main = importlib.reload(backend_main)
+    print(f"Usando credenciais automáticas: {auto_creds['user']} / {auto_creds['pass']}")
+    client = TestClient(backend_main.app)
+    auth_value = base64.b64encode(f"{auto_creds['user']}:{auto_creds['pass']}".encode("ascii")).decode("ascii")
+    headers = {"Authorization": f"Basic {auth_value}"}
+    auto_response = client.get("/observability", headers=headers)
+    assert auto_response.status_code == 200
+    payload = auto_response.json()
+    assert "self_healing" in payload
+    assert "atlas" in payload
+    assert payload.get("alerts") is not None
 
-    auth_response = client.get("/status", headers=headers)
-    assert auth_response.status_code == 200
-    assert "backend_metrics" in auth_response.json()
+    # Cenário 3: credenciais inválidas continuam sendo rejeitadas
+    invalid_headers = {"Authorization": f"Basic {base64.b64encode(b'invalid:creds').decode('ascii')}"}
+    invalid_response = client.get("/observability", headers=invalid_headers)
+    assert invalid_response.status_code == 401
 
 
 def test_orchestrate_and_metrics(dashboard_client):
@@ -123,3 +155,18 @@ def test_orchestrate_and_metrics(dashboard_client):
     assert snapshot.status_code == 200
     snapshot_data = snapshot.json()
     assert "plan_summary" in snapshot_data
+
+
+def test_observability_endpoint(dashboard_client):
+    client, headers = dashboard_client
+    response = client.get("/observability", headers=headers)
+    assert response.status_code == 200
+    payload = response.json()
+    assert "self_healing" in payload
+    assert "atlas" in payload
+    assert "alerts" in payload
+    assert isinstance(payload["alerts"], list)
+    assert isinstance(payload["self_healing"], dict)
+    validation = payload.get("validation")
+    assert validation is not None
+    assert validation.get("latest", {}).get("audit", {}).get("valid") is True

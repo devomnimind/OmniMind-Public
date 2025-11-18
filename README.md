@@ -45,6 +45,7 @@ scripts/start_dashboard.sh
 
 - Access the FastAPI endpoints (secured via Basic Auth) for `/status`, `/snapshot`, `/metrics`, `/tasks/orchestrate`, `/mcp/execute`, `/dbus/execute`, etc.
 - The React GUI (`web/frontend/`) reads credentials from the login form and stores `Basic` auth headers per session; it also surfaces the credential file path so administrators know where to rotate secrets.
+- `/observability` now surfaces a `validation` payload (pulled from `logs/security_validation.jsonl`) alongside `self_healing`, `atlas`, and `security`, so teams can see the latest audit-chain verdict directly in the UI.
 - MCP and D-Bus flows rely on `src/integrations` and the orchestrator agent to provide context, metrics, and manual triggers.
 
 ## Testing & Quality Gates
