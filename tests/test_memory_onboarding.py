@@ -1,9 +1,13 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, cast
 
-from src.integrations.graphql_supabase import GraphQLSupabaseError
+from src.integrations.graphql_supabase import (
+    GraphQLSupabaseError,
+    GraphQLSupabaseHelper,
+)
 from src.integrations.supabase_adapter import SupabaseConfig
+from src.memory import EpisodicMemory
 from src.onboarding.memory_onboarding import SupabaseMemoryOnboarding
 
 
@@ -87,7 +91,11 @@ def test_supabase_onboarding_processes_nodes() -> None:
         ]
     )
 
-    onboarding = SupabaseMemoryOnboarding(config=config, memory=memory, helper=helper)
+    onboarding = SupabaseMemoryOnboarding(
+        config=config,
+        memory=cast(EpisodicMemory, memory),
+        helper=cast(GraphQLSupabaseHelper, helper),
+    )
     report = onboarding.seed_collection(page_size=1)
 
     assert report.nodes_processed == 2
@@ -115,7 +123,9 @@ def test_supabase_onboarding_handles_error() -> None:
             raise GraphQLSupabaseError("boom")
 
     onboarding = SupabaseMemoryOnboarding(
-        config=config, memory=memory, helper=ErrorHelper([])
+        config=config,
+        memory=cast(EpisodicMemory, memory),
+        helper=cast(GraphQLSupabaseHelper, ErrorHelper([])),
     )
     report = onboarding.seed_collection()
 

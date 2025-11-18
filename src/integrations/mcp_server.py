@@ -212,7 +212,7 @@ class MCPServer:
         }
         if isinstance(result, Exception):
             details["error"] = str(result)
-        return self.audit_system.log_action(  # type: ignore[no-any-return]
+        return self.audit_system.log_action(
             method, details, category=self.config.audit_category
         )
 

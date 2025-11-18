@@ -4,7 +4,7 @@ import logging
 import os
 import re
 from dataclasses import dataclass
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any, Dict, Iterable, List, Optional, Sequence, cast
 
 from qdrant_client import QdrantClient
 from qdrant_client.http import models as qdrant_models
@@ -102,12 +102,14 @@ class QdrantAdapter:
         )
         try:
             response = self.client.get_collection(collection_name=collection)
-            return response.dict()  # type: ignore[no-any-return]
+            return response.dict()
         except Exception:
             logger.info("Creating missing collection %s", collection)
             self.client.recreate_collection(
                 collection_name=collection,
-                vectors=qdrant_models.VectorParams(size=vector_size, distance=distance),
+                vectors_config=qdrant_models.VectorParams(
+                    size=vector_size, distance=distance
+                ),
             )
             return {"collection": collection, "status": "created"}
 
@@ -144,12 +146,18 @@ class QdrantAdapter:
         with_payload: bool = True,
     ) -> List[Dict[str, Any]]:
         logger.debug("Searching vectors in %s (top=%s)", collection, top)
-        response = self.client.search(
-            collection_name=collection,
-            query_vector=query_vector,
-            limit=top,
-            with_payload=with_payload,
-            with_vectors=False,
+        search_fn = getattr(self.client, "search", None)
+        if search_fn is None:
+            raise QdrantAdapterError("Qdrant client missing search API")
+        response = cast(
+            Sequence[Any],
+            search_fn(
+                collection_name=collection,
+                query_vector=query_vector,
+                limit=top,
+                with_payload=with_payload,
+                with_vectors=False,
+            ),
         )
         return [hit.dict() for hit in response]
 
@@ -166,5 +174,8 @@ class QdrantAdapter:
     def delete_vectors(self, collection: str, ids: Iterable[int]) -> Dict[str, Any]:
         ids_list = list(ids)
         logger.debug("Deleting %s vectors from %s", len(ids_list), collection)
-        result = self.client.delete(collection_name=collection, points=ids_list)
+        delete_fn = getattr(self.client, "delete", None)
+        if delete_fn is None:
+            raise QdrantAdapterError("Qdrant client missing delete API")
+        result = delete_fn(collection_name=collection, points_selector=ids_list)
         return result.dict() if hasattr(result, "dict") else {}

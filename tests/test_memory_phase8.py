@@ -85,8 +85,14 @@ class DummyQdrantClient:
     def get_collection(self, name: str) -> Any:
         return type("Info", (), {"points_count": len(self.store)})()
 
-    def scroll(self, collection_name: str, offset: int = 0, limit: int = 10, **kwargs: Any) -> Any:
-        start = max(0, offset)
+    def scroll(
+        self,
+        collection_name: str,
+        offset: Optional[int] = None,
+        limit: int = 10,
+        **kwargs: Any,
+    ) -> tuple[List[Any], Optional[int]]:
+        start = max(0, offset or 0)
         end = start + limit
         points = []
         for key in self._order[start:end]:
@@ -96,16 +102,17 @@ class DummyQdrantClient:
             payload = record["payload"]
             point_id = record["id"]
             points.append(type("Point", (), {"id": point_id, "payload": payload}))
-        return type("ScrollResult", (), {"points": points})()
+        new_offset = end if end < len(self._order) else None
+        return points, new_offset
 
     def delete(
         self,
         collection_name: str,
         points: Optional[List[Any]] = None,
         ids: Optional[List[Any]] = None,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> None:
-        to_remove = points or ids or []
+        to_remove = points or ids or kwargs.get("points_selector") or []
         for point_id in to_remove:
             key = str(point_id)
             if key in self.store:
@@ -115,20 +122,24 @@ class DummyQdrantClient:
 
 
 def _patch_memory_module() -> None:
-    episodic_module.QdrantClient = DummyQdrantClient
-    episodic_module.PointStruct = DummyPointStruct
-    episodic_module.Distance = DummyDistance
-    episodic_module.VectorParams = DummyVectorParams
-    episodic_module.Filter = DummyFilter
-    episodic_module.FieldCondition = DummyFieldCondition
-    episodic_module.MatchValue = lambda *args, **kwargs: None
+    replacements = {
+        "QdrantClient": DummyQdrantClient,
+        "PointStruct": DummyPointStruct,
+        "Distance": DummyDistance,
+        "VectorParams": DummyVectorParams,
+        "Filter": DummyFilter,
+        "FieldCondition": DummyFieldCondition,
+        "MatchValue": lambda *args, **kwargs: None,
+    }
+    for name, value in replacements.items():
+        setattr(episodic_module, name, value)
 
 
 _patch_memory_module()
 # EpisodicMemory = episodic_module.EpisodicMemory  # Use imported instead
 
 
-@pytest.fixture  # type: ignore[misc]
+@pytest.fixture
 def episodic_memory() -> EpisodicMemory:
     return episodic_module.EpisodicMemory(
         qdrant_url="http://localhost:6333",
