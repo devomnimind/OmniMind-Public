@@ -26,7 +26,7 @@ class DLPPolicy:
     action: str
     severity: str = "medium"
     description: Optional[str] = None
-    compiled: re.Pattern = field(init=False)
+    compiled: re.Pattern[str] = field(init=False)
 
     def __post_init__(self) -> None:
         flags = re.IGNORECASE
@@ -73,7 +73,9 @@ class DLPValidator:
 
     def _load_policies(self) -> List[DLPPolicy]:
         if not self.policy_path.exists():
-            logger.warning("DLP policy file missing %s, falling back to defaults", self.policy_path)
+            logger.warning(
+                "DLP policy file missing %s, falling back to defaults", self.policy_path
+            )
             return [DLPPolicy(**policy) for policy in self.DEFAULT_POLICIES]
         try:
             data = yaml.safe_load(self.policy_path.read_text()) or {}
@@ -97,7 +99,10 @@ class DLPValidator:
                     action=policy.action,
                     severity=policy.severity,
                     snippet=snippet,
-                    details={"description": policy.description, "payload_sample": payload[:200]},
+                    details={
+                        "description": policy.description,
+                        "payload_sample": payload[:200],
+                    },
                 )
                 autonomy_observability.record_dlp_alert(violation.__dict__)
                 log_action(

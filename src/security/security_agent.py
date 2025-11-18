@@ -3,9 +3,9 @@
 import atexit
 import asyncio
 import copy
-import json
 import logging
 import os
+import subprocess
 import textwrap
 import uuid
 from dataclasses import dataclass, field
@@ -106,7 +106,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
 }
 
 
-class SecurityAgent(AuditedTool):
+class SecurityAgent(AuditedTool):  # type: ignore[misc]
     """Autonomous security monitor that coordinates playbooks."""
 
     def __init__(self, config_path: str, llm: Optional[Any] = None):
@@ -121,6 +121,8 @@ class SecurityAgent(AuditedTool):
         self.incident_log: List[Dict[str, Any]] = []
         self._pending_events: List[SecurityEvent] = []
         self._monitoring_tasks: List[asyncio.Task[Any]] = []
+        self._stop_event: Optional[asyncio.Event] = None
+        self._loop: Optional[asyncio.AbstractEventLoop] = None
         kernel = os.environ.get("OMNIMIND_FIRECRACKER_KERNEL")
         rootfs = os.environ.get("OMNIMIND_FIRECRACKER_ROOTFS")
         policy_path = os.environ.get("OMNIMIND_DLP_POLICY_FILE")
@@ -184,6 +186,7 @@ class SecurityAgent(AuditedTool):
         log_path.parent.mkdir(parents=True, exist_ok=True)
         global _security_log_handler
 
+        handler: logging.Handler
         if _security_log_handler is None:
             handler = logging.FileHandler(log_path)
             formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
@@ -212,170 +215,261 @@ class SecurityAgent(AuditedTool):
     def _current_utc_iso() -> str:
         return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
+    def _should_stop(self) -> bool:
+        """Indica se o loop contínuo recebeu sinal de parada."""
+
+        return bool(self._stop_event and self._stop_event.is_set())
+
+    async def _wait_interval(self, interval: int) -> bool:
+        """Aguarda o intervalo ou encerra antecipadamente se o stop_event for acionado."""
+
+        delay = max(1, int(interval))
+        if not self._stop_event:
+            await asyncio.sleep(delay)
+            return False
+        try:
+            await asyncio.wait_for(self._stop_event.wait(), timeout=delay)
+            return True
+        except asyncio.TimeoutError:
+            return False
+
+    async def _shutdown_tasks(self) -> None:
+        """Cancela e aguarda o término das tarefas de monitoramento."""
+
+        if not self._monitoring_tasks:
+            return
+        tasks = list(self._monitoring_tasks)
+        self._monitoring_tasks = []
+        for task in tasks:
+            if not task.done():
+                task.cancel()
+        await asyncio.gather(*tasks, return_exceptions=True)
+
+    def request_stop(self) -> None:
+        """Sinaliza para que o processo assíncrono finalize."""
+
+        if not self._stop_event:
+            return
+        if self._loop and self._loop.is_running():
+            self._loop.call_soon_threadsafe(self._stop_event.set)
+            return
+        self._stop_event.set()
+
     async def start_continuous_monitoring(self) -> None:
         if not self.config["security_agent"]["enabled"]:
             self.logger.warning("SecurityAgent disabled via config")
             return
         if self._monitoring_tasks:
+            self.logger.info("SecurityAgent monitoring already running")
             return
+        self._loop = asyncio.get_running_loop()
+        self._stop_event = asyncio.Event()
         monitors = [
-            self._monitor_processes(),
-            self._monitor_files(),
-            self._monitor_network(),
-            self._monitor_logs(),
-            self._analyze_events(),
-            self._respond_to_threats(),
+            asyncio.create_task(self._monitor_processes(), name="security.process"),
+            asyncio.create_task(self._monitor_files(), name="security.files"),
+            asyncio.create_task(self._monitor_network(), name="security.network"),
+            asyncio.create_task(self._monitor_logs(), name="security.logs"),
+            asyncio.create_task(self._analyze_events(), name="security.analysis"),
+            asyncio.create_task(self._respond_to_threats(), name="security.response"),
         ]
         self._monitoring_tasks = monitors
-        await asyncio.gather(*monitors)
+        self.logger.info(
+            "SecurityAgent continuous monitoring started (%d tasks)", len(monitors)
+        )
+        try:
+            await self._stop_event.wait()
+        finally:
+            await self._shutdown_tasks()
+            self._stop_event = None
+            self._loop = None
+            self.logger.info("SecurityAgent continuous monitoring stopped")
 
     async def _monitor_processes(self) -> None:
         interval = self.config["monitoring"]["processes"]["interval"]
         patterns = self.config["monitoring"]["processes"].get("suspicious_patterns", [])
-        while True:
-            try:
-                for proc in psutil.process_iter(["pid", "name", "cmdline"]):
-                    info = proc.info
-                    if self._is_suspicious_process(info, patterns):
-                        event = self._create_event(
-                            event_type="suspicious_process",
-                            source=f"process:{info.get('pid')}",
-                            description=f"Suspicious process {info.get('name')}",
-                            details=info,
-                            raw_data=str(info),
-                            level=ThreatLevel.HIGH,
-                        )
-                        await self._handle_event(event)
-            except (psutil.NoSuchProcess, psutil.AccessDenied):
-                pass
-            await asyncio.sleep(interval)
+        try:
+            while not self._should_stop():
+                try:
+                    for proc in psutil.process_iter(["pid", "name", "cmdline"]):
+                        info = proc.info
+                        if self._is_suspicious_process(info, patterns):
+                            event = self._create_event(
+                                event_type="suspicious_process",
+                                source=f"process:{info.get('pid')}",
+                                description=f"Suspicious process {info.get('name')}",
+                                details=info,
+                                raw_data=str(info),
+                                level=ThreatLevel.HIGH,
+                            )
+                            await self._handle_event(event)
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    continue
+                if await self._wait_interval(interval):
+                    break
+        except asyncio.CancelledError:
+            self.logger.info("Process monitoring task cancelled")
+            raise
 
     async def _monitor_files(self) -> None:
         interval = self.config["monitoring"]["files"]["interval"]
-        if not self.tools_available.get("aide"):
-            self.logger.warning("AIDE unavailable, skipping file monitoring")
-            await asyncio.sleep(interval)
-            return
-        while True:
-            try:
-                result = await asyncio.to_thread(
-                    run_command, ["sudo", "aide", "--check"]
-                )
-                changes = self._parse_aide_output(result.get("output", ""))
-                for change in changes:
-                    event = self._create_event(
-                        event_type="file_integrity",
-                        source="aide",
-                        description=f"File change detected: {change.get('path')}",
-                        details=change,
-                        raw_data=result.get("output", ""),
-                        level=ThreatLevel.MEDIUM,
+        try:
+            while not self._should_stop():
+                if not self.tools_available.get("aide"):
+                    self.logger.warning("AIDE unavailable, skipping file monitoring")
+                    if await self._wait_interval(interval):
+                        break
+                    continue
+                try:
+                    result = await asyncio.to_thread(
+                        run_command, ["sudo", "aide", "--check"]
                     )
-                    await self._handle_event(event)
-            except Exception as exc:  # pragma: no cover
-                self.logger.error("File monitor failed: %s", exc)
-            await asyncio.sleep(interval)
+                    changes = self._parse_aide_output(result.get("output", ""))
+                    for change in changes:
+                        event = self._create_event(
+                            event_type="file_integrity",
+                            source="aide",
+                            description=f"File change detected: {change.get('path')}",
+                            details=change,
+                            raw_data=result.get("output", ""),
+                            level=ThreatLevel.MEDIUM,
+                        )
+                        await self._handle_event(event)
+                except Exception as exc:  # pragma: no cover
+                    self.logger.error("File monitor failed: %s", exc)
+                if await self._wait_interval(interval):
+                    break
+        except asyncio.CancelledError:
+            self.logger.info("File monitoring task cancelled")
+            raise
 
     async def _monitor_network(self) -> None:
         interval = self.config["monitoring"]["network"]["interval"]
         suspicious_ports = set(
             self.config["monitoring"]["network"].get("suspicious_ports", [])
         )
-        while True:
-            try:
-                connections = psutil.net_connections(kind="inet")
-                summaries: Dict[str, int] = {}
-                for conn in connections:
-                    remote = (
-                        f"{conn.raddr.ip}:{conn.raddr.port}"
-                        if conn.raddr
-                        else "unknown"
-                    )
-                    local = (
-                        f"{conn.laddr.ip}:{conn.laddr.port}"
-                        if conn.laddr
-                        else "unknown"
-                    )
-                    if self._is_suspicious_connection(remote, suspicious_ports):
-                        event = self._create_event(
-                            event_type="suspicious_network",
-                            source="network",
-                            description=f"Suspicious connection {local} -> {remote}",
-                            details={"local": local, "remote": remote},
-                            raw_data=str(conn),
-                            level=ThreatLevel.HIGH,
+        try:
+            while not self._should_stop():
+                try:
+                    connections = psutil.net_connections(kind="inet")
+                    summaries: Dict[str, int] = {}
+                    for conn in connections:
+                        remote = (
+                            f"{conn.raddr.ip}:{conn.raddr.port}"
+                            if conn.raddr
+                            else "unknown"
                         )
-                        await self._handle_event(event)
-                    summaries[remote] = summaries.get(remote, 0) + 1
-                    if summaries[remote] > 5:
-                        event = self._create_event(
-                            event_type="data_exfiltration",
-                            source="network",
-                            description="Repeated outbound connection",
-                            details={"remote": remote, "count": summaries[remote]},
-                            raw_data=str(conn),
-                            level=ThreatLevel.HIGH,
+                        local = (
+                            f"{conn.laddr.ip}:{conn.laddr.port}"
+                            if conn.laddr
+                            else "unknown"
                         )
-                        await self._handle_event(event)
-            except Exception as exc:  # pragma: no cover
-                self.logger.error("Network monitor failed: %s", exc)
-            await asyncio.sleep(interval)
+                        if self._is_suspicious_connection(remote, suspicious_ports):
+                            event = self._create_event(
+                                event_type="suspicious_network",
+                                source="network",
+                                description=f"Suspicious connection {local} -> {remote}",
+                                details={"local": local, "remote": remote},
+                                raw_data=str(conn),
+                                level=ThreatLevel.HIGH,
+                            )
+                            await self._handle_event(event)
+                        summaries[remote] = summaries.get(remote, 0) + 1
+                        if summaries[remote] > 5:
+                            event = self._create_event(
+                                event_type="data_exfiltration",
+                                source="network",
+                                description="Repeated outbound connection",
+                                details={"remote": remote, "count": summaries[remote]},
+                                raw_data=str(conn),
+                                level=ThreatLevel.HIGH,
+                            )
+                            await self._handle_event(event)
+                except Exception as exc:  # pragma: no cover
+                    self.logger.error("Network monitor failed: %s", exc)
+                if await self._wait_interval(interval):
+                    break
+        except asyncio.CancelledError:
+            self.logger.info("Network monitoring task cancelled")
+            raise
 
     async def _monitor_logs(self) -> None:
         interval = self.config["monitoring"]["logs"]["interval"]
         files = self.config["monitoring"]["logs"].get("files", [])
         keywords = self.config["monitoring"]["logs"].get("keywords", [])
-        while True:
-            for log_file in files:
-                if not os.path.exists(log_file):
-                    continue
-                try:
-                    with open(log_file, "r", encoding="utf-8", errors="ignore") as fp:
-                        fp.seek(0, os.SEEK_END)
-                        size = fp.tell()
-                        fp.seek(max(0, size - 4096))
-                        for line in fp:
-                            if self._is_suspicious_log_line(line, keywords):
-                                event = self._create_event(
-                                    event_type="log_anomaly",
-                                    source=log_file,
-                                    description="Suspicious log detected",
-                                    details={"line": line.strip()},
-                                    raw_data=line,
-                                    level=ThreatLevel.MEDIUM,
-                                )
-                                await self._handle_event(event)
-                except Exception as exc:  # pragma: no cover
-                    self.logger.warning("Log monitor error on %s: %s", log_file, exc)
-            await asyncio.sleep(interval)
+        try:
+            while not self._should_stop():
+                for log_file in files:
+                    if not os.path.exists(log_file):
+                        continue
+                    try:
+                        with open(
+                            log_file, "r", encoding="utf-8", errors="ignore"
+                        ) as fp:
+                            fp.seek(0, os.SEEK_END)
+                            size = fp.tell()
+                            fp.seek(max(0, size - 4096))
+                            for line in fp:
+                                if self._is_suspicious_log_line(line, keywords):
+                                    event = self._create_event(
+                                        event_type="log_anomaly",
+                                        source=log_file,
+                                        description="Suspicious log detected",
+                                        details={"line": line.strip()},
+                                        raw_data=line,
+                                        level=ThreatLevel.MEDIUM,
+                                    )
+                                    await self._handle_event(event)
+                    except Exception as exc:  # pragma: no cover
+                        self.logger.warning(
+                            "Log monitor error on %s: %s", log_file, exc
+                        )
+                if await self._wait_interval(interval):
+                    break
+        except asyncio.CancelledError:
+            self.logger.info("Log monitoring task cancelled")
+            raise
 
     async def _analyze_events(self) -> None:
-        while True:
-            try:
-                if self.event_history:
-                    recent = self.event_history[:10]
-                    analysis = await self._analyze_with_llm(recent)
-                    if analysis.get("is_incident"):
-                        incident = {
-                            "timestamp": self._current_utc_iso(),
-                            "events": [event.event_type for event in recent],
-                            "analysis": analysis,
-                        }
-                        self.incident_log.append(incident)
-                        self.logger.warning(
-                            "LLM incident detected: %s", analysis.get("description")
-                        )
-            except Exception as exc:  # pragma: no cover
-                self.logger.error("Analysis loop failed: %s", exc)
-            await asyncio.sleep(60)
+        interval = 60
+        try:
+            while not self._should_stop():
+                try:
+                    if self.event_history:
+                        recent = self.event_history[:10]
+                        analysis = await self._analyze_with_llm(recent)
+                        if analysis.get("is_incident"):
+                            incident = {
+                                "timestamp": self._current_utc_iso(),
+                                "events": [event.event_type for event in recent],
+                                "analysis": analysis,
+                            }
+                            self.incident_log.append(incident)
+                            self.logger.warning(
+                                "LLM incident detected: %s", analysis.get("description")
+                            )
+                except Exception as exc:  # pragma: no cover
+                    self.logger.error("Analysis loop failed: %s", exc)
+                if await self._wait_interval(interval):
+                    break
+        except asyncio.CancelledError:
+            self.logger.info("Incident analysis task cancelled")
+            raise
 
     async def _respond_to_threats(self) -> None:
-        while True:
-            to_process = [event for event in self.event_history if not event.responded]
-            for event in to_process:
-                if event.threat_level in {ThreatLevel.HIGH, ThreatLevel.CRITICAL}:
-                    await self._execute_response(event)
-            await asyncio.sleep(30)
+        interval = 30
+        try:
+            while not self._should_stop():
+                to_process = [
+                    event for event in self.event_history if not event.responded
+                ]
+                for event in to_process:
+                    if event.threat_level in {ThreatLevel.HIGH, ThreatLevel.CRITICAL}:
+                        await self._execute_response(event)
+                if await self._wait_interval(interval):
+                    break
+        except asyncio.CancelledError:
+            self.logger.info("Threat response task cancelled")
+            raise
 
     async def _execute_response(self, event: SecurityEvent) -> None:
         playbook_key = self._map_event_to_playbook(event.event_type)
@@ -417,7 +511,9 @@ class SecurityAgent(AuditedTool):
             violation = self.dlp_validator.enforce(event.raw_data)
         except DLPViolationError as violation_error:
             self.logger.warning(
-                "DLP block for event %s: %s", event.event_type, violation_error.violation.rule
+                "DLP block for event %s: %s",
+                event.event_type,
+                violation_error.violation.rule,
             )
             self._audit_action(
                 "dlp.block",
@@ -518,7 +614,7 @@ Provide:
                 return True
         return False
 
-    def _is_suspicious_connection(self, conn: str, ports: set) -> bool:
+    def _is_suspicious_connection(self, conn: str, ports: set[int]) -> bool:
         if ":" not in conn:
             return False
         try:

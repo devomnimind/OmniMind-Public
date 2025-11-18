@@ -13,7 +13,7 @@ def run_command(command: List[str]) -> Dict[str, str]:
     if not command or not shutil.which(command[0]):
         return {
             "command": " ".join(command) if command else "",
-            "returncode": -1,
+            "returncode": "-1",
             "output": "command not available",
         }
 
@@ -23,14 +23,14 @@ def run_command(command: List[str]) -> Dict[str, str]:
         )
         return {
             "command": " ".join(command),
-            "returncode": result.returncode,
+            "returncode": str(result.returncode),
             "output": result.stdout.strip(),
         }
     except subprocess.CalledProcessError as exc:
         logger.warning("Command %s failed: %s", command, exc)
         return {
             "command": " ".join(command),
-            "returncode": exc.returncode,
+            "returncode": str(exc.returncode),
             "output": exc.output or exc.stderr or "",
         }
 

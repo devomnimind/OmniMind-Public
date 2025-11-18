@@ -42,7 +42,12 @@ class FirecrackerSandbox:
     ) -> None:
         self.kernel_path = Path(kernel_path) if kernel_path else None
         self.rootfs_path = Path(rootfs_path) if rootfs_path else None
-        self.enabled = enabled and bool(self.kernel_path and self.rootfs_path and self.kernel_path.exists() and self.rootfs_path.exists())
+        self.enabled = enabled and bool(
+            self.kernel_path
+            and self.rootfs_path
+            and self.kernel_path.exists()
+            and self.rootfs_path.exists()
+        )
         if not self.enabled:
             logger.warning(
                 "Firecracker sandbox disabled (kernel or rootfs missing): kernel=%s rootfs=%s",
@@ -86,7 +91,9 @@ class FirecrackerSandbox:
         summary = ",".join(str(item) for item in items)
         return summary or "empty"
 
-    def _record_event(self, payload_summary: str, result: SandboxResult, sandbox_name: str) -> None:
+    def _record_event(
+        self, payload_summary: str, result: SandboxResult, sandbox_name: str
+    ) -> None:
         event = SandboxEvent(
             timestamp=datetime.now(timezone.utc).isoformat(),
             sandbox=sandbox_name,
