@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import deque
 from dataclasses import dataclass, field
 from statistics import mean
-from typing import Dict
+from typing import Any, Dict
 
 
 @dataclass
@@ -36,7 +36,7 @@ class OrchestratorMetricsCollector:
         if not success:
             self.total_errors += 1
 
-    def summary(self) -> Dict[str, Dict[str, float]]:
+    def summary(self) -> Dict[str, Any]:
         ops = {}
         for name, op in self.operations.items():
             ops[name] = {
