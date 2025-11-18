@@ -4,7 +4,6 @@ import logging
 import os
 import re
 from dataclasses import dataclass
-from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
 from qdrant_client import QdrantClient
@@ -48,21 +47,33 @@ class QdrantConfig:
 
     @classmethod
     def load(cls, mcp_client: Optional[MCPClient] = None) -> Optional["QdrantConfig"]:
-        servers_path = Path("docs/servers.txt")
-        if mcp_client is not None:
+        config = cls.from_env()
+        if config:
+            return config
+        if mcp_client is not None and hasattr(mcp_client, "read_env"):
             try:
-                data = mcp_client.read_file(str(servers_path))
+                data = mcp_client.read_env([
+                    "OMNIMIND_QDRANT_URL",
+                    "OMNIMIND_QDRANT_API_KEY",
+                    "OMNIMIND_QDRANT_COLLECTION",
+                    "OMNIMIND_QDRANT_VECTOR_SIZE",
+                ])  # type: ignore[attr-defined]
             except MCPClientError as exc:
-                logger.debug("Unable to read servers via MCP: %s", exc)
+                logger.debug("Unable to read Qdrant env via MCP: %s", exc)
             else:
-                config = cls.from_text(data)
-                if config:
-                    return config
-        if servers_path.exists():
-            config = cls.from_text(servers_path.read_text(encoding="utf-8"))
-            if config:
-                return config
-        return cls.from_env()
+                env_map = data or {}
+                url = env_map.get("OMNIMIND_QDRANT_URL")
+                if url:
+                    vector_size_value = env_map.get("OMNIMIND_QDRANT_VECTOR_SIZE")
+                    vector_size = int(vector_size_value) if vector_size_value else None
+                    return cls(
+                        url=url,
+                        api_key=env_map.get("OMNIMIND_QDRANT_API_KEY"),
+                        collection=env_map.get("OMNIMIND_QDRANT_COLLECTION"),
+                        vector_size=vector_size,
+                    )
+        logger.warning("Qdrant configuration missing; set OMNIMIND_QDRANT_* environment variables")
+        return None
 
 
 class QdrantAdapter:

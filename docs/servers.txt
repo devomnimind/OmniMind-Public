@@ -1,18 +1,12 @@
-##Qdrant cloud
+Infrastructure credentials are managed through environment variables and never stored in this repository.
 
-from qdrant_client import QdrantClient
+Populate the runtime environment with the following keys via `.env` or secure secret storage before launching OmniMind:
 
-qdrant_client = QdrantClient(
-    url="https://af1fae47-c0b8-4880-bb0d-6b960897ac3d.us-east4-0.gcp.cloud.qdrant.io:6333", 
-    api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIiwiZXhwIjoxNzY4NjIzNDQzfQ.JFSf5gK-jleaCfjTm50wFq9nkLBIsTWd4Ps9oFWpnhw",
-)
+- `QDRANT_URL`
+- `QDRANT_API_KEY`
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `HF_TOKEN`
 
-print(qdrant_client.get_collections())
-
-
-supabase:
-NEXT_PUBLIC_SUPABASE_URL=https://noetzkgvyqcrycdsfnib.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5vZXR6a2d2eXFjcnljZHNmbmliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI1MzU0MzMsImV4cCI6MjA3ODExMTQzM30.I94qA1n4jinr6fzxuGQs6DKlpou_YGkmOjGGcf0sB_U
-passworddatabase: "97@8nea;GL7J,8N"
-SERVICE ROLE KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5vZXR6a2d2eXFjcnljZHNmbmliIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MjUzNTQzMywiZXhwIjoyMDc4MTExNDMzfQ.L-jLCt_U3yEMujANrkIfx7VkVP8bM4RF_8EVuR-2y0c"
-
+Refer to `docs/security/credential_pipeline.md` for the complete rotation and storage procedure.

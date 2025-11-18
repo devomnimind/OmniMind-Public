@@ -6,8 +6,8 @@ This document describes how the OmniMind DevBrain now connects securely to Supab
 
 ### Credential Loading
 
-1. **Primary source:** `docs/servers.txt` contains the Supabase URL and anon key used for demos (never commit your own secrets unless scoped to a vault). MCP can read that file with `MCPClient.read_file("docs/servers.txt")` and `SupabaseConfig.load()` will parse the relevant environment lines.
-2. **Environment fallback:** set `OMNIMIND_SUPABASE_URL`, `OMNIMIND_SUPABASE_ANON_KEY`, and optionally `OMNIMIND_SUPABASE_SERVICE_ROLE_KEY` / `OMNIMIND_SUPABASE_PROJECT` when running on production hardware.
+1. **Primary source:** export `OMNIMIND_SUPABASE_URL`, `OMNIMIND_SUPABASE_ANON_KEY`, and optionally `OMNIMIND_SUPABASE_SERVICE_ROLE_KEY` / `OMNIMIND_SUPABASE_PROJECT` in your shell, systemd unit, or secrets manager before launching OmniMind. Never store plaintext credentials inside the repository.
+2. **MCP assist:** when running through MCP, provide these environment variables via the MCP runtime so `SupabaseConfig.load()` can read them directly without touching the filesystem.
 
 ### Adapter Features
 
@@ -21,7 +21,7 @@ This document describes how the OmniMind DevBrain now connects securely to Supab
 
 ### Real Supabase Metadata (service role key)
 
-- The service role credential stored in `docs/servers.txt` now shows up as `SERVICE ROLE KEY=...`; `SupabaseConfig.from_text()` recognizes both the `OMNIMIND_SUPABASE_SERVICE_ROLE_KEY` and this literal entry so MCP can discover it.
+- The service role credential must be supplied via `OMNIMIND_SUPABASE_SERVICE_ROLE_KEY`. When that variable is present, `SupabaseConfig.load()` automatically unlocks schema inspection features.
 - Using that role key we introspected the GraphQL API at `/graphql/v1` and found the following accessible collections: `backup_metadata`, `evolution_history`, and `memory_consolidations`.
 - Each collection uses the Relay-style connection pattern (`<table>Collection`) and returns nodes such as `{ id, content, created_at, metadata }`, so agents can page through records with `first`, `after`, etc.
 - A sample GraphQL payload to fetch the latest two memory consolidations looks like:
@@ -51,7 +51,7 @@ query MemorySample {
 ### Memory onboarding
 
 - Agents now run `SupabaseMemoryOnboarding` during startup (`ReactAgent` seeds it after creating `EpisodicMemory`), so live Supabase `memory_consolidations` entries pre-populate the Qdrant store. The onboarding namespace handles duplicate IDs, metadata parsing, and audit-friendly logging.
-- To trigger onboarding manually, ensure `OMNIMIND_SUPABASE_SERVICE_ROLE_KEY` is available (or that `docs/servers.txt` contains `SERVICE ROLE KEY`). The onboarding report includes `nodes_processed`, `nodes_loaded`, and any GraphQL errors encountered; monitor the logs to confirm success before relying on the imported experiences.
+- To trigger onboarding manually, ensure `OMNIMIND_SUPABASE_SERVICE_ROLE_KEY` is available in the environment. The onboarding report includes `nodes_processed`, `nodes_loaded`, and any GraphQL errors encountered; monitor the logs to confirm success before relying on the imported experiences.
 
 ## Qdrant Integration
 
@@ -81,7 +81,7 @@ Ensure the service is reachable at `OMNIMIND_QDRANT_URL` (e.g., `http://127.0.0.
 
 ### MCP & Credential Handling
 
-`QdrantConfig.load()` reads `docs/servers.txt` through MCP, falling back to the local file or environment. This keeps credentials out of Git while enabling remote orchestration tools to reuse the same config.
+`QdrantConfig.load()` reads `OMNIMIND_QDRANT_*` variables supplied by the host shell or MCP runtime; no plaintext credential files are required.
 
 ## Testing & Monitoring
 

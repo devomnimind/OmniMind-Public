@@ -3,7 +3,6 @@ from __future__ import annotations
 import logging
 import os
 from dataclasses import dataclass
-from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
 try:
@@ -73,21 +72,32 @@ class SupabaseConfig:
 
     @classmethod
     def load(cls, mcp_client: Optional[MCPClient] = None) -> Optional["SupabaseConfig"]:
-        servers_path = Path("docs/servers.txt")
-        if mcp_client is not None:
+        config = cls.from_env()
+        if config:
+            return config
+        if mcp_client is not None and hasattr(mcp_client, "read_env"):
             try:
-                data = mcp_client.read_file(str(servers_path))
+                data = mcp_client.read_env([
+                    "OMNIMIND_SUPABASE_URL",
+                    "OMNIMIND_SUPABASE_ANON_KEY",
+                    "OMNIMIND_SUPABASE_SERVICE_ROLE_KEY",
+                    "OMNIMIND_SUPABASE_PROJECT",
+                ])  # type: ignore[attr-defined]
             except MCPClientError as exc:
-                logger.debug("Unable to read servers via MCP: %s", exc)
+                logger.debug("Unable to read Supabase env via MCP: %s", exc)
             else:
-                config = cls.from_text(data)
-                if config:
-                    return config
-        if servers_path.exists():
-            config = cls.from_text(servers_path.read_text(encoding="utf-8"))
-            if config:
-                return config
-        return cls.from_env()
+                env_map = data or {}
+                url = env_map.get("OMNIMIND_SUPABASE_URL")
+                anon_key = env_map.get("OMNIMIND_SUPABASE_ANON_KEY")
+                if url and anon_key:
+                    return cls(
+                        url=url,
+                        anon_key=anon_key,
+                        service_role_key=env_map.get("OMNIMIND_SUPABASE_SERVICE_ROLE_KEY"),
+                        project_ref=env_map.get("OMNIMIND_SUPABASE_PROJECT"),
+                    )
+        logger.warning("Supabase configuration missing; export OMNIMIND_SUPABASE_* variables")
+        return None
 
 
 class SupabaseAdapter:
