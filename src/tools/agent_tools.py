@@ -7,8 +7,7 @@ import os
 import subprocess
 import psutil
 from pathlib import Path
-from typing import Dict, List, Optional, Any
-import json
+from typing import Dict, List, Any
 
 
 class FileOperations:
@@ -142,8 +141,6 @@ class SystemMonitor:
             # GPU (if available)
             gpu_info = {}
             try:
-                import subprocess
-
                 result = subprocess.run(
                     [
                         "nvidia-smi",
@@ -163,8 +160,8 @@ class SystemMonitor:
                         "memory_total_mb": int(gpu_data[2].strip()),
                         "temperature_c": int(gpu_data[3].strip()),
                         "utilization_percent": int(gpu_data[4].strip()),
-                    }
-            except:
+                        }
+            except Exception:
                 gpu_info = {"available": False}
 
             return {
@@ -195,9 +192,14 @@ class SystemMonitor:
 
         # Memory
         mem = info.get("memory", {})
-        lines.append(
-            f"RAM: {mem.get('used_gb', 0):.1f}/{mem.get('total_gb', 0):.1f} GB ({mem.get('percent', 0):.1f}%)"
+        ram_used = mem.get("used_gb", 0)
+        ram_total = mem.get("total_gb", 0)
+        ram_percent = mem.get("percent", 0)
+        ram_line = (
+            f"RAM: {ram_used:.1f}/{ram_total:.1f} GB "
+            f"({ram_percent:.1f}%)"
         )
+        lines.append(ram_line)
 
         # GPU
         gpu = info.get("gpu", {})

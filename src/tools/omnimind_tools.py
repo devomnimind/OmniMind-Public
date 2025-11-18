@@ -17,6 +17,8 @@ Camadas:
 11. Workflow - Coordination (switch_mode)
 """
 
+from __future__ import annotations
+
 import asyncio
 import json
 import os
@@ -24,7 +26,7 @@ import hashlib
 import subprocess
 import time
 from datetime import datetime, timezone
-from typing import Dict, List, Optional, Any, Callable
+from typing import Any, Dict, List, Optional, cast
 from pathlib import Path
 from enum import Enum
 import logging
@@ -70,7 +72,7 @@ class ToolAuditLog:
     error_msg: Optional[str] = None
     prev_hash: str = "0"
 
-    def to_dict(self):
+    def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
 
 
@@ -92,9 +94,9 @@ class AuditedTool:
                     lines = f.readlines()
                     if lines:
                         last_entry = json.loads(lines[-1])
-                        return last_entry.get("output_hash", "0")
-            except:
-                pass
+                        return last_entry.get("output_hash", "0")  # type: ignore[no-any-return]
+            except (OSError, json.JSONDecodeError):
+                return "0"
         return "0"
 
     def _compute_hash(self, content: Any) -> str:
@@ -113,7 +115,7 @@ class AuditedTool:
         output_data: Any,
         status: str,
         error: Optional[str] = None,
-    ):
+    ) -> None:
         """Registra ação em cadeia imutável de auditoria"""
         input_hash = self._compute_hash(input_data)
         output_hash = self._compute_hash(output_data)
@@ -142,7 +144,7 @@ class AuditedTool:
         except Exception as e:
             logger.error(f"Failed to audit {self.name}: {e}")
 
-    def execute(self, *args, **kwargs) -> Any:
+    def execute(self, *args: Any, **kwargs: Any) -> Any:
         """Deve ser sobrescrito pela subclasse"""
         raise NotImplementedError(f"{self.name}.execute() not implemented")
 
@@ -155,7 +157,7 @@ class AuditedTool:
 class ReadFileTool(AuditedTool):
     """Lê arquivo do sistema com verificação de integridade"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("read_file", ToolCategory.PERCEPTION)
 
     def execute(self, filepath: str, encoding: str = "utf-8") -> str:
@@ -183,7 +185,7 @@ class ReadFileTool(AuditedTool):
 class SearchFilesTool(AuditedTool):
     """Busca arquivos por padrão"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("search_files", ToolCategory.PERCEPTION)
 
     def execute(self, directory: str, pattern: str, max_results: int = 50) -> List[str]:
@@ -214,10 +216,10 @@ class SearchFilesTool(AuditedTool):
 class ListFilesTool(AuditedTool):
     """Lista estrutura de diretório"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("list_files", ToolCategory.PERCEPTION)
 
-    def execute(self, directory: str, recursive: bool = False) -> List[Dict]:
+    def execute(self, directory: str, recursive: bool = False) -> List[Dict[str, Any]]:
         """Lista arquivos em diretório"""
         try:
             directory = os.path.expanduser(directory)
@@ -268,10 +270,10 @@ class ListFilesTool(AuditedTool):
 class InspectContextTool(AuditedTool):
     """Inspeciona estado do sistema"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("inspect_context", ToolCategory.PERCEPTION)
 
-    def execute(self) -> Dict:
+    def execute(self) -> Dict[str, Any]:
         """Retorna estado do sistema"""
         try:
             import psutil
@@ -301,7 +303,7 @@ class InspectContextTool(AuditedTool):
 class CodebaseSearchTool(AuditedTool):
     """Busca semântica em codebase"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("codebase_search", ToolCategory.PERCEPTION)
 
     def execute(
@@ -310,7 +312,7 @@ class CodebaseSearchTool(AuditedTool):
         directory: str = ".",
         extensions: List[str] = ["*.py", "*.js", "*.ts", "*.md"],
         max_results: int = 20,
-    ) -> List[Dict]:
+    ) -> List[Dict[str, Any]]:
         """Busca por padrão em código"""
         try:
             directory = os.path.expanduser(directory)
@@ -350,10 +352,10 @@ class CodebaseSearchTool(AuditedTool):
 class ListCodeDefinitionsTool(AuditedTool):
     """Lista definições de código (classes, funções)"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("list_code_definitions", ToolCategory.PERCEPTION)
 
-    def execute(self, filepath: str) -> List[Dict]:
+    def execute(self, filepath: str) -> List[Dict[str, Any]]:
         """Extrai definições de código Python"""
         try:
             filepath = os.path.expanduser(filepath)
@@ -402,7 +404,7 @@ class ListCodeDefinitionsTool(AuditedTool):
 class WriteFileTool(AuditedTool):
     """Escreve arquivo com validação"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("write_to_file", ToolCategory.ACTION)
 
     def execute(self, filepath: str, content: str, mode: str = "w") -> bool:
@@ -426,7 +428,7 @@ class WriteFileTool(AuditedTool):
 class UpdateFileTool(AuditedTool):
     """Atualiza arquivo existente (edição pontual)"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("update_file", ToolCategory.ACTION)
 
     def execute(self, filepath: str, old_content: str, new_content: str) -> bool:
@@ -464,7 +466,7 @@ class UpdateFileTool(AuditedTool):
 class ExecuteCommandTool(AuditedTool):
     """Executa comandos shell com segurança"""
 
-    def __init__(self, allowed_commands: List[str] = None):
+    def __init__(self, allowed_commands: Optional[List[str]] = None) -> None:
         super().__init__("execute_command", ToolCategory.ACTION)
         self.allowed_commands = allowed_commands or [
             "python",
@@ -489,7 +491,7 @@ class ExecuteCommandTool(AuditedTool):
         ]
 
     def execute(
-        self, command: str, timeout: int = 300, cwd: str = None
+        self, command: str, timeout: int = 300, cwd: Optional[str] = None
     ) -> Dict[str, Any]:
         """Executa comando com validação de segurança"""
         try:
@@ -535,7 +537,7 @@ class ExecuteCommandTool(AuditedTool):
 class ApplyDiffTool(AuditedTool):
     """Aplica diff a arquivo (edição cirúrgica)"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("apply_diff", ToolCategory.ACTION)
 
     def execute(self, filepath: str, diff_lines: List[str]) -> bool:
@@ -561,7 +563,7 @@ class ApplyDiffTool(AuditedTool):
 class InsertContentTool(AuditedTool):
     """Insere conteúdo em posição específica de arquivo"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("insert_content", ToolCategory.ACTION)
 
     def execute(self, filepath: str, content: str, line_number: int) -> bool:
@@ -594,7 +596,7 @@ class InsertContentTool(AuditedTool):
 class PlanTaskTool(AuditedTool):
     """Quebra tarefas complexas em planos executáveis"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("plan_task", ToolCategory.ORCHESTRATION)
 
     def execute(
@@ -618,7 +620,7 @@ class PlanTaskTool(AuditedTool):
 class NewTaskTool(AuditedTool):
     """Cria nova tarefa e delega para agente"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("new_task", ToolCategory.ORCHESTRATION)
 
     def execute(
@@ -626,8 +628,8 @@ class NewTaskTool(AuditedTool):
         task_name: str,
         assigned_to: str,
         priority: str = "MEDIUM",
-        metadata: Dict = None,
-    ) -> Dict:
+        metadata: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
         """Cria nova tarefa com ID único"""
         task_id = hashlib.md5(f"{task_name}{time.time()}".encode()).hexdigest()[:8]
 
@@ -648,11 +650,11 @@ class NewTaskTool(AuditedTool):
 class SwitchModeTool(AuditedTool):
     """Alterna entre modos de agente (code/architect/debug/ask)"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("switch_mode", ToolCategory.ORCHESTRATION)
         self.current_mode = "orchestrator"
 
-    def execute(self, target_mode: str, reason: str = "") -> Dict:
+    def execute(self, target_mode: str, reason: str = "") -> Dict[str, Any]:
         """Troca modo de operação"""
         valid_modes = ["code", "architect", "debug", "ask", "orchestrator", "reviewer"]
 
@@ -685,10 +687,10 @@ class SwitchModeTool(AuditedTool):
 class AttemptCompletionTool(AuditedTool):
     """Marca tentativa de conclusão de tarefa"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("attempt_completion", ToolCategory.ORCHESTRATION)
 
-    def execute(self, task_id: str, result: str, success: bool = True) -> Dict:
+    def execute(self, task_id: str, result: str, success: bool = True) -> Dict[str, Any]:
         """Registra conclusão de tarefa"""
         completion = {
             "task_id": task_id,
@@ -710,10 +712,10 @@ class AttemptCompletionTool(AuditedTool):
 class MCPToolTool(AuditedTool):
     """Invoca ferramentas de servidores MCP"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("use_mcp_tool", ToolCategory.INTEGRATION)
 
-    def execute(self, mcp_server: str, tool_name: str, args: Dict) -> Any:
+    def execute(self, mcp_server: str, tool_name: str, args: Dict[str, Any]) -> Any:
         """Invoca ferramenta MCP externa"""
         try:
             # Placeholder: integração real com servidores MCP
@@ -741,7 +743,7 @@ class MCPToolTool(AuditedTool):
 class AccessMCPResourceTool(AuditedTool):
     """Acessa recursos de servidores MCP"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("access_mcp_resource", ToolCategory.INTEGRATION)
 
     def execute(self, mcp_server: str, resource_uri: str) -> Any:
@@ -771,12 +773,12 @@ class AccessMCPResourceTool(AuditedTool):
 class EpisodicMemoryTool(AuditedTool):
     """Armazena memória episódica (eventos temporais)"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("episodic_memory", ToolCategory.MEMORY)
         self.memory_path = Path.home() / ".omnimind" / "memory" / "episodic.jsonl"
         self.memory_path.parent.mkdir(parents=True, exist_ok=True)
 
-    def execute(self, action: str, data: Dict = None, query: str = None) -> Any:
+    def execute(self, action: str, data: Optional[Dict[str, Any]] = None, query: Optional[str] = None) -> Any:
         """Armazena ou recupera memória episódica"""
         try:
             if action == "store":
@@ -827,13 +829,13 @@ class EpisodicMemoryTool(AuditedTool):
 class AuditSecurityTool(AuditedTool):
     """Auditoria e compliance P0"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("audit_security", ToolCategory.SECURITY)
 
     def execute(self, check_type: str) -> Dict[str, Any]:
         """Executa verificação de segurança"""
         try:
-            results = {
+            results: Dict[str, Any] = {
                 "check": check_type,
                 "timestamp": _current_utc_timestamp(),
                 "passed": True,
@@ -884,12 +886,14 @@ class SecurityAgentTool(AuditedTool):
         self._agent = SecurityAgent(self.config_path)
         self._monitor_thread: Optional[threading.Thread] = None
 
-    def execute(self, action: str, params: Dict[str, Any] = None) -> Dict[str, Any]:
+    def execute(self, action: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         try:
             params = params or {}
             result: Dict[str, Any]
             if action == "start_monitoring":
                 result = self._start_monitoring()
+            elif action == "stop_monitoring":
+                result = self._stop_monitoring()
             elif action == "generate_report":
                 result = {"report": self._agent.generate_security_report()}
             elif action == "check_threat":
@@ -916,6 +920,16 @@ class SecurityAgentTool(AuditedTool):
         self._monitor_thread.start()
         return {"status": "monitoring_started"}
 
+    def _stop_monitoring(self) -> Dict[str, str]:
+        if not self._monitor_thread:
+            return {"status": "not_running"}
+        self._agent.request_stop()
+        self._monitor_thread.join(timeout=10)
+        if self._monitor_thread.is_alive():
+            return {"status": "shutdown_pending"}
+        self._monitor_thread = None
+        return {"status": "stopped"}
+
     def _run_monitoring(self) -> None:
         try:
             asyncio.run(self._agent.start_continuous_monitoring())
@@ -931,7 +945,7 @@ class SecurityAgentTool(AuditedTool):
 class AnalyzeCodeTool(AuditedTool):
     """Análise de código (complexidade, qualidade)"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("analyze_code", ToolCategory.REASONING)
 
     def execute(self, filepath: str) -> Dict[str, Any]:
@@ -965,13 +979,13 @@ class AnalyzeCodeTool(AuditedTool):
 class DiagnoseErrorTool(AuditedTool):
     """Diagnóstico de erros e sugestões"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("diagnose_error", ToolCategory.REASONING)
 
-    def execute(self, error_message: str, context: Dict = None) -> Dict:
+    def execute(self, error_message: str, context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Diagnostica erro e sugere correções"""
         try:
-            diagnosis = {
+            diagnosis: Dict[str, Any] = {
                 "error": error_message,
                 "context": context or {},
                 "suggestions": [],
@@ -1004,10 +1018,10 @@ class DiagnoseErrorTool(AuditedTool):
 class AdaptStyleTool(AuditedTool):
     """Adapta estilo de comunicação"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("adapt_style", ToolCategory.PERSONALITY)
 
-    def execute(self, style: str, context: str = "") -> Dict:
+    def execute(self, style: str, context: str = "") -> Dict[str, Any]:
         """Adapta personalidade do agente"""
         styles = ["professional", "friendly", "concise", "detailed", "technical"]
 
@@ -1028,10 +1042,10 @@ class AdaptStyleTool(AuditedTool):
 class CollectFeedbackTool(AuditedTool):
     """Coleta feedback para aprendizado"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("collect_feedback", ToolCategory.FEEDBACK)
 
-    def execute(self, feedback_type: str, data: Dict) -> bool:
+    def execute(self, feedback_type: str, data: Dict[str, Any]) -> bool:
         """Armazena feedback para RLAIF"""
         try:
             feedback_path = (
@@ -1060,10 +1074,10 @@ class CollectFeedbackTool(AuditedTool):
 class TrackMetricsTool(AuditedTool):
     """Rastreia métricas de performance"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("track_metrics", ToolCategory.TELEMETRY)
 
-    def execute(self, metric_name: str, value: float, labels: Dict = None) -> bool:
+    def execute(self, metric_name: str, value: float, labels: Optional[Dict[str, Any]] = None) -> bool:
         """Registra métrica"""
         try:
             metrics_path = Path.home() / ".omnimind" / "metrics" / "metrics.jsonl"
@@ -1096,12 +1110,12 @@ class TrackMetricsTool(AuditedTool):
 class ToolsFramework:
     """Orquestrador de todas as ferramentas com 11 camadas"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.tools: Dict[str, AuditedTool] = {}
         self._register_all_tools()
         logger.info(f"ToolsFramework initialized with {len(self.tools)} tools")
 
-    def _register_all_tools(self):
+    def _register_all_tools(self) -> None:
         """Registra todas as 25+ ferramentas disponíveis"""
 
         # Camada 1: Percepção (6 ferramentas)
@@ -1145,7 +1159,7 @@ class ToolsFramework:
         self.tools["collect_feedback"] = CollectFeedbackTool()
         self.tools["track_metrics"] = TrackMetricsTool()
 
-    def execute_tool(self, tool_name: str, *args, **kwargs) -> Any:
+    def execute_tool(self, tool_name: str, *args: Any, **kwargs: Any) -> Any:
         """Executa ferramenta por nome"""
         if tool_name not in self.tools:
             logger.error(f"Tool not found: {tool_name}")
@@ -1203,7 +1217,7 @@ class ToolsFramework:
             with open(audit_log_path, "r") as f:
                 lines = f.readlines()
 
-            stats = {
+            stats: Dict[str, Any] = {
                 "total_calls": len(lines),
                 "by_tool": {},
                 "by_status": {},
