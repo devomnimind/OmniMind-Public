@@ -3,7 +3,7 @@
 import logging
 from typing import Any, Dict
 
-from .utils import command_available, run_command_async
+from .utils import CommandResult, command_available, run_command_async, skipped_command
 
 logger = logging.getLogger(__name__)
 
@@ -32,67 +32,47 @@ class PrivilegeEscalationPlaybook:
             "notification": notification,
         }
 
-    async def _detect_exploit_attempts(self) -> Dict[str, Any]:
+    async def _detect_exploit_attempts(self) -> CommandResult:
         logger.debug("   [1/6] Scanning logs for escalation attempts")
         command = ["/usr/bin/grep", "-i", "escalation", "/var/log/auth.log"]
         if not command_available(command[0]):
-            return {
-                "command": "grep",
-                "status": "skipped",
-                "reason": "tool unavailable",
-            }
+            return skipped_command("grep", "tool unavailable")
         return await run_command_async(command)
 
-    async def _block_malicious_processes(self) -> Dict[str, Any]:
+    async def _block_malicious_processes(self) -> CommandResult:
         logger.debug("   [2/6] Killing suspect escalation processes")
         command = ["sudo", "pkill", "-f", "exploit"]
         if not command_available(command[0]):
-            return {
-                "command": "pkill",
-                "status": "skipped",
-                "reason": "tool unavailable",
-            }
+            return skipped_command("pkill", "tool unavailable")
         return await run_command_async(command)
 
-    async def _reset_sudoers_permissions(self) -> Dict[str, Any]:
+    async def _reset_sudoers_permissions(self) -> CommandResult:
         logger.debug("   [3/6] Resetting /etc/sudoers permissions")
         command = ["sudo", "chmod", "440", "/etc/sudoers"]
         if not command_available(command[0]):
-            return {
-                "command": "chmod",
-                "status": "skipped",
-                "reason": "tool unavailable",
-            }
+            return skipped_command("chmod", "tool unavailable")
         return await run_command_async(command)
 
-    async def _revoke_sudo_sessions(self, event: Any) -> Dict[str, Any]:
+    async def _revoke_sudo_sessions(self, event: Any) -> CommandResult:
         logger.debug("   [4/6] Revoking active sudo sessions")
         user = None
         if hasattr(event, "details") and isinstance(event.details, dict):
             user = event.details.get("user")
         if not user:
-            return {"status": "skipped", "reason": "no user provided"}
+            return skipped_command("pkill", "no user provided")
         command = ["sudo", "pkill", "-KILL", "-u", user]
         if not command_available(command[0]):
-            return {
-                "command": "pkill",
-                "status": "skipped",
-                "reason": "tool unavailable",
-            }
+            return skipped_command("pkill", "tool unavailable")
         return await run_command_async(command)
 
-    async def _audit_sudoers(self) -> Dict[str, Any]:
+    async def _audit_sudoers(self) -> CommandResult:
         logger.debug("   [5/6] Auditing sudoers for unauthorized changes")
         command = ["sudo", "auditctl", "-w", "/etc/sudoers", "-p", "wa"]
         if not command_available(command[0]):
-            return {
-                "command": "auditctl",
-                "status": "skipped",
-                "reason": "tool unavailable",
-            }
+            return skipped_command("auditctl", "tool unavailable")
         return await run_command_async(command)
 
-    async def _notify_admin(self, event: Any) -> Dict[str, Any]:
+    async def _notify_admin(self, event: Any) -> CommandResult:
         logger.debug("   [6/6] Alerting administrators")
         message = (
             f"Privilege escalation detected: {getattr(event, 'description', 'unknown')}"

@@ -5,7 +5,7 @@ import json
 import logging
 from typing import Any, Dict
 
-from .utils import command_available, run_command_async
+from .utils import CommandResult, command_available, run_command_async, skipped_command
 
 logger = logging.getLogger(__name__)
 
@@ -31,24 +31,24 @@ class DataExfiltrationPlaybook:
             "notification": notification,
         }
 
-    async def _detect_anomalous_transfer(self) -> Dict[str, Any]:
+    async def _detect_anomalous_transfer(self) -> CommandResult:
         logger.debug("   [1/5] Sampling network traffic")
         command = ["/usr/bin/ss", "-tunap"]
         if not command_available(command[0]):
-            return {"command": "ss", "status": "skipped", "reason": "tool unavailable"}
+            return skipped_command("ss", "tool unavailable")
         return await run_command_async(command)
 
-    async def _block_connection(self, event: Any) -> Dict[str, Any]:
+    async def _block_connection(self, event: Any) -> CommandResult:
         logger.debug("   [2/5] Blocking suspicious egress")
         remote = "0.0.0.0"
         if hasattr(event, "details") and isinstance(event.details, dict):
             remote = event.details.get("remote") or remote
         command = ["sudo", "ufw", "deny", str(remote)]
         if not command_available(command[0]):
-            return {"command": "ufw", "status": "skipped", "reason": "tool unavailable"}
+            return skipped_command("ufw", "tool unavailable")
         return await run_command_async(command)
 
-    async def _throttle_bandwidth(self) -> Dict[str, Any]:
+    async def _throttle_bandwidth(self) -> CommandResult:
         logger.debug("   [3/5] Applying traffic shaping")
         command = [
             "sudo",
@@ -67,7 +67,7 @@ class DataExfiltrationPlaybook:
             "400ms",
         ]
         if not command_available(command[0]):
-            return {"command": "tc", "status": "skipped", "reason": "tool unavailable"}
+            return skipped_command("tc", "tool unavailable")
         return await run_command_async(command)
 
     async def _preserve_logs(self, event: Any) -> Dict[str, Any]:
@@ -80,7 +80,7 @@ class DataExfiltrationPlaybook:
         await asyncio.to_thread(self._write_artifact, path, snapshot)
         return {"path": path, "status": "saved"}
 
-    async def _notify_team(self, event: Any) -> Dict[str, Any]:
+    async def _notify_team(self, event: Any) -> CommandResult:
         logger.debug("   [5/5] Alerting stakeholders")
         message = f"Data exfiltration mitigated for {getattr(event, 'description', 'unknown')}"
         return await run_command_async(["/bin/echo", message])

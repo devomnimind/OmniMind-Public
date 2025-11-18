@@ -106,7 +106,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
 }
 
 
-class SecurityAgent(AuditedTool):  # type: ignore[misc]
+class SecurityAgent(AuditedTool):
     """Autonomous security monitor that coordinates playbooks."""
 
     def __init__(self, config_path: str, llm: Optional[Any] = None):

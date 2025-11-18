@@ -3,7 +3,7 @@
 import logging
 from typing import Any, Dict
 
-from .utils import command_available, run_command_async
+from .utils import CommandResult, command_available, run_command_async
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +28,7 @@ class RootkitPlaybook:
             "verification": verification,
         }
 
-    async def _isolate_system(self) -> Dict[str, Any]:
+    async def _isolate_system(self) -> CommandResult:
         logger.debug("   [1/5] Isolating network interfaces")
         return await run_command_async(["sudo", "ifdown", "eth0"])
 
@@ -56,7 +56,7 @@ class RootkitPlaybook:
         )
         return {"has_rootkit": has_rootkit, "findings": findings}
 
-    async def _remediate_rootkit(self) -> Dict[str, Any]:
+    async def _remediate_rootkit(self) -> CommandResult:
         logger.debug("   [4/5] Performing remediation")
         await run_command_async(["sudo", "apt-get", "update"])
         return await run_command_async(["sudo", "apt-get", "upgrade", "-y"])

@@ -4,16 +4,37 @@ import asyncio
 import logging
 import shutil
 import subprocess
-from typing import Dict, List
+from typing import Sequence, TypedDict
 
 logger = logging.getLogger(__name__)
 
 
-def run_command(command: List[str]) -> Dict[str, str]:
+class CommandResult(TypedDict):
+    command: str
+    returncode: int
+    output: str
+
+
+class CommandResultWithStatus(CommandResult, total=False):
+    status: str
+    reason: str
+
+
+def skipped_command(command: str, reason: str) -> CommandResultWithStatus:
+    return {
+        "command": command,
+        "returncode": -1,
+        "output": "",
+        "status": "skipped",
+        "reason": reason,
+    }
+
+
+def run_command(command: Sequence[str]) -> CommandResult:
     if not command or not shutil.which(command[0]):
         return {
             "command": " ".join(command) if command else "",
-            "returncode": "-1",
+            "returncode": -1,
             "output": "command not available",
         }
 
@@ -23,19 +44,19 @@ def run_command(command: List[str]) -> Dict[str, str]:
         )
         return {
             "command": " ".join(command),
-            "returncode": str(result.returncode),
+            "returncode": result.returncode,
             "output": result.stdout.strip(),
         }
     except subprocess.CalledProcessError as exc:
         logger.warning("Command %s failed: %s", command, exc)
         return {
             "command": " ".join(command),
-            "returncode": str(exc.returncode),
+            "returncode": exc.returncode,
             "output": exc.output or exc.stderr or "",
         }
 
 
-async def run_command_async(command: List[str]) -> Dict[str, str]:
+async def run_command_async(command: Sequence[str]) -> CommandResult:
     return await asyncio.to_thread(run_command, command)
 
 

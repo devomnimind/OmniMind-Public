@@ -4,11 +4,10 @@ import json
 import shutil
 from pathlib import Path
 from types import SimpleNamespace
-from typing import Any
+from typing import Any, Sequence
 
 import pytest
 
-import src.security.playbooks.utils as utils
 from src.security.playbooks import (
     intrusion_response,
     malware_response,
@@ -21,9 +20,11 @@ from src.security.playbooks.malware_response import MalwarePlaybook
 from src.security.playbooks.privilege_escalation_response import (
     PrivilegeEscalationPlaybook,
 )
+from src.security.playbooks.utils import CommandResult
+import src.security.playbooks.utils as utils
 
 
-async def _dummy_run(command):
+async def _dummy_run(command: Sequence[str]) -> CommandResult:
     return {
         "command": " ".join(command),
         "returncode": 0,
@@ -131,7 +132,7 @@ async def test_rootkit_playbook_remediation_path(
 ) -> None:
     seen: set[str] = set()
 
-    async def stub(command: list[str]) -> dict[str, Any]:
+    async def stub(command: Sequence[str]) -> CommandResult:
         cmd_joined = " ".join(command)
         if "chkrootkit" in cmd_joined and "chkrootkit" not in seen:
             seen.add("chkrootkit")
@@ -158,7 +159,7 @@ async def test_rootkit_playbook_remediation_path(
 async def test_intrusion_playbook_blocks_and_preserves_scene(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    async def stub(command: list[str]) -> dict[str, Any]:
+    async def stub(command: Sequence[str]) -> CommandResult:
         return {
             "command": " ".join(command),
             "returncode": 0,
@@ -192,7 +193,7 @@ async def test_intrusion_playbook_blocks_and_preserves_scene(
 async def test_malware_playbook_quarantines_artifacts(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    async def stub(command: list[str]) -> dict[str, Any]:
+    async def stub(command: Sequence[str]) -> CommandResult:
         return {
             "command": " ".join(command),
             "returncode": 0,
@@ -216,7 +217,7 @@ async def test_malware_playbook_quarantines_artifacts(
 async def test_privilege_escalation_playbook_revokes_sessions(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    async def stub(command: list[str]) -> dict[str, Any]:
+    async def stub(command: Sequence[str]) -> CommandResult:
         return {
             "command": " ".join(command),
             "returncode": 0,

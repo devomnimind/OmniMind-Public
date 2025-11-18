@@ -26,7 +26,7 @@ import hashlib
 import subprocess
 import time
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional, cast
+from typing import Any, Dict, List, Optional
 from pathlib import Path
 from enum import Enum
 import logging
@@ -690,7 +690,9 @@ class AttemptCompletionTool(AuditedTool):
     def __init__(self) -> None:
         super().__init__("attempt_completion", ToolCategory.ORCHESTRATION)
 
-    def execute(self, task_id: str, result: str, success: bool = True) -> Dict[str, Any]:
+    def execute(
+        self, task_id: str, result: str, success: bool = True
+    ) -> Dict[str, Any]:
         """Registra conclusão de tarefa"""
         completion = {
             "task_id": task_id,
@@ -778,7 +780,12 @@ class EpisodicMemoryTool(AuditedTool):
         self.memory_path = Path.home() / ".omnimind" / "memory" / "episodic.jsonl"
         self.memory_path.parent.mkdir(parents=True, exist_ok=True)
 
-    def execute(self, action: str, data: Optional[Dict[str, Any]] = None, query: Optional[str] = None) -> Any:
+    def execute(
+        self,
+        action: str,
+        data: Optional[Dict[str, Any]] = None,
+        query: Optional[str] = None,
+    ) -> Any:
         """Armazena ou recupera memória episódica"""
         try:
             if action == "store":
@@ -859,9 +866,9 @@ class AuditSecurityTool(AuditedTool):
 
             elif check_type == "audit_chain":
                 # Verificar integridade da cadeia de auditoria
-                from ..audit import ImmutableAudit
+                from ..audit import ImmutableAuditSystem
 
-                audit = ImmutableAudit()
+                audit = ImmutableAuditSystem()
                 if not audit.verify_chain_integrity():
                     results["findings"].append("Audit chain compromised")
                     results["passed"] = False
@@ -886,7 +893,9 @@ class SecurityAgentTool(AuditedTool):
         self._agent = SecurityAgent(self.config_path)
         self._monitor_thread: Optional[threading.Thread] = None
 
-    def execute(self, action: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    def execute(
+        self, action: str, params: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
         try:
             params = params or {}
             result: Dict[str, Any]
@@ -982,7 +991,9 @@ class DiagnoseErrorTool(AuditedTool):
     def __init__(self) -> None:
         super().__init__("diagnose_error", ToolCategory.REASONING)
 
-    def execute(self, error_message: str, context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    def execute(
+        self, error_message: str, context: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
         """Diagnostica erro e sugere correções"""
         try:
             diagnosis: Dict[str, Any] = {
@@ -1077,7 +1088,9 @@ class TrackMetricsTool(AuditedTool):
     def __init__(self) -> None:
         super().__init__("track_metrics", ToolCategory.TELEMETRY)
 
-    def execute(self, metric_name: str, value: float, labels: Optional[Dict[str, Any]] = None) -> bool:
+    def execute(
+        self, metric_name: str, value: float, labels: Optional[Dict[str, Any]] = None
+    ) -> bool:
         """Registra métrica"""
         try:
             metrics_path = Path.home() / ".omnimind" / "metrics" / "metrics.jsonl"

@@ -6,7 +6,12 @@ import logging
 from datetime import datetime, timezone
 from typing import Any, Dict
 
-from .utils import command_available, run_command_async
+from .utils import (
+    CommandResult,
+    command_available,
+    run_command_async,
+    skipped_command,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +38,7 @@ class IntrusionPlaybook:
             "scene": scene,
         }
 
-    async def _capture_evidence(self) -> Dict[str, Any]:
+    async def _capture_evidence(self) -> Dict[str, CommandResult]:
         logger.debug("   [1/6] Capturing process/network evidence")
         commands = [
             ["/usr/bin/ps", "aux"],
@@ -46,15 +51,12 @@ class IntrusionPlaybook:
         for command in commands:
             command_key = " ".join(command)
             if not command_available(command[0]):
-                evidence[command_key] = {
-                    "status": "skipped",
-                    "reason": "tool unavailable",
-                }
+                evidence[command_key] = skipped_command(command_key, "tool unavailable")
                 continue
             evidence[command_key] = await run_command_async(command)
         return evidence
 
-    async def _block_attacker(self, event: Any) -> Dict[str, Any]:
+    async def _block_attacker(self, event: Any) -> CommandResult:
         logger.debug("   [2/6] Blocking attacker at firewall")
         remote = (
             event.details.get("remote")
@@ -69,32 +71,24 @@ class IntrusionPlaybook:
         remote = remote or "0.0.0.0"
         command = ["sudo", "ufw", "deny", "from", str(remote)]
         if not command_available(command[0]):
-            return {"command": "ufw", "status": "skipped", "reason": "tool unavailable"}
+            return skipped_command("ufw", "tool unavailable")
         return await run_command_async(command)
 
-    async def _terminate_suspicious_sessions(self) -> Dict[str, Any]:
+    async def _terminate_suspicious_sessions(self) -> CommandResult:
         logger.debug("   [3/6] Terminating suspicious sessions")
         command = ["sudo", "pkill", "-f", "nmap"]
         if not command_available(command[0]):
-            return {
-                "command": "pkill",
-                "status": "skipped",
-                "reason": "tool unavailable",
-            }
+            return skipped_command("pkill", "tool unavailable")
         return await run_command_async(command)
 
-    async def _enhance_logging(self) -> Dict[str, Any]:
+    async def _enhance_logging(self) -> CommandResult:
         logger.debug("   [4/6] Boosting audit logs")
         command = ["sudo", "auditctl", "-b", "8192"]
         if not command_available(command[0]):
-            return {
-                "command": "auditctl",
-                "status": "skipped",
-                "reason": "tool unavailable",
-            }
+            return skipped_command("auditctl", "tool unavailable")
         return await run_command_async(command)
 
-    async def _alert_user(self, event: Any) -> Dict[str, Any]:
+    async def _alert_user(self, event: Any) -> CommandResult:
         logger.debug("   [5/6] Sending user alert")
         description = getattr(event, "description", "intrusion detected")
         message = f"Intrusion alert: {description}"
