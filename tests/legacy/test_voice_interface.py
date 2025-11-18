@@ -26,7 +26,12 @@ async def test_voice_interface_listen_and_speak() -> None:
     stt = DummySTT()
     tts = DummyTTS()
     recorded: list[bytes] = []
-    vi = VoiceInterface(stt_client=stt, tts_client=tts, audio_provider=lambda: b"hi", audio_sink=recorded.append)
+    vi = VoiceInterface(
+        stt_client=stt,
+        tts_client=tts,
+        audio_provider=lambda: b"hi",
+        audio_sink=recorded.append,
+    )
 
     text = await vi.listen()
     assert text == "hi"

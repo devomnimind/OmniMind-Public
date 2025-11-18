@@ -44,9 +44,18 @@ async def test_doc2agent_tracks_health_and_alerts() -> None:
     assert summary["health"]["success_tool"]["success"] == 1
     assert summary["health"]["fail_tool"]["failure"] == 1
     assert alerts
-    assert any("doc2agent_tool_latency_ms" in entry.get("metric", "") for entry in agent.metrics_log)
-    assert any("doc2agent_tool_status" in entry.get("metric", "") for entry in agent.metrics_log)
-    assert all(entry["tool"] in {"success_tool", "fail_tool"} for entry in agent.invocation_history)
+    assert any(
+        "doc2agent_tool_latency_ms" in entry.get("metric", "")
+        for entry in agent.metrics_log
+    )
+    assert any(
+        "doc2agent_tool_status" in entry.get("metric", "")
+        for entry in agent.metrics_log
+    )
+    assert all(
+        entry["tool"] in {"success_tool", "fail_tool"}
+        for entry in agent.invocation_history
+    )
     assert any(call["name"] == "track_metrics" for call in framework.metrics)
 
 
@@ -72,8 +81,12 @@ async def test_doc2agent_custom_invoker_metrics_called() -> None:
 
     await agent.plan_and_execute(["doc"], "goal")
 
-    assert any(entry.get("metric") == "doc2agent_tool_latency_ms" for entry in captured_metrics)
-    assert any(entry.get("metric") == "doc2agent_tool_status" for entry in captured_metrics)
+    assert any(
+        entry.get("metric") == "doc2agent_tool_latency_ms" for entry in captured_metrics
+    )
+    assert any(
+        entry.get("metric") == "doc2agent_tool_status" for entry in captured_metrics
+    )
     assert any("alert" in entry for entry in captured_metrics)
 
 

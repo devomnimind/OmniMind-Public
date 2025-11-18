@@ -36,7 +36,7 @@ async def test_langgraph_run_success() -> None:
     llm = AsyncMock()
     llm.ainvoke.side_effect = [
         MockResponse("{}"),
-        MockResponse("{\"issues\": [], \"severity\": \"low\"}"),
+        MockResponse('{"issues": [], "severity": "low"}'),
         MockResponse("Final summary"),
     ]
     memory = MemoryStub()
@@ -59,7 +59,7 @@ async def test_langgraph_errors_bubble_up() -> None:
     llm = AsyncMock()
     llm.ainvoke.side_effect = [
         MockResponse("{}"),
-        MockResponse("{\"issues\": [\"missing step\"], \"severity\": \"high\"}"),
+        MockResponse('{"issues": ["missing step"], "severity": "high"}'),
     ]
     memory = MemoryStub()
     sensors = SensorStub()

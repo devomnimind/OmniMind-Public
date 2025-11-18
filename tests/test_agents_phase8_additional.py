@@ -1,7 +1,7 @@
 """Additional Phase 8 agent coverage tests."""
 
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 import pytest
 
@@ -13,7 +13,7 @@ CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "agent_config.
 
 class DummyLLM:
     def __init__(self, *args: Any, **kwargs: Any) -> None:
-        self.history = []
+        self.history: List[str] = []
 
     def invoke(self, prompt: str) -> str:
         self.history.append(prompt)
@@ -22,11 +22,11 @@ class DummyLLM:
 
 class DummyMemory:
     def __init__(self, *args: Any, **kwargs: Any) -> None:
-        self.episodes: list[Dict[str, Any]] = []
+        self.episodes: List[Dict[str, Any]] = []
 
     def search_similar(
         self, query: str, top_k: int = 3, min_reward: float | None = None
-    ) -> list[Dict[str, Any]]:
+    ) -> List[Dict[str, Any]]:
         return []
 
     def store_episode(
@@ -51,7 +51,7 @@ class DummyMemory:
         return {"total_episodes": len(self.episodes)}
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(autouse=True)  # type: ignore[misc]
 def patch_agent_dependencies(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     monkeypatch.setenv("HOME", str(tmp_path))
     import langchain_ollama
@@ -62,7 +62,7 @@ def patch_agent_dependencies(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) ->
     monkeypatch.setattr(mem_mod, "EpisodicMemory", DummyMemory)
 
 
-@pytest.fixture
+@pytest.fixture  # type: ignore[misc]
 def config_path() -> Path:
     return CONFIG_PATH
 

@@ -10,7 +10,9 @@ from DEVBRAIN_V23.infrastructure.event_bus import EventBusRedis
 @pytest.mark.asyncio
 async def test_event_bus_delivers_messages() -> None:
     fake_client = fakeredis.FakeRedis(decode_responses=True)
-    with patch("DEVBRAIN_V23.infrastructure.event_bus.redis.from_url", return_value=fake_client):
+    with patch(
+        "DEVBRAIN_V23.infrastructure.event_bus.redis.from_url", return_value=fake_client
+    ):
         bus = EventBusRedis()
         received: list[dict] = []
         received_event = asyncio.Event()

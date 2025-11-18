@@ -7,13 +7,18 @@ from DEVBRAIN_V23.atlas import AtlasController
 
 class FakeDoc2Agent:
     def __init__(self) -> None:
-        self.plan = [DocStep(id="step_a", prompt="adapt", tool="success_tool", params={})]
+        self.plan = [
+            DocStep(id="step_a", prompt="adapt", tool="success_tool", params={})
+        ]
 
     async def analyze_documents(self, documents: list[str], goal: str) -> list[DocStep]:
         return self.plan
 
     async def execute_plan(self, steps: list[DocStep]) -> list[dict]:
-        return [{"step": step.id, "tool": step.tool, "result": {"ok": True}} for step in steps]
+        return [
+            {"step": step.id, "tool": step.tool, "result": {"ok": True}}
+            for step in steps
+        ]
 
 
 @pytest.mark.asyncio
@@ -21,7 +26,9 @@ async def test_atlas_controller_triggers_self_healing() -> None:
     loop = SelfHealingLoop()
     doc_agent = FakeDoc2Agent()
     monitor_records: list[dict] = []
-    atlas = AtlasController(loop, doc_agent, failure_threshold=0.1, monitor_sink=monitor_records.append)
+    atlas = AtlasController(
+        loop, doc_agent, failure_threshold=0.1, monitor_sink=monitor_records.append
+    )
 
     atlas.analyze_metrics({"failure_rate": 0.3})
     actions = await loop.run_cycle()

@@ -16,9 +16,13 @@ class FakeDoc2Agent:
         results: list[dict] = []
         for step in steps:
             if step.tool == "fail_tool":
-                results.append({"step": step.id, "tool": step.tool, "result": {"error": "boom"}})
+                results.append(
+                    {"step": step.id, "tool": step.tool, "result": {"error": "boom"}}
+                )
             else:
-                results.append({"step": step.id, "tool": step.tool, "result": {"ok": True}})
+                results.append(
+                    {"step": step.id, "tool": step.tool, "result": {"ok": True}}
+                )
         self.last_results = results
         return results
 
@@ -29,7 +33,13 @@ class FakeDoc2Agent:
         for entry in self.last_results:
             tool = entry["tool"]
             if tool not in tools:
-                tools[tool] = {"total": 0, "success": 0, "failure": 0, "last_latency_ms": 0.0, "total_latency_ms": 0.0}
+                tools[tool] = {
+                    "total": 0,
+                    "success": 0,
+                    "failure": 0,
+                    "last_latency_ms": 0.0,
+                    "total_latency_ms": 0.0,
+                }
             tools[tool]["total"] += 1
             if entry["result"].get("error"):
                 tools[tool]["failure"] += 1
@@ -49,7 +59,9 @@ def build_step(step_id: str, tool: str) -> DocStep:
 
 @pytest.mark.asyncio
 async def test_pipeline_successful_run() -> None:
-    doc_agent = FakeDoc2Agent([build_step("step_0", "fast"), build_step("step_1", "fast")])
+    doc_agent = FakeDoc2Agent(
+        [build_step("step_0", "fast"), build_step("step_1", "fast")]
+    )
     monitor_records: list[dict] = []
 
     pipeline = Doc2AgentPipeline(

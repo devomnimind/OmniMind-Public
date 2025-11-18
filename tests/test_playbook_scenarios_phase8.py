@@ -1,19 +1,12 @@
 """Realistic scenario tests for each security playbook."""
 
-import asyncio
 import json
 import shutil
-import sys
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
 
 import pytest
-
-# Ensure src path is importable
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-if str(PROJECT_ROOT / "src") not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 import src.security.playbooks.utils as utils
 from src.security.playbooks import (
@@ -21,6 +14,12 @@ from src.security.playbooks import (
     malware_response,
     privilege_escalation_response,
     rootkit_response,
+)
+from src.security.playbooks.rootkit_response import RootkitPlaybook
+from src.security.playbooks.intrusion_response import IntrusionPlaybook
+from src.security.playbooks.malware_response import MalwarePlaybook
+from src.security.playbooks.privilege_escalation_response import (
+    PrivilegeEscalationPlaybook,
 )
 
 
@@ -32,16 +31,10 @@ async def _dummy_run(command):
     }
 
 
-from src.security.playbooks.rootkit_response import RootkitPlaybook
-from src.security.playbooks.intrusion_response import IntrusionPlaybook
-from src.security.playbooks.malware_response import MalwarePlaybook
-from src.security.playbooks.privilege_escalation_response import (
-    PrivilegeEscalationPlaybook,
-)
-
-
 def test_utils_command_available(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(shutil, "which", lambda cmd: "/bin/echo" if cmd == "echo" else None)
+    monkeypatch.setattr(
+        shutil, "which", lambda cmd: "/bin/echo" if cmd == "echo" else None
+    )
     assert utils.command_available("echo")
     assert not utils.command_available("missing-tool")
 
@@ -133,7 +126,9 @@ async def test_privilege_escalation_playbook_steps(
 
 
 @pytest.mark.asyncio
-async def test_rootkit_playbook_remediation_path(monkeypatch: pytest.MonkeyPatch) -> None:
+async def test_rootkit_playbook_remediation_path(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     seen: set[str] = set()
 
     async def stub(command: list[str]) -> dict[str, Any]:
@@ -194,7 +189,9 @@ async def test_intrusion_playbook_blocks_and_preserves_scene(
 
 
 @pytest.mark.asyncio
-async def test_malware_playbook_quarantines_artifacts(monkeypatch: pytest.MonkeyPatch) -> None:
+async def test_malware_playbook_quarantines_artifacts(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     async def stub(command: list[str]) -> dict[str, Any]:
         return {
             "command": " ".join(command),
@@ -226,7 +223,9 @@ async def test_privilege_escalation_playbook_revokes_sessions(
             "output": "ok",
         }
 
-    monkeypatch.setattr(privilege_escalation_response, "command_available", lambda _: True)
+    monkeypatch.setattr(
+        privilege_escalation_response, "command_available", lambda _: True
+    )
     monkeypatch.setattr(privilege_escalation_response, "run_command_async", stub)
 
     event = SimpleNamespace(

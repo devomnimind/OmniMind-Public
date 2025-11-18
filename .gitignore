@@ -62,12 +62,38 @@ tmp/
 tmp_*/
 tmp_agents/
 tmp_tools/
+tmp_tools*/
+tmp_agents*/
+archive/examples/cuda/tmp*
+
+# Runtime databases & vector stores
+data/qdrant/
+data/tmp/
+
+# Snapshots / quarantines / backups created during recovery
 data/hdd_snapshot/
 data/quarantine_snapshot/
-data/tmp/
-archive/examples/cuda/tmp*
-logs/*.tmp
-logs/*.log
+snapshots/
+snapshot_*/
+quarantine/
+quarantine_*/
+**/snapshot/**
+**/quarantine/**
+
+# Logs, metrics, audits, benchmarks (never version runtime output)
+logs/
+**/logs/
+*.log
+*.log.*
+*.audit.json
+*.metrics.json
+*.trace
+*.dump
+*.benchmark
+*.benchmark.json
+benchmarks/
+benchmark_outputs/
+!logs/.gitkeep
 
 # ------------------------------------------------------------------
 # Backups / confidential configs
@@ -77,6 +103,12 @@ config/dashboard_auth.json
 **/guardian/backups/**/guardian/backups/
 **/*.bak
 **/*.old
+**/*.sav
+**/*.tar
+**/*.tar.gz
+**/*.tgz
+**/*.zip
+**/*.7z
 
 # ------------------------------------------------------------------
 # Mount points & external disks

@@ -6,6 +6,7 @@ import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Generator
 
 import pytest
 
@@ -22,13 +23,13 @@ def get_utc_timestamp() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
-@pytest.fixture
+@pytest.fixture  # type: ignore[misc]
 def utc_timestamp() -> str:
     """Fixture that provides a timezone-aware UTC timestamp for tests."""
     return get_utc_timestamp()
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="session")  # type: ignore[misc]
 def event_loop_policy() -> asyncio.AbstractEventLoopPolicy:
     """Configure the global event loop policy with debug awareness."""
 
@@ -41,8 +42,10 @@ def event_loop_policy() -> asyncio.AbstractEventLoopPolicy:
     return policy
 
 
-@pytest.fixture(scope="function")
-def event_loop(event_loop_policy: asyncio.AbstractEventLoopPolicy) -> asyncio.AbstractEventLoop:
+@pytest.fixture(scope="function")  # type: ignore[misc]
+def event_loop(
+    event_loop_policy: asyncio.AbstractEventLoopPolicy,
+) -> Generator[asyncio.AbstractEventLoop, None, None]:
     """Yield a fresh event loop per test with debug mode enabled."""
 
     loop = event_loop_policy.new_event_loop()
@@ -52,7 +55,7 @@ def event_loop(event_loop_policy: asyncio.AbstractEventLoopPolicy) -> asyncio.Ab
     loop.close()
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session", autouse=True)  # type: ignore[misc]
 def configure_logging() -> logging.Logger:
     """Ensure consistent debug logging during tests."""
 
@@ -63,8 +66,8 @@ def configure_logging() -> logging.Logger:
     return logging.getLogger("tests")
 
 
-@pytest.fixture(scope="session", autouse=True)
-def setup_omnimind_env() -> None:
+@pytest.fixture(scope="session", autouse=True)  # type: ignore[misc]
+def setup_omnimind_env() -> Generator[None, None, None]:
     """Prepare OmniMind directories and environment variables."""
 
     omn_home = Path.home() / ".omnimind"

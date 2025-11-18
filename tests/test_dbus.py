@@ -28,9 +28,7 @@ def test_system_controller_reports_status(mock_interface):
         mapping = {
             "State": 70,
             "Connectivity": 4,
-            "ActiveConnections": [
-                "/org/freedesktop/NetworkManager/ActiveConnection/1"
-            ],
+            "ActiveConnections": ["/org/freedesktop/NetworkManager/ActiveConnection/1"],
             "OnBattery": True,
             "Percentage": 81.2,
         }

@@ -9,7 +9,9 @@ from src.security.security_agent import SecurityAgent, ThreatLevel
 
 
 @pytest.mark.asyncio
-async def test_security_agent_handles_event_and_reports(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+async def test_security_agent_handles_event_and_reports(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
     home = tmp_path / "fake_system"
     monkeypatch.setenv("HOME", str(home))
 
@@ -39,5 +41,7 @@ async def test_security_agent_handles_event_and_reports(monkeypatch: pytest.Monk
 
     audit_path = home / ".omnimind" / "audit" / "tools.log"
     assert audit_path.exists()
-    entries = [json.loads(line) for line in audit_path.read_text().splitlines() if line.strip()]
+    entries = [
+        json.loads(line) for line in audit_path.read_text().splitlines() if line.strip()
+    ]
     assert any(entry["tool_name"] == "security_agent" for entry in entries)

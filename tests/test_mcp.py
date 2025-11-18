@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Iterable
 
 import pytest
 
@@ -6,11 +7,13 @@ from src.integrations import MCPClient, MCPConfig, MCPServer
 from src.integrations.mcp_client import MCPClientError
 
 
-def _start_mcp_server(tmp_path: Path, allowed_paths=None) -> MCPServer:
+def _start_mcp_server(
+    tmp_path: Path, allowed_paths: Iterable[str] | None = None
+) -> MCPServer:
     config = MCPConfig(
         host="127.0.0.1",
         port=0,
-        allowed_paths=allowed_paths or [str(tmp_path)],
+        allowed_paths=list(allowed_paths) if allowed_paths else [str(tmp_path)],
         max_read_size=16 * 1024,
         allowed_extensions=["txt", "md"],
     )

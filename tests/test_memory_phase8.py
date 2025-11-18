@@ -1,14 +1,10 @@
 """Targeted Phase 8 tests for the episodic memory subsystem."""
 
-import sys
-from pathlib import Path
-
 import pytest
+from typing import List, Dict, Any, Optional
 
-# Extend sys.path to import src modules
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
+from src.memory import episodic_memory as episodic_module
+from src.memory.episodic_memory import EpisodicMemory
 
 
 class DummyDistance:
@@ -22,35 +18,35 @@ class DummyVectorParams:
 
 
 class DummyPointStruct:
-    def __init__(self, id: int, vector: list, payload: dict):
+    def __init__(self, id: int, vector: List[float], payload: Dict[str, Any]) -> None:
         self.id = id
         self.vector = vector
         self.payload = payload
 
 
 class DummyFieldCondition:
-    def __init__(self, key: str, range: dict):
+    def __init__(self, key: str, range: Dict[str, Any]) -> None:
         self.key = key
         self.range = range
 
 
 class DummyFilter:
-    def __init__(self, must=None):
+    def __init__(self, must: Optional[List[Any]] = None) -> None:
         self.must = must or []
 
 
 class DummyQdrantClient:
-    def __init__(self, url: str):
-        self.store = {}
-        self._order = []
+    def __init__(self, url: str) -> None:
+        self.store: Dict[str, Any] = {}
+        self._order: List[str] = []
 
-    def get_collections(self):
+    def get_collections(self) -> Any:
         return type("Collections", (), {"collections": []})()
 
-    def create_collection(self, **kwargs):
+    def create_collection(self, **kwargs: Any) -> None:
         return None
 
-    def upsert(self, collection_name: str, points: list):
+    def upsert(self, collection_name: str, points: List[Any]) -> None:
         for point in points:
             key = str(point.id)
             self.store[key] = {"id": point.id, "payload": point.payload}
@@ -58,7 +54,7 @@ class DummyQdrantClient:
                 self._order.remove(key)
             self._order.append(key)
 
-    def query_points(self, *args, **kwargs):
+    def query_points(self, *args: Any, **kwargs: Any) -> Any:
         limit = kwargs.get("limit", 3)
         hits = []
         query_filter = kwargs.get("query_filter")
@@ -73,7 +69,7 @@ class DummyQdrantClient:
                 break
         return type("Result", (), {"points": hits})()
 
-    def retrieve(self, *args, **kwargs):
+    def retrieve(self, *args: Any, **kwargs: Any) -> List[Any]:
         ids = kwargs.get("ids") or args[1]
         if isinstance(ids, list):
             ids_iter = ids
@@ -86,10 +82,10 @@ class DummyQdrantClient:
                 hits.append(type("Hit", (), {"payload": record["payload"]}))
         return hits
 
-    def get_collection(self, name: str):
+    def get_collection(self, name: str) -> Any:
         return type("Info", (), {"points_count": len(self.store)})()
 
-    def scroll(self, collection_name: str, offset: int = 0, limit: int = 10, **kwargs):
+    def scroll(self, collection_name: str, offset: int = 0, limit: int = 10, **kwargs: Any) -> Any:
         start = max(0, offset)
         end = start + limit
         points = []
@@ -102,7 +98,13 @@ class DummyQdrantClient:
             points.append(type("Point", (), {"id": point_id, "payload": payload}))
         return type("ScrollResult", (), {"points": points})()
 
-    def delete(self, collection_name: str, points: list | None = None, ids: list | None = None, **kwargs):
+    def delete(
+        self,
+        collection_name: str,
+        points: Optional[List[Any]] = None,
+        ids: Optional[List[Any]] = None,
+        **kwargs: Any
+    ) -> None:
         to_remove = points or ids or []
         for point_id in to_remove:
             key = str(point_id)
@@ -112,9 +114,7 @@ class DummyQdrantClient:
                 self._order.remove(key)
 
 
-def _patch_memory_module():
-    import src.memory.episodic_memory as episodic_module
-
+def _patch_memory_module() -> None:
     episodic_module.QdrantClient = DummyQdrantClient
     episodic_module.PointStruct = DummyPointStruct
     episodic_module.Distance = DummyDistance
@@ -125,14 +125,16 @@ def _patch_memory_module():
 
 
 _patch_memory_module()
+# EpisodicMemory = episodic_module.EpisodicMemory  # Use imported instead
 
-from src.memory.episodic_memory import EpisodicMemory
 
-
-@pytest.fixture
+@pytest.fixture  # type: ignore[misc]
 def episodic_memory() -> EpisodicMemory:
-    return EpisodicMemory(qdrant_url="http://localhost:6333", collection_name="test_memory",
-                          embedding_dim=4)
+    return episodic_module.EpisodicMemory(
+        qdrant_url="http://localhost:6333",
+        collection_name="test_memory",
+        embedding_dim=4,
+    )
 
 
 def test_store_and_retrieve_episode(episodic_memory: EpisodicMemory) -> None:

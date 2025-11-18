@@ -3,17 +3,14 @@ Testes unitários para o sistema de auditoria imutável.
 Garante cobertura mínima de 90% conforme regras do projeto.
 """
 
-import pytest
 import json
-import tempfile
 import shutil
+import tempfile
 from pathlib import Path
-import sys
 
-# Adicionar src ao path
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+import pytest
 
-from audit.immutable_audit import ImmutableAuditSystem
+from src.audit.immutable_audit import ImmutableAuditSystem
 
 
 class TestImmutableAuditSystem:

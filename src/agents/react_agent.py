@@ -222,21 +222,21 @@ Your response:"""
         """Execute a tool action."""
         try:
             if action == "read_file":
-                return self.file_ops.read_file(args.get("path", ""))
+                return self.file_ops.read_file(args.get("path", ""))  # type: ignore[no-any-return]
 
             elif action == "write_file":
-                return self.file_ops.write_file(
+                return self.file_ops.write_file(  # type: ignore[no-any-return]
                     args.get("path", ""), args.get("content", "")
                 )
 
             elif action == "list_files":
-                return self.file_ops.list_files(args.get("path", "."))
+                return self.file_ops.list_files(args.get("path", "."))  # type: ignore[no-any-return]
 
             elif action == "execute_shell":
-                return self.shell.execute(args.get("command", ""))
+                return self.shell.execute(args.get("command", ""))  # type: ignore[no-any-return]
 
             elif action == "system_info":
-                return self.monitor.format_info(self.monitor.get_info())
+                return self.monitor.format_info(self.monitor.get_info())  # type: ignore[no-any-return]
 
             else:
                 return f"Unknown action: {action}"
@@ -326,7 +326,7 @@ Your response:"""
                 reward=1.0 if final_state["completed"] else 0.5,
             )
 
-            return final_state
+            return final_state  # type: ignore[no-any-return]
 
         except Exception as e:
             return {"error": str(e), "completed": False, "final_result": None}

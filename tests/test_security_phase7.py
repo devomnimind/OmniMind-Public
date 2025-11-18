@@ -1,5 +1,6 @@
 """Unit tests covering Phase 7 SecurityAgent behaviors."""
 
+import asyncio
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -57,11 +58,10 @@ def test_detect_normal_log(security_agent: SecurityAgent) -> None:
     assert not security_agent._is_suspicious_log_line("Normal log entry", keywords)
 
 
-@pytest.mark.asyncio
-async def test_event_recorded(
+def test_event_recorded(
     security_agent: SecurityAgent, suspicious_process_event: SecurityEvent
 ) -> None:
-    await security_agent._handle_event(suspicious_process_event)
+    asyncio.run(security_agent._handle_event(suspicious_process_event))
     assert security_agent.event_history
     assert security_agent.event_history[0].event_type == "suspicious_process"
 

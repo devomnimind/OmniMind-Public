@@ -4,7 +4,11 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from src.integrations.supabase_adapter import SupabaseAdapter, SupabaseConfig, SupabaseAdapterError
+from src.integrations.supabase_adapter import (
+    SupabaseAdapter,
+    SupabaseConfig,
+    SupabaseAdapterError,
+)
 
 
 def test_supabase_config_from_text_parses_entries() -> None:
@@ -34,7 +38,9 @@ def test_supabase_adapter_query_builds_filters() -> None:
     mock_query.execute.return_value = mock_response
     mock_client.table.return_value = mock_query
 
-    with patch("src.integrations.supabase_adapter.create_client", return_value=mock_client):
+    with patch(
+        "src.integrations.supabase_adapter.create_client", return_value=mock_client
+    ):
         adapter = SupabaseAdapter(config)
         result = adapter.query_table("notes", filters={"user_id": 1}, limit=5, offset=2)
 
@@ -45,7 +51,9 @@ def test_supabase_adapter_query_builds_filters() -> None:
 
 def test_supabase_adapter_requires_service_key_for_lists() -> None:
     config = SupabaseConfig(url="https://example.supabase.co", anon_key="anon")
-    with patch("src.integrations.supabase_adapter.create_client", return_value=MagicMock()):
+    with patch(
+        "src.integrations.supabase_adapter.create_client", return_value=MagicMock()
+    ):
         adapter = SupabaseAdapter(config)
         with pytest.raises(SupabaseAdapterError):
             adapter.list_tables()

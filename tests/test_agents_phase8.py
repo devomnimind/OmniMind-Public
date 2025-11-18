@@ -3,18 +3,21 @@
 import sys
 import types
 from pathlib import Path
+from typing import List, Dict, Any, Optional
 
 import pytest
 
-# Ensure src/ is importable
+from src.agents.architect_agent import ArchitectAgent
+from src.agents.code_agent import CodeAgent
+from src.agents.orchestrator_agent import AgentMode, OrchestratorAgent
+from src.agents.reviewer_agent import ReviewerAgent
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
 
 
 class DummyLLM:
-    def __init__(self, *args, **kwargs):
-        self.calls = []
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self.calls: List[str] = []
 
     def invoke(self, prompt: str) -> str:
         self.calls.append(prompt)
@@ -39,39 +42,39 @@ class DummyVectorParams:
 
 
 class DummyPointStruct:
-    def __init__(self, id: int, vector: list, payload: dict):
+    def __init__(self, id: int, vector: List[float], payload: Dict[str, Any]) -> None:
         self.id = id
         self.vector = vector
         self.payload = payload
 
 
 class DummyFieldCondition:
-    def __init__(self, key: str, range: dict):
+    def __init__(self, key: str, range: Dict[str, Any]) -> None:
         self.key = key
         self.range = range
 
 
 class DummyFilter:
-    def __init__(self, must=None):
+    def __init__(self, must: Optional[List[Any]] = None) -> None:
         self.must = must or []
 
 
 class DummyQdrantClient:
-    def __init__(self, url: str):
-        self.store = {}
+    def __init__(self, url: str) -> None:
+        self.store: Dict[str, Any] = {}
 
-    def get_collections(self):
+    def get_collections(self) -> Any:
         return type("Collections", (), {"collections": []})()
 
-    def create_collection(self, **kwargs):
+    def create_collection(self, **kwargs: Any) -> None:
         return None
 
-    def upsert(self, collection_name: str, points: list):
+    def upsert(self, collection_name: str, points: List[Any]) -> None:
         for point in points:
             payload = point.payload
             self.store[str(point.id)] = payload
 
-    def query_points(self, *args, **kwargs):
+    def query_points(self, *args: Any, **kwargs: Any) -> Any:
         limit = kwargs.get("limit", 3)
         query_filter = kwargs.get("query_filter")
         hits = []
@@ -85,7 +88,7 @@ class DummyQdrantClient:
                 break
         return type("Result", (), {"points": hits})()
 
-    def retrieve(self, *args, **kwargs):
+    def retrieve(self, *args: Any, **kwargs: Any) -> List[Any]:
         ids = kwargs.get("ids") or args[1]
         if isinstance(ids, list):
             ids_iter = ids
@@ -98,11 +101,11 @@ class DummyQdrantClient:
                 hits.append(type("Hit", (), {"payload": payload}))
         return hits
 
-    def get_collection(self, name: str):
+    def get_collection(self, name: str) -> Any:
         return type("Info", (), {"points_count": len(self.store)})()
 
 
-def _patch_memory_module():
+def _patch_memory_module() -> None:
     import src.memory.episodic_memory as episodic_module
 
     episodic_module.QdrantClient = DummyQdrantClient
@@ -120,31 +123,27 @@ try:
     import langchain_ollama
 except ImportError:
     langchain_ollama = types.SimpleNamespace()
-    sys.modules["langchain_ollama"] = langchain_ollama
-langchain_ollama.OllamaLLM = DummyLLM
-
-from src.agents.architect_agent import ArchitectAgent
-from src.agents.code_agent import CodeAgent
-from src.agents.orchestrator_agent import AgentMode, OrchestratorAgent
-from src.agents.reviewer_agent import ReviewerAgent
+    sys.modules["langchain_ollama"] = langchain_ollama  # type: ignore[assignment]
 
 
-@pytest.fixture
+@pytest.fixture  # type: ignore[misc]
 def config_path() -> str:
     return str(PROJECT_ROOT / "config" / "agent_config.yaml")
 
 
-@pytest.fixture
-def orchestrator(config_path: str) -> OrchestratorAgent:
+@pytest.fixture  # type: ignore[misc]
+def orchestrator(config_path: str) -> Any:
     return OrchestratorAgent(config_path)
 
 
-@pytest.fixture
+@pytest.fixture  # type: ignore[misc]
 def temporary_file(tmp_path: Path) -> Path:
     return tmp_path / "agent_output.py"
 
 
-def test_orchestrator_creates_specialist_agents(orchestrator: OrchestratorAgent) -> None:
+def test_orchestrator_creates_specialist_agents(
+    orchestrator: OrchestratorAgent,
+) -> None:
     code_agent = orchestrator._get_agent(AgentMode.CODE)
     assert hasattr(code_agent, "mode") and code_agent.mode == "code"
     assert orchestrator._get_agent(AgentMode.ARCHITECT).mode == "architect"
@@ -185,7 +184,9 @@ def test_architect_restrictions_and_writing(config_path: str, tmp_path: Path) ->
     assert "tool 'write_to_file' not allowed in architect mode" in resp.lower()
     assert not doc_path.exists()
 
-    blocked = agent._execute_action("write_to_file", {"filepath": "app.py", "content": ""})
+    blocked = agent._execute_action(
+        "write_to_file", {"filepath": "app.py", "content": ""}
+    )
     assert "architectagent can only edit documentation files" in blocked.lower()
 
 
@@ -194,12 +195,14 @@ def test_reviewer_scores_code(config_path: str, tmp_path: Path) -> None:
     agent.llm = DummyLLM()
 
     code_file = tmp_path / "fibonacci.py"
-    code_file.write_text("""
+    code_file.write_text(
+        """
 def fib(n):
     if n <= 1:
         return n
     return fib(n - 1) + fib(n - 2)
-""")
+"""
+    )
 
     review = agent.review_code(str(code_file), "Review Fibonacci builder")
     assert review["overall_score"] == 6.8

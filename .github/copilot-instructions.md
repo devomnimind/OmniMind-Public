@@ -83,6 +83,35 @@ You **MUST**:
 
 ---
 
+## 🛡️ Stability & Validation Protocol (Master Rule)
+
+**Regra de Ouro — Estabilidade Total**  
+- Nunca avance para novos módulos, features ou workflows se existir qualquer erro de lint, type-check ou teste em qualquer arquivo do repositório.  
+- A validação é sempre global: o módulo em edição e o restante do projeto devem estar limpos antes de seguir.  
+- Corrija avisos pendentes imediatamente; exceções só podem ocorrer com aprovação explícita para refatorações arquiteturais.
+
+**Sequência Obrigátoria de Comandos (por ciclo/commit)**  
+Execute sempre nesta ordem e corrija todos os erros antes de prosseguir:
+```bash
+black src tests
+flake8 src tests
+mypy src tests
+pytest -vv
+```
+
+**Padronização e Roadmap**  
+- Documente cada ajuste em commits e nos relatórios internos (docs/reports).  
+- Sincronize dependências (`requirements.txt`/`pyproject.toml`) com o ambiente ativo e instale tudo no `.venv`.  
+- Atualize `.gitignore` sempre que surgir novo arquivo temporário, log, dump ou cache.  
+- Antes de qualquer merge ou pull request, rode a rotina completa acima e confirme 100% de sucesso.
+
+**Autonomia e Compliance**  
+- Todos os agentes que atuarem no OmniMind devem seguir estas regras sem exceção.  
+- O roadmap só progride quando o ambiente inteiro estiver íntegro e validado.  
+- Registre "lessons learned" e hardening steps nos relatórios após cada ciclo de estabilização.
+
+---
+
 ## 📊 CURRENT STATUS (Phase 6 Complete)
 
 ### ✅ Implemented Components (2,303 lines Phase 6)
@@ -149,6 +178,19 @@ OmniMind System
 | Memory | Store Episode | 4.1ms | ✅ EXCELLENT |
 | Memory | Search Similar | 5.9ms | ✅ EXCELLENT |
 | LLM | Inference Speed | 3-6 tok/s | ✅ Expected |
+
+### ♻️ Nov 18 Maintenance Snapshot
+
+- `.gitignore` + `config/backup_excludes.txt` bloqueiam loops `guardian/backups/**/guardian/backups/` e snapshots contaminados (`data/hdd_snapshot/`, `data/quarantine_snapshot/`).
+- `docs/servers.txt` e `docs/reports/omnimind_state_vs_devbrain.md` foram atualizados para usar apenas variáveis de ambiente e documentar os módulos recuperados em `DEVBRAIN_V23/` como **referência read-only**.
+- `logs/audit_chain.log` e `logs/hash_chain.json` foram reprocessados (Nov 18) para remover a Supabase Service Key — rodar `python -m src.audit.immutable_audit verify_chain_integrity` após qualquer sanitização.
+- Inventários externos (`docs/reports/external_hdd_dataset_inventory.md`, `dev_brain_clean_setup.md`) e os diretórios `tmp_agents/`, `tmp_tools/` fazem parte da rotina diária de pré-flight.
+
+### 🚧 Outstanding Hardening (before Phase 7 GA)
+
+1. Ligar `SecurityAgent` como guardião assíncrono (process/network/file/log) e validar `tests/test_security_phase7.py`.
+2. Integrar `PsychoanalyticAnalyst` + workflow Code→Review→Fix→Document com iterações RLAIF ≥ 8.0.
+3. Migrar ferramentas de filesystem para `src/integrations/mcp_client.py` e bloquear acessos diretos antes do bootstrap do D-Bus/Web UI.
 
 ---
 
@@ -500,6 +542,54 @@ python -c "from src.audit.immutable_audit import verify_chain; assert verify_cha
 
 ---
 
+## 🧼 OmniMind Compliance & Hygiene — To-Do List
+
+1. **Monitoramento e atualização do Git**
+  - Antes de toda sessão de desenvolvimento ou merge:
+    - Rode `git status -sb` para listar arquivos não versionados ou alterações pendentes.
+    - Revise o `.gitignore` depois de cada adição de pasta, ferramenta ou módulo — ajuste explicitamente para bloquear quaisquer logs, benchmarks, dumps, caches e snapshots novos.
+    - Após qualquer alteração no `.gitignore`, rode `git clean -X -n` para simular deleções e garantir que nada importante vá pro git.
+    - Sempre descreva as alterações do `.gitignore` nos commits relevantes.
+
+2. **Pipeline automatizado de verificação de segredos/sensíveis**
+  - Implemente/atualize hook de pré-commit (preferencialmente usando `git-secrets` e `Yelp/detect-secrets`):
+    - Bloqueie pushes de arquivos contendo padrões de tokens do HuggingFace, Supabase, Qdrant, AWS, Azure, Google, chaves API ou configs `.env` não placeholder.
+    - O hook deve impedir o `git add` e alertar explicitamente se detectar segredo novo antes do push/commit.
+  - Atualize `README.md` e documente a política: **NUNCA** versionar logs, snapshots, dumps, bancos ou configs sensíveis — apenas exemplos `.env.template`.
+
+3. **Auditoria pós-push e workflow CI**
+  - Integre verificação automática dos padrões acima ao GitHub Actions/GitLab CI:
+    - Em todo pull request, rode jobs que executam linter, `detect-secrets`, `git-secrets`, validação do `.gitignore` e revisão de permissões de arquivos.
+    - Rejeite builds se qualquer arquivo sensível/log for detectado.
+  - Se possível, gere relatório CI diário/semanal de compliance e envie ao audit log (fora do git).
+
+4. **Revisão estrutural (a cada release/feature maior)**
+  - Liste e documente qualquer novo módulo, pasta, dependência ou reimplementação inspirada no DevBrain, registrando:
+    - Relação original e destino no OmniMind.
+    - Potenciais pontos críticos de segurança (IO, rede, datasets, execuções assíncronas).
+  - Reavalie o histórico do repositório (`git log --stat -- .`) buscando rastros residuais de dados sensíveis ou arquivos de auditoria.
+  - Rode `python -m src.audit.immutable_audit verify_chain_integrity` sempre após limpeza/sanitize do audit log, salvando o hash terminal da cadeia fora do git.
+
+5. **Revisão de backups e snapshots**
+  - Garanta que nenhum snapshot, quarantine, dump de dataset ou extração forense volte a ser versionado ou fique fora da árvore do `DEV_BRAIN_CLEAN` (apenas referência, nunca produção).
+  - Crie ou atualize scripts de backup que só sincronizam arquivos versionáveis (usando o `config/backup_excludes.txt` e regras `--safe-links` em todas as linhas do `rsync`).
+
+6. **Política de documentação**
+  - Toda sanitização de dados sensíveis, ajuste do `.gitignore`, hardening de backup e política de logs deve ser reportada na documentação interna (`docs/reports/`, `omnimind_state_vs_devbrain.md`, etc.).
+  - Assegure que os relatórios (inventário, compliance, lessons learned) são atualizados e armazenados **APENAS** em local seguro, nunca em logs versionados.
+
+**Checklist — Para cada commit/PR futuro**
+
+- Nenhum log, dump, cache, temp directory ou dado sensível no `git status`.
+- Pré-commit e CI com `git-secrets`/`detect-secrets` ativos.
+- `.gitignore` revisado para toda fonte/pasta nova.
+- Documentação interna sobre mudanças de compliance/hardening atualizada.
+- Backup e sanitização auditados, relatórios salvos fora do git.
+
+> Se precisar, posso criar o pipeline automatizado para enforce desses critérios (pre-commit/template para o CI) e um script para revisão rápida e periódica de compliance em lote. Confirme se deseja autoaplicar rotinas ou apenas listar alertas.
+
+---
+
 ## 📡 COMMUNICATION PROTOCOL
 
 ### Starting a Task
@@ -563,6 +653,8 @@ When this prompt is loaded, execute:
   │ Security Module             │ 🔄 PHASE 7    │
   │ MCP Integration             │ 🔄 PHASE 8    │
   │ Web UI                      │ 🔄 PHASE 8    │
+  │ Backups & Sanitization      │ ✅ CLEAN 2025-11-18 │
+  │ DevBrain Reference Set      │ 📚 READ-ONLY  │
   └─────────────────────────────┴───────────────┘
   ```
 

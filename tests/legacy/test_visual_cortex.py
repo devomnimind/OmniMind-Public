@@ -26,7 +26,9 @@ class DummyYOLO:
 
 @pytest.mark.asyncio
 async def test_see_screen_records_elements_and_metrics() -> None:
-    cortex = VisualCortex(parser=DummyParser(), yolo=DummyYOLO(), screenshot_provider=lambda: object())
+    cortex = VisualCortex(
+        parser=DummyParser(), yolo=DummyYOLO(), screenshot_provider=lambda: object()
+    )
     summary = await cortex.see_screen()
 
     assert summary["elements"]

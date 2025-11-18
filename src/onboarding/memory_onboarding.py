@@ -5,7 +5,11 @@ import logging
 from dataclasses import dataclass
 from typing import Any, Dict, Iterable, List, Optional, Set, TYPE_CHECKING
 
-from ..integrations.graphql_supabase import GraphQLCollectionPage, GraphQLSupabaseError, GraphQLSupabaseHelper
+from ..integrations.graphql_supabase import (
+    GraphQLCollectionPage,
+    GraphQLSupabaseError,
+    GraphQLSupabaseHelper,
+)
 from ..integrations.supabase_adapter import SupabaseConfig
 
 if TYPE_CHECKING:

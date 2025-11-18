@@ -1,7 +1,6 @@
 import base64
 import importlib
 import json
-from pathlib import Path
 from typing import Tuple
 
 import pytest
@@ -77,7 +76,12 @@ def dashboard_client(monkeypatch, tmp_path_factory) -> Tuple[TestClient, dict]:
         "timestamp": "2025-11-18T12:00:00Z",
         "audit": {"valid": True, "message": "Cadeia íntegra", "events_verified": 1},
         "dlp": {"policies": ["credentials"]},
-        "sandbox": {"kernel": "/opt/firecracker/vmlinux.bin", "kernel_exists": False, "rootfs": "/opt/firecracker/rootfs.ext4", "rootfs_exists": False},
+        "sandbox": {
+            "kernel": "/opt/firecracker/vmlinux.bin",
+            "kernel_exists": False,
+            "rootfs": "/opt/firecracker/rootfs.ext4",
+            "rootfs_exists": False,
+        },
     }
     validation_log.write_text(json.dumps(validation_entry) + "\n")
     monkeypatch.setenv("OMNIMIND_SECURITY_VALIDATION_LOG", str(validation_log))
@@ -110,9 +114,13 @@ def test_dashboard_requires_auth(monkeypatch, tmp_path):
     monkeypatch.delenv("OMNIMIND_DASHBOARD_USER", raising=False)
     monkeypatch.delenv("OMNIMIND_DASHBOARD_PASS", raising=False)
     backend_main = importlib.reload(backend_main)
-    print(f"Usando credenciais automáticas: {auto_creds['user']} / {auto_creds['pass']}")
+    print(
+        f"Usando credenciais automáticas: {auto_creds['user']} / {auto_creds['pass']}"
+    )
     client = TestClient(backend_main.app)
-    auth_value = base64.b64encode(f"{auto_creds['user']}:{auto_creds['pass']}".encode("ascii")).decode("ascii")
+    auth_value = base64.b64encode(
+        f"{auto_creds['user']}:{auto_creds['pass']}".encode("ascii")
+    ).decode("ascii")
     headers = {"Authorization": f"Basic {auth_value}"}
     auto_response = client.get("/observability", headers=headers)
     assert auto_response.status_code == 200
@@ -122,7 +130,9 @@ def test_dashboard_requires_auth(monkeypatch, tmp_path):
     assert payload.get("alerts") is not None
 
     # Cenário 3: credenciais inválidas continuam sendo rejeitadas
-    invalid_headers = {"Authorization": f"Basic {base64.b64encode(b'invalid:creds').decode('ascii')}"}
+    invalid_headers = {
+        "Authorization": f"Basic {base64.b64encode(b'invalid:creds').decode('ascii')}"
+    }
     invalid_response = client.get("/observability", headers=invalid_headers)
     assert invalid_response.status_code == 401
 

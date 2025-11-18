@@ -10,6 +10,9 @@ import langchain_ollama
 import pytest
 
 import src.agents.react_agent as react_module
+from src.agents.debug_agent import DebugAgent
+from src.agents.orchestrator_agent import OrchestratorAgent
+from src.agents.react_agent import ReactAgent
 
 
 class DummyLLM:
@@ -27,9 +30,13 @@ class InMemoryMemory:
 
     def search_similar(self, *args, **kwargs):
         query = args[0] if args else kwargs.get("query", "")
-        return [episode for episode in self.episodes if query in episode.get("task", "")]
+        return [
+            episode for episode in self.episodes if query in episode.get("task", "")
+        ]
 
-    def store_episode(self, task: str, action: str, result: str, reward: float = 0.0, metadata=None):
+    def store_episode(
+        self, task: str, action: str, result: str, reward: float = 0.0, metadata=None
+    ):
         entry = {
             "task": task,
             "action": action,
@@ -61,11 +68,6 @@ class InMemoryMemory:
         }
 
 
-# Patch dependencies before instantiating agents inside tests via fixture
-from src.agents.react_agent import ReactAgent
-from src.agents.orchestrator_agent import AgentMode, OrchestratorAgent
-from src.agents.debug_agent import DebugAgent
-
 CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "agent_config.yaml"
 
 
@@ -82,7 +84,9 @@ def stub_agent_dependencies(monkeypatch: pytest.MonkeyPatch) -> None:
 
 def test_react_agent_performs_file_and_shell_ops() -> None:
     agent = ReactAgent(str(CONFIG_PATH))
-    home_root = Path(os.environ["HOME"]) / "projects" / "omnimind" / "tmp" / "agents" / "react"
+    home_root = (
+        Path(os.environ["HOME"]) / "projects" / "omnimind" / "tmp" / "agents" / "react"
+    )
     home_root.mkdir(parents=True, exist_ok=True)
 
     target = home_root / "analysis.txt"
@@ -144,7 +148,11 @@ def test_orchestrator_parses_and_executes_plan() -> None:
     simple_agent = type("SimpleAgent", (), {})()
 
     def run_stub(task: str, max_iterations: int = 1, **kwargs: Any) -> dict:
-        return {"completed": True, "final_result": f"{task} done", "iteration": max_iterations}
+        return {
+            "completed": True,
+            "final_result": f"{task} done",
+            "iteration": max_iterations,
+        }
 
     setattr(simple_agent, "run", run_stub)
     setattr(simple_agent, "run_code_task", run_stub)

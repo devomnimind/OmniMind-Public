@@ -8,12 +8,11 @@ Baseado em: /home/fahbrain/OmniAgent/registroauditoria.md
 
 import hashlib
 import json
-import os
 import subprocess
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict, Optional
 import threading
 
 
@@ -202,9 +201,11 @@ class ImmutableAuditSystem:
                         )
 
             if corrupted_events:
-                self._log_security_event(
-                    f"ALERTA: Cadeia de auditoria corrompida! {len(corrupted_events)} eventos inválidos"
+                corruption_msg = (
+                    "ALERTA: Cadeia de auditoria corrompida! "
+                    f"{len(corrupted_events)} eventos inválidos"
                 )
+                self._log_security_event(corruption_msg)
                 return {
                     "valid": False,
                     "message": "Cadeia corrompida detectada",
