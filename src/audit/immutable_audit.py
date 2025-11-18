@@ -48,13 +48,16 @@ class ImmutableAuditSystem:
             try:
                 with open(self.hash_chain_file, "r") as f:
                     data = json.load(f)
-                    return data.get("last_hash", "0" * 64)
+                    last_hash = data.get("last_hash", "0" * 64)
+                    if isinstance(last_hash, str):
+                        return last_hash
+                    return str(last_hash)
             except Exception as e:
                 self._log_security_event(f"Erro ao carregar hash chain: {e}")
                 return "0" * 64
         return "0" * 64  # Hash inicial (64 zeros)
 
-    def _save_last_hash(self, hash_value: str):
+    def _save_last_hash(self, hash_value: str) -> None:
         """Salva o último hash da cadeia."""
         with open(self.hash_chain_file, "w") as f:
             json.dump(
@@ -344,13 +347,13 @@ class ImmutableAuditSystem:
         except FileNotFoundError:
             return False
 
-    def _log_security_event(self, message: str):
+    def _log_security_event(self, message: str) -> None:
         """Registra evento de segurança em log separado."""
         timestamp = datetime.now(timezone.utc).isoformat()
         with open(self.security_log, "a") as f:
             f.write(f"[{timestamp}] {message}\n")
 
-    def _log_system_event(self, event: str, details: Dict[str, Any]):
+    def _log_system_event(self, event: str, details: Dict[str, Any]) -> None:
         """Registra evento de sistema no audit log."""
         try:
             self.log_action(event, details, category="system")
