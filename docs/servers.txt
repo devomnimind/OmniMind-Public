@@ -1,6 +1,6 @@
-Infrastructure credentials are managed through environment variables and never stored in this repository.
+Infrastructure credentials are managed via environment variables and never stored in this repository.
 
-Populate the runtime environment with the following keys via `.env` or secure secret storage before launching OmniMind:
+Populate the runtime environment with the following keys via `.env` or the approved secret manager before launching OmniMind:
 
 - `QDRANT_URL`
 - `QDRANT_API_KEY`
@@ -9,4 +9,4 @@ Populate the runtime environment with the following keys via `.env` or secure se
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `HF_TOKEN`
 
-Refer to `docs/security/credential_pipeline.md` for the complete rotation and storage procedure.
+Each developer must provision their own secrets and follow the procedures defined in `docs/Modulo Securityforensis/securityAgent.md`.
