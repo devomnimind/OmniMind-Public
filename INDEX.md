@@ -202,101 +202,101 @@ omnimind/
 
 ---
 
-## 📖 How to Use This Index
+## 📖 Como Usar Este Índice
 
-### For New Developers
-1. Read **README.md** (main overview)
-2. Read **.github/copilot-instructions.md** (rules & standards)
-3. Read **docs/root_docs/PHASE8_HANDOVER_GUIDE.md** (quick start)
-4. Check **src/agents/** and **src/tools/** for implementation examples
+### Para Novos Desenvolvedores
+1. Leia **README.md** (visão geral principal)
+2. Leia **.github/copilot-instructions.md** (regras e padrões)
+3. Leia **docs/root_docs/PHASE8_HANDOVER_GUIDE.md** (início rápido)
+4. Verifique **src/agents/** e **src/tools/** para exemplos de implementação
 
-### For Maintenance & Debugging
-1. Check **docs/root_docs/WORKSPACE_CONSOLIDATION_REPORT.md** (recent changes)
-2. Review **docs/reports/** (historical issues & resolutions)
-3. Check test results: `pytest tests/ -v`
-4. Run validation: `black src/ && flake8 src/ && mypy src/`
+### Para Manutenção e Depuração
+1. Verifique **docs/root_docs/WORKSPACE_CONSOLIDATION_REPORT.md** (mudanças recentes)
+2. Revise **docs/reports/** (problemas históricos e resoluções)
+3. Verifique resultados de testes: `pytest tests/ -v`
+4. Execute validação: `black src/ && flake8 src/ && mypy src/`
 
-### For Phase 8 Development
-1. Read **.github/copilot-instructions.md** (Phase 8 section)
-2. Review **src/security/** (if adding security features)
-3. Review **src/integrations/** (if adding MCP/D-Bus)
-4. Follow **docs/root_docs/CURSOR_RULES.md** (development standards)
+### Para Desenvolvimento Phase 8
+1. Leia **.github/copilot-instructions.md** (seção Phase 8)
+2. Revise **src/security/** (se adicionando recursos de segurança)
+3. Revise **src/integrations/** (se adicionando MCP/D-Bus)
+4. Siga **docs/root_docs/CURSOR_RULES.md** (padrões de desenvolvimento)
 
-### For Performance & Optimization
-1. Check **benchmarks/PHASE7_COMPLETE_BENCHMARK_AUDIT.py**
-2. Review **scripts/optimization/optimize_pytorch_config.py**
-3. Check GPU status: `nvidia-smi`
-4. Run benchmarks: `python benchmarks/PHASE7_COMPLETE_BENCHMARK_AUDIT.py`
-
----
-
-## 🔗 Key References
-
-### Documentation Files
-| File | Purpose | Location |
-|------|---------|----------|
-| README.md | Project overview | Root |
-| .github/copilot-instructions.md | Dev instructions | .github/ |
-| .github/ENVIRONMENT.md | GPU/CUDA setup | .github/ |
-| PHASE8_HANDOVER_GUIDE.md | Phase 8 quick start | docs/root_docs/ |
-| CURSOR_RULES.md | Dev standards | docs/root_docs/ |
-| IMPLEMENTATION_REPORT.md | Technical details | docs/root_docs/ |
-
-### Configuration Files
-| File | Purpose | Location |
-|------|---------|----------|
-| requirements.txt | Dependencies | Root |
-| .python-version | Python version (3.12.8) | Root |
-| .env.template | Environment template | Root |
-| config/agent_config.yaml | Agent configuration | config/ |
-| config/security.yaml | Security configuration | config/ |
-| config/dlp_policies.yaml | DLP policies | config/ |
-
-### Test Entry Points
-| Command | Purpose |
-|---------|---------|
-| `pytest tests/ -v` | Run all tests |
-| `pytest tests/test_audit.py -v` | Core audit tests |
-| `black src/ tests/` | Format code |
-| `flake8 src/ tests/` | Lint code |
-| `mypy src/` | Type check |
+### Para Performance e Otimização
+1. Verifique **benchmarks/PHASE7_COMPLETE_BENCHMARK_AUDIT.py**
+2. Revise **scripts/optimization/optimize_pytorch_config.py**
+3. Verifique status GPU: `nvidia-smi`
+4. Execute benchmarks: `python benchmarks/PHASE7_COMPLETE_BENCHMARK_AUDIT.py`
 
 ---
 
-## 🚀 Quick Start Commands
+## 🔗 Referências Chave
+
+### Arquivos de Documentação
+| Arquivo | Propósito | Localização |
+|---------|-----------|-------------|
+| README.md | Visão geral do projeto | Raiz |
+| .github/copilot-instructions.md | Instruções de desenvolvimento | .github/ |
+| .github/ENVIRONMENT.md | Configuração GPU/CUDA | .github/ |
+| PHASE8_HANDOVER_GUIDE.md | Início rápido Phase 8 | docs/root_docs/ |
+| CURSOR_RULES.md | Padrões de desenvolvimento | docs/root_docs/ |
+| IMPLEMENTATION_REPORT.md | Detalhes técnicos | docs/root_docs/ |
+
+### Arquivos de Configuração
+| Arquivo | Propósito | Localização |
+|---------|-----------|-------------|
+| requirements.txt | Dependências | Raiz |
+| .python-version | Versão Python (3.12.8) | Raiz |
+| .env.template | Template de ambiente | Raiz |
+| config/agent_config.yaml | Configuração de agentes | config/ |
+| config/security.yaml | Configuração de segurança | config/ |
+| config/dlp_policies.yaml | Políticas DLP | config/ |
+
+### Pontos de Entrada de Testes
+| Comando | Propósito |
+|---------|-----------|
+| `pytest tests/ -v` | Executar todos os testes |
+| `pytest tests/test_audit.py -v` | Testes de auditoria core |
+| `black src/ tests/` | Formatar código |
+| `flake8 src/ tests/` | Verificar código |
+| `mypy src/` | Verificar tipos |
+
+---
+
+## 🚀 Comandos de Início Rápido
 
 ```bash
-# Setup environment
+# Configurar ambiente
 cd ~/projects/omnimind
 source .venv/bin/activate
 
-# Validate environment
+# Validar ambiente
 python -c "import torch; print(f'GPU: {torch.cuda.is_available()}')"
 
-# Run tests
+# Executar testes
 pytest tests/ -v
 
-# Format & lint
+# Formatar e verificar
 black src/ && flake8 src/
 
-# Start development
-# (See PHASE8_HANDOVER_GUIDE.md for next steps)
+# Iniciar desenvolvimento
+# (Ver PHASE8_HANDOVER_GUIDE.md para próximos passos)
 ```
 
 ---
 
-## 📞 Support & Escalation
+## 📞 Suporte e Escalação
 
-### Common Tasks
-- **Add new agent**: See `src/agents/react_agent.py` for base class
-- **Add new tool**: See `src/tools/omnimind_tools.py` (25+ examples)
-- **Run benchmarks**: See `benchmarks/PHASE7_COMPLETE_BENCHMARK_AUDIT.py`
-- **Deploy service**: See `scripts/systemd/` and security module
+### Tarefas Comuns
+- **Adicionar novo agente**: Ver `src/agents/react_agent.py` para classe base
+- **Adicionar nova ferramenta**: Ver `src/tools/omnimind_tools.py` (25+ exemplos)
+- **Executar benchmarks**: Ver `benchmarks/PHASE7_COMPLETE_BENCHMARK_AUDIT.py`
+- **Implantar serviço**: Ver `scripts/systemd/` e módulo de segurança
 
-### Troubleshooting
-- **GPU issues**: See `docs/root_docs/GPU_CUDA_REPAIR_AUDIT_COMPLETE.md`
-- **Import errors**: Check `src/` module structure
-- **Test failures**: Run `pytest tests/ -v --tb=short`
+### Solução de Problemas
+- **Problemas GPU**: Ver `docs/root_docs/GPU_CUDA_REPAIR_AUDIT_COMPLETE.md`
+- **Erros de importação**: Verificar estrutura de módulos `src/`
+- **Falhas de teste**: Executar `pytest tests/ -v --tb=short`
 - **Type errors**: Run `mypy src/ --strict`
 
 ### Escalation
