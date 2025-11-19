@@ -161,13 +161,16 @@ class OrchestratorAgent(ReactAgent):
         try:
             security_config = self.config.get("security", {})
             config_path = security_config.get("config_path", "config/security.yaml")
-            
+
             agent = SecurityAgent(config_path=config_path, llm=self.llm)
             if agent.config.get("security_agent", {}).get("enabled", False):
                 # Running this in a background task
                 import asyncio
+
                 asyncio.create_task(agent.start_continuous_monitoring())
-                logger.info("SecurityAgent continuous monitoring started in background.")
+                logger.info(
+                    "SecurityAgent continuous monitoring started in background."
+                )
             return agent
         except Exception as exc:
             logger.error("Failed to initialize SecurityAgent: %s", exc)
@@ -671,8 +674,9 @@ Your decomposition plan:"""
             if self.security_agent:
                 # For now, just log a check. A real implementation would
                 # check for active high-priority threats.
-                self.security_agent.logger.info(f"Pre-delegation check for task: {safe_description}")
-
+                self.security_agent.logger.info(
+                    f"Pre-delegation check for task: {safe_description}"
+                )
 
             try:
                 agent_mode = AgentMode(subtask["agent"])
@@ -716,7 +720,9 @@ Your decomposition plan:"""
                     }
                 elif agent_mode == AgentMode.PSYCHOANALYST:
                     # This is a simplified execution for the analyst
-                    analysis = agent.analyze_session(subtask["description"])  # type: ignore[union-attr]
+                    analysis = agent.analyze_session(  # type: ignore[union-attr]
+                        subtask["description"]
+                    )
                     report = agent.generate_abnt_report(analysis)  # type: ignore[union-attr]
                     result = {
                         "completed": True,
@@ -841,7 +847,7 @@ Your decomposition plan:"""
 
     def _execute_security_subtask(self, subtask: Dict[str, Any]) -> Dict[str, Any]:
         description = subtask.get("description", "").lower()
-        
+
         if not self.security_agent:
             return {
                 "completed": False,
@@ -855,7 +861,7 @@ Your decomposition plan:"""
             action = "status"
 
         security_result = self.security_agent.execute(action)
-        
+
         return {
             "completed": True,
             "action": action,

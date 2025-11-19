@@ -1,7 +1,6 @@
 """Integration tests for the SecurityAgent flows."""
 
 import asyncio
-import json
 from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -126,10 +125,10 @@ security:
         SecurityAgent, "_execute_response", AsyncMock()
     ) as mock_execute_response, patch(
         "src.agents.react_agent.EpisodicMemory", MagicMock()
-    ) as mock_memory, patch(
+    ), patch(
         "src.agents.react_agent.ReactAgent._run_supabase_memory_onboarding",
         MagicMock(),
-    ) as mock_onboarding:
+    ):
         # The orchestrator's __init__ will start the security agent
         orchestrator = OrchestratorAgent(str(config_path))
         assert orchestrator.security_agent is not None

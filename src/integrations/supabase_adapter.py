@@ -167,7 +167,7 @@ class SupabaseAdapter:
             )
             # The response data is a list of dicts, so we can safely cast it.
             table_data = cast(List[Dict[str, Any]], response.data)
-            
+
             table_names: list[str] = []
             for row in table_data:
                 name = row.get("table_name")

@@ -5,7 +5,6 @@ Tests the 24/7 autonomous background service functionality.
 """
 
 import asyncio
-import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from unittest.mock import Mock, patch
@@ -25,7 +24,7 @@ from src.daemon import (
 class TestSystemMetrics:
     """Test SystemMetrics functionality"""
 
-    def test_is_idle_when_low_cpu_and_memory(self):
+    def test_is_idle_when_low_cpu_and_memory(self) -> None:
         """System should be idle when CPU and memory are low"""
         metrics = SystemMetrics(
             cpu_percent=15.0,

@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import json
 import logging
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict
 from enum import Enum
 
 from .react_agent import ReactAgent
@@ -52,11 +52,11 @@ class PsychoanalyticAnalyst(ReactAgent):
             Um dicionário com os insights e a análise.
         """
         prompt = self._build_analysis_prompt(session_notes, framework)
-        
+
         logger.info(f"Iniciando análise com o framework {framework.value}...")
-        
+
         response = self.llm.invoke(prompt)
-        
+
         analysis = self._parse_analysis(response)
         analysis["framework_used"] = framework.value
 
@@ -93,16 +93,29 @@ class PsychoanalyticAnalyst(ReactAgent):
         self, session_notes: str, framework: PsychoanalyticFramework
     ) -> str:
         """Constrói o prompt para o LLM."""
-        
+
         framework_instructions = {
-            PsychoanalyticFramework.FREUDIAN: "Foque em conflitos edípicos, mecanismos de defesa (repressão, negação, projeção), e a dinâmica entre Id, Ego e Superego.",
-            PsychoanalyticFramework.LACANIAN: "Analise a estrutura da linguagem, a função do significante, o Real, o Simbólico e o Imaginário, e a posição do sujeito em relação ao Outro.",
-            PsychoanalyticFramework.KLEINIAN: "Identifique ansiedades primitivas, posições esquizo-paranoide e depressiva, e o uso de identificação projetiva.",
-            PsychoanalyticFramework.WINNICOTTIAN: "Observe a relação com o ambiente, o papel do 'holding', objetos transicionais e a dialética entre o verdadeiro e o falso self.",
+            PsychoanalyticFramework.FREUDIAN: (
+                "Foque em conflitos edípicos, mecanismos de defesa "
+                "(repressão, negação, projeção), e a dinâmica entre Id, Ego e Superego."
+            ),
+            PsychoanalyticFramework.LACANIAN: (
+                "Analise a estrutura da linguagem, a função do significante, "
+                "o Real, o Simbólico e o Imaginário, e a posição do sujeito em relação ao Outro."
+            ),
+            PsychoanalyticFramework.KLEINIAN: (
+                "Identifique ansiedades primitivas, posições esquizo-paranoide e depressiva, "
+                "e o uso de identificação projetiva."
+            ),
+            PsychoanalyticFramework.WINNICOTTIAN: (
+                "Observe a relação com o ambiente, o papel do 'holding', "
+                "objetos transicionais e a dialética entre o verdadeiro e o falso self."
+            ),
         }
 
         prompt = f"""
-Você é um assistente de IA especializado em psicanálise. Sua tarefa é analisar as seguintes notas de uma sessão clínica sob a ótica do framework {framework.value}.
+Você é um assistente de IA especializado em psicanálise. Sua tarefa é analisar as seguintes
+notas de uma sessão clínica sob a ótica do framework {framework.value}.
 
 **Instruções do Framework:**
 {framework_instructions[framework]}
@@ -116,9 +129,16 @@ Você é um assistente de IA especializado em psicanálise. Sua tarefa é analis
 Com base nas notas e no framework, forneça a seguinte estrutura:
 {{
   "hypothesis": "Formule uma hipótese interpretativa central sobre o material apresentado.",
-  "resistance": "Identifique possíveis pontos de resistência ou defesas notáveis no discurso.",
-  "key_elements": "Liste 3 a 5 elementos-chave (símbolos, atos falhos, padrões de repetição) que se destacam.",
-  "observations": "Ofereça uma breve observação ou questão que poderia guiar a próxima sessão."
+  "resistance": (
+      "Identifique possíveis pontos de resistência ou defesas notáveis no discurso."
+  ),
+  "key_elements": (
+      "Liste 3 a 5 elementos-chave (símbolos, atos falhos, padrões de repetição) "
+      "que se destacam."
+  ),
+  "observations": (
+      "Ofereça uma breve observação ou questão que poderia guiar a próxima sessão."
+  )
 }}
 """
         return prompt
@@ -131,13 +151,16 @@ Com base nas notas e no framework, forneça a seguinte estrutura:
             # O LLM pode retornar o JSON dentro de um bloco de código markdown
             if "```json" in content:
                 content = content.split("```json")[1].split("```")[0]
-            
-            return json.loads(content)
+
+            parsed = json.loads(content)
+            assert isinstance(parsed, dict)
+            return parsed
         except (json.JSONDecodeError, AttributeError, IndexError) as e:
             logger.error(f"Falha ao parsear a resposta do LLM: {e}")
             return {
                 "error": "Não foi possível parsear a análise.",
                 "raw_response": str(llm_response),
             }
+
 
 __all__ = ["PsychoanalyticAnalyst", "PsychoanalyticFramework"]

@@ -16,10 +16,8 @@ Key responsibilities:
 from __future__ import annotations
 
 import asyncio
-import logging
 import os
 import signal
-import sys
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -31,13 +29,13 @@ import psutil
 import structlog
 
 # Configure structured logging
-structlog.configure(
-    processors=[
-        structlog.processors.TimeStamper(fmt="iso"),
-        structlog.processors.add_log_level,
-        structlog.processors.JSONRenderer(),
+structlog.configure(  # type: ignore[attr-defined]
+    processors=[  # type: ignore[attr-defined]
+        structlog.processors.TimeStamper(fmt="iso"),  # type: ignore[attr-defined]
+        structlog.processors.add_log_level,  # type: ignore[attr-defined]
+        structlog.processors.JSONRenderer(),  # type: ignore[attr-defined]
     ],
-    logger_factory=structlog.PrintLoggerFactory(),
+    logger_factory=structlog.PrintLoggerFactory(),  # type: ignore[attr-defined]
 )
 
 logger = structlog.get_logger(__name__)
@@ -355,7 +353,7 @@ def create_default_tasks() -> List[DaemonTask]:
     """Create default tasks for the daemon"""
     tasks = []
 
-    def analyze_code():
+    def analyze_code() -> Dict[str, Any]:
         logger.info("task.code_analysis.running")
         return {"status": "completed", "files_analyzed": 0}
 
