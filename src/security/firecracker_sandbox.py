@@ -8,7 +8,17 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 from ..audit.immutable_audit import log_action
-from DEVBRAIN_V23.autonomy.observability import autonomy_observability
+
+
+# Simple observability for sandbox events (replaces DEVBRAIN_V23 import)
+class AutonomyObservability:
+    @staticmethod
+    def record_sandbox_event(event: dict[str, Any]) -> None:
+        """Record sandbox event for observability."""
+        logger.info("Sandbox event recorded", extra={"sandbox_event": event})
+
+
+autonomy_observability = AutonomyObservability()
 
 logger = logging.getLogger(__name__)
 

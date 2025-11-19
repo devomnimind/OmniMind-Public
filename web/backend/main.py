@@ -18,7 +18,49 @@ from pydantic import BaseModel
 from secrets import compare_digest
 from starlette.status import HTTP_401_UNAUTHORIZED
 
-from DEVBRAIN_V23.autonomy.observability import autonomy_observability
+# Simple observability for backend (replaces DEVBRAIN_V23 import)
+class AutonomyObservability:
+    def __init__(self) -> None:
+        self.self_healing_history: list[dict] = []
+        self.atlas_insights: list[dict] = []
+        self.sandbox_events: list[dict] = []
+        self.dlp_alerts: list[dict] = []
+        self.alerts: list[str] = []
+
+    def record_sandbox_event(self, event: dict) -> None:
+        """Record sandbox event for observability."""
+        logger.info("Backend sandbox event recorded", extra={"sandbox_event": event})
+        self.sandbox_events.append(event)
+
+    def record_dlp_alert(self, alert: dict) -> None:
+        """Record DLP alert for observability."""
+        logger.info("Backend DLP alert recorded", extra={"dlp_alert": alert})
+        self.dlp_alerts.append(alert)
+
+    def get_self_healing_snapshot(self) -> dict:
+        """Get self healing observability snapshot."""
+        return {
+            "latest": {},
+            "history": self.self_healing_history[-5:],
+            "alerts": []
+        }
+
+    def get_atlas_snapshot(self) -> dict:
+        """Get atlas observability snapshot."""
+        return {
+            "insights": self.atlas_insights[-10:]
+        }
+
+    def get_security_snapshot(self) -> dict:
+        """Get security observability snapshot."""
+        return {
+            "sandbox_events": self.sandbox_events[-5:],
+            "dlp_alerts": self.dlp_alerts[-5:]
+        }
+
+autonomy_observability = AutonomyObservability()
+
+
 from src.agents.orchestrator_agent import OrchestratorAgent
 
 logger = logging.getLogger("omnimind.backend")

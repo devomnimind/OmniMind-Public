@@ -10,7 +10,17 @@ from typing import Any, Dict, List, Optional
 import yaml
 
 from ..audit.immutable_audit import log_action
-from DEVBRAIN_V23.autonomy.observability import autonomy_observability
+
+
+# Simple observability for DLP alerts (replaces DEVBRAIN_V23 import)
+class AutonomyObservability:
+    @staticmethod
+    def record_dlp_alert(alert: dict[str, Any]) -> None:
+        """Record DLP alert for observability."""
+        logger.info("DLP Alert recorded", extra={"dlp_alert": alert})
+
+
+autonomy_observability = AutonomyObservability()
 
 logger = logging.getLogger(__name__)
 

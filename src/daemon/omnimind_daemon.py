@@ -368,7 +368,7 @@ def create_default_tasks() -> List[DaemonTask]:
         )
     )
 
-    def optimize_tests():
+    def optimize_tests() -> dict[str, Any]:
         logger.info("task.test_optimization.running")
         return {"status": "completed", "tests_optimized": 0}
 
@@ -383,7 +383,7 @@ def create_default_tasks() -> List[DaemonTask]:
         )
     )
 
-    def read_papers():
+    def read_papers() -> dict[str, Any]:
         logger.info("task.paper_reading.running")
         return {"status": "completed", "papers_read": 0}
 
@@ -398,7 +398,7 @@ def create_default_tasks() -> List[DaemonTask]:
         )
     )
 
-    def optimize_database():
+    def optimize_database() -> dict[str, Any]:
         logger.info("task.database_optimization.running")
         return {"status": "completed", "optimizations_found": 0}
 
@@ -416,7 +416,7 @@ def create_default_tasks() -> List[DaemonTask]:
     return tasks
 
 
-def main():
+def main() -> None:
     """Main entry point for daemon"""
     workspace = Path(os.getenv("OMNIMIND_WORKSPACE", "."))
 
