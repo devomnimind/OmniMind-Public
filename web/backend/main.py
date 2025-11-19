@@ -363,3 +363,187 @@ def dbus_execute(
         flow=request.flow, media_action=request.media_action
     )
     return {"result": result, "dashboard": orch.dashboard_snapshot}
+
+
+# ============================================================================
+# DAEMON ENDPOINTS (Phase 9)
+# ============================================================================
+
+# Global daemon instance (initialized on first use)
+_daemon_instance: Optional[Any] = None
+
+
+def _get_daemon():
+    """Get or create the daemon instance"""
+    global _daemon_instance
+    if _daemon_instance is None:
+        from pathlib import Path
+        from src.daemon import OmniMindDaemon, create_default_tasks
+
+        workspace = Path(os.getenv("OMNIMIND_WORKSPACE", ".")).resolve()
+        _daemon_instance = OmniMindDaemon(
+            workspace_path=workspace,
+            check_interval=int(os.getenv("DAEMON_CHECK_INTERVAL", "30")),
+            enable_cloud=os.getenv("OMNIMIND_CLOUD_ENABLED", "true").lower() == "true",
+        )
+
+        # Register default tasks
+        for task in create_default_tasks():
+            _daemon_instance.register_task(task)
+
+        logger.info("Daemon instance created with workspace: %s", workspace)
+
+    return _daemon_instance
+
+
+@app.get("/daemon/status")
+def daemon_status(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    """Get current daemon status and metrics"""
+    daemon = _get_daemon()
+    return daemon.get_status()
+
+
+@app.get("/daemon/tasks")
+def daemon_tasks(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    """List all registered daemon tasks"""
+    daemon = _get_daemon()
+
+    tasks_info = []
+    for task in daemon.tasks:
+        tasks_info.append(
+            {
+                "task_id": task.task_id,
+                "name": task.name,
+                "description": task.description,
+                "priority": task.priority.name,
+                "execution_count": task.execution_count,
+                "success_count": task.success_count,
+                "failure_count": task.failure_count,
+                "last_execution": (
+                    task.last_execution.isoformat() if task.last_execution else None
+                ),
+                "repeat_interval": (
+                    str(task.repeat_interval) if task.repeat_interval else None
+                ),
+            }
+        )
+
+    return {
+        "tasks": tasks_info,
+        "total_tasks": len(tasks_info),
+    }
+
+
+class DaemonTaskRequest(BaseModel):
+    """Request to add a custom daemon task"""
+
+    task_id: str
+    name: str
+    description: str
+    priority: str  # CRITICAL, HIGH, MEDIUM, LOW
+    code: str  # Python code to execute
+    repeat_hours: Optional[int] = None
+
+
+@app.post("/daemon/tasks/add")
+def daemon_add_task(
+    request: DaemonTaskRequest, user: str = Depends(_verify_credentials)
+) -> Dict[str, Any]:
+    """Add a custom task to the daemon"""
+    from datetime import timedelta
+    from src.daemon import DaemonTask, TaskPriority
+
+    daemon = _get_daemon()
+
+    # Parse priority
+    try:
+        priority = TaskPriority[request.priority.upper()]
+    except KeyError:
+        raise HTTPException(
+            status_code=400, detail=f"Invalid priority: {request.priority}"
+        )
+
+    # Create execution function from code
+    # SECURITY NOTE: This is for the local single-user case only
+    # In production, this would need sandboxing/validation
+    exec_globals = {}
+    exec(request.code, exec_globals)
+    exec_fn = exec_globals.get("execute")
+
+    if exec_fn is None:
+        raise HTTPException(
+            status_code=400,
+            detail="Code must define an 'execute()' function",
+        )
+
+    task = DaemonTask(
+        task_id=request.task_id,
+        name=request.name,
+        description=request.description,
+        priority=priority,
+        execute_fn=exec_fn,
+        repeat_interval=(
+            timedelta(hours=request.repeat_hours) if request.repeat_hours else None
+        ),
+    )
+
+    daemon.register_task(task)
+
+    return {
+        "status": "task_added",
+        "task_id": request.task_id,
+        "message": f"Task '{request.name}' added successfully",
+    }
+
+
+@app.post("/daemon/start")
+async def daemon_start(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    """Start the daemon in background"""
+    daemon = _get_daemon()
+
+    if daemon.running:
+        return {
+            "status": "already_running",
+            "message": "Daemon is already running",
+        }
+
+    # Start daemon in background task
+    async def run_daemon():
+        import asyncio
+        from src.daemon import DaemonState
+
+        daemon.running = True
+        daemon.state = DaemonState.IDLE
+        # Run daemon loop as background task
+        await daemon._daemon_loop()
+
+    # Create background task
+    app.state.daemon_task = asyncio.create_task(run_daemon())
+
+    return {
+        "status": "started",
+        "message": "Daemon started successfully",
+    }
+
+
+@app.post("/daemon/stop")
+def daemon_stop(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    """Stop the daemon"""
+    daemon = _get_daemon()
+
+    if not daemon.running:
+        return {
+            "status": "not_running",
+            "message": "Daemon is not running",
+        }
+
+    daemon.stop()
+
+    # Cancel background task if exists
+    if hasattr(app.state, "daemon_task"):
+        app.state.daemon_task.cancel()
+
+    return {
+        "status": "stopped",
+        "message": "Daemon stopped successfully",
+    }

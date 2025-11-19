@@ -1,0 +1,34 @@
+[Unit]
+Description=OmniMind Autonomous Daemon
+Documentation=https://github.com/fabs-devbrain/OmniMind
+After=network.target
+
+[Service]
+Type=simple
+User=fabricio
+WorkingDirectory=/home/fabricio/projects/omnimind
+Environment="OMNIMIND_WORKSPACE=/home/fabricio/projects/omnimind"
+Environment="OMNIMIND_CLOUD_ENABLED=true"
+Environment="PYTHONUNBUFFERED=1"
+
+# Start the daemon
+ExecStart=/home/fabricio/projects/omnimind/.venv/bin/python -m src.daemon.omnimind_daemon
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Security settings
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/fabricio/projects/omnimind
+NoNewPrivileges=true
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=omnimind-daemon
+
+[Install]
+WantedBy=multi-user.target
