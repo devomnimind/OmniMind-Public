@@ -145,7 +145,9 @@ if __name__ == "__main__":
     print(f"Result: {{result}}")
 ''',
             required_params=["agent_name", "description", "purpose"],
-            optional_params={"capabilities": ["- Task execution", "- Input validation"]},
+            optional_params={
+                "capabilities": ["- Task execution", "- Input validation"]
+            },
         )
 
         # Tool template
@@ -238,7 +240,7 @@ if __name__ == "__main__":
                 "test_methods": "    def test_execute(self, instance: {class_name}) -> None:\n"
                 '        """Test execution."""\n'
                 '        result = instance.execute("test")\n'
-                '        assert result is not None\n'
+                "        assert result is not None\n"
             },
         )
 
@@ -552,9 +554,7 @@ class {model_name}(BaseModel):
         sig = inspect.signature(func)
 
         # Get function description (use existing docstring or placeholder)
-        description = (
-            func.__doc__.strip() if func.__doc__ else "TODO: Add description"
-        )
+        description = func.__doc__.strip() if func.__doc__ else "TODO: Add description"
 
         # Build parameters section
         params = []

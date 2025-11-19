@@ -369,3 +369,298 @@ def compare_performance(
     return benchmark.compare_to_baseline(
         "baseline", "optimized", optimized_func, iterations
     )
+
+
+class RegressionDetector:
+    """Performance regression detection system.
+
+    Tracks performance over time and alerts on regressions.
+    """
+
+    def __init__(
+        self,
+        history_dir: Path = Path("data/benchmarks/history"),
+        regression_threshold: float = 10.0,
+    ):
+        """
+        Initialize regression detector.
+
+        Args:
+            history_dir: Directory to store benchmark history
+            regression_threshold: Percentage regression to trigger alert (default: 10%)
+        """
+        self.history_dir = history_dir
+        self.regression_threshold = regression_threshold
+        self.history_dir.mkdir(parents=True, exist_ok=True)
+
+        logger.info(
+            "regression_detector_initialized",
+            history_dir=str(history_dir),
+            threshold=f"{regression_threshold}%",
+        )
+
+    def record_benchmark(self, name: str, result: BenchmarkResult) -> Path:
+        """
+        Record benchmark result to history.
+
+        Args:
+            name: Benchmark name
+            result: Benchmark result
+
+        Returns:
+            Path to saved history file
+        """
+        history_file = self.history_dir / f"{name}_history.json"
+
+        # Load existing history
+        history = []
+        if history_file.exists():
+            with history_file.open() as f:
+                history = json.load(f)
+
+        # Add new result
+        history.append(
+            {
+                "timestamp": result.timestamp,
+                "iterations": result.iterations,
+                "mean_time_ms": result.mean_time_ms,
+                "mean_memory_mb": result.mean_memory_mb,
+                "mean_cpu_percent": result.mean_cpu_percent,
+                "metadata": result.metadata,
+            }
+        )
+
+        # Save updated history
+        with history_file.open("w") as f:
+            json.dump(history, f, indent=2)
+
+        logger.info(
+            "benchmark_recorded",
+            name=name,
+            entries=len(history),
+            file=str(history_file),
+        )
+
+        return history_file
+
+    def detect_regressions(
+        self, name: str, current_result: BenchmarkResult
+    ) -> Dict[str, Any]:
+        """
+        Detect performance regressions.
+
+        Args:
+            name: Benchmark name
+            current_result: Current benchmark result
+
+        Returns:
+            Regression detection result
+        """
+        history_file = self.history_dir / f"{name}_history.json"
+
+        if not history_file.exists():
+            logger.warning(
+                "no_history_found",
+                name=name,
+                message="No history file found, recording baseline",
+            )
+            self.record_benchmark(name, current_result)
+            return {
+                "has_regression": False,
+                "baseline_mean_time": None,
+                "current_mean_time": current_result.mean_time_ms,
+                "regression_percent": 0.0,
+                "message": "Baseline established",
+            }
+
+        # Load history
+        with history_file.open() as f:
+            history = json.load(f)
+
+        if not history:
+            return {
+                "has_regression": False,
+                "message": "Empty history",
+            }
+
+        # Calculate baseline (average of last N results)
+        N = min(5, len(history))
+        recent_results = history[-N:]
+        baseline_time = sum(r["mean_time_ms"] for r in recent_results) / N
+        baseline_memory = sum(r["mean_memory_mb"] for r in recent_results) / N
+
+        # Calculate regressions
+        current_time = current_result.mean_time_ms
+        current_memory = current_result.mean_memory_mb
+
+        time_regression = ((current_time - baseline_time) / baseline_time) * 100
+        memory_regression = ((current_memory - baseline_memory) / baseline_memory) * 100
+
+        has_regression = (
+            time_regression > self.regression_threshold
+            or memory_regression > self.regression_threshold
+        )
+
+        result = {
+            "has_regression": has_regression,
+            "baseline_mean_time": baseline_time,
+            "current_mean_time": current_time,
+            "time_regression_percent": time_regression,
+            "baseline_mean_memory": baseline_memory,
+            "current_mean_memory": current_memory,
+            "memory_regression_percent": memory_regression,
+            "threshold": self.regression_threshold,
+        }
+
+        if has_regression:
+            logger.warning(
+                "regression_detected",
+                name=name,
+                time_regression=f"{time_regression:.1f}%",
+                memory_regression=f"{memory_regression:.1f}%",
+            )
+            result["message"] = (
+                f"⚠️ Performance regression detected: "
+                f"time +{time_regression:.1f}%, memory +{memory_regression:.1f}%"
+            )
+        else:
+            logger.info(
+                "no_regression",
+                name=name,
+                time_change=f"{time_regression:+.1f}%",
+                memory_change=f"{memory_regression:+.1f}%",
+            )
+            result["message"] = (
+                f"✅ No regression detected: "
+                f"time {time_regression:+.1f}%, memory {memory_regression:+.1f}%"
+            )
+
+        # Record current result
+        self.record_benchmark(name, current_result)
+
+        return result
+
+    def generate_trend_report(self, name: str) -> str:
+        """
+        Generate performance trend report.
+
+        Args:
+            name: Benchmark name
+
+        Returns:
+            Markdown report
+        """
+        history_file = self.history_dir / f"{name}_history.json"
+
+        if not history_file.exists():
+            return f"# No history found for {name}\n"
+
+        with history_file.open() as f:
+            history = json.load(f)
+
+        if not history:
+            return f"# Empty history for {name}\n"
+
+        lines = [
+            f"# Performance Trend Report: {name}\n",
+            f"Total measurements: {len(history)}\n",
+            f"Date range: {history[0]['timestamp']} to {history[-1]['timestamp']}\n",
+            "\n## Performance Over Time\n",
+            "| Timestamp | Time (ms) | Memory (MB) | CPU (%) |",
+            "| --- | --- | --- | --- |",
+        ]
+
+        for entry in history[-20:]:  # Last 20 entries
+            timestamp = entry["timestamp"].split("T")[0]  # Just date
+            lines.append(
+                f"| {timestamp} | {entry['mean_time_ms']:.2f} | "
+                f"{entry['mean_memory_mb']:.2f} | {entry['mean_cpu_percent']:.1f} |"
+            )
+
+        # Calculate trends
+        if len(history) >= 2:
+            first = history[0]
+            last = history[-1]
+
+            time_trend = (
+                (last["mean_time_ms"] - first["mean_time_ms"]) / first["mean_time_ms"]
+            ) * 100
+            memory_trend = (
+                (last["mean_memory_mb"] - first["mean_memory_mb"])
+                / first["mean_memory_mb"]
+            ) * 100
+
+            lines.append("\n## Trends\n")
+            lines.append(f"- Time: {time_trend:+.1f}% (from first to last)")
+            lines.append(f"- Memory: {memory_trend:+.1f}% (from first to last)")
+
+        return "\n".join(lines)
+
+    def clean_old_history(self, days: int = 90) -> None:
+        """
+        Clean old history entries.
+
+        Args:
+            days: Keep entries from last N days
+        """
+        from datetime import datetime, timedelta
+
+        cutoff = datetime.now() - timedelta(days=days)
+
+        for history_file in self.history_dir.glob("*_history.json"):
+            with history_file.open() as f:
+                history = json.load(f)
+
+            # Filter old entries
+            filtered = [
+                entry
+                for entry in history
+                if datetime.fromisoformat(entry["timestamp"]) > cutoff
+            ]
+
+            if len(filtered) < len(history):
+                with history_file.open("w") as f:
+                    json.dump(filtered, f, indent=2)
+
+                logger.info(
+                    "history_cleaned",
+                    file=str(history_file),
+                    removed=len(history) - len(filtered),
+                    kept=len(filtered),
+                )
+
+
+def benchmark_with_regression_detection(
+    name: str,
+    workload: Callable[[], Any],
+    iterations: int = 100,
+    regression_threshold: float = 10.0,
+) -> Dict[str, Any]:
+    """
+    Run benchmark with automatic regression detection.
+
+    Args:
+        name: Benchmark name
+        workload: Workload to benchmark
+        iterations: Number of iterations
+        regression_threshold: Regression threshold percentage
+
+    Returns:
+        Combined benchmark and regression results
+    """
+    # Run benchmark
+    benchmark = PerformanceBenchmark()
+    result = benchmark.run_benchmark(name, workload, iterations)
+
+    # Detect regressions
+    detector = RegressionDetector(regression_threshold=regression_threshold)
+    regression_result = detector.detect_regressions(name, result)
+
+    return {
+        "benchmark": {
+            "mean_time_ms": result.mean_time_ms,
+            "mean_memory_mb": result.mean_memory_mb,
+            "mean_cpu_percent": result.mean_cpu_percent,
+        },
+        "regression": regression_result,
+    }
