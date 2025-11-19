@@ -2,10 +2,11 @@
 
 from typing import Any, TypeVar, Generic, Union, List
 
-_DType = TypeVar('_DType')
+_DType = TypeVar("_DType")
 
 class ndarray(Generic[_DType]):
     """NumPy array."""
+
     shape: tuple[int, ...]
     dtype: Any
     def __getitem__(self, key: Any) -> Any: ...

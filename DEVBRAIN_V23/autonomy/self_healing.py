@@ -35,7 +35,9 @@ class SelfHealingLoop:
         self.monitors = monitors or []
         self.remediations: Dict[str, List[RemediationHandler]] = {}
         self.alert_callback = alert_callback
-        self.metrics_sink = metrics_sink or autonomy_observability.record_self_healing_metrics
+        self.metrics_sink = (
+            metrics_sink or autonomy_observability.record_self_healing_metrics
+        )
         self.last_actions: List[HealingAction] = []
         self.issue_history: List[Dict[str, Any]] = []
         self.metrics = {
@@ -50,7 +52,9 @@ class SelfHealingLoop:
         self.monitors.append(monitor)
         self.metrics["monitors"] = len(self.monitors)
 
-    def register_remediation(self, issue_type: str, handler: RemediationHandler) -> None:
+    def register_remediation(
+        self, issue_type: str, handler: RemediationHandler
+    ) -> None:
         self.remediations.setdefault(issue_type, []).append(handler)
         self.metrics.setdefault("remediation_handlers", {}).setdefault(issue_type, 0)
         self.metrics["remediation_handlers"][issue_type] += 1

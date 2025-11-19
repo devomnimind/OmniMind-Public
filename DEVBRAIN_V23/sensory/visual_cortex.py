@@ -86,7 +86,10 @@ class VisualCortex:
         self.screenshot_provider = screenshot_provider or _default_screenshot
         self._click_handler = click_handler or (lambda *_: None)
         self._last_capture: Optional[str] = None
-        self.performance_log: Dict[str, List[float]] = {"see_screen": [], "click_element": []}
+        self.performance_log: Dict[str, List[float]] = {
+            "see_screen": [],
+            "click_element": [],
+        }
         self.error_alerts: List[str] = []
 
     def get_performance_summary(self) -> Dict[str, float]:
@@ -158,14 +161,21 @@ class VisualCortex:
             bbox = item.get("bbox", (0, 0, 0, 0))
             center = self._bbox_center(bbox)
             normalized.append(
-                {"label": label, "bbox": bbox, "confidence": item.get("confidence", 1.0), "center": center}
+                {
+                    "label": label,
+                    "bbox": bbox,
+                    "confidence": item.get("confidence", 1.0),
+                    "center": center,
+                }
             )
         return normalized
 
     def _detect_objects(self, image_array: Optional[Any]) -> List[DetectionRecord]:
         raw_results = self.yolo(image_array)
         detections: List[DetectionRecord] = []
-        is_sequence = isinstance(raw_results, _SequenceABC) and not isinstance(raw_results, (str, bytes))
+        is_sequence = isinstance(raw_results, _SequenceABC) and not isinstance(
+            raw_results, (str, bytes)
+        )
         results_list: Sequence = raw_results if is_sequence else (raw_results,)  # type: ignore[assignment]
         for result in results_list:
             boxes = getattr(result, "boxes", [])
@@ -176,10 +186,19 @@ class VisualCortex:
                     label = getattr(box, "label", "element")
                 confidence = getattr(box, "conf", getattr(box, "confidence", 1.0))
                 detections.append(
-                    DetectionRecord(label=str(label), confidence=float(confidence), bbox=bbox, center=self._bbox_center(bbox))
+                    DetectionRecord(
+                        label=str(label),
+                        confidence=float(confidence),
+                        bbox=bbox,
+                        center=self._bbox_center(bbox),
+                    )
                 )
         if not detections:
-            detections.append(DetectionRecord(label="unknown", confidence=0.0, bbox=(0, 0, 0, 0), center=(0, 0)))
+            detections.append(
+                DetectionRecord(
+                    label="unknown", confidence=0.0, bbox=(0, 0, 0, 0), center=(0, 0)
+                )
+            )
         return detections
 
     def _extract_bbox(self, box: Any) -> Tuple[int, int, int, int]:

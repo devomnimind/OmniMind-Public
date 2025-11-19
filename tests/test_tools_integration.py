@@ -9,11 +9,14 @@ import pytest
 from src.tools.omnimind_tools import ToolsFramework
 
 
+from typing import Any
+
+
 def _audit_log_path(home: Path) -> Path:
     return home / ".omnimind" / "audit" / "tools.log"
 
 
-def _read_audit_entries(log_path: Path) -> list[dict]:
+def _read_audit_entries(log_path: Path) -> list[dict[str, Any]]:
     if not log_path.exists():
         return []
     return [

@@ -11,7 +11,11 @@ EventHandler = Callable[[Dict[str, Any]], Awaitable[None]]
 class EventBusRedis:
     """Redis Streams event bus usado pelo DevBrain para comunicação entre agentes."""
 
-    def __init__(self, redis_url: str = "redis://localhost:6379", redis_client: Optional[Any] = None) -> None:
+    def __init__(
+        self,
+        redis_url: str = "redis://localhost:6379",
+        redis_client: Optional[Any] = None,
+    ) -> None:
         self._redis = redis_client or redis.from_url(redis_url, decode_responses=True)
         self._subscribers: Dict[str, List[EventHandler]] = {}
         self._listen_tasks: Dict[str, asyncio.Task[None]] = {}
@@ -33,7 +37,9 @@ class EventBusRedis:
     async def _listen(self, channel: str) -> None:
         last_id = "0"
         while self._running:
-            entries = await asyncio.to_thread(self._redis.xread, {channel: last_id}, count=10, block=1000)
+            entries = await asyncio.to_thread(
+                self._redis.xread, {channel: last_id}, count=10, block=1000
+            )
             if not entries:
                 await asyncio.sleep(0.05)
                 continue

@@ -160,7 +160,7 @@ class SystemMonitor:
                         "memory_total_mb": int(gpu_data[2].strip()),
                         "temperature_c": int(gpu_data[3].strip()),
                         "utilization_percent": int(gpu_data[4].strip()),
-                        }
+                    }
             except Exception:
                 gpu_info = {"available": False}
 
@@ -195,10 +195,7 @@ class SystemMonitor:
         ram_used = mem.get("used_gb", 0)
         ram_total = mem.get("total_gb", 0)
         ram_percent = mem.get("percent", 0)
-        ram_line = (
-            f"RAM: {ram_used:.1f}/{ram_total:.1f} GB "
-            f"({ram_percent:.1f}%)"
-        )
+        ram_line = f"RAM: {ram_used:.1f}/{ram_total:.1f} GB " f"({ram_percent:.1f}%)"
         lines.append(ram_line)
 
         # GPU

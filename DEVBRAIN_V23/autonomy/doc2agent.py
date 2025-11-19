@@ -133,7 +133,7 @@ class Doc2Agent:
             "tool": step.tool,
             "step_id": step.id,
             "status": status,
-            "goal": self.last_goal or ""
+            "goal": self.last_goal or "",
         }
         record = {
             "step": step.id,
@@ -144,7 +144,9 @@ class Doc2Agent:
             "timestamp": self._current_timestamp(),
         }
         self.invocation_history.append(record)
-        self.metrics_log.append({"metric": "latency", "value": latency_ms, "labels": metric_labels})
+        self.metrics_log.append(
+            {"metric": "latency", "value": latency_ms, "labels": metric_labels}
+        )
         self.metrics_sink("doc2agent_tool_latency_ms", latency_ms, metric_labels)
         self.metrics_sink(
             "doc2agent_tool_status",
@@ -155,16 +157,22 @@ class Doc2Agent:
     def get_aggregate_metrics(self) -> Dict[str, Any]:
         total_steps = sum(data["total"] for data in self.tool_health.values())
         failure_count = sum(data["failure"] for data in self.tool_health.values())
-        latency_sum = sum(data["total_latency_ms"] for data in self.tool_health.values())
+        latency_sum = sum(
+            data["total_latency_ms"] for data in self.tool_health.values()
+        )
         tool_breakdown = {}
         for tool, data in self.tool_health.items():
             tool_breakdown[tool] = {
                 "total": data["total"],
                 "success": data["success"],
                 "failure": data["failure"],
-                "avg_latency_ms": data["total_latency_ms"] / data["total"] if data["total"] else 0.0,
+                "avg_latency_ms": (
+                    data["total_latency_ms"] / data["total"] if data["total"] else 0.0
+                ),
                 "last_latency_ms": data["last_latency_ms"],
-                "failure_rate": data["failure"] / data["total"] if data["total"] else 0.0,
+                "failure_rate": (
+                    data["failure"] / data["total"] if data["total"] else 0.0
+                ),
             }
 
         overall_failure_rate = failure_count / total_steps if total_steps else 0.0
@@ -179,14 +187,21 @@ class Doc2Agent:
     def _default_metrics_sink(
         self, metric_name: str, value: float, labels: Dict[str, Any]
     ) -> None:
-        entry = {"metric": metric_name, "value": value, "labels": labels, "timestamp": self._current_timestamp()}
+        entry = {
+            "metric": metric_name,
+            "value": value,
+            "labels": labels,
+            "timestamp": self._current_timestamp(),
+        }
         self.metrics_log.append(entry)
 
         if not self.tool_framework:
             return
 
         try:
-            self.tool_framework.execute_tool("track_metrics", metric_name, value, labels)
+            self.tool_framework.execute_tool(
+                "track_metrics", metric_name, value, labels
+            )
         except Exception:
             logger.debug("Doc2Agent metric emission failed", exc_info=True)
 

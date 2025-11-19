@@ -32,7 +32,9 @@ class AgenticMemory:
             settings_kwargs["persist_directory"] = persist_directory
         settings = Settings(**settings_kwargs)
         self.client = client or Client(settings=settings)
-        self.embedding_function = embedding_function or embedding_functions.DefaultEmbeddingFunction()
+        self.embedding_function = (
+            embedding_function or embedding_functions.DefaultEmbeddingFunction()
+        )
         self._collections: Dict[str, Any] = {}
         self.episodic = self._get_collection("episodic")
         self.semantic = self._get_collection("semantic")
@@ -47,7 +49,9 @@ class AgenticMemory:
     def _get_collection(self, name: str) -> Any:
         if name in self._collections:
             return self._collections[name]
-        collection = self.client.get_or_create_collection(name, embedding_function=self.embedding_function)
+        collection = self.client.get_or_create_collection(
+            name, embedding_function=self.embedding_function
+        )
         self._collections[name] = collection
         return collection
 
@@ -65,7 +69,9 @@ class AgenticMemory:
             "version": self.version_counter,
             "timestamp": episode.get("timestamp", datetime.now().isoformat()),
         }
-        await self._run_in_thread(collection.add, ids=[episode_id], documents=[document], metadatas=[metadata])
+        await self._run_in_thread(
+            collection.add, ids=[episode_id], documents=[document], metadatas=[metadata]
+        )
         return episode_id
 
     async def extract_semantic(self, text: str, context: str = "") -> str:
@@ -77,7 +83,9 @@ class AgenticMemory:
             "text_length": len(text),
             "timestamp": datetime.now().isoformat(),
         }
-        await self._run_in_thread(collection.add, ids=[concept_id], documents=[text], metadatas=[metadata])
+        await self._run_in_thread(
+            collection.add, ids=[concept_id], documents=[text], metadatas=[metadata]
+        )
         return concept_id
 
     async def store_procedure(self, problem: str, solution: str) -> str:
@@ -93,15 +101,24 @@ class AgenticMemory:
             "problem_hash": hashlib.md5(problem.encode()).hexdigest(),
             "created_at": datetime.now().isoformat(),
         }
-        await self._run_in_thread(collection.add, ids=[proc_id], documents=[json.dumps(procedure)], metadatas=[metadata])
+        await self._run_in_thread(
+            collection.add,
+            ids=[proc_id],
+            documents=[json.dumps(procedure)],
+            metadatas=[metadata],
+        )
         return proc_id
 
-    async def query_similar_episodes(self, task: str, top_k: int = 5) -> List[Dict[str, Any]]:
+    async def query_similar_episodes(
+        self, task: str, top_k: int = 5
+    ) -> List[Dict[str, Any]]:
         if task in self._query_cache:
             self.cache_hits += 1
             return self._query_cache[task]
         collection = self.episodic
-        results = await self._run_in_thread(collection.query, query_texts=[task], n_results=top_k)
+        results = await self._run_in_thread(
+            collection.query, query_texts=[task], n_results=top_k
+        )
         stored: List[Dict[str, Any]] = []
         ids = results.get("ids", [[]])[0]
         documents = results.get("documents", [[]])[0]
@@ -113,11 +130,17 @@ class AgenticMemory:
             self._query_cache.popitem(last=False)
         return stored
 
-    async def query_procedures(self, problem: str, top_k: int = 3) -> List[Dict[str, Any]]:
+    async def query_procedures(
+        self, problem: str, top_k: int = 3
+    ) -> List[Dict[str, Any]]:
         collection = self.procedural
-        results = await self._run_in_thread(collection.query, query_texts=[problem], n_results=top_k)
+        results = await self._run_in_thread(
+            collection.query, query_texts=[problem], n_results=top_k
+        )
         stored: List[Dict[str, Any]] = []
-        for item_id, doc in zip(results.get("ids", [[]])[0], results.get("documents", [[]])[0]):
+        for item_id, doc in zip(
+            results.get("ids", [[]])[0], results.get("documents", [[]])[0]
+        ):
             try:
                 stored.append(json.loads(doc))
             except json.JSONDecodeError:

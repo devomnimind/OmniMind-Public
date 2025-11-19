@@ -23,13 +23,13 @@ def get_utc_timestamp() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
-@pytest.fixture  # type: ignore[misc]
+@pytest.fixture
 def utc_timestamp() -> str:
     """Fixture that provides a timezone-aware UTC timestamp for tests."""
     return get_utc_timestamp()
 
 
-@pytest.fixture(scope="session")  # type: ignore[misc]
+@pytest.fixture(scope="session")
 def event_loop_policy() -> asyncio.AbstractEventLoopPolicy:
     """Configure the global event loop policy with debug awareness."""
 
@@ -42,7 +42,7 @@ def event_loop_policy() -> asyncio.AbstractEventLoopPolicy:
     return policy
 
 
-@pytest.fixture(scope="function")  # type: ignore[misc]
+@pytest.fixture(scope="function")
 def event_loop(
     event_loop_policy: asyncio.AbstractEventLoopPolicy,
 ) -> Generator[asyncio.AbstractEventLoop, None, None]:
@@ -55,7 +55,7 @@ def event_loop(
     loop.close()
 
 
-@pytest.fixture(scope="session", autouse=True)  # type: ignore[misc]
+@pytest.fixture(scope="session", autouse=True)
 def configure_logging() -> logging.Logger:
     """Ensure consistent debug logging during tests."""
 
@@ -66,7 +66,7 @@ def configure_logging() -> logging.Logger:
     return logging.getLogger("tests")
 
 
-@pytest.fixture(scope="session", autouse=True)  # type: ignore[misc]
+@pytest.fixture(scope="session", autouse=True)
 def setup_omnimind_env() -> Generator[None, None, None]:
     """Prepare OmniMind directories and environment variables."""
 

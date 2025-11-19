@@ -35,7 +35,9 @@ class ReAcTreeAgent:
         self.tree: Optional[Thought] = None
         self.execution_history: List[Thought] = []
 
-    async def decompose_goal(self, goal: str, context: str = "") -> List[Dict[str, Any]]:
+    async def decompose_goal(
+        self, goal: str, context: str = ""
+    ) -> List[Dict[str, Any]]:
         prompt = f"""
 You are a task decomposition expert. Break down this complex goal into manageable subgoals.
 For each subgoal, specify the control flow type (sequence, fallback, or parallel).
@@ -105,7 +107,11 @@ Output JSON:
                     depth + 1,
                 )
                 node.subgoals.append(subgoal_node)
-            cf_type = subgoals_data[0].get("control_flow", "sequence") if subgoals_data else "sequence"
+            cf_type = (
+                subgoals_data[0].get("control_flow", "sequence")
+                if subgoals_data
+                else "sequence"
+            )
             node.control_flow = ControlFlowType(cf_type)
             node.status = "in_progress"
         else:
@@ -170,7 +176,9 @@ What action should you take? Output JSON with action and params.
             return {"error": "all fallbacks failed"}
 
         results = []
-        parallel = await asyncio.gather(*(self._execute_control_flow(subgoal) for subgoal in node.subgoals))
+        parallel = await asyncio.gather(
+            *(self._execute_control_flow(subgoal) for subgoal in node.subgoals)
+        )
         results.extend(parallel)
         node.status = "success"
         return {"results": results, "flow": "parallel"}
@@ -178,7 +186,9 @@ What action should you take? Output JSON with action and params.
     def _calculate_depth(self, node: Thought, depth: int = 0) -> int:
         if not node.subgoals:
             return depth
-        return max(self._calculate_depth(subgoal, depth + 1) for subgoal in node.subgoals)
+        return max(
+            self._calculate_depth(subgoal, depth + 1) for subgoal in node.subgoals
+        )
 
     @staticmethod
     def _parse_json(payload: Any) -> Dict[str, Any]:

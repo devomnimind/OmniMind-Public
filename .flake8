@@ -11,6 +11,7 @@ exclude =
     DEVBRAIN_V23,
     third_party,
     archive/examples/*,
+    archive/legacy_scripts/*,
     data,
     venv,
     src/agents/react_agent_broken.py,
@@ -19,3 +20,4 @@ exclude =
     src/onboarding
     */sympy/*
 # Excluído sympy/** do flake8 por erro recursivo em dependência externa (não faz parte do core OmniMind)
+# Excluído archive/legacy_scripts/* - scripts legados arquivados do desenvolvimento

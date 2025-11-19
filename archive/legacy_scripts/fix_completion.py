@@ -1,7 +1,7 @@
 # Fix completion flag in ReactAgent
 
 file_path = "src/agents/react_agent.py"
-with open(file_path, 'r') as f:
+with open(file_path, "r") as f:
     content = f.read()
 
 # Fix 1: Modify _observe_node to set completion flags
@@ -70,7 +70,7 @@ new_should = '''    def _should_continue(self, state: AgentState) -> str:
 
 content = content.replace(old_should, new_should)
 
-with open(file_path, 'w') as f:
+with open(file_path, "w") as f:
     f.write(content)
 
 print("✅ Fixed completion logic:")

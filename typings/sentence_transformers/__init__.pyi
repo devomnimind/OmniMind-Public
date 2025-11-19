@@ -5,9 +5,8 @@ import numpy as np
 
 class SentenceTransformer:
     """Sentence transformer for generating embeddings."""
-    
+
     def __init__(self, model_name_or_path: str, **kwargs: Any) -> None: ...
-    
     def encode(
         self,
         sentences: Union[str, List[str]],

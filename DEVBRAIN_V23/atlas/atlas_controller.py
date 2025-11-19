@@ -35,7 +35,9 @@ class AtlasController:
 
     def _register_hooks(self) -> None:
         self.self_healing.register_monitor(self._atlas_failure_monitor)
-        self.self_healing.register_remediation(self.issue_type, self._atlas_remediation_handler)
+        self.self_healing.register_remediation(
+            self.issue_type, self._atlas_remediation_handler
+        )
 
     def analyze_metrics(self, metrics: Dict[str, Any]) -> None:
         self._latest_metrics = metrics
@@ -78,14 +80,20 @@ class AtlasController:
                 "id": f"atlas-{datetime.now(timezone.utc).isoformat()}",
                 "details": {"failure_rate": failure_rate},
             }
-        return {"status": "ok", "type": self.issue_type, "details": {"failure_rate": failure_rate}}
+        return {
+            "status": "ok",
+            "type": self.issue_type,
+            "details": {"failure_rate": failure_rate},
+        }
 
     async def _atlas_remediation_handler(self, issue: Dict[str, Any]) -> Dict[str, Any]:
         if not self.doc_agent:
             return {"success": False, "description": "Doc2Agent missing"}
 
         prompt = f"Adapt for issue {issue.get('id')} with rate {issue.get('details')}"
-        steps = await self.doc_agent.analyze_documents([prompt], "Atlas rapid adaptation")
+        steps = await self.doc_agent.analyze_documents(
+            [prompt], "Atlas rapid adaptation"
+        )
         results = await self.doc_agent.execute_plan(steps)
         success = all(not entry["result"].get("error") for entry in results)
         description = "Adaptation succeeded" if success else "Adaptation had errors"

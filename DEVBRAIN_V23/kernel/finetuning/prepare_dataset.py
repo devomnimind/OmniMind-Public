@@ -88,7 +88,9 @@ class DatasetCollector:
                 elif isinstance(data, list):
                     for item in data:
                         if isinstance(item, dict) and "text" in item:
-                            examples.append({"text": item["text"], "source": "voice_transcript"})
+                            examples.append(
+                                {"text": item["text"], "source": "voice_transcript"}
+                            )
             except Exception as e:
                 logger.warning(f"Error reading {json_file}: {e}")
         logger.info(f"✅ Collected {len(examples)} transcript examples")
@@ -108,8 +110,12 @@ class DatasetCollector:
             logger.error("❌ Dataset is empty!")
             return False
         if len(self.examples) < 50:
-            logger.warning(f"⚠️ Dataset has only {len(self.examples)} examples (target: ≥50)")
-        avg_length = sum(len(ex.get("text", "")) for ex in self.examples) / len(self.examples)
+            logger.warning(
+                f"⚠️ Dataset has only {len(self.examples)} examples (target: ≥50)"
+            )
+        avg_length = sum(len(ex.get("text", "")) for ex in self.examples) / len(
+            self.examples
+        )
         logger.info(f"Average text length: {avg_length:.0f} chars")
         if avg_length < 50:
             logger.warning("⚠️ Average text too short")
@@ -140,9 +146,18 @@ def main() -> None:
     if not collector.examples:
         logger.info("No data sources provided. Adding example data...")
         collector.examples = [
-            {"text": "I believe AI should be transparent, ethical, and respectful of h", "source": "manual"},
-            {"text": "My approach to problem-solving is systematic and creative.", "source": "manual"},
-            {"text": "I value privacy, learning, and meaningful connections.", "source": "manual"},
+            {
+                "text": "I believe AI should be transparent, ethical, and respectful of h",
+                "source": "manual",
+            },
+            {
+                "text": "My approach to problem-solving is systematic and creative.",
+                "source": "manual",
+            },
+            {
+                "text": "I value privacy, learning, and meaningful connections.",
+                "source": "manual",
+            },
         ]
     collector.validate()
     collector.save_dataset()

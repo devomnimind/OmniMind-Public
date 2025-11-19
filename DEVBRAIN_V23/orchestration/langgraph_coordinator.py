@@ -79,7 +79,9 @@ class LangGraphCoordinator:
             except Exception as exc:
                 sensor_snapshot = {"error": str(exc)}
         if self.amem:
-            similar = await self.amem.query_similar_episodes(state["intention"], top_k=3)
+            similar = await self.amem.query_similar_episodes(
+                state["intention"], top_k=3
+            )
 
         return {
             "plan": plan,
@@ -152,14 +154,18 @@ Results: {json.dumps(state['execution_results'], indent=2)}
         response = await self.llm.ainvoke(prompt)
 
         if self.amem:
-            await self.amem.store_episode({
-                "intention": state["intention"],
-                "plan": state["plan"],
-                "results": state["execution_results"],
-                "similar": state.get("metadata", {}).get("similar_episodes", []),
-                "sensor_snapshot": state.get("metadata", {}).get("sensor_snapshot", {}),
-                "timestamp": datetime.now().isoformat(),
-            })
+            await self.amem.store_episode(
+                {
+                    "intention": state["intention"],
+                    "plan": state["plan"],
+                    "results": state["execution_results"],
+                    "similar": state.get("metadata", {}).get("similar_episodes", []),
+                    "sensor_snapshot": state.get("metadata", {}).get(
+                        "sensor_snapshot", {}
+                    ),
+                    "timestamp": datetime.now().isoformat(),
+                }
+            )
 
         return {
             "final_result": response.content,
@@ -175,7 +181,9 @@ Results: {json.dumps(state['execution_results'], indent=2)}
             "final_result": f"Could not execute due to: {', '.join(state.get('criticism', []))}",
         }
 
-    async def run(self, intention: str, context: Dict[str, Any] | None = None) -> Dict[str, Any]:
+    async def run(
+        self, intention: str, context: Dict[str, Any] | None = None
+    ) -> Dict[str, Any]:
         initial_state: PlanState = {
             "intention": intention,
             "plan": [],

@@ -37,7 +37,9 @@ class AutonomyObservability:
         if len(self.alerts) > self.history_limit:
             self.alerts.pop(0)
 
-    def record_atlas_insight(self, insight: Union[AtlasInsight, Dict[str, Any]]) -> None:
+    def record_atlas_insight(
+        self, insight: Union[AtlasInsight, Dict[str, Any]]
+    ) -> None:
         if isinstance(insight, dict):
             insight = AtlasInsight(**insight)
         self.atlas_insights.append(insight)
@@ -58,13 +60,19 @@ class AutonomyObservability:
         }
 
     def record_sandbox_event(self, metadata: Dict[str, Any]) -> None:
-        timestamped = {"timestamp": metadata.get("timestamp", datetime.utcnow().isoformat()), **metadata}
+        timestamped = {
+            "timestamp": metadata.get("timestamp", datetime.utcnow().isoformat()),
+            **metadata,
+        }
         self.sandbox_events.append(timestamped)
         if len(self.sandbox_events) > self.history_limit:
             self.sandbox_events.pop(0)
 
     def record_dlp_alert(self, alert: Dict[str, Any]) -> None:
-        timestamped = {"timestamp": alert.get("timestamp", datetime.utcnow().isoformat()), **alert}
+        timestamped = {
+            "timestamp": alert.get("timestamp", datetime.utcnow().isoformat()),
+            **alert,
+        }
         self.dlp_alerts.append(timestamped)
         if len(self.dlp_alerts) > self.history_limit:
             self.dlp_alerts.pop(0)

@@ -49,8 +49,8 @@ class GraphQLSupabaseHelper:
         if not config.service_role_key:
             raise GraphQLSupabaseError("Service role key required for GraphQL helper")
         self.config = config
-        self.session: GraphQLSession = (
-            session or cast(GraphQLSession, requests.Session())
+        self.session: GraphQLSession = session or cast(
+            GraphQLSession, requests.Session()
         )
         self.endpoint = f"{config.url.rstrip('/')}/graphql/v1"
         self.headers = {

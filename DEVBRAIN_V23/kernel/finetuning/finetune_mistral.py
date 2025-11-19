@@ -49,7 +49,11 @@ class MistralFineTuner:
         self.output_dir = Path(output_dir)
         self.device_map = device_map
         self.load_in_4bit = load_in_4bit
-        self.hf_token = hf_token or os.environ.get("HUGGING_FACE_HUB_TOKEN") or os.environ.get("HF_TOKEN")
+        self.hf_token = (
+            hf_token
+            or os.environ.get("HUGGING_FACE_HUB_TOKEN")
+            or os.environ.get("HF_TOKEN")
+        )
         self.max_memory = max_memory
         self.offload_folder = offload_folder
         self.tokenizer = None
@@ -85,11 +89,16 @@ class MistralFineTuner:
         tokenizer_kwargs: Dict[str, Any] = {"trust_remote_code": True}
         if self.hf_token:
             tokenizer_kwargs["token"] = self.hf_token
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name, **tokenizer_kwargs)
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            self.model_name, **tokenizer_kwargs
+        )
         self.tokenizer.pad_token = self.tokenizer.eos_token
         self.tokenizer.padding_side = "left"
 
-        model_kwargs: Dict[str, Any] = {"trust_remote_code": True, "device_map": self.device_map}
+        model_kwargs: Dict[str, Any] = {
+            "trust_remote_code": True,
+            "device_map": self.device_map,
+        }
         if self.load_in_4bit:
             quant_config = BitsAndBytesConfig(
                 load_in_4bit=True,
@@ -112,7 +121,9 @@ class MistralFineTuner:
         if self.hf_token:
             model_kwargs["token"] = self.hf_token
 
-        self.model = AutoModelForCausalLM.from_pretrained(self.model_name, **model_kwargs)
+        self.model = AutoModelForCausalLM.from_pretrained(
+            self.model_name, **model_kwargs
+        )
         logger.info("✅ Model loaded: %s", self.model_name)
         logger.info("Model parameters: %s", f"{self.model.num_parameters():,}")
 
@@ -258,7 +269,9 @@ class MistralFineTuner:
             json.dump(metadata, file_obj, indent=2)
         logger.info("✅ Model saved")
 
-    def push_to_hub(self, repo_id: str, commit_message: str = "Add fine-tuned checkpoint") -> None:
+    def push_to_hub(
+        self, repo_id: str, commit_message: str = "Add fine-tuned checkpoint"
+    ) -> None:
         """Upload artifacts to Hugging Face Hub"""
         if not repo_id:
             raise ValueError("repo_id is required to push to hub")
@@ -318,13 +331,19 @@ def parse_max_memory(raw: Optional[str]) -> Optional[Dict[str, str]]:
 def main():
     parser = argparse.ArgumentParser(description="DevBrain Mistral Fine-tuning")
     parser.add_argument("--dataset", required=True, help="Path to JSONL dataset")
-    parser.add_argument("--output", default="./mistral_finetuned", help="Output directory")
+    parser.add_argument(
+        "--output", default="./mistral_finetuned", help="Output directory"
+    )
     parser.add_argument("--epochs", type=int, default=3, help="Training epochs")
     parser.add_argument("--batch-size", type=int, default=4, help="Batch size")
     parser.add_argument("--lr", type=float, default=2e-4, help="Learning rate")
-    parser.add_argument("--model", default="mistralai/Mistral-7B-v0.1", help="Model name")
+    parser.add_argument(
+        "--model", default="mistralai/Mistral-7B-v0.1", help="Model name"
+    )
     parser.add_argument("--device-map", default="auto", help="Device map strategy")
-    parser.add_argument("--no-4bit", action="store_true", help="Disable 4-bit quantization")
+    parser.add_argument(
+        "--no-4bit", action="store_true", help="Disable 4-bit quantization"
+    )
     parser.add_argument("--hf-token", help="Override Hugging Face token")
     parser.add_argument(
         "--max-memory",
@@ -352,8 +371,14 @@ def main():
     )
     args = parser.parse_args()
     max_memory = parse_max_memory(args.max_memory)
-    offload_folder = Path(args.offload_folder).expanduser() if args.offload_folder else None
-    grad_accum = args.grad_accum if args.grad_accum and args.grad_accum > 0 else (4 if args.batch_size <= 1 else 2)
+    offload_folder = (
+        Path(args.offload_folder).expanduser() if args.offload_folder else None
+    )
+    grad_accum = (
+        args.grad_accum
+        if args.grad_accum and args.grad_accum > 0
+        else (4 if args.batch_size <= 1 else 2)
+    )
     fine_tuner = MistralFineTuner(
         model_name=args.model,
         output_dir=args.output,
