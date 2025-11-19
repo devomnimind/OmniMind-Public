@@ -56,6 +56,12 @@ from src.scaling.multi_level_cache import (
     EvictionPolicy,
     MultiLevelCache,
 )
+from src.scaling.redis_cluster_manager import (
+    RedisClusterManager,
+    ClusterState,
+    ClusterNode,
+    ClusterHealth,
+)
 
 __all__ = [
     # Multi-Tenant Isolation (NEW)
@@ -100,4 +106,9 @@ __all__ = [
     "CacheLayer",
     "EvictionPolicy",
     "MultiLevelCache",
+    # Redis Cluster (NEW)
+    "RedisClusterManager",
+    "ClusterState",
+    "ClusterNode",
+    "ClusterHealth",
 ]

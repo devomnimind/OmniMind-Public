@@ -1,0 +1,128 @@
+# Docker Compose for Redis Cluster
+# 6-node cluster: 3 masters + 3 replicas (1 replica per master)
+
+version: "3.9"
+
+services:
+  redis-node-1:
+    image: redis:7-alpine
+    container_name: redis-node-1
+    command: redis-server /usr/local/etc/redis/redis.conf --port 7000
+    ports:
+      - "7000:7000"
+      - "17000:17000"
+    volumes:
+      - ./config/redis/redis-cluster.conf:/usr/local/etc/redis/redis.conf
+      - redis-node-1-data:/data
+    networks:
+      - redis-cluster
+    restart: unless-stopped
+
+  redis-node-2:
+    image: redis:7-alpine
+    container_name: redis-node-2
+    command: redis-server /usr/local/etc/redis/redis.conf --port 7001
+    ports:
+      - "7001:7001"
+      - "17001:17001"
+    volumes:
+      - ./config/redis/redis-cluster.conf:/usr/local/etc/redis/redis.conf
+      - redis-node-2-data:/data
+    networks:
+      - redis-cluster
+    restart: unless-stopped
+
+  redis-node-3:
+    image: redis:7-alpine
+    container_name: redis-node-3
+    command: redis-server /usr/local/etc/redis/redis.conf --port 7002
+    ports:
+      - "7002:7002"
+      - "17002:17002"
+    volumes:
+      - ./config/redis/redis-cluster.conf:/usr/local/etc/redis/redis.conf
+      - redis-node-3-data:/data
+    networks:
+      - redis-cluster
+    restart: unless-stopped
+
+  redis-node-4:
+    image: redis:7-alpine
+    container_name: redis-node-4
+    command: redis-server /usr/local/etc/redis/redis.conf --port 7003
+    ports:
+      - "7003:7003"
+      - "17003:17003"
+    volumes:
+      - ./config/redis/redis-cluster.conf:/usr/local/etc/redis/redis.conf
+      - redis-node-4-data:/data
+    networks:
+      - redis-cluster
+    restart: unless-stopped
+
+  redis-node-5:
+    image: redis:7-alpine
+    container_name: redis-node-5
+    command: redis-server /usr/local/etc/redis/redis.conf --port 7004
+    ports:
+      - "7004:7004"
+      - "17004:17004"
+    volumes:
+      - ./config/redis/redis-cluster.conf:/usr/local/etc/redis/redis.conf
+      - redis-node-5-data:/data
+    networks:
+      - redis-cluster
+    restart: unless-stopped
+
+  redis-node-6:
+    image: redis:7-alpine
+    container_name: redis-node-6
+    command: redis-server /usr/local/etc/redis/redis.conf --port 7005
+    ports:
+      - "7005:7005"
+      - "17005:17005"
+    volumes:
+      - ./config/redis/redis-cluster.conf:/usr/local/etc/redis/redis.conf
+      - redis-node-6-data:/data
+    networks:
+      - redis-cluster
+    restart: unless-stopped
+
+  # Cluster initialization (run once)
+  redis-cluster-init:
+    image: redis:7-alpine
+    container_name: redis-cluster-init
+    command: >
+      sh -c "
+        sleep 5 &&
+        redis-cli --cluster create
+        redis-node-1:7000
+        redis-node-2:7001
+        redis-node-3:7002
+        redis-node-4:7003
+        redis-node-5:7004
+        redis-node-6:7005
+        --cluster-replicas 1
+        --cluster-yes
+      "
+    depends_on:
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+      - redis-node-4
+      - redis-node-5
+      - redis-node-6
+    networks:
+      - redis-cluster
+
+volumes:
+  redis-node-1-data:
+  redis-node-2-data:
+  redis-node-3-data:
+  redis-node-4-data:
+  redis-node-5-data:
+  redis-node-6-data:
+
+networks:
+  redis-cluster:
+    driver: bridge
