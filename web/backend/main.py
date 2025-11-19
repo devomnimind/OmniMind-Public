@@ -249,6 +249,19 @@ def _load_last_validation_entry() -> Dict[str, Any]:
         }
 
 
+@app.get("/")
+async def read_root():
+    """A simple endpoint to confirm the API is running."""
+    return {"message": "OmniMind Backend is running."}
+
+
+@app.get("/api/v1/status")
+async def get_status():
+    """Returns the current status of the OmniMind system."""
+    # In the future, this will query the OrchestratorAgent.
+    return {"status": "nominal", "active_agents": 0}
+
+
 @app.get("/health")
 def health() -> Dict[str, Any]:
     orch = None
