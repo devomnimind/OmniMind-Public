@@ -27,9 +27,9 @@ Documentation=https://github.com/omnimind/omnimind
 Type=simple
 User=%u
 WorkingDirectory=%h/projects/omnimind
-Environment="PATH=%h/projects/omnimind/venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="PATH=%h/projects/omnimind/.venv/bin:/usr/local/bin:/usr/bin:/bin"
 Environment="PYTHONUNBUFFERED=1"
-ExecStart=%h/projects/omnimind/venv/bin/python -m omnimind_core
+ExecStart=%h/projects/omnimind/.venv/bin/python -m omnimind_core
 
 Restart=on-failure
 RestartSec=10

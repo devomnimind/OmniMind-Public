@@ -134,11 +134,11 @@ echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "8. Verificando ambiente Python OmniMind"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-if [ -d "$HOME/projects/omnimind/venv" ]; then
+if [ -d "$HOME/projects/omnimind/.venv" ]; then
     check_pass "Virtual environment encontrado"
     
     # Ativar e verificar
-    source "$HOME/projects/omnimind/venv/bin/activate"
+    source "$HOME/projects/omnimind/.venv/bin/activate"
     
     if python3 -c "import torch; print(torch.cuda.is_available())" 2>/dev/null | grep -q True; then
         check_pass "PyTorch com CUDA disponível"
@@ -157,9 +157,9 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "9. Registrando verificação no sistema de auditoria"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-if [ -d "$HOME/projects/omnimind/venv" ]; then
+if [ -d "$HOME/projects/omnimind/.venv" ]; then
     cd "$HOME/projects/omnimind"
-    source venv/bin/activate
+    source .venv/bin/activate
     
     python3 << 'PYEOF'
 from src.audit import log_action

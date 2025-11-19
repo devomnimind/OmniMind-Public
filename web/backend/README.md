@@ -5,7 +5,7 @@ Integra o `OrchestratorAgent` ao dashboard FastAPI com autenticação básica, m
 ## Requisitos
 
 - Python 3.12+
-- Ambiente virtual configurado (use `source venv/bin/activate`)
+- Ambiente virtual configurado (use `source .venv/bin/activate`)
 - Dependências instaladas (`pip install -r requirements.txt`)
 
 ## Execução local

@@ -59,8 +59,8 @@ OmniMind is a self-hosted multi-agent system with a FastAPI + React dashboard, s
 3. Create and activate the Python virtual environment:
 
 ```bash
-python -m venv venv
-source venv/bin/activate
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 
 # Verify GPU setup
