@@ -1,0 +1,17 @@
+{
+  "cpu_cores_physical": 1,
+  "cpu_cores_logical": 2,
+  "cpu_freq_mhz": 3506.2035,
+  "cpu_architecture": "x86_64",
+  "ram_total_gb": 7.757110595703125,
+  "ram_available_gb": 6.320716857910156,
+  "swap_total_gb": 2.9999961853027344,
+  "gpu_available": false,
+  "os_system": "Linux",
+  "os_release": "6.11.0-1018-azure",
+  "machine_type": "x86_64",
+  "gpu_name": null,
+  "gpu_vram_gb": null,
+  "gpu_compute_capability": null,
+  "detected_at": "2025-11-19T05:58:40.770266"
+}

@@ -19,12 +19,18 @@
 - **.github/ENVIRONMENT.md** - GPU/CUDA/Python environment specifications
 - **docs/dashboard_architecture.md** - Web UI/dashboard architecture
 - **docs/devbrain_data_integration.md** - Integration patterns and data flow
+- **docs/HARDWARE_OPTIMIZATION_SUMMARY.md** - Hardware detection and optimization
+- **docs/ROADMAP_PROGRESS.md** - Phase 7/8 roadmap and progress tracking
 
 ### 🔒 Security & Compliance
 - **docs/root_docs/GPU_CUDA_REPAIR_AUDIT_COMPLETE.md** - GPU/CUDA audit and repairs
 - **docs/Modulo Securityforensis/** - Complete security forensics module (read-only reference)
+- **docs/CLOUD_FREE_DEPLOYMENT.md** - Cloud-free deployment alternatives
+- **docs/FREE_SERVICE_ALTERNATIVES.md** - Free service alternatives guide
 - **config/security.yaml** - Security configuration
 - **config/dlp_policies.yaml** - Data Loss Prevention policies
+- **config/hardware_profile.json** - Detected hardware specifications
+- **config/optimization_config.json** - Optimization configuration
 
 ### 📊 Project Status & Reports
 - **docs/root_docs/PHASE7_DOCUMENTATION_COMPLETION_REPORT.md** - Phase 7 completion details
@@ -169,9 +175,11 @@ omnimind/
 
 ### ✅ Phase 7 Complete (GPU/CUDA)
 - Python 3.12.8 (pinned, verified)
-- CUDA 12.4, PyTorch 2.6.0+cu124
-- GPU verified: 1124.44 GFLOPS ✅
-- Environment: Single .venv/, consolidated
+- CUDA 12.4, PyTorch 2.6.0+cu124 (GPU)
+- CPU-only deployment (requirements-cpu.txt)
+- Automatic hardware detection & optimization
+- Hardware profile: `config/hardware_profile.json`
+- Optimization config: `config/optimization_config.json`
 - All documentation updated
 
 ### 🔄 Phase 8 (Current Development)
@@ -180,6 +188,7 @@ omnimind/
 - MCP Protocol Implementation (ready)
 - D-Bus Integration (ready)
 - Web UI Dashboard (framework ready)
+- Hardware optimization branch merged
 
 ---
 
