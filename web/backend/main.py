@@ -9,7 +9,7 @@ import threading
 import time
 from contextlib import asynccontextmanager, suppress
 from pathlib import Path
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Callable, Dict, Optional, Tuple
 
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -22,7 +22,9 @@ from DEVBRAIN_V23.autonomy.observability import autonomy_observability
 from src.agents.orchestrator_agent import OrchestratorAgent
 
 logger = logging.getLogger("omnimind.backend")
-_AUTH_FILE = Path(os.environ.get("OMNIMIND_DASHBOARD_AUTH_FILE", "config/dashboard_auth.json"))
+_AUTH_FILE = Path(
+    os.environ.get("OMNIMIND_DASHBOARD_AUTH_FILE", "config/dashboard_auth.json")
+)
 
 
 def _load_dashboard_credentials() -> Optional[Dict[str, str]]:
@@ -47,7 +49,9 @@ def _persist_dashboard_credentials(credentials: Dict[str, str]) -> None:
             json.dump(credentials, stream, indent=2)
         _AUTH_FILE.chmod(0o600)
     except Exception as exc:
-        logger.warning("Unable to persist dashboard credentials %s: %s", _AUTH_FILE, exc)
+        logger.warning(
+            "Unable to persist dashboard credentials %s: %s", _AUTH_FILE, exc
+        )
 
 
 def _generate_dashboard_credentials() -> Dict[str, str]:
@@ -74,6 +78,7 @@ def _ensure_dashboard_credentials() -> Tuple[str, str]:
     logger.info("Generated dashboard credentials at %s (keep file private)", _AUTH_FILE)
     return generated["user"], generated["pass"]
 
+
 @asynccontextmanager
 async def lifespan(app_instance: FastAPI) -> Any:
     app_instance.state.metrics_task = asyncio.create_task(_metrics_reporter())
@@ -86,9 +91,13 @@ async def lifespan(app_instance: FastAPI) -> Any:
             with suppress(asyncio.CancelledError):
                 await task
 
+
 app = FastAPI(
     title="OmniMind Dashboard API",
-    description="Provides orchestrator snapshots, MCP/D-Bus telemetry, metrics, and orchestration controls.",
+    description=(
+        "Provides orchestrator snapshots, MCP/D-Bus telemetry, metrics, and "
+        "orchestration controls."
+    ),
     version="0.2.0",
     lifespan=lifespan,
 )
@@ -103,7 +112,9 @@ security = HTTPBasic()
 
 _orchestrator_instance: Optional[OrchestratorAgent] = None
 _metrics_collect_interval = int(os.environ.get("OMNIMIND_METRICS_INTERVAL", "30"))
-_validation_log = Path(os.environ.get("OMNIMIND_SECURITY_VALIDATION_LOG", "logs/security_validation.jsonl"))
+_validation_log = Path(
+    os.environ.get("OMNIMIND_SECURITY_VALIDATION_LOG", "logs/security_validation.jsonl")
+)
 _dashboard_user, _dashboard_pass = _ensure_dashboard_credentials()
 
 
@@ -141,18 +152,18 @@ class MetricsCollector:
 metrics_collector = MetricsCollector()
 
 
-class OrchestrateRequest(BaseModel):  # type: ignore[misc]
+class OrchestrateRequest(BaseModel):
     task: str
     max_iterations: int = 3
 
 
-class MCPFlowRequest(BaseModel):  # type: ignore[misc]
+class MCPFlowRequest(BaseModel):
     action: str = "read"
     path: Optional[str] = None
     recursive: bool = False
 
 
-class DBusFlowRequest(BaseModel):  # type: ignore[misc]
+class DBusFlowRequest(BaseModel):
     flow: str = "power"
     media_action: str = "playpause"
 
@@ -177,18 +188,18 @@ def _verify_credentials(credentials: HTTPBasicCredentials = Depends(security)) -
             detail="Invalid dashboard credentials",
             headers={"WWW-Authenticate": "Basic"},
         )
-    return credentials.username  # type: ignore[no-any-return]
+    return credentials.username
 
 
-@app.middleware("http")  # type: ignore[misc]
-async def track_metrics(request: Request, call_next) -> Any:  # type: ignore[no-untyped-def]
+@app.middleware("http")
+async def track_metrics(request: Request, call_next: Callable[[Request], Any]) -> Any:
     start = time.perf_counter()
     success = True
     try:
         response = await call_next(request)
         success = response.status_code < 400
         return response
-    except Exception as exc:
+    except Exception:
         success = False
         logger.exception("Unhandled error processing %s", request.url.path)
         raise
@@ -200,7 +211,7 @@ async def track_metrics(request: Request, call_next) -> Any:  # type: ignore[no-
 def _collect_orchestrator_metrics() -> Dict[str, Any]:
     try:
         orch = _get_orchestrator()
-        return orch.metrics_summary()  # type: ignore[no-any-return]
+        return orch.metrics_summary()
     except HTTPException:
         return {"error": "orchestrator unavailable"}
 
@@ -210,7 +221,12 @@ async def _metrics_reporter() -> None:
         await asyncio.sleep(_metrics_collect_interval)
         summary = metrics_collector.summary()
         orch_metrics = _collect_orchestrator_metrics()
-        logger.info("Dashboard metrics heartbeat - requests=%s errors=%s orchestrator=%s", summary["requests"], summary["errors"], orch_metrics)
+        logger.info(
+            "Dashboard metrics heartbeat - requests=%s errors=%s orchestrator=%s",
+            summary["requests"],
+            summary["errors"],
+            orch_metrics,
+        )
 
 
 def _load_last_validation_entry() -> Dict[str, Any]:
@@ -226,10 +242,14 @@ def _load_last_validation_entry() -> Dict[str, Any]:
                 entry = json.loads(line)
         return {"latest": entry, "log_path": str(_validation_log)}
     except Exception:
-        return {"latest": None, "log_path": str(_validation_log), "error": "failed to parse"}
+        return {
+            "latest": None,
+            "log_path": str(_validation_log),
+            "error": "failed to parse",
+        }
 
 
-@app.get("/health")  # type: ignore[misc]
+@app.get("/health")
 def health() -> Dict[str, Any]:
     orch = None
     try:
@@ -243,7 +263,7 @@ def health() -> Dict[str, Any]:
     }
 
 
-@app.get("/status")  # type: ignore[misc]
+@app.get("/status")
 def status(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
     orch = _get_orchestrator()
     return {
@@ -255,27 +275,26 @@ def status(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
     }
 
 
-@app.get("/snapshot")  # type: ignore[misc]
+@app.get("/snapshot")
 def snapshot(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
     orch = _get_orchestrator()
-    return orch.dashboard_snapshot or orch.refresh_dashboard_snapshot()  # type: ignore[no-any-return]
+    return orch.dashboard_snapshot or orch.refresh_dashboard_snapshot()
 
 
-@app.get("/plan")  # type: ignore[misc]
+@app.get("/plan")
 def plan_view(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
     orch = _get_orchestrator()
-    return orch.plan_overview()  # type: ignore[no-any-return]
+    return orch.plan_overview()
 
 
-@app.get("/metrics")  # type: ignore[misc]
+@app.get("/metrics")
 def metrics(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
-    orch = _get_orchestrator()
     return {
         "backend": metrics_collector.summary(),
     }
 
 
-@app.get("/observability")  # type: ignore[misc]
+@app.get("/observability")
 def observability(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
     return {
         "self_healing": autonomy_observability.get_self_healing_snapshot(),
@@ -286,8 +305,10 @@ def observability(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
     }
 
 
-@app.post("/tasks/orchestrate")  # type: ignore[misc]
-def orchestrate(request: OrchestrateRequest, user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+@app.post("/tasks/orchestrate")
+def orchestrate(
+    request: OrchestrateRequest, user: str = Depends(_verify_credentials)
+) -> Dict[str, Any]:
     orch = _get_orchestrator()
     result = orch.run_orchestrated_task(request.task, request.max_iterations)
     snapshot = orch.refresh_dashboard_snapshot()
@@ -300,22 +321,32 @@ def orchestrate(request: OrchestrateRequest, user: str = Depends(_verify_credent
     }
 
 
-@app.post("/dashboard/refresh")  # type: ignore[misc]
+@app.post("/dashboard/refresh")
 def refresh_dashboard(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
     orch = _get_orchestrator()
     snapshot = orch.refresh_dashboard_snapshot()
     return {"status": "refreshed", "snapshot": snapshot}
 
 
-@app.post("/mcp/execute")  # type: ignore[misc]
-def mcp_execute(request: MCPFlowRequest, user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+@app.post("/mcp/execute")
+def mcp_execute(
+    request: MCPFlowRequest, user: str = Depends(_verify_credentials)
+) -> Dict[str, Any]:
     orch = _get_orchestrator()
-    result = orch.trigger_mcp_action(action=request.action, path=request.path or "config/agent_config.yaml", recursive=request.recursive)
+    result = orch.trigger_mcp_action(
+        action=request.action,
+        path=request.path or "config/agent_config.yaml",
+        recursive=request.recursive,
+    )
     return {"result": result, "dashboard": orch.dashboard_snapshot}
 
 
-@app.post("/dbus/execute")  # type: ignore[misc]
-def dbus_execute(request: DBusFlowRequest, user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+@app.post("/dbus/execute")
+def dbus_execute(
+    request: DBusFlowRequest, user: str = Depends(_verify_credentials)
+) -> Dict[str, Any]:
     orch = _get_orchestrator()
-    result = orch.trigger_dbus_action(flow=request.flow, media_action=request.media_action)
+    result = orch.trigger_dbus_action(
+        flow=request.flow, media_action=request.media_action
+    )
     return {"result": result, "dashboard": orch.dashboard_snapshot}

@@ -1,14 +1,15 @@
 import base64
 import importlib
 import json
-from typing import Tuple
+from pathlib import Path
+from typing import Any, Dict, Tuple
 
 import pytest
 from fastapi.testclient import TestClient
 
 
 class DummyLLM:
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         pass
 
     def invoke(self, prompt: str) -> str:
@@ -21,19 +22,19 @@ ESTIMATED_COMPLEXITY: medium
 
 
 class DummyMemory:
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         pass
 
-    def store_episode(self, *args, **kwargs) -> str:
+    def store_episode(self, *args: Any, **kwargs: Any) -> str:
         return "dummy"
 
-    def search_similar(self, *args, **kwargs):
+    def search_similar(self, *args: Any, **kwargs: Any) -> list[Dict[str, Any]]:
         return []
 
 
 class DummyMonitor:
     @staticmethod
-    def get_info():
+    def get_info() -> Dict[str, Any]:
         return {
             "cpu": {"percent": 1, "count": 4},
             "memory": {"total_gb": 16, "used_gb": 8, "percent": 50},
@@ -41,29 +42,31 @@ class DummyMonitor:
         }
 
     @staticmethod
-    def format_info(info) -> str:
+    def format_info(info: Any) -> str:
         return "dummy"
 
 
 class DummyMCPClient:
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         pass
 
-    def stat(self, path: str) -> dict:
+    def stat(self, path: str) -> Dict[str, Any]:
         return {"path": path, "status": "ok", "mode": "stat"}
 
     def read_file(self, path: str, *, encoding: str = "utf-8") -> str:
         return f"dummy content for {path}"
 
-    def list_dir(self, path: str, *, recursive: bool = False) -> dict:
+    def list_dir(self, path: str, *, recursive: bool = False) -> Dict[str, Any]:
         return {"path": path, "entries": [], "recursive": recursive}
 
-    def get_metrics(self) -> dict:
+    def get_metrics(self) -> Dict[str, Any]:
         return {"requests": 1, "errors": 0}
 
 
 @pytest.fixture()
-def dashboard_client(monkeypatch, tmp_path_factory) -> Tuple[TestClient, dict]:
+def dashboard_client(
+    monkeypatch: pytest.MonkeyPatch, tmp_path_factory: pytest.TempPathFactory
+) -> Tuple[TestClient, Dict[str, str]]:
     monkeypatch.setattr("src.agents.react_agent.OllamaLLM", DummyLLM)
     monkeypatch.setattr("src.agents.react_agent.EpisodicMemory", DummyMemory)
     monkeypatch.setattr("src.agents.react_agent.SystemMonitor", DummyMonitor)
@@ -95,7 +98,9 @@ def dashboard_client(monkeypatch, tmp_path_factory) -> Tuple[TestClient, dict]:
     return client, headers
 
 
-def test_dashboard_requires_auth(monkeypatch, tmp_path):
+def test_dashboard_requires_auth(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
     backend_main = importlib.import_module("web.backend.main")
 
     # Cenário 1: sem credenciais configuradas -> 401
@@ -137,7 +142,9 @@ def test_dashboard_requires_auth(monkeypatch, tmp_path):
     assert invalid_response.status_code == 401
 
 
-def test_orchestrate_and_metrics(dashboard_client):
+def test_orchestrate_and_metrics(
+    dashboard_client: Tuple[TestClient, Dict[str, str]],
+) -> None:
     client, headers = dashboard_client
     payload = {"task": "Validar MCP e D-Bus", "max_iterations": 1}
     response = client.post("/tasks/orchestrate", headers=headers, json=payload)
@@ -167,7 +174,9 @@ def test_orchestrate_and_metrics(dashboard_client):
     assert "plan_summary" in snapshot_data
 
 
-def test_observability_endpoint(dashboard_client):
+def test_observability_endpoint(
+    dashboard_client: Tuple[TestClient, Dict[str, str]],
+) -> None:
     client, headers = dashboard_client
     response = client.get("/observability", headers=headers)
     assert response.status_code == 200

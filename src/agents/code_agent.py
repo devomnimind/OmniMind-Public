@@ -54,10 +54,13 @@ class CodeAgent(ReactAgent):
         """Retorna descrição de ferramentas disponíveis"""
         tools_by_category: Dict[str, List[str]] = {}
 
-        for tool_name, category in self.tools_framework.get_available_tools().items():
-            if category not in tools_by_category:
-                tools_by_category[category] = []
-            tools_by_category[category].append(tool_name)
+        for (
+            tool_name,
+            tool_category,
+        ) in self.tools_framework.get_available_tools().items():
+            if tool_category not in tools_by_category:
+                tools_by_category[tool_category] = []
+            tools_by_category[tool_category].append(tool_name)
 
         description = "AVAILABLE TOOLS:\n\n"
 

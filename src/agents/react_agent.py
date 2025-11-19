@@ -8,10 +8,10 @@ import logging
 import os
 import yaml
 from datetime import datetime, timezone
-from typing import Dict, List, Any, TypedDict
+from typing import Any, Dict, List, Protocol, TypedDict, cast
 
 from langchain_ollama import OllamaLLM
-from langgraph.graph import StateGraph, END
+from langgraph.graph import END, StateGraph
 
 from ..integrations.supabase_adapter import SupabaseConfig
 from ..memory import EpisodicMemory
@@ -35,6 +35,14 @@ class AgentState(TypedDict):
     max_iterations: int
     completed: bool
     final_result: str
+
+
+class GraphInvoker(Protocol):
+    def invoke(self, state: AgentState) -> AgentState:
+        ...
+
+
+StateGraphType = StateGraph[AgentState, None, Any, Any]
 
 
 class ReactAgent:
@@ -81,15 +89,15 @@ class ReactAgent:
             timeout=system_config["shell_timeout"],
         )
         self.monitor = SystemMonitor()
-        self.graph = self._build_graph()
+        self.graph: GraphInvoker = self._build_graph()
 
     def _timestamp(self) -> str:
         """Generate ISO timestamp for logging"""
         return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
-    def _build_graph(self) -> StateGraph:
+    def _build_graph(self) -> GraphInvoker:
         """Build LangGraph state machine."""
-        workflow = StateGraph(AgentState)
+        workflow: StateGraphType = StateGraph(AgentState)
 
         # Add nodes
         workflow.add_node("think", self._think_node)
@@ -106,7 +114,7 @@ class ReactAgent:
             "observe", self._should_continue, {"continue": "think", "end": END}
         )
 
-        return workflow.compile()
+        return cast(GraphInvoker, workflow.compile())
 
     def _think_node(self, state: AgentState) -> AgentState:
         """
@@ -222,21 +230,21 @@ Your response:"""
         """Execute a tool action."""
         try:
             if action == "read_file":
-                return self.file_ops.read_file(args.get("path", ""))  # type: ignore[no-any-return]
+                return self.file_ops.read_file(args.get("path", ""))
 
             elif action == "write_file":
-                return self.file_ops.write_file(  # type: ignore[no-any-return]
+                return self.file_ops.write_file(
                     args.get("path", ""), args.get("content", "")
                 )
 
             elif action == "list_files":
-                return self.file_ops.list_files(args.get("path", "."))  # type: ignore[no-any-return]
+                return self.file_ops.list_files(args.get("path", "."))
 
             elif action == "execute_shell":
-                return self.shell.execute(args.get("command", ""))  # type: ignore[no-any-return]
+                return self.shell.execute(args.get("command", ""))
 
             elif action == "system_info":
-                return self.monitor.format_info(self.monitor.get_info())  # type: ignore[no-any-return]
+                return self.monitor.format_info(self.monitor.get_info())
 
             else:
                 return f"Unknown action: {action}"
@@ -252,9 +260,7 @@ Your response:"""
             last_action = state["actions_taken"][-1]
             action_name = last_action["action"]
             result_snippet = str(last_action["result"])[:200]
-            observation = (
-                f"Action '{action_name}' completed. Result: {result_snippet}"
-            )
+            observation = f"Action '{action_name}' completed. Result: {result_snippet}"
 
             state["observations"].append(observation)
             state["messages"].append(f"[OBSERVE] {observation}")
@@ -326,7 +332,7 @@ Your response:"""
                 reward=1.0 if final_state["completed"] else 0.5,
             )
 
-            return final_state  # type: ignore[no-any-return]
+            return cast(Dict[str, Any], final_state)
 
         except Exception as e:
             return {"error": str(e), "completed": False, "final_result": None}
