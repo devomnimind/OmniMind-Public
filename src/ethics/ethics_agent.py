@@ -156,6 +156,9 @@ class EthicsAgent:
                     reasoning="High/critical impact actions require human oversight",
                     framework_used=framework,
                     confidence=1.0,
+                    alternatives_suggested=self._suggest_alternatives(
+                        action_description, context
+                    ),
                 )
                 self._record_decision(decision)
                 return decision
