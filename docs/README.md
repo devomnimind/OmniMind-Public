@@ -9,6 +9,7 @@ Recursos avançados e funcionalidades especiais do sistema.
 - `ADVANCED_FEATURES_IMPLEMENTATION.md` - Implementação de recursos avançados
 - `COPILOT_AGENT_INSTRUCTIONS.md` - Instruções para agentes Copilot
 - `DEVBRAIN_UI_COMPLETE_SUMMARY.md` - Resumo completo UI DevBrain
+- `DEVELOPMENT_TOOLS_GUIDE.md` - Guia de ferramentas de desenvolvimento
 - `ImmunityP0.md` - Sistema de imunidade
 - `OBSERVABILITY_SCALING_QUICKREF.md` - Referência rápida de observabilidade
 

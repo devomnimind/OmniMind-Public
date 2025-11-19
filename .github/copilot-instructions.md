@@ -1,50 +1,50 @@
-# 🧠 OmniMind Project - GitHub Copilot Instructions (Consolidated v4.0)
+# 🧠 Projeto OmniMind - Instruções GitHub Copilot (Consolidado v4.0)
 
-**Date:** 2025-11-19
-**Status:** Phase 9 Core Complete → Phase 10 Enterprise Scaling
-**Hardware:** Auto-detected (Intel i5 10th + GTX 1650 4GB + 24GB RAM)
-**Target:** Remote Copilot Agent (GitHub Codespaces/GitPod)
-**Project:** /home/fahbrain/projects/omnimind/
+**Data:** 2025-11-19
+**Status:** Phase 12 Multi-Modal Intelligence Complete
+**Hardware:** Auto-detectado (Intel i5 10ª geração + GTX 1650 4GB + 24GB RAM)
+**Destino:** Agente Copilot Remoto (GitHub Codespaces/GitPod)
+**Projeto:** /home/fahbrain/projects/omnimind/
 ---
 
-## 📋 CRITICAL: Read Security Module First
+## 📋 CRÍTICO: Leia o Módulo de Segurança Primeiro
 
-**MANDATORY READING BEFORE ANY DEVELOPMENT:**
-- `/home/fahbrain/OmniAgent/Modulo Securityforensis/` (ALL FILES)
-- This instruction set is subordinate to security requirements
-- Security Agent implementation MUST be integrated in Phase 7
-
----
-
-## 🎯 PROJECT IDENTITY & ISOLATION
-
-### What is OmniMind?
-**Groundbreaking Autonomous AI System** - Self-aware, ethically-minded, psychoanalytically-inspired
-- **🧠 Metacognition Engine:** Self-reflective AI that analyzes its own decisions
-- **🎯 Proactive Goals:** AI generates its own improvement objectives
-- **⚖️ Ethics Framework:** 4-methodology ethical decision system (Deontological, Consequentialist, Virtue, Care)
-- **🔄 Real-time WebSocket:** Live dashboard with instant updates
-- **🤖 Multi-Agent Orchestration:** Psychoanalytic task delegation (Freudian/Lacanian)
-- **🛡️ Enterprise Security:** LGPD-compliant with immutable audit trails
-- **🏗️ Production Ready:** 202/202 tests passing, full-stack deployment
-- **Hardware-optimized** with automatic detection (CPU/GPU)
+**LEITURA OBRIGATÓRIA ANTES DE QUALQUER DESENVOLVIMENTO:**
+- `/home/fahbrain/OmniAgent/Modulo Securityforensis/` (TODOS OS ARQUIVOS)
+- Este conjunto de instruções é subordinado aos requisitos de segurança
+- Implementação do Agente de Segurança DEVE ser integrada na Phase 7
 
 ---
 
-## 🖥️ HARDWARE & ENVIRONMENT SETUP (Phase 9 Complete)
+## 🎯 IDENTIDADE E ISOLAMENTO DO PROJETO
 
-### Hardware Specification (Auto-detected)
+### O que é OmniMind?
+**Sistema de IA Autônomo Revolucionário** - Autoconsciente, eticamente orientado, inspirado em psicoanálise
+- **🧠 Motor de Metacognição:** IA auto-reflexiva que analisa suas próprias decisões
+- **🎯 Objetivos Proativos:** IA gera seus próprios objetivos de melhoria
+- **⚖️ Framework de Ética:** Sistema de decisão ética com 4 metodologias (Deontológico, Consequencialista, Virtude, Cuidado)
+- **🔄 WebSocket em Tempo Real:** Dashboard ao vivo com atualizações instantâneas
+- **🤖 Orquestração Multi-Agente:** Delegação de tarefas psicoanalítica (Freudiana/Lacaniana)
+- **🛡️ Segurança Enterprise:** Compatível com LGPD com trilhas de auditoria imutáveis
+- **🏗️ Pronto para Produção:** 105/105 testes aprovados, implantação full-stack
+- **Otimizado para Hardware** com detecção automática (CPU/GPU)
+
+---
+
+## 🖥️ CONFIGURAÇÃO DE HARDWARE E AMBIENTE (Phase 12 Complete)
+
+### Especificação de Hardware (Auto-detectada)
 ```
-CPU:        Intel i5 10th generation (4 cores/8 threads)
+CPU:        Intel i5 10ª geração (4 núcleos/8 threads)
 GPU:        NVIDIA GeForce GTX 1650 (4GB VRAM, Compute Capability 7.5)
-RAM:        24GB total (18.5GB typically available)
-Driver:     NVIDIA 550.163.01+ (validated)
-Status:     ✅ GPU Fully Operational
+RAM:        24GB total (18.5GB tipicamente disponíveis)
+Driver:     NVIDIA 550.163.01+ (validado)
+Status:     ✅ GPU Totalmente Operacional
 ```
 
-### Environment Setup (One-Command)
+### Configuração de Ambiente (Um Comando)
 ```bash
-# Clone and auto-setup (hardware detection + dependencies + services)
+# Clone e auto-configuração (detecção de hardware + dependências + serviços)
 git clone https://github.com/fabs-devbrain/OmniMind.git
 cd OmniMind
 source scripts/start_dashboard.sh
@@ -104,9 +104,9 @@ lsmod | grep nvidia_uvm
 python -c "import torch; print(torch.cuda.is_available())"
 ```
 
-**Expected Result:** `torch.cuda.is_available()` should return `True`
+**Resultado Esperado:** `torch.cuda.is_available()` deve retornar `True`
 
-**Note:** nvidia_uvm kernel module corruption typically occurs after system suspend/hibernate on Linux. The reload procedure restores GPU access immediately.
+**Nota:** Corrupção do módulo do kernel nvidia_uvm normalmente ocorre após suspensão/hibernação do sistema no Linux. O procedimento de recarregamento restaura o acesso à GPU imediatamente.
 
 **Solution 2: Verify System CUDA Installation**
 ```bash
