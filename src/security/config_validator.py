@@ -16,6 +16,7 @@ import json
 import logging
 import os
 from dataclasses import dataclass, field
+from datetime import datetime
 from enum import Enum
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
@@ -562,3 +563,192 @@ class ConfigurationValidator:
             json.dump(report, f, indent=2)
 
         logger.info(f"Validation report exported to {output_path}")
+
+    def run_health_checks(self, config: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Run pre-deployment health checks.
+
+        Args:
+            config: Configuration dictionary
+
+        Returns:
+            Health check results
+        """
+        logger.info("Running pre-deployment health checks...")
+
+        checks = {
+            "timestamp": datetime.now().isoformat(),
+            "overall_status": "healthy",
+            "checks": {},
+        }
+
+        # Check 1: Port availability
+        port_check = self._check_port_availability(config)
+        checks["checks"]["port_availability"] = port_check
+        if not port_check["passed"]:
+            checks["overall_status"] = "unhealthy"
+
+        # Check 2: File paths
+        path_check = self._check_file_paths(config)
+        checks["checks"]["file_paths"] = path_check
+        if not path_check["passed"]:
+            checks["overall_status"] = "warning"
+
+        # Check 3: Dependencies
+        dep_check = self._check_dependencies()
+        checks["checks"]["dependencies"] = dep_check
+        if not dep_check["passed"]:
+            checks["overall_status"] = "unhealthy"
+
+        # Check 4: Disk space
+        disk_check = self._check_disk_space()
+        checks["checks"]["disk_space"] = disk_check
+        if not disk_check["passed"]:
+            checks["overall_status"] = "warning"
+
+        # Check 5: Memory
+        memory_check = self._check_memory()
+        checks["checks"]["memory"] = memory_check
+        if not memory_check["passed"]:
+            checks["overall_status"] = "warning"
+
+        logger.info(f"Health check completed: {checks['overall_status']}")
+
+        return checks
+
+    def _check_port_availability(self, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Check if configured ports are available."""
+        import socket
+
+        result = {"passed": True, "details": [], "errors": []}
+
+        ports_to_check = []
+        if "port" in config:
+            ports_to_check.append(("main", config["port"]))
+        if "websocket_port" in config:
+            ports_to_check.append(("websocket", config["websocket_port"]))
+        if "metrics_port" in config:
+            ports_to_check.append(("metrics", config["metrics_port"]))
+
+        for name, port in ports_to_check:
+            try:
+                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                    s.settimeout(1)
+                    result_code = s.connect_ex(("localhost", port))
+                    if result_code == 0:
+                        result["errors"].append(
+                            f"Port {port} ({name}) is already in use"
+                        )
+                        result["passed"] = False
+                    else:
+                        result["details"].append(f"Port {port} ({name}) is available")
+            except Exception as e:
+                result["errors"].append(f"Failed to check port {port}: {e}")
+                result["passed"] = False
+
+        return result
+
+    def _check_file_paths(self, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Check if configured file paths exist and are accessible."""
+        result = {"passed": True, "details": [], "warnings": []}
+
+        path_configs = [
+            "ssl_cert_path",
+            "ssl_key_path",
+            "backup_location",
+            "log_directory",
+        ]
+
+        for key in path_configs:
+            if key in config:
+                path = Path(config[key])
+                if not path.exists():
+                    # Create directories if they don't exist
+                    if key in ["backup_location", "log_directory"]:
+                        try:
+                            path.mkdir(parents=True, exist_ok=True)
+                            result["details"].append(f"Created directory: {path}")
+                        except Exception as e:
+                            result["warnings"].append(
+                                f"Could not create {key}: {path} - {e}"
+                            )
+                    else:
+                        result["warnings"].append(f"{key} does not exist: {path}")
+                else:
+                    result["details"].append(f"{key} exists: {path}")
+
+        return result
+
+    def _check_dependencies(self) -> Dict[str, Any]:
+        """Check if required Python dependencies are installed."""
+        result = {"passed": True, "details": [], "errors": []}
+
+        required_packages = [
+            "fastapi",
+            "uvicorn",
+            "pydantic",
+            "structlog",
+            "psutil",
+        ]
+
+        for package in required_packages:
+            try:
+                __import__(package)
+                result["details"].append(f"{package} is installed")
+            except ImportError:
+                result["errors"].append(f"{package} is not installed")
+                result["passed"] = False
+
+        return result
+
+    def _check_disk_space(self, min_gb: int = 5) -> Dict[str, Any]:
+        """Check available disk space."""
+        import shutil
+
+        result = {"passed": True, "details": [], "warnings": []}
+
+        try:
+            total, used, free = shutil.disk_usage("/")
+            free_gb = free / (1024**3)
+
+            result["details"].append(
+                f"Free disk space: {free_gb:.2f} GB / {total / (1024**3):.2f} GB"
+            )
+
+            if free_gb < min_gb:
+                result["warnings"].append(
+                    f"Low disk space: {free_gb:.2f} GB (minimum: {min_gb} GB)"
+                )
+                result["passed"] = False
+
+        except Exception as e:
+            result["errors"] = [f"Failed to check disk space: {e}"]
+            result["passed"] = False
+
+        return result
+
+    def _check_memory(self, min_gb: int = 2) -> Dict[str, Any]:
+        """Check available memory."""
+        import psutil
+
+        result = {"passed": True, "details": [], "warnings": []}
+
+        try:
+            mem = psutil.virtual_memory()
+            available_gb = mem.available / (1024**3)
+
+            result["details"].append(
+                f"Available memory: {available_gb:.2f} GB / {mem.total / (1024**3):.2f} GB"
+            )
+
+            if available_gb < min_gb:
+                result["warnings"].append(
+                    f"Low memory: {available_gb:.2f} GB (minimum: {min_gb} GB)"
+                )
+                result["passed"] = False
+
+        except Exception as e:
+            result["errors"] = [f"Failed to check memory: {e}"]
+            result["passed"] = False
+
+        return result
