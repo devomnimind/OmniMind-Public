@@ -7,7 +7,7 @@ from typing import TypeAlias, TypedDict, List, Dict, Any, Optional
 from datetime import datetime
 import yaml
 
-from langchain_community.llms import Ollama  # type: ignore[import-not-found]
+from langchain_community.llms import Ollama
 from langgraph.graph import StateGraph, CompiledStateGraph, END
 
 from ..memory import EpisodicMemory
