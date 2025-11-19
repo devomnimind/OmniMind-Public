@@ -1,0 +1,31 @@
+{
+  "timestamp": "2025-11-19T00:32:21.524058",
+  "label": "isolated_agents",
+  "phi_proxy": 0.0,
+  "num_connections": 3,
+  "num_feedback_loops": 0,
+  "connections": [
+    {
+      "source": "CodeAgent",
+      "target": "ReviewerAgent",
+      "type": "message",
+      "bidirectional": false,
+      "weight": 1.0
+    },
+    {
+      "source": "ReviewerAgent",
+      "target": "SecurityAgent",
+      "type": "message",
+      "bidirectional": false,
+      "weight": 1.0
+    },
+    {
+      "source": "SecurityAgent",
+      "target": "ArchitectAgent",
+      "type": "message",
+      "bidirectional": false,
+      "weight": 1.0
+    }
+  ],
+  "feedback_loops": []
+}

@@ -1,0 +1,21 @@
+{
+  "experiment": "transparency_tracking",
+  "hypothesis": "Transpar\u00eancia >= 85% com audit chain completo",
+  "scenarios": {
+    "without_transparency": {
+      "explainability": 0.0,
+      "interpretability": 0.0,
+      "traceability": 0.0,
+      "overall": 0.0
+    },
+    "with_transparency": {
+      "explainability": 100.0,
+      "interpretability": 100.0,
+      "traceability": 100.0,
+      "overall": 100.0
+    }
+  },
+  "improvement_points": 100.0,
+  "hypothesis_validated": true,
+  "snapshot_file": "{'timestamp': '2025-11-19T00:32:42.805038', 'label': 'transparency_test', 'mfa_score': {'mfa_score': None, 'error': 'No scenarios tested', 'scenarios_count': 0}, 'transparency': {'explainability': 33.33333333333333, 'interpretability': 33.33333333333333, 'traceability': 33.33333333333333, 'overall': 33.33333333333333}, 'scenarios_count': 0, 'decisions_logged': 15}"
+}
