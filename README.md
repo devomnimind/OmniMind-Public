@@ -1,289 +1,289 @@
-# 🧠 OmniMind - Autonomous AI System
+# 🧠 OmniMind - Sistema de IA Autônomo
 
-**OmniMind** is a groundbreaking autonomous AI system that combines psychoanalytic decision-making with advanced metacognition capabilities. This self-hosted, local-first architecture features multi-agent orchestration, real-time WebSocket communication, and self-evolving intelligence.
+**OmniMind** é um revolucionário sistema de IA autônomo que combina tomada de decisão psicoanalítica com capacidades avançadas de metacognição. Esta arquitetura auto-hospedada e local-first apresenta orquestração multi-agente, comunicação WebSocket em tempo real e inteligência auto-evolutiva.
 
-**🚀 Current Status:** Phase 9 Core Complete (Advanced Consciousness) | 202/202 Tests Passing | Production Ready
+**🚀 Status Atual:** Phase 12 Multi-Modal Intelligence Complete | 105/105 Tests Passing | Produção Pronta
 
-**🧬 Core Philosophy:** Psychoanalytically-inspired AI that reflects on its own decisions, learns from patterns, and proactively generates its own goals - creating a truly autonomous and self-aware system.
+**🧬 Filosofia Central:** IA psicoanaliticamente inspirada que reflete sobre suas próprias decisões, aprende com padrões e gera proativamente seus próprios objetivos - criando um sistema verdadeiramente autônomo e autoconsciente.
 
-## 🚀 Quick Start
+## 🚀 Início Rápido
 
-### Choose Your Environment:
+### Escolha Seu Ambiente:
 
-1. **[Production Deployment](docs/PHASE8_9_IMPLEMENTATION_COMPLETE.md)** - Full system with WebSocket + Metacognition
-2. **[CPU-Only / Cloud-Free](docs/CLOUD_FREE_DEPLOYMENT.md)** - GitHub Actions, Docker, no GPU needed
-3. **[GPU-Enabled](docs/reports/GPU_SETUP_REPORT.md)** - Local machine with NVIDIA GPU
-4. **[Free Services Guide](docs/FREE_SERVICE_ALTERNATIVES.md)** - Local alternatives to paid cloud services
+1. **[Implantação de Produção](docs/phases/PHASE12_COMPLETION_SUMMARY.md)** - Sistema completo com WebSocket + Inteligência Multi-Modal
+2. **[Apenas CPU / Sem Nuvem](docs/deployment/CLOUD_FREE_DEPLOYMENT.md)** - GitHub Actions, Docker, sem necessidade de GPU
+3. **[Com GPU Habilitada](docs/reports/GPU_SETUP_REPORT.md)** - Máquina local com NVIDIA GPU
+4. **[Guia de Serviços Gratuitos](docs/deployment/FREE_SERVICE_ALTERNATIVES.md)** - Alternativas locais para serviços pagos
 
-### 🚀 One-Command Setup (Production Ready)
+### 🚀 Configuração com Um Comando (Pronto para Produção)
 
-OmniMind now includes automatic hardware detection, optimization, and full-stack deployment:
+OmniMind agora inclui detecção automática de hardware, otimização e implantação full-stack:
 
 ```bash
-# 1. Clone and setup
+# 1. Clone e configure
 git clone https://github.com/fabs-devbrain/OmniMind.git
 cd OmniMind
 
-# 2. Auto-setup (hardware detection + dependencies)
+# 2. Auto-configuração (detecção de hardware + dependências)
 source scripts/start_dashboard.sh
 
-# 3. Access dashboard at http://localhost:3000
-# Default credentials: auto-generated (check logs)
+# 3. Acesse o dashboard em http://localhost:3000
+# Credenciais padrão: auto-geradas (verifique os logs)
 ```
 
-### Advanced Features Unlocked 🔓
+### Recursos Avançados Desbloqueados 🔓
 
-- **🧠 Metacognition:** Self-reflective AI that analyzes its own decisions
-- **🎯 Proactive Goals:** AI generates its own improvement objectives
-- **⚖️ Ethics Engine:** Built-in ethical decision framework (4 methodologies)
-- **🔄 Real-time WebSocket:** Live updates between frontend and autonomous agents
-- **🛡️ Advanced Security:** LGPD-compliant with immutable audit trails
-- **🏗️ Multi-Agent Orchestration:** Psychoanalytic-inspired task delegation
+- **🧠 Metacognição:** IA auto-reflexiva que analisa suas próprias decisões
+- **🎯 Objetivos Proativos:** IA gera seus próprios objetivos de melhoria
+- **⚖️ Motor de Ética:** Framework integrado de decisão ética (4 metodologias)
+- **🔄 WebSocket em Tempo Real:** Atualizações ao vivo entre frontend e agentes autônomos
+- **🛡️ Segurança Avançada:** Compatível com LGPD com trilhas de auditoria imutáveis
+- **🏗️ Orquestração Multi-Agente:** Delegação de tarefas inspirada em psicoanálise
 
-## 🏗️ Architecture Overview
+## 🏗️ Visão Geral da Arquitetura
 
-### Core Components (Phase 9 Complete)
+### Componentes Centrais (Phase 12 Multi-Modal Intelligence Complete)
 
 ```
-🧠 OmniMind Autonomous System
+🧠 Sistema Autônomo OmniMind
 ├── 🎨 Frontend (React + TypeScript)
-│   ├── Real-time WebSocket dashboard
-│   ├── Task orchestration interface
-│   ├── Agent status monitoring
-│   └── Ethics decision visualization
+│   ├── Dashboard WebSocket em tempo real
+│   ├── Interface de orquestração de tarefas
+│   ├── Monitoramento de status de agentes
+│   └── Visualização de decisões éticas
 │
 ├── ⚙️ Backend (FastAPI + WebSocket)
-│   ├── REST APIs (Tasks, Agents, Security)
-│   ├── Real-time WebSocket server
-│   ├── Multi-agent orchestration
-│   └── Metacognition endpoints
+│   ├── APIs REST (Tarefas, Agentes, Segurança)
+│   ├── Servidor WebSocket em tempo real
+│   ├── Orquestração multi-agente
+│   └── Endpoints de metacognição
 │
-├── 🧠 Metacognition Engine
-│   ├── Self-analysis & pattern recognition
-│   ├── Proactive goal generation
-│   ├── Homeostasis & resource management
-│   └── Ethics decision framework
+├── 🧠 Motor de Metacognição
+│   ├── Auto-análise e reconhecimento de padrões
+│   ├── Geração proativa de objetivos
+│   ├── Homeostase e gerenciamento de recursos
+│   └── Framework de decisão ética
 │
-└── 🤖 Multi-Agent System
-    ├── Orchestrator (Psychoanalytic-inspired)
-    ├── Security Agent (Forensic monitoring)
-    ├── Ethics Agent (Decision framework)
-    └── Autonomous task delegation
+└── 🤖 Sistema Multi-Agente
+    ├── Orquestrador (inspirado em psicoanálise)
+    ├── Agente de Segurança (monitoramento forense)
+    ├── Agente de Ética (framework de decisão)
+    └── Delegação autônoma de tarefas
 ```
 
-### Repository Structure
+### Estrutura do Repositório
 
-- `config/` – Configuration files (agents, ethics, metacognition, hardware)
-- `docs/` – Complete documentation suite (roadmaps, reports, guides)
-- `web/` – Full-stack web application (React frontend + FastAPI backend)
-- `src/` – Core Python modules (agents, metacognition, security, integrations)
-- `scripts/` – Automation scripts (deployment, systemd, benchmarks)
-- `tests/` – Comprehensive test suite (202 tests passing)
-- `logs/` – Audit trails and execution logs (immutable)
-- `data/` – Datasets and experimental data (Git-ignored)
+- `config/` – Arquivos de configuração (agentes, ética, metacognição, hardware)
+- `docs/` – Suíte completa de documentação (roteiros, relatórios, guias)
+- `web/` – Aplicação web full-stack (frontend React + backend FastAPI)
+- `src/` – Módulos Python centrais (agentes, metacognição, segurança, integrações)
+- `scripts/` – Scripts de automação (implantação, systemd, benchmarks)
+- `tests/` – Suíte abrangente de testes (105 testes passando)
+- `logs/` – Trilhas de auditoria e logs de execução (imutáveis)
+- `data/` – Conjuntos de dados e dados experimentais (ignorados pelo Git)
 
-## 🚀 Production Deployment
+## 🚀 Implantação em Produção
 
-### One-Click Setup (Recommended)
+### Configuração com Um Clique (Recomendado)
 
-OmniMind now includes fully automated deployment with hardware optimization:
+OmniMind agora inclui implantação totalmente automatizada com otimização de hardware:
 
 ```bash
-# 1. Clone repository
+# 1. Clonar repositório
 git clone https://github.com/fabs-devbrain/OmniMind.git
 cd OmniMind
 
-# 2. Automatic setup (hardware detection + dependencies + services)
+# 2. Configuração automática (detecção de hardware + dependências + serviços)
 source scripts/start_dashboard.sh
 
-# 3. Access interfaces:
+# 3. Acessar interfaces:
 # - Frontend: http://localhost:3000
-# - Backend API: http://localhost:8000
-# - Documentation: http://localhost:8000/docs
+# - API Backend: http://localhost:8000
+# - Documentação: http://localhost:8000/docs
 ```
 
-### Manual Setup (Advanced Users)
+### Configuração Manual (Usuários Avançados)
 
-#### Prerequisites
-- **Python 3.12.8** (via pyenv - PyTorch compatibility)
-- **Node.js 18+** (for frontend development)
-- **NVIDIA GPU** (optional, auto-detected)
+#### Pré-requisitos
+- **Python 3.12.8** (via pyenv - compatibilidade com PyTorch)
+- **Node.js 18+** (para desenvolvimento frontend)
+- **GPU NVIDIA** (opcional, auto-detectada)
 
-#### Installation Steps
+#### Passos de Instalação
 
 ```bash
-# 1. Python environment setup
+# 1. Configuração do ambiente Python
 pyenv install 3.12.8
 pyenv local 3.12.8
 python -m venv .venv
 source .venv/bin/activate
 
-# 2. Install dependencies (auto-detects hardware)
+# 2. Instalar dependências (auto-detecta hardware)
 pip install -r requirements.txt
 
-# 3. Hardware optimization (automatic)
+# 3. Otimização de hardware (automática)
 python src/optimization/hardware_detector.py
 
-# 4. Verify GPU (if available)
+# 4. Verificar GPU (se disponível)
 python -c "import torch; print(f'CUDA: {torch.cuda.is_available()}')"
 
-# 5. Start full system
+# 5. Iniciar sistema completo
 source scripts/start_dashboard.sh
 ```
 
-### Service Management
+### Gerenciamento de Serviços
 
 ```bash
-# Install as system service
+# Instalar como serviço do sistema
 sudo ./scripts/systemd/install_service.sh
 
-# Manage daemon
+# Gerenciar daemon
 sudo systemctl start omnimind-daemon
 sudo systemctl status omnimind-daemon
 sudo journalctl -u omnimind-daemon -f
 ```
 
-## 📖 Project Navigation
+## 📖 Navegação do Projeto
 
-See **[INDEX.md](INDEX.md)** for complete project structure and documentation navigation.
+Veja **[INDEX.md](INDEX.md)** para estrutura completa do projeto e navegação da documentação.
 
-## 🧠 Advanced Autonomous Capabilities
+## 🧠 Capacidades Autônomas Avançadas
 
-### Metacognition Engine 🧠
-OmniMind features groundbreaking self-reflective AI capabilities:
+### Motor de Metacognição 🧠
+OmniMind apresenta capacidades revolucionárias de IA auto-reflexiva:
 
-**Self-Analysis & Pattern Recognition:**
-- Analyzes its own decision patterns and success rates
-- Identifies behavioral anomalies and optimization opportunities
-- Generates proactive improvement suggestions
-- Maintains historical performance metrics
+**Auto-Análise e Reconhecimento de Padrões:**
+- Analisa seus próprios padrões de decisão e taxas de sucesso
+- Identifica anomalias comportamentais e oportunidades de otimização
+- Gera sugestões proativas de melhoria
+- Mantém métricas históricas de performance
 
-**Proactive Goal Generation:**
-- Automatically identifies improvement opportunities
-- Generates specific, actionable objectives
-- Prioritizes goals based on system health metrics
-- Creates pull requests for self-improvement
+**Geração Proativa de Objetivos:**
+- Identifica automaticamente oportunidades de melhoria
+- Gera objetivos específicos e acionáveis
+- Prioriza objetivos baseados em métricas de saúde do sistema
+- Cria pull requests para auto-melhoria
 
-**Homeostasis & Resource Management:**
-- Monitors hardware utilization in real-time
-- Automatically adjusts resource allocation
-- Prevents resource exhaustion through throttling
-- Optimizes performance based on available resources
+**Homeostase e Gerenciamento de Recursos:**
+- Monitora utilização de hardware em tempo real
+- Ajusta automaticamente alocação de recursos
+- Previne exaustão de recursos através de limitação
+- Otimiza performance baseada em recursos disponíveis
 
-### Ethics Decision Framework ⚖️
-Built-in ethical reasoning with 4 philosophical frameworks:
+### Framework de Decisão Ética ⚖️
+Raciocínio ético integrado com 4 frameworks filosóficos:
 
-- **Deontological:** Rule-based ethical decisions
-- **Consequentialist:** Outcome-focused analysis
-- **Virtue Ethics:** Character-based reasoning
-- **Care Ethics:** Relationship and stakeholder consideration
+- **Deontológico:** Decisões éticas baseadas em regras
+- **Consequencialista:** Análise focada em resultados
+- **Ética da Virtude:** Raciocínio baseado em caráter
+- **Ética do Cuidado:** Consideração de relacionamentos e stakeholders
 
-### Real-Time Multi-Agent Orchestration 🤖
-Psychoanalytically-inspired task delegation:
+### Orquestração Multi-Agente em Tempo Real 🤖
+Delegação de tarefas inspirada em psicoanálise:
 
-- **Orchestrator Agent:** Freudian/Lacanian decision framework
-- **Security Agent:** Forensic monitoring and threat detection
-- **Ethics Agent:** Ethical oversight and veto capabilities
-- **Metacognition Agent:** Self-reflection and optimization
+- **Agente Orquestrador:** Framework de decisão Freudiano/Lacaniano
+- **Agente de Segurança:** Monitoramento forense e detecção de ameaças
+- **Agente de Ética:** Supervisão ética e capacidades de veto
+- **Agente de Metacognição:** Auto-reflexão e otimização
 
-### 24/7 Autonomous Operation
+### Operação Autônoma 24/7
 ```bash
-# Install complete autonomous system
+# Instalar sistema autônomo completo
 sudo ./scripts/systemd/install_service.sh
 
-# Start full autonomous operation
+# Iniciar operação autônoma completa
 sudo systemctl start omnimind-daemon
 
-# Monitor autonomous activities
+# Monitorar atividades autônomas
 sudo journalctl -u omnimind-daemon -f
 
-# View metacognition insights
+# Visualizar insights de metacognição
 curl -u <user>:<pass> http://localhost:8000/metacognition/insights
 ```
 
-### WebSocket Real-Time Interface 🔄
-Live dashboard with real-time updates:
-- Task progress visualization
-- Agent status monitoring
-- Security event streaming
-- Ethics decision logging
-- Metacognition insights feed
+### Interface WebSocket em Tempo Real 🔄
+Dashboard ao vivo com atualizações em tempo real:
+- Visualização do progresso de tarefas
+- Monitoramento de status de agentes
+- Streaming de eventos de segurança
+- Logging de decisões éticas
+- Feed de insights de metacognição
 
-## Dependency Compatibility Notes
+## Notas de Compatibilidade de Dependências
 
 - O pacote `supabase-py>=1.0.0` ainda não oferece wheel compatível com Python 3.13 em Linux x86_64, então `pip install -r requirements.txt` falha nesse ponto por ausência de `supabase-py`. Por ora mantemos `psutil`, `dbus-python` e os outros pacotes, mas a integração completa com Supabase exige Python **≤ 3.12**.
 - A recomendação operacional é usar um ambiente Python 3.12 (ou menor) sempre que precisar rodar os adaptadores Supabase/Qdrant e os testes que dependem deles.
 
-## Dashboard Workflow
+## Workflow do Dashboard
 
-- Access the FastAPI endpoints (secured via Basic Auth) for `/status`, `/snapshot`, `/metrics`, `/tasks/orchestrate`, `/mcp/execute`, `/dbus/execute`, etc.
-- The React GUI (`web/frontend/`) reads credentials from the login form and stores `Basic` auth headers per session; it also surfaces the credential file path so administrators know where to rotate secrets.
-- `/observability` now surfaces a `validation` payload (pulled from `logs/security_validation.jsonl`) alongside `self_healing`, `atlas`, and `security`, so teams can see the latest audit-chain verdict directly in the UI.
-- MCP and D-Bus flows rely on `src/integrations` and the orchestrator agent to provide context, metrics, and manual triggers.
+- Acesse os endpoints FastAPI (protegidos via Basic Auth) para `/status`, `/snapshot`, `/metrics`, `/tasks/orchestrate`, `/mcp/execute`, `/dbus/execute`, etc.
+- A GUI React (`web/frontend/`) lê credenciais do formulário de login e armazena headers de autenticação `Basic` por sessão; também mostra o caminho do arquivo de credenciais para que administradores saibam onde rotacionar segredos.
+- `/observability` agora apresenta um payload de `validation` (obtido de `logs/security_validation.jsonl`) junto com `self_healing`, `atlas` e `security`, para que equipes possam ver o último veredicto da cadeia de auditoria diretamente na UI.
+- Os fluxos MCP e D-Bus dependem de `src/integrations` e do agente orquestrador para fornecer contexto, métricas e gatilhos manuais.
 
-## GPU Verification (Phase 7)
+## Verificação de GPU (Phase 7)
 
-After completing installation, verify GPU is operational:
+Após completar a instalação, verifique se a GPU está operacional:
 
 ```bash
-# 1. Check CUDA availability
-python -c "import torch; print(f'CUDA Available: {torch.cuda.is_available()}'); print(f'GPU: {torch.cuda.get_device_name(0)}')"
+# 1. Verificar disponibilidade do CUDA
+python -c "import torch; print(f'CUDA Disponível: {torch.cuda.is_available()}'); print(f'GPU: {torch.cuda.get_device_name(0)}')"
 
-# Expected output:
-# CUDA Available: True
+# Output esperado:
+# CUDA Disponível: True
 # GPU: NVIDIA GeForce GTX 1650
 
-# 2. Run GPU benchmark
+# 2. Executar benchmark da GPU
 python PHASE7_COMPLETE_BENCHMARK_AUDIT.py
 
-# Expected output (validates GPU is working):
-# CPU Throughput: 253.21 GFLOPS
-# GPU Throughput: 1149.91 GFLOPS (≥1000 GFLOPS indicates success)
-# Memory Bandwidth: 12.67 GB/s
-# Report saved to: logs/PHASE7_BENCHMARK_REPORT.json
+# Output esperado (valida que a GPU está funcionando):
+# Throughput CPU: 253.21 GFLOPS
+# Throughput GPU: 1149.91 GFLOPS (≥1000 GFLOPS indica sucesso)
+# Largura de banda de memória: 12.67 GB/s
+# Relatório salvo em: logs/PHASE7_BENCHMARK_REPORT.json
 
-# 3. Run audit tests to confirm integration
+# 3. Executar testes de auditoria para confirmar integração
 pytest tests/test_audit.py -v --cov=src.audit
 
-# Expected: 14/14 tests passing
+# Esperado: 14/14 testes passando
 ```
 
-**Reference Documentation:**
-- Detailed GPU setup: `.github/copilot-instructions.md` (GPU/CUDA Setup Requirements section)
-- GPU troubleshooting: `docs/reports/PHASE7_GPU_CUDA_REPAIR_LOG.md`
-- Repair summary: `GPU_CUDA_REPAIR_AUDIT_COMPLETE.md`
+**Documentação de Referência:**
+- Configuração detalhada da GPU: `.github/copilot-instructions.md` (seção GPU/CUDA Setup Requirements)
+- Solução de problemas da GPU: `docs/reports/PHASE7_GPU_CUDA_REPAIR_LOG.md`
+- Resumo do reparo: `GPU_CUDA_REPAIR_AUDIT_COMPLETE.md`
 
-## Testing & Quality Gates
+## Testes e Portões de Qualidade
 
-Run the fast pipelines after reorganizing or changing core logic:
+Execute os pipelines rápidos após reorganizar ou alterar lógica central:
 
 ```bash
 pytest tests/test_dashboard_e2e.py -W error
-pytest tests/ -k "not legacy"  # run the active suites
+pytest tests/ -k "not legacy"  # executar suítes ativas
 ```
 
-Ensure `logs/.coverage` is removed or regenerated via `pytest --cov=src` and keep work in sync with the hashed audit chain via `scripts/id` if relevant.
+Garanta que `logs/.coverage` seja removido ou regenerado via `pytest --cov=src` e mantenha o trabalho sincronizado com a cadeia de auditoria hash via `scripts/id` se relevante.
 
-## Logs, Alerts, and Credentials
+## Logs, Alertas e Credenciais
 
-- Active logs live under `logs/`; coverage and audit traces now also stay here for easier rotation.
-- The dashboard auth file is `config/dashboard_auth.json` (600). Rotate credentials by editing this file securely and restarting the backend; the new creds are durable until the next rotation.
-- Use `scripts/start_dashboard.sh` or the Docker Compose asset to orchestrate the backend + frontend; it logs the credential location upon startup.
-- For the Supabase + Qdrant MCP adapters, credential handling, and tests, see `docs/devbrain_data_integration.md`.
+- Logs ativos ficam em `logs/`; cobertura e rastros de auditoria também ficam aqui para facilitar rotação.
+- O arquivo de autenticação do dashboard é `config/dashboard_auth.json` (600). Rotacione credenciais editando este arquivo de forma segura e reiniciando o backend; as novas credenciais são duráveis até a próxima rotação.
+- Use `scripts/start_dashboard.sh` ou o asset Docker Compose para orquestrar backend + frontend; ele registra a localização das credenciais na inicialização.
+- Para adaptadores MCP Supabase + Qdrant, tratamento de credenciais e testes, veja `docs/devbrain_data_integration.md`.
 
-## Maintenance Notes
+## Notas de Manutenção
 
-- Legacy artifacts live in `archive/reports/` and `archive/examples/`; reference `archive/README.md` for context.
-- Legacy demos that contain invalid syntax (e.g., the old `archive/examples/demo_phase6*`) have been removed to keep the formatter pipeline operável. Any new artifacts placed under `archive/examples/` must be sanitized and approved before re-enabling them in `black`/`flake8` runs; by default essa pasta fica excluída dos hooks de qualidade.
-- Scripts under `scripts/` are the only runtime automation files allowed at the root level; please do not scatter lone `.py` or `.sh` files outside this directory.
-- Tests that once lived at the root now reside under `tests/legacy/`; keep new tests under `tests/`.
-- Temporary tool outputs must stay within `tmp/`; this directory is ignored and safe to wipe.
+- Artefatos legados ficam em `archive/reports/` e `archive/examples/`; consulte `archive/README.md` para contexto.
+- Demos legadas que continham sintaxe inválida (ex.: o antigo `archive/examples/demo_phase6*`) foram removidas para manter o pipeline do formatador operacional. Quaisquer novos artefatos colocados em `archive/examples/` devem ser sanitizados e aprovados antes de reabilitá-los em execuções `black`/`flake8`; por padrão essa pasta fica excluída dos hooks de qualidade.
+- Scripts em `scripts/` são os únicos arquivos de automação de runtime permitidos no nível raiz; por favor não espalhe arquivos `.py` ou `.sh` solitários fora deste diretório.
+- Testes que antes ficavam na raiz agora residem em `tests/legacy/`; mantenha novos testes em `tests/`.
+- Outputs de ferramentas temporárias devem ficar dentro de `tmp/`; este diretório é ignorado e seguro para limpar.
 
-With this organization, the root stays focused on keys (configs, requirements, Compose files), and the rest of the workspace aligns with our production readiness and CI/CD standards.
+Com esta organização, a raiz fica focada nas chaves (configs, requirements, arquivos Compose), e o resto do workspace se alinha com nossos padrões de prontidão para produção e CI/CD.
 
-## DEVBRAIN V23 Roadmap
+## Roadmap DEVBRAIN V23
 
-The `DEVBRAIN_V23/` directory now hosts the foundational work for the Masterplan (Protocolo Phoenix). Each folder mirrors a sense or infrastructure pillar:
+O diretório `DEVBRAIN_V23/` agora hospeda o trabalho fundamental para o Masterplan (Protocolo Phoenix). Cada pasta espelha um pilar de sentido ou infraestrutura:
 
 - `core/` → futura migração do `src/`, `tests/` e `config/` atuais.
 - `sensory/` → visão (Visual Cortex), audição/voz e propriocepção com `eBPF`.

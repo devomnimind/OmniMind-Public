@@ -1,73 +1,73 @@
-# Kubernetes Deployment
+# Implantação Kubernetes
 
-This directory contains Kubernetes manifests for deploying OmniMind in production.
+Este diretório contém manifests Kubernetes para implantar OmniMind em produção.
 
-## Directory Structure
+## Estrutura de Diretórios
 
 ```
 k8s/
-├── base/               # Base deployment manifests
-│   └── deployment.yaml # Main deployment configuration
-├── staging/            # Staging environment overlays
-└── production/         # Production environment overlays
+├── base/               # Manifests de implantação base
+│   └── deployment.yaml # Configuração principal de implantação
+├── staging/            # Overlays de ambiente staging
+└── production/         # Overlays de ambiente produção
 ```
 
-## Quick Start
+## Início Rápido
 
-### Prerequisites
+### Pré-requisitos
 
-- Kubernetes cluster (1.28+)
-- kubectl CLI configured
-- NGINX Ingress Controller
-- cert-manager (for TLS)
+- Cluster Kubernetes (1.28+)
+- CLI kubectl configurada
+- Controlador NGINX Ingress
+- cert-manager (para TLS)
 
-### Deploy to Kubernetes
+### Implantar no Kubernetes
 
-1. **Create namespace and deploy:**
+1. **Criar namespace e implantar:**
 ```bash
 kubectl apply -f k8s/base/deployment.yaml
 ```
 
-2. **Verify deployment:**
+2. **Verificar implantação:**
 ```bash
 kubectl get pods -n omnimind
 kubectl get services -n omnimind
 kubectl get ingress -n omnimind
 ```
 
-3. **Check logs:**
+3. **Verificar logs:**
 ```bash
 kubectl logs -n omnimind -l app=omnimind,component=backend -f
 ```
 
-## Components
+## Componentes
 
-### Backend Deployment
-- **Replicas:** 3 (with HPA 3-10)
-- **Resources:** 
-  - Requests: 250m CPU, 512Mi memory
-  - Limits: 1000m CPU, 2Gi memory
-- **Probes:** Liveness and readiness checks
-- **Auto-scaling:** Based on CPU (70%) and Memory (80%)
+### Implantação Backend
+- **Réplicas:** 3 (com HPA 3-10)
+- **Recursos:**
+  - Requests: 250m CPU, 512Mi memória
+  - Limits: 1000m CPU, 2Gi memória
+- **Probes:** Verificações de liveness e readiness
+- **Auto-scaling:** Baseado em CPU (70%) e Memória (80%)
 
-### Frontend Deployment
-- **Replicas:** 2 (with HPA 2-5)
-- **Resources:**
-  - Requests: 100m CPU, 128Mi memory
-  - Limits: 200m CPU, 256Mi memory
-- **Probes:** Liveness and readiness checks
-- **Auto-scaling:** Based on CPU (70%)
+### Implantação Frontend
+- **Réplicas:** 2 (com HPA 2-5)
+- **Recursos:**
+  - Requests: 100m CPU, 128Mi memória
+  - Limits: 200m CPU, 256Mi memória
+- **Probes:** Verificações de liveness e readiness
+- **Auto-scaling:** Baseado em CPU (70%)
 
 ### Ingress
 - **TLS:** Let's Encrypt via cert-manager
-- **Paths:**
-  - `/api` → Backend service
+- **Caminhos:**
+  - `/api` → Serviço backend
   - `/ws` → WebSocket (Backend)
-  - `/` → Frontend service
+  - `/` → Serviço frontend
 
-## Configuration
+## Configuração
 
-### Update Secrets
+### Atualizar Secrets
 
 ```bash
 kubectl create secret generic omnimind-secrets \
@@ -76,115 +76,115 @@ kubectl create secret generic omnimind-secrets \
   -n omnimind --dry-run=client -o yaml | kubectl apply -f -
 ```
 
-### Update Ingress Hostname
+### Atualizar Hostname do Ingress
 
-Edit `k8s/base/deployment.yaml` and replace `omnimind.example.com` with your domain.
+Edite `k8s/base/deployment.yaml` e substitua `omnimind.example.com` pelo seu domínio.
 
-### Storage Configuration
+### Configuração de Storage
 
-The deployment uses a PersistentVolumeClaim for data storage:
-- **Size:** 10Gi
-- **Storage Class:** standard (adjust as needed)
+A implantação usa PersistentVolumeClaim para armazenamento de dados:
+- **Tamanho:** 10Gi
+- **Storage Class:** standard (ajuste conforme necessário)
 
-To use a different storage class:
+Para usar uma storage class diferente:
 ```bash
 kubectl patch pvc omnimind-data -n omnimind -p '{"spec":{"storageClassName":"fast-ssd"}}'
 ```
 
-## Monitoring
+## Monitoramento
 
-### View Autoscaling Status
+### Visualizar Status de Auto-scaling
 
 ```bash
 kubectl get hpa -n omnimind
 kubectl describe hpa omnimind-backend-hpa -n omnimind
 ```
 
-### View Resource Usage
+### Visualizar Uso de Recursos
 
 ```bash
 kubectl top pods -n omnimind
 kubectl top nodes
 ```
 
-### View Logs
+### Visualizar Logs
 
 ```bash
-# Backend logs
+# Logs do backend
 kubectl logs -n omnimind -l component=backend --tail=100 -f
 
-# Frontend logs
+# Logs do frontend
 kubectl logs -n omnimind -l component=frontend --tail=100 -f
 ```
 
 ## Scaling
 
-### Manual Scaling
+### Scaling Manual
 
 ```bash
-# Scale backend
+# Escalar backend
 kubectl scale deployment omnimind-backend -n omnimind --replicas=5
 
-# Scale frontend
+# Escalar frontend
 kubectl scale deployment omnimind-frontend -n omnimind --replicas=3
 ```
 
-### Update HPA Limits
+### Atualizar Limites HPA
 
 ```bash
-# Increase backend max replicas
+# Aumentar réplicas máximas do backend
 kubectl patch hpa omnimind-backend-hpa -n omnimind \
   -p '{"spec":{"maxReplicas":15}}'
 ```
 
-## Troubleshooting
+## Solução de Problemas
 
-### Pods Not Starting
+### Pods Não Iniciando
 
 ```bash
 kubectl describe pod <pod-name> -n omnimind
 kubectl logs <pod-name> -n omnimind --previous
 ```
 
-### Service Not Accessible
+### Serviço Não Acessível
 
 ```bash
-# Check service
+# Verificar serviço
 kubectl get svc -n omnimind
 kubectl describe svc omnimind-backend -n omnimind
 
-# Check ingress
+# Verificar ingress
 kubectl get ingress -n omnimind
 kubectl describe ingress omnimind-ingress -n omnimind
 ```
 
-### SSL/TLS Issues
+### Problemas SSL/TLS
 
 ```bash
-# Check certificate
+# Verificar certificado
 kubectl get certificate -n omnimind
 kubectl describe certificate omnimind-tls -n omnimind
 
-# Check cert-manager logs
+# Verificar logs do cert-manager
 kubectl logs -n cert-manager -l app=cert-manager
 ```
 
-## Cleanup
+## Limpeza
 
 ```bash
 kubectl delete -f k8s/base/deployment.yaml
 ```
 
-Or delete just the namespace:
+Ou deletar apenas o namespace:
 ```bash
 kubectl delete namespace omnimind
 ```
 
-## Advanced Configuration
+## Configuração Avançada
 
-### Custom Resource Limits
+### Limites de Recursos Customizados
 
-Edit the deployment and adjust resource requests/limits:
+Edite a implantação e ajuste requests/limits de recursos:
 
 ```yaml
 resources:
@@ -196,35 +196,35 @@ resources:
     cpu: "2000m"
 ```
 
-### Multiple Environments
+### Múltiplos Ambientes
 
-Use Kustomize for environment-specific configurations:
+Use Kustomize para configurações específicas de ambiente:
 
 ```bash
-# Base + Staging overlay
+# Base + Overlay staging
 kubectl apply -k k8s/staging/
 
-# Base + Production overlay
+# Base + Overlay produção
 kubectl apply -k k8s/production/
 ```
 
-## Security
+## Segurança
 
-### Network Policies
+### Políticas de Rede
 
-Apply network policies to restrict traffic:
+Aplique políticas de rede para restringir tráfego:
 
 ```bash
 kubectl apply -f k8s/security/network-policies.yaml
 ```
 
-### Pod Security Standards
+### Padrões de Segurança de Pod
 
-The deployment follows Pod Security Standards:
-- No privileged containers
-- Non-root user execution
-- Read-only root filesystem where possible
+A implantação segue os Padrões de Segurança de Pod:
+- Sem containers privilegiados
+- Execução de usuário não-root
+- Sistema de arquivos raiz somente leitura quando possível
 
-## Support
+## Suporte
 
-For detailed deployment guide, see [ENTERPRISE_DEPLOYMENT.md](../docs/ENTERPRISE_DEPLOYMENT.md)
+Para guia detalhado de implantação, veja [ENTERPRISE_DEPLOYMENT.md](../docs/ENTERPRISE_DEPLOYMENT.md)
