@@ -712,12 +712,13 @@ def websocket_stats(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
 # API ROUTERS (Phase 8.2)
 # ============================================================================
 
-from web.backend.routes import tasks, agents, security, metacognition
+from web.backend.routes import tasks, agents, security, metacognition, health
 
 app.include_router(tasks.router)
 app.include_router(agents.router)
 app.include_router(security.router)
 app.include_router(metacognition.router)
+app.include_router(health.router)
 
 # Set orchestrator for metacognition routes
 # This will be set when orchestrator is initialized
