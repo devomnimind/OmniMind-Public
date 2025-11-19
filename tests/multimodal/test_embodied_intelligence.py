@@ -1,6 +1,6 @@
 """Tests for Embodied Intelligence (Phase 12.4)."""
 
-from datetime import datetime
+
 
 import pytest
 
@@ -262,7 +262,9 @@ class TestEmbodiedIntelligence:
         initial_pos = ei.current_state.position
 
         target = Position3D(5.0, 5.0, 0.0)
-        action = Action(action_type=ActionType.MOVE, target_position=target, duration=2.0)
+        action = Action(
+            action_type=ActionType.MOVE, target_position=target, duration=2.0
+        )
 
         status = ei.execute_action(action)
 
@@ -410,7 +412,9 @@ class TestEmbodiedIntelligence:
         ei = EmbodiedIntelligence()
 
         # Add some sensor readings
-        readings = [SensorReading(sensor_type=SensorType.CAMERA, value="img", confidence=0.9)]
+        readings = [
+            SensorReading(sensor_type=SensorType.CAMERA, value="img", confidence=0.9)
+        ]
         ei.sense_environment(readings)
 
         # Execute some actions

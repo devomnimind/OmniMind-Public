@@ -1,6 +1,6 @@
 """Tests for Multi-Modal Fusion (Phase 12.3)."""
 
-from datetime import datetime, timedelta
+
 
 import pytest
 
@@ -61,14 +61,10 @@ class TestAttentionWeights:
 
     def test_attention_weights_normalization(self) -> None:
         """Test that attention weights are normalized."""
-        weights = AttentionWeights(
-            weights={Modality.VISION: 2.0, Modality.AUDIO: 3.0}
-        )
+        weights = AttentionWeights(weights={Modality.VISION: 2.0, Modality.AUDIO: 3.0})
 
         # Should be normalized to sum to 1.0
-        total = weights.get_weight(Modality.VISION) + weights.get_weight(
-            Modality.AUDIO
-        )
+        total = weights.get_weight(Modality.VISION) + weights.get_weight(Modality.AUDIO)
         assert abs(total - 1.0) < 1e-10
 
     def test_attention_weights_validation(self) -> None:
@@ -379,7 +375,10 @@ class TestMultiModalFusion:
         assert isinstance(alignments, dict)
         assert len(alignments) > 0
         # Check that alignment score exists
-        assert any("vision" in key.lower() and "audio" in key.lower() for key in alignments.keys())
+        assert any(
+            "vision" in key.lower() and "audio" in key.lower()
+            for key in alignments.keys()
+        )
 
     def test_align_modalities_insufficient_inputs(self) -> None:
         """Test alignment with insufficient inputs."""

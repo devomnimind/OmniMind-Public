@@ -300,7 +300,9 @@ class MultiModalFusion:
         # Filter inputs by target modalities
         if query.target_modalities:
             candidates = [
-                inp for inp in available_inputs if inp.modality in query.target_modalities
+                inp
+                for inp in available_inputs
+                if inp.modality in query.target_modalities
             ]
         else:
             candidates = [
@@ -492,13 +494,16 @@ class MultiModalFusion:
         # Feature overlap (if any common feature names)
         overlap = 0.0
         if query_context:
-            context_features = {k: v for k, v in query_context.items() if isinstance(v, (int, float))}
+            context_features = {
+                k: v for k, v in query_context.items() if isinstance(v, (int, float))
+            }
             if context_features and target_features:
                 common_keys = set(context_features.keys()) & set(target_features.keys())
                 if common_keys:
                     # Calculate similarity for common features
                     diffs = [
-                        abs(context_features[k] - target_features[k]) for k in common_keys
+                        abs(context_features[k] - target_features[k])
+                        for k in common_keys
                     ]
                     overlap = 1.0 - (sum(diffs) / len(diffs))
 
@@ -533,9 +538,7 @@ class MultiModalFusion:
         # Check feature similarity
         common_keys = set(inp1.features.keys()) & set(inp2.features.keys())
         if common_keys:
-            diffs = [
-                abs(inp1.features[k] - inp2.features[k]) for k in common_keys
-            ]
+            diffs = [abs(inp1.features[k] - inp2.features[k]) for k in common_keys]
             feature_similarity = 1.0 - (sum(diffs) / len(diffs))
         else:
             feature_similarity = 0.5

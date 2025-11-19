@@ -14,7 +14,7 @@ import hashlib
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 import structlog
 
@@ -385,9 +385,7 @@ class AudioProcessor:
         zero_crossing_rate = min(1.0, ((data_sum + 100) % 1000) / 1000)
 
         # Simulate MFCC-like features (typically 13-20 coefficients)
-        mfcc_like = [
-            ((data_sum + i * 100) % 1000) / 1000 for i in range(13)
-        ]
+        mfcc_like = [((data_sum + i * 100) % 1000) / 1000 for i in range(13)]
 
         features = AudioFeatures(
             duration=duration,
@@ -481,9 +479,7 @@ class AudioProcessor:
         )
 
         # Extract features from all samples
-        all_features = [
-            self.extract_audio_features(sample) for sample in audio_samples
-        ]
+        all_features = [self.extract_audio_features(sample) for sample in audio_samples]
 
         # Average voice characteristics
         avg_pitch = sum(f.pitch for f in all_features) / len(all_features)
@@ -504,7 +500,9 @@ class AudioProcessor:
             name=name,
             voice_features=voice_features,
             sample_count=len(audio_samples),
-            confidence=min(1.0, len(audio_samples) / 10),  # More samples = higher confidence
+            confidence=min(
+                1.0, len(audio_samples) / 10
+            ),  # More samples = higher confidence
         )
 
         self._speaker_profiles[speaker_id] = profile
@@ -602,13 +600,13 @@ class AudioProcessor:
         """Simulate speech synthesis (returns dummy audio data)."""
         # Generate deterministic "audio" data based on text
         text_hash = hashlib.sha256(text.encode()).hexdigest()
-        
+
         # Simulate audio data size (roughly proportional to text length)
         audio_size = len(text) * 100  # 100 bytes per character
-        
+
         # Generate reproducible audio data
         audio_data = (text_hash * (audio_size // len(text_hash) + 1))[:audio_size]
-        
+
         return audio_data.encode()
 
     def _calculate_speaker_similarity(

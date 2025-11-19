@@ -64,8 +64,10 @@ def demo_vision_processing() -> VisionProcessor:
     if analysis.objects:
         print(f"\n  Detected objects:")
         for obj in analysis.objects[:3]:  # Show first 3
-            print(f"    • {obj.label} ({obj.category.value}) - "
-                  f"confidence: {obj.confidence:.2f}")
+            print(
+                f"    • {obj.label} ({obj.category.value}) - "
+                f"confidence: {obj.confidence:.2f}"
+            )
 
     # Process a video
     print("\n🎬 Processing simulated video...")
@@ -74,8 +76,10 @@ def demo_vision_processing() -> VisionProcessor:
 
     print(f"\n✓ Video processed:")
     print(f"  - Total frames analyzed: {len(frames)}")
-    print(f"  - Average motion score: "
-          f"{sum(f.motion_score for f in frames) / len(frames):.2f}")
+    print(
+        f"  - Average motion score: "
+        f"{sum(f.motion_score for f in frames) / len(frames):.2f}"
+    )
 
     # Extract features
     print("\n🔍 Extracting vision features...")
@@ -113,8 +117,10 @@ def demo_audio_processing() -> AudioProcessor:
     if result.segments:
         print(f"\n  Speech segments:")
         for seg in result.segments[:3]:  # Show first 3
-            print(f"    • {seg.start_time:.1f}s - {seg.end_time:.1f}s: "
-                  f'"{seg.text}" (emotion: {seg.emotion.value})')
+            print(
+                f"    • {seg.start_time:.1f}s - {seg.end_time:.1f}s: "
+                f'"{seg.text}" (emotion: {seg.emotion.value})'
+            )
 
     # Speech synthesis
     print("\n🗣️  Synthesizing speech...")
@@ -157,15 +163,13 @@ def demo_audio_processing() -> AudioProcessor:
 
 
 def demo_multimodal_fusion(
-    vision_processor: VisionProcessor,
-    audio_processor: AudioProcessor
+    vision_processor: VisionProcessor, audio_processor: AudioProcessor
 ) -> MultiModalFusion:
     """Demonstrate multi-modal fusion capabilities."""
     print_section("Phase 12.3: Multi-Modal Fusion")
 
     fusion = MultiModalFusion(
-        default_strategy=FusionStrategy.HYBRID,
-        enable_attention=True
+        default_strategy=FusionStrategy.HYBRID, enable_attention=True
     )
     print(f"✓ Multi-Modal Fusion engine initialized")
     print(f"  - Strategy: {fusion.default_strategy.value}")
@@ -214,8 +218,7 @@ def demo_multimodal_fusion(
     # Fuse modalities
     print("\n🔀 Fusing modalities with hybrid strategy...")
     fused = fusion.fuse_modalities(
-        [vision_input, audio_input, text_input],
-        strategy=FusionStrategy.HYBRID
+        [vision_input, audio_input, text_input], strategy=FusionStrategy.HYBRID
     )
 
     print(f"\n✓ Modalities fused:")
@@ -242,15 +245,15 @@ def demo_multimodal_fusion(
     print(f"  - Matches found: {len(matches)}")
 
     for i, match in enumerate(matches, 1):
-        print(f"  {i}. {match.match_modality.value} - "
-              f"similarity: {match.similarity:.3f}")
+        print(
+            f"  {i}. {match.match_modality.value} - "
+            f"similarity: {match.similarity:.3f}"
+        )
 
     # Align modalities
     print("\n⚡ Aligning vision, audio, and text modalities...")
     alignments = fusion.align_modalities(
-        vision_input=vision_input,
-        audio_input=audio_input,
-        text_input=text_input
+        vision_input=vision_input, audio_input=audio_input, text_input=text_input
     )
 
     print(f"\n✓ Modality alignment complete:")
@@ -295,7 +298,9 @@ def demo_embodied_intelligence() -> EmbodiedIntelligence:
     env_state = ei.sense_environment(sensor_readings)
 
     print(f"\n✓ Environment sensed:")
-    print(f"  - Sensor types: {len([k for k in env_state.keys() if k not in ['summary', 'obstacles_detected']])}")
+    print(
+        f"  - Sensor types: {len([k for k in env_state.keys() if k not in ['summary', 'obstacles_detected']])}"
+    )
     print(f"  - Summary: {env_state['summary']}")
     print(f"  - Obstacles detected: {env_state['obstacles_detected']}")
 
@@ -317,8 +322,10 @@ def demo_embodied_intelligence() -> EmbodiedIntelligence:
 
     print(f"\n  Planned actions:")
     for i, action in enumerate(plan.actions, 1):
-        print(f"    {i}. {action.action_type.value} "
-              f"(duration: {action.duration:.1f}s)")
+        print(
+            f"    {i}. {action.action_type.value} "
+            f"(duration: {action.duration:.1f}s)"
+        )
 
     # Execute plan
     print("\n⚙️  Executing action plan...")
@@ -337,8 +344,10 @@ def demo_embodied_intelligence() -> EmbodiedIntelligence:
 
     print(f"\n✓ Movement complete:")
     print(f"  - New position: {ei.current_state.position}")
-    print(f"  - Distance traveled: "
-          f"{initial_pos.distance_to(ei.current_state.position):.2f} units")
+    print(
+        f"  - Distance traveled: "
+        f"{initial_pos.distance_to(ei.current_state.position):.2f} units"
+    )
 
     # Grasp and release demo
     print("\n🤲 Demonstrating grasp and release...")
@@ -355,7 +364,9 @@ def demo_embodied_intelligence() -> EmbodiedIntelligence:
     # Check goal achievement
     print("\n✅ Checking goal achievement...")
     achieved = ei.check_goal_achieved(goal)
-    print(f"  Goal '{goal.description}': {'✓ Achieved' if achieved else '✗ Not achieved'}")
+    print(
+        f"  Goal '{goal.description}': {'✓ Achieved' if achieved else '✗ Not achieved'}"
+    )
 
     # Show action history
     print("\n📜 Action history:")
@@ -414,6 +425,7 @@ def main() -> None:
     except Exception as e:
         print(f"\n❌ Demo error: {e}")
         import traceback
+
         traceback.print_exc()
 
 

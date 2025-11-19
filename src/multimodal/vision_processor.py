@@ -477,9 +477,7 @@ class VisionProcessor:
 
         return objects
 
-    def _extract_dominant_colors(
-        self, image_data: bytes
-    ) -> List[Tuple[int, int, int]]:
+    def _extract_dominant_colors(self, image_data: bytes) -> List[Tuple[int, int, int]]:
         """Simulate dominant color extraction."""
         # Simulate extracting 3-5 dominant colors
         data_sum = sum(image_data[:300])
@@ -503,10 +501,7 @@ class VisionProcessor:
         """Generate natural language description of scene."""
         obj_labels = [obj.label for obj in objects[:3]]
         if obj_labels:
-            return (
-                f"A {scene_type.value} scene containing "
-                f"{', '.join(obj_labels)}"
-            )
+            return f"A {scene_type.value} scene containing " f"{', '.join(obj_labels)}"
         else:
             return f"A {scene_type.value} scene"
 

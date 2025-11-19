@@ -372,7 +372,11 @@ class TestAudioProcessor:
     def test_register_speaker(self) -> None:
         """Test speaker registration."""
         processor = AudioProcessor()
-        samples = [b"voice_sample_1" * 50, b"voice_sample_2" * 50, b"voice_sample_3" * 50]
+        samples = [
+            b"voice_sample_1" * 50,
+            b"voice_sample_2" * 50,
+            b"voice_sample_3" * 50,
+        ]
 
         profile = processor.register_speaker(
             audio_samples=samples,

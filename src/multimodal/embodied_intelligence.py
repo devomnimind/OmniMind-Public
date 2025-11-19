@@ -251,9 +251,7 @@ class EmbodiedIntelligence:
             physics=enable_physics,
         )
 
-    def sense_environment(
-        self, sensor_readings: List[SensorReading]
-    ) -> Dict[str, Any]:
+    def sense_environment(self, sensor_readings: List[SensorReading]) -> Dict[str, Any]:
         """Process sensor readings to understand environment.
 
         Args:
@@ -584,9 +582,7 @@ class EmbodiedIntelligence:
         elif action.action_type == ActionType.RELEASE:
             self.current_state.gripping = False
 
-    def _generate_environment_summary(
-        self, readings: List[SensorReading]
-    ) -> str:
+    def _generate_environment_summary(self, readings: List[SensorReading]) -> str:
         """Generate natural language summary of environment."""
         sensor_types = set(r.sensor_type.value for r in readings)
 
