@@ -7,11 +7,12 @@ import os
 import secrets
 import threading
 import time
+import uuid
 from contextlib import asynccontextmanager, suppress
 from pathlib import Path
 from typing import Any, Callable, Dict, Optional, Tuple
 
-from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pydantic import BaseModel
@@ -123,15 +124,26 @@ def _ensure_dashboard_credentials() -> Tuple[str, str]:
 
 @asynccontextmanager
 async def lifespan(app_instance: FastAPI) -> Any:
+    # Import WebSocket manager
+    from web.backend.websocket_manager import ws_manager
+
+    # Start WebSocket manager
+    await ws_manager.start()
+
+    # Start metrics reporter
     app_instance.state.metrics_task = asyncio.create_task(_metrics_reporter())
     try:
         yield
     finally:
+        # Stop metrics reporter
         task = getattr(app_instance.state, "metrics_task", None)
         if task:
             task.cancel()
             with suppress(asyncio.CancelledError):
                 await task
+
+        # Stop WebSocket manager
+        await ws_manager.stop()
 
 
 app = FastAPI(
@@ -589,3 +601,70 @@ def daemon_stop(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
         "status": "stopped",
         "message": "Daemon stopped successfully",
     }
+
+
+# ============================================================================
+# WEBSOCKET ENDPOINTS (Phase 8.2)
+# ============================================================================
+
+from web.backend.websocket_manager import ws_manager
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    """Main WebSocket endpoint for real-time updates."""
+    client_id = str(uuid.uuid4())
+    await ws_manager.connect(websocket, client_id)
+
+    try:
+        while True:
+            # Receive messages from client
+            data = await websocket.receive_json()
+
+            # Handle subscription requests
+            if data.get("type") == "subscribe":
+                channels = data.get("channels", [])
+                await ws_manager.subscribe(client_id, channels)
+
+            elif data.get("type") == "unsubscribe":
+                channels = data.get("channels", [])
+                await ws_manager.unsubscribe(client_id, channels)
+
+            elif data.get("type") == "ping":
+                # Respond to ping
+                await websocket.send_json(
+                    {"type": "pong", "timestamp": time.time()}
+                )
+
+    except WebSocketDisconnect:
+        ws_manager.disconnect(client_id)
+    except Exception as exc:
+        logger.exception(f"WebSocket error for client {client_id}: {exc}")
+        ws_manager.disconnect(client_id)
+
+
+@app.get("/ws/stats")
+def websocket_stats(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    """Get WebSocket connection statistics."""
+    return ws_manager.get_stats()
+
+
+# ============================================================================
+# API ROUTERS (Phase 8.2)
+# ============================================================================
+
+from web.backend.routes import tasks, agents, security, metacognition
+
+app.include_router(tasks.router)
+app.include_router(agents.router)
+app.include_router(security.router)
+app.include_router(metacognition.router)
+
+# Set orchestrator for metacognition routes
+# This will be set when orchestrator is initialized
+try:
+    orch = _get_orchestrator()
+    metacognition.set_orchestrator(orch)
+    logger.info("Metacognition routes connected to orchestrator")
+except Exception as exc:
+    logger.warning(f"Metacognition routes not connected yet: {exc}")

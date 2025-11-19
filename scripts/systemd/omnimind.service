@@ -1,9 +1,8 @@
 [Unit]
-Description=OmniMind Autonomous Daemon
+Description=OmniMind AI Agent System
 Documentation=https://github.com/fabs-devbrain/OmniMind
-After=network-online.target omnimind.service
+After=network-online.target
 Wants=network-online.target
-Requires=omnimind.service
 
 [Service]
 Type=simple
@@ -15,14 +14,12 @@ WorkingDirectory=/home/%i/projects/omnimind
 Environment="PYTHONUNBUFFERED=1"
 Environment="OMNIMIND_WORKSPACE=/home/%i/projects/omnimind"
 Environment="OMNIMIND_LOG_LEVEL=INFO"
-Environment="DAEMON_CHECK_INTERVAL=30"
-Environment="OMNIMIND_CLOUD_ENABLED=false"
 
 # Virtual environment activation
 ExecStartPre=/bin/bash -c 'source .venv/bin/activate'
 
-# Main daemon service
-ExecStart=/home/%i/projects/omnimind/.venv/bin/python -m src.daemon
+# Main service
+ExecStart=/home/%i/projects/omnimind/.venv/bin/python -m uvicorn web.backend.main:app --host 0.0.0.0 --port 8000 --log-level info
 
 # Restart policy
 Restart=on-failure
@@ -31,9 +28,9 @@ StartLimitBurst=5
 StartLimitInterval=300
 
 # Resource limits
-MemoryMax=2G
-CPUQuota=150%
-TasksMax=50
+MemoryMax=4G
+CPUQuota=200%
+TasksMax=100
 
 # Security
 NoNewPrivileges=true
@@ -45,7 +42,7 @@ ReadWritePaths=/home/%i/projects/omnimind/logs /home/%i/projects/omnimind/data
 # Logging
 StandardOutput=journal
 StandardError=journal
-SyslogIdentifier=omnimind-daemon
+SyslogIdentifier=omnimind
 
 [Install]
 WantedBy=multi-user.target

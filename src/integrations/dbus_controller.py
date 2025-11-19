@@ -114,3 +114,178 @@ class DBusSystemController:
         except dbus.DBusException as exc:
             logger.debug("UPower query failed: %s", exc)
             return {"error": str(exc)}
+
+    def get_disk_usage(self) -> Dict[str, Any]:
+        """Get disk usage information from UDisks2.
+
+        Returns:
+            Dictionary with disk usage information
+        """
+        try:
+            import psutil
+
+            # Use psutil for cross-platform disk usage
+            disk_info = {}
+            for partition in psutil.disk_partitions():
+                try:
+                    usage = psutil.disk_usage(partition.mountpoint)
+                    disk_info[partition.mountpoint] = {
+                        "device": partition.device,
+                        "fstype": partition.fstype,
+                        "total": usage.total,
+                        "used": usage.used,
+                        "free": usage.free,
+                        "percent": usage.percent,
+                    }
+                except PermissionError:
+                    continue
+
+            return {"disks": disk_info, "timestamp": __import__("time").time()}
+
+        except Exception as exc:
+            logger.debug(f"Disk usage query failed: {exc}")
+            return {"error": str(exc)}
+
+    def get_battery_info(self) -> Dict[str, Any]:
+        """Get detailed battery information.
+
+        Returns:
+            Dictionary with battery information
+        """
+        try:
+            import psutil
+
+            battery = psutil.sensors_battery()
+            if battery is None:
+                return {"error": "No battery detected"}
+
+            return {
+                "percent": battery.percent,
+                "power_plugged": battery.power_plugged,
+                "time_left": battery.secsleft if battery.secsleft != -1 else None,
+                "timestamp": __import__("time").time(),
+            }
+
+        except Exception as exc:
+            logger.debug(f"Battery info query failed: {exc}")
+            return {"error": str(exc)}
+
+    def get_network_interfaces(self) -> Dict[str, Any]:
+        """Get network interface information.
+
+        Returns:
+            Dictionary with network interface details
+        """
+        try:
+            import psutil
+
+            interfaces = {}
+            stats = psutil.net_if_stats()
+            addrs = psutil.net_if_addrs()
+
+            for iface_name, iface_stats in stats.items():
+                interface_info = {
+                    "is_up": iface_stats.isup,
+                    "speed": iface_stats.speed,
+                    "mtu": iface_stats.mtu,
+                    "addresses": [],
+                }
+
+                # Add addresses if available
+                if iface_name in addrs:
+                    for addr in addrs[iface_name]:
+                        interface_info["addresses"].append(
+                            {
+                                "family": str(addr.family),
+                                "address": addr.address,
+                                "netmask": addr.netmask,
+                                "broadcast": addr.broadcast,
+                            }
+                        )
+
+                interfaces[iface_name] = interface_info
+
+            return {"interfaces": interfaces, "timestamp": __import__("time").time()}
+
+        except Exception as exc:
+            logger.debug(f"Network interfaces query failed: {exc}")
+            return {"error": str(exc)}
+
+    def get_system_services_status(self) -> Dict[str, Any]:
+        """Get status of system services via systemd.
+
+        Returns:
+            Dictionary with service statuses
+        """
+        try:
+            proxy = self._bus.get_object(
+                "org.freedesktop.systemd1", "/org/freedesktop/systemd1"
+            )
+            manager = dbus.Interface(proxy, "org.freedesktop.systemd1.Manager")
+
+            # Get list of units
+            units = manager.ListUnits()
+
+            services = {}
+            for unit in units:
+                unit_name, description, load_state, active_state, sub_state = (
+                    unit[0],
+                    unit[1],
+                    unit[2],
+                    unit[3],
+                    unit[4],
+                )
+
+                # Only include service units
+                if unit_name.endswith(".service"):
+                    services[unit_name] = {
+                        "description": description,
+                        "load_state": load_state,
+                        "active_state": active_state,
+                        "sub_state": sub_state,
+                    }
+
+            return {"services": services, "timestamp": __import__("time").time()}
+
+        except dbus.DBusException as exc:
+            logger.debug(f"systemd query failed: {exc}")
+            return {"error": str(exc)}
+
+    def send_notification(
+        self, summary: str, body: str, urgency: int = 1
+    ) -> Dict[str, Any]:
+        """Send desktop notification via D-Bus.
+
+        Args:
+            summary: Notification title
+            body: Notification body
+            urgency: Urgency level (0=low, 1=normal, 2=critical)
+
+        Returns:
+            Notification result
+        """
+        try:
+            # Get session bus for notifications
+            session_bus = dbus.SessionBus()
+            proxy = session_bus.get_object(
+                "org.freedesktop.Notifications", "/org/freedesktop/Notifications"
+            )
+            notifications = dbus.Interface(proxy, "org.freedesktop.Notifications")
+
+            # Send notification
+            notification_id = notifications.Notify(
+                "OmniMind",  # app_name
+                0,  # replaces_id (0 = new notification)
+                "",  # app_icon
+                summary,
+                body,
+                [],  # actions
+                {"urgency": dbus.Byte(urgency)},  # hints
+                -1,  # timeout (-1 = default)
+            )
+
+            return {"success": True, "notification_id": int(notification_id)}
+
+        except dbus.DBusException as exc:
+            logger.warning(f"Notification failed: {exc}")
+            return {"success": False, "error": str(exc)}

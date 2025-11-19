@@ -44,6 +44,7 @@ from ..integrations.qdrant_adapter import (
 from .orchestrator_metrics import OrchestratorMetricsCollector
 from ..security.security_agent import SecurityAgent
 from .psychoanalytic_analyst import PsychoanalyticAnalyst
+from ..metacognition.metacognition_agent import MetacognitionAgent
 
 
 logger = logging.getLogger(__name__)
@@ -99,9 +100,11 @@ class OrchestratorAgent(ReactAgent):
         self.supabase_adapter: Optional[SupabaseAdapter] = self._init_supabase_adapter()
         self.qdrant_adapter: Optional[QdrantAdapter] = self._init_qdrant_adapter()
         self.security_agent: Optional[SecurityAgent] = self._init_security_agent()
+        self.metacognition_agent: Optional[MetacognitionAgent] = self._init_metacognition_agent()
         self.dashboard_snapshot: Dict[str, Any] = {}
         self.last_mcp_result: Dict[str, Any] = {}
         self.last_dbus_result: Dict[str, Any] = {}
+        self.last_metacognition_analysis: Dict[str, Any] = {}
         self.metrics = OrchestratorMetricsCollector()
 
         # Estado de orquestração
@@ -174,6 +177,29 @@ class OrchestratorAgent(ReactAgent):
             return agent
         except Exception as exc:
             logger.error("Failed to initialize SecurityAgent: %s", exc)
+            return None
+
+    def _init_metacognition_agent(self) -> Optional[MetacognitionAgent]:
+        """Initialize the metacognition agent for self-analysis."""
+        try:
+            metacog_config = self.config.get("metacognition", {})
+            hash_chain_path = metacog_config.get(
+                "hash_chain_path", "logs/hash_chain.json"
+            )
+            analysis_interval = metacog_config.get("analysis_interval", 3600)
+            bias_sensitivity = metacog_config.get("bias_sensitivity", 0.7)
+            max_suggestions = metacog_config.get("max_suggestions", 10)
+
+            agent = MetacognitionAgent(
+                hash_chain_path=hash_chain_path,
+                analysis_interval=analysis_interval,
+                bias_sensitivity=bias_sensitivity,
+                max_suggestions=max_suggestions,
+            )
+            logger.info("MetacognitionAgent initialized successfully")
+            return agent
+        except Exception as exc:
+            logger.error("Failed to initialize MetacognitionAgent: %s", exc)
             return None
 
     def _timestamp(self) -> str:
@@ -894,6 +920,69 @@ Your decomposition plan:"""
         }
 
         return synthesis
+
+    def run_metacognition_analysis(
+        self, lookback_hours: int = 24
+    ) -> Dict[str, Any]:
+        """Run metacognition self-analysis.
+
+        Args:
+            lookback_hours: Hours of history to analyze
+
+        Returns:
+            Analysis report with health, patterns, and optimization suggestions
+        """
+        if not self.metacognition_agent:
+            logger.warning("MetacognitionAgent not initialized")
+            return {"error": "MetacognitionAgent not available"}
+
+        try:
+            report = self.metacognition_agent.run_analysis(lookback_hours)
+            self.last_metacognition_analysis = report
+
+            # Log critical suggestions
+            suggestions = report.get("optimization_suggestions", [])
+            critical_suggestions = [
+                s for s in suggestions if s.get("priority") == "critical"
+            ]
+
+            if critical_suggestions:
+                logger.warning(
+                    f"Metacognition found {len(critical_suggestions)} critical optimization suggestions"
+                )
+                for suggestion in critical_suggestions:
+                    logger.warning(f"  - {suggestion.get('title')}")
+
+            return report
+        except Exception as exc:
+            logger.exception(f"Metacognition analysis failed: {exc}")
+            return {"error": str(exc)}
+
+    def check_metacognition_health(self) -> Dict[str, Any]:
+        """Quick health check via metacognition.
+
+        Returns:
+            Quick health status
+        """
+        if not self.metacognition_agent:
+            return {"status": "unavailable", "error": "MetacognitionAgent not initialized"}
+
+        try:
+            return self.metacognition_agent.get_quick_health_check()
+        except Exception as exc:
+            logger.exception(f"Health check failed: {exc}")
+            return {"status": "error", "error": str(exc)}
+
+    def should_run_metacognition_analysis(self) -> bool:
+        """Check if periodic metacognition analysis should run.
+
+        Returns:
+            True if analysis should run
+        """
+        if not self.metacognition_agent:
+            return False
+
+        return self.metacognition_agent.should_run_analysis()
 
 
 # ============================================================================

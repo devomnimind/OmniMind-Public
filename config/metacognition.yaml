@@ -1,0 +1,57 @@
+# Metacognition Agent Configuration
+# Self-reflective AI capabilities for OmniMind
+
+# Analysis Settings
+analysis_interval: 3600  # seconds (1 hour)
+lookback_hours: 24  # hours of history to analyze
+
+# Detection Thresholds
+bias_detection_sensitivity: 0.7  # 0.0-1.0 (higher = more sensitive)
+anomaly_threshold: 2.0  # standard deviations for anomaly detection
+performance_threshold: 0.85  # success rate threshold
+
+# Optimization Settings
+max_suggestions: 10  # maximum suggestions per analysis
+suggestion_priorities:
+  - critical
+  - high
+  - medium
+  - low
+
+# Performance Thresholds
+thresholds:
+  execution_time_warning: 5.0  # seconds
+  execution_time_critical: 10.0  # seconds
+  failure_count_warning: 5
+  failure_count_critical: 10
+  cpu_usage_warning: 80.0  # percent
+  cpu_usage_critical: 95.0  # percent
+  memory_usage_warning: 80.0  # percent
+  memory_usage_critical: 95.0  # percent
+
+# Pattern Recognition
+pattern_recognition:
+  min_sequence_length: 2
+  max_sequence_length: 6
+  min_repetitions: 2
+  diversity_threshold: 0.4  # minimum diversity score
+
+# Self-Analysis
+self_analysis:
+  hash_chain_path: "logs/hash_chain.json"
+  cache_enabled: true
+  cache_ttl: 300  # seconds
+
+# Reporting
+reporting:
+  enabled: true
+  report_path: "logs/metacognition/"
+  keep_reports: 30  # days
+  format: "json"  # json or yaml
+
+# Integration
+integration:
+  orchestrator_enabled: true
+  auto_apply_suggestions: false  # require human approval
+  notification_enabled: true
+  critical_threshold_notification: true
