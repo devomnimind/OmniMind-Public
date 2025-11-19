@@ -8,9 +8,13 @@ This module provides multi-modal capabilities for OmniMind:
 """
 
 from src.multimodal.audio_processor import AudioProcessor
+from src.multimodal.embodied_intelligence import EmbodiedIntelligence
+from src.multimodal.multi_modal_fusion import MultiModalFusion
 from src.multimodal.vision_processor import VisionProcessor
 
 __all__ = [
     "VisionProcessor",
     "AudioProcessor",
+    "MultiModalFusion",
+    "EmbodiedIntelligence",
 ]
