@@ -1,6 +1,30 @@
 # OmniMind Workspace
 
-OmniMind is a self-hosted multi-agent system with a FastAPI + React dashboard, secure monitoring agents, and automation tooling. This project follows a strict workspace layout that keeps the root clean, archives legacy artifacts, and centralizes script/log management for predictable CI/CD.
+OmniMind is a self-hosted multi-agent system with a FastAPI + React dashboard, secure monitoring agents, and automation tooling. This project follows a **local-first** architecture with automatic hardware detection and CPU/GPU optimization.
+
+## 🚀 Quick Start
+
+### Choose Your Deployment:
+
+1. **[CPU-Only / Cloud-Free](docs/CLOUD_FREE_DEPLOYMENT.md)** - GitHub Actions, Docker, no GPU needed
+2. **[GPU-Enabled](docs/reports/PHASE7_GPU_CUDA_REPAIR_LOG.md)** - Local machine with NVIDIA GPU
+3. **[Free Services Guide](docs/FREE_SERVICE_ALTERNATIVES.md)** - Local alternatives to paid cloud services
+
+### Automatic Hardware Detection
+
+OmniMind automatically detects your hardware and configures itself optimally:
+
+```bash
+# Install dependencies (CPU or GPU auto-detected)
+pip install -r requirements.txt  # or requirements-cpu.txt for CPU-only
+
+# Auto-detect hardware and configure
+python src/optimization/hardware_detector.py
+
+# Verify configuration
+cat config/hardware_profile.json
+cat config/optimization_config.json
+```
 
 ## Repository Structure
 

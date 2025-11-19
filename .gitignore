@@ -21,7 +21,7 @@ htmlcov/
 .venv/
 venv/
 env/
-.python-version
+# .python-version  # ALLOW: Pin Python version for project
 pip-wheel-metadata/
 
 # ------------------------------------------------------------------

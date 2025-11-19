@@ -1,0 +1,18 @@
+{
+  "device": "cpu",
+  "use_gpu": false,
+  "llm_batch_size": 2,
+  "embedding_batch_size": 32,
+  "max_tensor_size": 2000,
+  "max_memory_mb": 3236,
+  "cache_size_mb": 809,
+  "num_workers": 1,
+  "async_workers": 2,
+  "use_quantization": true,
+  "quantization_bits": 8,
+  "vector_db": "chromadb",
+  "cache_backend": "fakeredis",
+  "database": "sqlite",
+  "cpu_governor": "performance",
+  "enable_profiling": true
+}
