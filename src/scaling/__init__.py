@@ -16,15 +16,29 @@ from src.scaling.multi_node import (
     NodeStatus,
     TaskStatus,
 )
+from src.scaling.node_failure_recovery import (
+    FailoverCoordinator,
+    LogEntry,
+    LogEntryType,
+    NodeRole,
+    RaftNode,
+    RaftState,
+)
 
 __all__ = [
     "ClusterCoordinator",
     "DistributedTask",
+    "FailoverCoordinator",
     "IntelligentLoadBalancer",
     "LoadBalancer",
+    "LogEntry",
+    "LogEntryType",
     "NodeInfo",
     "NodePerformanceMetrics",
+    "NodeRole",
     "NodeStatus",
+    "RaftNode",
+    "RaftState",
     "TaskStatus",
     "WorkloadPrediction",
 ]
