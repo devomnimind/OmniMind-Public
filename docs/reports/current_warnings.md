@@ -19,3 +19,5 @@
 > Atualize esse arquivo assim que qualquer warning for adicionado ou eliminado. Mantenha o histórico para onboarding futuros e referencie-o nos commits que lidam com os bloqueios listados.
 
 ✅ BLOCO 1 COMPLETO E VALIDADO: src/metrics, tests/metrics, typings/structlog.pyi — zero mypy errors, 111 testes passando
+- **Hardware benchmark realizado** – , , , ,  e  coletaram métricas (CPU, memória, disco, GPU). Resultados salvos em  e  para Phase 10 (Autotimização).
+- **Hardware benchmark realizado** – scripts/system_info.py ...

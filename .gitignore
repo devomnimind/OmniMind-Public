@@ -94,6 +94,7 @@ logs/
 benchmarks/
 benchmark_outputs/
 !logs/.gitkeep
+!scripts/benchmarks/
 
 # ------------------------------------------------------------------
 # Backups / confidential configs
