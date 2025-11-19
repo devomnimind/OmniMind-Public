@@ -1,10 +1,12 @@
+from typing import Any
+
 from unittest.mock import MagicMock, patch
 
 from src.integrations.dbus_controller import DBusSessionController, DBusSystemController
 
 
 @patch("src.integrations.dbus_controller.dbus.Interface")
-def test_session_controller_controls_player(mock_interface):
+def test_session_controller_controls_player(mock_interface: MagicMock) -> None:
     mock_iface = MagicMock()
     mock_interface.return_value = mock_iface
 
@@ -21,10 +23,10 @@ def test_session_controller_controls_player(mock_interface):
 
 
 @patch("src.integrations.dbus_controller.dbus.Interface")
-def test_system_controller_reports_status(mock_interface):
+def test_system_controller_reports_status(mock_interface: MagicMock) -> None:
     mock_props = MagicMock()
 
-    def capture_get(interface_name, prop_name):
+    def capture_get(interface_name: str, prop_name: str) -> Any:
         mapping = {
             "State": 70,
             "Connectivity": 4,
