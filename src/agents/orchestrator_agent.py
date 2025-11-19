@@ -42,6 +42,7 @@ from ..integrations.qdrant_adapter import (
     QdrantConfig,
 )
 from .orchestrator_metrics import OrchestratorMetricsCollector
+from ..security.security_agent import SecurityAgent
 
 logger = logging.getLogger(__name__)
 
@@ -94,6 +95,7 @@ class OrchestratorAgent(ReactAgent):
         )
         self.supabase_adapter: Optional[SupabaseAdapter] = self._init_supabase_adapter()
         self.qdrant_adapter: Optional[QdrantAdapter] = self._init_qdrant_adapter()
+        self.security_agent: Optional[SecurityAgent] = self._init_security_agent()
         self.dashboard_snapshot: Dict[str, Any] = {}
         self.last_mcp_result: Dict[str, Any] = {}
         self.last_dbus_result: Dict[str, Any] = {}
@@ -150,6 +152,23 @@ class OrchestratorAgent(ReactAgent):
         except Exception as exc:
             logger.warning("Unexpected error initializing Qdrant adapter: %s", exc)
         return None
+
+    def _init_security_agent(self) -> Optional[SecurityAgent]:
+        """Initializes the security agent and starts its monitoring."""
+        try:
+            security_config = self.config.get("security", {})
+            config_path = security_config.get("config_path", "config/security.yaml")
+            
+            agent = SecurityAgent(config_path=config_path, llm=self.llm)
+            if agent.config.get("security_agent", {}).get("enabled", False):
+                # Running this in a background task
+                import asyncio
+                asyncio.create_task(agent.start_continuous_monitoring())
+                logger.info("SecurityAgent continuous monitoring started in background.")
+            return agent
+        except Exception as exc:
+            logger.error("Failed to initialize SecurityAgent: %s", exc)
+            return None
 
     def _timestamp(self) -> str:
         """Retorna timestamp UTC em formato ISO"""
@@ -210,6 +229,9 @@ class OrchestratorAgent(ReactAgent):
             except QdrantAdapterError as exc:
                 logger.warning("Qdrant list collections failed: %s", exc)
                 context["qdrant_error"] = str(exc)
+
+        if self.security_agent:
+            context["security_status"] = self.security_agent.execute("status")
 
         context["plan_summary"].update(self._plan_progress(plan))
         context["last_mcp_result"] = self.last_mcp_result
@@ -631,6 +653,13 @@ Your decomposition plan:"""
             )
             print(delegation_msg)
 
+            # >>> PRE-DELEGATION SECURITY CHECK <<<
+            if self.security_agent:
+                # For now, just log a check. A real implementation would
+                # check for active high-priority threats.
+                self.security_agent.logger.info(f"Pre-delegation check for task: {safe_description}")
+
+
             try:
                 agent_mode = AgentMode(subtask["agent"])
                 result: Dict[str, Any] = {}
@@ -787,25 +816,26 @@ Your decomposition plan:"""
 
     def _execute_security_subtask(self, subtask: Dict[str, Any]) -> Dict[str, Any]:
         description = subtask.get("description", "").lower()
-        if any(keyword in description for keyword in ["monitor", "watch", "observe"]):
-            action = "start_monitoring"
+        
+        if not self.security_agent:
+            return {
+                "completed": False,
+                "final_result": "SecurityAgent not initialized.",
+                "iteration": 1,
+            }
+
+        if "report" in description:
+            action = "report"
         else:
-            action = "check_threat"
-        security_result = self.tools_framework.execute_tool(
-            "security_agent",
-            action=action,
-            params={"description": subtask.get("description")},
-        )
-        report = self.tools_framework.execute_tool(
-            "security_agent", action="generate_report"
-        )
-        final_report = report.get("report") if isinstance(report, dict) else str(report)
+            action = "status"
+
+        security_result = self.security_agent.execute(action)
+        
         return {
             "completed": True,
             "action": action,
             "security_result": security_result,
-            "report": final_report,
-            "final_result": final_report,
+            "final_result": str(security_result),
             "iteration": 1,
         }
 
