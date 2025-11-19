@@ -7,6 +7,7 @@ These tests validate the entire OmniMind system from UI to backend.
 import asyncio
 import json
 import os
+import re
 import subprocess
 import time
 from pathlib import Path
@@ -194,7 +195,7 @@ class TestUIInteraction:
         await page.goto("http://localhost:3000")
 
         # Wait for title to load
-        await expect(page).to_have_title(/OmniMind/)
+        await expect(page).to_have_title(re.compile(r"OmniMind"))
 
     @pytest.mark.asyncio
     @pytest.mark.skipif(
