@@ -200,53 +200,53 @@ pytest tests/ --cov=src
    [Attach screenshots if UI changes]
    ```
 
-### PR Review Requirements
-- [ ] Code follows TypeScript/React best practices
-- [ ] Tests pass (CI/CD)
-- [ ] No linting errors
-- [ ] Documentation updated
-- [ ] Security review passed
-- [ ] Performance acceptable
+### Requisitos de Revisão PR
+- [ ] Código segue melhores práticas TypeScript/React
+- [ ] Testes passam (CI/CD)
+- [ ] Sem erros de linting
+- [ ] Documentação atualizada
+- [ ] Revisão de segurança aprovada
+- [ ] Performance aceitável
 
 ---
 
-## 🚨 BLOCKERS & COMMUNICATION
+## 🚨 BLOQUEADORES E COMUNICAÇÃO
 
-### When Stuck
-1. **Check Documentation:** Re-read relevant sections of roadmap
-2. **Environment Issues:** Document workarounds in PR description
-3. **API Changes:** Update immediately in related components
-4. **Security Concerns:** Flag immediately in PR comments
+### Quando Travado
+1. **Verificar Documentação:** Releia seções relevantes do roadmap
+2. **Problemas de Ambiente:** Documente workarounds na descrição do PR
+3. **Mudanças na API:** Atualize imediatamente nos componentes relacionados
+4. **Preocupações de Segurança:** Marque imediatamente nos comentários do PR
 
-### Communication Channels
-- **PR Comments:** Technical discussions
-- **Issues:** Blockers and environment issues
-- **PROJECT_STATE.md:** Major progress updates
-- **Documentation:** Always update with code changes
+### Canais de Comunicação
+- **Comentários PR:** Discussões técnicas
+- **Issues:** Bloqueadores e problemas de ambiente
+- **PROJECT_STATE.md:** Atualizações de progresso majoritário
+- **Documentação:** Sempre atualize com mudanças no código
 
 ---
 
-## 🎯 SUCCESS METRICS
+## 🎯 MÉTRICAS DE SUCESSO
 
-### Daily Goals
-- [ ] 3-5 granular commits
-- [ ] All tests passing locally
-- [ ] Code following quality standards
-- [ ] Documentation updated
-- [ ] PR created for completed features
+### Metas Diárias
+- [ ] 3-5 commits granulares
+- [ ] Todos os testes passando localmente
+- [ ] Código seguindo padrões de qualidade
+- [ ] Documentação atualizada
+- [ ] PR criado para recursos concluídos
 
-### Weekly Goals
-- [ ] One major feature completed
-- [ ] Full test suite passing
-- [ ] Documentation current
-- [ ] Code review feedback addressed
-- [ ] Ready for next phase planning
+### Metas Semanais
+- [ ] Um recurso majoritário concluído
+- [ ] Suite completa de testes passando
+- [ ] Documentação atual
+- [ ] Feedback de revisão de código endereçado
+- [ ] Pronto para planejamento da próxima fase
 
-### Quality Metrics
-- **Test Coverage:** Maintain >90%
-- **Type Safety:** 100% mypy compliance
-- **Linting:** 0 violations
-- **Performance:** <100ms component render times
+### Métricas de Qualidade
+- **Cobertura de Testes:** Manter >90%
+- **Segurança de Tipos:** 100% conformidade mypy
+- **Linting:** 0 violações
+- **Performance:** <100ms tempos de renderização de componentes
 
 ---
 
