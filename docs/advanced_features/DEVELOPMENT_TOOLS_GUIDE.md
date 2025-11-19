@@ -302,92 +302,92 @@ api_code = generator.generate_api_endpoint(
 )
 ```
 
-### Available Templates
+### Templates Disponíveis
 
-1. **Agent Template**: Complete agent class with tools integration
-2. **Tool Template**: Tool function with validation and error handling
-3. **Test Template**: pytest test suite with fixtures
-4. **API Endpoint Template**: FastAPI endpoint with Pydantic models
-5. **Data Model Template**: Pydantic model with validators
+1. **Template de Agente**: Classe completa de agente com integração de ferramentas
+2. **Template de Ferramenta**: Função de ferramenta com validação e tratamento de erros
+3. **Template de Teste**: Suite de testes pytest com fixtures
+4. **Template de Endpoint API**: Endpoint FastAPI com modelos Pydantic
+5. **Template de Modelo de Dados**: Modelo Pydantic com validadores
 
 ---
 
-## Automated Code Review
+## Revisão Automática de Código
 
-### Overview
-AI-powered automated code review with comprehensive analysis.
+### Visão Geral
+Revisão automática de código alimentada por IA com análise abrangente.
 
-### Features
-- **Static Analysis**: AST parsing and code metrics
-- **Security Scanning**: Vulnerability detection
-- **Style Checking**: PEP 8 compliance
-- **Complexity Analysis**: Cyclomatic complexity
-- **Documentation Checks**: Docstring coverage
-- **Type Safety**: Type hint validation
-- **Performance Analysis**: Performance issue detection
-- **Best Practices**: Python best practice validation
+### Recursos
+- **Análise Estática**: Parsing AST e métricas de código
+- **Verificação de Segurança**: Detecção de vulnerabilidades
+- **Verificação de Estilo**: Conformidade PEP 8
+- **Análise de Complexidade**: Complexidade ciclomática
+- **Verificações de Documentação**: Cobertura de docstring
+- **Segurança de Tipos**: Validação de type hints
+- **Análise de Performance**: Detecção de problemas de performance
+- **Melhores Práticas**: Validação de melhores práticas Python
 
 ### Usage
 
 ```python
 from src.workflows.automated_code_review import review_code
 
-# Review a file
+# Revisar um arquivo
 result = review_code(
     Path("src/agents/my_agent.py"),
     min_score=8.0,
     output_report=Path("logs/code_review.md")
 )
 
-print(f"Score: {result.overall_score:.1f}/10.0")
-print(f"Issues: {len(result.issues)}")
-print(f"Status: {'✅ PASSED' if result.passed else '❌ FAILED'}")
+print(f"Pontuação: {result.overall_score:.1f}/10.0")
+print(f"Problemas: {len(result.issues)}")
+print(f"Status: {'✅ APROVADO' if result.passed else '❌ REPROVADO'}")
 
-# View metrics
+# Ver métricas
 if result.metrics:
-    print(f"Complexity: {result.metrics.complexity}")
+    print(f"Complexidade: {result.metrics.complexity}")
     print(f"Type Hints: {result.metrics.type_hint_coverage:.1f}%")
     print(f"Docstrings: {result.metrics.docstring_coverage:.1f}%")
 ```
 
-### Issue Categories
+### Categorias de Problemas
 
-- **SECURITY**: Security vulnerabilities (eval, exec, SQL injection, hardcoded secrets)
-- **PERFORMANCE**: Performance issues (string concatenation in loops)
-- **STYLE**: Code style violations (line length, multiple statements)
-- **COMPLEXITY**: High complexity functions
-- **MAINTAINABILITY**: Maintainability issues (mutable defaults)
-- **DOCUMENTATION**: Missing or poor documentation
-- **TYPE_SAFETY**: Missing type hints
-- **ERROR_HANDLING**: Poor error handling (bare except, pass in except)
+- **SEGURANÇA**: Vulnerabilidades de segurança (eval, exec, SQL injection, secrets hardcoded)
+- **PERFORMANCE**: Problemas de performance (concatenação de strings em loops)
+- **ESTILO**: Violações de estilo de código (comprimento de linha, múltiplas declarações)
+- **COMPLEXIDADE**: Funções de alta complexidade
+- **MANUTENÇÃO**: Problemas de manutenção (padrões mutáveis)
+- **DOCUMENTAÇÃO**: Documentação ausente ou inadequada
+- **SEGURANÇA_DE_TIPOS**: Type hints ausentes
+- **TRATAMENTO_DE_ERROS**: Tratamento inadequado de erros (except vazio, pass em except)
 
-### Severity Levels
+### Níveis de Severidade
 
-- **CRITICAL**: Must fix before deployment
-- **ERROR**: Should fix soon
-- **WARNING**: Should be addressed
-- **INFO**: Informational only
+- **CRÍTICO**: Deve corrigir antes do deployment
+- **ERRO**: Deve corrigir em breve
+- **AVISO**: Deve ser abordado
+- **INFO**: Apenas informativo
 
-### Example Report
+### Relatório de Exemplo
 
 ```markdown
-# Code Review Report: src/agents/my_agent.py
-Generated: 2025-11-19T00:00:00
-Overall Score: 8.5/10.0
-Status: ✅ PASSED
+# Relatório de Revisão de Código: src/agents/my_agent.py
+Gerado: 2025-11-19T00:00:00
+Pontuação Geral: 8.5/10.0
+Status: ✅ APROVADO
 
-## Metrics
-- Lines of Code: 150
-- Complexity: 5
-- Maintainability Index: 75.0/100
-- Type Hint Coverage: 95.0%
-- Docstring Coverage: 90.0%
+## Métricas
+- Linhas de Código: 150
+- Complexidade: 5
+- Índice de Manutenibilidade: 75.0/100
+- Cobertura de Type Hints: 95.0%
+- Cobertura de Docstrings: 90.0%
 
-## Issues Summary
+## Resumo de Problemas
 - Total: 3
-- Critical: 0
-- Errors: 0
-- Warnings: 2
+- Críticos: 0
+- Erros: 0
+- Avisos: 2
 - Info: 1
 ```
 
