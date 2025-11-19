@@ -7,6 +7,7 @@ This module provides self-reflective AI capabilities including:
 - Optimization suggestions
 - Proactive goal generation
 - Homeostatic resource management
+- Intelligent goal generation with impact prediction
 """
 
 from __future__ import annotations
@@ -27,8 +28,24 @@ from src.metacognition.iit_metrics import (
     SystemState,
 )
 
-__all__.extend([
-    "IITAnalyzer",
-    "PhiMetrics",
-    "SystemState",
-])
+# Intelligent goal generation
+from src.metacognition.intelligent_goal_generation import (
+    CodeAnalyzer,
+    ImpactMetrics,
+    ImpactPredictor,
+    IntelligentGoalEngine,
+    RepositoryAnalysis,
+)
+
+__all__.extend(
+    [
+        "IITAnalyzer",
+        "PhiMetrics",
+        "SystemState",
+        "CodeAnalyzer",
+        "ImpactMetrics",
+        "ImpactPredictor",
+        "IntelligentGoalEngine",
+        "RepositoryAnalysis",
+    ]
+)
