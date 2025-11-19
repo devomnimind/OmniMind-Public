@@ -47,3 +47,34 @@ export interface AddTaskRequest {
   repeat_interval_seconds?: number;
   timeout_seconds?: number;
 }
+
+export interface Agent {
+  agent_id: string;
+  name: string;
+  type: 'orchestrator' | 'code' | 'architect' | 'debug' | 'reviewer' | 'psychoanalyst';
+  status: 'idle' | 'working' | 'error' | 'offline';
+  current_task?: string;
+  tasks_completed: number;
+  tasks_failed: number;
+  last_active?: string;
+  uptime_seconds: number;
+  metrics?: {
+    avg_response_time_ms: number;
+    success_rate: number;
+    memory_usage_mb: number;
+  };
+}
+
+export interface Task {
+  task_id: string;
+  name: string;
+  description: string;
+  status: 'pending' | 'running' | 'completed' | 'failed';
+  priority: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+  created_at: string;
+  started_at?: string;
+  completed_at?: string;
+  assigned_agent?: string;
+  progress?: number;
+  error_message?: string;
+}

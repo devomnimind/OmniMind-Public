@@ -2,15 +2,22 @@ import { useEffect, useCallback } from 'react';
 import { useAuthStore } from '../store/authStore';
 import { useDaemonStore } from '../store/daemonStore';
 import { apiService } from '../services/api';
+import { useWebSocket } from '../hooks/useWebSocket';
+import type { DaemonStatus as DaemonStatusType } from '../types/daemon';
 import { DaemonStatus } from './DaemonStatus';
 import { SystemMetrics } from './SystemMetrics';
 import { TaskList } from './TaskList';
+import { TaskForm } from './TaskForm';
+import { AgentStatus } from './AgentStatus';
 import { DaemonControls } from './DaemonControls';
+import { ConnectionStatus } from './ConnectionStatus';
+import { DashboardSkeleton } from './LoadingSkeletons';
 
 export function Dashboard() {
   const logout = useAuthStore((state) => state.logout);
   const username = useAuthStore((state) => state.username);
-  const { setStatus, setTasks, setLoading, setError } = useDaemonStore();
+  const { setStatus, setTasks, setLoading, setError, loading } = useDaemonStore();
+  const { lastMessage } = useWebSocket();
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -30,12 +37,40 @@ export function Dashboard() {
     }
   }, [setStatus, setTasks, setLoading, setError]);
 
+  // Handle WebSocket messages
+  useEffect(() => {
+    if (!lastMessage) return;
+
+    switch (lastMessage.type) {
+      case 'daemon_status':
+        setStatus(lastMessage.data as DaemonStatusType);
+        break;
+      case 'task_update':
+        // Refresh tasks when update received
+        fetchData();
+        break;
+      case 'agent_update':
+        // Agent updates handled by AgentStatus component
+        break;
+      case 'metrics_update':
+        // Metrics updates handled automatically
+        break;
+      default:
+        console.log('Unhandled WebSocket message:', lastMessage.type);
+    }
+  }, [lastMessage, setStatus, fetchData]);
+
   useEffect(() => {
     fetchData();
     // Refresh every 5 seconds
     const interval = setInterval(fetchData, 5000);
     return () => clearInterval(interval);
   }, [fetchData]);
+
+  // Show loading skeleton on initial load
+  if (loading && !useDaemonStore.getState().status) {
+    return <DashboardSkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -48,9 +83,11 @@ export function Dashboard() {
               <button
                 onClick={fetchData}
                 className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors"
+                disabled={loading}
               >
                 🔄 Refresh
               </button>
+              <ConnectionStatus />
             </div>
             <div className="flex items-center gap-4">
               <span className="text-gray-400">Welcome, <span className="text-white font-semibold">{username}</span></span>
@@ -68,16 +105,18 @@ export function Dashboard() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Status and Controls */}
+          {/* Left Column - Status and Tasks */}
           <div className="lg:col-span-2 space-y-6">
             <DaemonStatus />
+            <AgentStatus />
             <TaskList />
           </div>
 
-          {/* Right Column - Metrics and Controls */}
+          {/* Right Column - Metrics, Controls, and Task Form */}
           <div className="space-y-6">
             <SystemMetrics />
             <DaemonControls />
+            <TaskForm />
           </div>
         </div>
       </main>
