@@ -91,7 +91,8 @@ logs/
 *.dump
 *.benchmark
 *.benchmark.json
-benchmarks/
+benchmarks/*.json
+benchmarks/*.log
 benchmark_outputs/
 !logs/.gitkeep
 !scripts/benchmarks/
