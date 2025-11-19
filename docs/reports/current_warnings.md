@@ -18,3 +18,4 @@
 
 > Atualize esse arquivo assim que qualquer warning for adicionado ou eliminado. Mantenha o histórico para onboarding futuros e referencie-o nos commits que lidam com os bloqueios listados.
 
+✅ BLOCO 1 COMPLETO E VALIDADO: src/metrics, tests/metrics, typings/structlog.pyi — zero mypy errors, 111 testes passando
