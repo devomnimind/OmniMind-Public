@@ -55,7 +55,7 @@ class HardwareProfile:
     # Timestamp
     detected_at: str = ""
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.detected_at:
             self.detected_at = datetime.now().isoformat()
 
@@ -126,7 +126,7 @@ class OptimizationConfig:
 class HardwareDetector:
     """Detects hardware capabilities and generates optimized configuration."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.profile: Optional[HardwareProfile] = None
         self.config: Optional[OptimizationConfig] = None
 
@@ -162,7 +162,7 @@ class HardwareDetector:
         gpu_compute_capability = None
 
         try:
-            import torch
+            import torch  # type: ignore[import-not-found]
 
             if torch.cuda.is_available():
                 gpu_available = True
@@ -222,6 +222,7 @@ class HardwareDetector:
         assert profile is not None
 
         # Determine device
+        device: Literal["cpu", "cuda"]
         if profile.gpu_available:
             device = "cuda"
             use_gpu = True
@@ -281,6 +282,9 @@ class HardwareDetector:
         quantization_bits = 8 if use_quantization else 16
 
         # Services (local-first by default)
+        vector_db: Literal["chromadb", "qdrant"]
+        cache_backend: Literal["fakeredis", "redis"]
+        database: Literal["sqlite", "postgresql"]
         if prefer_local:
             vector_db = "chromadb"  # Local, no server needed
             cache_backend = "fakeredis"  # In-memory, no Redis server
@@ -293,7 +297,7 @@ class HardwareDetector:
         # CPU governor (performance for servers, powersave for laptops)
         # Detect if on battery (laptop) or AC power
         try:
-            battery = psutil.sensors_battery()
+            battery = psutil.sensors_battery()  # type: ignore[no-untyped-call]
             if battery and not battery.power_plugged:
                 cpu_governor = "powersave"
             else:
