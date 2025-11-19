@@ -50,45 +50,45 @@ Implementados com sucesso **5 de 7** recursos avançados de alta prioridade para
 ```tsx
 import { DragDropTaskList } from './components/DragDropTaskList';
 
-// In Dashboard component:
+// No componente Dashboard:
 <DragDropTaskList />
 ```
 
-**Key Enhancements:**
-- Smooth animations with CSS transitions (300ms duration)
-- Visual drop zones with cyan glow effect
-- Opacity feedback during drag (0.5 opacity)
-- Scale transformations on hover (scale-110)
-- Real-time task statistics with formatted displays
+**Principais Melhorias:**
+- Animações suaves com transições CSS (duração de 300ms)
+- Zonas de drop visuais com efeito de brilho ciano
+- Feedback de opacidade durante arrastar (opacidade 0.5)
+- Transformações de escala no hover (scale-110)
+- Estatísticas de tarefas em tempo real com displays formatados
 
 ---
 
-## 🏥 2. Health Check System
+## 🏥 2. Sistema de Health Check
 
-### Backend Implementation
+### Implementação Backend
 
-**Files:**
-- `web/backend/monitoring/health_check_system.py` (560 lines)
-- `web/backend/routes/health.py` (200 lines)
+**Arquivos:**
+- `web/backend/monitoring/health_check_system.py` (560 linhas)
+- `web/backend/routes/health.py` (200 linhas)
 
-**Health Checks Implemented:**
+**Health Checks Implementados:**
 
-| Check | Monitors | Metrics | Status Thresholds |
-|-------|----------|---------|-------------------|
-| **Database** | Connection health | Response time, pool size | Warning: 1000ms, Critical: 5000ms |
-| **Redis** | Cache availability | Response time, memory | Warning: 1000ms, Critical: 5000ms |
-| **GPU** | CUDA availability | Memory usage, device count | N/A (availability-based) |
-| **Filesystem** | Disk usage | Total/free/used GB, % | Warning: 85%, Critical: 95% |
-| **Memory** | RAM usage | Total/available/used GB, % | Warning: 80%, Critical: 95% |
-| **CPU** | Processor load | Usage %, core count, load avg | Warning: 80%, Critical: 95% |
+| Verificação | Monitora | Métricas | Limites de Status |
+|-------------|----------|----------|-------------------|
+| **Banco de Dados** | Saúde da conexão | Tempo de resposta, tamanho do pool | Aviso: 1000ms, Crítico: 5000ms |
+| **Redis** | Disponibilidade do cache | Tempo de resposta, memória | Aviso: 1000ms, Crítico: 5000ms |
+| **GPU** | Disponibilidade CUDA | Uso de memória, contagem de dispositivos | N/D (baseado em disponibilidade) |
+| **Sistema de Arquivos** | Uso de disco | Total/livre/usado GB, % | Aviso: 85%, Crítico: 95% |
+| **Memória** | Uso de RAM | Total/disponível/usado GB, % | Aviso: 80%, Crítico: 95% |
+| **CPU** | Carga do processador | Uso %, contagem de cores, média de carga | Aviso: 80%, Crítico: 95% |
 
-**API Endpoints:**
+**Endpoints da API:**
 
 ```bash
-# Get overall system health
+# Obter saúde geral do sistema
 GET /api/v1/health/
 
-# Get specific component health
+# Obter saúde de componente específico
 GET /api/v1/health/database
 GET /api/v1/health/redis
 GET /api/v1/health/gpu
@@ -96,18 +96,18 @@ GET /api/v1/health/filesystem
 GET /api/v1/health/memory
 GET /api/v1/health/cpu
 
-# Get health trends (prediction analysis)
+# Obter tendências de saúde (análise preditiva)
 GET /api/v1/health/{check_name}/trend?window_size=10
 
-# System summary
+# Resumo do sistema
 GET /api/v1/health/summary
 
-# Control monitoring
+# Controle de monitoramento
 POST /api/v1/health/start-monitoring
 POST /api/v1/health/stop-monitoring
 ```
 
-**Response Format:**
+**Formato de Resposta:**
 ```json
 {
   "overall_status": "healthy",
@@ -149,54 +149,54 @@ POST /api/v1/health/stop-monitoring
 }
 ```
 
-### Frontend Implementation
+### Implementação Frontend
 
-**File:** `web/frontend/src/components/HealthDashboard.tsx`
+**Arquivo:** `web/frontend/src/components/HealthDashboard.tsx`
 
-**Features:**
-- Real-time health monitoring with 10s auto-refresh
-- Visual status indicators (✓ ⚠ ✗ ?)
-- Color-coded status badges with glow effects
-- Summary statistics grid (healthy/degraded/unhealthy)
-- Expandable details per check
-- Health trend analysis on click
-- Remediation suggestions display
-- Error state handling
+**Recursos:**
+- Monitoramento de saúde em tempo real com atualização automática de 10s
+- Indicadores visuais de status (✓ ⚠ ✗ ?)
+- Badges de status codificados por cor com efeitos de brilho
+- Grade de estatísticas resumidas (saudável/degradado/não saudável)
+- Detalhes expansíveis por verificação
+- Análise de tendência de saúde ao clicar
+- Exibição de sugestões de remediação
+- Tratamento de estado de erro
 
-**Usage:**
+**Uso:**
 ```tsx
 import { HealthDashboard } from './components/HealthDashboard';
 
-// In main Dashboard:
+// No Dashboard principal:
 <HealthDashboard />
 ```
 
-**Integration with main.py:**
+**Integração com main.py:**
 ```python
-# Already integrated in web/backend/main.py line 715
+# Já integrado em web/backend/main.py linha 715
 from web.backend.routes import health
 app.include_router(health.router)
 ```
 
 ---
 
-## 🛡️ 3. Advanced Error Boundaries
+## 🛡️ 3. Limites de Erro Avançados
 
-### Implementation
+### Implementação
 
-**File:** `web/frontend/src/components/ComponentErrorBoundaries.tsx`
+**Arquivo:** `web/frontend/src/components/ComponentErrorBoundaries.tsx`
 
-**Error Boundaries Created:**
+**Limites de Erro Criados:**
 
-1. **DashboardErrorBoundary** - Full-screen fallback with retry/reload
-2. **TaskErrorBoundary** - Task component errors  
-3. **AgentErrorBoundary** - Agent status errors
-4. **MetricsErrorBoundary** - Metrics display errors
-5. **HealthErrorBoundary** - Health check errors
-6. **WebSocketErrorBoundary** - Real-time connection errors
+1. **DashboardErrorBoundary** - Fallback em tela cheia com retry/recarregar
+2. **TaskErrorBoundary** - Erros de componentes de tarefa
+3. **AgentErrorBoundary** - Erros de status de agentes
+4. **MetricsErrorBoundary** - Erros de exibição de métricas
+5. **HealthErrorBoundary** - Erros de verificação de saúde
+6. **WebSocketErrorBoundary** - Erros de conexão em tempo real
 
-**Features:**
-- Component-specific fallback UIs
+**Recursos:**
+- UIs de fallback específicas por componente
 - Configurable retry attempts (2-5 retries)
 - Auto-recovery support
 - Graceful degradation
