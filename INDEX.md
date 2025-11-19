@@ -36,6 +36,7 @@
 - **config/optimization_config.json** - Optimization configuration
 
 ### 📊 Project Status & Reports
+- **docs/GLOBAL_PENDENCIES_AUDIT_20251119.md** - Complete global pendencies audit 🔍
 - **docs/PROJECT_STATE_20251119.md** - Current project state and roadmap ✅
 - **docs/OMNIMIND_REMOTE_DEVELOPMENT_ROADMAP.md** - Complete remote development roadmap 🚀
 - **docs/OMNIMIND_AUTONOMOUS_ROADMAP.md** - Complete development roadmap
