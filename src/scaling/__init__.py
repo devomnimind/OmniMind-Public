@@ -3,6 +3,18 @@
 Multi-node scaling, load balancing, distributed transactions, and resource pooling.
 """
 
+# Multi-tenant isolation (new module)
+from src.scaling.multi_tenant_isolation import (
+    MultiTenantIsolationManager,
+    TenantConfig,
+    TenantStatus,
+    ResourceType,
+    ResourceQuota,
+    create_tenant,
+    get_tenant,
+    get_isolation_manager,
+)
+
 from src.scaling.intelligent_load_balancer import (
     IntelligentLoadBalancer,
     NodePerformanceMetrics,
@@ -46,6 +58,16 @@ from src.scaling.multi_level_cache import (
 )
 
 __all__ = [
+    # Multi-Tenant Isolation (NEW)
+    "MultiTenantIsolationManager",
+    "TenantConfig",
+    "TenantStatus",
+    "ResourceType",
+    "ResourceQuota",
+    "create_tenant",
+    "get_tenant",
+    "get_isolation_manager",
+    # Cluster Management
     "ClusterCoordinator",
     "DistributedTask",
     "FailoverCoordinator",
