@@ -128,8 +128,23 @@ async def lifespan(app_instance: FastAPI) -> Any:
     # Import WebSocket manager
     from web.backend.websocket_manager import ws_manager
 
+    # Import monitoring systems
+    try:
+        from web.backend.monitoring import agent_monitor, metrics_collector, performance_tracker
+        monitoring_available = True
+    except ImportError:
+        monitoring_available = False
+        logger.warning("Monitoring systems not available")
+
     # Start WebSocket manager
     await ws_manager.start()
+
+    # Start monitoring systems
+    if monitoring_available:
+        await agent_monitor.start()
+        await metrics_collector.start()
+        await performance_tracker.start()
+        logger.info("All monitoring systems started")
 
     # Start metrics reporter
     app_instance.state.metrics_task = asyncio.create_task(_metrics_reporter())
@@ -142,6 +157,13 @@ async def lifespan(app_instance: FastAPI) -> Any:
             task.cancel()
             with suppress(asyncio.CancelledError):
                 await task
+
+        # Stop monitoring systems
+        if monitoring_available:
+            await agent_monitor.stop()
+            await metrics_collector.stop()
+            await performance_tracker.stop()
+            logger.info("All monitoring systems stopped")
 
         # Stop WebSocket manager
         await ws_manager.stop()
@@ -250,17 +272,36 @@ def _verify_credentials(credentials: HTTPBasicCredentials = Depends(security)) -
 async def track_metrics(request: Request, call_next: Callable[[Request], Any]) -> Any:
     start = time.perf_counter()
     success = True
+    error_msg = None
+    status_code = 200
+    
     try:
         response = await call_next(request)
-        success = response.status_code < 400
+        status_code = response.status_code
+        success = status_code < 400
         return response
-    except Exception:
+    except Exception as exc:
         success = False
+        status_code = 500
+        error_msg = str(exc)
         logger.exception("Unhandled error processing %s", request.url.path)
         raise
     finally:
         latency = time.perf_counter() - start
         metrics_collector.record(request.url.path, latency, success)
+        
+        # Also record in new metrics collector if available
+        try:
+            from web.backend.monitoring import metrics_collector as new_collector
+            new_collector.record_request(
+                path=request.url.path,
+                method=request.method,
+                latency=latency,
+                status_code=status_code,
+                error=error_msg,
+            )
+        except ImportError:
+            pass
 
 
 def _collect_orchestrator_metrics() -> Dict[str, Any]:
@@ -357,9 +398,26 @@ def plan_view(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
 
 @app.get("/metrics")
 def metrics(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
-    return {
-        "backend": metrics_collector.summary(),
-    }
+    """Get comprehensive system metrics."""
+    backend_metrics = metrics_collector.summary()
+    
+    # Try to get enhanced metrics
+    try:
+        from web.backend.monitoring import metrics_collector as new_collector
+        from web.backend.monitoring import performance_tracker
+        
+        return {
+            "backend": backend_metrics,
+            "api": new_collector.get_all_metrics(),
+            "performance": performance_tracker.get_performance_summary(),
+            "errors": new_collector.get_error_summary(),
+            "timestamp": time.time(),
+        }
+    except ImportError:
+        return {
+            "backend": backend_metrics,
+            "timestamp": time.time(),
+        }
 
 
 @app.get("/observability")

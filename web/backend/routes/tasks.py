@@ -8,12 +8,21 @@ import uuid
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query  # noqa: F401
 from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/tasks", tags=["tasks"])
+
+# Import performance tracking
+try:
+    from web.backend.monitoring import performance_tracker
+
+    TRACKING_ENABLED = True
+except ImportError:
+    TRACKING_ENABLED = False
+    logger.warning("Performance tracking not available")
 
 
 class TaskStatus(str, Enum):
@@ -74,6 +83,8 @@ class TaskProgressUpdate(BaseModel):
 
 # In-memory task storage (would be replaced with database in production)
 _tasks: Dict[str, Dict[str, Any]] = {}
+_task_execution_history: Dict[str, List[Dict[str, Any]]] = {}
+_task_analytics: Dict[str, Dict[str, Any]] = {}
 
 
 def _get_task(task_id: str) -> Dict[str, Any]:
@@ -102,6 +113,15 @@ async def create_task(task: TaskCreate) -> TaskResponse:
         "max_iterations": task.max_iterations,
     }
     _tasks[task_id] = task_data
+
+    # Initialize execution history and analytics
+    _task_execution_history[task_id] = []
+    _task_analytics[task_id] = {
+        "checkpoints": [],
+        "operations_count": 0,
+        "errors_count": 0,
+        "retries_count": 0,
+    }
 
     logger.info(f"Created task {task_id}: {task.description}")
 
@@ -168,13 +188,59 @@ async def update_task_progress(
     """Update task progress (internal use)."""
     task = _get_task(task_id)
 
+    old_status = task["status"]
     task["progress"] = progress.progress
     task["status"] = progress.status
 
+    # Track status changes
     if progress.status == TaskStatus.RUNNING and not task["started_at"]:
         task["started_at"] = time.time()
+        # Start performance tracking
+        if TRACKING_ENABLED:
+            performance_tracker.start_task(task_id)
+
+        # Record execution history event
+        _task_execution_history[task_id].append(
+            {
+                "timestamp": time.time(),
+                "event": "task_started",
+                "status": progress.status.value,
+                "progress": progress.progress,
+            }
+        )
+
     elif progress.status in (TaskStatus.COMPLETED, TaskStatus.FAILED):
         task["completed_at"] = time.time()
+        # Complete performance tracking
+        if TRACKING_ENABLED:
+            performance_tracker.complete_task(task_id, status=progress.status.value)
+
+        # Record execution history event
+        _task_execution_history[task_id].append(
+            {
+                "timestamp": time.time(),
+                "event": "task_completed",
+                "status": progress.status.value,
+                "progress": progress.progress,
+                "duration": (
+                    task["completed_at"] - task["started_at"]
+                    if task["started_at"]
+                    else 0
+                ),
+            }
+        )
+
+    # Record progress update in history
+    if old_status != progress.status or progress.message:
+        _task_execution_history[task_id].append(
+            {
+                "timestamp": time.time(),
+                "event": "progress_update",
+                "status": progress.status.value,
+                "progress": progress.progress,
+                "message": progress.message,
+            }
+        )
 
     logger.info(f"Task {task_id} progress: {progress.progress}% ({progress.status})")
 
@@ -233,6 +299,14 @@ async def get_task_history(task_id: str) -> Dict[str, Any]:
     if task["started_at"] and task["completed_at"]:
         execution_time = task["completed_at"] - task["started_at"]
 
+    # Get detailed execution history
+    history = _task_execution_history.get(task_id, [])
+
+    # Get performance tracking data if available
+    perf_data = None
+    if TRACKING_ENABLED:
+        perf_data = performance_tracker.get_task_performance(task_id)
+
     return {
         "task_id": task_id,
         "description": task["description"],
@@ -244,4 +318,154 @@ async def get_task_history(task_id: str) -> Dict[str, Any]:
         "result": task["result"],
         "error": task["error"],
         "metadata": task["metadata"],
+        "execution_history": history,
+        "performance_data": perf_data,
+    }
+
+
+@router.get("/{task_id}/analytics")
+async def get_task_analytics(task_id: str) -> Dict[str, Any]:
+    """Get analytics data for a task."""
+    task = _get_task(task_id)
+    analytics = _task_analytics.get(task_id, {})
+
+    # Calculate metrics
+    total_events = len(_task_execution_history.get(task_id, []))
+    duration = None
+    if task["started_at"] and task["completed_at"]:
+        duration = task["completed_at"] - task["started_at"]
+
+    return {
+        "task_id": task_id,
+        "status": task["status"],
+        "priority": task["priority"],
+        "duration": duration,
+        "total_events": total_events,
+        "checkpoints": analytics.get("checkpoints", []),
+        "operations_count": analytics.get("operations_count", 0),
+        "errors_count": analytics.get("errors_count", 0),
+        "retries_count": analytics.get("retries_count", 0),
+        "success_rate": (
+            (analytics.get("operations_count", 0) - analytics.get("errors_count", 0))
+            / analytics.get("operations_count", 1)
+            * 100
+            if analytics.get("operations_count", 0) > 0
+            else 0.0
+        ),
+    }
+
+
+@router.post("/{task_id}/checkpoint")
+async def add_task_checkpoint(
+    task_id: str, name: str, data: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
+    """Add a checkpoint to track task progress."""
+    task = _get_task(task_id)
+
+    checkpoint = {
+        "name": name,
+        "timestamp": time.time(),
+        "elapsed": (time.time() - task["started_at"] if task["started_at"] else 0.0),
+        "data": data or {},
+    }
+
+    # Add to analytics
+    if task_id in _task_analytics:
+        _task_analytics[task_id]["checkpoints"].append(checkpoint)
+
+    # Add to performance tracker if available
+    if TRACKING_ENABLED:
+        performance_tracker.add_checkpoint(task_id, name, data)
+
+    # Record in execution history
+    if task_id in _task_execution_history:
+        _task_execution_history[task_id].append(
+            {
+                "timestamp": checkpoint["timestamp"],
+                "event": "checkpoint",
+                "name": name,
+                "elapsed": checkpoint["elapsed"],
+            }
+        )
+
+    logger.debug(f"Added checkpoint '{name}' to task {task_id}")
+
+    return {"status": "checkpoint_added", "checkpoint": checkpoint}
+
+
+@router.post("/{task_id}/operation")
+async def record_task_operation(
+    task_id: str, success: bool = True, error: Optional[str] = None
+) -> Dict[str, Any]:
+    """Record an operation within a task."""
+    _get_task(task_id)  # Validate task exists
+
+    # Update analytics
+    if task_id in _task_analytics:
+        _task_analytics[task_id]["operations_count"] += 1
+        if not success:
+            _task_analytics[task_id]["errors_count"] += 1
+
+    # Record in performance tracker if available
+    if TRACKING_ENABLED:
+        performance_tracker.record_operation(task_id, success)
+
+    # Record in execution history
+    if task_id in _task_execution_history:
+        _task_execution_history[task_id].append(
+            {
+                "timestamp": time.time(),
+                "event": "operation",
+                "success": success,
+                "error": error,
+            }
+        )
+
+    return {
+        "status": "operation_recorded",
+        "task_id": task_id,
+        "success": success,
+    }
+
+
+@router.get("/analytics/summary")
+async def get_tasks_analytics_summary() -> Dict[str, Any]:
+    """Get overall analytics summary for all tasks."""
+    total_tasks = len(_tasks)
+    completed = sum(1 for t in _tasks.values() if t["status"] == TaskStatus.COMPLETED)
+    failed = sum(1 for t in _tasks.values() if t["status"] == TaskStatus.FAILED)
+    running = sum(1 for t in _tasks.values() if t["status"] == TaskStatus.RUNNING)
+    pending = sum(1 for t in _tasks.values() if t["status"] == TaskStatus.PENDING)
+
+    # Calculate average duration for completed tasks
+    completed_tasks = [
+        t for t in _tasks.values() if t["status"] == TaskStatus.COMPLETED
+    ]
+    avg_duration = 0.0
+    if completed_tasks:
+        durations = [
+            t["completed_at"] - t["started_at"]
+            for t in completed_tasks
+            if t["started_at"] and t["completed_at"]
+        ]
+        if durations:
+            avg_duration = sum(durations) / len(durations)
+
+    # Get performance summary if available
+    perf_summary = None
+    if TRACKING_ENABLED:
+        perf_summary = performance_tracker.get_performance_summary()
+
+    return {
+        "total_tasks": total_tasks,
+        "by_status": {
+            "completed": completed,
+            "failed": failed,
+            "running": running,
+            "pending": pending,
+        },
+        "success_rate": (completed / total_tasks * 100) if total_tasks > 0 else 0.0,
+        "avg_duration": round(avg_duration, 3),
+        "performance_summary": perf_summary,
+        "timestamp": time.time(),
     }

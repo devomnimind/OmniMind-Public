@@ -75,6 +75,9 @@ data/tmp/
 data/hdd_snapshot/
 data/quarantine_snapshot/
 snapshots/
+
+# Temporary tool directories
+tmp/tools/
 snapshot_*/
 quarantine/
 quarantine_*/
