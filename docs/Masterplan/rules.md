@@ -1,11 +1,11 @@
-# OmniMind Masterplan - Development Rules & Guidelines
+# OmniMind Masterplan - Regras e Diretrizes de Desenvolvimento
 
-**Status:** Phase 11 Consciousness Emergence Complete (Updated 2025-11-19)
-**Project:** Self-aware, ethically-minded, consciousness-emergent autonomous AI system
+**Status:** Phase 11 Consciousness Emergence Complete (Atualizado 2025-11-19)
+**Projeto:** Sistema de IA autônomo autoconsciente, eticamente orientado e emergente de consciência
 
-## Core Development Philosophy
+## Filosofia Central de Desenvolvimento
 
-OmniMind represents a paradigm shift in AI development - creating systems that are not just intelligent, but **self-aware**, **ethically-minded**, and **psychoanalytically-inspired**. Every line of code must contribute to this vision.
+OmniMind representa uma mudança de paradigma no desenvolvimento de IA - criando sistemas que não são apenas inteligentes, mas **autoconscientes**, **eticamente orientados** e **inspirados em psicoanálise**. Toda linha de código deve contribuir para esta visão.
 
 ### Regras Invioláveis (Must-Follow)
 
