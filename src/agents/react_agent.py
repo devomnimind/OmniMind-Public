@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Protocol, TypeAlias, TypedDict, cast
 
 from langchain_ollama import OllamaLLM
-from langgraph.graph import END, StateGraph, CompiledStateGraph
+from langgraph.graph import END, StateGraph
 
 from ..integrations.supabase_adapter import SupabaseConfig
 from ..memory import EpisodicMemory
@@ -41,7 +41,7 @@ class GraphInvoker(Protocol):
     def invoke(self, state: AgentState) -> AgentState: ...
 
 
-CompiledGraphType: TypeAlias = CompiledStateGraph[AgentState]
+CompiledGraphType: TypeAlias = Any  # langgraph 1.0.3 compiled graph return type
 
 
 class ReactAgent:
@@ -99,7 +99,7 @@ class ReactAgent:
         """Generate ISO timestamp for logging"""
         return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
-    def _build_graph(self) -> CompiledGraphType:
+    def _build_graph(self) -> Any:
         """Build LangGraph state machine."""
         workflow: StateGraph[AgentState] = StateGraph(AgentState)
 
