@@ -19,3 +19,16 @@ __all__ = [
     "ProactiveGoalEngine",
     "HomeostaticController",
 ]
+
+# IIT (Integrated Information Theory) metrics
+from src.metacognition.iit_metrics import (
+    IITAnalyzer,
+    PhiMetrics,
+    SystemState,
+)
+
+__all__.extend([
+    "IITAnalyzer",
+    "PhiMetrics",
+    "SystemState",
+])
