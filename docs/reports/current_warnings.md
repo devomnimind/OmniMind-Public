@@ -52,12 +52,12 @@ pytest tests/metrics -vv       # ✅ 34/34 passing
 ## ⚠️ Ambiente GPU & Dependências
 
 - `pip install -r requirements.txt` foi executado com `--constraint /tmp/pytorch_constraints.txt` e `--extra-index-url https://download.pytorch.org/whl/cu121`, mas `supabase-py>=1.0.0` não possui distribuição para Linux/py3.12 e `TTS>=0.13.1` declara `Requires-Python >=3.9,<3.12`; tais dependências falham durante a instalação. O pacote `supabase` (sem o suffix `-py`) foi instalado manualmente como paliativo, mas os adaptadores ainda estão sujeitos aos erros de tipagem abaixo.
-- `scripts/verify_gpu_setup.py` foi reexecutado após instalar `libcudnn8=8.9.7.29-1+cuda12.2`, mas continua reportando `cuDNN not found` e `TensorFlow` ausente (`ModuleNotFoundError`). Embora as bibliotecas estejam em `/usr/lib/x86_64-linux-gnu`, `ldconfig -p | grep -i cudnn` retorna vazio; é necessário rodar `sudo ldconfig` (e reiniciar, se possível) para que o cache do linker exponha o runtime. O mesmo aviso `CUDA unknown error ... Setting the available devices to be zero` aparece em `python test_pytorch_gpu.py`, `python optimize_pytorch_config.py` e `python scripts/benchmarks/gpu_benchmark.py`, portanto `torch.cuda.is_available()` continua `False`.
+- **✅ GPU/CUDA RESOLVIDO (19/11/2025):** Após execução de `sudo ldconfig`, cuDNN 9.1.0 está detectado, `torch.cuda.is_available()` retorna `True`, e benchmarks GPU funcionam corretamente (multiplicação 5000x5000 em 0.1789s). TensorFlow permanece ausente mas não afeta operações PyTorch.
 - `mypy src tests` falha apenas em `src/integrations/supabase_adapter.py`: o import dinâmico de `supabase.Client` redefine `create_client` sem assinar `APIResponse`/`SyncRequestBuilder`, gerando `attr-defined`, `return-value` e `assignment` insatisfeitos. Criar stubs ou um wrapper tipado também resolverá a dependência que impede a passagem do Type Safety Sprint.
 
 ### BLOCO 2 (Experimentos/typing)
 
-- O BloCO 2 de experimentos/typing depende de PyTorch com CUDA funcional. No estado atual, o `torch.cuda` enxerga zero dispositivos, cuDNN e TensorFlow estão ausentes e há falhas no mypy relacionadas à integração Supabase. Estabilize o hardware (cuDNN + driver + ambiente Python) e só então recomece o sprint BloCO 2 com os testes correspondentes.
+- **✅ BLOCO 2 PRONTO PARA EXECUÇÃO:** PyTorch com CUDA funcional confirmado (cuDNN 9.1.0 detectado, GPU benchmarks passando). Apenas erros mypy relacionados à integração Supabase permanecem.
 - **Tests**: 4 arquivos (test_agents_*, test_tools_integration, conftest)
 - **Stubs**: 9 arquivos (typings/*)
 - **Config**: 3 arquivos (.flake8, mypy.ini, .gitignore implícito)
@@ -97,10 +97,10 @@ pytest tests/metrics -vv       # ✅ 34/34 passing
 3. **FastAPI Stubs**: Criar ou instalar types-fastapi para web backend
 4. **Async Review**: Resolver ResourceWarning em fixtures pytest-asyncio
 
-> Atualizado em 2025-11-19 após conclusão do Type Safety Sprint (Blocos 1-4)
+> Atualizado em 2025-11-19 após conclusão do Type Safety Sprint (Blocos 1-4) e resolução completa dos issues GPU/CUDA
 > Todos os blocos validados com ciclo completo: black → flake8 → mypy → pytest
 
 ✅ BLOCO 1 COMPLETO E VALIDADO: src/metrics, tests/metrics, typings/structlog.pyi — zero mypy errors, 111 testes passando
 **Hardware benchmark realizado** – os scripts `scripts/benchmarks/*` coletaram métricas (CPU, memória, disco, GPU) e foram reexecutados depois da atualização do sistema; os resultados estão em `hardware_audit.json` e `HARDWARE_BENCHMARK_REPORT.md` para Phase 10 (Autotimização).  
-**GPU setup parcial** – driver 550.163.01 com CUDA 12.4 detectados, cuDNN 8.9.7 instalado mas não exposto pelo cache do linker (`ldconfig -p` não lista as libs). `torch.cuda` continua retornando `False` (avisos `CUDA unknown error`). Reexecute os scripts listados acima após rodar `sudo ldconfig` e reiniciar para confirmar a detecção da GTX 1650; `tensorflow` ainda não está instalado.
+**✅ GPU setup RESOLVIDO (19/11/2025)** – Driver 550.163.01 com CUDA 12.4 detectados, cuDNN 9.1.0 exposto pelo cache do linker após `sudo ldconfig`. `torch.cuda.is_available()` retorna `True`, benchmarks GPU confirmados (5000x5000 matrix em 0.1789s). `tensorflow` permanece não instalado mas não afeta operações PyTorch.
 
