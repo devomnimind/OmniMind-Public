@@ -27,20 +27,16 @@ class MCPClientError(Exception):
     """Base exception for MCP client errors."""
 
 
-
 class MCPTimeoutError(MCPClientError):
     """Raised when MCP request times out."""
-
 
 
 class MCPConnectionError(MCPClientError):
     """Raised when connection to MCP server fails."""
 
 
-
 class MCPProtocolError(MCPClientError):
     """Raised when protocol validation fails."""
-
 
 
 class AsyncMCPClient:
