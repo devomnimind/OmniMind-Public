@@ -9,7 +9,7 @@ types-requests>=2.32.4
 # Ferramentas de desenvolvimento adicionais
 pre-commit>=3.5.0
 ruff>=0.1.0
-isort>=5.12.0
+isort>=7.0.0
 
 # Documentação
 mkdocs>=1.5.0
@@ -18,7 +18,7 @@ mkdocs-material>=9.0.0
 # Testes adicionais
 pytest-xdist>=3.5.0
 pytest-mock>=3.12.0
-coverage>=7.3.0
+coverage>=7.12.0
 
 # Desenvolvimento web
 python-multipart>=0.0.6
