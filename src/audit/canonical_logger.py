@@ -96,16 +96,16 @@ class CanonicalLogger:
         with open(self.json_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
 
-        # Calculate previous hash
-        if data["action_log"]:
-            prev_record = data["action_log"][-1]
-            prev_hash = prev_record["hash"]
-        else:
-            prev_hash = "0000000000000000000000000000000000000000000000000000000000000000"
-
         # Create new record
         timestamp = datetime.now().isoformat()
         record_content = f"{timestamp}{ai_agent}{action_type}{target}{result}{description}"
+        
+        # Calculate hash
+        if data["action_log"]:
+            prev_hash = data["action_log"][-1]["hash"]
+        else:
+            prev_hash = "0000000000000000000000000000000000000000000000000000000000000000"
+        
         content_hash = hashlib.sha256((prev_hash + record_content).encode()).hexdigest()
 
         new_record = {
