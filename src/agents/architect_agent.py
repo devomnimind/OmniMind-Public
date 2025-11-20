@@ -175,5 +175,118 @@ Your response:"""
 
         return state
 
+    def analyze_dependencies(self, directory: str) -> Dict[str, Any]:
+        """
+        Analisa dependências de um projeto.
+
+        Args:
+            directory: Diretório do projeto
+
+        Returns:
+            Dict com análise de dependências
+        """
+        dependencies: Dict[str, List[str]] = {}
+        dir_path = Path(directory)
+
+        # Procurar por requirements.txt
+        req_file = dir_path / "requirements.txt"
+        if req_file.exists():
+            with open(req_file, "r") as f:
+                dependencies["python"] = [
+                    line.strip()
+                    for line in f
+                    if line.strip() and not line.startswith("#")
+                ]
+
+        # Procurar por package.json
+        pkg_file = dir_path / "package.json"
+        if pkg_file.exists():
+            with open(pkg_file, "r") as f:
+                pkg_data = json.load(f)
+                dependencies["npm"] = list(pkg_data.get("dependencies", {}).keys())
+
+        return {
+            "directory": directory,
+            "dependencies": dependencies,
+            "total_deps": sum(len(deps) for deps in dependencies.values()),
+        }
+
+    def create_architecture_diagram(
+        self, components: List[str], connections: List[tuple[str, str]]
+    ) -> str:
+        """
+        Cria diagrama de arquitetura em formato Mermaid.
+
+        Args:
+            components: Lista de componentes
+            connections: Lista de tuplas (origem, destino)
+
+        Returns:
+            Diagrama Mermaid em formato texto
+        """
+        lines = ["```mermaid", "graph TD"]
+
+        # Adicionar componentes
+        for i, comp in enumerate(components):
+            lines.append(f"    {chr(65+i)}[{comp}]")
+
+        # Adicionar conexões
+        comp_map = {comp: chr(65 + i) for i, comp in enumerate(components)}
+        for src, dst in connections:
+            if src in comp_map and dst in comp_map:
+                lines.append(f"    {comp_map[src]} --> {comp_map[dst]}")
+
+        lines.append("```")
+        return "\n".join(lines)
+
+    def generate_spec_document(
+        self,
+        title: str,
+        sections: Dict[str, str],
+        output_path: str,
+    ) -> Dict[str, Any]:
+        """
+        Gera documento de especificação técnica.
+
+        Args:
+            title: Título do documento
+            sections: Dict de seções {nome: conteúdo}
+            output_path: Caminho para salvar documento
+
+        Returns:
+            Dict com resultado da operação
+        """
+        if not self._validate_write_permission(output_path):
+            return {
+                "success": False,
+                "error": f"Cannot write to {output_path}. Must be documentation file.",
+            }
+
+        # Gerar markdown
+        lines = [f"# {title}", ""]
+
+        for section_name, content in sections.items():
+            lines.append(f"## {section_name}")
+            lines.append("")
+            lines.append(content)
+            lines.append("")
+
+        content = "\n".join(lines)
+
+        # Salvar arquivo
+        try:
+            with open(output_path, "w") as f:
+                f.write(content)
+            return {
+                "success": True,
+                "path": output_path,
+                "size": len(content),
+            }
+        except Exception as exc:
+            return {
+                "success": False,
+                "error": str(exc),
+            }
+
 
 __all__ = ["ArchitectAgent"]

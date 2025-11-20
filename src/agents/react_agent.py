@@ -6,9 +6,10 @@ OmniMind ReactAgent - Fixed version with proper completion detection
 import json
 import logging
 import os
+import time
 import yaml
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Protocol, TypeAlias, TypedDict, cast
+from typing import Any, Dict, List, Protocol, TypeAlias, TypedDict, cast, Optional
 
 from langchain_ollama import OllamaLLM
 from langgraph.graph import END, StateGraph
@@ -17,6 +18,13 @@ from ..integrations.supabase_adapter import SupabaseConfig
 from ..memory import EpisodicMemory
 from ..onboarding import SupabaseMemoryOnboarding
 from ..tools import FileOperations, ShellExecutor, SystemMonitor
+from .agent_protocol import (
+    AgentMessage,
+    AgentMessageBus,
+    MessageType,
+    MessagePriority,
+    get_message_bus,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -92,6 +100,10 @@ class ReactAgent:
         # Expose attributes for type checking and testing
         self.mode: str = "react"
         self.tools: List[Any] = [self.file_ops, self.shell, self.monitor]
+        
+        # Agent communication
+        self.agent_id = f"{self.mode}_agent_{id(self)}"
+        self.message_bus = get_message_bus()
 
         self.graph: CompiledGraphType = self._build_graph()
 
@@ -361,3 +373,41 @@ Your response:"""
             logger.warning(
                 "Supabase memory onboarding reported errors: %s", report.errors
             )
+
+    async def send_message(
+        self,
+        recipient: str,
+        message_type: MessageType,
+        payload: Dict[str, Any],
+        priority: MessagePriority = MessagePriority.MEDIUM,
+    ) -> None:
+        """
+        Envia mensagem para outro agente.
+
+        Args:
+            recipient: ID do agente destinatário
+            message_type: Tipo da mensagem
+            payload: Dados da mensagem
+            priority: Prioridade da mensagem
+        """
+        message = AgentMessage(
+            message_id=str(id(self)) + str(time.time()),
+            message_type=message_type,
+            sender=self.agent_id,
+            recipient=recipient,
+            payload=payload,
+            priority=priority,
+        )
+        await self.message_bus.send_message(message)
+
+    async def receive_message(self, timeout: float = 1.0) -> Optional[AgentMessage]:
+        """
+        Recebe mensagem da fila do agente.
+
+        Args:
+            timeout: Timeout em segundos
+
+        Returns:
+            Mensagem recebida ou None
+        """
+        return await self.message_bus.receive_message(self.agent_id, timeout)

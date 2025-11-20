@@ -16,6 +16,7 @@ from typing import Any, Dict, List
 from .react_agent import ReactAgent, AgentState
 from ..memory.episodic_memory import SimilarEpisode
 from ..tools.omnimind_tools import ToolsFramework, ToolCategory
+from ..tools.ast_parser import ASTParser, CodeStructure
 
 
 class CodeAgent(ReactAgent):
@@ -36,6 +37,9 @@ class CodeAgent(ReactAgent):
         # Inicializar framework de ferramentas
         self.tools_framework = ToolsFramework()
 
+        # Inicializar AST parser para análise avançada de código
+        self.ast_parser = ASTParser()
+
         # Modo de operação
         self.mode = "code"
 
@@ -49,6 +53,9 @@ class CodeAgent(ReactAgent):
 
         # Histórico de operações de código
         self.code_history: List[Dict[str, Any]] = []
+        
+        # Cache de análises AST
+        self._ast_cache: Dict[str, CodeStructure] = {}
 
     def _get_available_tools_description(self) -> str:
         """Retorna descrição de ferramentas disponíveis"""
@@ -230,6 +237,108 @@ Your response:"""
             action = op["action"]
             counts[action] = counts.get(action, 0) + 1
         return counts
+
+    def analyze_code_structure(self, filepath: str) -> Dict[str, Any]:
+        """
+        Analisa estrutura de código Python usando AST.
+
+        Args:
+            filepath: Caminho para arquivo Python
+
+        Returns:
+            Dict com análise completa (classes, funções, imports, complexidade)
+        """
+        # Verificar cache
+        if filepath in self._ast_cache:
+            structure = self._ast_cache[filepath]
+        else:
+            structure = self.ast_parser.parse_file(filepath)
+            if structure:
+                self._ast_cache[filepath] = structure
+
+        if not structure:
+            return {"error": f"Failed to parse {filepath}"}
+
+        return {
+            "filepath": structure.filepath,
+            "classes": [
+                {
+                    "name": c.name,
+                    "lines": f"{c.line_start}-{c.line_end}",
+                    "docstring": c.docstring,
+                    "bases": c.bases,
+                }
+                for c in structure.classes
+            ],
+            "functions": [
+                {
+                    "name": f.name,
+                    "lines": f"{f.line_start}-{f.line_end}",
+                    "parameters": f.parameters,
+                    "return_type": f.return_type,
+                    "docstring": f.docstring,
+                }
+                for f in structure.functions
+            ],
+            "imports": [i.name for i in structure.imports],
+            "dependencies": list(structure.dependencies),
+            "complexity": structure.complexity,
+            "lines_of_code": structure.lines_of_code,
+        }
+
+    def validate_code_syntax(self, code: str) -> Dict[str, Any]:
+        """
+        Valida sintaxe de código Python.
+
+        Args:
+            code: Código-fonte Python
+
+        Returns:
+            Dict com resultado da validação
+        """
+        is_valid, error = self.ast_parser.validate_syntax(code)
+        return {
+            "valid": is_valid,
+            "error": error,
+            "timestamp": self._timestamp(),
+        }
+
+    def analyze_code_security(self, code: str) -> Dict[str, Any]:
+        """
+        Analisa código para problemas de segurança.
+
+        Args:
+            code: Código-fonte Python
+
+        Returns:
+            Dict com avisos de segurança
+        """
+        warnings = self.ast_parser.analyze_security_issues(code)
+        return {
+            "warnings": warnings,
+            "safe": len(warnings) == 0,
+            "severity": "high" if any("eval" in w or "exec" in w for w in warnings) else "medium",
+            "timestamp": self._timestamp(),
+        }
+
+    def generate_code_skeleton(
+        self,
+        class_name: str,
+        methods: List[tuple[str, List[str], str]],
+        docstring: str = "",
+    ) -> str:
+        """
+        Gera esqueleto de classe Python.
+
+        Args:
+            class_name: Nome da classe
+            methods: Lista de (nome, parâmetros, tipo_retorno)
+            docstring: Docstring da classe
+
+        Returns:
+            Código-fonte da classe gerada
+        """
+        return self.ast_parser.generate_skeleton(class_name, methods, docstring)
 
 
 # ============================================================================
