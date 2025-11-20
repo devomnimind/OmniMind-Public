@@ -40,7 +40,9 @@ class PatternRecognition:
             return {"patterns": [], "message": "No operations to analyze"}
 
         # Extract sequences of tool usage
-        tool_sequences = [op.get("tool_name") for op in operations if op.get("tool_name")]
+        tool_sequences = [
+            op.get("tool_name") for op in operations if op.get("tool_name")
+        ]
 
         if len(tool_sequences) < 3:
             return {"patterns": [], "message": "Insufficient data"}
@@ -93,9 +95,7 @@ class PatternRecognition:
         )
 
         # Count agent usage
-        agent_counts = Counter(
-            op.get("agent") for op in operations if op.get("agent")
-        )
+        agent_counts = Counter(op.get("agent") for op in operations if op.get("agent"))
 
         total_ops = len(operations)
         biases = []
@@ -132,9 +132,7 @@ class PatternRecognition:
             "timestamp": datetime.now().isoformat(),
         }
 
-    def detect_anomalies(
-        self, operations: List[Dict[str, Any]]
-    ) -> Dict[str, Any]:
+    def detect_anomalies(self, operations: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Detect anomalous behavior patterns.
 
         Args:
@@ -193,9 +191,7 @@ class PatternRecognition:
             "timestamp": datetime.now().isoformat(),
         }
 
-    def analyze_decision_tree(
-        self, operations: List[Dict[str, Any]]
-    ) -> Dict[str, Any]:
+    def analyze_decision_tree(self, operations: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Analyze decision-making tree structure.
 
         Args:
@@ -264,7 +260,9 @@ class PatternRecognition:
             return {"diversity_score": 0.0, "message": "No operations to analyze"}
 
         # Count unique tools and agents
-        unique_tools = set(op.get("tool_name") for op in operations if op.get("tool_name"))
+        unique_tools = set(
+            op.get("tool_name") for op in operations if op.get("tool_name")
+        )
         unique_agents = set(op.get("agent") for op in operations if op.get("agent"))
 
         # Calculate Shannon entropy for tool distribution
@@ -277,7 +275,7 @@ class PatternRecognition:
         for count in tool_counts.values():
             if count > 0:
                 prob = count / total
-                entropy -= prob * (prob ** 0.5)  # Simplified entropy
+                entropy -= prob * (prob**0.5)  # Simplified entropy
 
         # Normalize to 0-1 scale
         max_entropy = len(unique_tools) ** 0.5 if unique_tools else 1.0
@@ -289,7 +287,9 @@ class PatternRecognition:
             "unique_agents": len(unique_agents),
             "total_operations": len(operations),
             "interpretation": (
-                "high" if diversity_score > 0.7 else "medium" if diversity_score > 0.4 else "low"
+                "high"
+                if diversity_score > 0.7
+                else "medium" if diversity_score > 0.4 else "low"
             ),
             "timestamp": datetime.now().isoformat(),
         }

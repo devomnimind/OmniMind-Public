@@ -284,9 +284,7 @@ async def test_login_page_visual(page: Page, visual_tester: VisualRegressionTest
     await page.goto("http://localhost:3000/login")
     await page.wait_for_load_state("networkidle")
 
-    result = await visual_tester.capture_and_compare(
-        page, "login_page", threshold=0.01
-    )
+    result = await visual_tester.capture_and_compare(page, "login_page", threshold=0.01)
 
     assert result["passed"], f"Visual regression detected: {result['difference']:.2%}"
 

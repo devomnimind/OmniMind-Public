@@ -210,9 +210,7 @@ class DistributedTracer:
             exporter_type=config.exporter_type,
         )
 
-    def create_context(
-        self, parent: Optional[SpanContext] = None
-    ) -> SpanContext:
+    def create_context(self, parent: Optional[SpanContext] = None) -> SpanContext:
         """Create a new span context.
 
         Args:

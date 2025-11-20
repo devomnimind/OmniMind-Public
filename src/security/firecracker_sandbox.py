@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+import os
 import logging
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 from ..audit.immutable_audit import log_action
 
@@ -50,8 +51,9 @@ class FirecrackerSandbox:
         rootfs_path: Optional[str] = None,
         enabled: bool = True,
     ) -> None:
-        self.kernel_path = Path(kernel_path) if kernel_path else None
-        self.rootfs_path = Path(rootfs_path) if rootfs_path else None
+        # Read from environment variables if not provided
+        self.kernel_path = Path(kernel_path or os.environ.get("OMNIMIND_FIRECRACKER_KERNEL", ""))
+        self.rootfs_path = Path(rootfs_path or os.environ.get("OMNIMIND_FIRECRACKER_ROOTFS", ""))
         self.enabled = enabled and bool(
             self.kernel_path
             and self.rootfs_path
@@ -67,7 +69,7 @@ class FirecrackerSandbox:
 
     def run(
         self,
-        payload: Dict[str, Any],
+        payload: Union[str, Dict[str, Any]],
         timeout: int = 60,
         sandbox_name: str = "omnimind-sandbox",
     ) -> SandboxResult:
@@ -96,10 +98,15 @@ class FirecrackerSandbox:
         self._record_event(payload_summary, result, sandbox_name)
         return result
 
-    def _summarize_payload(self, payload: Dict[str, Any]) -> str:
-        items = list(payload.keys())[:3]
-        summary = ",".join(str(item) for item in items)
-        return summary or "empty"
+    def _summarize_payload(self, payload: Union[str, Dict[str, Any]]) -> str:
+        if isinstance(payload, str):
+            return payload[:50] + "..." if len(payload) > 50 else payload
+        elif isinstance(payload, dict):
+            items = list(payload.keys())[:3]
+            summary = ",".join(str(item) for item in items)
+            return summary or "empty"
+        else:
+            return str(payload)[:50] + "..." if len(str(payload)) > 50 else str(payload)
 
     def _record_event(
         self, payload_summary: str, result: SandboxResult, sandbox_name: str

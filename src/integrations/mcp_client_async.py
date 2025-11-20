@@ -119,9 +119,7 @@ class AsyncMCPClient:
             raise MCPProtocolError("Response missing 'jsonrpc' field")
 
         if payload["jsonrpc"] != "2.0":
-            raise MCPProtocolError(
-                f"Invalid JSON-RPC version: {payload['jsonrpc']}"
-            )
+            raise MCPProtocolError(f"Invalid JSON-RPC version: {payload['jsonrpc']}")
 
         if "id" not in payload:
             raise MCPProtocolError("Response missing 'id' field")
@@ -135,9 +133,7 @@ class AsyncMCPClient:
         if "result" not in payload:
             raise MCPProtocolError("Response missing 'result' field")
 
-    async def _request_with_retry(
-        self, method: str, params: Dict[str, Any]
-    ) -> Any:
+    async def _request_with_retry(self, method: str, params: Dict[str, Any]) -> Any:
         """Make MCP request with automatic retries.
 
         Args:
@@ -161,7 +157,9 @@ class AsyncMCPClient:
             "id": request_id,
         }
 
-        last_exception: MCPTimeoutError | MCPConnectionError | MCPClientError | None = None
+        last_exception: MCPTimeoutError | MCPConnectionError | MCPClientError | None = (
+            None
+        )
         backoff = self.retry_backoff
 
         for attempt in range(self.max_retries):
@@ -196,9 +194,7 @@ class AsyncMCPClient:
                 logger.warning(f"MCP timeout (attempt {attempt + 1}): {exc}")
 
             except httpx.ConnectError as exc:
-                last_exception = MCPConnectionError(
-                    f"Connection failed: {exc}"
-                )
+                last_exception = MCPConnectionError(f"Connection failed: {exc}")
                 logger.warning(f"MCP connection error (attempt {attempt + 1}): {exc}")
 
             except httpx.HTTPStatusError as exc:
@@ -261,9 +257,7 @@ class AsyncMCPClient:
         )
         return dict(result)
 
-    async def list_dir(
-        self, path: str, recursive: bool = False
-    ) -> Dict[str, Any]:
+    async def list_dir(self, path: str, recursive: bool = False) -> Dict[str, Any]:
         """List directory contents from MCP server.
 
         Args:

@@ -216,7 +216,7 @@ class TestABTest:
             test.add_treatment_metric(metrics)
 
         results = test.get_results()
-        
+
         assert results["status"] == "complete"
         assert "winner" in results
         assert "improvement" in results
@@ -234,7 +234,7 @@ class TestSelfOptimizationEngine:
     def test_set_baseline_configuration(self):
         """Test setting baseline configuration."""
         engine = SelfOptimizationEngine()
-        
+
         config = Configuration("baseline", "Baseline", {"threads": 10})
         engine.set_baseline_configuration(config)
 
@@ -243,7 +243,7 @@ class TestSelfOptimizationEngine:
     def test_create_ab_test(self):
         """Test creating an A/B test."""
         engine = SelfOptimizationEngine()
-        
+
         baseline = Configuration("baseline", "Baseline", {"threads": 10})
         engine.set_baseline_configuration(baseline)
 
@@ -257,16 +257,16 @@ class TestSelfOptimizationEngine:
     def test_create_ab_test_without_baseline(self):
         """Test that creating test without baseline raises error."""
         engine = SelfOptimizationEngine()
-        
+
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
-        
+
         with pytest.raises(ValueError):
             engine.create_ab_test("test-1", "Thread test", treatment)
 
     def test_start_test(self):
         """Test starting an A/B test."""
         engine = SelfOptimizationEngine()
-        
+
         baseline = Configuration("baseline", "Baseline", {"threads": 10})
         engine.set_baseline_configuration(baseline)
 
@@ -274,7 +274,7 @@ class TestSelfOptimizationEngine:
         test = engine.create_ab_test("test-1", "Thread test", treatment)
 
         engine.start_test("test-1")
-        
+
         active_tests = engine.get_active_tests()
         assert len(active_tests) == 1
         assert active_tests[0].status == ExperimentStatus.RUNNING
@@ -282,7 +282,7 @@ class TestSelfOptimizationEngine:
     def test_record_metrics(self):
         """Test recording metrics."""
         engine = SelfOptimizationEngine()
-        
+
         baseline = Configuration("baseline", "Baseline", {"threads": 10})
         engine.set_baseline_configuration(baseline)
 
@@ -310,7 +310,7 @@ class TestSelfOptimizationEngine:
     def test_analyze_test(self):
         """Test analyzing a test."""
         engine = SelfOptimizationEngine()
-        
+
         baseline = Configuration("baseline", "Baseline", {"threads": 10})
         engine.set_baseline_configuration(baseline)
 
@@ -332,14 +332,14 @@ class TestSelfOptimizationEngine:
                 engine.record_metrics("test-1", metrics, is_treatment)
 
         results = engine.analyze_test("test-1")
-        
+
         assert "status" in results
         assert results["status"] == "complete"
 
     def test_apply_winner(self):
         """Test applying winner configuration."""
         engine = SelfOptimizationEngine()
-        
+
         baseline = Configuration("baseline", "Baseline", {"threads": 10})
         engine.set_baseline_configuration(baseline)
 
@@ -385,7 +385,7 @@ class TestSelfOptimizationEngine:
     def test_rollback(self):
         """Test rolling back a test."""
         engine = SelfOptimizationEngine()
-        
+
         baseline = Configuration("baseline", "Baseline", {"threads": 10})
         engine.set_baseline_configuration(baseline)
 
@@ -401,7 +401,7 @@ class TestSelfOptimizationEngine:
     def test_get_optimization_history(self):
         """Test getting optimization history."""
         engine = SelfOptimizationEngine()
-        
+
         baseline = Configuration("baseline", "Baseline", {"threads": 10})
         engine.set_baseline_configuration(baseline)
 

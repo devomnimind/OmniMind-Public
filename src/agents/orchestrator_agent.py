@@ -100,7 +100,9 @@ class OrchestratorAgent(ReactAgent):
         self.supabase_adapter: Optional[SupabaseAdapter] = self._init_supabase_adapter()
         self.qdrant_adapter: Optional[QdrantAdapter] = self._init_qdrant_adapter()
         self.security_agent: Optional[SecurityAgent] = self._init_security_agent()
-        self.metacognition_agent: Optional[MetacognitionAgent] = self._init_metacognition_agent()
+        self.metacognition_agent: Optional[MetacognitionAgent] = (
+            self._init_metacognition_agent()
+        )
         self.dashboard_snapshot: Dict[str, Any] = {}
         self.last_mcp_result: Dict[str, Any] = {}
         self.last_dbus_result: Dict[str, Any] = {}
@@ -921,9 +923,7 @@ Your decomposition plan:"""
 
         return synthesis
 
-    def run_metacognition_analysis(
-        self, lookback_hours: int = 24
-    ) -> Dict[str, Any]:
+    def run_metacognition_analysis(self, lookback_hours: int = 24) -> Dict[str, Any]:
         """Run metacognition self-analysis.
 
         Args:
@@ -949,7 +949,7 @@ Your decomposition plan:"""
             if critical_suggestions:
                 logger.warning(
                     "Metacognition found %d critical optimization suggestions",
-                    len(critical_suggestions)
+                    len(critical_suggestions),
                 )
                 for suggestion in critical_suggestions:
                     logger.warning(f"  - {suggestion.get('title')}")
@@ -966,7 +966,10 @@ Your decomposition plan:"""
             Quick health status
         """
         if not self.metacognition_agent:
-            return {"status": "unavailable", "error": "MetacognitionAgent not initialized"}
+            return {
+                "status": "unavailable",
+                "error": "MetacognitionAgent not initialized",
+            }
 
         try:
             return self.metacognition_agent.get_quick_health_check()

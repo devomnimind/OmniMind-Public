@@ -44,9 +44,7 @@ class SelfAnalysis:
             logger.error(f"Failed to load hash chain: {exc}")
             return []
 
-    def analyze_decision_patterns(
-        self, lookback_hours: int = 24
-    ) -> Dict[str, Any]:
+    def analyze_decision_patterns(self, lookback_hours: int = 24) -> Dict[str, Any]:
         """Analyze decision-making patterns over recent history.
 
         Args:
@@ -64,8 +62,7 @@ class SelfAnalysis:
         recent_entries = [
             e
             for e in entries
-            if datetime.fromisoformat(e.get("timestamp", ""))
-            > cutoff_time
+            if datetime.fromisoformat(e.get("timestamp", "")) > cutoff_time
         ]
 
         if not recent_entries:

@@ -60,8 +60,12 @@ class TransactionParticipant:
             "participant_id": self.participant_id,
             "node_id": self.node_id,
             "state": self.state.value,
-            "prepare_timestamp": self.prepare_timestamp.isoformat() if self.prepare_timestamp else None,
-            "commit_timestamp": self.commit_timestamp.isoformat() if self.commit_timestamp else None,
+            "prepare_timestamp": (
+                self.prepare_timestamp.isoformat() if self.prepare_timestamp else None
+            ),
+            "commit_timestamp": (
+                self.commit_timestamp.isoformat() if self.commit_timestamp else None
+            ),
             "error": self.error,
         }
 
@@ -85,15 +89,13 @@ class DistributedTransaction:
     def all_prepared(self) -> bool:
         """Check if all participants are prepared."""
         return all(
-            p.state == ParticipantState.PREPARED
-            for p in self.participants.values()
+            p.state == ParticipantState.PREPARED for p in self.participants.values()
         )
 
     def any_failed(self) -> bool:
         """Check if any participant failed."""
         return any(
-            p.state == ParticipantState.FAILED
-            for p in self.participants.values()
+            p.state == ParticipantState.FAILED for p in self.participants.values()
         )
 
     def is_expired(self) -> bool:
@@ -105,11 +107,11 @@ class DistributedTransaction:
         return {
             "transaction_id": self.transaction_id,
             "phase": self.phase.value,
-            "participants": {
-                pid: p.to_dict() for pid, p in self.participants.items()
-            },
+            "participants": {pid: p.to_dict() for pid, p in self.participants.items()},
             "started_at": self.started_at.isoformat(),
-            "completed_at": self.completed_at.isoformat() if self.completed_at else None,
+            "completed_at": (
+                self.completed_at.isoformat() if self.completed_at else None
+            ),
             "timeout_seconds": self.timeout.total_seconds(),
             "data": self.data,
         }
@@ -162,7 +164,7 @@ class TwoPhaseCommitCoordinator:
             Created transaction
         """
         transaction_id = str(uuid.uuid4())
-        
+
         transaction = DistributedTransaction(
             transaction_id=transaction_id,
             phase=TransactionPhase.PREPARING,
@@ -179,7 +181,9 @@ class TwoPhaseCommitCoordinator:
             transaction.add_participant(participant)
 
         self._transactions[transaction_id] = transaction
-        logger.info(f"Started transaction {transaction_id} with {len(participant_nodes)} participants")
+        logger.info(
+            f"Started transaction {transaction_id} with {len(participant_nodes)} participants"
+        )
 
         return transaction
 
@@ -244,9 +248,7 @@ class TwoPhaseCommitCoordinator:
                     logger.error(f"No commit handler for node {participant.node_id}")
                     continue
 
-                commit_tasks.append(
-                    self._commit_participant(transaction, participant)
-                )
+                commit_tasks.append(self._commit_participant(transaction, participant))
 
             # Wait for all commits
             if commit_tasks:
@@ -272,7 +274,7 @@ class TwoPhaseCommitCoordinator:
         """Prepare a participant."""
         try:
             participant.state = ParticipantState.PREPARING
-            
+
             handler = self._prepare_handlers[participant.node_id]
             success: bool = await asyncio.wait_for(
                 handler(transaction.transaction_id, transaction.data),
@@ -286,7 +288,9 @@ class TwoPhaseCommitCoordinator:
             else:
                 participant.state = ParticipantState.FAILED
                 participant.error = "Prepare returned False"
-                logger.warning(f"Participant {participant.participant_id} failed to prepare")
+                logger.warning(
+                    f"Participant {participant.participant_id} failed to prepare"
+                )
 
         except asyncio.TimeoutError:
             participant.state = ParticipantState.FAILED
@@ -315,7 +319,9 @@ class TwoPhaseCommitCoordinator:
                 participant.commit_timestamp = datetime.now()
                 logger.debug(f"Participant {participant.participant_id} committed")
             else:
-                logger.warning(f"Participant {participant.participant_id} commit returned False")
+                logger.warning(
+                    f"Participant {participant.participant_id} commit returned False"
+                )
 
         except Exception as e:
             logger.error(f"Participant {participant.participant_id} commit error: {e}")
@@ -331,9 +337,7 @@ class TwoPhaseCommitCoordinator:
             if participant.node_id not in self._abort_handlers:
                 continue
 
-            abort_tasks.append(
-                self._abort_participant(transaction, participant)
-            )
+            abort_tasks.append(self._abort_participant(transaction, participant))
 
         if abort_tasks:
             await asyncio.gather(*abort_tasks, return_exceptions=True)
@@ -377,7 +381,8 @@ class TwoPhaseCommitCoordinator:
             List of active transactions
         """
         return [
-            t for t in self._transactions.values()
+            t
+            for t in self._transactions.values()
             if t.phase not in [TransactionPhase.COMMITTED, TransactionPhase.ABORTED]
         ]
 
@@ -427,7 +432,9 @@ class SagaCoordinator:
         self._saga_data[saga_id] = {}
         logger.info(f"Created saga {saga_id} with {len(steps)} steps")
 
-    async def execute_saga(self, saga_id: str, initial_data: Optional[Dict[str, Any]] = None) -> bool:
+    async def execute_saga(
+        self, saga_id: str, initial_data: Optional[Dict[str, Any]] = None
+    ) -> bool:
         """Execute a saga transaction.
 
         Args:
@@ -480,7 +487,9 @@ class SagaCoordinator:
         steps = self._sagas[saga_id]
         data = self._saga_data[saga_id]
 
-        logger.warning(f"Saga {saga_id}: Compensating {failed_step_index} completed steps")
+        logger.warning(
+            f"Saga {saga_id}: Compensating {failed_step_index} completed steps"
+        )
 
         # Compensate in reverse order
         for i in range(failed_step_index - 1, -1, -1):

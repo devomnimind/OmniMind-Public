@@ -372,6 +372,7 @@ class TestSagaStep:
 
     def test_initialization(self):
         """Test saga step initialization."""
+
         async def action(data: dict) -> dict:
             return {}
 

@@ -230,9 +230,11 @@ class CreativeProblemSolver:
         logger.info(
             "solutions_generated",
             count=len(solutions),
-            avg_novelty=sum(s.novelty_score for s in solutions) / len(solutions)
-            if solutions
-            else 0,
+            avg_novelty=(
+                sum(s.novelty_score for s in solutions) / len(solutions)
+                if solutions
+                else 0
+            ),
         )
 
         return solutions
@@ -306,9 +308,7 @@ class CreativeProblemSolver:
 
         return solutions[:num_solutions]
 
-    def _lateral_thinking(
-        self, problem: Problem, num_solutions: int
-    ) -> List[Solution]:
+    def _lateral_thinking(self, problem: Problem, num_solutions: int) -> List[Solution]:
         """Generate solutions using lateral thinking.
 
         Args:
@@ -495,9 +495,7 @@ class CreativeProblemSolver:
             Sorted list of solutions
         """
         # Evaluate each solution
-        evaluated = [
-            (self.evaluate_solution(s, criteria), s) for s in solutions
-        ]
+        evaluated = [(self.evaluate_solution(s, criteria), s) for s in solutions]
 
         # Sort by score (descending)
         ranked = sorted(evaluated, key=lambda x: x[0], reverse=True)
@@ -524,15 +522,17 @@ class CreativeProblemSolver:
         avg_effectiveness = 0.0
 
         if total_solutions > 0:
-            avg_novelty = sum(
-                s.novelty_score for s in self._solution_history
-            ) / total_solutions
-            avg_feasibility = sum(
-                s.feasibility_score for s in self._solution_history
-            ) / total_solutions
-            avg_effectiveness = sum(
-                s.effectiveness_score for s in self._solution_history
-            ) / total_solutions
+            avg_novelty = (
+                sum(s.novelty_score for s in self._solution_history) / total_solutions
+            )
+            avg_feasibility = (
+                sum(s.feasibility_score for s in self._solution_history)
+                / total_solutions
+            )
+            avg_effectiveness = (
+                sum(s.effectiveness_score for s in self._solution_history)
+                / total_solutions
+            )
 
         return {
             "total_solutions_generated": total_solutions,

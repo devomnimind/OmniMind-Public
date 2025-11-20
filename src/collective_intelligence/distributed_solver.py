@@ -54,7 +54,7 @@ class DistributedSolution:
 
 
 class TaskDecomposer:
-    """Decomposes problems into distributable subtasks.    """
+    """Decomposes problems into distributable subtasks."""
 
     def __init__(self) -> None:
         """Initialize task decomposer."""

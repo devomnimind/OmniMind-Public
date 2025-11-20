@@ -144,12 +144,12 @@ class ContinuousProfiler:
     Example:
         >>> config = ProfilingConfig()
         >>> profiler = ContinuousProfiler(config)
-        >>> 
+        >>>
         >>> @profiler.profile
         ... def my_function():
         ...     # Function code
         ...     pass
-        >>> 
+        >>>
         >>> profiler.start()
         >>> # Application runs...
         >>> profiler.stop()
@@ -213,6 +213,7 @@ class ContinuousProfiler:
         Returns:
             Wrapped function
         """
+
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             if not self.config.enabled:
                 return func(*args, **kwargs)
@@ -251,7 +252,7 @@ class ContinuousProfiler:
         stats = pstats.Stats(profiler)
 
         # Parse stats
-        stats_dict = getattr(stats, 'stats', {})
+        stats_dict = getattr(stats, "stats", {})
         for func_key, (cc, nc, tt, ct, callers) in stats_dict.items():
             filename, line_number, function_name = func_key
 
@@ -362,12 +363,10 @@ class ContinuousProfiler:
     def _cleanup_old_samples(self) -> None:
         """Remove old samples based on retention settings."""
         if len(self._samples) > self.config.max_samples:
-            self._samples = self._samples[-self.config.max_samples:]
+            self._samples = self._samples[-self.config.max_samples :]
 
         cutoff_time = time.time() - (self.config.retention_hours * 3600)
-        self._samples = [
-            s for s in self._samples if s.timestamp >= cutoff_time
-        ]
+        self._samples = [s for s in self._samples if s.timestamp >= cutoff_time]
 
     def clear_samples(self) -> None:
         """Clear all collected samples."""
@@ -499,18 +498,18 @@ class FlameGraphGenerator:
         svg_parts = [
             '<?xml version="1.0" encoding="UTF-8"?>',
             '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800">',
-            '<style>',
-            '  .func { font-family: monospace; font-size: 12px; }',
-            '  .time { fill: #333; }',
-            '</style>',
+            "<style>",
+            "  .func { font-family: monospace; font-size: 12px; }",
+            "  .time { fill: #333; }",
+            "</style>",
         ]
 
         # Render nodes
         y_offset = 20
         self._render_node_svg(flame_graph, 10, y_offset, 1180, svg_parts)
 
-        svg_parts.append('</svg>')
-        return '\n'.join(svg_parts)
+        svg_parts.append("</svg>")
+        return "\n".join(svg_parts)
 
     def _render_node_svg(
         self,
@@ -543,7 +542,7 @@ class FlameGraphGenerator:
         # Draw text
         text = f"{node.name} ({node.value:.2f}ms)"
         if len(text) * 7 > width:  # Rough estimation of text width
-            text = node.name[:int(width / 7)] + "..."
+            text = node.name[: int(width / 7)] + "..."
 
         svg_parts.append(
             f'<text x="{x + 5}" y="{y + 15}" class="func time">{text}</text>'

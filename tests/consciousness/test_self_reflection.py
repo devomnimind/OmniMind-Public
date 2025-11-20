@@ -146,9 +146,7 @@ class TestAdvancedSelfReflection:
 
     def test_introspect_decision_making(self, temp_hash_chain: Path) -> None:
         """Test introspection on decision making."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         log = reflection.introspect(
             focus_area="decision_making",
@@ -161,9 +159,7 @@ class TestAdvancedSelfReflection:
 
     def test_introspect_performance(self, temp_hash_chain: Path) -> None:
         """Test introspection on performance."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         log = reflection.introspect(
             focus_area="performance",
@@ -176,9 +172,7 @@ class TestAdvancedSelfReflection:
 
     def test_introspect_learning(self, temp_hash_chain: Path) -> None:
         """Test introspection on learning."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         log = reflection.introspect(
             focus_area="learning",
@@ -191,9 +185,7 @@ class TestAdvancedSelfReflection:
 
     def test_introspect_resource_usage(self, temp_hash_chain: Path) -> None:
         """Test introspection on resource usage."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         log = reflection.introspect(
             focus_area="resource_usage",
@@ -205,9 +197,7 @@ class TestAdvancedSelfReflection:
 
     def test_introspection_history(self, temp_hash_chain: Path) -> None:
         """Test that introspections are stored in history."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         # Perform multiple introspections
         reflection.introspect("decision_making")
@@ -217,9 +207,7 @@ class TestAdvancedSelfReflection:
 
     def test_introspection_history_limit(self, temp_hash_chain: Path) -> None:
         """Test that introspection history is limited."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         # Generate more logs than limit (100)
         for i in range(110):
@@ -231,9 +219,7 @@ class TestAdvancedSelfReflection:
         self, temp_hash_chain: Path
     ) -> None:
         """Test evaluating quality with no history."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         metrics = reflection.evaluate_self_reflection_quality()
 
@@ -245,9 +231,7 @@ class TestAdvancedSelfReflection:
         self, temp_hash_chain: Path
     ) -> None:
         """Test evaluating quality with history."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         # Perform various introspections
         reflection.introspect("decision_making")
@@ -262,13 +246,9 @@ class TestAdvancedSelfReflection:
         assert metrics.actionability_score >= 0.0
         assert metrics.consistency_score > 0.0
 
-    def test_generate_self_improvement_plan(
-        self, temp_hash_chain: Path
-    ) -> None:
+    def test_generate_self_improvement_plan(self, temp_hash_chain: Path) -> None:
         """Test generating self-improvement plan."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         plan = reflection.generate_self_improvement_plan(lookback_hours=24)
 
@@ -279,13 +259,9 @@ class TestAdvancedSelfReflection:
         assert "action_items" in plan
         assert "recommended_focus" in plan
 
-    def test_improvement_plan_quality_metrics(
-        self, temp_hash_chain: Path
-    ) -> None:
+    def test_improvement_plan_quality_metrics(self, temp_hash_chain: Path) -> None:
         """Test that improvement plan includes quality metrics."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         plan = reflection.generate_self_improvement_plan()
 
@@ -296,13 +272,9 @@ class TestAdvancedSelfReflection:
         assert "actionability" in quality
         assert "consistency" in quality
 
-    def test_improvement_plan_action_items(
-        self, temp_hash_chain: Path
-    ) -> None:
+    def test_improvement_plan_action_items(self, temp_hash_chain: Path) -> None:
         """Test that improvement plan generates action items."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         plan = reflection.generate_self_improvement_plan()
 
@@ -317,9 +289,7 @@ class TestAdvancedSelfReflection:
 
     def test_get_statistics(self, temp_hash_chain: Path) -> None:
         """Test getting statistics."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         # Perform some introspections
         reflection.introspect("decision_making")
@@ -334,9 +304,7 @@ class TestAdvancedSelfReflection:
 
     def test_focus_area_distribution(self, temp_hash_chain: Path) -> None:
         """Test focus area distribution tracking."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         # Perform introspections on different areas
         reflection.introspect("decision_making")
@@ -351,9 +319,7 @@ class TestAdvancedSelfReflection:
 
     def test_reflection_quality_history(self, temp_hash_chain: Path) -> None:
         """Test that reflection quality is tracked over time."""
-        reflection = AdvancedSelfReflection(
-            hash_chain_path=str(temp_hash_chain)
-        )
+        reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
         # Generate some introspections
         for _ in range(5):

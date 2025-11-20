@@ -86,7 +86,10 @@ class TestGDPRCompliance:
             "user123",
             DataProcessingPurpose.LEGITIMATE_INTERESTS,
             [DataCategory.BEHAVIORAL],
-            {"action": "page_view", "timestamp": datetime.now(timezone.utc).isoformat()},
+            {
+                "action": "page_view",
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+            },
             "OmniMind Analytics",
         )
 

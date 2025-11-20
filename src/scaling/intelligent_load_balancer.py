@@ -254,7 +254,9 @@ class IntelligentLoadBalancer:
         else:
             speed_score = 0.0
 
-        total_score: float = load_score + prediction_score + reliability_score + speed_score
+        total_score: float = (
+            load_score + prediction_score + reliability_score + speed_score
+        )
 
         logger.debug(
             f"Node {node.node_id} score: {total_score:.3f} "
@@ -381,10 +383,14 @@ class IntelligentLoadBalancer:
             "total_nodes": len(self.node_metrics),
             "total_tasks": len(self.task_history),
             "avg_completion_time": (
-                float(statistics.mean(all_completion_times)) if all_completion_times else 0.0
+                float(statistics.mean(all_completion_times))
+                if all_completion_times
+                else 0.0
             ),
             "completion_time_std": (
-                float(statistics.stdev(all_completion_times)) if len(all_completion_times) > 1 else 0.0
+                float(statistics.stdev(all_completion_times))
+                if len(all_completion_times) > 1
+                else 0.0
             ),
             "avg_success_rate": (
                 float(statistics.mean(all_success_rates)) if all_success_rates else 0.0

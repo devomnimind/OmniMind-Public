@@ -139,7 +139,11 @@ class RetentionPolicyManager:
         period = self.config["retention_policies"].get(
             category.value, RetentionPeriod.DAYS_365.value
         )
-        return int(period) if isinstance(period, (int, str)) else RetentionPeriod.DAYS_365.value
+        return (
+            int(period)
+            if isinstance(period, (int, str))
+            else RetentionPeriod.DAYS_365.value
+        )
 
     def archive_old_data(
         self, category: DataCategory, dry_run: bool = False

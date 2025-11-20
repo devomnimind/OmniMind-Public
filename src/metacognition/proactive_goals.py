@@ -152,7 +152,9 @@ class ProactiveGoalEngine:
                 with open(self.workspace_path / "coverage.json") as f:
                     coverage_data = json.load(f)
 
-                total_coverage = coverage_data.get("totals", {}).get("percent_covered", 0)
+                total_coverage = coverage_data.get("totals", {}).get(
+                    "percent_covered", 0
+                )
 
                 if total_coverage < 80:
                     goals.append(
@@ -188,7 +190,8 @@ class ProactiveGoalEngine:
                 # Check for untested files
                 files = coverage_data.get("files", {})
                 untested_files = [
-                    path for path, data in files.items()
+                    path
+                    for path, data in files.items()
                     if data.get("summary", {}).get("percent_covered", 100) < 50
                 ]
 

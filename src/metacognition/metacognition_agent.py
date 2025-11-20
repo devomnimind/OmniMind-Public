@@ -85,13 +85,12 @@ class MetacognitionAgent:
                 recent_ops = [
                     e
                     for e in entries
-                    if datetime.fromisoformat(e.get("timestamp", ""))
-                    > cutoff_time
+                    if datetime.fromisoformat(e.get("timestamp", "")) > cutoff_time
                 ]
 
                 # Pattern recognition
-                repetitive_behavior = self.pattern_recognition.detect_repetitive_behavior(
-                    recent_ops
+                repetitive_behavior = (
+                    self.pattern_recognition.detect_repetitive_behavior(recent_ops)
                 )
                 bias_detection = self.pattern_recognition.detect_bias(recent_ops)
                 anomalies = self.pattern_recognition.detect_anomalies(recent_ops)

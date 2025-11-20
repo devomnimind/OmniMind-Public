@@ -125,8 +125,7 @@ class TestCreativeProblemSolver:
         innovative_count = sum(
             1
             for s in solutions
-            if s.category
-            in [SolutionCategory.INNOVATIVE, SolutionCategory.RADICAL]
+            if s.category in [SolutionCategory.INNOVATIVE, SolutionCategory.RADICAL]
         )
         assert innovative_count > 0
 

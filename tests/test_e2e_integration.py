@@ -404,12 +404,8 @@ class TestErrorHandling:
 # Test configuration
 def pytest_configure(config):
     """Configure pytest for E2E tests."""
-    config.addinivalue_line(
-        "markers", "e2e: mark test as end-to-end integration test"
-    )
-    config.addinivalue_line(
-        "markers", "slow: mark test as slow running"
-    )
+    config.addinivalue_line("markers", "e2e: mark test as end-to-end integration test")
+    config.addinivalue_line("markers", "slow: mark test as slow running")
 
 
 # Mark all tests in this module as e2e

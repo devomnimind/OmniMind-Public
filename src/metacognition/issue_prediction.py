@@ -95,7 +95,10 @@ class TimeSeriesAnalyzer:
             self._data[metric] = deque(maxlen=window_size)
 
     def add_data_point(
-        self, metric_type: MetricType, value: float, metadata: Optional[Dict[str, Any]] = None
+        self,
+        metric_type: MetricType,
+        value: float,
+        metadata: Optional[Dict[str, Any]] = None,
     ) -> None:
         """Add a data point to the time series.
 
@@ -253,7 +256,10 @@ class IssuePredictionEngine:
         self._prediction_history: List[IssuePrediction] = []
 
     def update_metric(
-        self, metric_type: MetricType, value: float, metadata: Optional[Dict[str, Any]] = None
+        self,
+        metric_type: MetricType,
+        value: float,
+        metadata: Optional[Dict[str, Any]] = None,
     ) -> None:
         """Update metric value and trigger prediction analysis.
 
@@ -319,11 +325,15 @@ class IssuePredictionEngine:
         if hours_until > 24:
             return None
 
-        severity = PredictionSeverity.CRITICAL if hours_until < 1 else PredictionSeverity.WARNING
+        severity = (
+            PredictionSeverity.CRITICAL
+            if hours_until < 1
+            else PredictionSeverity.WARNING
+        )
         probability = min(0.9, 0.5 + (24 - hours_until) / 48)
 
         stats = self.analyzer.get_statistics(metric_type)
-        
+
         return IssuePrediction(
             metric_type=metric_type,
             severity=severity,
@@ -351,11 +361,13 @@ class IssuePredictionEngine:
     def _predict_anomaly(self, metric_type: MetricType) -> Optional[IssuePrediction]:
         """Predict anomaly-based issues."""
         is_anomaly, z_score = self.analyzer.detect_anomaly(metric_type, threshold=2.5)
-        
+
         if not is_anomaly:
             return None
 
-        severity = PredictionSeverity.CRITICAL if z_score > 4.0 else PredictionSeverity.WARNING
+        severity = (
+            PredictionSeverity.CRITICAL if z_score > 4.0 else PredictionSeverity.WARNING
+        )
         probability = min(0.95, z_score / 5.0)
 
         stats = self.analyzer.get_statistics(metric_type)
@@ -394,7 +406,7 @@ class IssuePredictionEngine:
 
         stats = self.analyzer.get_statistics(metric_type)
         trend = stats.get("trend", 0.0)
-        
+
         # Check if performance is degrading (increasing response time/latency)
         if trend <= 0:
             return None

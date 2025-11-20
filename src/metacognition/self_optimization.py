@@ -169,17 +169,25 @@ class ABTest:
         control_mean = statistics.mean(control_scores)
         treatment_mean = statistics.mean(treatment_scores)
 
-        improvement = (treatment_mean - control_mean) / control_mean if control_mean > 0 else 0
+        improvement = (
+            (treatment_mean - control_mean) / control_mean if control_mean > 0 else 0
+        )
 
         # Simple statistical test (t-test would be better, but requires scipy)
-        control_stdev = statistics.stdev(control_scores) if len(control_scores) > 1 else 0
-        treatment_stdev = statistics.stdev(treatment_scores) if len(treatment_scores) > 1 else 0
+        control_stdev = (
+            statistics.stdev(control_scores) if len(control_scores) > 1 else 0
+        )
+        treatment_stdev = (
+            statistics.stdev(treatment_scores) if len(treatment_scores) > 1 else 0
+        )
 
         # Calculate confidence (simplified)
         confidence = min(0.99, 0.5 + abs(improvement) * 0.5)
 
         winner = "treatment" if treatment_mean > control_mean else "control"
-        is_significant = confidence >= self.confidence_threshold and abs(improvement) > 0.05
+        is_significant = (
+            confidence >= self.confidence_threshold and abs(improvement) > 0.05
+        )
 
         return {
             "status": "complete",
@@ -333,11 +341,13 @@ class SelfOptimizationEngine:
             test.ended_at = datetime.now()
 
             # Record optimization history
-            self._optimization_history.append({
-                "test_id": test_id,
-                "timestamp": datetime.now().isoformat(),
-                "results": results,
-            })
+            self._optimization_history.append(
+                {
+                    "test_id": test_id,
+                    "timestamp": datetime.now().isoformat(),
+                    "results": results,
+                }
+            )
 
         logger.info(f"Analyzed test {test_id}: {results.get('winner', 'unknown')} won")
         return results
@@ -385,7 +395,9 @@ class SelfOptimizationEngine:
         test = self._active_tests.get(test_id)
         if not test:
             # Check completed tests
-            test = next((t for t in self._completed_tests if t.test_id == test_id), None)
+            test = next(
+                (t for t in self._completed_tests if t.test_id == test_id), None
+            )
             if not test:
                 raise ValueError(f"Test not found: {test_id}")
 
@@ -456,14 +468,16 @@ class SelfOptimizationEngine:
 
             current += step_size
 
-        self._optimization_history.append({
-            "type": "auto_tune",
-            "parameter": parameter_name,
-            "timestamp": datetime.now().isoformat(),
-            "best_value": best_value,
-            "best_score": best_score,
-            "value_scores": value_scores,
-        })
+        self._optimization_history.append(
+            {
+                "type": "auto_tune",
+                "parameter": parameter_name,
+                "timestamp": datetime.now().isoformat(),
+                "best_value": best_value,
+                "best_score": best_score,
+                "value_scores": value_scores,
+            }
+        )
 
         logger.info(
             f"Auto-tuned {parameter_name}: best value={best_value}, score={best_score}"
@@ -508,7 +522,9 @@ class SelfOptimizationEngine:
         scores = [m.get_score(self._metric_weights) for m in recent_metrics]
 
         return {
-            "current_config": self._current_config.config_id if self._current_config else None,
+            "current_config": (
+                self._current_config.config_id if self._current_config else None
+            ),
             "avg_score": statistics.mean(scores) if scores else 0,
             "min_score": min(scores) if scores else 0,
             "max_score": max(scores) if scores else 0,
