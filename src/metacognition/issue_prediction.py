@@ -425,7 +425,8 @@ class IssuePredictionEngine:
             probability=probability,
             predicted_time=None,
             description=(
-                f"Performance degradation detected in {metric_type.value.replace('_', ' ').title()} "
+                f"Performance degradation detected in "
+                f"{metric_type.value.replace('_', ' ').title()} "
                 f"(trending {trend:.2f}ms/min upward)"
             ),
             recommended_actions=[

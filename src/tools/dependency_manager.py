@@ -652,4 +652,4 @@ if __name__ == "__main__":
     report = manager.generate_security_report(
         Path("logs/dependency_security_report.md")
     )
-    print(f"✓ Report saved to logs/dependency_security_report.md")
+    print("✓ Report saved to logs/dependency_security_report.md")

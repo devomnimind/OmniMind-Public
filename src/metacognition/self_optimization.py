@@ -173,10 +173,10 @@ class ABTest:
         )
 
         # Simple statistical test (t-test would be better, but requires scipy)
-        control_stdev = (
+        (
             statistics.stdev(control_scores) if len(control_scores) > 1 else 0
         )
-        treatment_stdev = (
+        (
             statistics.stdev(treatment_scores) if len(treatment_scores) > 1 else 0
         )
 
@@ -443,13 +443,6 @@ class SelfOptimizationEngine:
         value_scores: List[Tuple[Any, float]] = []
 
         while current <= max_val:
-            # Create test configuration
-            test_config = Configuration(
-                config_id=f"autotune-{parameter_name}-{current}",
-                name=f"Auto-tune {parameter_name}={current}",
-                parameters={**self._current_config.parameters, parameter_name: current},
-            )
-
             # This is a simplified version - in reality, you'd need to:
             # 1. Apply the configuration
             # 2. Collect metrics

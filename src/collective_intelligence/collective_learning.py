@@ -365,7 +365,7 @@ class MultiAgentTrainer:
             self.collective_learner.learn_from_experience(exp.agent_id, exp)
 
         # Synchronize collective knowledge
-        model = self.collective_learner.synchronize()
+        self.collective_learner.synchronize()
 
         self.training_episodes += 1
 

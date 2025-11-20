@@ -238,7 +238,10 @@ class ConfigurationValidator:
                 result.add_issue(
                     path=current_path,
                     severity=ValidationSeverity.ERROR,
-                    message=f"Invalid type for '{key}': expected {expected_type}, got {type(value).__name__}",
+                    message=(
+                        f"Invalid type for '{key}': expected {expected_type}, "
+                        f"got {type(value).__name__}"
+                    ),
                     suggestion=f"Change '{key}' to type {expected_type}",
                     auto_fix=self._convert_type(value, expected_type),
                 )

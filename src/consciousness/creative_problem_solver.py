@@ -402,7 +402,7 @@ class CreativeProblemSolver:
         # If not enough analogies, generate hybrid solutions
         while len(solutions) < num_solutions:
             solution = Solution(
-                description=f"Hybrid approach combining multiple strategies",
+                description="Hybrid approach combining multiple strategies",
                 category=SolutionCategory.HYBRID,
                 novelty_score=random.uniform(0.6, 0.8),
                 feasibility_score=random.uniform(0.6, 0.85),

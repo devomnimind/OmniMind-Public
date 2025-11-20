@@ -344,7 +344,7 @@ class EmotionalIntelligence:
             Emotionally-informed response
         """
         primary = detected_emotion.primary_emotion
-        sentiment = detected_emotion.sentiment
+        detected_emotion.sentiment
 
         # Generate appropriate response based on detected emotion
         if primary == Emotion.SADNESS:

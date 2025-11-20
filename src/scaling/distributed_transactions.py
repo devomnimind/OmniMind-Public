@@ -424,7 +424,9 @@ class SagaCoordinator:
             step = SagaStep(
                 step_id=f"{saga_id}-step-{i}",
                 action=lambda data, act=action: act(data),  # type: ignore
-                compensation=lambda data, comp=compensation: comp(data) if comp else None,  # type: ignore
+                compensation=lambda data, comp=compensation: (
+                    comp(data) if comp else None
+                ),  # type: ignore
             )
             saga_steps.append(step)
 

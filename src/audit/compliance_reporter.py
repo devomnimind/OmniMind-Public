@@ -208,7 +208,8 @@ class ComplianceReporter:
         # Calculate compliance score
         total_checks = len(report["compliance_checks"])
         passed_checks = sum(
-            1 for check in report["compliance_checks"].values() if check["compliant"]  # type: ignore
+            1 for check in report["compliance_checks"].values()
+            if check["compliant"]  # type: ignore
         )
         report["summary"] = {
             "total_checks": total_checks,

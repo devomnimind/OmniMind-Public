@@ -81,7 +81,7 @@ logger = logging.getLogger(__name__)
 class {agent_name}:
     """
     {description}
-    
+
     Capabilities:
 {capabilities}
     """
@@ -89,7 +89,7 @@ class {agent_name}:
     def __init__(self, tools: Optional[ToolsFramework] = None) -> None:
         """
         Initialize {agent_name}.
-        
+
         Args:
             tools: Tools framework instance
         """
@@ -99,42 +99,42 @@ class {agent_name}:
     def execute(self, task: str, context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
         Execute agent task.
-        
+
         Args:
             task: Task description
             context: Optional execution context
-            
+
         Returns:
             Execution result
         """
         logger.info(f"Executing task: {{task}}")
-        
+
         if context is None:
             context = {{}}
-        
+
         # TODO: Implement agent logic
         result = {{
             "status": "success",
             "task": task,
             "output": "Task executed successfully",
         }}
-        
+
         return result
 
     def validate_input(self, task: str) -> bool:
         """
         Validate input task.
-        
+
         Args:
             task: Task to validate
-            
+
         Returns:
             True if valid, False otherwise
         """
         if not task or not task.strip():
             logger.error("Empty task provided")
             return False
-        
+
         return True
 
 
@@ -158,25 +158,25 @@ if __name__ == "__main__":
             template='''def {tool_name}({parameters}) -> {return_type}:
     """
     {description}
-    
+
     Args:
 {args_docs}
-        
+
     Returns:
         {return_description}
-        
+
     Raises:
         ValueError: If validation fails
     """
     # Validate inputs
 {validation}
-    
+
     # Execute tool logic
     try:
 {logic}
-        
+
         return result
-        
+
     except Exception as e:
         logger.error(f"{tool_name} failed: {{e}}")
         raise
@@ -272,13 +272,13 @@ async def {endpoint_name}(
 ) -> {response_model}:
     """
     {description}
-    
+
     Args:
         request: Request data
-        
+
     Returns:
         Response data
-        
+
     Raises:
         HTTPException: On error
     """
@@ -288,9 +288,9 @@ async def {endpoint_name}(
             "status": "success",
             "message": "{endpoint_name} executed successfully",
         }}
-        
+
         return {response_model}(**result)
-        
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 ''',
@@ -335,7 +335,7 @@ class {model_name}(BaseModel):
 
     class Config:
         """Pydantic configuration."""
-        
+
         use_enum_values = True
         validate_assignment = True
         arbitrary_types_allowed = True

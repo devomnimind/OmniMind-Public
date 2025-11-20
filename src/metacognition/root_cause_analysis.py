@@ -163,7 +163,7 @@ class DependencyGraph:
             to_id: Component being depended on
         """
         if from_id not in self._components or to_id not in self._components:
-            logger.warning(f"Cannot add dependency: component not found")
+            logger.warning("Cannot add dependency: component not found")
             return
 
         self._adjacency[from_id].add(to_id)
