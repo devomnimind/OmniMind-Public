@@ -1,7 +1,5 @@
 """Tests for Self-Optimization Engine."""
 
-from datetime import datetime
-import pytest
 
 from src.metacognition.self_optimization import (
     ABTest,
@@ -107,7 +105,6 @@ class TestABTest:
         control = Configuration("control", "Control", {"threads": 10})
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
 
-        test = ABTest(
             test_id="test-1",
             name="Thread count test",
             control_config=control,
@@ -123,7 +120,6 @@ class TestABTest:
         control = Configuration("control", "Control", {"threads": 10})
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
 
-        test = ABTest(
             test_id="test-1",
             name="Test",
             control_config=control,
@@ -165,7 +161,6 @@ class TestABTest:
         control = Configuration("control", "Control", {"threads": 10})
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
 
-        test = ABTest(
             test_id="test-1",
             name="Test",
             control_config=control,
@@ -182,7 +177,6 @@ class TestABTest:
         control = Configuration("control", "Control", {"threads": 10})
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
 
-        test = ABTest(
             test_id="test-1",
             name="Test",
             control_config=control,
@@ -248,7 +242,6 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
-        test = engine.create_ab_test("test-1", "Thread test", treatment)
 
         assert test.test_id == "test-1"
         assert test.control_config == baseline
@@ -271,7 +264,6 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
-        test = engine.create_ab_test("test-1", "Thread test", treatment)
 
         engine.start_test("test-1")
 
@@ -287,7 +279,6 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
-        test = engine.create_ab_test("test-1", "Thread test", treatment, min_samples=5)
         engine.start_test("test-1")
 
         # Record metrics
@@ -315,7 +306,6 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
-        test = engine.create_ab_test("test-1", "Thread test", treatment, min_samples=5)
         engine.start_test("test-1")
 
         # Record sufficient metrics
@@ -344,7 +334,6 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
-        test = engine.create_ab_test("test-1", "Thread test", treatment, min_samples=5)
         engine.start_test("test-1")
 
         # Record metrics showing treatment wins
@@ -377,7 +366,6 @@ class TestSelfOptimizationEngine:
             )
 
         engine.analyze_test("test-1")
-        new_config = engine.apply_winner("test-1")
 
         # Winner should be applied
         assert engine.get_current_configuration().config_id in ["baseline", "treatment"]
@@ -390,7 +378,6 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
-        test = engine.create_ab_test("test-1", "Thread test", treatment)
 
         # Rollback
         control_config = engine.rollback("test-1")
@@ -406,7 +393,6 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
-        test = engine.create_ab_test("test-1", "Thread test", treatment, min_samples=5)
         engine.start_test("test-1")
 
         # Record and analyze

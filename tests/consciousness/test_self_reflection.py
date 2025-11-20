@@ -4,7 +4,6 @@ import json
 import tempfile
 from pathlib import Path
 
-import pytest
 
 from src.consciousness.self_reflection import (
     AdvancedSelfReflection,
@@ -326,8 +325,6 @@ class TestAdvancedSelfReflection:
             reflection.introspect("decision_making")
 
         # Evaluate quality multiple times
-        metrics1 = reflection.evaluate_self_reflection_quality()
-        metrics2 = reflection.evaluate_self_reflection_quality()
 
         # Should be stored in history
         assert len(reflection._reflection_history) == 2

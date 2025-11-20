@@ -356,7 +356,7 @@ class EmotionalIntelligence:
             tone = "supportive"
             empathy_level = 0.9
 
-        elif primary == Emotion.ANGER or primary == Emotion.ANGER:
+        elif primary == Emotion.ANGER:
             response_text = (
                 "I recognize this is frustrating. "
                 "Let me help address the issue systematically."

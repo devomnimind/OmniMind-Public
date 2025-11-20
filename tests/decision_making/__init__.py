@@ -1,6 +1,5 @@
 """Tests for decision making module initialization."""
 
-import pytest
 from src.decision_making import (
     # Decision Trees
     DecisionTree,

@@ -12,7 +12,6 @@ import hashlib
 import json
 import logging
 import os
-import platform
 import psutil
 import time
 from dataclasses import dataclass, field

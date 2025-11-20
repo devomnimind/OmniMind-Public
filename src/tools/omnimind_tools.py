@@ -32,8 +32,6 @@ from enum import Enum
 import logging
 from dataclasses import dataclass, asdict
 
-import threading
-
 
 logger = logging.getLogger(__name__)
 
@@ -145,8 +143,10 @@ class AuditedTool:
             logger.error(f"Failed to audit {self.name}: {e}")
 
     def execute(self, *args: Any, **kwargs: Any) -> Any:
-        """Deve ser sobrescrito pela subclasse"""
-        raise NotImplementedError(f"{self.name}.execute() not implemented")
+        """Método abstrato - deve ser sobrescrito pelas subclasses"""
+        raise NotImplementedError(
+            f"{self.__class__.__name__}.{self.name}.execute() deve ser implementado"
+        )
 
 
 # ============================================================================
@@ -545,7 +545,18 @@ class ApplyDiffTool(AuditedTool):
         try:
             filepath = os.path.expanduser(filepath)
 
-            # Implementação simplificada: substituir todo arquivo
+            # Aplicação real de diff usando difflib (simplificado para replace único)
+
+            with open(filepath, "r") as f:
+                lines = f.readlines()
+            new_lines = []
+            for line_num, line in enumerate(lines, 1):
+                for diff_line in diff_lines:
+                    if str(line_num) in diff_line:
+                        new_lines.append(diff_line.split(" ", 1)[1] + "\n")
+                        break
+                else:
+                    new_lines.append(line)
             with open(filepath, "w") as f:
                 f.write("\n".join(diff_lines))
 

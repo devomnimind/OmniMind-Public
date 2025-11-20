@@ -35,11 +35,11 @@ class NetworkHost:
     hostname: Optional[str] = None
     mac_address: Optional[str] = None
     os_guess: Optional[str] = None
-    open_ports: List[int] = None
-    services: List[str] = None
-    last_seen: str = None
+    open_ports: Optional[List[int]] = None
+    services: Optional[List[str]] = None
+    last_seen: Optional[str] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.open_ports is None:
             self.open_ports = []
         if self.services is None:
@@ -57,10 +57,10 @@ class NetworkAnomaly:
     description: str
     source_ip: Optional[str] = None
     destination_ip: Optional[str] = None
-    timestamp: str = None
-    details: Dict[str, Any] = None
+    timestamp: Optional[str] = None
+    details: Optional[Dict[str, Any]] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.now(timezone.utc).isoformat()
         if self.details is None:
@@ -216,15 +216,16 @@ class NetworkSensorGanglia:
                     current_host.mac_address = mac_match.group(1)
 
             # Open port
-            elif "/tcp" in line or "/udp" in line and current_host:
+            elif ("/tcp" in line or "/udp" in line) and current_host:
                 port_match = re.search(r"(\d+)/(tcp|udp)\s+open", line)
                 if port_match:
                     port = int(port_match.group(1))
-                    current_host.open_ports.append(port)
+                    if current_host.open_ports is not None:
+                        current_host.open_ports.append(port)
 
                     # Extract service name
                     service_match = re.search(r"open\s+(\S+)", line)
-                    if service_match:
+                    if service_match and current_host.services is not None:
                         current_host.services.append(service_match.group(1))
 
             # OS detection
@@ -273,13 +274,15 @@ class NetworkSensorGanglia:
                     )
                 )
                 # Establish baseline
-                self.baseline_ports[ip] = host.open_ports.copy()
+                if host.open_ports is not None:
+                    self.baseline_ports[ip] = host.open_ports.copy()
                 continue
 
             # Check for new open ports
-            baseline = set(self.baseline_ports[ip])
-            current = set(host.open_ports)
-            new_ports = current - baseline
+            if host.open_ports is not None:
+                baseline = set(self.baseline_ports[ip])
+                current = set(host.open_ports)
+                new_ports = current - baseline
 
             if new_ports:
                 # Suspicious ports (commonly used by malware)
@@ -306,15 +309,17 @@ class NetworkSensorGanglia:
                 )
 
                 # Update baseline
-                self.baseline_ports[ip] = host.open_ports.copy()
+                if host.open_ports is not None:
+                    self.baseline_ports[ip] = host.open_ports.copy()
 
             # Check for suspicious services
-            suspicious_services = {"nc", "ncat", "metasploit", "msfconsole"}
-            detected_suspicious = [
-                s
-                for s in host.services
-                if any(sus in s.lower() for sus in suspicious_services)
-            ]
+            if host.services is not None:
+                suspicious_services = {"nc", "ncat", "metasploit", "msfconsole"}
+                detected_suspicious = [
+                    s
+                    for s in host.services
+                    if any(sus in s.lower() for sus in suspicious_services)
+                ]
 
             if detected_suspicious:
                 anomalies.append(
@@ -357,15 +362,16 @@ class NetworkSensorGanglia:
         total_open_ports = 0
 
         for host in self.known_hosts.values():
-            total_open_ports += len(host.open_ports)
+            if host.open_ports is not None:
+                total_open_ports += len(host.open_ports)
 
-            # Check for suspicious ports
-            suspicious_ports = {4444, 5555, 6666, 7777, 8888, 31337}
-            if any(port in suspicious_ports for port in host.open_ports):
-                hosts_with_suspicious_ports += 1
+                # Check for suspicious ports
+                suspicious_ports = {4444, 5555, 6666, 7777, 8888, 31337}
+                if any(port in suspicious_ports for port in host.open_ports):
+                    hosts_with_suspicious_ports += 1
 
         # Calculate health score (100 = perfect, 0 = critical)
-        health_score = 100
+        health_score: float = 100.0
 
         if total_hosts > 0:
             # Penalize for suspicious ports
@@ -409,7 +415,8 @@ class NetworkSensorGanglia:
 
         # Store current state as baseline
         for host in self.known_hosts.values():
-            self.baseline_ports[host.ip] = host.open_ports.copy()
+            if host.open_ports is not None:
+                self.baseline_ports[host.ip] = host.open_ports.copy()
 
         self.audit_system.log_action(
             "network_baseline_established",

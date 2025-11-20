@@ -1,7 +1,5 @@
 """Tests for Root Cause Analysis engine."""
 
-from datetime import datetime, timedelta
-import pytest
 
 from src.metacognition.root_cause_analysis import (
     ComponentType,

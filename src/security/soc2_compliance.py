@@ -418,7 +418,7 @@ class SOC2ComplianceManager:
 
     def _get_vulnerabilities_summary(self) -> Dict[str, Any]:
         """Get summary of vulnerabilities."""
-        summary = {
+        summary: Dict[str, Any] = {
             "total": len(self.vulnerabilities),
             "by_severity": {
                 "critical": 0,

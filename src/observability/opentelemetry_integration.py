@@ -7,10 +7,7 @@ production-ready telemetry capabilities.
 Reference: Problem Statement - OpenTelemetry Integration
 """
 
-import logging
 from typing import Any, Dict, Optional
-
-import structlog
 from opentelemetry import metrics, trace
 from opentelemetry.exporter.otlp.proto.grpc.metric_exporter import OTLPMetricExporter
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
@@ -20,7 +17,7 @@ from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter
 
-logger = structlog.get_logger(__name__)
+logger = None  # structlog not available
 
 
 class OpenTelemetryConfig:

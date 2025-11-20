@@ -60,7 +60,26 @@ class QuantumOptimizer:
         Returns:
             (best_solution, best_value)
         """
-        raise NotImplementedError
+        # Default implementation: simple random search as fallback
+        import random
+
+        best_solution = [
+            random.uniform(bounds[i][0], bounds[i][1]) for i in range(self.dimension)
+        ]
+        best_value = objective(best_solution)
+        for _ in range(max_iterations):
+            candidate = [
+                random.uniform(bounds[i][0], bounds[i][1])
+                for i in range(self.dimension)
+            ]
+            value = objective(candidate)
+            if value < best_value:
+                best_value = value
+                best_solution = candidate
+        self.best_solution = best_solution
+        self.best_value = best_value
+        self.logger.info("Default optimizer complete", best_value=best_value)
+        return best_solution, best_value
 
 
 class QAOAOptimizer(QuantumOptimizer):

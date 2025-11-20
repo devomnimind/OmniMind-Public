@@ -9,13 +9,10 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
-import os
-import stat
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
 from enum import Enum
 
 from src.audit.immutable_audit import get_audit_system
@@ -93,7 +90,7 @@ class IntegrityValidator:
 
     def __init__(
         self,
-        audit_system=None,
+        audit_system: Optional[Any] = None,
         baseline_dir: Optional[str] = None,
         log_dir: Optional[str] = None,
     ):
@@ -177,7 +174,7 @@ class IntegrityValidator:
         self.logger.info(f"Creating integrity baseline for {target_path}")
 
         start_time = time.time()
-        baseline_data = {
+        baseline_data: Dict[str, Any] = {
             "created_at": datetime.now(timezone.utc).isoformat(),
             "target_path": target_path,
             "scope": scope.value,
@@ -300,11 +297,12 @@ class IntegrityValidator:
         """
         self.logger.info(f"Validating integrity for {target_path}")
 
-        start_time = time.time()
+        start_time: float = time.time()
 
         # Load baseline
         if baseline_file is None:
-            baseline_file = self._get_baseline_filename(target_path, scope)
+            baseline_file_path = self._get_baseline_filename(target_path, scope)
+            baseline_file = str(baseline_file_path)
 
         try:
             with open(baseline_file, "r", encoding="utf-8") as f:
@@ -409,7 +407,7 @@ class IntegrityValidator:
         Returns:
             List of validation reports
         """
-        reports = []
+        reports: List[Dict[str, Any]] = []
 
         try:
             for report_file in sorted(
@@ -516,16 +514,22 @@ class IntegrityValidator:
                 )
 
             if (
-                abs(record.mtime_current - record.mtime_expected) > 1
+                record.mtime_current is not None
+                and record.mtime_expected is not None
+                and abs(record.mtime_current - record.mtime_expected) > 1
             ):  # Allow 1 second tolerance
                 record.evidence.append(
                     f"Modification time changed: {record.mtime_expected} -> {record.mtime_current}"
                 )
 
             if record.permissions_current != record.permissions_expected:
-                record.evidence.append(
-                    f"Permissions changed: {oct(record.permissions_expected)} -> {oct(record.permissions_current)}"
-                )
+                if (
+                    record.permissions_expected is not None
+                    and record.permissions_current is not None
+                ):
+                    record.evidence.append(
+                        f"Permissions changed: {oct(record.permissions_expected)} -> {oct(record.permissions_current)}"
+                    )
 
             record.last_checked = datetime.now(timezone.utc).isoformat()
 

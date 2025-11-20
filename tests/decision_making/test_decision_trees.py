@@ -2,7 +2,6 @@
 Comprehensive tests for decision tree module.
 """
 
-import pytest
 from src.decision_making.decision_trees import (
     DecisionTree,
     DecisionNode,
@@ -370,7 +369,6 @@ class TestAdaptiveLearning:
 
         # Make decision and provide feedback
         outcome = tree.decide({"value": 0.7})
-        initial_confidence = outcome.confidence
 
         tree.provide_feedback(outcome, success=True)
 

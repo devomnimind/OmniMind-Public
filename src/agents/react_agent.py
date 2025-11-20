@@ -18,13 +18,6 @@ from ..integrations.supabase_adapter import SupabaseConfig
 from ..memory import EpisodicMemory
 from ..onboarding import SupabaseMemoryOnboarding
 from ..tools import FileOperations, ShellExecutor, SystemMonitor
-from .agent_protocol import (
-    AgentMessage,
-    AgentMessageBus,
-    MessageType,
-    MessagePriority,
-    get_message_bus,
-)
 
 logger = logging.getLogger(__name__)
 

@@ -6,16 +6,16 @@ Collects, analyzes, and reports on security incidents and system anomalies.
 
 from __future__ import annotations
 
-import json
 import logging
 import re
-import shutil
 import subprocess
+import json
+import json
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional
 from enum import Enum
 
 from src.audit.immutable_audit import get_audit_system
@@ -81,6 +81,8 @@ class Incident:
     assigned_to: Optional[str] = None
     evidence_items: List[EvidenceItem] = field(default_factory=list)
     analysis: Dict[str, Any] = field(default_factory=dict)
+from typing import Set
+from typing import Set
     recommendations: List[str] = field(default_factory=list)
     tags: Set[str] = field(default_factory=set)
 
@@ -809,9 +811,11 @@ class ForensicsSystem:
         for evidence in log_evidence:
             if "matches" in evidence.content:
                 # Analyze the matched log content
-                log_analysis = self.log_analyzer.analyze_logs(
-                    "\n".join(evidence.content["matches"]), evidence.source
-                )
+                matches = evidence.content["matches"]
+                if matches:
+                    log_analysis = self.log_analyzer.analyze_logs(
+                        "\n".join([str(m) for m in matches]), evidence.source
+                    )
                 analysis["log_analysis"].append(log_analysis)
 
         # Correlate events

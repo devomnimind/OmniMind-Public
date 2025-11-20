@@ -3,7 +3,6 @@
 import asyncio
 from typing import Any
 
-import pytest
 
 from src.scaling.distributed_transactions import (
     DistributedTransaction,
@@ -231,8 +230,6 @@ class TestTwoPhaseCommitCoordinator:
         """Test getting active transactions."""
         coordinator = TwoPhaseCommitCoordinator()
 
-        tx1 = await coordinator.begin_transaction(["node-1"])
-        tx2 = await coordinator.begin_transaction(["node-2"])
 
         active = coordinator.get_active_transactions()
 

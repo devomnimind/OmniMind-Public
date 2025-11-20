@@ -16,9 +16,6 @@ from __future__ import annotations
 import ast
 import logging
 from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Set
-
 logger = logging.getLogger(__name__)
 
 
@@ -321,8 +318,10 @@ class ASTParser:
             lines.append(
                 f"    def {method_name}(self{', ' + params_str if params_str else ''}){return_annotation}:"
             )
-            lines.append(f'        """TODO: Implement {method_name}"""')
-            lines.append("        pass")
+            lines.append(f'        """Implementation for {method_name} pending"""')
+            lines.append(
+                "        raise NotImplementedError(f'{method_name} not implemented')"
+            )
             lines.append("")
 
         return "\n".join(lines)
