@@ -440,7 +440,7 @@ class {model_name}(BaseModel):
         }
 
         if capabilities:
-            params["capabilities"] = capabilities
+            params["capabilities"] = "\n".join(f"    {cap}" for cap in capabilities)
 
         return self.generate_code("agent", params, output_file)
 

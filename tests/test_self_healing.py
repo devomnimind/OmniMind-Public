@@ -16,7 +16,7 @@ from src.metacognition.self_healing import (
 @pytest.mark.asyncio
 async def test_self_healing_metrics_and_remediation() -> None:
     """Test self-healing loop with metrics and remediation."""
-    metrics_log: list[dict] = []
+    metrics_log: list[dict[str, Any]] = []
     alerts: list[str] = []
 
     loop = SelfHealingLoop(
@@ -24,7 +24,7 @@ async def test_self_healing_metrics_and_remediation() -> None:
         alert_callback=alerts.append,
     )
 
-    async def monitor() -> dict:
+    async def monitor() -> dict[str, Any]:
         return {
             "status": "error",
             "type": "service_failure",
@@ -33,7 +33,7 @@ async def test_self_healing_metrics_and_remediation() -> None:
             "id": "42",
         }
 
-    async def remediation(_: dict[str, Any]) -> dict:
+    async def remediation(_: dict[str, Any]) -> dict[str, Any]:
         return {"success": True, "description": "fixed"}
 
     loop.register_monitor(monitor)

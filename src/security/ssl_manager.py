@@ -47,7 +47,7 @@ class SSLConfig:
     hsts_preload: bool = False
     cert_rotation_days: int = 30  # Rotate when less than 30 days remain
 
-    def to_dict(self) -> Dict[str, any]:
+    def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
         return {
             "cert_path": str(self.cert_path),
@@ -90,7 +90,7 @@ class CertificateInfo:
         """Check if certificate needs rotation."""
         return self.days_until_expiry <= rotation_days
 
-    def to_dict(self) -> Dict[str, any]:
+    def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
         return {
             "subject": self.subject,
@@ -370,7 +370,7 @@ class SSLManager:
             logger.error(f"Failed to check certificate rotation: {e}")
             return True  # Assume rotation needed if check fails
 
-    def get_uvicorn_ssl_config(self) -> Dict[str, any]:
+    def get_uvicorn_ssl_config(self) -> Dict[str, Any]:
         """
         Get SSL configuration for Uvicorn/FastAPI.
 
@@ -402,7 +402,7 @@ class SSLManager:
         else:
             return ssl.PROTOCOL_TLS_SERVER
 
-    def export_certificate_status(self) -> Dict[str, any]:
+    def export_certificate_status(self) -> Dict[str, Any]:
         """
         Export certificate status for monitoring.
 
