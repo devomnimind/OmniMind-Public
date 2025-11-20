@@ -11,10 +11,10 @@ import re
 import time
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Pattern, Set, Tuple
+from typing import Any, Dict, List, Optional, Pattern, Tuple
 
 import structlog
 

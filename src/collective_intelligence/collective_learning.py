@@ -11,7 +11,7 @@ License: MIT
 import time
 import uuid
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Set, Union
+from typing import Any, Dict, List, Optional, Union
 import structlog
 
 logger = structlog.get_logger(__name__)

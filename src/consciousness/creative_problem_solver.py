@@ -9,12 +9,11 @@ Implements creative thinking and novel solution generation:
 
 from __future__ import annotations
 
-import logging
 import random
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional
 
 import structlog
 

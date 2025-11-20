@@ -26,25 +26,21 @@ logger = logging.getLogger(__name__)
 class MCPClientError(Exception):
     """Base exception for MCP client errors."""
 
-    pass
 
 
 class MCPTimeoutError(MCPClientError):
     """Raised when MCP request times out."""
 
-    pass
 
 
 class MCPConnectionError(MCPClientError):
     """Raised when connection to MCP server fails."""
 
-    pass
 
 
 class MCPProtocolError(MCPClientError):
     """Raised when protocol validation fails."""
 
-    pass
 
 
 class AsyncMCPClient:

@@ -22,20 +22,8 @@ __all__ = [
 ]
 
 # IIT (Integrated Information Theory) metrics
-from src.metacognition.iit_metrics import (
-    IITAnalyzer,
-    PhiMetrics,
-    SystemState,
-)
 
 # Intelligent goal generation
-from src.metacognition.intelligent_goal_generation import (
-    CodeAnalyzer,
-    ImpactMetrics,
-    ImpactPredictor,
-    IntelligentGoalEngine,
-    RepositoryAnalysis,
-)
 
 __all__.extend(
     [

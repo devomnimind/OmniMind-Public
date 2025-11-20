@@ -9,7 +9,6 @@ Implements mental state attribution capabilities for AI consciousness:
 
 from __future__ import annotations
 
-import logging
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum

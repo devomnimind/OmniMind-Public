@@ -14,7 +14,6 @@ License: MIT
 import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 import structlog
 import random
@@ -102,7 +101,6 @@ class RLEnvironment(ABC):
     @abstractmethod
     def reset(self) -> RLState:
         """Reset environment to initial state."""
-        pass
 
     @abstractmethod
     def step(self, action: RLAction) -> Tuple[RLState, RLReward, bool]:
@@ -115,12 +113,10 @@ class RLEnvironment(ABC):
         Returns:
             Tuple of (next_state, reward, done)
         """
-        pass
 
     @abstractmethod
     def get_available_actions(self, state: RLState) -> List[RLAction]:
         """Get available actions for current state."""
-        pass
 
 
 class RLAgent(ABC):
@@ -155,12 +151,10 @@ class RLAgent(ABC):
         self, state: RLState, available_actions: List[RLAction]
     ) -> RLAction:
         """Select action for given state."""
-        pass
 
     @abstractmethod
     def update(self, transition: RLTransition) -> None:
         """Update agent based on transition."""
-        pass
 
     def decay_exploration(self, decay_rate: float = 0.995) -> None:
         """Decay exploration rate over time."""

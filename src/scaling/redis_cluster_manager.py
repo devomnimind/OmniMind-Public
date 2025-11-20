@@ -25,11 +25,9 @@ from dataclasses import dataclass
 from enum import Enum
 import logging
 import time
-import json
 
 # Redis is optional dependency for local-first operation
 try:
-    import redis
     from redis.cluster import RedisCluster
     from redis.sentinel import Sentinel
 

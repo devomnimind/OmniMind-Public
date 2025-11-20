@@ -16,7 +16,6 @@ from datetime import datetime
 from typing import Any, Deque, Dict, List, Optional, Tuple
 
 import statistics
-from typing import cast
 
 from src.scaling.multi_node import DistributedTask, NodeInfo
 

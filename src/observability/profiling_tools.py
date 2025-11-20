@@ -10,8 +10,6 @@ import json
 import time
 import cProfile
 import pstats
-import io
-from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
