@@ -129,7 +129,9 @@ class WebhookReceiver:
             config: Webhook configuration
         """
         self.config = config
-        self._handlers: Dict[WebhookEventType, List[Callable[[WebhookEvent], None]]] = {}
+        self._handlers: Dict[WebhookEventType, List[Callable[[WebhookEvent], None]]] = (
+            {}
+        )
 
         logger.info(
             "webhook_receiver_initialized",
@@ -149,7 +151,7 @@ class WebhookReceiver:
         """
 
         def decorator(
-            func: Callable[[WebhookEvent], None]
+            func: Callable[[WebhookEvent], None],
         ) -> Callable[[WebhookEvent], None]:
             if event_type not in self._handlers:
                 self._handlers[event_type] = []
@@ -373,7 +375,9 @@ class WebhookSender:
                         error=str(e),
                     )
 
-        raise WebhookError(f"Failed to send webhook after {max_retries} retries") from last_error
+        raise WebhookError(
+            f"Failed to send webhook after {max_retries} retries"
+        ) from last_error
 
     def _make_request(
         self, url: str, body: str, headers: Dict[str, str]

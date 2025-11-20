@@ -223,7 +223,9 @@ class PerformanceAnalyzer:
         bottlenecks: List[PerformanceBottleneck] = []
 
         for sample in samples:
-            percentage = (sample.cumulative_time_ms / total_time * 100) if total_time > 0 else 0
+            percentage = (
+                (sample.cumulative_time_ms / total_time * 100) if total_time > 0 else 0
+            )
 
             if percentage < min_percentage:
                 continue
@@ -371,7 +373,10 @@ class PerformanceAnalyzer:
         )
 
     def _generate_summary(
-        self, bottlenecks: List[PerformanceBottleneck], total_time: float, sample_count: int
+        self,
+        bottlenecks: List[PerformanceBottleneck],
+        total_time: float,
+        sample_count: int,
     ) -> str:
         """Generate executive summary.
 
@@ -386,8 +391,12 @@ class PerformanceAnalyzer:
         if not bottlenecks:
             return "No significant performance bottlenecks detected."
 
-        critical_count = sum(1 for b in bottlenecks if b.severity == BottleneckSeverity.CRITICAL)
-        high_count = sum(1 for b in bottlenecks if b.severity == BottleneckSeverity.HIGH)
+        critical_count = sum(
+            1 for b in bottlenecks if b.severity == BottleneckSeverity.CRITICAL
+        )
+        high_count = sum(
+            1 for b in bottlenecks if b.severity == BottleneckSeverity.HIGH
+        )
 
         top_bottleneck = bottlenecks[0]
 
@@ -422,7 +431,9 @@ class PerformanceAnalyzer:
 
         return recommendations
 
-    def save_report(self, report: PerformanceReport, filename: Optional[str] = None) -> str:
+    def save_report(
+        self, report: PerformanceReport, filename: Optional[str] = None
+    ) -> str:
         """Save performance report to file.
 
         Args:
@@ -433,7 +444,9 @@ class PerformanceAnalyzer:
             Path to saved file
         """
         if filename is None:
-            timestamp = datetime.fromtimestamp(report.timestamp).strftime("%Y%m%d_%H%M%S")
+            timestamp = datetime.fromtimestamp(report.timestamp).strftime(
+                "%Y%m%d_%H%M%S"
+            )
             filename = f"performance_report_{timestamp}.json"
 
         filepath = self._reports_dir / filename

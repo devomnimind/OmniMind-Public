@@ -171,9 +171,7 @@ class OpenTelemetryIntegration:
         # Add OTLP exporter
         try:
             otlp_exporter = OTLPSpanExporter(endpoint=self.config.otlp_endpoint)
-            self._tracer_provider.add_span_processor(
-                BatchSpanProcessor(otlp_exporter)
-            )
+            self._tracer_provider.add_span_processor(BatchSpanProcessor(otlp_exporter))
             logger.debug("otlp_span_exporter_added", endpoint=self.config.otlp_endpoint)
         except Exception as e:
             logger.warning("otlp_span_exporter_failed", error=str(e))
@@ -244,7 +242,9 @@ class OpenTelemetryIntegration:
             Tracer instance
         """
         if not self._initialized:
-            raise RuntimeError("OpenTelemetry not initialized. Call initialize() first.")
+            raise RuntimeError(
+                "OpenTelemetry not initialized. Call initialize() first."
+            )
 
         return trace.get_tracer(name)
 
@@ -258,7 +258,9 @@ class OpenTelemetryIntegration:
             Meter instance
         """
         if not self._initialized:
-            raise RuntimeError("OpenTelemetry not initialized. Call initialize() first.")
+            raise RuntimeError(
+                "OpenTelemetry not initialized. Call initialize() first."
+            )
 
         return metrics.get_meter(name)
 

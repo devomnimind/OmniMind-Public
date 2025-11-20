@@ -262,9 +262,7 @@ class EnhancedMCPClient:
             max_retries=self.retry_config.max_retries,
         )
 
-    def _execute_with_retry(
-        self, operation: Callable[[], T], operation_name: str
-    ) -> T:
+    def _execute_with_retry(self, operation: Callable[[], T], operation_name: str) -> T:
         """Execute operation with retry logic.
 
         Args:
