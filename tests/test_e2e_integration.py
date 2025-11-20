@@ -32,21 +32,17 @@ def backend_server():
     os.environ["OMNIMIND_DASHBOARD_USER"] = "test_user"
     os.environ["OMNIMIND_DASHBOARD_PASS"] = "test_pass"
 
-    # Start server in background
-    server_process = subprocess.Popen(
-        ["uvicorn", "web.backend.main:app", "--port", "8001"],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
+    # Set Qdrant configuration for tests
+    os.environ["OMNIMIND_QDRANT_URL"] = "http://localhost:6333"
+    os.environ["OMNIMIND_QDRANT_COLLECTION"] = "omnimind_memories"
+    os.environ["OMNIMIND_QDRANT_VECTOR_SIZE"] = "768"
 
-    # Wait for server to start
-    time.sleep(3)
-
-    yield "http://localhost:8001"
-
-    # Stop server
-    server_process.terminate()
-    server_process.wait()
+    # Import and create test client
+    from fastapi.testclient import TestClient
+    from web.backend.main import app
+    
+    client = TestClient(app)
+    return client
 
 
 @pytest.fixture(scope="session")
@@ -78,64 +74,50 @@ class TestAPIEndpoints:
     """Test API endpoints via direct HTTP calls."""
 
     @pytest.mark.asyncio
-    async def test_health_endpoint(self, backend_server: str):
+    async def test_health_endpoint(self, backend_server):
         """Test health endpoint is accessible."""
-        import httpx
-
-        async with httpx.AsyncClient() as client:
-            response = await client.get(f"{backend_server}/health")
-            assert response.status_code == 200
-            data = response.json()
-            assert "status" in data
-            assert data["status"] == "ok"
+        response = backend_server.get("/health")
+        assert response.status_code == 200
+        data = response.json()
+        assert "status" in data
+        assert data["status"] == "ok"
 
     @pytest.mark.asyncio
-    async def test_authenticated_endpoint(
-        self, backend_server: str, auth_credentials: Dict[str, str]
-    ):
+    async def test_authenticated_endpoint(self, backend_server, auth_credentials: Dict[str, str]):
         """Test authenticated endpoint access."""
-        import httpx
+        # Without auth - should fail
+        response = backend_server.get("/status")
+        assert response.status_code == 401
 
-        async with httpx.AsyncClient() as client:
-            # Without auth - should fail
-            response = await client.get(f"{backend_server}/status")
-            assert response.status_code == 401
+        # With auth - should succeed
+        response = backend_server.get(
+            "/status",
+            auth=(auth_credentials["username"], auth_credentials["password"]),
+        )
+        assert response.status_code == 200
 
-            # With auth - should succeed
-            response = await client.get(
-                f"{backend_server}/status",
-                auth=(auth_credentials["username"], auth_credentials["password"]),
-            )
-            assert response.status_code == 200
-
-    @pytest.mark.asyncio
-    async def test_task_orchestration_workflow(
-        self, backend_server: str, auth_credentials: Dict[str, str]
-    ):
+    def test_task_orchestration_workflow(self, backend_server, auth_credentials: Dict[str, str]):
         """Test complete task orchestration workflow."""
-        import httpx
+        auth = (auth_credentials["username"], auth_credentials["password"])
 
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            auth = (auth_credentials["username"], auth_credentials["password"])
+        # Submit task
+        task_data = {"task": "Test task", "max_iterations": 1}
+        response = backend_server.post(
+            "/tasks/orchestrate",
+            json=task_data,
+            auth=auth,
+        )
+        assert response.status_code == 200
+        result = response.json()
+        assert "task" in result
+        assert result["task"] == "Test task"
 
-            # Submit task
-            task_data = {"task": "Test task", "max_iterations": 1}
-            response = await client.post(
-                f"{backend_server}/tasks/orchestrate",
-                json=task_data,
-                auth=auth,
-            )
-            assert response.status_code == 200
-            result = response.json()
-            assert "task" in result
-            assert result["task"] == "Test task"
-
-            # Check metrics were updated
-            response = await client.get(f"{backend_server}/metrics", auth=auth)
-            assert response.status_code == 200
-            metrics = response.json()
-            assert "backend" in metrics
-            assert metrics["backend"]["requests"] > 0
+        # Check metrics were updated
+        response = backend_server.get("/metrics", auth=auth)
+        assert response.status_code == 200
+        metrics = response.json()
+        assert "backend" in metrics
+        assert metrics["backend"]["requests"] > 0
 
 
 class TestWebSocketIntegration:

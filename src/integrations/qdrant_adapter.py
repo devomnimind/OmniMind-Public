@@ -27,6 +27,21 @@ class QdrantConfig:
 
     @classmethod
     def from_env(cls) -> Optional["QdrantConfig"]:
+        # Try cloud configuration first
+        cloud_url = os.environ.get("OMNIMIND_QDRANT_CLOUD_URL")
+        if cloud_url:
+            return cls(
+                url=cloud_url,
+                api_key=os.environ.get("OMNIMIND_QDRANT_API_KEY"),
+                collection=os.environ.get("OMNIMIND_QDRANT_COLLECTION"),
+                vector_size=(
+                    int(os.environ["OMNIMIND_QDRANT_VECTOR_SIZE"])
+                    if os.environ.get("OMNIMIND_QDRANT_VECTOR_SIZE")
+                    else None
+                ),
+            )
+        
+        # Fallback to local configuration
         url = os.environ.get("OMNIMIND_QDRANT_URL")
         if not url:
             return None

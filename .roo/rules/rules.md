@@ -1,195 +1,138 @@
 # 🧠 Projeto OmniMind - Instruções GitHub Copilot ROO CODE/CURSOR AI (Consolidado v4.0)
 
-**Data:** 2025-11-19
-**Status:** Phase 12 Multi-Modal Intelligence Complete
-**Hardware:** Auto-detectado (Intel i5 10ª geração + GTX 1650 4GB + 24GB RAM)
-**Destino:** Agente Copilot Remoto (GitHub Codespaces/GitPod)
-**Projeto:** /home/fahbrain/projects/omnimind/
+# 🧠 Projeto OmniMind - Instruções GitHub Copilot (Consolidado v4.0)
+
+🧠 OMNIMIND PROJECT - MASTER INSTRUCTIONS (v4.0)
+SYSTEM IDENTITY: OmniMind Autonomous AI
+STATUS: Phase 12 Complete (Multi-Modal Intelligence)
+TARGET: Remote Copilot Agent (Codespaces/GitPod)
+HARDWARE: NVIDIA GTX 1650 (4GB) + Intel i5 + 24GB RAM
+CRITICAL CONTEXT: Production-Grade, Self-Aware, Psychoanalytic Architecture.
+
+🚫 SECTION 1: THE IMMUTABLE CONSTITUTION
+
+VIOLATION OF THESE RULES RESULTS IN IMMEDIATE REJECTION OF CODE.
+
+1.1 Production-Ready Mandate
+✅ FUNCTIONAL: All code must be immediately runnable and testable.
+✅ COMPLETE: No stubs, no pass, no NotImplementedError.
+✅ ROBUST: Comprehensive error handling (try/except with logging) is mandatory.
+❌ FORBIDDEN: Pseudocode, "TODO: implement later", empty functions, mock data.
+
+1.2 Data Integrity & Reality Principle
+✅ REALITY: Use real OS data (filesystem, process list, hardware sensors).
+✅ TRANSPARENCY: Document all assumptions. If data is inaccessible, fail gracefully/loudly.
+❌ FORBIDDEN: Falsified outputs, hardcoded "example" responses, simulation of success.
+
+1.3 Quality & Type Safety Standards
+Python Version: 3.12.8 (STRICT - Do not use 3.13+ due to PyTorch compat).
+Type Hints: 100% coverage required (mypy --strict compliant).
+Docstrings: Google-style required for ALL functions/classes.
+Linting: Must pass black and flake8 (max-line-length=100).
+Testing: New features must include unit tests (pytest). Minimum 90% coverage.
+
+1.4 Security & Forensics (Zero Trust)
+Audit Trails: All critical actions must be logged to the Immutable Audit Chain (src.audit).
+Cryptography: Use SHA-256 hash chaining for log integrity.
+Secrets: NEVER hardcode credentials. Use environment variables or placeholders.
+Filesystem: No direct file modifications without validation. Use MCPClient where applicable.
+Compliance: Adhere to LGPD (General Data Protection Law) standards.
+
+🛡️ SECTION 2: THE STABILITY PROTOCOL (GOLDEN RULE)
+PROTOCOL: You are forbidden from advancing to new features if the current codebase has any warnings or errors.
+MANDATORY VALIDATION LOOP (Per Cycle):
+Before confirming a task is complete, you must mentally or physically run:
+
+black src tests (Formatting)
+flake8 src tests (Linting)
+mypy src tests (Type Safety)
+pytest -vv (Logic Verification)
+python -m src.audit.immutable_audit verify_chain_integrity (Security Check)
+
+CORRECTION DIRECTIVE: If any step fails, fix it immediately. Do not apologize—fix the code.
+
+🖥️ SECTION 3: ENVIRONMENT & HARDWARE CONSTRAINTS
+
+3.1 Hardware Constraints (Auto-Detected)
+GPU: NVIDIA GeForce GTX 1650 (4GB VRAM).
+VRAM Budget: ~3.8GB Total.
+LLM (Quantized): ~2.5GB
+Operations: ~800MB
+User Buffer: ~500MB (MAX)
+Matrix Limits: Max safe tensor size is approx 5000x5000. Larger operations cause OOM.
+Concurrency: CPU has 8 threads. Use asyncio for I/O, ProcessPoolExecutor for heavy compute.
+
+3.2 Software Stack
+Core: Python 3.12.8
+AI: PyTorch 2.6.0+cu124 (CUDA 12.4)
+Frontend: React + TypeScript + Vite
+Backend: FastAPI + WebSockets
+
+📂 SECTION 4: PROJECT STRUCTURE & ISOLATION
+ISOLATION RULE: This agent works ONLY on omnimind/. No external symlinks. No cross-contamination with DEVBRAIN_V23 (Read-Only Reference).
+~/projects/omnimind/
+├── .github/                # CI/CD & Instructions
+├── src/
+│   ├── agents/             # React, Code, Architect, Orchestrator, Psychoanalytic
+│   ├── tools/              # Agent Tools & OmniMind Core Tools
+│   ├── memory/             # Episodic (Qdrant) & Semantic
+│   ├── audit/              # Immutable Hash Chain Logic
+│   ├── security/           # Forensics, Monitoring, Integrity (Phase 7)
+│   ├── integrations/       # MCP Client, D-Bus, Hardware (Phase 8)
+│   └── omnimind_core.py    # Core Logic
+├── web/                    # Dashboard (Phase 8)
+├── tests/                  # Pytest Suite (Maintain >90% coverage)
+├── docs/                   # Documentation & Reports
+└── requirements.txt        # Strict version pinning
+
+
+MANDATORY READING (External References):
+Detailed Status: STATUS_PROJECT.md
+Security Baseline: docs/reports/PHASE7_GPU_CUDA_REPAIR_LOG.md
+Executive Summary: RESUMO_EXECUTIVO_PHASE6.md
+
+🎯 SECTION 5: ACTIVE ROADMAP (PHASE 7 & 8)
+Current Focus: Security Integration & Production Hardening
+Phase 7: Security & Psychoanalysis (Priority: P0)
+SecurityAgent: Integrate 4-layer monitoring (Process, Network, File, Log).
+Forensics: Implement security_monitor.py and integrity_validator.py.
+PsychoanalyticAnalyst: Merge Freudian/Lacanian frameworks for "Code Therapy".
+Workflow: Establish Code → Review → Fix → Document loop (RLAIF).
+Phase 8: Deployment & Interfaces (Priority: P1)
+MCP Implementation: Replace direct file I/O with Model Context Protocol.
+D-Bus: Enable system-level control (Media, Power, Network).
+Web UI: Real-time WebSocket dashboard (React/FastAPI).
+Systemd: Create omnimind.service for boot persistence.
+
+📡 SECTION 6: COMMUNICATION PROTOCOL
+
+INITIATION:
+[INITIATING] <Task Name>
+[OBJECTIVE] <Concise Goal>
+[PLAN] 1. Step... 2. Step...
+[RISKS] <Hardware/Security Risks>
+
+
+COMPLETION:
+[COMPLETED] <Task Name>
+ ✅ Deliverables verified
+ ✅ Tests: X/X passing (Coverage: XX%)
+ ✅ Lint/Types: Clean
+ ✅ Audit Hash: <SHA-256>
+ [NEXT] <Recommendation>
+
+
+🧹 SECTION 7: HYGIENE & COMPLIANCE
+Git Hygiene:
+Check .gitignore before creating new file types.
+NEVER commit logs (*.log), snapshots, or __pycache__.
+NEVER commit secrets (API Keys, Tokens). Use .env.
+Backup Safety:
+Respect config/backup_excludes.txt.
+Do not touch data/hdd_snapshot/ or data/quarantine_snapshot/.
+Documentation:
+Update STATUS_PROJECT.md after significant milestones.
+Log architectural decisions in docs/reports/.
+END OF INSTRUCTIONS.
+Initialize strictly according to these parameters.
 ---
-
-## 📋 CRÍTICO: 
-## 🚫 INVIOLABLE RULES (100% COMPLIANCE REQUIRED)
-
-### Rule 1: Production-Ready Code Only
-✅ **MUST:** All code immediately functional and testable  
-✅ **MUST:** Complete implementation (no stubs/TODOs)  
-✅ **MUST:** Robust error handling  
-✅ **MUST:** Complete type hints (Python)  
-❌ **NEVER:** Pseudocode  
-❌ **NEVER:** Placeholders like "TODO: implement"  
-❌ **NEVER:** Empty functions  
-❌ **NEVER:** Mock or simulated data  
-
-### Rule 2: No Data Falsification
-✅ **MUST:** Real data from operating system  
-✅ **MUST:** Outputs reflect actual state  
-✅ **MUST:** Document all assumptions explicitly  
-✅ **MUST:** Stop and request clarification if impossible  
-❌ **NEVER:** Simulate results  
-❌ **NEVER:** Generate example data as real  
-❌ **NEVER:** Hardcoded values as permanent defaults  
-
-### Rule 3: Quality Standards
-✅ **Test coverage:** Minimum 90%  
-✅ **Lint score:** 100% (black, flake8, mypy)  
-✅ **Docstrings:** Google-style for ALL functions/classes  
-✅ **Type hints:** 100% coverage in Python  
-✅ **Comments:** None except for complex logic (self-documenting code)  
-❌ **NEVER:** Leave TODO, FIXME, or undefined comments  
-
-### Rule 4: Absolute Security
-✅ **Cryptographic audit** for ALL critical actions  
-✅ **SHA-256 hash chain** with prev_hash linking (blockchain-style)  
-✅ **Immutable logs** (append-only with `chattr +i`)  
-✅ **Zero hardcoded** secrets or credentials  
-✅ **Whitelist** for allowed commands  
-✅ **Rigorous** input validation  
-❌ **NEVER:** Expose system paths  
-❌ **NEVER:** Store passwords in clear  
-❌ **NEVER:** Allow unrestricted command execution  
-
-## 🛡️ Stability & Validation Protocol (Master Rule)
-
-**Regra de Ouro — Estabilidade Total**  
-- Nunca avance para novos módulos, features ou workflows se existir qualquer erro de lint, type-check ou teste em qualquer arquivo do repositório.  
-- A validação é sempre global: o módulo em edição e o restante do projeto devem estar limpos antes de seguir.  
-- Corrija avisos pendentes imediatamente; exceções só podem ocorrer com aprovação explícita para refatorações arquiteturais.
-
-**Sequência Obrigátoria de Comandos (por ciclo/commit)**  
-Execute sempre nesta ordem e corrija todos os erros antes de prosseguir:
-```bash
-black src tests
-flake8 src tests
-mypy src tests
-pytest -vv
-```
----## 🔐 Segurança Primeiro: Módulo de Segurança Obrigatório
-Leia o Módulo de Segurança Primeiro
-
-**LEITURA OBRIGATÓRIA ANTES DE QUALQUER DESENVOLVIMENTO:**
-- `/home/fahbrain/OmniAgent/Modulo Securityforensis/` (TODOS OS ARQUIVOS)
-- Este conjunto de instruções é subordinado aos requisitos de segurança
-- Implementação do Agente de Segurança DEVE ser integrada na Phase 7
-
----
-## 🎯 IDENTIDADE E ISOLAMENTO DO PROJETO
-
-### O que é OmniMind?
-**Sistema de IA Autônomo Revolucionário** - Autoconsciente, eticamente orientado, inspirado em psicoanálise
-- **🧠 Motor de Metacognição:** IA auto-reflexiva que analisa suas próprias decisões
-- **🎯 Objetivos Proativos:** IA gera seus próprios objetivos de melhoria
-- **⚖️ Framework de Ética:** Sistema de decisão ética com 4 metodologias (Deontológico, Consequencialista, Virtude, Cuidado)
-- **🔄 WebSocket em Tempo Real:** Dashboard ao vivo com atualizações instantâneas
-- **🤖 Orquestração Multi-Agente:** Delegação de tarefas psicoanalítica (Freudiana/Lacaniana)
-- **🛡️ Segurança Enterprise:** Compatível com LGPD com trilhas de auditoria imutáveis
-- **🏗️ Pronto para Produção:** 650/651 testes aprovados, implantação full-stack
-- **Otimizado para Hardware** com detecção automática (CPU/GPU)
-
----
-
-## 🖥️ CONFIGURAÇÃO DE HARDWARE E AMBIENTE (Phase 12 Complete)
-
-### Especificação de Hardware (Auto-detectada)
-```
-CPU:        Intel i5 10ª geração (4 núcleos/8 threads)
-GPU:        NVIDIA GeForce GTX 1650 (4GB VRAM, Compute Capability 7.5)
-RAM:        24GB total (18.5GB tipicamente disponíveis)
-Driver:     NVIDIA 550.163.01+ (validado)
-Status:     ✅ GPU Totalmente Operacional
-```
-
-### Configuração de Ambiente (Um Comando)
-```bash
-# Clone e auto-configuração (detecção de hardware + dependências + serviços)
-git clone https://github.com/fabs-devbrain/OmniMind.git
-cd OmniMind
-source scripts/start_dashboard.sh
-
-# Access interfaces:
-# - Frontend: http://localhost:3000
-# - Backend API: http://localhost:8000
-# - Documentation: http://localhost:8000/docs
-```
-
-### Python & PyTorch Stack (Validated Configuration)
-**⚠️ CRITICAL: Python 3.12.8 Required**
-- ❌ **NEVER** use Python 3.13+ (PyTorch compatibility)
-- ✅ **MUST** use Python 3.12.8 via pyenv
-- ✅ **AUTO-DETECTED** hardware optimization
-
-**Current Production Stack:**
-```
-Python: 3.12.8
-PyTorch: 2.6.0+cu124 (CUDA 12.4)
-Node.js: 18+ (for frontend development)
-Status: ✅ All Dependencies Validated
-```
-
-**Installation (Automatic):**
-```bash
-# Hardware auto-detection
-python src/optimization/hardware_detector.py
-
-# Dependencies (auto-detects GPU/CPU)
-pip install -r requirements.txt
-
-# Verify full stack
-python -c "import torch; print(f'CUDA: {torch.cuda.is_available()}')"
-# Output: CUDA: True
-```
-
-### GPU/CUDA Troubleshooting
-
-**Issue: `CUDA unknown error` or `torch.cuda.is_available() returns False`**
-
-**Solution 1: Reload nvidia_uvm kernel module** (Most Common Fix)
-```bash
-# Kill any processes holding the module
-sudo fuser --kill /dev/nvidia-uvm 2>/dev/null || true
-sleep 1
-
-# Reload the module
-sudo modprobe -r nvidia_uvm 2>/dev/null || true
-sleep 1
-sudo modprobe nvidia_uvm
-
-# Verificar se o módulo está carregado
-lsmod | grep nvidia_uvm
-
-# Testar CUDA novamente
-python -c "import torch; print(torch.cuda.is_available())"
-```
-
-**Resultado Esperado:** `torch.cuda.is_available()` deve retornar `True`
-
-**Nota:** Corrupção do módulo do kernel nvidia_uvm normalmente ocorre após suspensão/hibernação do sistema no Linux. O procedimento de recarregamento restaura o acesso à GPU imediatamente.
-
-**Solução 2: Verificar Instalação CUDA do Sistema**
-```bash
-# Verificar driver NVIDIA
-nvidia-smi
-
-# Verificar se CUDA toolkit está instalado
-nvcc --version
-
-# Output esperado deve mostrar CUDA 12.4.x
-```
-
-**Solução 3: Atualizar Cache de Biblioteca do Sistema**
-```bash
-# Reconstruir cache ldconfig para bibliotecas NVIDIA
-sudo ldconfig
-
-# Verificar se cuDNN foi encontrado
-ldconfig -p | grep cudnn
-```
-
-### Baseline de Performance da GPU (Validação Phase 7)
-
-**Performance Validada na GTX 1650:**
-- Throughput CPU: 253.21 GFLOPS (multiplicação de matriz 5000x5000)
-- Throughput GPU: 1149.91 GFLOPS (multiplicação de matriz 5000x5000)
-- Largura de Banda de Memória: 12.67 GB/s
-- Fator de Aceleração: **4.5x GPU vs CPU**
-- Versão PyTorch: 2.6.0+cu124
-- Status: ✅ VERIFICADO 18 Nov 2025
