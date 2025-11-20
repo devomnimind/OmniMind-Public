@@ -1,7 +1,7 @@
 """Tests for Self-Optimization Engine."""
 
-import pytest
 from datetime import datetime
+import pytest
 
 from src.metacognition.self_optimization import (
     ABTest,
@@ -248,7 +248,6 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
-
         test = engine.create_ab_test("test-1", "Thread test", treatment)
 
         assert test.test_id == "test-1"
@@ -272,6 +271,7 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
+        engine.create_ab_test("test-1", "Thread test", treatment)
 
         engine.start_test("test-1")
 
@@ -287,6 +287,7 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
+        engine.create_ab_test("test-1", "Thread test", treatment)
         engine.start_test("test-1")
 
         # Record metrics
@@ -314,6 +315,7 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
+        engine.create_ab_test("test-1", "Thread test", treatment)
         engine.start_test("test-1")
 
         # Record sufficient metrics
@@ -342,6 +344,7 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
+        engine.create_ab_test("test-1", "Thread test", treatment)
         engine.start_test("test-1")
 
         # Record metrics showing treatment wins
@@ -382,10 +385,8 @@ class TestSelfOptimizationEngine:
         """Test rolling back a test."""
         engine = SelfOptimizationEngine()
 
-        baseline = Configuration("baseline", "Baseline", {"threads": 10})
+        baseline = Configuration("baseline", "Treatment", {"threads": 10})
         engine.set_baseline_configuration(baseline)
-
-        treatment = Configuration("treatment", "Treatment", {"threads": 20})
 
         # Rollback
         control_config = engine.rollback("test-1")
@@ -401,6 +402,7 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
+        engine.create_ab_test("test-1", "Thread test", treatment)
         engine.start_test("test-1")
 
         # Record and analyze

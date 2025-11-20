@@ -1,6 +1,7 @@
 """Tests for Advanced Self-Reflection (Phase 11.4)."""
 
 import json
+import pytest
 import tempfile
 from pathlib import Path
 

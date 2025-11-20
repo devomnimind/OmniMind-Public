@@ -152,7 +152,7 @@ class TestDistributedTracing:
         config = TraceConfig(enabled=False)
         tracer = DistributedTracer(config)
 
-        with tracer.trace("operation") as span:
+        with tracer.trace("operation"):
             pass
 
         tracer.export_traces()

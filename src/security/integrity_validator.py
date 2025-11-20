@@ -14,6 +14,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple
 
 from src.audit.immutable_audit import get_audit_system
 
@@ -502,7 +503,8 @@ class IntegrityValidator:
             if record.current_hash != record.expected_hash:
                 record.status = IntegrityStatus.MODIFIED
                 record.evidence.append(
-                    f"Hash mismatch: expected {record.expected_hash[:16]}..., got {record.current_hash[:16]}..."
+                    f"Hash mismatch: expected {record.expected_hash[:16]}..., "
+                    f"got {record.current_hash[:16]}..."
                 )
             else:
                 record.status = IntegrityStatus.INTACT
@@ -528,7 +530,9 @@ class IntegrityValidator:
                     and record.permissions_current is not None
                 ):
                     record.evidence.append(
-                        f"Permissions changed: {oct(record.permissions_expected)} -> {oct(record.permissions_current)}"
+                        f"Permissions changed: "
+                        f"{oct(record.permissions_expected)} -> "
+                        f"{oct(record.permissions_current)}"
                     )
 
             record.last_checked = datetime.now(timezone.utc).isoformat()

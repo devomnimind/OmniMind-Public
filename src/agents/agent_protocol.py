@@ -12,6 +12,7 @@ Fornece infraestrutura para comunicação padronizada entre agentes:
 from __future__ import annotations
 
 import asyncio
+import logging
 import uuid
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone

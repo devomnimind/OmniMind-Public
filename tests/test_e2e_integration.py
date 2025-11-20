@@ -5,13 +5,11 @@ These tests validate the entire OmniMind system from UI to backend.
 """
 
 import asyncio
-import json
 import os
 import re
-import subprocess
 import time
 from pathlib import Path
-from typing import Any, Dict
+from typing import Dict
 
 import pytest
 
@@ -223,8 +221,6 @@ class TestPerformance:
     async def test_api_response_time(self, backend_server):
         """Test API response times are acceptable."""
         # Test health endpoint directly with TestClient
-        import time
-
         start = time.perf_counter()
         response = backend_server.get("/health")
         duration = time.perf_counter() - start
@@ -237,8 +233,6 @@ class TestPerformance:
         self, backend_server, auth_credentials: Dict[str, str]
     ):
         """Test handling of concurrent requests."""
-        import asyncio
-
         async def make_request(i: int):
             # Use TestClient directly
             response = backend_server.get(
@@ -307,7 +301,6 @@ class TestDataIntegrity:
             auth=auth,
         )
         assert response.status_code == 200
-        result1 = response.json()
 
         # Get snapshot
         response = backend_server.get("/snapshot", auth=auth)

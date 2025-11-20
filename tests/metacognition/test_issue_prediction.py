@@ -1,5 +1,7 @@
 """Tests for proactive issue prediction engine."""
 
+from datetime import datetime
+
 from src.metacognition.issue_prediction import (
     IssuePredictionEngine,
     MetricType,

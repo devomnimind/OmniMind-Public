@@ -1,5 +1,7 @@
 """Tests for Embodied Intelligence (Phase 12.4)."""
 
+import pytest
+
 from src.multimodal.embodied_intelligence import (
     Action,
     ActionPlan,
@@ -212,6 +214,7 @@ class TestEmbodiedIntelligence:
 
     def test_embodied_intelligence_initialization(self) -> None:
         """Test embodied intelligence initialization."""
+        initial_pos = Position3D(1.0, 2.0, 3.0)
         ei = EmbodiedIntelligence(initial_position=initial_pos, enable_physics=True)
 
         assert ei.current_state.position == initial_pos
@@ -347,6 +350,7 @@ class TestEmbodiedIntelligence:
 
     def test_get_current_state(self) -> None:
         """Test getting current state."""
+        initial_pos = Position3D(1.0, 2.0, 3.0)
         ei = EmbodiedIntelligence(initial_position=initial_pos)
 
         state = ei.get_current_state()

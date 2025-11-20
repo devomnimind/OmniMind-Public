@@ -5,7 +5,6 @@ Tests OpenTelemetry integration, performance analyzer, and enhanced features.
 
 import pytest
 import time
-from unittest.mock import Mock, patch
 
 from src.observability.opentelemetry_integration import (
     OpenTelemetryConfig,
@@ -212,13 +211,15 @@ class TestPerformanceAnalyzer:
         severity = analyzer._determine_severity(2.0, sample)
         assert severity == BottleneckSeverity.LOW
 
-    def test_save_report(self, tmp_path: pytest.TempPathFactory) -> None:  # type: ignore[name-defined]
+    def test_save_report(
+        self, tmp_path: pytest.TempPathFactory  # type: ignore[name-defined]
+    ) -> None:
         """Test saving performance report."""
         analyzer = PerformanceAnalyzer()
         analyzer._reports_dir = tmp_path  # type: ignore[assignment]
 
         report = analyzer.analyze([])
-        filepath = analyzer.save_report(report, "test_report.json")
+        analyzer.save_report(report, "test_report.json")
 
         assert tmp_path.joinpath("test_report.json").exists()  # type: ignore[arg-type]
 

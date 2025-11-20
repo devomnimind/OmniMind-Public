@@ -16,6 +16,7 @@ from __future__ import annotations
 import ast
 import logging
 from dataclasses import dataclass, field
+from typing import List, Optional, Set
 
 logger = logging.getLogger(__name__)
 
@@ -120,11 +121,7 @@ class ASTParser:
                 for alias in node.names:
                     structure.imports.append(
                         CodeElement(
-                            name=(
-                                f"{node.module}.{alias.name}"
-                                if node.module
-                                else alias.name
-                            ),
+                            name=(f"{node.module}.{alias.name}" if node.module else alias.name),
                             type="import",
                             line_start=node.lineno,
                             line_end=node.lineno,
@@ -210,9 +207,7 @@ class ASTParser:
         """Calcula complexidade ciclomática aproximada"""
         complexity = 1  # Base complexity
         for node in ast.walk(tree):
-            if isinstance(
-                node, (ast.If, ast.For, ast.While, ast.ExceptHandler, ast.With)
-            ):
+            if isinstance(node, (ast.If, ast.For, ast.While, ast.ExceptHandler, ast.With)):
                 complexity += 1
             elif isinstance(node, ast.BoolOp):
                 complexity += len(node.values) - 1
@@ -317,12 +312,12 @@ class ASTParser:
             return_annotation = f" -> {return_type}" if return_type else ""
 
             lines.append(
-                f"    def {method_name}(self{', ' + params_str if params_str else ''}){return_annotation}:"
+                f"    def {method_name}(self"
+                f"{', ' + params_str if params_str else ''})"
+                f"{return_annotation}:"
             )
             lines.append(f'        """Implementation for {method_name} pending"""')
-            lines.append(
-                "        raise NotImplementedError(f'{method_name} not implemented')"
-            )
+            lines.append("        raise NotImplementedError(f'{method_name} not implemented')")
             lines.append("")
 
         return "\n".join(lines)
@@ -358,7 +353,9 @@ class ASTParser:
                         for alias in node.names:
                             if alias.name in dangerous_modules:
                                 warnings.append(
-                                    f"Line {node.lineno}: Potentially dangerous import: {alias.name}"
+                                    f"Line {node.lineno}: "
+                                    f"Potentially dangerous import: "
+                                    f"{alias.name}"
                                 )
 
         except Exception as exc:

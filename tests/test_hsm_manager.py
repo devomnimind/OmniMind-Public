@@ -1,7 +1,7 @@
 """Tests for HSM Manager"""
 
 import pytest
-from src.security.hsm_manager import HSMManager, KeyMetadata
+from src.security.hsm_manager import HSMManager
 
 
 class TestHSMManager:

@@ -7,7 +7,6 @@ import json
 import pytest
 import time
 from unittest.mock import Mock, patch, MagicMock
-from urllib.error import HTTPError, URLError
 
 from src.integrations.mcp_client_enhanced import (
     EnhancedMCPClient,

@@ -1,6 +1,5 @@
 """Tests for GDPR compliance framework"""
 
-import pytest
 from datetime import datetime, timedelta, timezone
 
 from src.compliance.gdpr_compliance import (
@@ -100,7 +99,6 @@ class TestGDPRCompliance:
     def test_data_processing_without_consent(self) -> None:
         """Test data processing without consent fails"""
         controller = GDPRController()
-        subject = controller.register_data_subject("user123")
 
         # Try to process data without consent
         result = controller.process_data(

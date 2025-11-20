@@ -6,8 +6,7 @@ Testa funcionalidades de parsing e análise de código Python.
 """
 
 import pytest
-from pathlib import Path
-from src.tools.ast_parser import ASTParser, CodeElement, CodeStructure
+from src.tools.ast_parser import ASTParser
 
 
 class TestASTParser:
