@@ -122,9 +122,11 @@ class ASTParser:
                 for alias in node.names:
                     structure.imports.append(
                         CodeElement(
-                            name=f"{node.module}.{alias.name}"
-                            if node.module
-                            else alias.name,
+                            name=(
+                                f"{node.module}.{alias.name}"
+                                if node.module
+                                else alias.name
+                            ),
                             type="import",
                             line_start=node.lineno,
                             line_end=node.lineno,
@@ -312,9 +314,13 @@ class ASTParser:
 
         for method_name, params, return_type in methods:
             params_str = ", ".join(params)
+            if params_str:
+                params_str = f"{params_str}"
             return_annotation = f" -> {return_type}" if return_type else ""
 
-            lines.append(f"    def {method_name}(self, {params_str}){return_annotation}:")
+            lines.append(
+                f"    def {method_name}(self{', ' + params_str if params_str else ''}){return_annotation}:"
+            )
             lines.append(f'        """TODO: Implement {method_name}"""')
             lines.append("        pass")
             lines.append("")

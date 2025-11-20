@@ -110,9 +110,7 @@ def main():
             ("set_age", ["age: int"], "None"),
         ]
 
-        skeleton = parser.generate_skeleton(
-            "Person", methods, "Person class"
-        )
+        skeleton = parser.generate_skeleton("Person", methods, "Person class")
 
         assert "class Person:" in skeleton
         assert "Person class" in skeleton

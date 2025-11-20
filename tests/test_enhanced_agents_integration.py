@@ -53,7 +53,8 @@ system:
         """Testa integração do CodeAgent com AST parser"""
         # Criar arquivo Python de teste
         test_file = tmp_path / "test_code.py"
-        test_file.write_text("""
+        test_file.write_text(
+            """
 import os
 from typing import List
 
@@ -65,7 +66,8 @@ class Calculator:
     '''Simple calculator'''
     def add(self, x: int, y: int) -> int:
         return x + y
-""")
+"""
+        )
 
         # Analisar estrutura
         result = code_agent.analyze_code_structure(str(test_file))
@@ -218,9 +220,7 @@ class TestAgentCommunicationIntegration:
         yield bus
         await bus.stop()
 
-    async def test_code_agent_communication(
-        self, message_bus, tmp_path: Path
-    ) -> None:
+    async def test_code_agent_communication(self, message_bus, tmp_path: Path) -> None:
         """Testa comunicação do CodeAgent"""
         config_file = tmp_path / "config.yaml"
         config_content = """
@@ -260,9 +260,7 @@ system:
         assert received.message_type == MessageType.REQUEST
         assert received.payload["action"] == "analyze"
 
-    async def test_multi_agent_coordination(
-        self, message_bus, tmp_path: Path
-    ) -> None:
+    async def test_multi_agent_coordination(self, message_bus, tmp_path: Path) -> None:
         """Testa coordenação entre múltiplos agentes"""
         config_file = tmp_path / "config.yaml"
         config_content = """

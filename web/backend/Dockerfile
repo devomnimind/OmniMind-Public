@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     make \
     && rm -rf /var/lib/apt/lists/*
 
+# Copy third_party for local dependencies
+COPY third_party ./third_party
+
 # Copy requirements and install to user directory
 COPY requirements.txt .
 RUN pip install --no-cache-dir --user --upgrade pip && \

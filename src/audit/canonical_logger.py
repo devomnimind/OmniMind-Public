@@ -29,7 +29,7 @@ class CanonicalLogger:
         if not self.json_file.exists():
             self._initialize_files()
 
-    def _initialize_files(self):
+    def _initialize_files(self) -> None:
         """Initialize canonical log files."""
         initial_data = {
             "metadata": {
@@ -96,7 +96,7 @@ class CanonicalLogger:
         description: str,
         details: str = "",
         impact: str = "",
-        automatic_actions: List[str] = None,
+        automatic_actions: Optional[List[str]] = None,
     ) -> str:
         """Log an action with integrity hash."""
 
@@ -147,15 +147,17 @@ class CanonicalLogger:
         logger.info(f"Action logged: {ai_agent} {action_type} {target} -> {result}")
         return content_hash
 
-    def _update_md_file(self, record: Dict[str, Any]):
+    def _update_md_file(self, record: Dict[str, Any]) -> None:
         """Update the MD file with new record."""
-        md_entry = f"""
-### [{record['timestamp'][:19]}] {record['ai_agent']} {record['action_type']} {record['target']} {record['result']} {record['hash'][:16]}...
-**Descrição**: {record['description']}
-**Detalhes**: {record['details']}
-**Impacto**: {record['impact']}
-**Ações Automáticas**: {', '.join(record['automatic_actions'])}
-"""
+        md_entry = (
+            f"### [{record['timestamp'][:19]}] {record['ai_agent']} "
+            f"{record['action_type']} {record['target']} {record['result']} "
+            f"{record['hash'][:16]}...\n"
+            f"**Descrição**: {record['description']}\n"
+            f"**Detalhes**: {record['details']}\n"
+            f"**Impacto**: {record['impact']}\n"
+            f"**Ações Automáticas**: {', '.join(record['automatic_actions'])}"
+        )
 
         # Read current content
         with open(self.md_file, "r", encoding="utf-8") as f:
@@ -181,7 +183,10 @@ class CanonicalLogger:
         )
 
         for record in data["action_log"]:
-            record_content = f"{record['timestamp']}{record['ai_agent']}{record['action_type']}{record['target']}{record['result']}{record['description']}"
+            record_content = (
+                f"{record['timestamp']}{record['ai_agent']}{record['action_type']}"
+                f"{record['target']}{record['result']}{record['description']}"
+            )
             calculated_hash = hashlib.sha256(
                 (expected_hash + record_content).encode()
             ).hexdigest()
@@ -197,10 +202,10 @@ class CanonicalLogger:
     def get_metrics(self) -> Dict[str, Any]:
         """Get current system metrics."""
         with open(self.json_file, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        return data["current_metrics"]
+            data: Dict[str, Any] = json.load(f)
+        return data["current_metrics"]  # type: ignore
 
-    def update_metrics(self, metrics: Dict[str, Any]):
+    def update_metrics(self, metrics: Dict[str, Any]) -> None:
         """Update system metrics."""
         with open(self.json_file, "r", encoding="utf-8") as f:
             data = json.load(f)

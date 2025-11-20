@@ -100,7 +100,7 @@ class ReactAgent:
         # Expose attributes for type checking and testing
         self.mode: str = "react"
         self.tools: List[Any] = [self.file_ops, self.shell, self.monitor]
-        
+
         # Agent communication
         self.agent_id = f"{self.mode}_agent_{id(self)}"
         self.message_bus = get_message_bus()

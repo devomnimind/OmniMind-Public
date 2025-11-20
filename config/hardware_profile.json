@@ -1,17 +1,23 @@
-{
-  "cpu_cores_physical": 1,
-  "cpu_cores_logical": 2,
-  "cpu_freq_mhz": 3506.2035,
-  "cpu_architecture": "x86_64",
-  "ram_total_gb": 7.757110595703125,
-  "ram_available_gb": 6.320716857910156,
-  "swap_total_gb": 2.9999961853027344,
-  "gpu_available": false,
-  "os_system": "Linux",
-  "os_release": "6.11.0-1018-azure",
-  "machine_type": "x86_64",
-  "gpu_name": null,
-  "gpu_vram_gb": null,
-  "gpu_compute_capability": null,
-  "detected_at": "2025-11-19T05:58:40.770266"
+🔍 Detecting hardware capabilities...
+
+📊 Hardware Profile:
+  CPU: 4c/8t @ 2500 MHz
+  RAM: 11.7 GB available / 23.2 GB total
+  GPU: NVIDIA GeForce GTX 1650 (3.8 GB VRAM)
+  Compute Capability: 7.5
+
+⚙️  Optimization Config:
+  Device: cuda
+  LLM Batch Size: 8
+  Embedding Batch Size: 64
+  Max Tensor Size: 5000
+  Workers: 3
+  Vector DB: chromadb
+  Cache: fakeredis
+  Database: sqlite
+  Quantization: False (16-bit)
+
+✅ Configuration saved to config/
+ty": "7.5",
+  "detected_at": "2025-11-20T12:18:14.420760"
 }

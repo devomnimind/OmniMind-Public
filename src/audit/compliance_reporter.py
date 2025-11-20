@@ -9,7 +9,7 @@ Based on: docs/Omni-Dev-Integrationforensis.md (LGPD Compliance section)
 import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set, cast
 from enum import Enum
 
 from .immutable_audit import ImmutableAuditSystem
@@ -112,9 +112,10 @@ class ComplianceReporter:
         )
 
         # Calculate overall compliance score
-        total_checks = len(report["compliance_checks"])
+        compliance_checks = cast(Dict[str, Dict[str, Any]], report["compliance_checks"])
+        total_checks = len(compliance_checks)
         passed_checks = sum(
-            1 for check in report["compliance_checks"].values() if check["compliant"]
+            1 for check in compliance_checks.values() if check["compliant"]
         )
         report["summary"] = {
             "total_checks": total_checks,
@@ -205,12 +206,11 @@ class ComplianceReporter:
             start_date, end_date
         )
 
-        # Calculate compliance score
-        total_checks = len(report["compliance_checks"])
+        # Calculate overall compliance score
+        compliance_checks = cast(Dict[str, Dict[str, Any]], report["compliance_checks"])
+        total_checks = len(compliance_checks)
         passed_checks = sum(
-            1
-            for check in report["compliance_checks"].values()
-            if check["compliant"]  # type: ignore
+            1 for check in compliance_checks.values() if check["compliant"]
         )
         report["summary"] = {
             "total_checks": total_checks,
