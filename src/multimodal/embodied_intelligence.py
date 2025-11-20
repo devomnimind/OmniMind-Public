@@ -73,7 +73,7 @@ class Position3D:
         dx = self.x - other.x
         dy = self.y - other.y
         dz = self.z - other.z
-        return (dx**2 + dy**2 + dz**2) ** 0.5
+        return float((dx**2 + dy**2 + dz**2) ** 0.5)
 
     def __str__(self) -> str:
         """String representation."""

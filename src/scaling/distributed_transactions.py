@@ -16,7 +16,7 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
-from typing import Any, Callable, Dict, List, Optional, Set
+from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -121,9 +121,9 @@ class TwoPhaseCommitCoordinator:
     def __init__(self) -> None:
         """Initialize coordinator."""
         self._transactions: Dict[str, DistributedTransaction] = {}
-        self._prepare_handlers: Dict[str, Callable] = {}
-        self._commit_handlers: Dict[str, Callable] = {}
-        self._abort_handlers: Dict[str, Callable] = {}
+        self._prepare_handlers: Dict[str, Callable[[str, Dict[str, Any]], bool]] = {}
+        self._commit_handlers: Dict[str, Callable[[str], bool]] = {}
+        self._abort_handlers: Dict[str, Callable[[str], None]] = {}
 
     def register_node_handlers(
         self,
@@ -274,7 +274,7 @@ class TwoPhaseCommitCoordinator:
             participant.state = ParticipantState.PREPARING
             
             handler = self._prepare_handlers[participant.node_id]
-            success = await asyncio.wait_for(
+            success: bool = await asyncio.wait_for(
                 handler(transaction.transaction_id, transaction.data),
                 timeout=10.0,
             )
@@ -305,7 +305,7 @@ class TwoPhaseCommitCoordinator:
         """Commit a participant."""
         try:
             handler = self._commit_handlers[participant.node_id]
-            success = await asyncio.wait_for(
+            success: bool = await asyncio.wait_for(
                 handler(transaction.transaction_id),
                 timeout=10.0,
             )
@@ -406,7 +406,7 @@ class SagaCoordinator:
     def create_saga(
         self,
         saga_id: str,
-        steps: List[Tuple[Callable, Callable]],
+        steps: List[Tuple[Callable[[], Any], Callable[[], Any]]],
     ) -> None:
         """Create a new saga.
 
@@ -418,8 +418,8 @@ class SagaCoordinator:
         for i, (action, compensation) in enumerate(steps):
             step = SagaStep(
                 step_id=f"{saga_id}-step-{i}",
-                action=action,
-                compensation=compensation,
+                action=lambda data, act=action: act(data),  # type: ignore
+                compensation=lambda data, comp=compensation: comp(data) if comp else None,  # type: ignore
             )
             saga_steps.append(step)
 

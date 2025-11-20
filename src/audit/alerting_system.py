@@ -113,10 +113,10 @@ class AlertingSystem:
 
         self.alerts_file = self.alerts_dir / "alerts.jsonl"
         self.active_alerts: Dict[str, Alert] = {}
-        self.subscribers: Set[Callable] = set()
+        self.subscribers: Set[Callable[[Alert], None]] = set()
 
         # Alert statistics
-        self.stats = {
+        self.stats: Dict[str, Any] = {
             "total_alerts": 0,
             "by_severity": {severity.value: 0 for severity in AlertSeverity},
             "by_category": {category.value: 0 for category in AlertCategory},
@@ -328,7 +328,7 @@ class AlertingSystem:
         Returns:
             List of historical alerts
         """
-        alerts = []
+        alerts: List[Alert] = []
 
         if not self.alerts_file.exists():
             return alerts

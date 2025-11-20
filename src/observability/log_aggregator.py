@@ -111,9 +111,9 @@ class LogPattern:
     severity: AlertSeverity
     description: str
     action: Optional[str] = None
-    _compiled: Optional[Pattern] = field(default=None, init=False, repr=False)
+    _compiled: Optional[Pattern[str]] = field(default=None, init=False, repr=False)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Compile the regex pattern."""
         self._compiled = re.compile(self.regex, re.IGNORECASE)
 

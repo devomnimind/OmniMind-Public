@@ -184,7 +184,7 @@ class ClusterCoordinator:
         self.heartbeat_timeout = heartbeat_timeout
         self._task_callbacks: Dict[str, Callable[[DistributedTask], Any]] = {}
         self._running = False
-        self._heartbeat_task: Optional[asyncio.Task] = None
+        self._heartbeat_task: Optional[asyncio.Task[None]] = None
 
     def register_node(self, node: NodeInfo) -> None:
         """Register a new node in the cluster."""

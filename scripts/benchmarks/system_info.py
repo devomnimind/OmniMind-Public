@@ -1,7 +1,7 @@
 import json
 import os
 import platform
-from datetime import datetime
+from datetime import datetime, UTC
 
 import psutil
 
@@ -11,7 +11,7 @@ def gather_system_info() -> dict:
     boot = datetime.fromtimestamp(psutil.boot_time()).isoformat()
     cpu_freq = psutil.cpu_freq()
     return {
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(UTC).isoformat(),
         "os": {
             "system": uname.system,
             "node": uname.node,

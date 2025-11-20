@@ -54,9 +54,9 @@ class DistributedSolution:
 
 
 class TaskDecomposer:
-    """Decomposes problems into distributable subtasks."""
+    """Decomposes problems into distributable subtasks.    """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize task decomposer."""
         self.logger = logger.bind(component="task_decomposer")
 
@@ -258,7 +258,7 @@ class DistributedSolver:
             consensus_protocol: Protocol for reaching consensus
         """
         self.num_agents = num_agents
-        self.decomposer = TaskDecomposer()
+        self.decomposer: TaskDecomposer = TaskDecomposer()
         self.aggregator = SolutionAggregator(consensus_protocol)
         self.logger = logger.bind(
             num_agents=num_agents,

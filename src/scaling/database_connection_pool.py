@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, TypeVar
+from typing import Any, Callable, Dict, Generator, List, Optional, TypeVar
 from contextlib import contextmanager
 
 import structlog
@@ -241,7 +241,7 @@ class DatabaseConnectionPool:
             logger.error("connection_close_failed", error=str(e))
 
     @contextmanager
-    def get_connection(self):
+    def get_connection(self) -> Generator[Any, None, None]:
         """Get a connection from the pool.
 
         Yields:
@@ -338,7 +338,8 @@ class DatabaseConnectionPool:
         """
         try:
             # In production, execute a simple query like "SELECT 1"
-            return conn.ping()
+            result = conn.ping()
+            return bool(result)
         except Exception as e:
             logger.warning("connection_ping_failed", error=str(e))
             return False

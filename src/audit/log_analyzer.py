@@ -68,7 +68,7 @@ class AuditLogAnalyzer:
         Returns:
             List of matching audit events
         """
-        events = []
+        events: List[Dict[str, Any]] = []
         filter = filter or QueryFilter()
 
         if not self.audit_system.audit_log_file.exists():
@@ -153,8 +153,8 @@ class AuditLogAnalyzer:
         events = self.query(QueryFilter(start_date=cutoff_time))
 
         # Analyze patterns
-        action_frequency = Counter()
-        category_frequency = Counter()
+        action_frequency: Counter[str] = Counter()
+        category_frequency: Counter[str] = Counter()
         action_sequences = []
         user_actions = defaultdict(list)
 
@@ -210,7 +210,7 @@ class AuditLogAnalyzer:
 
         # Simple n-gram detection
         for length in range(min_length, min(6, n + 1)):
-            sequence_counts = Counter()
+            sequence_counts: Counter[tuple[Any, ...]] = Counter()
 
             for i in range(n - length + 1):
                 sequence = tuple(actions[i : i + length])
@@ -227,7 +227,7 @@ class AuditLogAnalyzer:
                         }
                     )
 
-        return sorted(sequences, key=lambda x: x["count"], reverse=True)[:10]
+        return sorted(sequences, key=lambda x: x["count"], reverse=True)[:10]  # type: ignore
 
     def _detect_anomalies(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Detect anomalous patterns in events."""
@@ -329,7 +329,7 @@ class AuditLogAnalyzer:
         category_counts = Counter(e.get("category") for e in events)
 
         # Time distribution
-        time_distribution = defaultdict(int)
+        time_distribution: Dict[int, int] = defaultdict(int)
         for event in events:
             try:
                 timestamp = datetime.fromisoformat(event.get("datetime_utc", ""))
@@ -339,7 +339,7 @@ class AuditLogAnalyzer:
                 pass
 
         # Day of week distribution
-        day_distribution = defaultdict(int)
+        day_distribution: Dict[str, int] = defaultdict(int)
         for event in events:
             try:
                 timestamp = datetime.fromisoformat(event.get("datetime_utc", ""))

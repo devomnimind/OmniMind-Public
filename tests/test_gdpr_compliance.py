@@ -1,7 +1,7 @@
 """Tests for GDPR compliance framework"""
 
 import pytest
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from src.compliance.gdpr_compliance import (
     GDPRController,
@@ -86,7 +86,7 @@ class TestGDPRCompliance:
             "user123",
             DataProcessingPurpose.LEGITIMATE_INTERESTS,
             [DataCategory.BEHAVIORAL],
-            {"action": "page_view", "timestamp": datetime.utcnow().isoformat()},
+            {"action": "page_view", "timestamp": datetime.now(timezone.utc).isoformat()},
             "OmniMind Analytics",
         )
 
@@ -171,9 +171,7 @@ class TestGDPRCompliance:
         )
 
         # Manually expire the consent by setting old date
-        import datetime
-
-        old_date = datetime.datetime.utcnow() - datetime.timedelta(hours=25)
+        old_date = datetime.now(timezone.utc) - timedelta(hours=25)
         subject.consents[list(subject.consents.keys())[0]][
             "expires_at"
         ] = old_date.isoformat()

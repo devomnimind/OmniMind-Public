@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Deque, Dict, List, Optional, Set
 from collections import deque
 
 import structlog
@@ -228,7 +228,7 @@ class GPUResourcePool:
         self.config = config
         self._gpus: Dict[int, GPUDevice] = {}
         self._tasks: Dict[str, GPUTask] = {}
-        self._task_queue: deque = deque()
+        self._task_queue: Deque[GPUTask] = deque()
 
         if config.auto_discover_gpus:
             self._discover_gpus()

@@ -444,7 +444,7 @@ class EthicalDecisionMaker:
         if len(option_scores) < 2:
             return 1.0
 
-        scores = [s["total_score"] for s in option_scores.values()]
+        scores = [float(s["total_score"]) for s in option_scores.values()]
         max_score = max(scores)
         second_max = sorted(scores, reverse=True)[1]
 

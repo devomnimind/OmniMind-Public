@@ -8,7 +8,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
@@ -62,8 +62,8 @@ class DataSubject:
     def __init__(self, subject_id: str, email: Optional[str] = None):
         self.subject_id = subject_id
         self.email = email
-        self.created_at = datetime.utcnow()
-        self.last_activity = datetime.utcnow()
+        self.created_at = datetime.now(UTC)
+        self.last_activity = datetime.now(UTC)
         self.consents: Dict[str, Dict[str, Any]] = {}
         self.data_processing_records: List[Dict[str, Any]] = []
         self.rights_requests: List[Dict[str, Any]] = []
@@ -72,7 +72,7 @@ class DataSubject:
                      retention_period: RetentionPeriod) -> str:
         """Grant consent for data processing"""
         consent_id = hashlib.sha256(
-            f"{self.subject_id}:{purpose}:{datetime.utcnow().isoformat()}".encode()
+            f"{self.subject_id}:{purpose}:{datetime.now(UTC).isoformat()}".encode()
         ).hexdigest()[:16]
 
         self.consents[consent_id] = {
@@ -80,8 +80,8 @@ class DataSubject:
             "data_categories": [cat.value for cat in data_categories],
             "retention_period": retention_period.value.total_seconds() if retention_period.value else None,
             "status": ConsentStatus.GRANTED.value,
-            "granted_at": datetime.utcnow().isoformat(),
-            "expires_at": (datetime.utcnow() + retention_period.value).isoformat() if retention_period.value else None
+            "granted_at": datetime.now(UTC).isoformat(),
+            "expires_at": (datetime.now(UTC) + retention_period.value).isoformat() if retention_period.value else None
         }
 
         logger.info("Consent granted", subject_id=self.subject_id, consent_id=consent_id, purpose=purpose)
@@ -91,7 +91,7 @@ class DataSubject:
         """Withdraw consent for data processing"""
         if consent_id in self.consents:
             self.consents[consent_id]["status"] = ConsentStatus.WITHDRAWN.value
-            self.consents[consent_id]["withdrawn_at"] = datetime.utcnow().isoformat()
+            self.consents[consent_id]["withdrawn_at"] = datetime.now(UTC).isoformat()
             logger.info("Consent withdrawn", subject_id=self.subject_id, consent_id=consent_id)
             return True
         return False
@@ -106,7 +106,7 @@ class DataSubject:
                 # Check if consent hasn't expired
                 if consent.get("expires_at"):
                     expires_at = datetime.fromisoformat(consent["expires_at"])
-                    if datetime.utcnow() > expires_at:
+                    if datetime.now(UTC) > expires_at:
                         consent["status"] = ConsentStatus.EXPIRED.value
                         continue
 
@@ -120,14 +120,14 @@ class DataProcessingRecord:
     def __init__(self, subject_id: str, purpose: DataProcessingPurpose,
                  data_categories: List[DataCategory], data_controller: str):
         self.record_id = hashlib.sha256(
-            f"{subject_id}:{purpose.value}:{datetime.utcnow().isoformat()}".encode()
+            f"{subject_id}:{purpose.value}:{datetime.now(UTC).isoformat()}".encode()
         ).hexdigest()[:16]
 
         self.subject_id = subject_id
         self.purpose = purpose
         self.data_categories = data_categories
         self.data_controller = data_controller
-        self.timestamp = datetime.utcnow()
+        self.timestamp = datetime.now(UTC)
         self.processed_data_hash = None  # Will be set when data is processed
 
     def record_processing(self, data_hash: str) -> None:
@@ -208,10 +208,10 @@ class GDPRController:
             return {"status": "error", "message": "Data subject not found"}
 
         rights_request = {
-            "request_id": hashlib.sha256(f"{subject_id}:{right}:{datetime.utcnow().isoformat()}".encode()).hexdigest()[:16],
+            "request_id": hashlib.sha256(f"{subject_id}:{right}:{datetime.now(UTC).isoformat()}".encode()).hexdigest()[:16],
             "subject_id": subject_id,
             "right": right,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "status": "processing"
         }
 
@@ -298,7 +298,7 @@ class GDPRController:
             "email": subject.email,
             "consents": subject.consents,
             "processing_records": subject.data_processing_records,
-            "export_timestamp": datetime.utcnow().isoformat()
+            "export_timestamp": datetime.now(UTC).isoformat()
         }
 
         logger.info("Data portability export completed", subject_id=subject.subject_id)
@@ -319,7 +319,7 @@ class GDPRController:
     def enforce_data_retention(self) -> int:
         """Enforce data retention policies - return number of records cleaned"""
         cleaned_count = 0
-        current_time = datetime.utcnow()
+        current_time = datetime.now(UTC)
 
         for subject in self.data_subjects.values():
             # Clean expired consents
@@ -363,7 +363,7 @@ class GDPRController:
                     consent_stats[status] += 1
 
         return {
-            "report_date": datetime.utcnow().isoformat(),
+            "report_date": datetime.now(UTC).isoformat(),
             "gdpr_version": "GDPR 2018",
             "data_controller": "DevBrain Systems",
             "statistics": {
@@ -373,7 +373,7 @@ class GDPRController:
                 "consent_status_breakdown": consent_stats
             },
             "compliance_status": "compliant" if total_subjects > 0 else "not_applicable",
-            "last_retention_enforcement": datetime.utcnow().isoformat()
+            "last_retention_enforcement": datetime.now(UTC).isoformat()
         }
 
 

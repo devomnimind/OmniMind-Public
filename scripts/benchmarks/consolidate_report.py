@@ -1,6 +1,6 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, UTC
 
 BENCHMARK_FILES = {
     "system": "docs/reports/hardware_audit.json",
@@ -20,7 +20,7 @@ def load_json(path: str) -> dict:
 
 def create_markdown(report: dict) -> str:
     md = ["# Hardware Benchmark Report — OmniMind", ""]
-    md.append(f"Data: {datetime.utcnow().isoformat()}")
+    md.append(f"Data: {datetime.now(UTC).isoformat()}")
     md.append("")
     system = report.get("system_info", {})
     cpu = system.get("cpu", {})

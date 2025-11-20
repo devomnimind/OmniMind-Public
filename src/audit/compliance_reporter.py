@@ -9,7 +9,7 @@ Based on: docs/Omni-Dev-Integrationforensis.md (LGPD Compliance section)
 import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set
 from enum import Enum
 
 from .immutable_audit import ImmutableAuditSystem
@@ -68,7 +68,7 @@ class ComplianceReporter:
         if start_date is None:
             start_date = end_date - timedelta(days=30)
 
-        report = {
+        report: Dict[str, Any] = {
             "standard": "LGPD",
             "report_id": f"lgpd_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}",
             "period": {
@@ -183,32 +183,32 @@ class ComplianceReporter:
         }
 
         # GDPR compliance checks (similar structure to LGPD)
-        report["compliance_checks"]["lawfulness"] = self._check_gdpr_lawfulness(
+        report["compliance_checks"]["lawfulness"] = self._check_gdpr_lawfulness(  # type: ignore
             start_date, end_date
         )
-        report["compliance_checks"]["purpose_limitation"] = (
+        report["compliance_checks"]["purpose_limitation"] = (  # type: ignore
             self._check_purpose_limitation(start_date, end_date)
         )
-        report["compliance_checks"]["data_minimization"] = (
+        report["compliance_checks"]["data_minimization"] = (  # type: ignore
             self._check_data_minimization(start_date, end_date)
         )
-        report["compliance_checks"]["accuracy"] = self._check_data_accuracy(
+        report["compliance_checks"]["accuracy"] = self._check_data_accuracy(  # type: ignore
             start_date, end_date
         )
-        report["compliance_checks"]["storage_limitation"] = (
+        report["compliance_checks"]["storage_limitation"] = (  # type: ignore
             self._check_retention_policy(start_date, end_date)
         )
-        report["compliance_checks"]["security"] = self._check_security_measures(
+        report["compliance_checks"]["security"] = self._check_security_measures(  # type: ignore
             start_date, end_date
         )
-        report["compliance_checks"]["accountability"] = self._check_accountability(
+        report["compliance_checks"]["accountability"] = self._check_accountability(  # type: ignore
             start_date, end_date
         )
 
         # Calculate compliance score
         total_checks = len(report["compliance_checks"])
         passed_checks = sum(
-            1 for check in report["compliance_checks"].values() if check["compliant"]
+            1 for check in report["compliance_checks"].values() if check["compliant"]  # type: ignore
         )
         report["summary"] = {
             "total_checks": total_checks,
@@ -229,7 +229,7 @@ class ComplianceReporter:
             {
                 "standard": "GDPR",
                 "report_id": report["report_id"],
-                "compliance_score": report["summary"]["compliance_score"],
+                "compliance_score": report["summary"]["compliance_score"],  # type: ignore
             },
             category="compliance",
         )
@@ -420,7 +420,7 @@ class ComplianceReporter:
         self, start_date: datetime, end_date: datetime
     ) -> List[Dict[str, Any]]:
         """Get audit events within date range."""
-        events = []
+        events: List[Dict[str, Any]] = []
 
         if not self.audit_system.audit_log_file.exists():
             return events
@@ -464,7 +464,7 @@ class ComplianceReporter:
 
         with open(file_path, "w", newline="") as f:
             # Get all unique keys from events
-            fieldnames = set()
+            fieldnames: Set[str] = set()
             for event in events:
                 fieldnames.update(event.keys())
 

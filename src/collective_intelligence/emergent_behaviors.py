@@ -60,7 +60,7 @@ class EmergenceDetector:
     - Complexity metrics
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize emergence detector."""
         self.detected_patterns: List[EmergentPattern] = []
         self.logger = logger.bind(component="emergence_detector")
@@ -210,7 +210,7 @@ class SelfOrganization:
     - Adaptive behavior
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize self-organizing system."""
         self.rules: List[BehaviorRule] = []
         self.agent_states: Dict[str, Dict[str, Any]] = {}

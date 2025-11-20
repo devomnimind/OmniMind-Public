@@ -531,7 +531,7 @@ class MultiLevelCache:
         self,
         ttl_seconds: Optional[int] = None,
         level: CacheLevel = CacheLevel.L1,
-    ) -> Callable:
+    ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
         """Decorator for caching function results.
 
         Args:
@@ -541,7 +541,7 @@ class MultiLevelCache:
         Returns:
             Decorator function
         """
-        def decorator(func: Callable) -> Callable:
+        def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
             def wrapper(*args: Any, **kwargs: Any) -> Any:
                 # Create cache key from function name and arguments
                 key_data = {

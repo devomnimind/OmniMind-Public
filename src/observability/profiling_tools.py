@@ -48,7 +48,7 @@ class ProfileSample:
     cumulative_time_ms: float
     per_call_time_ms: float = 0.0
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Calculate per-call time."""
         if self.call_count > 0:
             self.per_call_time_ms = self.total_time_ms / self.call_count
@@ -251,7 +251,8 @@ class ContinuousProfiler:
         stats = pstats.Stats(profiler)
 
         # Parse stats
-        for func_key, (cc, nc, tt, ct, callers) in stats.stats.items():
+        stats_dict = getattr(stats, 'stats', {})
+        for func_key, (cc, nc, tt, ct, callers) in stats_dict.items():
             filename, line_number, function_name = func_key
 
             # Filter builtins if configured
@@ -404,7 +405,7 @@ class FlameGraphGenerator:
         >>> generator.save_svg(flame_graph, "profile.svg")
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the flame graph generator."""
         self._flamegraphs_dir = Path.home() / ".omnimind" / "flamegraphs"
         self._flamegraphs_dir.mkdir(parents=True, exist_ok=True)

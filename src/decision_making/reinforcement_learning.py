@@ -236,7 +236,7 @@ class QLearningAgent(RLAgent):
             # Assume all actions available (simplified)
             max_next_q = max(
                 [
-                    self.q_table.get((transition.next_state.state_id, a), 0.0)
+                    self.q_table.get(a, 0.0)
                     for a in self.q_table.keys()
                     if a[0] == transition.next_state.state_id
                 ]
@@ -414,7 +414,7 @@ class PolicyGradientAgent(RLAgent):
 
     def _compute_returns(self) -> List[float]:
         """Compute discounted returns for each timestep."""
-        returns = []
+        returns: List[float] = []
         G = 0.0
 
         # Compute returns in reverse order
@@ -434,7 +434,7 @@ class PolicyGradientAgent(RLAgent):
                 "baseline_value": self.baseline_value,
             }
 
-        all_params = []
+        all_params: List[float] = []
         for state_params in self.policy_params.values():
             all_params.extend(state_params.values())
 
