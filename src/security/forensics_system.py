@@ -15,7 +15,7 @@ import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set
 from enum import Enum
 
 from src.audit.immutable_audit import get_audit_system
@@ -81,8 +81,6 @@ class Incident:
     assigned_to: Optional[str] = None
     evidence_items: List[EvidenceItem] = field(default_factory=list)
     analysis: Dict[str, Any] = field(default_factory=dict)
-from typing import Set
-from typing import Set
     recommendations: List[str] = field(default_factory=list)
     tags: Set[str] = field(default_factory=set)
 
