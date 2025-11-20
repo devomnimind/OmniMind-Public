@@ -11,8 +11,9 @@ black>=24.0.0
 
 # Framework de agentes
 langchain>=0.1.20
-langgraph>=0.0.30
 langchain-community>=0.0.45
+langchain-ollama>=0.1.0
+langgraph>=0.0.30
 
 # LLM local
 llama-cpp-python>=0.2.80
@@ -24,6 +25,7 @@ trl>=0.7.10
 datasets>=2.16.0
 accelerate>=0.27.0
 tensorboard>=2.15.0
+sentence-transformers>=2.2.0
 
 # Vector database para memória episódica
 qdrant-client>=1.16.0,<2.0.0
@@ -37,6 +39,7 @@ rich>=13.7.0
 psutil>=5.9.6
 PyYAML>=6.0.1
 requests>=2.31.0
+brotli>=1.0.0
 
 # Sistema D-Bus (Linux)
 dbus-python>=1.3.0
@@ -59,8 +62,14 @@ py-spy>=0.3.14
 # Web dashboard
 fastapi>=0.110.0
 uvicorn>=0.23.0
-# supabase-py>=1.0.0  # Incompatível com Python 3.12, substituído por 'supabase'
+websockets>=12.0
+httpx>=0.25.0
+python-multipart>=0.0.6
+starlette>=0.27.0
+
+# Supabase integration
 supabase>=2.0.0
+postgrest-py>=0.10.0
 
 # DEVBRAIN V23 senses and infrastructure
 redis>=5.4.0
@@ -74,4 +83,4 @@ pydub>=0.25.1
 whisper>=1.1.10
 falcon>=3.0.0
 sounddevice>=0.4.9
-# TTS>=0.13.1  # Incompatível com Python 3.12
+playwright>=1.40.0
