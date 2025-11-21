@@ -9,6 +9,7 @@ Implements emotional understanding and response capabilities:
 
 from __future__ import annotations
 
+import logging
 import re
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -69,7 +70,9 @@ class EmotionalState:
             raise ValueError("Confidence must be between 0.0 and 1.0")
         for emotion, intensity in self.emotion_intensities.items():
             if not 0.0 <= intensity <= 1.0:
-                raise ValueError(f"Intensity for {emotion} must be between 0.0 and 1.0")
+                raise ValueError(
+                    f"Intensity for {emotion} must be between 0.0 and 1.0"
+                )
 
 
 @dataclass
@@ -225,8 +228,12 @@ class EmotionalIntelligence:
             Emotion.DISGUST,
         ]
 
-        positive_score = sum(emotion_scores[e] for e in positive_emotions)
-        negative_score = sum(emotion_scores[e] for e in negative_emotions)
+        positive_score = sum(
+            emotion_scores[e] for e in positive_emotions
+        )
+        negative_score = sum(
+            emotion_scores[e] for e in negative_emotions
+        )
 
         if positive_score > self.sentiment_threshold:
             sentiment = Sentiment.POSITIVE
@@ -253,7 +260,9 @@ class EmotionalIntelligence:
         # Add to history
         self._emotion_history.append(state)
         if len(self._emotion_history) > self.emotion_history_limit:
-            self._emotion_history = self._emotion_history[-self.emotion_history_limit :]
+            self._emotion_history = self._emotion_history[
+                -self.emotion_history_limit :
+            ]
 
         logger.debug(
             "sentiment_analyzed",
@@ -317,7 +326,9 @@ class EmotionalIntelligence:
 
         self._emotion_history.append(state)
         if len(self._emotion_history) > self.emotion_history_limit:
-            self._emotion_history = self._emotion_history[-self.emotion_history_limit :]
+            self._emotion_history = self._emotion_history[
+                -self.emotion_history_limit :
+            ]
 
         logger.debug(
             "emotion_from_action",
@@ -344,7 +355,7 @@ class EmotionalIntelligence:
             Emotionally-informed response
         """
         primary = detected_emotion.primary_emotion
-        detected_emotion.sentiment
+        sentiment = detected_emotion.sentiment
 
         # Generate appropriate response based on detected emotion
         if primary == Emotion.SADNESS:
@@ -356,7 +367,7 @@ class EmotionalIntelligence:
             tone = "supportive"
             empathy_level = 0.9
 
-        elif primary == Emotion.ANGER:
+        elif primary == Emotion.ANGER or primary == Emotion.ANGER:
             response_text = (
                 "I recognize this is frustrating. "
                 "Let me help address the issue systematically."
@@ -375,13 +386,19 @@ class EmotionalIntelligence:
             empathy_level = 0.9
 
         elif primary == Emotion.JOY:
-            response_text = "That's wonderful! " "Let's build on this success."
+            response_text = (
+                "That's wonderful! "
+                "Let's build on this success."
+            )
             target_emotion = Emotion.JOY
             tone = "encouraging"
             empathy_level = 0.8
 
         else:  # NEUTRAL or others
-            response_text = "I'm here to assist. " "How can I best help you?"
+            response_text = (
+                "I'm here to assist. "
+                "How can I best help you?"
+            )
             target_emotion = Emotion.NEUTRAL
             tone = "neutral and professional"
             empathy_level = 0.6
@@ -414,7 +431,9 @@ class EmotionalIntelligence:
             rationale=rationale,
         )
 
-    def get_emotional_trend(self, time_window: int = 10) -> Dict[str, Any]:
+    def get_emotional_trend(
+        self, time_window: int = 10
+    ) -> Dict[str, Any]:
         """Analyze emotional trends over recent history.
 
         Args:
@@ -502,9 +521,9 @@ class EmotionalIntelligence:
         # Calculate average confidence
         avg_confidence = 0.0
         if total_states > 0:
-            avg_confidence = (
-                sum(s.confidence for s in self._emotion_history) / total_states
-            )
+            avg_confidence = sum(
+                s.confidence for s in self._emotion_history
+            ) / total_states
 
         return {
             "total_emotional_states": total_states,

@@ -31,11 +31,15 @@ class TestBelief:
     def test_belief_confidence_validation(self) -> None:
         """Test belief confidence validation."""
         # Valid confidence
-        Belief(subject="test", proposition="test", confidence=0.5)
+        Belief(
+            subject="test", proposition="test", confidence=0.5
+        )
 
         # Invalid confidence
         with pytest.raises(ValueError, match="Confidence must be"):
-            Belief(subject="test", proposition="test", confidence=1.5)
+            Belief(
+                subject="test", proposition="test", confidence=1.5
+            )
 
 
 class TestMentalStateModel:
@@ -57,7 +61,9 @@ class TestMentalStateModel:
 
     def test_mental_model_with_beliefs(self) -> None:
         """Test mental model with beliefs."""
-        belief = Belief(subject="task", proposition="Task is complex", confidence=0.8)
+        belief = Belief(
+            subject="task", proposition="Task is complex", confidence=0.8
+        )
 
         model = MentalStateModel(
             entity_id="agent_1",
@@ -336,8 +342,12 @@ class TestTheoryOfMind:
         tom = TheoryOfMind()
 
         # Create some data
-        tom.observe_action(entity_id="user_1", action_type="read", action_data={})
-        tom.observe_action(entity_id="user_2", action_type="search", action_data={})
+        tom.observe_action(
+            entity_id="user_1", action_type="read", action_data={}
+        )
+        tom.observe_action(
+            entity_id="user_2", action_type="search", action_data={}
+        )
         tom.update_belief(
             entity_id="user_1",
             subject="test",

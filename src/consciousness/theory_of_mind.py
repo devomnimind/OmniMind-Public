@@ -9,6 +9,7 @@ Implements mental state attribution capabilities for AI consciousness:
 
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
@@ -186,34 +187,46 @@ class TheoryOfMind:
             return []
 
         # Get recent actions
-        actions = self._action_history[entity_id][-(recent_actions or 5) :]
+        actions = self._action_history[entity_id][-recent_actions:]
 
         # Analyze action patterns
         intents: List[Intent] = []
 
         # Check for information gathering patterns
         info_actions = ["read", "search", "query", "analyze"]
-        if any(action.get("action_type") in info_actions for action in actions):
+        if any(
+            action.get("action_type") in info_actions for action in actions
+        ):
             intents.append(Intent.GATHER_INFORMATION)
 
         # Check for problem-solving patterns
         problem_actions = ["debug", "fix", "optimize", "refactor"]
-        if any(action.get("action_type") in problem_actions for action in actions):
+        if any(
+            action.get("action_type") in problem_actions for action in actions
+        ):
             intents.append(Intent.SOLVE_PROBLEM)
 
         # Check for learning patterns
         learning_actions = ["learn", "study", "practice", "experiment"]
-        if any(action.get("action_type") in learning_actions for action in actions):
+        if any(
+            action.get("action_type") in learning_actions for action in actions
+        ):
             intents.append(Intent.LEARN_SKILL)
 
         # Check for execution patterns
         execution_actions = ["execute", "run", "deploy", "commit"]
-        if any(action.get("action_type") in execution_actions for action in actions):
+        if any(
+            action.get("action_type") in execution_actions
+            for action in actions
+        ):
             intents.append(Intent.EXECUTE_TASK)
 
         # Check for exploration patterns
         exploration_actions = ["explore", "test", "try", "experiment"]
-        if any(action.get("action_type") in exploration_actions for action in actions):
+        if any(
+            action.get("action_type") in exploration_actions
+            for action in actions
+        ):
             intents.append(Intent.EXPLORE_OPTIONS)
 
         logger.debug(
@@ -255,7 +268,10 @@ class TheoryOfMind:
             return MentalState.EXPLORING
 
         # Check for problem-solving behavior
-        if any(at in ["debug", "fix", "analyze", "optimize"] for at in action_types):
+        if any(
+            at in ["debug", "fix", "analyze", "optimize"]
+            for at in action_types
+        ):
             return MentalState.PROBLEM_SOLVING
 
         # Check for learning behavior
@@ -465,7 +481,9 @@ class TheoryOfMind:
             Statistics dictionary
         """
         total_entities = len(self._mental_models)
-        total_actions = sum(len(actions) for actions in self._action_history.values())
+        total_actions = sum(
+            len(actions) for actions in self._action_history.values()
+        )
         total_beliefs = sum(
             len(model.beliefs) for model in self._mental_models.values()
         )
@@ -473,10 +491,9 @@ class TheoryOfMind:
         # Calculate average confidence
         avg_confidence = 0.0
         if total_entities > 0:
-            avg_confidence = (
-                sum(model.confidence for model in self._mental_models.values())
-                / total_entities
-            )
+            avg_confidence = sum(
+                model.confidence for model in self._mental_models.values()
+            ) / total_entities
 
         return {
             "total_entities_tracked": total_entities,

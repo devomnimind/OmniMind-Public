@@ -9,9 +9,10 @@ Enhanced meta-cognitive self-analysis capabilities:
 
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import structlog
 
@@ -313,7 +314,9 @@ class AdvancedSelfReflection:
         actionability_score = with_actions / len(recent_logs)
 
         # Calculate consistency score (average confidence)
-        avg_confidence = sum(log.confidence for log in recent_logs) / len(recent_logs)
+        avg_confidence = sum(log.confidence for log in recent_logs) / len(
+            recent_logs
+        )
         consistency_score = avg_confidence
 
         metrics = SelfReflectionMetrics(
@@ -366,7 +369,9 @@ class AdvancedSelfReflection:
                     {
                         "action": action,
                         "area": log.focus_area,
-                        "priority": "high" if len(log.insights) > 2 else "medium",
+                        "priority": "high"
+                        if len(log.insights) > 2
+                        else "medium",
                     }
                 )
 
@@ -407,7 +412,9 @@ class AdvancedSelfReflection:
             "weaknesses": weaknesses,
             "action_items": all_actions[:10],  # Top 10 actions
             "recommended_focus": self._recommend_focus_area(introspections),
-            "next_review": (datetime.now() + timedelta(hours=24)).isoformat(),
+            "next_review": (
+                datetime.now() + timedelta(hours=24)
+            ).isoformat(),
         }
 
         logger.info(
@@ -418,7 +425,9 @@ class AdvancedSelfReflection:
 
         return plan
 
-    def _recommend_focus_area(self, introspections: List[IntrospectionLog]) -> str:
+    def _recommend_focus_area(
+        self, introspections: List[IntrospectionLog]
+    ) -> str:
         """Recommend which area needs most focus.
 
         Args:
@@ -449,15 +458,16 @@ class AdvancedSelfReflection:
         # Calculate focus area distribution
         focus_dist: Dict[str, int] = {}
         for log in self._introspection_logs:
-            focus_dist[log.focus_area] = focus_dist.get(log.focus_area, 0) + 1
+            focus_dist[log.focus_area] = (
+                focus_dist.get(log.focus_area, 0) + 1
+            )
 
         # Calculate average confidence
         avg_confidence = 0.0
         if total_introspections > 0:
-            avg_confidence = (
-                sum(log.confidence for log in self._introspection_logs)
-                / total_introspections
-            )
+            avg_confidence = sum(
+                log.confidence for log in self._introspection_logs
+            ) / total_introspections
 
         # Get latest quality metrics
         latest_quality = 0.0

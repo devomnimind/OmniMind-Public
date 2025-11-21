@@ -101,7 +101,9 @@ class TestEmotionalIntelligence:
         """Test analyzing neutral sentiment."""
         ei = EmotionalIntelligence()
 
-        state = ei.analyze_sentiment("The system is currently running.")
+        state = ei.analyze_sentiment(
+            "The system is currently running."
+        )
 
         assert state.sentiment == Sentiment.NEUTRAL
         assert state.primary_emotion == Emotion.NEUTRAL
