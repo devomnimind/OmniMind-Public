@@ -12,6 +12,8 @@ Features:
 - Reflection depth analysis
 - Positive reinforcement triggers
 - Improvement loop mechanisms
+- Hawking radiation-inspired knowledge evaporation
+- Frustration-based motivation generation
 """
 
 from .intrinsic_rewards import (
@@ -19,9 +21,17 @@ from .intrinsic_rewards import (
     SatisfactionMetrics,
     TaskOutcome,
 )
+from .hawking_motivation import (
+    HawkingMotivationEngine,
+    KnowledgeItem,
+    EvaporationEvent,
+)
 
 __all__ = [
     "IntrinsicMotivationEngine",
     "SatisfactionMetrics",
     "TaskOutcome",
+    "HawkingMotivationEngine",
+    "KnowledgeItem",
+    "EvaporationEvent",
 ]
