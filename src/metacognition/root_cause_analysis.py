@@ -163,7 +163,7 @@ class DependencyGraph:
             to_id: Component being depended on
         """
         if from_id not in self._components or to_id not in self._components:
-            logger.warning("Cannot add dependency: component not found")
+            logger.warning(f"Cannot add dependency: component not found")
             return
 
         self._adjacency[from_id].add(to_id)
@@ -406,9 +406,7 @@ class RootCauseEngine:
         )
 
         self._analyses[failure_id] = analysis
-        logger.info(
-            f"Completed RCA for {failure_id}: {len(root_causes)} root causes found"
-        )
+        logger.info(f"Completed RCA for {failure_id}: {len(root_causes)} root causes found")
 
         return analysis
 
@@ -451,10 +449,8 @@ class RootCauseEngine:
         if causal_failures:
             # Add causal failures first (root causes)
             for causal_failure in causal_failures:
-                chain.append(
-                    (causal_failure.component_id, causal_failure.failure_type.value)
-                )
-
+                chain.append((causal_failure.component_id, causal_failure.failure_type.value))
+        
         # Add primary failure at the end
         chain.append((failure.component_id, failure.failure_type.value))
 
@@ -483,10 +479,7 @@ class RootCauseEngine:
         return root_causes
 
     def _calculate_confidence(
-        self,
-        failure: Failure,
-        causal_chain: List[Tuple[str, str]],
-        correlated: List[Failure],
+        self, failure: Failure, causal_chain: List[Tuple[str, str]], correlated: List[Failure]
     ) -> float:
         """Calculate confidence in the analysis."""
         confidence = 0.5  # Base confidence
@@ -506,10 +499,7 @@ class RootCauseEngine:
         return min(1.0, confidence)
 
     def _generate_explanation(
-        self,
-        failure: Failure,
-        causal_chain: List[Tuple[str, str]],
-        root_causes: List[str],
+        self, failure: Failure, causal_chain: List[Tuple[str, str]], root_causes: List[str]
     ) -> str:
         """Generate human-readable explanation."""
         if not causal_chain:
@@ -522,44 +512,29 @@ class RootCauseEngine:
             root_name = root_comp.name if root_comp else root_causes[0]
             explanation_parts.append(f"Root cause identified: {root_name}")
         else:
-            explanation_parts.append(
-                f"Multiple root causes identified: {', '.join(root_causes)}"
-            )
+            explanation_parts.append(f"Multiple root causes identified: {', '.join(root_causes)}")
 
         if len(causal_chain) > 1:
             chain_desc = " → ".join(
-                [
-                    (
-                        self.graph.get_component(comp_id).name
-                        if self.graph.get_component(comp_id)
-                        else comp_id
-                    )
-                    for comp_id, _ in causal_chain
-                ]
+                [self.graph.get_component(comp_id).name if self.graph.get_component(comp_id) else comp_id
+                 for comp_id, _ in causal_chain]
             )
             explanation_parts.append(f"Failure propagation: {chain_desc}")
 
         return ". ".join(explanation_parts)
 
     def _gather_evidence(
-        self,
-        failure: Failure,
-        correlated: List[Failure],
-        causal_chain: List[Tuple[str, str]],
+        self, failure: Failure, correlated: List[Failure], causal_chain: List[Tuple[str, str]]
     ) -> List[str]:
         """Gather supporting evidence for the analysis."""
         evidence: List[str] = []
 
         # Primary failure evidence
-        evidence.append(
-            f"Primary failure: {failure.description} at {failure.timestamp.isoformat()}"
-        )
+        evidence.append(f"Primary failure: {failure.description} at {failure.timestamp.isoformat()}")
 
         # Correlated failures
         if correlated:
-            evidence.append(
-                f"Found {len(correlated)} correlated failures within time window"
-            )
+            evidence.append(f"Found {len(correlated)} correlated failures within time window")
 
         # Causal chain evidence
         if len(causal_chain) > 1:
@@ -575,9 +550,7 @@ class RootCauseEngine:
 
         return evidence
 
-    def _generate_recommendations(
-        self, failure: Failure, root_causes: List[str]
-    ) -> List[str]:
+    def _generate_recommendations(self, failure: Failure, root_causes: List[str]) -> List[str]:
         """Generate recommended remediation actions."""
         recommendations: List[str] = []
 
@@ -588,41 +561,31 @@ class RootCauseEngine:
                 continue
 
             if component.component_type == ComponentType.DATABASE:
-                recommendations.extend(
-                    [
-                        f"Check {component.name} database connectivity and health",
-                        "Review database query performance and indexes",
-                        "Check for database locks or connection pool exhaustion",
-                    ]
-                )
+                recommendations.extend([
+                    f"Check {component.name} database connectivity and health",
+                    "Review database query performance and indexes",
+                    "Check for database locks or connection pool exhaustion",
+                ])
             elif component.component_type == ComponentType.SERVICE:
-                recommendations.extend(
-                    [
-                        f"Restart {component.name} service if necessary",
-                        "Review service logs for error patterns",
-                        "Check service resource utilization (CPU, memory)",
-                    ]
-                )
+                recommendations.extend([
+                    f"Restart {component.name} service if necessary",
+                    "Review service logs for error patterns",
+                    "Check service resource utilization (CPU, memory)",
+                ])
             elif component.component_type == ComponentType.NETWORK:
-                recommendations.extend(
-                    [
-                        "Check network connectivity and latency",
-                        "Review firewall and routing configurations",
-                    ]
-                )
+                recommendations.extend([
+                    "Check network connectivity and latency",
+                    "Review firewall and routing configurations",
+                ])
 
         # Generic recommendations based on failure type
         if failure.failure_type == FailureType.OVERLOAD:
             recommendations.append("Consider scaling resources or load balancing")
         elif failure.failure_type == FailureType.TIMEOUT:
-            recommendations.append(
-                "Review timeout configurations and increase if necessary"
-            )
+            recommendations.append("Review timeout configurations and increase if necessary")
 
         # Always include monitoring recommendation
-        recommendations.append(
-            "Implement enhanced monitoring for early detection of similar issues"
-        )
+        recommendations.append("Implement enhanced monitoring for early detection of similar issues")
 
         return recommendations
 
@@ -647,8 +610,7 @@ class RootCauseEngine:
             Health status dictionary
         """
         recent_failures = [
-            f
-            for f in self._failure_history
+            f for f in self._failure_history
             if f.component_id == component_id
             and datetime.now() - f.timestamp < timedelta(hours=1)
         ]
@@ -657,7 +619,5 @@ class RootCauseEngine:
             "component_id": component_id,
             "recent_failures": len(recent_failures),
             "health_status": "unhealthy" if len(recent_failures) > 3 else "healthy",
-            "last_failure": (
-                recent_failures[-1].timestamp.isoformat() if recent_failures else None
-            ),
+            "last_failure": recent_failures[-1].timestamp.isoformat() if recent_failures else None,
         }
