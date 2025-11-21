@@ -224,7 +224,7 @@ class DecisionTree:
         """Evaluate utility-based criterion."""
         utilities = context.get("utilities", {})
         if not utilities:
-            return cast(str, list(node.children.keys())[0])  # type: ignore[no-any-return]
+            return str(list(node.children.keys())[0])
 
         # Select child with highest utility
         max_utility = -float("inf")
@@ -236,7 +236,7 @@ class DecisionTree:
                 max_utility = utility
                 best_child = child_key
 
-        return str(best_child)  # type: ignore
+        return best_child
 
     def _evaluate_ethical(self, node: DecisionNode, context: Dict[str, Any]) -> str:
         """Evaluate ethics-based criterion."""

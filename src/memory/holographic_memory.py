@@ -28,14 +28,9 @@ import statistics
 
 # Type checking imports (for type hints only)
 if TYPE_CHECKING:
-    try:
-        import numpy.typing as npt
-
-        NDArray = npt.NDArray[Any]
-    except ImportError:
-        NDArray = Any  # type: ignore
+    NDArray = Any
 else:
-    NDArray = Any  # type: ignore
+    NDArray = Any
 
 # Runtime imports
 try:
@@ -44,7 +39,7 @@ try:
     NUMPY_AVAILABLE = True
 except ImportError:
     NUMPY_AVAILABLE = False
-    np = None  # type: ignore
+    np = None
 
 try:
     import torch
@@ -53,8 +48,8 @@ try:
     TORCH_AVAILABLE = True
 except (ImportError, OSError):
     TORCH_AVAILABLE = False
-    torch = None  # type: ignore
-    nn = None  # type: ignore
+    torch = None
+    nn = None
 
 logger = logging.getLogger(__name__)
 
@@ -156,7 +151,7 @@ class HolographicProjection:
                 surface = self._downsample_fft(surface, self.max_surface_dim)
             # Convert to numpy array if available
             if NUMPY_AVAILABLE and np is not None:
-                return np.array(surface)
+                return np.array(surface)  # type: ignore
             return surface
 
         # For 3D data, project to 2D surface using radon transform approximation
@@ -165,10 +160,10 @@ class HolographicProjection:
 
         # Convert to numpy array if available
         if NUMPY_AVAILABLE and np is not None:
-            return np.array(surface_projection)
+            return np.array(surface_projection)  # type: ignore
         return surface_projection
 
-    def _information_to_tensor(self, information: Dict[str, Any]) -> Sequence[Any]:
+    def _information_to_tensor(self, information: Dict[str, Any]) -> Any:
         """
         Convert information dictionary to tensor representation.
 
@@ -179,9 +174,9 @@ class HolographicProjection:
             Numpy array representation
         """
         # Handle different data types
-        if "tensor" in information and isinstance(information["tensor"], Sequence):
-            return information["tensor"]  # typed as nested sequences
-        elif "array" in information and isinstance(information["array"], Sequence):
+        if "tensor" in information:
+            return information["tensor"]
+        elif "array" in information:
             return information["array"]
         elif "embedding" in information:
             embedding = information["embedding"]
@@ -208,6 +203,16 @@ class HolographicProjection:
         Returns:
             2D array
         """
+        # Handle numpy arrays
+        if NUMPY_AVAILABLE and np is not None and isinstance(arr, np.ndarray):
+            arr_2d = arr
+            if arr.ndim == 1:  # type: ignore
+                arr_2d = arr.reshape(1, -1)  # type: ignore
+            elif arr.ndim > 2:  # type: ignore
+                # Flatten higher dimensions
+                arr_2d = arr.reshape(arr.shape[0], -1)  # type: ignore
+            return arr_2d.tolist()
+
         # Convert nested sequences into flat list and reshape into square-ish 2D
         flat: List[float] = []
         if isinstance(arr, Sequence) and not isinstance(arr, (str, bytes)):
@@ -463,7 +468,7 @@ class EventHorizonMemory:
             "child_count": len(self.child_memories),
         }
 
-    def _calculate_entropy(self, surface_bits: Sequence[Sequence[Any]]) -> float:
+    def _calculate_entropy(self, surface_bits: Any) -> float:
         """
         Calculate Shannon entropy of surface encoding.
 
@@ -496,9 +501,7 @@ class EventHorizonMemory:
 
         return float(entropy)
 
-    def _merge_surfaces(
-        self, surface1: Sequence[Sequence[Any]], surface2: Sequence[Sequence[Any]]
-    ) -> List[List[float]]:
+    def _merge_surfaces(self, surface1: Any, surface2: Any) -> List[List[float]]:
         """
         Merge two holographic surfaces (quantum superposition).
 
@@ -512,8 +515,8 @@ class EventHorizonMemory:
         # Ensure same shape (pad if necessary)
         max_h = max(len(surface1), len(surface2))
         max_w = max(
-            len(surface1[0]) if surface1 and surface1[0] else 0,
-            len(surface2[0]) if surface2 and surface2[0] else 0,
+            len(surface1[0]) if surface1 is not None else 0,
+            len(surface2[0]) if surface2 is not None else 0,
         )
 
         # pad both surfaces to max_h x max_w
@@ -611,7 +614,17 @@ class EventHorizonMemory:
 
         # Threshold for match
         if correlation > 0.5:
-            return self.surface.surface_bits
+            # Convert to list if it's ndarray
+            if isinstance(self.surface.surface_bits, list):
+                return self.surface.surface_bits
+            elif (
+                NUMPY_AVAILABLE
+                and np is not None
+                and isinstance(self.surface.surface_bits, np.ndarray)
+            ):
+                return self.surface.surface_bits.tolist()
+            else:
+                return None
 
         # Search children if enabled
         if search_children:
@@ -622,9 +635,7 @@ class EventHorizonMemory:
 
         return None
 
-    def _compute_correlation(
-        self, surface1: Sequence[Sequence[Any]], surface2: Sequence[Sequence[Any]]
-    ) -> float:
+    def _compute_correlation(self, surface1: Any, surface2: Any) -> float:
         """
         Compute holographic correlation between surfaces.
 

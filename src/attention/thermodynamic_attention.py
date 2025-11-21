@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import logging
 from typing import Optional
+import math
 
 import numpy as np
 
@@ -31,9 +32,9 @@ try:
     TORCH_AVAILABLE = True
 except (ImportError, OSError):
     TORCH_AVAILABLE = False
-    torch = None  # type: ignore
-    nn = None  # type: ignore
-    F = None  # type: ignore
+    torch = None
+    nn = None
+    F = None
 
 logger = logging.getLogger(__name__)
 
@@ -118,7 +119,7 @@ class ThermodynamicAttention(nn.Module if TORCH_AVAILABLE else object):  # type:
 
         # Standard similarity-based attention scores
         # Scale by 1/sqrt(d_k) for numerical stability
-        similarity_scores = torch.matmul(query, key.transpose(-2, -1)) / np.sqrt(
+        similarity_scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(
             self.embed_dim
         )
 
@@ -330,4 +331,4 @@ class MultiHeadThermodynamicAttention(
         output = self.out_proj(concat_output)
         output = self.dropout(output)
 
-        return output
+        return output  # type: ignore

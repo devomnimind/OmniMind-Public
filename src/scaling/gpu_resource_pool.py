@@ -226,7 +226,7 @@ class GPUResourcePool:
         self.config = config
         self._gpus: Dict[int, GPUDevice] = {}
         self._tasks: Dict[str, GPUTask] = {}
-        self._task_queue: deque[str] = deque()
+        self._task_queue: deque[GPUTask] = deque()
 
         if config.auto_discover_gpus:
             self._discover_gpus()
@@ -409,7 +409,7 @@ class GPUResourcePool:
             task_id: Task identifier
         """
         task = self._tasks.get(task_id)
-        if not task or not task.assigned_device_id:
+        if task is None or task.assigned_device_id is None:
             logger.warning("task_not_found_or_not_assigned", task_id=task_id)
             return
 
@@ -427,13 +427,12 @@ class GPUResourcePool:
     def _process_queue(self) -> None:
         """Process queued tasks."""
         while self._task_queue:
-            task = self._task_queue[0]
+            task = self._task_queue.popleft()
             device_id = self.allocate_gpu(task)
             if device_id is None:
                 # No GPU available, stop processing
                 break
-            # Task assigned, remove from queue
-            self._task_queue.popleft()
+            # Task assigned, remove from queue (already popped)
             logger.info("queued_task_assigned", task_id=task.task_id)
 
     def update_gpu_stats(

@@ -682,3 +682,46 @@ Provide:
         if action == "report":
             return self.generate_security_report()
         raise ValueError(f"Unsupported action: {action}")
+
+    def monitor_processes(self) -> Optional[Dict[str, Any]]:
+        """Monitor processes for suspicious activity (synchronous version)."""
+        try:
+            patterns = self.config["monitoring"]["processes"].get(
+                "suspicious_patterns", []
+            )
+            for proc in psutil.process_iter(["pid", "name", "cmdline"]):
+                info = proc.info
+                if self._is_suspicious_process(info, patterns):
+                    return {
+                        "pid": info.get("pid"),
+                        "name": info.get("name"),
+                        "cmdline": info.get("cmdline"),
+                        "threat_level": "HIGH",
+                    }
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            pass
+        return None
+
+    def monitor_network(self) -> Optional[Dict[str, Any]]:
+        """Monitor network connections for suspicious activity (synchronous version)."""
+        try:
+            suspicious_ports = set(
+                self.config["monitoring"]["network"].get("suspicious_ports", [])
+            )
+            connections = psutil.net_connections(kind="inet")
+            for conn in connections:
+                remote = (
+                    f"{conn.raddr.ip}:{conn.raddr.port}" if conn.raddr else "unknown"
+                )
+                local = (
+                    f"{conn.laddr.ip}:{conn.laddr.port}" if conn.laddr else "unknown"
+                )
+                if self._is_suspicious_connection(remote, suspicious_ports):
+                    return {
+                        "local": local,
+                        "remote": remote,
+                        "threat_level": "HIGH",
+                    }
+        except Exception:
+            pass
+        return None

@@ -390,7 +390,7 @@ class SecurityOrchestrator:
         security_events: List[Any],
     ) -> float:
         """Calculate overall risk score (0-100)."""
-        risk = 0.0
+        risk: float = 0.0
 
         # Network health contributes (0-30 points)
         network_score = network_health.get("health_score", 100)

@@ -20,7 +20,7 @@ Example:
     >>> value = manager.get("key")
 """
 
-from typing import Dict, List, Optional, Any, Union
+from typing import Dict, List, Optional, Any, Union, cast
 from dataclasses import dataclass
 from enum import Enum
 import logging
@@ -34,8 +34,8 @@ try:
     REDIS_AVAILABLE = True
 except ImportError:
     REDIS_AVAILABLE = False
-    RedisCluster = None
-    Sentinel = None
+    RedisCluster = None  # type: ignore
+    Sentinel = None  # type: ignore
 
 logger = logging.getLogger(__name__)
 
@@ -159,7 +159,7 @@ class RedisClusterManager:
         # Initialize cluster
         try:
             self.cluster = RedisCluster(
-                startup_nodes=nodes,
+                startup_nodes=nodes,  # type: ignore
                 decode_responses=decode_responses,
                 skip_full_coverage_check=False,
                 max_connections=max_connections,
@@ -175,7 +175,7 @@ class RedisClusterManager:
         self.sentinel = None
         if sentinel_nodes:
             try:
-                self.sentinel = Sentinel(
+                self.sentinel = Sentinel(  # type: ignore
                     sentinel_nodes, socket_timeout=0.1, password=password
                 )
                 logger.info(f"Connected to Sentinel with {len(sentinel_nodes)} nodes")
@@ -322,7 +322,7 @@ class RedisClusterManager:
             return results
 
         try:
-            result: list[Any | None] = self.cluster.mget(keys)
+            result: list[Any | None] = self.cluster.mget(keys)  # type: ignore
             return result
         except Exception as e:
             logger.error(f"Failed to mget: {e}")
@@ -385,14 +385,14 @@ class RedisClusterManager:
 
         try:
             cluster_info = self.cluster.cluster_info()
-            info["state"] = cluster_info.get("cluster_state", "unknown")
-            info["slots_assigned"] = cluster_info.get("cluster_slots_assigned", 0)
-            info["slots_ok"] = cluster_info.get("cluster_slots_ok", 0)
-            info["slots_pfail"] = cluster_info.get("cluster_slots_pfail", 0)
-            info["slots_fail"] = cluster_info.get("cluster_slots_fail", 0)
+            info["state"] = cluster_info.get("cluster_state", "unknown")  # type: ignore
+            info["slots_assigned"] = cluster_info.get("cluster_slots_assigned", 0)  # type: ignore
+            info["slots_ok"] = cluster_info.get("cluster_slots_ok", 0)  # type: ignore
+            info["slots_pfail"] = cluster_info.get("cluster_slots_pfail", 0)  # type: ignore
+            info["slots_fail"] = cluster_info.get("cluster_slots_fail", 0)  # type: ignore
 
             nodes_info = self.cluster.cluster_nodes()
-            for node_line in nodes_info.split("\n"):
+            for node_line in nodes_info.split("\n"):  # type: ignore
                 if node_line.strip():
                     info["nodes"].append(node_line)
 
@@ -483,7 +483,7 @@ class RedisClusterManager:
         health = self.get_cluster_health()
         return health.is_healthy()
 
-    def get_stats(self) -> Dict[str, int]:
+    def get_stats(self) -> Dict[str, Union[int, float]]:
         """
         Get operation statistics.
 
@@ -494,7 +494,7 @@ class RedisClusterManager:
             >>> stats = manager.get_stats()
             >>> hit_rate = stats["hits"] / (stats["hits"] + stats["misses"])
         """
-        stats = self._stats.copy()
+        stats = cast(Dict[str, Union[int, float]], self._stats.copy())
         total = stats["hits"] + stats["misses"]
         stats["hit_rate"] = (stats["hits"] / total) if total > 0 else 0.0
         return stats

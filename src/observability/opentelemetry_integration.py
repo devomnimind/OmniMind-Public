@@ -112,9 +112,7 @@ class OpenTelemetryIntegration:
         self._initialized = False
 
         logger.info(
-            "opentelemetry_integration_created",
-            service_name=config.service_name,
-            environment=config.environment,
+            f"opentelemetry_integration_created service_name={config.service_name} environment={config.environment}"
         )
 
     def initialize(self) -> None:
@@ -144,9 +142,7 @@ class OpenTelemetryIntegration:
 
         self._initialized = True
         logger.info(
-            "opentelemetry_initialized",
-            service=self.config.service_name,
-            exporters=self._get_enabled_exporters(),
+            f"opentelemetry_initialized service={self.config.service_name} exporters={self._get_enabled_exporters()}"
         )
 
     def _initialize_tracing(self, resource: Resource) -> None:
@@ -170,9 +166,11 @@ class OpenTelemetryIntegration:
         try:
             otlp_exporter = OTLPSpanExporter(endpoint=self.config.otlp_endpoint)
             self._tracer_provider.add_span_processor(BatchSpanProcessor(otlp_exporter))
-            logger.debug("otlp_span_exporter_added", endpoint=self.config.otlp_endpoint)
+            logger.debug(
+                f"otlp_span_exporter_added endpoint={self.config.otlp_endpoint}"
+            )
         except Exception as e:
-            logger.warning("otlp_span_exporter_failed", error=str(e))
+            logger.warning(f"otlp_span_exporter_failed error={str(e)}")
 
         # Add Jaeger exporter if enabled
         if self.config.enable_jaeger_export:
@@ -180,22 +178,20 @@ class OpenTelemetryIntegration:
                 # Note: In production, you would use jaeger-client or similar
                 # For now, we use OTLP as Jaeger supports it
                 logger.info(
-                    "jaeger_export_via_otlp",
-                    endpoint=self.config.jaeger_endpoint,
+                    f"jaeger_export_via_otlp endpoint={self.config.jaeger_endpoint}"
                 )
             except Exception as e:
-                logger.warning("jaeger_exporter_failed", error=str(e))
+                logger.warning(f"jaeger_exporter_failed error={str(e)}")
 
         # Add Zipkin exporter if enabled
         if self.config.enable_zipkin_export:
             try:
                 # Note: In production, you would use opentelemetry-exporter-zipkin
                 logger.info(
-                    "zipkin_export_configured",
-                    endpoint=self.config.zipkin_endpoint,
+                    f"zipkin_export_configured endpoint={self.config.zipkin_endpoint}"
                 )
             except Exception as e:
-                logger.warning("zipkin_exporter_failed", error=str(e))
+                logger.warning(f"zipkin_exporter_failed error={str(e)}")
 
         # Set global tracer provider
         trace.set_tracer_provider(self._tracer_provider)
@@ -228,7 +224,7 @@ class OpenTelemetryIntegration:
             logger.debug("metrics_provider_initialized")
 
         except Exception as e:
-            logger.warning("metrics_initialization_failed", error=str(e))
+            logger.warning(f"metrics_initialization_failed error={str(e)}")
 
     def get_tracer(self, name: str = "omnimind") -> trace.Tracer:
         """Get a tracer instance.
@@ -273,18 +269,18 @@ class OpenTelemetryIntegration:
 
         try:
             if self._tracer_provider:
-                self._tracer_provider.shutdown()  # type: ignore[attr-defined]
+                self._tracer_provider.shutdown()
                 logger.debug("tracer_provider_shutdown")
 
             if self._meter_provider:
-                self._meter_provider.shutdown()  # type: ignore[attr-defined]
+                self._meter_provider.shutdown()
                 logger.debug("meter_provider_shutdown")
 
             self._initialized = False
             logger.info("opentelemetry_shutdown_complete")
 
         except Exception as e:
-            logger.error("opentelemetry_shutdown_error", error=str(e))
+            logger.error(f"opentelemetry_shutdown_error error={str(e)}")
 
     def _get_enabled_exporters(self) -> list[str]:
         """Get list of enabled exporters.
