@@ -5,11 +5,13 @@ These tests validate the entire OmniMind system from UI to backend.
 """
 
 import asyncio
+import json
 import os
 import re
+import subprocess
 import time
 from pathlib import Path
-from typing import Dict
+from typing import Any, Dict
 
 import pytest
 
@@ -26,27 +28,25 @@ except ImportError:
 @pytest.fixture(scope="session")
 def backend_server():
     """Start backend server for E2E tests."""
-    import importlib
-
     # Set test credentials
     os.environ["OMNIMIND_DASHBOARD_USER"] = "test_user"
     os.environ["OMNIMIND_DASHBOARD_PASS"] = "test_pass"
 
-    # Set Qdrant configuration for tests
-    os.environ["OMNIMIND_QDRANT_URL"] = "http://localhost:6333"
-    os.environ["OMNIMIND_QDRANT_COLLECTION"] = "omnimind_memories"
-    os.environ["OMNIMIND_QDRANT_VECTOR_SIZE"] = "768"
+    # Start server in background
+    server_process = subprocess.Popen(
+        ["uvicorn", "web.backend.main:app", "--port", "8001"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
 
-    # Reload backend module to pick up new environment variables
-    import web.backend.main as backend_main
+    # Wait for server to start
+    time.sleep(3)
 
-    importlib.reload(backend_main)
+    yield "http://localhost:8001"
 
-    # Import and create test client
-    from fastapi.testclient import TestClient
-
-    client = TestClient(backend_main.app)
-    return client
+    # Stop server
+    server_process.terminate()
+    server_process.wait()
 
 
 @pytest.fixture(scope="session")
@@ -78,70 +78,107 @@ class TestAPIEndpoints:
     """Test API endpoints via direct HTTP calls."""
 
     @pytest.mark.asyncio
-    async def test_health_endpoint(self, backend_server):
+    async def test_health_endpoint(self, backend_server: str):
         """Test health endpoint is accessible."""
-        response = backend_server.get("/health")
-        assert response.status_code == 200
-        data = response.json()
-        assert "status" in data
-        assert data["status"] == "ok"
+        import httpx
+
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f"{backend_server}/health")
+            assert response.status_code == 200
+            data = response.json()
+            assert "status" in data
+            assert data["status"] == "ok"
 
     @pytest.mark.asyncio
     async def test_authenticated_endpoint(
-        self, backend_server, auth_credentials: Dict[str, str]
+        self, backend_server: str, auth_credentials: Dict[str, str]
     ):
         """Test authenticated endpoint access."""
-        # Without auth - should fail
-        response = backend_server.get("/status")
-        assert response.status_code == 401
+        import httpx
 
-        # With auth - should succeed
-        response = backend_server.get(
-            "/status",
-            auth=(auth_credentials["username"], auth_credentials["password"]),
-        )
-        assert response.status_code == 200
+        async with httpx.AsyncClient() as client:
+            # Without auth - should fail
+            response = await client.get(f"{backend_server}/status")
+            assert response.status_code == 401
 
-    def test_task_orchestration_workflow(
-        self, backend_server, auth_credentials: Dict[str, str]
+            # With auth - should succeed
+            response = await client.get(
+                f"{backend_server}/status",
+                auth=(auth_credentials["username"], auth_credentials["password"]),
+            )
+            assert response.status_code == 200
+
+    @pytest.mark.asyncio
+    async def test_task_orchestration_workflow(
+        self, backend_server: str, auth_credentials: Dict[str, str]
     ):
         """Test complete task orchestration workflow."""
-        auth = (auth_credentials["username"], auth_credentials["password"])
+        import httpx
 
-        # Submit task
-        task_data = {"task": "Test task", "max_iterations": 1}
-        response = backend_server.post(
-            "/tasks/orchestrate",
-            json=task_data,
-            auth=auth,
-        )
-        assert response.status_code == 200
-        result = response.json()
-        assert "task" in result
-        assert result["task"] == "Test task"
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            auth = (auth_credentials["username"], auth_credentials["password"])
 
-        # Check metrics were updated
-        response = backend_server.get("/metrics", auth=auth)
-        assert response.status_code == 200
-        metrics = response.json()
-        assert "backend" in metrics
-        assert metrics["backend"]["requests"] > 0
+            # Submit task
+            task_data = {"task": "Test task", "max_iterations": 1}
+            response = await client.post(
+                f"{backend_server}/tasks/orchestrate",
+                json=task_data,
+                auth=auth,
+            )
+            assert response.status_code == 200
+            result = response.json()
+            assert "task" in result
+            assert result["task"] == "Test task"
+
+            # Check metrics were updated
+            response = await client.get(f"{backend_server}/metrics", auth=auth)
+            assert response.status_code == 200
+            metrics = response.json()
+            assert "backend" in metrics
+            assert metrics["backend"]["requests"] > 0
 
 
 class TestWebSocketIntegration:
     """Test WebSocket real-time communication."""
 
     @pytest.mark.asyncio
-    @pytest.mark.skip(reason="WebSocket tests require real server, not TestClient")
-    async def test_websocket_connection(self, backend_server):
+    async def test_websocket_connection(self, backend_server: str):
         """Test WebSocket connection and ping/pong."""
-        pass  # Skipped - requires real server
+        import websockets
+
+        ws_url = backend_server.replace("http", "ws") + "/ws"
+
+        async with websockets.connect(ws_url) as websocket:
+            # Send ping
+            await websocket.send(json.dumps({"type": "ping"}))
+
+            # Receive pong
+            response = await websocket.recv()
+            data = json.loads(response)
+            assert data["type"] == "pong"
+            assert "timestamp" in data
 
     @pytest.mark.asyncio
-    @pytest.mark.skip(reason="WebSocket tests require real server, not TestClient")
-    async def test_websocket_subscription(self, backend_server):
+    async def test_websocket_subscription(self, backend_server: str):
         """Test WebSocket channel subscription."""
-        pass  # Skipped - requires real server
+        import websockets
+
+        ws_url = backend_server.replace("http", "ws") + "/ws"
+
+        async with websockets.connect(ws_url) as websocket:
+            # Subscribe to channels
+            await websocket.send(
+                json.dumps({"type": "subscribe", "channels": ["tasks", "agents"]})
+            )
+
+            # Wait a bit for subscription to process
+            await asyncio.sleep(0.5)
+
+            # Send ping to verify connection still alive
+            await websocket.send(json.dumps({"type": "ping"}))
+            response = await websocket.recv()
+            data = json.loads(response)
+            assert data["type"] == "pong"
 
 
 class TestUIInteraction:
@@ -218,36 +255,40 @@ class TestPerformance:
     """Performance and load testing."""
 
     @pytest.mark.asyncio
-    async def test_api_response_time(self, backend_server):
+    async def test_api_response_time(self, backend_server: str):
         """Test API response times are acceptable."""
-        # Test health endpoint directly with TestClient
-        start = time.perf_counter()
-        response = backend_server.get("/health")
-        duration = time.perf_counter() - start
+        import httpx
 
-        assert response.status_code == 200
-        assert duration < 1.0, f"Health endpoint too slow: {duration:.3f}s"
+        async with httpx.AsyncClient() as client:
+            # Test health endpoint
+            start = time.perf_counter()
+            response = await client.get(f"{backend_server}/health")
+            duration = time.perf_counter() - start
+
+            assert response.status_code == 200
+            assert duration < 0.1, f"Health endpoint too slow: {duration:.3f}s"
 
     @pytest.mark.asyncio
     async def test_concurrent_requests(
-        self, backend_server, auth_credentials: Dict[str, str]
+        self, backend_server: str, auth_credentials: Dict[str, str]
     ):
         """Test handling of concurrent requests."""
+        import httpx
 
-        async def make_request(i: int):
-            # Use TestClient directly
-            response = backend_server.get(
-                "/metrics",
+        async def make_request(client: httpx.AsyncClient, i: int):
+            response = await client.get(
+                f"{backend_server}/metrics",
                 auth=(auth_credentials["username"], auth_credentials["password"]),
             )
             return response.status_code
 
-        # Make 10 concurrent requests
-        tasks = [make_request(i) for i in range(10)]
-        results = await asyncio.gather(*tasks)
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            # Make 10 concurrent requests
+            tasks = [make_request(client, i) for i in range(10)]
+            results = await asyncio.gather(*tasks)
 
-        # All should succeed
-        assert all(status == 200 for status in results)
+            # All should succeed
+            assert all(status == 200 for status in results)
 
 
 class TestSecurityIntegration:
@@ -255,33 +296,39 @@ class TestSecurityIntegration:
 
     @pytest.mark.asyncio
     async def test_audit_logging(
-        self, backend_server, auth_credentials: Dict[str, str]
+        self, backend_server: str, auth_credentials: Dict[str, str]
     ):
         """Test audit logging is working."""
-        auth = (auth_credentials["username"], auth_credentials["password"])
+        import httpx
 
-        # Make authenticated request
-        response = backend_server.get("/observability", auth=auth)
-        assert response.status_code == 200
+        async with httpx.AsyncClient() as client:
+            auth = (auth_credentials["username"], auth_credentials["password"])
 
-        data = response.json()
-        assert "validation" in data
+            # Make authenticated request
+            response = await client.get(f"{backend_server}/observability", auth=auth)
+            assert response.status_code == 200
+
+            data = response.json()
+            assert "validation" in data
 
     @pytest.mark.asyncio
-    async def test_rate_limiting(self, backend_server):
+    async def test_rate_limiting(self, backend_server: str):
         """Test rate limiting (if enabled)."""
-        # Make many rapid requests
-        statuses = []
-        for _ in range(50):  # Reduced from 100 to be more reasonable
-            try:
-                response = backend_server.get("/health")
-                statuses.append(response.status_code)
-            except Exception:
-                pass
+        import httpx
 
-        # Should mostly succeed (rate limiting may not be strict in tests)
-        success_count = sum(1 for s in statuses if s == 200)
-        assert success_count > 25, "Too many requests failed"
+        async with httpx.AsyncClient() as client:
+            # Make many rapid requests
+            statuses = []
+            for _ in range(100):
+                try:
+                    response = await client.get(f"{backend_server}/health")
+                    statuses.append(response.status_code)
+                except Exception:
+                    pass
+
+            # Should mostly succeed (rate limiting may not be strict in tests)
+            success_count = sum(1 for s in statuses if s == 200)
+            assert success_count > 50, "Too many requests failed"
 
 
 class TestDataIntegrity:
@@ -289,27 +336,31 @@ class TestDataIntegrity:
 
     @pytest.mark.asyncio
     async def test_task_state_consistency(
-        self, backend_server, auth_credentials: Dict[str, str]
+        self, backend_server: str, auth_credentials: Dict[str, str]
     ):
         """Test task state is consistent across endpoints."""
-        auth = (auth_credentials["username"], auth_credentials["password"])
+        import httpx
 
-        # Submit task
-        task_data = {"task": "Consistency test", "max_iterations": 1}
-        response = backend_server.post(
-            "/tasks/orchestrate",
-            json=task_data,
-            auth=auth,
-        )
-        assert response.status_code == 200
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            auth = (auth_credentials["username"], auth_credentials["password"])
 
-        # Get snapshot
-        response = backend_server.get("/snapshot", auth=auth)
-        assert response.status_code == 200
-        snapshot = response.json()
+            # Submit task
+            task_data = {"task": "Consistency test", "max_iterations": 1}
+            response = await client.post(
+                f"{backend_server}/tasks/orchestrate",
+                json=task_data,
+                auth=auth,
+            )
+            assert response.status_code == 200
+            result1 = response.json()
 
-        # Verify task appears in snapshot
-        assert "plan_summary" in snapshot
+            # Get snapshot
+            response = await client.get(f"{backend_server}/snapshot", auth=auth)
+            assert response.status_code == 200
+            snapshot = response.json()
+
+            # Verify task appears in snapshot
+            assert "plan_summary" in snapshot
 
 
 class TestErrorHandling:
@@ -317,31 +368,37 @@ class TestErrorHandling:
 
     @pytest.mark.asyncio
     async def test_invalid_task_input(
-        self, backend_server, auth_credentials: Dict[str, str]
+        self, backend_server: str, auth_credentials: Dict[str, str]
     ):
         """Test handling of invalid task input."""
-        auth = (auth_credentials["username"], auth_credentials["password"])
+        import httpx
 
-        # Submit invalid task (empty description)
-        response = backend_server.post(
-            "/tasks/orchestrate",
-            json={"task": "", "max_iterations": 1},
-            auth=auth,
-        )
+        async with httpx.AsyncClient() as client:
+            auth = (auth_credentials["username"], auth_credentials["password"])
 
-        # Should handle gracefully (either accept or reject with proper error)
-        assert response.status_code in [200, 400, 422]
+            # Submit invalid task (empty description)
+            response = await client.post(
+                f"{backend_server}/tasks/orchestrate",
+                json={"task": "", "max_iterations": 1},
+                auth=auth,
+            )
+
+            # Should handle gracefully (either accept or reject with proper error)
+            assert response.status_code in [200, 400, 422]
 
     @pytest.mark.asyncio
-    async def test_service_recovery(self, backend_server):
+    async def test_service_recovery(self, backend_server: str):
         """Test service can recover from errors."""
-        # Make request to ensure service is healthy
-        response = backend_server.get("/health")
-        assert response.status_code == 200
+        import httpx
 
-        # Service should continue to work after errors
-        response = backend_server.get("/health")
-        assert response.status_code == 200
+        async with httpx.AsyncClient() as client:
+            # Make request to ensure service is healthy
+            response = await client.get(f"{backend_server}/health")
+            assert response.status_code == 200
+
+            # Service should continue to work after errors
+            response = await client.get(f"{backend_server}/health")
+            assert response.status_code == 200
 
 
 # Test configuration
