@@ -41,6 +41,31 @@
 - `STATUS_PROJECT.md` - Detailed project status
 - `.omnimind/canonical/action_log.md` - Canonical action logging system
 
+### ✅ CHECKLIST FOR AIs
+
+Before starting to work on the project:
+
+- [ ] MCPs started (`orchestrator.start_all_servers()`)
+- [ ] Qdrant running (for Memory MCP)
+- [ ] Audit verified (`audit.verify_chain_integrity()`)
+- [ ] Project context loaded
+- [ ] Relevant knowledge retrieved from memory
+
+During work:
+
+- [ ] Use Sequential Thinking for structured reasoning
+- [ ] Store important decisions in memory
+- [ ] Validate paths before filesystem operations
+- [ ] Commit with descriptive messages (via Git MCP)
+- [ ] Export chain-of-thought at the end
+
+Upon completion:
+
+- [ ] Consolidate memories (avoid duplication)
+- [ ] Check MCP metrics
+- [ ] Export final report
+- [ ] Stop MCPs gracefully
+
 ## How to Build and Test
 
 ### Initial Setup
