@@ -8,10 +8,11 @@ Author: OmniMind Project
 License: MIT
 """
 
+import time
 import uuid
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Callable, Dict, List
+from typing import Any, Callable, Dict, List, Optional
 import structlog
 
 logger = structlog.get_logger(__name__)
@@ -55,7 +56,7 @@ class DistributedSolution:
 class TaskDecomposer:
     """Decomposes problems into distributable subtasks."""
 
-    def __init__(self) -> None:
+    def __init__(self):
         """Initialize task decomposer."""
         self.logger = logger.bind(component="task_decomposer")
 
@@ -257,7 +258,7 @@ class DistributedSolver:
             consensus_protocol: Protocol for reaching consensus
         """
         self.num_agents = num_agents
-        self.decomposer: TaskDecomposer = TaskDecomposer()
+        self.decomposer = TaskDecomposer()
         self.aggregator = SolutionAggregator(consensus_protocol)
         self.logger = logger.bind(
             num_agents=num_agents,

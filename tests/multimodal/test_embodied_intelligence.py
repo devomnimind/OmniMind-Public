@@ -1,7 +1,5 @@
 """Tests for Embodied Intelligence (Phase 12.4)."""
 
-
-
 import pytest
 
 from src.multimodal.embodied_intelligence import (

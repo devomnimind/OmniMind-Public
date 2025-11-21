@@ -14,7 +14,7 @@ License: MIT
 import time
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set
 import structlog
 
 logger = structlog.get_logger(__name__)
@@ -444,7 +444,7 @@ class EthicalDecisionMaker:
         if len(option_scores) < 2:
             return 1.0
 
-        scores = [float(s["total_score"]) for s in option_scores.values()]
+        scores = [s["total_score"] for s in option_scores.values()]
         max_score = max(scores)
         second_max = sorted(scores, reverse=True)[1]
 

@@ -10,6 +10,7 @@ License: MIT
 """
 
 import random
+import time
 import uuid
 from dataclasses import dataclass, field
 from enum import Enum
@@ -393,7 +394,7 @@ class AntColonyOptimizer:
     def _select_next_city(
         self,
         current: int,
-        unvisited: set[int],
+        unvisited: set,
         distance_matrix: List[List[float]],
     ) -> int:
         """Select next city using pheromone and heuristic information."""
@@ -413,7 +414,7 @@ class AntColonyOptimizer:
         # Normalize
         total = sum(probabilities)
         if total == 0:
-            return int(random.choice(cities))
+            return random.choice(cities)
 
         probabilities = [p / total for p in probabilities]
 
@@ -423,9 +424,9 @@ class AntColonyOptimizer:
         for i, prob in enumerate(probabilities):
             cumsum += prob
             if r <= cumsum:
-                return int(cities[i])
+                return cities[i]
 
-        return int(cities[-1])
+        return cities[-1]
 
     def _update_pheromones(self, paths: List[List[int]], costs: List[float]) -> None:
         """Update pheromone trails."""

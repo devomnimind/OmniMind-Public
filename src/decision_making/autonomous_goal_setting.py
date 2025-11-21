@@ -15,7 +15,7 @@ import time
 import uuid
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set
 import structlog
 
 logger = structlog.get_logger(__name__)
@@ -95,7 +95,7 @@ class GoalHierarchy:
     - Progress propagation
     """
 
-    def __init__(self) -> None:
+    def __init__(self):
         """Initialize goal hierarchy."""
         self.goals: Dict[str, Goal] = {}
         self.logger = logger.bind(component="goal_hierarchy")
@@ -206,7 +206,7 @@ class GoalSetter:
             max_concurrent_goals: Maximum number of concurrent active goals
             enable_auto_generation: Whether to automatically generate goals
         """
-        self.hierarchy: GoalHierarchy = GoalHierarchy()
+        self.hierarchy = GoalHierarchy()
         self.max_concurrent_goals = max_concurrent_goals
         self.enable_auto_generation = enable_auto_generation
         self.logger = logger.bind(component="goal_setter")

@@ -10,7 +10,7 @@ License: MIT
 
 import math
 from dataclasses import dataclass, field
-from typing import Any, Callable, List
+from typing import Any, Callable, Dict, List
 import structlog
 
 logger = structlog.get_logger(__name__)

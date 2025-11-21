@@ -234,7 +234,8 @@ class LogAnalytics:
         """
         cutoff_time = time.time() - window_seconds
         errors = sum(
-            1 for entry in self.log_entries
+            1
+            for entry in self.log_entries
             if entry.timestamp >= cutoff_time
             and entry.level in (LogLevel.ERROR, LogLevel.CRITICAL)
         )
@@ -284,8 +285,10 @@ class LogAnalytics:
         anomalies = []
 
         # Analyze message patterns (first word)
-        message_starts = [entry.message.split()[0] if entry.message else ""
-                         for entry in self.log_entries]
+        message_starts = [
+            entry.message.split()[0] if entry.message else ""
+            for entry in self.log_entries
+        ]
         counter = Counter(message_starts)
 
         if counter:
@@ -293,14 +296,16 @@ class LogAnalytics:
             counts = list(counter.values())
             mean = sum(counts) / len(counts)
             variance = sum((x - mean) ** 2 for x in counts) / len(counts)
-            stddev = variance ** 0.5
+            stddev = variance**0.5
 
             # Find outliers
             for pattern, count in counter.items():
                 if stddev > 0:
                     z_score = abs((count - mean) / stddev)
                     if z_score > threshold:
-                        anomalies.append(f"Unusual frequency of '{pattern}': {count} occurrences")
+                        anomalies.append(
+                            f"Unusual frequency of '{pattern}': {count} occurrences"
+                        )
 
         return anomalies
 
@@ -406,7 +411,9 @@ class LogAggregator:
             pattern: Log pattern to add
         """
         self._patterns.append(pattern)
-        logger.debug("pattern_added", name=pattern.name, severity=pattern.severity.value)
+        logger.debug(
+            "pattern_added", name=pattern.name, severity=pattern.severity.value
+        )
 
     def log(
         self,
@@ -543,12 +550,16 @@ class LogAggregator:
             lines = []
             for log in self._log_entries:
                 # Index metadata
-                lines.append(json.dumps({
-                    "index": {
-                        "_index": "omnimind-logs",
-                        "_type": "_doc",
-                    }
-                }))
+                lines.append(
+                    json.dumps(
+                        {
+                            "index": {
+                                "_index": "omnimind-logs",
+                                "_type": "_doc",
+                            }
+                        }
+                    )
+                )
                 # Document
                 lines.append(json.dumps(log.to_dict()))
             return "\n".join(lines)
@@ -569,19 +580,17 @@ class LogAggregator:
         """Remove logs older than retention period."""
         if len(self._log_entries) > self.config.max_log_entries:
             # Remove oldest entries
-            self._log_entries = self._log_entries[-self.config.max_log_entries:]
+            self._log_entries = self._log_entries[-self.config.max_log_entries :]
 
         # Remove by time
         cutoff_time = time.time() - (self.config.retention_hours * 3600)
         self._log_entries = [
-            log for log in self._log_entries
-            if log.timestamp >= cutoff_time
+            log for log in self._log_entries if log.timestamp >= cutoff_time
         ]
 
         # Cleanup alerts
         self._alerts = [
-            alert for alert in self._alerts
-            if alert.timestamp >= cutoff_time
+            alert for alert in self._alerts if alert.timestamp >= cutoff_time
         ]
 
     def clear_logs(self) -> None:

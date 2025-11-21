@@ -14,6 +14,7 @@ License: MIT
 import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
+from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 import structlog
 import random
@@ -101,6 +102,7 @@ class RLEnvironment(ABC):
     @abstractmethod
     def reset(self) -> RLState:
         """Reset environment to initial state."""
+        pass
 
     @abstractmethod
     def step(self, action: RLAction) -> Tuple[RLState, RLReward, bool]:
@@ -113,10 +115,12 @@ class RLEnvironment(ABC):
         Returns:
             Tuple of (next_state, reward, done)
         """
+        pass
 
     @abstractmethod
     def get_available_actions(self, state: RLState) -> List[RLAction]:
         """Get available actions for current state."""
+        pass
 
 
 class RLAgent(ABC):
@@ -151,10 +155,12 @@ class RLAgent(ABC):
         self, state: RLState, available_actions: List[RLAction]
     ) -> RLAction:
         """Select action for given state."""
+        pass
 
     @abstractmethod
     def update(self, transition: RLTransition) -> None:
         """Update agent based on transition."""
+        pass
 
     def decay_exploration(self, decay_rate: float = 0.995) -> None:
         """Decay exploration rate over time."""
@@ -230,7 +236,7 @@ class QLearningAgent(RLAgent):
             # Assume all actions available (simplified)
             max_next_q = max(
                 [
-                    self.q_table.get(a, 0.0)
+                    self.q_table.get((transition.next_state.state_id, a), 0.0)
                     for a in self.q_table.keys()
                     if a[0] == transition.next_state.state_id
                 ]
@@ -408,7 +414,7 @@ class PolicyGradientAgent(RLAgent):
 
     def _compute_returns(self) -> List[float]:
         """Compute discounted returns for each timestep."""
-        returns: List[float] = []
+        returns = []
         G = 0.0
 
         # Compute returns in reverse order
@@ -428,7 +434,7 @@ class PolicyGradientAgent(RLAgent):
                 "baseline_value": self.baseline_value,
             }
 
-        all_params: List[float] = []
+        all_params = []
         for state_params in self.policy_params.values():
             all_params.extend(state_params.values())
 

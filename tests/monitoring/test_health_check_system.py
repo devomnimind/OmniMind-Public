@@ -27,9 +27,10 @@ def test_health_routes_can_be_imported():
 def test_health_dashboard_component():
     """Test that HealthDashboard component exists."""
     import os
+
     health_component_path = "web/frontend/src/components/HealthDashboard.tsx"
     assert os.path.exists(health_component_path), "HealthDashboard.tsx should exist"
-    
+
     with open(health_component_path) as f:
         content = f.read()
         # Check for key functionality
@@ -41,9 +42,10 @@ def test_health_dashboard_component():
 def test_error_boundaries_component():
     """Test that ComponentErrorBoundaries exists."""
     import os
+
     boundaries_path = "web/frontend/src/components/ComponentErrorBoundaries.tsx"
     assert os.path.exists(boundaries_path), "ComponentErrorBoundaries.tsx should exist"
-    
+
     with open(boundaries_path) as f:
         content = f.read()
         # Check for key error boundaries
@@ -56,13 +58,13 @@ def test_error_boundaries_component():
 def test_drag_drop_task_list():
     """Test that DragDropTaskList component exists."""
     import os
+
     component_path = "web/frontend/src/components/DragDropTaskList.tsx"
     assert os.path.exists(component_path), "DragDropTaskList.tsx should exist"
-    
+
     with open(component_path) as f:
         content = f.read()
         # Check for drag-drop functionality
         assert "DragDropTaskList" in content
         assert "handleDragStart" in content or "onDragStart" in content
         assert "handleDrop" in content or "onDrop" in content
-

@@ -14,7 +14,7 @@ License: MIT
 import time
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 import structlog
 
 logger = structlog.get_logger(__name__)
@@ -205,7 +205,7 @@ class DecisionTree:
 
     def _evaluate_category(self, node: DecisionNode, context: Dict[str, Any]) -> str:
         """Evaluate category-based criterion."""
-        category = str(context.get("category", "unknown"))
+        category = context.get("category", "unknown")
         if node.categories and category in node.categories:
             return category
         return "unknown"

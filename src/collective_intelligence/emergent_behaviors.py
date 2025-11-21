@@ -11,7 +11,7 @@ License: MIT
 import time
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 import structlog
 
 logger = structlog.get_logger(__name__)
@@ -60,7 +60,7 @@ class EmergenceDetector:
     - Complexity metrics
     """
 
-    def __init__(self) -> None:
+    def __init__(self):
         """Initialize emergence detector."""
         self.detected_patterns: List[EmergentPattern] = []
         self.logger = logger.bind(component="emergence_detector")
@@ -210,7 +210,7 @@ class SelfOrganization:
     - Adaptive behavior
     """
 
-    def __init__(self) -> None:
+    def __init__(self):
         """Initialize self-organizing system."""
         self.rules: List[BehaviorRule] = []
         self.agent_states: Dict[str, Dict[str, Any]] = {}
