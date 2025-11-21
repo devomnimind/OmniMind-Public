@@ -232,7 +232,7 @@ class MCPServer:
             "error": {"code": code, "message": message},
         }
         if data is not None:
-            payload["error"]["data"] = data  # type: ignore[index]
+            payload["error"]["data"] = data
         return json.dumps(payload)
 
     def _resolve_path(self, path: str) -> Path:
@@ -334,6 +334,6 @@ if __name__ == "__main__":
     try:
         server.start()
         logger.info("Press Ctrl+C to stop MCPServer")
-        server._thread.join()  # type: ignore[union-attr]
+        server._thread.join()
     except KeyboardInterrupt:
         server.stop()

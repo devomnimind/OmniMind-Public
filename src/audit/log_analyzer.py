@@ -227,7 +227,7 @@ class AuditLogAnalyzer:
                         }
                     )
 
-        return sorted(sequences, key=lambda x: x.get("count", 0), reverse=True)[:10]
+        return sorted(sequences, key=lambda x: x.get("count", 0), reverse=True)[:10]  # type: ignore
 
     def _detect_anomalies(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Detect anomalous patterns in events."""

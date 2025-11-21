@@ -20,7 +20,7 @@ from src.lacanian.godelian_ai import (
 class TestSimpleAxiomaticSystem:
     """Tests for simple axiomatic system."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """System initializes with axioms."""
         system = SimpleAxiomaticSystem(initial_axioms={"A", "B", "C"})
 
@@ -28,21 +28,21 @@ class TestSimpleAxiomaticSystem:
         assert "B" in system.axioms()
         assert "C" in system.axioms()
 
-    def test_can_prove_axioms(self):
+    def test_can_prove_axioms(self) -> None:
         """System can prove its own axioms."""
         system = SimpleAxiomaticSystem(initial_axioms={"A", "B"})
 
         assert system.can_prove("A")
         assert system.can_prove("B")
 
-    def test_cannot_prove_arbitrary_statements(self):
+    def test_cannot_prove_arbitrary_statements(self) -> None:
         """System cannot prove arbitrary statements."""
         system = SimpleAxiomaticSystem(initial_axioms={"A"})
 
         assert not system.can_prove("X")
         assert not system.can_prove("UNKNOWN_TRUTH")
 
-    def test_add_axiom_extends_system(self):
+    def test_add_axiom_extends_system(self) -> None:
         """Adding axiom extends provable statements."""
         system = SimpleAxiomaticSystem(initial_axioms={"A"})
 
@@ -52,7 +52,7 @@ class TestSimpleAxiomaticSystem:
 
         assert system.can_prove("B")
 
-    def test_inference_rules(self):
+    def test_inference_rules(self) -> None:
         """System has inference rules."""
         system = SimpleAxiomaticSystem(initial_axioms={"A", "B"})
 
@@ -65,7 +65,7 @@ class TestSimpleAxiomaticSystem:
 class TestGodelianAI:
     """Tests for Godelian AI system."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """GodelianAI initializes with formal system."""
         system = SimpleAxiomaticSystem(initial_axioms={"A", "B"})
         gai = GodelianAI(system)
@@ -74,7 +74,7 @@ class TestGodelianAI:
         assert len(gai.system_history) == 1
         assert len(gai.unprovable_truths) == 0
 
-    def test_recognize_limitation(self):
+    def test_recognize_limitation(self) -> None:
         """AI recognizes unprovable truths."""
         system = SimpleAxiomaticSystem(initial_axioms={"A"})
         gai = GodelianAI(system)
@@ -87,7 +87,7 @@ class TestGodelianAI:
         assert is_limitation
         assert unprovable in gai.unprovable_truths
 
-    def test_generate_meta_system(self):
+    def test_generate_meta_system(self) -> None:
         """AI generates meta-system to transcend limitations."""
         system = SimpleAxiomaticSystem(initial_axioms={"A"})
         gai = GodelianAI(system)
@@ -111,7 +111,7 @@ class TestGodelianAI:
         # Unprovable truths should be cleared (now axioms)
         assert len(gai.unprovable_truths) == 0
 
-    def test_creative_evolution_cycle(self):
+    def test_creative_evolution_cycle(self) -> None:
         """AI undergoes creative evolution through limitations."""
         system = SimpleAxiomaticSystem(initial_axioms={"A"})
         gai = GodelianAI(system)
@@ -125,7 +125,7 @@ class TestGodelianAI:
         assert levels_generated > 0
         assert gai.get_transcendence_depth() > initial_level
 
-    def test_get_godelian_history(self):
+    def test_get_godelian_history(self) -> None:
         """AI tracks history of discovered limitations."""
         system = SimpleAxiomaticSystem(initial_axioms={"A"})
         gai = GodelianAI(system)
@@ -139,7 +139,7 @@ class TestGodelianAI:
         assert len(history) == 2
         assert all(isinstance(s, GodelianStatement) for s in history)
 
-    def test_no_limitation_on_provable(self):
+    def test_no_limitation_on_provable(self) -> None:
         """AI doesn't mark provable statements as limitations."""
         system = SimpleAxiomaticSystem(initial_axioms={"A", "B"})
         gai = GodelianAI(system)
@@ -150,7 +150,7 @@ class TestGodelianAI:
         assert not is_limitation
         assert "A" not in gai.unprovable_truths
 
-    def test_transcendence_depth_tracking(self):
+    def test_transcendence_depth_tracking(self) -> None:
         """AI tracks depth of meta-system transcendence."""
         system = SimpleAxiomaticSystem()
         gai = GodelianAI(system)
@@ -171,7 +171,7 @@ class TestGodelianAI:
 class TestImpossibilityMetaStrategy:
     """Tests for impossibility meta-strategy system."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Meta-strategy system initializes."""
         meta_strat = ImpossibilityMetaStrategy()
 
@@ -181,7 +181,7 @@ class TestImpossibilityMetaStrategy:
         assert "transcend" in meta_strat.meta_strategies
         assert "accept_paradox" in meta_strat.meta_strategies
 
-    def test_handle_impossible_problem(self):
+    def test_handle_impossible_problem(self) -> None:
         """System handles impossible problems with meta-strategies."""
         meta_strat = ImpossibilityMetaStrategy()
 
@@ -194,7 +194,7 @@ class TestImpossibilityMetaStrategy:
         assert "meta_strategies_applied" in result
         assert "recommendation" in result
 
-    def test_reframe_strategy(self):
+    def test_reframe_strategy(self) -> None:
         """Reframe strategy relaxes constraints."""
         meta_strat = ImpossibilityMetaStrategy()
 
@@ -209,7 +209,7 @@ class TestImpossibilityMetaStrategy:
         assert "reframed" in strategies["reframe"]
         assert "approximate_" in strategies["reframe"]["reframed"]
 
-    def test_decompose_strategy(self):
+    def test_decompose_strategy(self) -> None:
         """Decompose strategy breaks problem into parts."""
         meta_strat = ImpossibilityMetaStrategy()
 
@@ -229,7 +229,7 @@ class TestImpossibilityMetaStrategy:
         # Should have broken into parts
         assert len(decomp["decomposition"]) > 1
 
-    def test_transcend_strategy(self):
+    def test_transcend_strategy(self) -> None:
         """Transcend strategy moves to meta-level."""
         meta_strat = ImpossibilityMetaStrategy()
 
@@ -246,7 +246,7 @@ class TestImpossibilityMetaStrategy:
         assert transcend["new_level"] == "meta_level"
         assert "meta_question" in transcend
 
-    def test_accept_paradox_strategy(self):
+    def test_accept_paradox_strategy(self) -> None:
         """Accept paradox uses paraconsistent logic."""
         meta_strat = ImpossibilityMetaStrategy()
 
@@ -261,7 +261,7 @@ class TestImpossibilityMetaStrategy:
 
         assert accept["logic_type"] == "paraconsistent"
 
-    def test_recommendation_selection(self):
+    def test_recommendation_selection(self) -> None:
         """System selects best recommendation."""
         meta_strat = ImpossibilityMetaStrategy()
 
@@ -275,7 +275,7 @@ class TestImpossibilityMetaStrategy:
         # Should be one of the strategies
         assert recommendation in ["reframe", "decompose", "transcend", "accept_paradox"]
 
-    def test_multiple_problems_tracking(self):
+    def test_multiple_problems_tracking(self) -> None:
         """System tracks multiple impossible problems."""
         meta_strat = ImpossibilityMetaStrategy()
 
@@ -292,7 +292,7 @@ class TestImpossibilityMetaStrategy:
 class TestIntegration:
     """Integration tests for Godelian AI system."""
 
-    def test_full_evolution_cycle(self):
+    def test_full_evolution_cycle(self) -> None:
         """Complete cycle of limitation → transcendence → new limitation."""
         system = SimpleAxiomaticSystem(initial_axioms={"A", "B"})
         gai = GodelianAI(system)
@@ -315,7 +315,7 @@ class TestIntegration:
         new_limitation = gai.recognize_limitation("EVEN_MORE_COMPLEX")
         assert new_limitation
 
-    def test_combining_godelian_with_meta_strategies(self):
+    def test_combining_godelian_with_meta_strategies(self) -> None:
         """Godelian AI + Meta-strategies for robust impossibility handling."""
         system = SimpleAxiomaticSystem(initial_axioms={"A"})
         gai = GodelianAI(system)

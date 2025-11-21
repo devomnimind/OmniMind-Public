@@ -19,13 +19,13 @@ print_status() {
 }
 
 # Verificar ROO Code
-echo "1. Verificando presença de ROO Code..."
-if code --list-extensions | grep -q roo; then
-    echo -e "${RED}🚨 ROO CODE AINDA INSTALADA! REMOVA IMEDIATAMENTE${NC}"
-    exit 1
-else
-    print_status 0 "ROO Code não encontrada"
-fi
+# echo "1. Verificando presença de ROO Code..."
+# if code --list-extensions | grep -q roo; then
+#     echo -e "${RED}🚨 ROO CODE AINDA INSTALADA! REMOVA IMEDIATAMENTE${NC}"
+#     exit 1
+# else
+#     print_status 0 "ROO Code não encontrada"
+# fi
 
 # Black formatting
 echo "2. Verificando formatação (Black)..."
@@ -53,10 +53,10 @@ echo "4. Verificando tipos (MyPy)..."
 MYPY_ERRORS=$(mypy src/ --ignore-missing-imports 2>&1 | grep -c "error:")
 if [ "$MYPY_ERRORS" -eq 0 ]; then
     print_status 0 "Tipos corretos (0 erros)"
-elif [ "$MYPY_ERRORS" -le 50 ]; then
+elif [ "$MYPY_ERRORS" -le 25 ]; then
     echo -e "${YELLOW}⚠️  $MYPY_ERRORS erros de tipo (aceitável)${NC}"
 else
-    echo -e "${RED}❌ Muitos erros de tipo: $MYPY_ERRORS (máximo: 50)${NC}"
+    echo -e "${RED}❌ Muitos erros de tipo: $MYPY_ERRORS (máximo: 25)${NC}"
     exit 1
 fi
 

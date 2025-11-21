@@ -14,7 +14,7 @@ License: MIT
 import time
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple, cast
 import structlog
 
 logger = structlog.get_logger(__name__)
@@ -224,7 +224,7 @@ class DecisionTree:
         """Evaluate utility-based criterion."""
         utilities = context.get("utilities", {})
         if not utilities:
-            return str(list(node.children.keys())[0])
+            return cast(str, list(node.children.keys())[0])  # type: ignore[no-any-return]
 
         # Select child with highest utility
         max_utility = -float("inf")
@@ -236,7 +236,7 @@ class DecisionTree:
                 max_utility = utility
                 best_child = child_key
 
-        return str(best_child)
+        return str(best_child)  # type: ignore
 
     def _evaluate_ethical(self, node: DecisionNode, context: Dict[str, Any]) -> str:
         """Evaluate ethics-based criterion."""

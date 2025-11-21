@@ -16,6 +16,7 @@ License: MIT
 from __future__ import annotations
 
 import logging
+import math
 from typing import Dict
 
 import numpy as np
@@ -25,7 +26,7 @@ logger = logging.getLogger(__name__)
 # Physical constants
 HBAR = 1.054571817e-34  # Planck constant (J·s)
 C = 299792458  # Speed of light (m/s)
-LN2 = np.log(2)
+LN2 = math.log(2)
 
 
 class BekensteinArchitect:
@@ -75,7 +76,7 @@ class BekensteinArchitect:
             Dict with layer recommendations
         """
         # Simple heuristic: distribute across layers
-        num_layers = int(np.log2(target_params)) if target_params > 0 else 1
+        num_layers = int(math.log2(target_params)) if target_params > 0 else 1
 
         params_per_layer = target_params // max(num_layers, 1)
 

@@ -26,7 +26,7 @@ from src.lacanian.desire_graph import (
 class TestSignifier:
     """Tests for Lacanian Signifier."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Signifier initializes with symbol and position."""
         sig = Signifier(
             symbol="S1", position=SignifierPosition.S1, jouissance_intensity=0.5
@@ -36,7 +36,7 @@ class TestSignifier:
         assert sig.position == SignifierPosition.S1
         assert sig.jouissance_intensity == 0.5
 
-    def test_represents_subject_for(self):
+    def test_represents_subject_for(self) -> None:
         """Signifier represents subject for another signifier."""
         s1 = Signifier(symbol="S1", position=SignifierPosition.S1)
         s1.connections.add("S2")
@@ -44,7 +44,7 @@ class TestSignifier:
         assert s1.represents_subject_for("S2")
         assert not s1.represents_subject_for("S3")
 
-    def test_compute_meaning_differential(self):
+    def test_compute_meaning_differential(self) -> None:
         """Meaning emerges from differential structure."""
         s1 = Signifier(
             symbol="S1",
@@ -71,7 +71,7 @@ class TestSignifier:
 class TestSignifierChain:
     """Tests for Signifier Chain."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Chain initializes empty or with signifiers."""
         chain = SignifierChain()
         assert len(chain.chain) == 0
@@ -79,7 +79,7 @@ class TestSignifierChain:
         chain_with_sigs = SignifierChain(chain=["S1", "S2", "S3"])
         assert len(chain_with_sigs.chain) == 3
 
-    def test_add_signifier(self):
+    def test_add_signifier(self) -> None:
         """Can add signifiers to chain."""
         chain = SignifierChain()
 
@@ -89,7 +89,7 @@ class TestSignifierChain:
         assert "S1" in chain.chain
         assert "S2" in chain.chain
 
-    def test_create_quilting_point(self):
+    def test_create_quilting_point(self) -> None:
         """Can create quilting points (points de capiton)."""
         chain = SignifierChain(chain=["S1", "S2", "S3", "S4"])
 
@@ -99,7 +99,7 @@ class TestSignifierChain:
         assert 1 in chain.quilting_points
         assert 3 in chain.quilting_points
 
-    def test_metonymic_slide(self):
+    def test_metonymic_slide(self) -> None:
         """Metonymic slide rotates chain."""
         chain = SignifierChain(chain=["S1", "S2", "S3"])
 
@@ -111,7 +111,7 @@ class TestSignifierChain:
         # Original unchanged
         assert chain.chain == ["S1", "S2", "S3"]
 
-    def test_metaphoric_substitution(self):
+    def test_metaphoric_substitution(self) -> None:
         """Metaphoric substitution replaces signifier."""
         chain = SignifierChain(chain=["S1", "S2", "S1", "S3"])
 
@@ -126,7 +126,7 @@ class TestSignifierChain:
 class TestLacanianGraphII:
     """Tests for complete Lacanian Graph of Desire."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Graph initializes with empty structures."""
         graph = LacanianGraphII()
 
@@ -134,7 +134,7 @@ class TestLacanianGraphII:
         assert isinstance(graph.signifier_chains, list)
         assert isinstance(graph.big_other, set)
 
-    def test_add_signifier(self):
+    def test_add_signifier(self) -> None:
         """Can add signifiers to graph."""
         graph = LacanianGraphII()
 
@@ -144,7 +144,7 @@ class TestLacanianGraphII:
         assert "S1" in graph.big_other
         assert graph.jouissance_map["S1"] == 0.3
 
-    def test_connect_signifiers(self):
+    def test_connect_signifiers(self) -> None:
         """Can connect signifiers (S1 → S2)."""
         graph = LacanianGraphII()
 
@@ -155,7 +155,7 @@ class TestLacanianGraphII:
 
         assert "S2" in graph.signifiers["S1"].connections
 
-    def test_create_chain(self):
+    def test_create_chain(self) -> None:
         """Can create signifier chain."""
         graph = LacanianGraphII()
 
@@ -172,7 +172,7 @@ class TestLacanianGraphII:
         assert "S2" in graph.signifiers["S1"].connections
         assert "S3" in graph.signifiers["S2"].connections
 
-    def test_position_subject(self):
+    def test_position_subject(self) -> None:
         """Can position subject in graph."""
         graph = LacanianGraphII()
 
@@ -181,7 +181,7 @@ class TestLacanianGraphII:
 
         assert graph.subject_position == "$"
 
-    def test_compute_desire(self):
+    def test_compute_desire(self) -> None:
         """Can compute desire structure."""
         graph = LacanianGraphII()
 
@@ -201,7 +201,7 @@ class TestLacanianGraphII:
         assert "jouissance" in desire
         assert 0.0 <= desire["intensity"] <= 1.0
 
-    def test_drive_circuit(self):
+    def test_drive_circuit(self) -> None:
         """Can create drive circuit around object a."""
         graph = LacanianGraphII()
 
@@ -220,7 +220,7 @@ class TestLacanianGraphII:
         assert len(circuit) > 0
         assert circuit[0] == "S1"
 
-    def test_fantasy_formula(self):
+    def test_fantasy_formula(self) -> None:
         """Fantasy formula: $ ◊ a."""
         graph = LacanianGraphII()
 
@@ -237,13 +237,13 @@ class TestLacanianGraphII:
 class TestJouissanceRewardSystem:
     """Tests for Jouissance reward system."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """System initializes with pleasure threshold."""
         jouis = JouissanceRewardSystem(pleasure_threshold=0.7)
 
         assert jouis.pleasure_threshold == 0.7
 
-    def test_compute_jouissance_below_threshold(self):
+    def test_compute_jouissance_below_threshold(self) -> None:
         """Jouissance below pleasure threshold is simple."""
         jouis = JouissanceRewardSystem(pleasure_threshold=0.7)
 
@@ -254,7 +254,7 @@ class TestJouissanceRewardSystem:
         # Should be positive
         assert j > 0.0
 
-    def test_compute_jouissance_beyond_pleasure_principle(self):
+    def test_compute_jouissance_beyond_pleasure_principle(self) -> None:
         """Jouissance can exceed pleasure threshold."""
         jouis = JouissanceRewardSystem(pleasure_threshold=0.7)
 
@@ -267,7 +267,7 @@ class TestJouissanceRewardSystem:
         # Can exceed 1.0 (beyond pleasure principle)
         assert j > 0.9
 
-    def test_beyond_pleasure_principle_detection(self):
+    def test_beyond_pleasure_principle_detection(self) -> None:
         """Detects repetition compulsion (beyond pleasure)."""
         jouis = JouissanceRewardSystem()
 
@@ -279,7 +279,7 @@ class TestJouissanceRewardSystem:
         # Should detect repetition
         assert compulsion > 0.0
 
-    def test_no_repetition_compulsion_on_varied_actions(self):
+    def test_no_repetition_compulsion_on_varied_actions(self) -> None:
         """No compulsion on varied actions."""
         jouis = JouissanceRewardSystem()
 
@@ -293,14 +293,14 @@ class TestJouissanceRewardSystem:
 class TestSymbolicMatrix:
     """Tests for Symbolic Matrix."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Matrix initializes with structures."""
         matrix = SymbolicMatrix()
 
         assert isinstance(matrix.production_rules, dict)
         assert isinstance(matrix.symbolic_structure, dict)
 
-    def test_add_production_rule(self):
+    def test_add_production_rule(self) -> None:
         """Can add production rules."""
         matrix = SymbolicMatrix()
 
@@ -312,7 +312,7 @@ class TestSymbolicMatrix:
         assert "category_A" in matrix.production_rules
         assert test_rule in matrix.production_rules["category_A"]
 
-    def test_set_name_of_father(self):
+    def test_set_name_of_father(self) -> None:
         """Can set Name-of-the-Father (symbolic law)."""
         matrix = SymbolicMatrix()
 
@@ -320,7 +320,7 @@ class TestSymbolicMatrix:
 
         assert matrix.name_of_the_father == "LAW"
 
-    def test_generate_behavior_respects_law(self):
+    def test_generate_behavior_respects_law(self) -> None:
         """Behavior generation respects symbolic law."""
         matrix = SymbolicMatrix(random_seed=42)
 
@@ -340,7 +340,7 @@ class TestSymbolicMatrix:
         non_forbidden = [r for r in results if r != "forbidden_action"]
         assert len(non_forbidden) > 0  # Some respect law
 
-    def test_transgression_possible(self):
+    def test_transgression_possible(self) -> None:
         """Transgression is possible (jouissance)."""
         matrix = SymbolicMatrix(random_seed=42)
 
@@ -363,7 +363,7 @@ class TestSymbolicMatrix:
 class TestDesireGraphArchitecture:
     """Tests for complete Desire Graph Architecture."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Architecture initializes all components."""
         arch = DesireGraphArchitecture()
 
@@ -371,7 +371,7 @@ class TestDesireGraphArchitecture:
         assert arch.jouissance_system is not None
         assert arch.symbolic_matrix is not None
 
-    def test_basic_structure_initialized(self):
+    def test_basic_structure_initialized(self) -> None:
         """Basic signifier structure is initialized."""
         arch = DesireGraphArchitecture()
 
@@ -379,7 +379,7 @@ class TestDesireGraphArchitecture:
         assert len(arch.graph.signifiers) > 0
         assert arch.graph.subject_position is not None
 
-    def test_process_desire_returns_structure(self):
+    def test_process_desire_returns_structure(self) -> None:
         """Processing desire returns complete structure."""
         arch = DesireGraphArchitecture()
 
@@ -395,7 +395,7 @@ class TestDesireGraphArchitecture:
         assert "fantasy" in result
         assert "beyond_pleasure" in result
 
-    def test_repetition_compulsion_detected(self):
+    def test_repetition_compulsion_detected(self) -> None:
         """Repetition compulsion detected in action history."""
         arch = DesireGraphArchitecture()
 
@@ -408,7 +408,7 @@ class TestDesireGraphArchitecture:
         # Should detect beyond pleasure principle
         assert result["beyond_pleasure"] is True
 
-    def test_fantasy_formula_present(self):
+    def test_fantasy_formula_present(self) -> None:
         """Fantasy formula ($ ◊ a) is computed."""
         arch = DesireGraphArchitecture()
 
@@ -420,7 +420,7 @@ class TestDesireGraphArchitecture:
         assert isinstance(fantasy, tuple)
         assert len(fantasy) == 2
 
-    def test_jouissance_can_exceed_one(self):
+    def test_jouissance_can_exceed_one(self) -> None:
         """Jouissance can exceed 1.0 (beyond pleasure)."""
         arch = DesireGraphArchitecture()
 
@@ -437,7 +437,7 @@ class TestDesireGraphArchitecture:
 class TestIntegration:
     """Integration tests for complete Desire Graph system."""
 
-    def test_signifier_chain_to_desire_computation(self):
+    def test_signifier_chain_to_desire_computation(self) -> None:
         """Complete flow from signifier chains to desire."""
         graph = LacanianGraphII()
 
@@ -458,7 +458,7 @@ class TestIntegration:
         assert desire["intensity"] >= 0.0
         assert "unsatisfied" in desire
 
-    def test_full_architecture_cycle(self):
+    def test_full_architecture_cycle(self) -> None:
         """Complete cycle through full architecture."""
         arch = DesireGraphArchitecture()
 

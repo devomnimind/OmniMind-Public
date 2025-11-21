@@ -17,6 +17,7 @@ License: MIT
 from __future__ import annotations
 
 import logging
+import math
 from dataclasses import dataclass
 from typing import Any, Dict, List
 
@@ -78,7 +79,7 @@ class BlackHoleMetaLearner:
         r_s = 2 * G_CONSTANT * knowledge_mass / (C_CONSTANT**2)
 
         # Critical volume
-        critical_volume = (4 / 3) * np.pi * (r_s**3)
+        critical_volume = (4 / 3) * math.pi * (r_s**3)
 
         return knowledge_volume <= critical_volume or density > self.critical_density
 

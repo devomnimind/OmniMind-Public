@@ -307,9 +307,11 @@ class EnhancedMCPClient:
                         backoff_ms=backoff_ms,
                     )
                     time.sleep(backoff_ms / 1000.0)
-                    backoff_ms = min(
-                        backoff_ms * self.retry_config.backoff_multiplier,
-                        self.retry_config.max_backoff_ms,
+                    backoff_ms = int(
+                        min(
+                            backoff_ms * self.retry_config.backoff_multiplier,
+                            self.retry_config.max_backoff_ms,
+                        )
                     )
 
             except urllib.error.URLError as e:
@@ -323,9 +325,11 @@ class EnhancedMCPClient:
                         backoff_ms=backoff_ms,
                     )
                     time.sleep(backoff_ms / 1000.0)
-                    backoff_ms = min(
-                        backoff_ms * self.retry_config.backoff_multiplier,
-                        self.retry_config.max_backoff_ms,
+                    backoff_ms = int(
+                        min(
+                            backoff_ms * self.retry_config.backoff_multiplier,
+                            self.retry_config.max_backoff_ms,
+                        )
                     )
 
             except Exception as e:

@@ -19,7 +19,7 @@ from src.optimization.memory_optimization import (
 class TestMemoryUsageSnapshot:
     """Test memory usage snapshot."""
 
-    def test_snapshot_creation(self):
+    def test_snapshot_creation(self) -> None:
         """Test creating memory snapshot."""
         from datetime import datetime
 
@@ -37,7 +37,7 @@ class TestMemoryUsageSnapshot:
         assert snapshot.percent == 15.2
         assert snapshot.objects_count == 5000
 
-    def test_snapshot_to_dict(self):
+    def test_snapshot_to_dict(self) -> None:
         """Test snapshot serialization."""
         from datetime import datetime
 
@@ -60,7 +60,7 @@ class TestMemoryUsageSnapshot:
 class TestAllocationStats:
     """Test allocation statistics."""
 
-    def test_stats_creation(self):
+    def test_stats_creation(self) -> None:
         """Test creating allocation stats."""
         stats = AllocationStats()
 
@@ -68,7 +68,7 @@ class TestAllocationStats:
         assert stats.current_live_objects == 0
         assert stats.peak_live_objects == 0
 
-    def test_utilization_calculation(self):
+    def test_utilization_calculation(self) -> None:
         """Test memory utilization calculation."""
         stats = AllocationStats(
             total_bytes_allocated=1000,
@@ -79,7 +79,7 @@ class TestAllocationStats:
 
         assert utilization == 0.6
 
-    def test_utilization_zero_allocated(self):
+    def test_utilization_zero_allocated(self) -> None:
         """Test utilization with zero allocation."""
         stats = AllocationStats()
 
@@ -91,7 +91,7 @@ class TestAllocationStats:
 class TestMemoryPool:
     """Test memory pool functionality."""
 
-    def test_pool_creation(self):
+    def test_pool_creation(self) -> None:
         """Test creating memory pool."""
 
         def factory():
@@ -103,7 +103,7 @@ class TestMemoryPool:
         assert pool.max_size == 10
         assert pool.stats.total_allocations == 5
 
-    def test_acquire_from_pool(self):
+    def test_acquire_from_pool(self) -> None:
         """Test acquiring object from pool."""
 
         def factory():
@@ -118,7 +118,7 @@ class TestMemoryPool:
         assert len(pool.pool) == initial_size - 1
         assert pool.stats.current_live_objects == 1
 
-    def test_acquire_when_empty(self):
+    def test_acquire_when_empty(self) -> None:
         """Test acquiring when pool is empty."""
 
         def factory():
@@ -131,7 +131,7 @@ class TestMemoryPool:
         assert isinstance(obj, dict)
         assert pool.stats.total_allocations == 1
 
-    def test_release_to_pool(self):
+    def test_release_to_pool(self) -> None:
         """Test releasing object back to pool."""
 
         def factory():
@@ -145,7 +145,7 @@ class TestMemoryPool:
         assert len(pool.pool) == 2
         assert pool.stats.total_deallocations == 1
 
-    def test_release_with_reset(self):
+    def test_release_with_reset(self) -> None:
         """Test releasing with reset function."""
 
         def factory():
@@ -164,7 +164,7 @@ class TestMemoryPool:
         obj2 = pool.acquire()
         assert obj2["value"] == 0
 
-    def test_pool_max_size_limit(self):
+    def test_pool_max_size_limit(self) -> None:
         """Test that pool respects max size limit."""
 
         def factory():
@@ -180,7 +180,7 @@ class TestMemoryPool:
         # Pool should not exceed max_size
         assert len(pool.pool) <= 3
 
-    def test_peak_live_objects_tracking(self):
+    def test_peak_live_objects_tracking(self) -> None:
         """Test tracking of peak live objects."""
 
         def factory():
@@ -200,7 +200,7 @@ class TestMemoryPool:
         # Peak should remain at 3
         assert pool.stats.peak_live_objects == 3
 
-    def test_clear_pool(self):
+    def test_clear_pool(self) -> None:
         """Test clearing pool."""
 
         def factory():
@@ -218,14 +218,14 @@ class TestMemoryPool:
 class TestMemoryAllocator:
     """Test memory allocator."""
 
-    def test_allocator_creation(self):
+    def test_allocator_creation(self) -> None:
         """Test creating memory allocator."""
         allocator = MemoryAllocator()
 
         assert len(allocator.pools) == 0
         assert isinstance(allocator.stats_by_type, dict)
 
-    def test_create_pool(self):
+    def test_create_pool(self) -> None:
         """Test creating named pool."""
         allocator = MemoryAllocator()
 
@@ -239,7 +239,7 @@ class TestMemoryAllocator:
         assert "test_pool" in allocator.pools
         assert pool is allocator.pools["test_pool"]
 
-    def test_create_duplicate_pool(self):
+    def test_create_duplicate_pool(self) -> None:
         """Test creating pool with existing name."""
         allocator = MemoryAllocator()
 
@@ -249,7 +249,7 @@ class TestMemoryAllocator:
         # Should return the first pool
         assert pool1 is pool2
 
-    def test_get_pool(self):
+    def test_get_pool(self) -> None:
         """Test retrieving pool by name."""
         allocator = MemoryAllocator()
         allocator.create_pool("my_pool", lambda: [])
@@ -259,7 +259,7 @@ class TestMemoryAllocator:
         assert pool is not None
         assert isinstance(pool, MemoryPool)
 
-    def test_get_nonexistent_pool(self):
+    def test_get_nonexistent_pool(self) -> None:
         """Test retrieving nonexistent pool."""
         allocator = MemoryAllocator()
 
@@ -267,7 +267,7 @@ class TestMemoryAllocator:
 
         assert pool is None
 
-    def test_get_all_stats(self):
+    def test_get_all_stats(self) -> None:
         """Test getting stats for all pools."""
         allocator = MemoryAllocator()
 
@@ -281,7 +281,7 @@ class TestMemoryAllocator:
         assert stats["pool1"].total_allocations == 3
         assert stats["pool2"].total_allocations == 5
 
-    def test_clear_all_pools(self):
+    def test_clear_all_pools(self) -> None:
         """Test clearing all pools."""
         allocator = MemoryAllocator()
 
@@ -297,14 +297,14 @@ class TestMemoryAllocator:
 class TestMemoryLeakDetector:
     """Test memory leak detection."""
 
-    def test_detector_creation(self):
+    def test_detector_creation(self) -> None:
         """Test creating leak detector."""
         detector = MemoryLeakDetector(check_interval=50)
 
         assert detector.check_interval == 50
         assert len(detector.tracked_objects) == 0
 
-    def test_track_object(self):
+    def test_track_object(self) -> None:
         """Test tracking an object."""
         detector = MemoryLeakDetector()
 
@@ -319,7 +319,7 @@ class TestMemoryLeakDetector:
         # For built-in types (dict, list), they're just counted
         assert detector.allocation_count == 1
 
-    def test_object_cleanup_on_deletion(self):
+    def test_object_cleanup_on_deletion(self) -> None:
         """Test that deleted objects are cleaned up."""
         detector = MemoryLeakDetector()
 
@@ -337,7 +337,7 @@ class TestMemoryLeakDetector:
         # At minimum, allocation count should be recorded
         assert detector.allocation_count > 0
 
-    def test_check_for_leaks(self):
+    def test_check_for_leaks(self) -> None:
         """Test leak detection."""
         detector = MemoryLeakDetector()
 
@@ -352,7 +352,7 @@ class TestMemoryLeakDetector:
         # Should detect potential leaks for dict type
         assert isinstance(leaks, list)
 
-    def test_leak_report(self):
+    def test_leak_report(self) -> None:
         """Test getting leak report."""
         detector = MemoryLeakDetector()
 
@@ -377,7 +377,7 @@ class TestMemoryLeakDetector:
 class TestMemoryProfiler:
     """Test memory profiler."""
 
-    def test_profiler_creation(self):
+    def test_profiler_creation(self) -> None:
         """Test creating memory profiler."""
         profiler = MemoryProfiler(snapshot_interval=30)
 
@@ -385,7 +385,7 @@ class TestMemoryProfiler:
         assert len(profiler.snapshots) == 0
         assert profiler.baseline is None
 
-    def test_take_snapshot(self):
+    def test_take_snapshot(self) -> None:
         """Test taking memory snapshot."""
         profiler = MemoryProfiler()
 
@@ -396,7 +396,7 @@ class TestMemoryProfiler:
         assert snapshot.objects_count > 0
         assert len(profiler.snapshots) == 1
 
-    def test_baseline_setting(self):
+    def test_baseline_setting(self) -> None:
         """Test that first snapshot sets baseline."""
         profiler = MemoryProfiler()
 
@@ -405,7 +405,7 @@ class TestMemoryProfiler:
         assert profiler.baseline is not None
         assert isinstance(profiler.baseline, MemoryUsageSnapshot)
 
-    def test_get_memory_growth(self):
+    def test_get_memory_growth(self) -> None:
         """Test calculating memory growth."""
         profiler = MemoryProfiler()
 
@@ -421,7 +421,7 @@ class TestMemoryProfiler:
         # Should show some growth (or at least not error)
         assert isinstance(growth, float)
 
-    def test_detect_memory_spike(self):
+    def test_detect_memory_spike(self) -> None:
         """Test memory spike detection."""
         profiler = MemoryProfiler()
 
@@ -433,7 +433,7 @@ class TestMemoryProfiler:
 
         assert isinstance(spike, bool)
 
-    def test_get_statistics(self):
+    def test_get_statistics(self) -> None:
         """Test getting memory statistics."""
         profiler = MemoryProfiler()
 
@@ -447,7 +447,7 @@ class TestMemoryProfiler:
         assert "min_rss_mb" in stats
         assert "max_rss_mb" in stats
 
-    def test_snapshot_limit(self):
+    def test_snapshot_limit(self) -> None:
         """Test that snapshots are limited."""
         profiler = MemoryProfiler()
 
@@ -462,7 +462,7 @@ class TestMemoryProfiler:
 class TestMemoryOptimizer:
     """Test integrated memory optimizer."""
 
-    def test_optimizer_creation(self):
+    def test_optimizer_creation(self) -> None:
         """Test creating memory optimizer."""
         optimizer = MemoryOptimizer()
 
@@ -470,7 +470,7 @@ class TestMemoryOptimizer:
         assert isinstance(optimizer.profiler, MemoryProfiler)
         assert isinstance(optimizer.leak_detector, MemoryLeakDetector)
 
-    def test_optimize_gc(self):
+    def test_optimize_gc(self) -> None:
         """Test GC optimization."""
         optimizer = MemoryOptimizer()
 
@@ -481,7 +481,7 @@ class TestMemoryOptimizer:
         thresholds = gc.get_threshold()
         assert thresholds[0] == 1000
 
-    def test_create_object_pool(self):
+    def test_create_object_pool(self) -> None:
         """Test creating object pool through optimizer."""
         optimizer = MemoryOptimizer()
 
@@ -491,7 +491,7 @@ class TestMemoryOptimizer:
         assert optimizer.allocator.get_pool("test_pool") is pool
         assert "pool_test_pool_created" in optimizer.optimizations_applied
 
-    def test_track_for_leaks(self):
+    def test_track_for_leaks(self) -> None:
         """Test tracking objects for leaks."""
         optimizer = MemoryOptimizer()
 
@@ -500,7 +500,7 @@ class TestMemoryOptimizer:
 
         assert optimizer.leak_detector.allocation_count == 1
 
-    def test_take_snapshot(self):
+    def test_take_snapshot(self) -> None:
         """Test taking snapshot through optimizer."""
         optimizer = MemoryOptimizer()
 
@@ -509,7 +509,7 @@ class TestMemoryOptimizer:
         assert isinstance(snapshot, MemoryUsageSnapshot)
         assert len(optimizer.profiler.snapshots) == 1
 
-    def test_get_optimization_report(self):
+    def test_get_optimization_report(self) -> None:
         """Test getting comprehensive optimization report."""
         optimizer = MemoryOptimizer()
 
@@ -525,7 +525,7 @@ class TestMemoryOptimizer:
         assert "leak_report" in report
         assert len(report["optimizations_applied"]) > 0
 
-    def test_suggest_optimizations(self):
+    def test_suggest_optimizations(self) -> None:
         """Test optimization suggestions."""
         optimizer = MemoryOptimizer()
 
@@ -541,7 +541,7 @@ class TestMemoryOptimizer:
 class TestIntegration:
     """Integration tests for memory optimization."""
 
-    def test_full_workflow(self):
+    def test_full_workflow(self) -> None:
         """Test complete memory optimization workflow."""
         optimizer = MemoryOptimizer()
 
@@ -584,7 +584,7 @@ class TestIntegration:
         suggestions = optimizer.suggest_optimizations()
         assert isinstance(suggestions, list)
 
-    def test_memory_pool_reuse(self):
+    def test_memory_pool_reuse(self) -> None:
         """Test that memory pool actually reuses objects."""
         optimizer = MemoryOptimizer()
 

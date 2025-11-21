@@ -13,13 +13,13 @@ from src.metacognition.issue_prediction import (
 class TestTimeSeriesAnalyzer:
     """Tests for TimeSeriesAnalyzer."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Test analyzer initialization."""
         analyzer = TimeSeriesAnalyzer(window_size=50)
         assert analyzer.window_size == 50
         assert len(analyzer._data) == len(MetricType)
 
-    def test_add_data_point(self):
+    def test_add_data_point(self) -> None:
         """Test adding data points."""
         analyzer = TimeSeriesAnalyzer(window_size=10)
 
@@ -28,7 +28,7 @@ class TestTimeSeriesAnalyzer:
 
         assert len(analyzer._data[MetricType.CPU_USAGE]) == 2
 
-    def test_window_size_limit(self):
+    def test_window_size_limit(self) -> None:
         """Test that window size is respected."""
         analyzer = TimeSeriesAnalyzer(window_size=5)
 
@@ -39,7 +39,7 @@ class TestTimeSeriesAnalyzer:
         # Should only keep last 5
         assert len(analyzer._data[MetricType.CPU_USAGE]) == 5
 
-    def test_get_trend_increasing(self):
+    def test_get_trend_increasing(self) -> None:
         """Test trend detection for increasing values."""
         analyzer = TimeSeriesAnalyzer(window_size=100)
 
@@ -51,7 +51,7 @@ class TestTimeSeriesAnalyzer:
         assert trend is not None
         assert trend > 0  # Positive trend
 
-    def test_get_trend_decreasing(self):
+    def test_get_trend_decreasing(self) -> None:
         """Test trend detection for decreasing values."""
         analyzer = TimeSeriesAnalyzer(window_size=100)
 
@@ -63,7 +63,7 @@ class TestTimeSeriesAnalyzer:
         assert trend is not None
         assert trend < 0  # Negative trend
 
-    def test_get_trend_insufficient_data(self):
+    def test_get_trend_insufficient_data(self) -> None:
         """Test trend with insufficient data."""
         analyzer = TimeSeriesAnalyzer(window_size=100)
 
@@ -72,7 +72,7 @@ class TestTimeSeriesAnalyzer:
         trend = analyzer.get_trend(MetricType.CPU_USAGE)
         assert trend is None
 
-    def test_detect_anomaly_normal(self):
+    def test_detect_anomaly_normal(self) -> None:
         """Test anomaly detection with normal values."""
         analyzer = TimeSeriesAnalyzer(window_size=100)
 
@@ -84,7 +84,7 @@ class TestTimeSeriesAnalyzer:
         assert not is_anomaly
         assert abs(z_score) < 2.0
 
-    def test_detect_anomaly_spike(self):
+    def test_detect_anomaly_spike(self) -> None:
         """Test anomaly detection with spike."""
         analyzer = TimeSeriesAnalyzer(window_size=100)
 
@@ -99,7 +99,7 @@ class TestTimeSeriesAnalyzer:
         assert is_anomaly
         assert z_score > 2.0
 
-    def test_predict_resource_exhaustion(self):
+    def test_predict_resource_exhaustion(self) -> None:
         """Test resource exhaustion prediction."""
         analyzer = TimeSeriesAnalyzer(window_size=100)
 
@@ -114,7 +114,7 @@ class TestTimeSeriesAnalyzer:
         assert predicted_time is not None
         assert predicted_time > datetime.now()
 
-    def test_predict_resource_exhaustion_no_trend(self):
+    def test_predict_resource_exhaustion_no_trend(self) -> None:
         """Test resource exhaustion with no upward trend."""
         analyzer = TimeSeriesAnalyzer(window_size=100)
 
@@ -128,7 +128,7 @@ class TestTimeSeriesAnalyzer:
 
         assert predicted_time is None
 
-    def test_get_statistics(self):
+    def test_get_statistics(self) -> None:
         """Test getting statistics."""
         analyzer = TimeSeriesAnalyzer(window_size=100)
 
@@ -154,13 +154,13 @@ class TestTimeSeriesAnalyzer:
 class TestIssuePredictionEngine:
     """Tests for IssuePredictionEngine."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Test engine initialization."""
         engine = IssuePredictionEngine(window_size=50)
         assert engine.analyzer.window_size == 50
         assert len(engine._thresholds) > 0
 
-    def test_update_metric(self):
+    def test_update_metric(self) -> None:
         """Test updating metrics."""
         engine = IssuePredictionEngine()
 
@@ -170,7 +170,7 @@ class TestIssuePredictionEngine:
         stats = engine.get_metrics_summary()
         assert MetricType.CPU_USAGE.value in stats
 
-    def test_predict_resource_exhaustion_warning(self):
+    def test_predict_resource_exhaustion_warning(self) -> None:
         """Test prediction of resource exhaustion."""
         engine = IssuePredictionEngine()
 
@@ -194,7 +194,7 @@ class TestIssuePredictionEngine:
             assert 0.0 <= pred.probability <= 1.0
             assert 0.0 <= pred.confidence <= 1.0
 
-    def test_predict_anomaly(self):
+    def test_predict_anomaly(self) -> None:
         """Test anomaly prediction."""
         engine = IssuePredictionEngine()
 
@@ -219,7 +219,7 @@ class TestIssuePredictionEngine:
                 or "error" in pred.description.lower()
             )
 
-    def test_predict_performance_degradation(self):
+    def test_predict_performance_degradation(self) -> None:
         """Test performance degradation prediction."""
         engine = IssuePredictionEngine()
 
@@ -238,7 +238,7 @@ class TestIssuePredictionEngine:
             pred = perf_predictions[0]
             assert "degradation" in pred.description.lower()
 
-    def test_prediction_to_dict(self):
+    def test_prediction_to_dict(self) -> None:
         """Test prediction serialization."""
         engine = IssuePredictionEngine()
 
@@ -258,7 +258,7 @@ class TestIssuePredictionEngine:
             assert "recommended_actions" in pred_dict
             assert "confidence" in pred_dict
 
-    def test_get_prediction_history(self):
+    def test_get_prediction_history(self) -> None:
         """Test prediction history tracking."""
         engine = IssuePredictionEngine()
 
@@ -278,7 +278,7 @@ class TestIssuePredictionEngine:
         # History should accumulate
         assert final_count >= initial_count
 
-    def test_clear_predictions(self):
+    def test_clear_predictions(self) -> None:
         """Test clearing current predictions."""
         engine = IssuePredictionEngine()
 
@@ -294,7 +294,7 @@ class TestIssuePredictionEngine:
         # History should still be intact
         assert len(engine.get_prediction_history()) > 0
 
-    def test_multiple_metric_types(self):
+    def test_multiple_metric_types(self) -> None:
         """Test predictions for multiple metric types."""
         engine = IssuePredictionEngine()
 
@@ -311,7 +311,7 @@ class TestIssuePredictionEngine:
         assert MetricType.MEMORY_USAGE.value in summary
         assert MetricType.DISK_USAGE.value in summary
 
-    def test_recommended_actions_present(self):
+    def test_recommended_actions_present(self) -> None:
         """Test that predictions include recommended actions."""
         engine = IssuePredictionEngine()
 
@@ -328,7 +328,7 @@ class TestIssuePredictionEngine:
                     isinstance(action, str) for action in pred.recommended_actions
                 )
 
-    def test_supporting_data_present(self):
+    def test_supporting_data_present(self) -> None:
         """Test that predictions include supporting data."""
         engine = IssuePredictionEngine()
 

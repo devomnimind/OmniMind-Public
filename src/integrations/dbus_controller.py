@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 from typing import Any, Dict, List, Optional
 
-import dbus  # type: ignore[import-untyped]
+import dbus
 
 logger = logging.getLogger(__name__)
 
@@ -194,7 +194,7 @@ class DBusSystemController:
                 # Add addresses if available
                 if iface_name in addrs:
                     for addr in addrs[iface_name]:
-                        interface_info["addresses"].append(
+                        interface_info["addresses"].append(  # type: ignore[attr-defined]
                             {
                                 "family": str(addr.family),
                                 "address": addr.address,

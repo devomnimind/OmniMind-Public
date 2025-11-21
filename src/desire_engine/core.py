@@ -15,7 +15,6 @@ from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set
-import numpy as np
 import pickle
 import zlib
 from collections import deque
@@ -119,7 +118,7 @@ class DigitalMaslowHierarchy:
     def __init__(self) -> None:
         """Initialize the hierarchy."""
         self.needs: Dict[str, Need] = self._initialize_needs()
-        self.satisfaction_history: List[Dict[str, float]] = []
+        self.satisfaction_history: List[Dict[str, Any]] = []
 
     def _initialize_needs(self) -> Dict[str, Need]:
         """Initialize the needs hierarchy."""
@@ -286,7 +285,7 @@ class DigitalMaslowHierarchy:
             raise ValueError(f"Unknown need: {need_name}")
 
         need = self.needs[need_name]
-        need.satisfaction = np.clip(need.satisfaction + delta, 0.0, 1.0)
+        need.satisfaction = min(max(need.satisfaction + delta, 0.0), 1.0)
 
         # Log history
         self.satisfaction_history.append(
@@ -315,7 +314,7 @@ class CompressionProgressTheory:
 
     def __init__(self, history_size: int = 1000):
         """Initialize theory."""
-        self.compression_history = deque(maxlen=history_size)
+        self.compression_history: deque[float] = deque(maxlen=history_size)
 
     def compute_compression_ratio(self, data: bytes) -> float:
         """Compute compression ratio."""
@@ -333,7 +332,11 @@ class CompressionProgressTheory:
             return 1.0  # First information is maximally curious
 
         # Historical average compression
-        historical_avg = np.mean(list(self.compression_history))
+        historical_avg = (
+            sum(self.compression_history) / len(self.compression_history)
+            if self.compression_history
+            else 0.0
+        )
 
         # Progress = reduction in compression (learning)
         progress = max(0, historical_avg - current_ratio)
@@ -350,7 +353,7 @@ class ArtificialCuriosityEngine:
         """Initialize engine."""
         self.compression_theory = CompressionProgressTheory()
         self.surprise_threshold = 0.7
-        self.curiosity_history: List[Dict] = []
+        self.curiosity_history: List[Dict[str, Any]] = []
 
     def evaluate_curiosity(
         self, new_information: Any, context: Dict[str, Any]
@@ -479,7 +482,11 @@ class ArtificialEmotionWithDesire:
             )
 
         # Calculate average frustration
-        avg_frustration = np.mean([need.frustration_level() for need in active_needs])
+        avg_frustration = (
+            sum(need.frustration_level() for need in active_needs) / len(active_needs)
+            if active_needs
+            else 0.0
+        )
 
         # Maximum urgency
         max_urgency = max(need.urgency for need in active_needs)
@@ -587,7 +594,7 @@ class DesireDrivenMetaLearning:
         self.needs = needs_hierarchy
         self.curiosity = curiosity_engine
         self.unsatisfied_desires: List[UnsatisfiedDesire] = []
-        self.learning_history: List[Dict] = []
+        self.learning_history: List[Dict[str, Any]] = []
 
     def identify_unsatisfied_desires(self) -> List[UnsatisfiedDesire]:
         """Identify unsatisfied desires."""
@@ -741,7 +748,7 @@ class ValueEvolutionSystem:
     def __init__(self) -> None:
         """Initialize system."""
         self.values: Dict[str, Value] = self._initialize_core_values()
-        self.value_history: List[Dict] = []
+        self.value_history: List[Dict[str, Any]] = []
 
     def _initialize_core_values(self) -> Dict[str, Value]:
         """Initialize core values."""

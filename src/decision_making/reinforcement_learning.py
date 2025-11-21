@@ -230,7 +230,7 @@ class QLearningAgent(RLAgent):
             # Assume all actions available (simplified)
             max_next_q = max(
                 [
-                    self.q_table.get((transition.next_state.state_id, a), 0.0)
+                    self.q_table.get(a, 0.0)
                     for a in self.q_table.keys()
                     if a[0] == transition.next_state.state_id
                 ]

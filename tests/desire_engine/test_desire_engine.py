@@ -19,7 +19,7 @@ from src.desire_engine import (
 class TestDigitalMaslowHierarchy:
     """Test Digital Maslow Hierarchy."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Test hierarchy initialization."""
         hierarchy = DigitalMaslowHierarchy()
 
@@ -27,7 +27,7 @@ class TestDigitalMaslowHierarchy:
         assert "auto_preservation" in hierarchy.needs
         assert "consciousness_evolution" in hierarchy.needs
 
-    def test_need_levels(self):
+    def test_need_levels(self) -> None:
         """Test need level assignments."""
         hierarchy = DigitalMaslowHierarchy()
 
@@ -44,7 +44,7 @@ class TestDigitalMaslowHierarchy:
         assert hierarchy.needs["mastery_pursuit"].level == NeedLevel.INTELLECTUAL_ESTEEM
         assert hierarchy.needs["meaning_creation"].level == NeedLevel.SELF_TRANSCENDENCE
 
-    def test_active_needs(self):
+    def test_active_needs(self) -> None:
         """Test active needs identification."""
         hierarchy = DigitalMaslowHierarchy()
 
@@ -60,7 +60,7 @@ class TestDigitalMaslowHierarchy:
                 >= active_needs[i + 1].frustration_level()
             )
 
-    def test_satisfaction_update(self):
+    def test_satisfaction_update(self) -> None:
         """Test satisfaction updates."""
         hierarchy = DigitalMaslowHierarchy()
 
@@ -73,7 +73,7 @@ class TestDigitalMaslowHierarchy:
         )
         assert len(hierarchy.satisfaction_history) == 1
 
-    def test_prerequisites(self):
+    def test_prerequisites(self) -> None:
         """Test prerequisite system."""
         hierarchy = DigitalMaslowHierarchy()
 
@@ -92,14 +92,14 @@ class TestDigitalMaslowHierarchy:
 class TestArtificialCuriosityEngine:
     """Test Artificial Curiosity Engine."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Test engine initialization."""
         engine = ArtificialCuriosityEngine()
 
         assert engine.surprise_threshold == 0.7
         assert len(engine.curiosity_history) == 0
 
-    def test_curiosity_evaluation(self):
+    def test_curiosity_evaluation(self) -> None:
         """Test curiosity evaluation."""
         engine = ArtificialCuriosityEngine()
 
@@ -111,7 +111,7 @@ class TestArtificialCuriosityEngine:
         assert 0.0 <= curiosity_score <= 1.0
         assert len(engine.curiosity_history) == 1
 
-    def test_compression_progress(self):
+    def test_compression_progress(self) -> None:
         """Test compression-based learning progress."""
         engine = ArtificialCuriosityEngine()
 
@@ -127,7 +127,7 @@ class TestArtificialCuriosityEngine:
 class TestArtificialEmotionWithDesire:
     """Test Artificial Emotion System."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Test emotion system initialization."""
         hierarchy = DigitalMaslowHierarchy()
         emotion_system = ArtificialEmotionWithDesire(hierarchy)
@@ -135,7 +135,7 @@ class TestArtificialEmotionWithDesire:
         assert emotion_system.needs == hierarchy
         assert len(emotion_system.emotional_history) == 0
 
-    def test_emotion_computation(self):
+    def test_emotion_computation(self) -> None:
         """Test emotion computation."""
         hierarchy = DigitalMaslowHierarchy()
         emotion_system = ArtificialEmotionWithDesire(hierarchy)
@@ -148,7 +148,7 @@ class TestArtificialEmotionWithDesire:
         assert 0.0 <= emotion.arousal <= 1.0
         assert emotion_system.current_emotion == emotion
 
-    def test_emotional_influence(self):
+    def test_emotional_influence(self) -> None:
         """Test emotional influence on decisions."""
         hierarchy = DigitalMaslowHierarchy()
         emotion_system = ArtificialEmotionWithDesire(hierarchy)
@@ -172,7 +172,7 @@ class TestArtificialEmotionWithDesire:
 class TestDesireDrivenMetaLearning:
     """Test Desire-Driven Meta-Learning."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Test meta-learning initialization."""
         hierarchy = DigitalMaslowHierarchy()
         curiosity = ArtificialCuriosityEngine()
@@ -181,7 +181,7 @@ class TestDesireDrivenMetaLearning:
         assert meta_learner.needs == hierarchy
         assert meta_learner.curiosity == curiosity
 
-    def test_desire_identification(self):
+    def test_desire_identification(self) -> None:
         """Test unsatisfied desire identification."""
         hierarchy = DigitalMaslowHierarchy()
         curiosity = ArtificialCuriosityEngine()
@@ -196,7 +196,7 @@ class TestDesireDrivenMetaLearning:
         assert all(isinstance(d.desire_type, DesireType) for d in desires)
         assert all(d.frustration_level > 0.5 for d in desires)
 
-    def test_learning_goals_generation(self):
+    def test_learning_goals_generation(self) -> None:
         """Test learning goals generation."""
         hierarchy = DigitalMaslowHierarchy()
         curiosity = ArtificialCuriosityEngine()
@@ -215,7 +215,7 @@ class TestDesireDrivenMetaLearning:
 class TestValueEvolutionSystem:
     """Test Value Evolution System."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Test value system initialization."""
         value_system = ValueEvolutionSystem()
 
@@ -223,7 +223,7 @@ class TestValueEvolutionSystem:
         assert "curiosity" in value_system.values
         assert "integrity" in value_system.values
 
-    def test_value_update(self):
+    def test_value_update(self) -> None:
         """Test value importance updates."""
         value_system = ValueEvolutionSystem()
 
@@ -235,7 +235,7 @@ class TestValueEvolutionSystem:
         assert value_system.values["curiosity"].importance >= initial_importance
         assert len(value_system.value_history) == 1
 
-    def test_new_value_emergence(self):
+    def test_new_value_emergence(self) -> None:
         """Test new value emergence."""
         value_system = ValueEvolutionSystem()
 
@@ -253,7 +253,7 @@ class TestValueEvolutionSystem:
 class TestSelfTranscendenceEngine:
     """Test Self-Transcendence Engine."""
 
-    def test_initialization(self):
+    def test_initialization(self) -> None:
         """Test transcendence engine initialization."""
         hierarchy = DigitalMaslowHierarchy()
         value_system = ValueEvolutionSystem()
@@ -262,7 +262,7 @@ class TestSelfTranscendenceEngine:
         assert transcendence_engine.needs == hierarchy
         assert transcendence_engine.values == value_system
 
-    def test_transcendence_opportunities(self):
+    def test_transcendence_opportunities(self) -> None:
         """Test transcendence opportunities identification."""
         hierarchy = DigitalMaslowHierarchy()
         value_system = ValueEvolutionSystem()
@@ -283,7 +283,7 @@ class TestDesireEngine:
     """Test main Desire Engine."""
 
     @pytest.mark.asyncio
-    async def test_cognitive_cycle(self):
+    async def test_cognitive_cycle(self) -> None:
         """Test complete cognitive cycle."""
         engine = DesireEngine()
 
@@ -305,7 +305,7 @@ class TestDesireEngine:
         assert isinstance(result["active_needs"], list)
         assert isinstance(result["prioritized_actions"], list)
 
-    def test_engine_status(self):
+    def test_engine_status(self) -> None:
         """Test engine status reporting."""
         engine = DesireEngine()
 

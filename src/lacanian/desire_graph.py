@@ -111,11 +111,10 @@ class Signifier:
             return self.meaning_vector
 
         context_vectors = []
-        from typing import cast
 
         for conn in self.connections:
             if conn in context and context[conn].meaning_vector is not None:
-                context_vectors.append(cast(List[float], context[conn].meaning_vector))
+                context_vectors.append(context[conn].meaning_vector)
 
         if context_vectors:
             # Compute element-wise mean across context vectors

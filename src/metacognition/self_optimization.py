@@ -373,7 +373,8 @@ class SelfOptimizationEngine:
         self._completed_tests.append(test)
         del self._active_tests[test_id]
 
-        return cast(Configuration, self._current_config)
+        assert self._current_config is not None
+        return self._current_config
 
     def rollback(self, test_id: str) -> Configuration:
         """Rollback a test to control configuration.
