@@ -414,7 +414,7 @@ class LogAnalyzer:
     - Threat intelligence matching
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize Log Analyzer."""
         self.logger = logging.getLogger("log_analyzer")
         self.logger.setLevel(logging.INFO)
@@ -457,7 +457,7 @@ class LogAnalyzer:
         Returns:
             Analysis results
         """
-        analysis = {
+        analysis: Dict[str, Any] = {
             "log_source": log_source,
             "total_lines": len(log_content.split("\n")),
             "security_events": [],
@@ -634,8 +634,8 @@ class ForensicsSystem:
         self,
         evidence_dir: Optional[str] = None,
         reports_dir: Optional[str] = None,
-        audit_system=None,
-    ):
+        audit_system: Optional[Any] = None,
+    ) -> None:
         """
         Initialize Forensics System.
 
@@ -796,7 +796,7 @@ class ForensicsSystem:
         if not incident:
             raise ValueError(f"Incident not found: {incident_id}")
 
-        analysis = {
+        analysis: Dict[str, Any] = {
             "incident_id": incident.id,
             "log_analysis": [],
             "correlations": [],
@@ -847,7 +847,7 @@ class ForensicsSystem:
 
         # Update incident
         incident.analysis = analysis
-        incident.recommendations = analysis["recommendations"]
+        incident.recommendations = list(analysis["recommendations"])
         incident.status = IncidentStatus.INVESTIGATING
         incident.updated_at = datetime.now(timezone.utc).isoformat()
         self._save_incident(incident)
@@ -1220,7 +1220,7 @@ def analyze_security_incident(incident_id: str) -> Dict[str, Any]:
 def generate_forensics_report(incident_id: str) -> ForensicsReport:
     """Generate forensics report for an incident."""
     system = get_forensics_system()
-    return system.generate_forensics_report(incident_id)
+    return system.generate_report(incident_id)
 
 
 if __name__ == "__main__":

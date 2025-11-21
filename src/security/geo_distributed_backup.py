@@ -20,7 +20,7 @@ from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta, timezone
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, cast
 
 logger = logging.getLogger(__name__)
 
@@ -527,7 +527,7 @@ class GeoDistributedBackupManager:
         Returns:
             Consistency report
         """
-        report = {
+        report: Dict[str, Any] = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "regions_checked": [],
             "consistent": True,
@@ -629,11 +629,12 @@ class GeoDistributedBackupManager:
                 (self.locations[r].priority, r) for r in restore_point.regions_available
             ]
             available.sort()
-            region = available[0][1] if available else None
+            if not available:
+                logger.error(f"No region available for restore: {restore_id}")
+                return False
+            region = available[0][1]
 
-        if not region:
-            logger.error(f"No region available for restore: {restore_id}")
-            return False
+        # Now region is guaranteed to be BackupRegion
 
         # Find backup manifest for this region
         backup_id = None
