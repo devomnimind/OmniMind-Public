@@ -1,0 +1,42 @@
+# Version control
+.git
+.gitignore
+.github
+
+# Python artifacts
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+.mypy_cache
+.coverage
+htmlcov
+*.egg-info
+
+# Dependencies and Environments
+.venv
+venv
+env
+node_modules
+
+# IDEs
+.vscode
+.idea
+
+# Project specific heavy folders
+data/
+backups/
+logs/
+tmp/
+benchmarks/
+docs/
+
+# Docker specific
+docker-compose.yml
+docker-compose.*.yml
+.dockerignore
+
+# Temporary files
+*.swp
+*.swo
