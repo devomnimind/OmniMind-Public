@@ -6,7 +6,8 @@ Testa funcionalidades de parsing e análise de código Python.
 """
 
 import pytest
-from src.tools.ast_parser import ASTParser
+from pathlib import Path
+from src.tools.ast_parser import ASTParser, CodeElement, CodeStructure
 
 
 class TestASTParser:
@@ -109,7 +110,9 @@ def main():
             ("set_age", ["age: int"], "None"),
         ]
 
-        skeleton = parser.generate_skeleton("Person", methods, "Person class")
+        skeleton = parser.generate_skeleton(
+            "Person", methods, "Person class"
+        )
 
         assert "class Person:" in skeleton
         assert "Person class" in skeleton

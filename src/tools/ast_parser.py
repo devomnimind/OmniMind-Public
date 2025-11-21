@@ -16,7 +16,8 @@ from __future__ import annotations
 import ast
 import logging
 from dataclasses import dataclass, field
-from typing import List, Optional, Set
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set
 
 logger = logging.getLogger(__name__)
 
@@ -121,11 +122,9 @@ class ASTParser:
                 for alias in node.names:
                     structure.imports.append(
                         CodeElement(
-                            name=(
-                                f"{node.module}.{alias.name}"
-                                if node.module
-                                else alias.name
-                            ),
+                            name=f"{node.module}.{alias.name}"
+                            if node.module
+                            else alias.name,
                             type="import",
                             line_start=node.lineno,
                             line_end=node.lineno,
@@ -313,19 +312,11 @@ class ASTParser:
 
         for method_name, params, return_type in methods:
             params_str = ", ".join(params)
-            if params_str:
-                params_str = f"{params_str}"
             return_annotation = f" -> {return_type}" if return_type else ""
 
-            lines.append(
-                f"    def {method_name}(self"
-                f"{', ' + params_str if params_str else ''})"
-                f"{return_annotation}:"
-            )
-            lines.append(f'        """Implementation for {method_name} pending"""')
-            lines.append(
-                "        raise NotImplementedError(f'{method_name} not implemented')"
-            )
+            lines.append(f"    def {method_name}(self, {params_str}){return_annotation}:")
+            lines.append(f'        """TODO: Implement {method_name}"""')
+            lines.append("        pass")
             lines.append("")
 
         return "\n".join(lines)
@@ -361,9 +352,7 @@ class ASTParser:
                         for alias in node.names:
                             if alias.name in dangerous_modules:
                                 warnings.append(
-                                    f"Line {node.lineno}: "
-                                    f"Potentially dangerous import: "
-                                    f"{alias.name}"
+                                    f"Line {node.lineno}: Potentially dangerous import: {alias.name}"
                                 )
 
         except Exception as exc:

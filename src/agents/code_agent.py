@@ -53,7 +53,7 @@ class CodeAgent(ReactAgent):
 
         # Histórico de operações de código
         self.code_history: List[Dict[str, Any]] = []
-
+        
         # Cache de análises AST
         self._ast_cache: Dict[str, CodeStructure] = {}
 
@@ -317,11 +317,7 @@ Your response:"""
         return {
             "warnings": warnings,
             "safe": len(warnings) == 0,
-            "severity": (
-                "high"
-                if any("eval" in w or "exec" in w for w in warnings)
-                else "medium"
-            ),
+            "severity": "high" if any("eval" in w or "exec" in w for w in warnings) else "medium",
             "timestamp": self._timestamp(),
         }
 

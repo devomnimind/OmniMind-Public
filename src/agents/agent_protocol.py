@@ -12,7 +12,9 @@ Fornece infraestrutura para comunicação padronizada entre agentes:
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
+import time
 import uuid
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
@@ -149,7 +151,9 @@ class AgentMessageBus:
                 del self._handlers[agent_id]
             logger.info(f"Agent unregistered: {agent_id}")
 
-    def subscribe(self, agent_id: str, message_types: List[MessageType]) -> None:
+    def subscribe(
+        self, agent_id: str, message_types: List[MessageType]
+    ) -> None:
         """
         Inscreve agente para receber tipos específicos de mensagens.
 
@@ -367,7 +371,8 @@ class AgentMessageBus:
             "pending_responses": len(self._pending_responses),
             "total_conflicts": len(self._conflicts),
             "queue_sizes": {
-                agent_id: queue.qsize() for agent_id, queue in self._queues.items()
+                agent_id: queue.qsize()
+                for agent_id, queue in self._queues.items()
             },
         }
 

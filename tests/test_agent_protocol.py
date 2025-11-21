@@ -12,7 +12,7 @@ from src.agents.agent_protocol import (
     AgentMessageBus,
     MessageType,
     MessagePriority,
-    get_message_bus,
+    ConflictResolution,
 )
 
 
@@ -112,7 +112,9 @@ class TestAgentMessageBus:
         assert MessageType.REQUEST in message_bus._subscriptions["agent-1"]
         assert MessageType.NOTIFICATION in message_bus._subscriptions["agent-1"]
 
-    async def test_send_and_receive_message(self, message_bus: AgentMessageBus) -> None:
+    async def test_send_and_receive_message(
+        self, message_bus: AgentMessageBus
+    ) -> None:
         """Testa envio e recebimento de mensagem"""
         message_bus.register_agent("agent-1")
         message_bus.register_agent("agent-2")
@@ -152,7 +154,9 @@ class TestAgentMessageBus:
             await asyncio.sleep(0.1)
             request = await message_bus.receive_message("agent-2", timeout=1.0)
             if request:
-                await message_bus.respond_to_message(request, {"result": "success"})
+                await message_bus.respond_to_message(
+                    request, {"result": "success"}
+                )
 
         # Executar em paralelo
         respond_task = asyncio.create_task(respond())

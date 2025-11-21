@@ -469,6 +469,10 @@ async def analyze_code_security(request: CodeValidationRequest) -> Dict[str, Any
         ),
         "timestamp": time.time(),
     }
+        "agent_id": agent_id,
+        "history": [],
+        "count": 0,
+    }
 
 
 @router.get("/monitoring/summary")

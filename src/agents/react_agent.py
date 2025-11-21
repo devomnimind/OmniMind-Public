@@ -19,6 +19,13 @@ from ..integrations.supabase_adapter import SupabaseConfig
 from ..memory import EpisodicMemory
 from ..onboarding import SupabaseMemoryOnboarding
 from ..tools import FileOperations, ShellExecutor, SystemMonitor
+from .agent_protocol import (
+    AgentMessage,
+    AgentMessageBus,
+    MessageType,
+    MessagePriority,
+    get_message_bus,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -94,6 +101,10 @@ class ReactAgent:
         # Expose attributes for type checking and testing
         self.mode: str = "react"
         self.tools: List[Any] = [self.file_ops, self.shell, self.monitor]
+        
+        # Agent communication
+        self.agent_id = f"{self.mode}_agent_{id(self)}"
+        self.message_bus = get_message_bus()
 
         # Agent communication
         self.agent_id = f"{self.mode}_agent_{id(self)}"
