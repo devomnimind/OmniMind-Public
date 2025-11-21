@@ -8,8 +8,10 @@ Reference: docs/OMNIMIND_COMPREHENSIVE_PENDENCIES_REPORT_20251119.md, Section 7.
 
 import time
 from dataclasses import dataclass, field
+from datetime import datetime
 from enum import Enum
-from typing import Any, Callable, Dict, Generator, List, Optional, TypeVar
+from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional, TypeVar
 from contextlib import contextmanager
 
 import structlog
@@ -145,11 +147,11 @@ class DatabaseConnectionPool:
     Example:
         >>> config = PoolConfig(pool_size=5)
         >>> pool = DatabaseConnectionPool("postgresql://user:pass@localhost/db", config)
-        >>>
+        >>> 
         >>> with pool.get_connection() as conn:
         ...     # Use connection
         ...     result = conn.execute("SELECT 1")
-        >>>
+        >>> 
         >>> stats = pool.get_stats()
     """
 
@@ -239,7 +241,7 @@ class DatabaseConnectionPool:
             logger.error("connection_close_failed", error=str(e))
 
     @contextmanager
-    def get_connection(self) -> Generator[Any, None, None]:
+    def get_connection(self):
         """Get a connection from the pool.
 
         Yields:
@@ -279,7 +281,7 @@ class DatabaseConnectionPool:
                     conn = self._create_connection()
 
             # Update connection info
-            if conn and hasattr(conn, "conn_id"):
+            if conn and hasattr(conn, 'conn_id'):
                 info = self._connection_info.get(conn.conn_id)
                 if info:
                     info.mark_used()
@@ -288,7 +290,7 @@ class DatabaseConnectionPool:
 
         except Exception as e:
             logger.error("connection_error", error=str(e))
-            if conn and hasattr(conn, "conn_id"):
+            if conn and hasattr(conn, 'conn_id'):
                 info = self._connection_info.get(conn.conn_id)
                 if info:
                     info.mark_error()
@@ -297,7 +299,7 @@ class DatabaseConnectionPool:
         finally:
             # Return connection to pool
             if conn:
-                if hasattr(conn, "conn_id"):
+                if hasattr(conn, 'conn_id'):
                     info = self._connection_info.get(conn.conn_id)
                     if info:
                         info.mark_idle()
@@ -306,10 +308,7 @@ class DatabaseConnectionPool:
                         if info.is_stale(self.config.max_connection_age_seconds):
                             self._close_connection(conn)
                             # Create new connection to maintain pool size
-                            if (
-                                conn in self._pool
-                                or len(self._pool) < self.config.pool_size
-                            ):
+                            if conn in self._pool or len(self._pool) < self.config.pool_size:
                                 new_conn = self._create_connection()
                                 if new_conn:
                                     self._pool.append(new_conn)
@@ -339,8 +338,7 @@ class DatabaseConnectionPool:
         """
         try:
             # In production, execute a simple query like "SELECT 1"
-            result = conn.ping()
-            return bool(result)
+            return conn.ping()
         except Exception as e:
             logger.warning("connection_ping_failed", error=str(e))
             return False
@@ -400,24 +398,23 @@ class DatabaseConnectionPool:
             Dictionary with pool statistics
         """
         active_connections = sum(
-            1
-            for info in self._connection_info.values()
+            1 for info in self._connection_info.values()
             if info.status == ConnectionStatus.ACTIVE
         )
 
         idle_connections = sum(
-            1
-            for info in self._connection_info.values()
+            1 for info in self._connection_info.values()
             if info.status == ConnectionStatus.IDLE
         )
 
         error_connections = sum(
-            1
-            for info in self._connection_info.values()
+            1 for info in self._connection_info.values()
             if info.status == ConnectionStatus.ERROR
         )
 
-        total_use_count = sum(info.use_count for info in self._connection_info.values())
+        total_use_count = sum(
+            info.use_count for info in self._connection_info.values()
+        )
 
         return {
             "pool_size": len(self._pool),

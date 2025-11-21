@@ -8,8 +8,10 @@ Reference: docs/OMNIMIND_COMPREHENSIVE_PENDENCIES_REPORT_20251119.md, Section 7.
 
 import time
 from dataclasses import dataclass, field
+from datetime import datetime
 from enum import Enum
-from typing import Any, Deque, Dict, List, Optional
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set
 from collections import deque
 
 import structlog
@@ -226,7 +228,7 @@ class GPUResourcePool:
         self.config = config
         self._gpus: Dict[int, GPUDevice] = {}
         self._tasks: Dict[str, GPUTask] = {}
-        self._task_queue: Deque[GPUTask] = deque()
+        self._task_queue: deque = deque()
 
         if config.auto_discover_gpus:
             self._discover_gpus()
@@ -241,7 +243,6 @@ class GPUResourcePool:
         """Automatically discover available GPUs."""
         try:
             import torch
-
             if torch.cuda.is_available():
                 for i in range(torch.cuda.device_count()):
                     props = torch.cuda.get_device_properties(i)
@@ -329,9 +330,7 @@ class GPUResourcePool:
             return False
 
         # Check memory
-        required_memory = (
-            task.required_memory_mb + self.config.memory_reservation_overhead_mb
-        )
+        required_memory = task.required_memory_mb + self.config.memory_reservation_overhead_mb
         if not gpu.has_capacity(required_memory):
             return False
 
@@ -365,7 +364,8 @@ class GPUResourcePool:
             Best GPU device or None
         """
         available_gpus = [
-            gpu for gpu in self._gpus.values() if self._can_allocate_gpu(gpu, task)
+            gpu for gpu in self._gpus.values()
+            if self._can_allocate_gpu(gpu, task)
         ]
 
         if not available_gpus:
@@ -409,7 +409,7 @@ class GPUResourcePool:
             task_id: Task identifier
         """
         task = self._tasks.get(task_id)
-        if not task or task.assigned_device_id is None:
+        if not task or not task.assigned_device_id:
             logger.warning("task_not_found_or_not_assigned", task_id=task_id)
             return
 
@@ -512,9 +512,7 @@ class GPUResourcePool:
             "total_memory_mb": total_memory,
             "used_memory_mb": used_memory,
             "free_memory_mb": total_memory - used_memory,
-            "utilization_percent": (
-                (used_memory / total_memory * 100) if total_memory > 0 else 0
-            ),
+            "utilization_percent": (used_memory / total_memory * 100) if total_memory > 0 else 0,
             "running_tasks": running_tasks,
             "completed_tasks": completed_tasks,
             "queued_tasks": len(self._task_queue),

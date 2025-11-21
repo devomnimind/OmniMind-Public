@@ -9,8 +9,10 @@ Reference: docs/OMNIMIND_COMPREHENSIVE_PENDENCIES_REPORT_20251119.md, Section 7.
 import json
 import time
 from dataclasses import dataclass, field
+from datetime import datetime
 from enum import Enum
-from typing import Any, Callable, Dict, List, Optional, TypeVar
+from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional, Set, TypeVar
 import hashlib
 
 import structlog
@@ -332,7 +334,10 @@ class CacheLayer:
 
     def _evict_expired(self) -> None:
         """Evict expired entries."""
-        expired_keys = [key for key, entry in self._cache.items() if entry.is_expired()]
+        expired_keys = [
+            key for key, entry in self._cache.items()
+            if entry.is_expired()
+        ]
 
         for key in expired_keys:
             self.delete(key)
@@ -360,7 +365,7 @@ class CacheLayer:
         try:
             # Simple approximation using JSON serialization
             json_str = json.dumps(value)
-            return len(json_str.encode("utf-8"))
+            return len(json_str.encode('utf-8'))
         except (TypeError, ValueError):
             # Fallback to estimate
             return 1024  # 1KB default
@@ -384,7 +389,7 @@ class MultiLevelCache:
         >>> config_l1 = CacheConfig(max_size_bytes=10*1024*1024)  # 10MB
         >>> config_l2 = CacheConfig(max_size_bytes=100*1024*1024)  # 100MB
         >>> config_l3 = CacheConfig(max_size_bytes=1024*1024*1024)  # 1GB
-        >>>
+        >>> 
         >>> cache = MultiLevelCache(config_l1, config_l2, config_l3)
         >>> cache.set("key", "value")
         >>> value = cache.get("key")
@@ -511,14 +516,14 @@ class MultiLevelCache:
             "l2": self._l2.get_stats().to_dict(),
             "l3": self._l3.get_stats().to_dict(),
             "total_hits": (
-                self._l1.get_stats().hits
-                + self._l2.get_stats().hits
-                + self._l3.get_stats().hits
+                self._l1.get_stats().hits +
+                self._l2.get_stats().hits +
+                self._l3.get_stats().hits
             ),
             "total_misses": (
-                self._l1.get_stats().misses
-                + self._l2.get_stats().misses
-                + self._l3.get_stats().misses
+                self._l1.get_stats().misses +
+                self._l2.get_stats().misses +
+                self._l3.get_stats().misses
             ),
         }
 
@@ -526,7 +531,7 @@ class MultiLevelCache:
         self,
         ttl_seconds: Optional[int] = None,
         level: CacheLevel = CacheLevel.L1,
-    ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+    ) -> Callable:
         """Decorator for caching function results.
 
         Args:
@@ -536,8 +541,7 @@ class MultiLevelCache:
         Returns:
             Decorator function
         """
-
-        def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
+        def decorator(func: Callable) -> Callable:
             def wrapper(*args: Any, **kwargs: Any) -> Any:
                 # Create cache key from function name and arguments
                 key_data = {
@@ -545,7 +549,7 @@ class MultiLevelCache:
                     "args": str(args),
                     "kwargs": str(sorted(kwargs.items())),
                 }
-                key = hashlib.sha256(json.dumps(key_data).encode()).hexdigest()
+                key = hashlib.md5(json.dumps(key_data).encode()).hexdigest()
 
                 # Try to get from cache
                 cached_value = self.get(key)
@@ -561,5 +565,4 @@ class MultiLevelCache:
                 return result
 
             return wrapper
-
         return decorator

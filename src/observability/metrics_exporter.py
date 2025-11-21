@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set, Union
 
 import structlog
 
@@ -219,29 +219,14 @@ class CustomMetricsExporter:
     def _initialize_ml_metrics(self) -> None:
         """Initialize standard ML metrics."""
         ml_metric_definitions = [
-            (
-                "model_inference_latency_ms",
-                MetricType.HISTOGRAM,
-                "Model inference latency",
-                "milliseconds",
-            ),
-            (
-                "model_throughput_rps",
-                MetricType.GAUGE,
-                "Model throughput",
-                "requests/second",
-            ),
+            ("model_inference_latency_ms", MetricType.HISTOGRAM, "Model inference latency", "milliseconds"),
+            ("model_throughput_rps", MetricType.GAUGE, "Model throughput", "requests/second"),
             ("model_accuracy", MetricType.GAUGE, "Model accuracy score", "percentage"),
             ("model_loss", MetricType.GAUGE, "Model training/validation loss", ""),
             ("gpu_utilization", MetricType.GAUGE, "GPU utilization", "percentage"),
             ("gpu_memory_used_mb", MetricType.GAUGE, "GPU memory usage", "megabytes"),
             ("batch_size", MetricType.GAUGE, "Current batch size", ""),
-            (
-                "tokens_per_second",
-                MetricType.GAUGE,
-                "Token generation rate",
-                "tokens/second",
-            ),
+            ("tokens_per_second", MetricType.GAUGE, "Token generation rate", "tokens/second"),
             ("cache_hit_rate", MetricType.GAUGE, "Model cache hit rate", "percentage"),
         ]
 
@@ -358,12 +343,8 @@ class CustomMetricsExporter:
             return
 
         # Record individual metrics
-        self.record_histogram(
-            "model_inference_latency_ms", ml_metrics.model_inference_latency_ms
-        )
-        self.record_gauge(
-            "model_throughput_rps", ml_metrics.model_throughput_requests_per_sec
-        )
+        self.record_histogram("model_inference_latency_ms", ml_metrics.model_inference_latency_ms)
+        self.record_gauge("model_throughput_rps", ml_metrics.model_throughput_requests_per_sec)
         self.record_gauge("model_accuracy", ml_metrics.model_accuracy)
         self.record_gauge("model_loss", ml_metrics.model_loss)
         self.record_gauge("gpu_utilization", ml_metrics.gpu_utilization_percent)
@@ -470,13 +451,14 @@ class CustomMetricsExporter:
         cutoff_time = time.time() - (self.config.retention_hours * 3600)
 
         for metric in self._metrics.values():
-            metric.values = [v for v in metric.values if v.timestamp >= cutoff_time]
+            metric.values = [
+                v for v in metric.values if v.timestamp >= cutoff_time
+            ]
 
         # Cleanup ML metrics history
         self._ml_metrics_history = [
-            m
-            for m in self._ml_metrics_history
-            if hasattr(m, "timestamp") or True  # Keep all for now
+            m for m in self._ml_metrics_history
+            if hasattr(m, 'timestamp') or True  # Keep all for now
         ]
 
     def reset_metrics(self) -> None:

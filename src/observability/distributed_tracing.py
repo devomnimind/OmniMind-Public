@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, Generator, List, Optional
+from typing import Any, Dict, List, Optional, Union
 from contextlib import contextmanager
 
 import structlog
@@ -210,7 +210,9 @@ class DistributedTracer:
             exporter_type=config.exporter_type,
         )
 
-    def create_context(self, parent: Optional[SpanContext] = None) -> SpanContext:
+    def create_context(
+        self, parent: Optional[SpanContext] = None
+    ) -> SpanContext:
         """Create a new span context.
 
         Args:
@@ -296,7 +298,7 @@ class DistributedTracer:
         name: str,
         kind: SpanKind = SpanKind.INTERNAL,
         attributes: Optional[Dict[str, Any]] = None,
-    ) -> Generator[Any, None, None]:
+    ):
         """Context manager for tracing an operation.
 
         Args:
