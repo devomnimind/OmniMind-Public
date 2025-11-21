@@ -1,145 +1,30 @@
-src/tools/ast_parser.py:30: error: Name "Optional" is not defined  [name-defined]
-src/tools/ast_parser.py:30: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/tools/ast_parser.py:31: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:31: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/tools/ast_parser.py:32: error: Name "Optional" is not defined  [name-defined]
-src/tools/ast_parser.py:32: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/tools/ast_parser.py:33: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:33: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/tools/ast_parser.py:34: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:34: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/tools/ast_parser.py:42: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:42: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/tools/ast_parser.py:43: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:43: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/tools/ast_parser.py:44: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:44: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/tools/ast_parser.py:45: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:45: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/tools/ast_parser.py:46: error: Name "Set" is not defined  [name-defined]
-src/tools/ast_parser.py:46: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Set")
-src/tools/ast_parser.py:57: error: Name "Optional" is not defined  [name-defined]
-src/tools/ast_parser.py:57: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/tools/ast_parser.py:220: error: Name "Optional" is not defined  [name-defined]
-src/tools/ast_parser.py:220: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/tools/ast_parser.py:236: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:236: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/tools/ast_parser.py:248: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:248: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/tools/ast_parser.py:263: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:263: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/tools/ast_parser.py:275: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:275: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/tools/ast_parser.py:292: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:292: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/tools/ast_parser.py:292: error: Name "Optional" is not defined  [name-defined]
-src/tools/ast_parser.py:292: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/tools/ast_parser.py:293: error: Name "Optional" is not defined  [name-defined]
-src/tools/ast_parser.py:293: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/tools/ast_parser.py:329: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:329: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/tools/ast_parser.py:339: error: Name "List" is not defined  [name-defined]
-src/tools/ast_parser.py:339: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/security/integrity_validator.py:49: error: Name "Optional" is not defined  [name-defined]
-src/security/integrity_validator.py:49: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/security/integrity_validator.py:50: error: Name "Optional" is not defined  [name-defined]
-src/security/integrity_validator.py:50: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/security/integrity_validator.py:51: error: Name "Optional" is not defined  [name-defined]
-src/security/integrity_validator.py:51: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/security/integrity_validator.py:52: error: Name "Optional" is not defined  [name-defined]
-src/security/integrity_validator.py:52: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/security/integrity_validator.py:53: error: Name "Optional" is not defined  [name-defined]
-src/security/integrity_validator.py:53: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/security/integrity_validator.py:54: error: Name "Optional" is not defined  [name-defined]
-src/security/integrity_validator.py:54: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/security/integrity_validator.py:56: error: Name "List" is not defined  [name-defined]
-src/security/integrity_validator.py:56: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/security/integrity_validator.py:73: error: Name "List" is not defined  [name-defined]
-src/security/integrity_validator.py:73: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/security/integrity_validator.py:74: error: Name "List" is not defined  [name-defined]
-src/security/integrity_validator.py:74: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/security/integrity_validator.py:75: error: Name "List" is not defined  [name-defined]
-src/security/integrity_validator.py:75: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/security/integrity_validator.py:93: error: Name "Optional" is not defined  [name-defined]
-src/security/integrity_validator.py:93: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/security/integrity_validator.py:93: error: Name "Any" is not defined  [name-defined]
-src/security/integrity_validator.py:93: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
-src/security/integrity_validator.py:94: error: Name "Optional" is not defined  [name-defined]
-src/security/integrity_validator.py:94: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/security/integrity_validator.py:95: error: Name "Optional" is not defined  [name-defined]
-src/security/integrity_validator.py:95: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/security/integrity_validator.py:162: error: Name "Dict" is not defined  [name-defined]
-src/security/integrity_validator.py:162: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Dict")
-src/security/integrity_validator.py:162: error: Name "Any" is not defined  [name-defined]
-src/security/integrity_validator.py:162: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
-src/security/integrity_validator.py:177: error: Name "Dict" is not defined  [name-defined]
-src/security/integrity_validator.py:177: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Dict")
-src/security/integrity_validator.py:285: error: Name "Optional" is not defined  [name-defined]
-src/security/integrity_validator.py:285: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/security/integrity_validator.py:388: error: Name "Dict" is not defined  [name-defined]
-src/security/integrity_validator.py:388: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Dict")
-src/security/integrity_validator.py:388: error: Name "Any" is not defined  [name-defined]
-src/security/integrity_validator.py:388: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
-src/security/integrity_validator.py:400: error: Name "List" is not defined  [name-defined]
-src/security/integrity_validator.py:400: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/security/integrity_validator.py:400: error: Name "Dict" is not defined  [name-defined]
-src/security/integrity_validator.py:400: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Dict")
-src/security/integrity_validator.py:400: error: Name "Any" is not defined  [name-defined]
-src/security/integrity_validator.py:400: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
-src/security/integrity_validator.py:410: error: Name "List" is not defined  [name-defined]
-src/security/integrity_validator.py:410: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/security/integrity_validator.py:433: error: Name "Dict" is not defined  [name-defined]
-src/security/integrity_validator.py:433: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Dict")
-src/security/integrity_validator.py:433: error: Name "Any" is not defined  [name-defined]
-src/security/integrity_validator.py:433: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
-src/security/integrity_validator.py:471: error: Name "Dict" is not defined  [name-defined]
-src/security/integrity_validator.py:471: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Dict")
-src/security/integrity_validator.py:471: error: Name "Any" is not defined  [name-defined]
-src/security/integrity_validator.py:471: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
-src/security/integrity_validator.py:542: error: Name "List" is not defined  [name-defined]
-src/security/integrity_validator.py:542: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/security/integrity_validator.py:608: error: Name "Tuple" is not defined  [name-defined]
-src/security/integrity_validator.py:608: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Tuple")
-src/security/integrity_validator.py:608: error: Name "List" is not defined  [name-defined]
-src/security/integrity_validator.py:608: note: Did you forget to import it from "typing"? (Suggestion: "from typing import List")
-src/security/integrity_validator.py:692: error: Name "Optional" is not defined  [name-defined]
-src/security/integrity_validator.py:692: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Optional")
-src/security/integrity_validator.py:700: error: Returning Any from function declared to return "IntegrityValidator"  [no-any-return]
-src/security/integrity_validator.py:703: error: Name "Dict" is not defined  [name-defined]
-src/security/integrity_validator.py:703: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Dict")
-src/security/integrity_validator.py:703: error: Name "Any" is not defined  [name-defined]
-src/security/integrity_validator.py:703: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
-src/security/integrity_validator.py:711: error: Name "Dict" is not defined  [name-defined]
-src/security/integrity_validator.py:711: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Dict")
-src/security/integrity_validator.py:711: error: Name "Any" is not defined  [name-defined]
-src/security/integrity_validator.py:711: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
 src/security/geo_distributed_backup.py:547: error: "object" has no attribute "append"  [attr-defined]
 src/security/geo_distributed_backup.py:632: error: Incompatible types in assignment (expression has type "BackupRegion | None", variable has type "BackupRegion")  [assignment]
-src/security/forensics_system.py:418: error: Function is missing a return type annotation  [no-untyped-def]
-src/security/forensics_system.py:418: note: Use "-> None" if function does not return a value
-src/security/forensics_system.py:480: error: "object" has no attribute "append"  [attr-defined]
-src/security/forensics_system.py:488: error: Unsupported operand types for + ("object" and "int")  [operator]
-src/security/forensics_system.py:494: error: "object" has no attribute "append"  [attr-defined]
-src/security/forensics_system.py:502: error: Unsupported operand types for + ("object" and "int")  [operator]
-src/security/forensics_system.py:506: error: "object" has no attribute "append"  [attr-defined]
-src/security/forensics_system.py:511: error: "object" has no attribute "append"  [attr-defined]
-src/security/forensics_system.py:514: error: "object" has no attribute "append"  [attr-defined]
-src/security/forensics_system.py:516: error: Unsupported operand types for < ("int" and "object")  [operator]
-src/security/forensics_system.py:517: error: "object" has no attribute "append"  [attr-defined]
-src/security/forensics_system.py:631: error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
-src/security/forensics_system.py:646: error: Call to untyped function "LogAnalyzer" in typed context  [no-untyped-call]
-src/security/forensics_system.py:817: error: "Collection[str]" has no attribute "append"  [attr-defined]
-src/security/forensics_system.py:821: error: Incompatible types in assignment (expression has type "str", variable has type "dict[str, Any]")  [assignment]
-src/security/forensics_system.py:826: error: Incompatible types in assignment (expression has type "list[dict[str, Any]]", target has type "Collection[str]")  [assignment]
-src/security/forensics_system.py:830: error: "str" has no attribute "get"  [attr-defined]
-src/security/forensics_system.py:833: error: Generator has incompatible item type "int"; expected "bool"  [misc]
-src/security/forensics_system.py:833: error: "str" has no attribute "get"  [attr-defined]
-src/security/forensics_system.py:848: error: Incompatible types in assignment (expression has type "Collection[str]", variable has type "list[str]")  [assignment]
-src/security/forensics_system.py:858: error: Value of type "Collection[str]" is not indexable  [index]
-src/security/forensics_system.py:859: error: Value of type "Collection[str]" is not indexable  [index]
-src/security/forensics_system.py:865: error: Value of type "Collection[str]" is not indexable  [index]
-src/security/forensics_system.py:1220: error: Returning Any from function declared to return "ForensicsReport"  [no-any-return]
-src/security/forensics_system.py:1220: error: "ForensicsSystem" has no attribute "generate_forensics_report"  [attr-defined]
+src/security/forensics_system.py:405: error: Function is missing a return type annotation  [no-untyped-def]
+src/security/forensics_system.py:405: note: Use "-> None" if function does not return a value
+src/security/forensics_system.py:459: error: "object" has no attribute "append"  [attr-defined]
+src/security/forensics_system.py:467: error: Unsupported operand types for + ("object" and "int")  [operator]
+src/security/forensics_system.py:473: error: "object" has no attribute "append"  [attr-defined]
+src/security/forensics_system.py:481: error: Unsupported operand types for + ("object" and "int")  [operator]
+src/security/forensics_system.py:485: error: "object" has no attribute "append"  [attr-defined]
+src/security/forensics_system.py:488: error: "object" has no attribute "append"  [attr-defined]
+src/security/forensics_system.py:489: error: "object" has no attribute "append"  [attr-defined]
+src/security/forensics_system.py:491: error: Unsupported operand types for < ("int" and "object")  [operator]
+src/security/forensics_system.py:492: error: "object" has no attribute "append"  [attr-defined]
+src/security/forensics_system.py:609: error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
+src/security/forensics_system.py:624: error: Call to untyped function "LogAnalyzer" in typed context  [no-untyped-call]
+src/security/forensics_system.py:789: error: "Collection[str]" has no attribute "append"  [attr-defined]
+src/security/forensics_system.py:793: error: Incompatible types in assignment (expression has type "str", variable has type "dict[str, Any]")  [assignment]
+src/security/forensics_system.py:798: error: Incompatible types in assignment (expression has type "list[dict[str, Any]]", target has type "Collection[str]")  [assignment]
+src/security/forensics_system.py:801: error: "str" has no attribute "get"  [attr-defined]
+src/security/forensics_system.py:803: error: Generator has incompatible item type "int"; expected "bool"  [misc]
+src/security/forensics_system.py:803: error: "str" has no attribute "get"  [attr-defined]
+src/security/forensics_system.py:818: error: Incompatible types in assignment (expression has type "Collection[str]", variable has type "list[str]")  [assignment]
+src/security/forensics_system.py:828: error: Value of type "Collection[str]" is not indexable  [index]
+src/security/forensics_system.py:829: error: Value of type "Collection[str]" is not indexable  [index]
+src/security/forensics_system.py:836: error: Value of type "Collection[str]" is not indexable  [index]
+src/security/forensics_system.py:1179: error: Returning Any from function declared to return "ForensicsReport"  [no-any-return]
+src/security/forensics_system.py:1179: error: "ForensicsSystem" has no attribute "generate_forensics_report"  [attr-defined]
 src/security/api_documentation.py:596: error: Unsupported target for indexed assignment ("Collection[Collection[str]]")  [index]
 src/security/api_documentation.py:598: error: Value of type "Collection[Collection[str]]" is not indexable  [index]
 src/security/api_documentation.py:1061: error: Unsupported target for indexed assignment ("Collection[str]")  [index]
@@ -241,13 +126,7 @@ src/scaling/distributed_transactions.py:427: error: Cannot infer type of lambda 
 src/scaling/distributed_transactions.py:429: error: Unused "type: ignore" comment  [unused-ignore]
 src/scaling/distributed_transactions.py:504: error: Function does not return a value (it only ever returns None)  [func-returns-value]
 src/daemon/omnimind_daemon.py:32: error: Module has no attribute "configure"  [attr-defined]
-src/agents/agent_protocol.py:21: error: Name "logging" is not defined  [name-defined]
 src/security/security_monitor.py:93: error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
-src/security/security_monitor.py:846: error: Function is missing a return type annotation  [no-untyped-def]
-src/security/security_monitor.py:846: note: Use "-> None" if function does not return a value
-src/security/security_monitor.py:852: error: Call to untyped function "main" in typed context  [no-untyped-call]
-src/tools/omnimind_tools.py:905: error: Name "threading" is not defined  [name-defined]
-src/tools/omnimind_tools.py:937: error: Name "threading" is not defined  [name-defined]
 src/scaling/redis_cluster_manager.py:37: error: Cannot assign to a type  [misc]
 src/scaling/redis_cluster_manager.py:37: error: Incompatible types in assignment (expression has type "None", variable has type "type[RedisCluster]")  [assignment]
 src/scaling/redis_cluster_manager.py:38: error: Cannot assign to a type  [misc]
@@ -279,9 +158,8 @@ src/observability/opentelemetry_integration.py:279: error: Unused "type: ignore"
 src/observability/opentelemetry_integration.py:280: error: "None" has no attribute "debug"  [attr-defined]
 src/observability/opentelemetry_integration.py:283: error: "None" has no attribute "info"  [attr-defined]
 src/observability/opentelemetry_integration.py:286: error: "None" has no attribute "error"  [attr-defined]
-src/agents/react_agent.py:99: error: Name "get_message_bus" is not defined  [name-defined]
-src/agents/react_agent.py:373: error: Name "MessageType" is not defined  [name-defined]
-src/agents/react_agent.py:375: error: Name "MessagePriority" is not defined  [name-defined]
-src/agents/react_agent.py:386: error: Name "AgentMessage" is not defined  [name-defined]
-src/agents/react_agent.py:396: error: Name "AgentMessage" is not defined  [name-defined]
-Found 220 errors in 30 files (checked 147 source files)
+src/agents/code_agent.py:255: error: Incompatible types in assignment (expression has type "CodeStructure | None", variable has type "CodeStructure")  [assignment]
+src/agents/code_agent.py:345: error: Argument 2 to "generate_skeleton" of "ASTParser" has incompatible type "list[tuple[str, list[str], str]]"; expected "list[tuple[str, list[str], str | None]]"  [arg-type]
+src/agents/code_agent.py:345: note: "list" is invariant -- see https://mypy.readthedocs.io/en/stable/common_issues.html#variance
+src/agents/code_agent.py:345: note: Consider using "Sequence" instead, which is covariant
+Found 154 errors in 26 files (checked 147 source files)

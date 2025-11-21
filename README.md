@@ -69,10 +69,13 @@ Para desenvolvimento no VS Code, utilize as tasks pré-configuradas:
 
 - **🔍 Validação Completa de Segurança** - Verificações anti-corrupção AI
 - **✅ Validação Manual de Código** - Black, Flake8, MyPy completos
-- **🧪 Executar Todos os Testes** - Suite com cobertura
+- **⚡ Testes Rápidos Paralelos** - Testes em paralelo (até 8x mais rápido)
+- **📊 Testes com Cobertura Detalhada** - Análise completa de cobertura
 - **📋 Checklist de Segurança Pré-Commit** - Verificação antes de commits
 
 **Acesso:** `Ctrl+Shift+P` → "Tasks: Run Task" ou `Terminal` → `Run Task`
+
+**Testes Paralelos:** `./scripts/run_tests_parallel.sh fast` (modo desenvolvimento)
 
 📖 **Documentação completa:** `.vscode/TASKS_README.md`
 

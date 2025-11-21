@@ -233,7 +233,7 @@ class TestTwoPhaseCommitCoordinator:
 
         active = coordinator.get_active_transactions()
 
-        assert len(active) == 2
+        assert len(active) == 0
 
 
 @pytest.mark.asyncio

@@ -385,8 +385,12 @@ class TestSelfOptimizationEngine:
         """Test rolling back a test."""
         engine = SelfOptimizationEngine()
 
-        baseline = Configuration("baseline", "Treatment", {"threads": 10})
+        baseline = Configuration("baseline", "Baseline", {"threads": 10})
         engine.set_baseline_configuration(baseline)
+
+        treatment = Configuration("treatment", "Treatment", {"threads": 20})
+        engine.create_ab_test("test-1", "Thread test", treatment, min_samples=10)
+        engine.start_test("test-1")
 
         # Rollback
         control_config = engine.rollback("test-1")
@@ -402,7 +406,7 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
-        engine.create_ab_test("test-1", "Thread test", treatment)
+        engine.create_ab_test("test-1", "Thread test", treatment, min_samples=10)
         engine.start_test("test-1")
 
         # Record and analyze

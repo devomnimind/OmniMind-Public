@@ -220,7 +220,9 @@ class SecurityMonitor:
         self.is_monitoring = False
         self.logger.info("Security monitoring stopped")
 
-        self.audit_system.log_action("security_monitoring_stopped", {}, category="security")
+        self.audit_system.log_action(
+            "security_monitoring_stopped", {}, category="security"
+        )
 
     async def _establish_baseline(self) -> None:
         """Establish baseline system state."""
@@ -550,9 +552,12 @@ class SecurityMonitor:
         try:
             connections = self._get_network_connections()
             self.baseline_network = {
-                (conn.get("local_addr", ""), conn.get("local_port", 0)) for conn in connections
+                (conn.get("local_addr", ""), conn.get("local_port", 0))
+                for conn in connections
             }
-            self.logger.info(f"Network baseline: {len(self.baseline_network)} connections")
+            self.logger.info(
+                f"Network baseline: {len(self.baseline_network)} connections"
+            )
         except Exception as e:
             self.logger.error(f"Network snapshot failed: {e}")
 
@@ -606,10 +611,14 @@ class SecurityMonitor:
                         conn_info = [
                             {
                                 "local_addr": (
-                                    f"{conn.laddr.ip}:{conn.laddr.port}" if conn.laddr else None
+                                    f"{conn.laddr.ip}:{conn.laddr.port}"
+                                    if conn.laddr
+                                    else None
                                 ),
                                 "remote_addr": (
-                                    f"{conn.raddr.ip}:{conn.raddr.port}" if conn.raddr else None
+                                    f"{conn.raddr.ip}:{conn.raddr.port}"
+                                    if conn.raddr
+                                    else None
                                 ),
                                 "status": conn.status,
                                 "type": conn.type,
@@ -656,8 +665,12 @@ class SecurityMonitor:
                     "fd": conn.fd,
                     "family": conn.family,
                     "type": conn.type,
-                    "local_addr": (f"{conn.laddr.ip}:{conn.laddr.port}" if conn.laddr else None),
-                    "remote_addr": (f"{conn.raddr.ip}:{conn.raddr.port}" if conn.raddr else None),
+                    "local_addr": (
+                        f"{conn.laddr.ip}:{conn.laddr.port}" if conn.laddr else None
+                    ),
+                    "remote_addr": (
+                        f"{conn.raddr.ip}:{conn.raddr.port}" if conn.raddr else None
+                    ),
                     "status": conn.status,
                     "pid": conn.pid,
                 }

@@ -233,6 +233,7 @@ class TestPerformance:
         self, backend_server, auth_credentials: Dict[str, str]
     ):
         """Test handling of concurrent requests."""
+
         async def make_request(i: int):
             # Use TestClient directly
             response = backend_server.get(

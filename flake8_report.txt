@@ -1,4 +1,3 @@
-src/agents/agent_protocol.py:21:10: F821 undefined name 'logging'
 src/agents/architect_agent.py:128:89: E501 line too long (89 > 88 characters)
 src/agents/code_agent.py:183:89: E501 line too long (100 > 88 characters)
 src/agents/debug_agent.py:113:89: E501 line too long (100 > 88 characters)
@@ -10,13 +9,7 @@ src/agents/psychoanalytic_analyst.py:104:89: E501 line too long (97 > 88 charact
 src/agents/psychoanalytic_analyst.py:107:89: E501 line too long (94 > 88 characters)
 src/agents/psychoanalytic_analyst.py:117:89: E501 line too long (91 > 88 characters)
 src/agents/psychoanalytic_analyst.py:131:89: E501 line too long (92 > 88 characters)
-src/agents/react_agent.py:99:28: F821 undefined name 'get_message_bus'
-src/agents/react_agent.py:172:89: E501 line too long (94 > 88 characters)
-src/agents/react_agent.py:373:23: F821 undefined name 'MessageType'
-src/agents/react_agent.py:375:19: F821 undefined name 'MessagePriority'
-src/agents/react_agent.py:375:37: F821 undefined name 'MessagePriority'
-src/agents/react_agent.py:386:19: F821 undefined name 'AgentMessage'
-src/agents/react_agent.py:396:71: F821 undefined name 'AgentMessage'
+src/agents/react_agent.py:173:89: E501 line too long (94 > 88 characters)
 src/audit/compliance_reporter.py:187:89: E501 line too long (96 > 88 characters)
 src/audit/compliance_reporter.py:196:89: E501 line too long (92 > 88 characters)
 src/audit/compliance_reporter.py:202:89: E501 line too long (96 > 88 characters)
@@ -56,76 +49,54 @@ src/security/config_validator.py:272:89: E501 line too long (91 > 88 characters)
 src/security/config_validator.py:273:89: E501 line too long (95 > 88 characters)
 src/security/config_validator.py:744:89: E501 line too long (91 > 88 characters)
 src/security/firecracker_sandbox.py:73:89: E501 line too long (95 > 88 characters)
-src/security/forensics_system.py:13:1: F811 redefinition of unused 'json' from line 12
-src/security/forensics_system.py:569:89: E501 line too long (101 > 88 characters)
-src/security/forensics_system.py:865:89: E501 line too long (102 > 88 characters)
-src/security/forensics_system.py:1158:89: E501 line too long (106 > 88 characters)
+src/security/forensics_system.py:173:89: E501 line too long (89 > 88 characters)
+src/security/forensics_system.py:177:89: E501 line too long (90 > 88 characters)
+src/security/forensics_system.py:220:89: E501 line too long (90 > 88 characters)
+src/security/forensics_system.py:234:89: E501 line too long (100 > 88 characters)
+src/security/forensics_system.py:249:89: E501 line too long (96 > 88 characters)
+src/security/forensics_system.py:305:89: E501 line too long (94 > 88 characters)
+src/security/forensics_system.py:412:89: E501 line too long (95 > 88 characters)
+src/security/forensics_system.py:413:89: E501 line too long (97 > 88 characters)
+src/security/forensics_system.py:414:89: E501 line too long (100 > 88 characters)
+src/security/forensics_system.py:415:89: E501 line too long (96 > 88 characters)
+src/security/forensics_system.py:485:89: E501 line too long (96 > 88 characters)
+src/security/forensics_system.py:488:89: E501 line too long (91 > 88 characters)
+src/security/forensics_system.py:686:89: E501 line too long (98 > 88 characters)
+src/security/forensics_system.py:711:89: E501 line too long (90 > 88 characters)
+src/security/forensics_system.py:780:89: E501 line too long (95 > 88 characters)
+src/security/forensics_system.py:801:89: E501 line too long (94 > 88 characters)
+src/security/forensics_system.py:908:89: E501 line too long (95 > 88 characters)
+src/security/forensics_system.py:931:89: E501 line too long (91 > 88 characters)
+src/security/forensics_system.py:1111:89: E501 line too long (95 > 88 characters)
+src/security/forensics_system.py:1157:89: E501 line too long (97 > 88 characters)
+src/security/forensics_system.py:1161:89: E501 line too long (91 > 88 characters)
+src/security/forensics_system.py:1164:89: E501 line too long (97 > 88 characters)
+src/security/forensics_system.py:1201:89: E501 line too long (89 > 88 characters)
 src/security/hsm_manager.py:337:89: E501 line too long (91 > 88 characters)
 src/security/integrity_validator.py:4:89: E501 line too long (95 > 88 characters)
-src/security/integrity_validator.py:49:20: F821 undefined name 'Optional'
-src/security/integrity_validator.py:50:19: F821 undefined name 'Optional'
-src/security/integrity_validator.py:51:21: F821 undefined name 'Optional'
-src/security/integrity_validator.py:52:20: F821 undefined name 'Optional'
-src/security/integrity_validator.py:53:27: F821 undefined name 'Optional'
-src/security/integrity_validator.py:54:26: F821 undefined name 'Optional'
-src/security/integrity_validator.py:56:15: F821 undefined name 'List'
-src/security/integrity_validator.py:73:22: F821 undefined name 'List'
-src/security/integrity_validator.py:74:22: F821 undefined name 'List'
-src/security/integrity_validator.py:75:19: F821 undefined name 'List'
-src/security/integrity_validator.py:93:23: F821 undefined name 'Optional'
-src/security/integrity_validator.py:93:32: F821 undefined name 'Any'
-src/security/integrity_validator.py:94:23: F821 undefined name 'Optional'
-src/security/integrity_validator.py:95:18: F821 undefined name 'Optional'
-src/security/integrity_validator.py:162:10: F821 undefined name 'Dict'
-src/security/integrity_validator.py:162:20: F821 undefined name 'Any'
-src/security/integrity_validator.py:177:24: F821 undefined name 'Dict'
-src/security/integrity_validator.py:177:34: F821 undefined name 'Any'
-src/security/integrity_validator.py:285:24: F821 undefined name 'Optional'
-src/security/integrity_validator.py:388:58: F821 undefined name 'Dict'
-src/security/integrity_validator.py:388:68: F821 undefined name 'Any'
-src/security/integrity_validator.py:400:58: F821 undefined name 'List'
-src/security/integrity_validator.py:400:63: F821 undefined name 'Dict'
-src/security/integrity_validator.py:400:73: F821 undefined name 'Any'
-src/security/integrity_validator.py:410:18: F821 undefined name 'List'
-src/security/integrity_validator.py:410:23: F821 undefined name 'Dict'
-src/security/integrity_validator.py:410:33: F821 undefined name 'Any'
-src/security/integrity_validator.py:433:10: F821 undefined name 'Dict'
-src/security/integrity_validator.py:433:20: F821 undefined name 'Any'
-src/security/integrity_validator.py:471:47: F821 undefined name 'Dict'
-src/security/integrity_validator.py:471:57: F821 undefined name 'Any'
-src/security/integrity_validator.py:505:89: E501 line too long (112 > 88 characters)
-src/security/integrity_validator.py:522:89: E501 line too long (99 > 88 characters)
-src/security/integrity_validator.py:531:89: E501 line too long (119 > 88 characters)
-src/security/integrity_validator.py:542:74: F821 undefined name 'List'
-src/security/integrity_validator.py:608:10: F821 undefined name 'Tuple'
-src/security/integrity_validator.py:608:16: F821 undefined name 'List'
-src/security/integrity_validator.py:608:27: F821 undefined name 'List'
-src/security/integrity_validator.py:644:89: E501 line too long (92 > 88 characters)
-src/security/integrity_validator.py:692:23: F821 undefined name 'Optional'
-src/security/integrity_validator.py:703:48: F821 undefined name 'Dict'
-src/security/integrity_validator.py:703:58: F821 undefined name 'Any'
-src/security/integrity_validator.py:711:6: F821 undefined name 'Dict'
-src/security/integrity_validator.py:711:16: F821 undefined name 'Any'
+src/security/integrity_validator.py:524:89: E501 line too long (99 > 88 characters)
+src/security/integrity_validator.py:648:89: E501 line too long (92 > 88 characters)
 src/security/network_sensors.py:212:89: E501 line too long (97 > 88 characters)
 src/security/network_sensors.py:329:89: E501 line too long (90 > 88 characters)
 src/security/playbooks/data_exfiltration_response.py:85:89: E501 line too long (95 > 88 characters)
 src/security/security_agent.py:224:89: E501 line too long (90 > 88 characters)
 src/security/security_agent.py:370:89: E501 line too long (89 > 88 characters)
 src/security/security_agent.py:671:89: E501 line too long (99 > 88 characters)
-src/security/security_monitor.py:286:89: E501 line too long (98 > 88 characters)
-src/security/security_monitor.py:317:89: E501 line too long (93 > 88 characters)
-src/security/security_monitor.py:335:89: E501 line too long (99 > 88 characters)
-src/security/security_monitor.py:367:89: E501 line too long (124 > 88 characters)
-src/security/security_monitor.py:704:13: F841 local variable 'local_addr' is assigned to but never used
-src/security/security_monitor.py:726:89: E501 line too long (93 > 88 characters)
-src/security/security_monitor.py:844:5: F811 redefinition of unused 'asyncio' from line 10
-src/security/security_orchestrator.py:254:89: E501 line too long (112 > 88 characters)
-src/security/security_orchestrator.py:255:1: W293 blank line contains whitespace
-src/security/security_orchestrator.py:257:89: E501 line too long (113 > 88 characters)
-src/security/security_orchestrator.py:367:89: E501 line too long (90 > 88 characters)
-src/security/security_orchestrator.py:396:89: E501 line too long (93 > 88 characters)
-src/security/security_orchestrator.py:432:89: E501 line too long (90 > 88 characters)
-src/security/security_orchestrator.py:434:89: E501 line too long (99 > 88 characters)
+src/security/security_monitor.py:223:89: E501 line too long (92 > 88 characters)
+src/security/security_monitor.py:284:89: E501 line too long (98 > 88 characters)
+src/security/security_monitor.py:315:89: E501 line too long (93 > 88 characters)
+src/security/security_monitor.py:333:89: E501 line too long (99 > 88 characters)
+src/security/security_monitor.py:553:89: E501 line too long (95 > 88 characters)
+src/security/security_monitor.py:555:89: E501 line too long (91 > 88 characters)
+src/security/security_monitor.py:609:89: E501 line too long (96 > 88 characters)
+src/security/security_monitor.py:612:89: E501 line too long (96 > 88 characters)
+src/security/security_monitor.py:659:89: E501 line too long (97 > 88 characters)
+src/security/security_monitor.py:660:89: E501 line too long (98 > 88 characters)
+src/security/security_monitor.py:716:89: E501 line too long (93 > 88 characters)
+src/security/security_orchestrator.py:369:89: E501 line too long (90 > 88 characters)
+src/security/security_orchestrator.py:398:89: E501 line too long (93 > 88 characters)
+src/security/security_orchestrator.py:434:89: E501 line too long (90 > 88 characters)
+src/security/security_orchestrator.py:436:89: E501 line too long (99 > 88 characters)
 src/security/soc2_compliance.py:4:89: E501 line too long (100 > 88 characters)
 src/security/soc2_compliance.py:185:89: E501 line too long (93 > 88 characters)
 src/security/web_scanner.py:222:89: E501 line too long (90 > 88 characters)
@@ -133,35 +104,12 @@ src/security/web_scanner.py:226:89: E501 line too long (95 > 88 characters)
 src/security/web_scanner.py:238:89: E501 line too long (89 > 88 characters)
 src/security/web_scanner.py:288:89: E501 line too long (89 > 88 characters)
 src/tools/agent_tools.py:147:89: E501 line too long (100 > 88 characters)
-src/tools/ast_parser.py:30:16: F821 undefined name 'Optional'
-src/tools/ast_parser.py:31:17: F821 undefined name 'List'
-src/tools/ast_parser.py:32:18: F821 undefined name 'Optional'
-src/tools/ast_parser.py:33:17: F821 undefined name 'List'
-src/tools/ast_parser.py:34:12: F821 undefined name 'List'
-src/tools/ast_parser.py:42:14: F821 undefined name 'List'
-src/tools/ast_parser.py:43:14: F821 undefined name 'List'
-src/tools/ast_parser.py:44:16: F821 undefined name 'List'
-src/tools/ast_parser.py:45:16: F821 undefined name 'List'
-src/tools/ast_parser.py:46:19: F821 undefined name 'Set'
-src/tools/ast_parser.py:57:44: F821 undefined name 'Optional'
-src/tools/ast_parser.py:220:59: F821 undefined name 'Optional'
-src/tools/ast_parser.py:236:47: F821 undefined name 'List'
-src/tools/ast_parser.py:248:22: F821 undefined name 'List'
-src/tools/ast_parser.py:263:51: F821 undefined name 'List'
-src/tools/ast_parser.py:275:20: F821 undefined name 'List'
-src/tools/ast_parser.py:292:18: F821 undefined name 'List'
-src/tools/ast_parser.py:292:34: F821 undefined name 'List'
-src/tools/ast_parser.py:292:45: F821 undefined name 'Optional'
-src/tools/ast_parser.py:293:20: F821 undefined name 'Optional'
-src/tools/ast_parser.py:319:89: E501 line too long (107 > 88 characters)
-src/tools/ast_parser.py:329:55: F821 undefined name 'List'
-src/tools/ast_parser.py:339:19: F821 undefined name 'List'
-src/tools/ast_parser.py:360:89: E501 line too long (101 > 88 characters)
+src/tools/ast_parser.py:124:89: E501 line too long (96 > 88 characters)
+src/tools/ast_parser.py:210:89: E501 line too long (91 > 88 characters)
+src/tools/ast_parser.py:320:89: E501 line too long (95 > 88 characters)
 src/tools/code_generator.py:99:89: E501 line too long (93 > 88 characters)
 src/tools/code_generator.py:240:89: E501 line too long (95 > 88 characters)
-src/tools/omnimind_tools.py:95:89: E501 line too long (96 > 88 characters)
-src/tools/omnimind_tools.py:905:40: F821 undefined name 'threading'
-src/tools/omnimind_tools.py:937:32: F821 undefined name 'threading'
+src/tools/omnimind_tools.py:96:89: E501 line too long (96 > 88 characters)
 src/workflows/automated_code_review.py:356:89: E501 line too long (92 > 88 characters)
 src/workflows/automated_code_review.py:505:89: E501 line too long (91 > 88 characters)
 src/workflows/automated_code_review.py:646:89: E501 line too long (90 > 88 characters)
