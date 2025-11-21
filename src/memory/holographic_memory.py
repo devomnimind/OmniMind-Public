@@ -145,7 +145,7 @@ class HolographicProjection:
             surface = self._ensure_2d(info_tensor)
             # Check if downsampling needed
             if (
-                max(len(surface), len(surface[0]) if surface and surface[0] else 0)
+                max(len(surface), len(surface[0]) if surface is not None and len(surface) > 0 and len(surface[0]) > 0 else 0)
                 > self.max_surface_dim
             ):
                 surface = self._downsample_fft(surface, self.max_surface_dim)
@@ -259,8 +259,8 @@ class HolographicProjection:
         if not volume:
             return []
         depth = len(volume)
-        h = len(volume[0]) if depth and volume[0] else 0
-        w = len(volume[0][0]) if h and volume[0][0] else 0
+        h = len(volume[0]) if depth > 0 and volume[0] else 0
+        w = len(volume[0][0]) if h > 0 and volume[0][0] else 0
         projection: List[List[float]] = [[0.0 for _ in range(w)] for _ in range(h)]
         for z in range(depth):
             layer = volume[z]
@@ -272,7 +272,7 @@ class HolographicProjection:
         if (
             max(
                 len(projection),
-                len(projection[0]) if projection and projection[0] else 0,
+                len(projection[0]) if projection and len(projection) > 0 and projection[0] else 0,
             )
             > self.max_surface_dim
         ):
@@ -548,6 +548,9 @@ class EventHorizonMemory:
             for r in range(max_h)
         ]
 
+        if NUMPY_AVAILABLE and np is not None:
+            return np.array(merged)  # type: ignore
+
         return merged
 
     def _spawn_child_memory(self) -> EventHorizonMemory:
@@ -614,14 +617,16 @@ class EventHorizonMemory:
 
         # Threshold for match
         if correlation > 0.5:
-            # Convert to list if it's ndarray
+            # Return as numpy array if available, else list
+            if NUMPY_AVAILABLE and np is not None:
+                if isinstance(self.surface.surface_bits, list):
+                    return np.array(self.surface.surface_bits)
+                return self.surface.surface_bits  # Already ndarray
+            
+            # Fallback to list
             if isinstance(self.surface.surface_bits, list):
                 return self.surface.surface_bits
-            elif (
-                NUMPY_AVAILABLE
-                and np is not None
-                and isinstance(self.surface.surface_bits, np.ndarray)
-            ):
+            elif hasattr(self.surface.surface_bits, "tolist"):
                 return self.surface.surface_bits.tolist()
             else:
                 return None
@@ -649,8 +654,8 @@ class EventHorizonMemory:
         # Ensure same shape
         min_h = min(len(surface1), len(surface2))
         min_w = min(
-            len(surface1[0]) if surface1 and surface1[0] else 0,
-            len(surface2[0]) if surface2 and surface2[0] else 0,
+            len(surface1[0]) if surface1 is not None and len(surface1) > 0 and len(surface1[0]) > 0 else 0,
+            len(surface2[0]) if surface2 is not None and len(surface2) > 0 and len(surface2[0]) > 0 else 0,
         )
 
         s1_crop = [row[:min_w] for row in surface1[:min_h]]
