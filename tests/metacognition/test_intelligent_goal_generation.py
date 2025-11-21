@@ -19,7 +19,7 @@ from src.metacognition.proactive_goals import GoalCategory, GoalPriority
 class TestImpactMetrics:
     """Test impact metrics calculation."""
 
-    def test_impact_metrics_creation(self) -> None:
+    def test_impact_metrics_creation(self):
         """Test creating impact metrics."""
         metrics = ImpactMetrics(
             code_coverage_impact=0.8,
@@ -32,7 +32,7 @@ class TestImpactMetrics:
         assert metrics.code_coverage_impact == 0.8
         assert metrics.security_impact == 0.9
 
-    def test_total_impact_calculation(self) -> None:
+    def test_total_impact_calculation(self):
         """Test total impact calculation with weighted scoring."""
         metrics = ImpactMetrics(
             code_coverage_impact=0.8,
@@ -48,7 +48,7 @@ class TestImpactMetrics:
         expected = 0.8 * 0.15 + 0.6 * 0.25 + 1.0 * 0.30 + 0.7 * 0.15 + 0.5 * 0.15
         assert abs(total - expected) < 0.01
 
-    def test_to_dict(self) -> None:
+    def test_to_dict(self):
         """Test conversion to dictionary."""
         metrics = ImpactMetrics(
             code_coverage_impact=0.8,
@@ -67,7 +67,7 @@ class TestImpactMetrics:
 class TestCodeAnalyzer:
     """Test code analysis functionality."""
 
-    def test_analyze_simple_file(self) -> None:
+    def test_analyze_simple_file(self):
         """Test analyzing a simple Python file."""
         with tempfile.TemporaryDirectory() as tmpdir:
             test_file = Path(tmpdir) / "test.py"
@@ -92,7 +92,7 @@ class TestClass:
             assert "TestClass" in result["classes"]
             assert result["lines"] > 0
 
-    def test_analyze_file_with_complexity(self) -> None:
+    def test_analyze_file_with_complexity(self):
         """Test complexity calculation."""
         with tempfile.TemporaryDirectory() as tmpdir:
             test_file = Path(tmpdir) / "complex.py"
@@ -114,7 +114,7 @@ def complex_function(x, y):
             # Should detect multiple decision points
             assert result["complexity"] > 1
 
-    def test_analyze_file_with_imports(self) -> None:
+    def test_analyze_file_with_imports(self):
         """Test import detection."""
         with tempfile.TemporaryDirectory() as tmpdir:
             test_file = Path(tmpdir) / "imports.py"
@@ -134,7 +134,7 @@ from typing import Dict, List
             assert "sys" in result["imports"]
             assert "pathlib" in result["imports"]
 
-    def test_analyze_repository(self) -> None:
+    def test_analyze_repository(self):
         """Test repository-level analysis."""
         with tempfile.TemporaryDirectory() as tmpdir:
             workspace = Path(tmpdir)
@@ -174,14 +174,14 @@ def complex_func():
 class TestImpactPredictor:
     """Test ML-based impact prediction."""
 
-    def test_impact_predictor_creation(self) -> None:
+    def test_impact_predictor_creation(self):
         """Test creating impact predictor."""
         predictor = ImpactPredictor()
 
         assert predictor.historical_goals == []
         assert predictor.model_trained is False
 
-    def test_predict_security_impact(self) -> None:
+    def test_predict_security_impact(self):
         """Test predicting impact for security goals."""
         predictor = ImpactPredictor()
         analysis = RepositoryAnalysis()
@@ -195,7 +195,7 @@ class TestImpactPredictor:
         assert impact.security_impact > 0.5
         assert impact.confidence > 0.0
 
-    def test_predict_performance_impact(self) -> None:
+    def test_predict_performance_impact(self):
         """Test predicting impact for performance goals."""
         predictor = ImpactPredictor()
         analysis = RepositoryAnalysis()
@@ -206,7 +206,7 @@ class TestImpactPredictor:
 
         assert impact.performance_impact > 0.5
 
-    def test_predict_testing_impact(self) -> None:
+    def test_predict_testing_impact(self):
         """Test predicting impact for testing goals."""
         predictor = ImpactPredictor()
         analysis = RepositoryAnalysis()
@@ -217,7 +217,7 @@ class TestImpactPredictor:
 
         assert impact.code_coverage_impact > 0.5
 
-    def test_effort_estimation(self) -> None:
+    def test_effort_estimation(self):
         """Test effort estimation from description."""
         predictor = ImpactPredictor()
 
@@ -233,7 +233,7 @@ class TestImpactPredictor:
         effort = predictor._estimate_effort("Fix typo in comment")
         assert effort < 5.0
 
-    def test_effort_vs_impact_ratio(self) -> None:
+    def test_effort_vs_impact_ratio(self):
         """Test effort vs impact ratio calculation."""
         predictor = ImpactPredictor()
         analysis = RepositoryAnalysis()
@@ -245,7 +245,7 @@ class TestImpactPredictor:
         # High impact, low effort should have high ratio
         assert impact.effort_vs_impact_ratio > 0.0
 
-    def test_learn_from_goal(self) -> None:
+    def test_learn_from_goal(self):
         """Test learning from completed goals."""
         predictor = ImpactPredictor()
 
@@ -264,7 +264,7 @@ class TestImpactPredictor:
         assert len(predictor.historical_goals) == 1
         assert predictor.historical_goals[0]["goal"]["title"] == "Add tests"
 
-    def test_impact_normalization(self) -> None:
+    def test_impact_normalization(self):
         """Test that impact values are normalized to 0-1."""
         predictor = ImpactPredictor()
         analysis = RepositoryAnalysis()
@@ -284,7 +284,7 @@ class TestImpactPredictor:
 class TestIntelligentGoalEngine:
     """Test intelligent goal generation engine."""
 
-    def test_engine_creation(self) -> None:
+    def test_engine_creation(self):
         """Test creating goal engine."""
         with tempfile.TemporaryDirectory() as tmpdir:
             engine = IntelligentGoalEngine(tmpdir)
@@ -293,7 +293,7 @@ class TestIntelligentGoalEngine:
             assert isinstance(engine.code_analyzer, CodeAnalyzer)
             assert isinstance(engine.impact_predictor, ImpactPredictor)
 
-    def test_generate_id(self) -> None:
+    def test_generate_id(self):
         """Test unique ID generation."""
         with tempfile.TemporaryDirectory() as tmpdir:
             engine = IntelligentGoalEngine(tmpdir)
@@ -305,7 +305,7 @@ class TestIntelligentGoalEngine:
             assert "GOAL-" in id1
             assert "GOAL-" in id2
 
-    def test_generate_complexity_reduction_goals(self) -> None:
+    def test_generate_complexity_reduction_goals(self):
         """Test generating complexity reduction goals."""
         with tempfile.TemporaryDirectory() as tmpdir:
             engine = IntelligentGoalEngine(tmpdir)
@@ -327,7 +327,7 @@ class TestIntelligentGoalEngine:
             )
             assert "impact_metrics" in goal
 
-    def test_generate_test_coverage_goals(self) -> None:
+    def test_generate_test_coverage_goals(self):
         """Test generating test coverage goals."""
         with tempfile.TemporaryDirectory() as tmpdir:
             workspace = Path(tmpdir)
@@ -348,7 +348,7 @@ class TestIntelligentGoalEngine:
                 "test" in goal["title"].lower() or "coverage" in goal["title"].lower()
             )
 
-    def test_generate_architecture_improvement_goals(self) -> None:
+    def test_generate_architecture_improvement_goals(self):
         """Test generating architecture improvement goals."""
         with tempfile.TemporaryDirectory() as tmpdir:
             engine = IntelligentGoalEngine(tmpdir)
@@ -368,7 +368,7 @@ class TestIntelligentGoalEngine:
                 or "architecture" in goal["title"].lower()
             )
 
-    def test_generate_security_hardening_goals(self) -> None:
+    def test_generate_security_hardening_goals(self):
         """Test generating security hardening goals."""
         with tempfile.TemporaryDirectory() as tmpdir:
             engine = IntelligentGoalEngine(tmpdir)
@@ -388,7 +388,7 @@ class TestIntelligentGoalEngine:
             assert "security" in goal["title"].lower()
             assert goal["priority"] == GoalPriority.CRITICAL
 
-    def test_analyze_and_generate_goals(self) -> None:
+    def test_analyze_and_generate_goals(self):
         """Test end-to-end goal generation."""
         with tempfile.TemporaryDirectory() as tmpdir:
             workspace = Path(tmpdir)
@@ -430,7 +430,7 @@ def complex_func():
                 assert "impact_metrics" in goal
                 assert "total_impact" in goal["impact_metrics"]
 
-    def test_goals_sorted_by_impact(self) -> None:
+    def test_goals_sorted_by_impact(self):
         """Test that goals are sorted by total impact."""
         with tempfile.TemporaryDirectory() as tmpdir:
             workspace = Path(tmpdir)
@@ -460,7 +460,7 @@ def complex():
                         >= goals[i + 1]["impact_metrics"]["total_impact"]
                     )
 
-    def test_detect_circular_dependencies(self) -> None:
+    def test_detect_circular_dependencies(self):
         """Test circular dependency detection."""
         with tempfile.TemporaryDirectory() as tmpdir:
             engine = IntelligentGoalEngine(tmpdir)
@@ -474,7 +474,7 @@ def complex():
             cycles = engine._detect_circular_dependencies(dependencies)
             assert len(cycles) > 0
 
-    def test_no_circular_dependencies(self) -> None:
+    def test_no_circular_dependencies(self):
         """Test when there are no circular dependencies."""
         with tempfile.TemporaryDirectory() as tmpdir:
             engine = IntelligentGoalEngine(tmpdir)
@@ -493,7 +493,7 @@ def complex():
 class TestIntegration:
     """Integration tests for intelligent goal generation."""
 
-    def test_full_workflow(self) -> None:
+    def test_full_workflow(self):
         """Test complete workflow from analysis to prioritized goals."""
         with tempfile.TemporaryDirectory() as tmpdir:
             workspace = Path(tmpdir)
@@ -553,7 +553,7 @@ def dangerous_function():
                 assert 0.0 <= impact["total_impact"] <= 1.0
                 assert 0.0 <= impact["confidence"] <= 1.0
 
-    def test_predictor_learning_integration(self) -> None:
+    def test_predictor_learning_integration(self):
         """Test integration between predictor and learning."""
         predictor = ImpactPredictor()
 

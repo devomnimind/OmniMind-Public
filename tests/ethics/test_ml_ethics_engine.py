@@ -15,7 +15,7 @@ from src.ethics.ml_ethics_engine import (
 class TestEthicalContext:
     """Test ethical context data structure."""
 
-    def test_context_creation(self) -> None:
+    def test_context_creation(self):
         """Test creating ethical context."""
         context = EthicalContext(
             action_description="Delete old backup files",
@@ -29,7 +29,7 @@ class TestEthicalContext:
         assert len(context.stakeholders) == 2
         assert context.reversibility == 0.8
 
-    def test_context_to_dict(self) -> None:
+    def test_context_to_dict(self):
         """Test context serialization."""
         context = EthicalContext(
             action_description="Update configuration",
@@ -46,7 +46,7 @@ class TestEthicalContext:
 class TestFrameworkScore:
     """Test framework scoring."""
 
-    def test_framework_score_creation(self) -> None:
+    def test_framework_score_creation(self):
         """Test creating framework score."""
         score = FrameworkScore(
             framework=EthicalFramework.DEONTOLOGICAL,
@@ -59,7 +59,7 @@ class TestFrameworkScore:
         assert score.score == 0.75
         assert score.confidence == 0.85
 
-    def test_framework_score_to_dict(self) -> None:
+    def test_framework_score_to_dict(self):
         """Test framework score serialization."""
         score = FrameworkScore(
             framework=EthicalFramework.CONSEQUENTIALIST,
@@ -78,7 +78,7 @@ class TestFrameworkScore:
 class TestConsensusDecision:
     """Test consensus decision."""
 
-    def test_consensus_decision_creation(self) -> None:
+    def test_consensus_decision_creation(self):
         """Test creating consensus decision."""
         scores = [
             FrameworkScore(EthicalFramework.DEONTOLOGICAL, 0.7, 0.8, "Rules ok"),
@@ -101,7 +101,7 @@ class TestConsensusDecision:
         assert decision.overall_score == 0.75
         assert len(decision.framework_scores) == 2
 
-    def test_consensus_decision_to_dict(self) -> None:
+    def test_consensus_decision_to_dict(self):
         """Test consensus decision serialization."""
         scores = [FrameworkScore(EthicalFramework.DEONTOLOGICAL, 0.7, 0.8, "Rules ok")]
 
@@ -125,7 +125,7 @@ class TestConsensusDecision:
 class TestEthicalFeatureExtractor:
     """Test feature extraction."""
 
-    def test_feature_extraction(self) -> None:
+    def test_feature_extraction(self):
         """Test extracting features from context."""
         extractor = EthicalFeatureExtractor()
 
@@ -147,7 +147,7 @@ class TestEthicalFeatureExtractor:
         assert features["reversibility"] == 0.2
         assert features["transparency"] == 0.9
 
-    def test_impact_encoding(self) -> None:
+    def test_impact_encoding(self):
         """Test impact level encoding."""
         extractor = EthicalFeatureExtractor()
 
@@ -156,7 +156,7 @@ class TestEthicalFeatureExtractor:
         assert extractor._encode_impact(ActionImpact.HIGH) == 0.75
         assert extractor._encode_impact(ActionImpact.CRITICAL) == 1.0
 
-    def test_risk_score_calculation(self) -> None:
+    def test_risk_score_calculation(self):
         """Test action risk score calculation."""
         extractor = EthicalFeatureExtractor()
 
@@ -176,7 +176,7 @@ class TestEthicalFeatureExtractor:
 class TestMLEthicsEngine:
     """Test ML ethics engine."""
 
-    def test_engine_creation(self) -> None:
+    def test_engine_creation(self):
         """Test creating ML ethics engine."""
         engine = MLEthicsEngine(
             learning_rate=0.1,
@@ -187,7 +187,7 @@ class TestMLEthicsEngine:
         assert engine.consensus_threshold == 0.6
         assert len(engine.framework_weights) == 4
 
-    def test_framework_weights_initialization(self) -> None:
+    def test_framework_weights_initialization(self):
         """Test framework weights are balanced initially."""
         engine = MLEthicsEngine()
 
@@ -198,7 +198,7 @@ class TestMLEthicsEngine:
         # Should sum to 1.0
         assert abs(sum(weights.values()) - 1.0) < 0.01
 
-    def test_safe_action_approval(self) -> None:
+    def test_safe_action_approval(self):
         """Test that safe actions are approved."""
         engine = MLEthicsEngine(consensus_threshold=0.5)
 
@@ -216,7 +216,7 @@ class TestMLEthicsEngine:
         assert decision.overall_score >= 0.5
         assert len(decision.framework_scores) == 4
 
-    def test_risky_action_rejection(self) -> None:
+    def test_risky_action_rejection(self):
         """Test that risky actions are rejected."""
         engine = MLEthicsEngine(consensus_threshold=0.6)
 
@@ -233,7 +233,7 @@ class TestMLEthicsEngine:
         # Should be rejected or have low score
         assert decision.overall_score < 0.7
 
-    def test_human_oversight_improves_approval(self) -> None:
+    def test_human_oversight_improves_approval(self):
         """Test that human oversight increases approval likelihood."""
         engine = MLEthicsEngine()
 
@@ -260,7 +260,7 @@ class TestMLEthicsEngine:
         # With oversight should score higher
         assert decision_yes.overall_score >= decision_no.overall_score
 
-    def test_alternatives_generation_for_vetoed_actions(self) -> None:
+    def test_alternatives_generation_for_vetoed_actions(self):
         """Test that alternatives are generated for rejected actions."""
         engine = MLEthicsEngine(consensus_threshold=0.7)
 
@@ -278,7 +278,7 @@ class TestMLEthicsEngine:
         if not decision.approved:
             assert len(decision.alternatives_suggested) > 0
 
-    def test_deontological_evaluation(self) -> None:
+    def test_deontological_evaluation(self):
         """Test deontological framework evaluation."""
         engine = MLEthicsEngine()
 
@@ -296,7 +296,7 @@ class TestMLEthicsEngine:
         assert score.framework == EthicalFramework.DEONTOLOGICAL
         assert score.score > 0.5  # Should approve rule-compliant action
 
-    def test_consequentialist_evaluation(self) -> None:
+    def test_consequentialist_evaluation(self):
         """Test consequentialist framework evaluation."""
         engine = MLEthicsEngine()
 
@@ -314,7 +314,7 @@ class TestMLEthicsEngine:
         assert score.framework == EthicalFramework.CONSEQUENTIALIST
         assert score.score > 0.4  # Should approve if net benefit positive
 
-    def test_virtue_ethics_evaluation(self) -> None:
+    def test_virtue_ethics_evaluation(self):
         """Test virtue ethics framework evaluation."""
         engine = MLEthicsEngine()
 
@@ -332,7 +332,7 @@ class TestMLEthicsEngine:
         assert score.framework == EthicalFramework.VIRTUE_ETHICS
         assert score.score > 0.5  # Should approve prudent action
 
-    def test_care_ethics_evaluation(self) -> None:
+    def test_care_ethics_evaluation(self):
         """Test care ethics framework evaluation."""
         engine = MLEthicsEngine()
 
@@ -350,7 +350,7 @@ class TestMLEthicsEngine:
         assert score.framework == EthicalFramework.CARE_ETHICS
         assert score.score > 0.5  # Should approve relationship-preserving action
 
-    def test_framework_agreement_affects_confidence(self) -> None:
+    def test_framework_agreement_affects_confidence(self):
         """Test that framework agreement affects confidence."""
         engine = MLEthicsEngine()
 
@@ -379,7 +379,7 @@ class TestMLEthicsEngine:
         assert 0.0 <= decision_agree.confidence <= 1.0
         assert 0.0 <= decision_disagree.confidence <= 1.0
 
-    def test_learning_from_outcome(self) -> None:
+    def test_learning_from_outcome(self):
         """Test learning from decision outcomes."""
         engine = MLEthicsEngine(learning_rate=0.1)
 
@@ -406,7 +406,7 @@ class TestMLEthicsEngine:
         # Weights should still sum to 1.0
         assert abs(sum(engine.framework_weights.values()) - 1.0) < 0.01
 
-    def test_framework_performance_tracking(self) -> None:
+    def test_framework_performance_tracking(self):
         """Test framework performance statistics."""
         engine = MLEthicsEngine()
 
@@ -428,7 +428,7 @@ class TestMLEthicsEngine:
         # At least one framework should have stats
         assert any(acc > 0.0 for acc in performance.values())
 
-    def test_decision_history_tracking(self) -> None:
+    def test_decision_history_tracking(self):
         """Test that decisions are tracked in history."""
         engine = MLEthicsEngine()
 
@@ -446,7 +446,7 @@ class TestMLEthicsEngine:
         assert engine.decision_history[0].action_description == "Action 1"
         assert engine.decision_history[1].action_description == "Action 2"
 
-    def test_multiple_stakeholders_consideration(self) -> None:
+    def test_multiple_stakeholders_consideration(self):
         """Test that multiple stakeholders affect decision."""
         engine = MLEthicsEngine()
 
@@ -474,7 +474,7 @@ class TestMLEthicsEngine:
 class TestIntegration:
     """Integration tests for ML ethics engine."""
 
-    def test_full_workflow(self) -> None:
+    def test_full_workflow(self):
         """Test complete ethical decision workflow."""
         engine = MLEthicsEngine(consensus_threshold=0.6)
 
@@ -511,7 +511,7 @@ class TestIntegration:
         performance = engine.get_framework_performance()
         assert isinstance(performance, dict)
 
-    def test_progressive_learning(self) -> None:
+    def test_progressive_learning(self):
         """Test that engine learns over multiple iterations."""
         engine = MLEthicsEngine(learning_rate=0.2)
 
