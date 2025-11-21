@@ -146,7 +146,7 @@ jobs:
   load-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       
       - name: Setup k6
         run: |
@@ -164,11 +164,10 @@ jobs:
         run: |
           k6 run tests/load_tests/api_load_test.js
       
-      - name: Upload Results
-        uses: actions/upload-artifact@v2
+      - name: Upload Report
+        uses: actions/upload-artifact@v4
         with:
-          name: load-test-results
-          path: logs/load_test_*.json
+          name: locust-report
 ```
 
 ## Interpreting Results
