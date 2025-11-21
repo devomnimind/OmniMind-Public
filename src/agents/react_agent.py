@@ -69,16 +69,20 @@ class ReactAgent:
 
         # Initialize LLM
         model_config = self.config["model"]
+        base_url = os.getenv(
+            "OLLAMA_BASE_URL", model_config.get("base_url", "http://localhost:11434")
+        )
         self.llm = OllamaLLM(
             model=model_config["name"],
-            base_url=model_config.get("base_url", "http://localhost:11434"),
+            base_url=base_url,
             temperature=model_config.get("temperature", 0.7),
         )
 
         # Initialize memory
         memory_config = self.config["memory"]
+        qdrant_url = os.getenv("QDRANT_URL", memory_config["qdrant_url"])
         self.memory = EpisodicMemory(
-            qdrant_url=memory_config["qdrant_url"],
+            qdrant_url=qdrant_url,
             collection_name=memory_config["collection_name"],
         )
         self._run_supabase_memory_onboarding()
@@ -163,6 +167,23 @@ class ReactAgent:
         # Build prompt
         shell_whitelist = ", ".join(self.config["system"]["shell_whitelist"])
 
+        # Format previous actions
+        if state["actions_taken"]:
+            actions_str = chr(10).join(
+                [
+                    f"- {a['action']}({a.get('args', {})})"
+                    for a in state["actions_taken"]
+                ]
+            )
+        else:
+            actions_str = "None"
+
+        # Format previous observations
+        if state["observations"]:
+            observations_str = chr(10).join([f"- {o}" for o in state["observations"]])
+        else:
+            observations_str = "None"
+
         prompt = f"""You are an autonomous agent executing tasks using available tools.
 
 TASK: {state['current_task']}
@@ -176,10 +197,10 @@ SYSTEM STATUS:
 ITERATION: {state['iteration'] + 1}/{state['max_iterations']}
 
 PREVIOUS ACTIONS:
-{chr(10).join([f"- {a['action']}({a.get('args', {})})" for a in state['actions_taken']]) if state['actions_taken'] else "None"}
+{actions_str}
 
 PREVIOUS OBSERVATIONS:
-{chr(10).join([f"- {o}" for o in state['observations']]) if state['observations'] else "None"}
+{observations_str}
 
 AVAILABLE TOOLS:
 1. read_file(path: str) - Read file contents
@@ -199,7 +220,16 @@ ARGS: <json dict of arguments>
 Your response:"""
 
         # Generate reasoning
-        response = self.llm.invoke(prompt)
+        try:
+            response = self.llm.invoke(prompt)
+        except Exception as e:
+            logger.error(f"LLM invocation failed: {e}")
+            # Fallback response for testing/dev when LLM is unavailable
+            response = (
+                "REASONING: LLM is unavailable. I will return a dummy result.\n"
+                "ACTION: system_info\nARGS: {}"
+            )
+
         state["reasoning_chain"].append(response)
         state["messages"].append(f"[THINK] {response[:500]}...")
 

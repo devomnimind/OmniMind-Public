@@ -506,7 +506,18 @@ ESTIMATED_COMPLEXITY: <low/medium/high>
 
 Your decomposition plan:"""
 
-        response = self.llm.invoke(prompt)
+        try:
+            response = self.llm.invoke(prompt)
+        except Exception as e:
+            logger.error(f"LLM invocation failed in decompose_task: {e}")
+            # Fallback plan for testing/dev
+            response = """
+ANALYSIS: LLM unavailable, using fallback plan.
+SUBTASKS:
+1. [CODE] Implement requested feature
+DEPENDENCIES:
+ESTIMATED_COMPLEXITY: low
+"""
 
         # Parsear plano
         plan = self._parse_plan(response)

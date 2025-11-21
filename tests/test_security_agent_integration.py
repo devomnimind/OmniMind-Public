@@ -119,15 +119,17 @@ security:
     mock_net_connections = MagicMock(return_value=[])
 
     # We patch the security agent's playbook execution to prevent side effects
-    with patch("psutil.process_iter", mock_process_iter), patch(
-        "psutil.net_connections", mock_net_connections
-    ), patch.object(
-        SecurityAgent, "_execute_response", AsyncMock()
-    ) as mock_execute_response, patch(
-        "src.agents.react_agent.EpisodicMemory", MagicMock()
-    ), patch(
-        "src.agents.react_agent.ReactAgent._run_supabase_memory_onboarding",
-        MagicMock(),
+    with (
+        patch("psutil.process_iter", mock_process_iter),
+        patch("psutil.net_connections", mock_net_connections),
+        patch.object(
+            SecurityAgent, "_execute_response", AsyncMock()
+        ) as mock_execute_response,
+        patch("src.agents.react_agent.EpisodicMemory", MagicMock()),
+        patch(
+            "src.agents.react_agent.ReactAgent._run_supabase_memory_onboarding",
+            MagicMock(),
+        ),
     ):
         # The orchestrator's __init__ will start the security agent
         orchestrator = OrchestratorAgent(str(config_path))
