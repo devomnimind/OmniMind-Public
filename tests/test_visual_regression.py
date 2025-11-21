@@ -4,6 +4,8 @@ Visual Regression Testing for OmniMind UI
 Uses Playwright for screenshot comparison to detect UI changes.
 """
 
+import asyncio
+import hashlib
 import json
 from pathlib import Path
 from typing import Any, Dict, List, Optional

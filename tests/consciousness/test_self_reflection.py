@@ -321,11 +321,10 @@ class TestAdvancedSelfReflection:
         """Test that reflection quality is tracked over time."""
         reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
-        # Generate some introspections
+        # Generate some introspections and evaluate quality
         for _ in range(5):
             reflection.introspect("decision_making")
-
-        # Evaluate quality multiple times
+            reflection.evaluate_self_reflection_quality()
 
         # Should be stored in history
-        assert len(reflection._reflection_history) == 2
+        assert len(reflection._reflection_history) == 5

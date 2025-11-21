@@ -315,7 +315,7 @@ class TestSelfOptimizationEngine:
         engine.set_baseline_configuration(baseline)
 
         treatment = Configuration("treatment", "Treatment", {"threads": 20})
-        engine.create_ab_test("test-1", "Thread test", treatment)
+        engine.create_ab_test("test-1", "Thread test", treatment, min_samples=10)
         engine.start_test("test-1")
 
         # Record sufficient metrics
