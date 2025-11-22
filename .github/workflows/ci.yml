@@ -29,7 +29,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libdbus-1-dev pkg-config cmake build-essential
+          sudo apt-get install -y libdbus-1-dev pkg-config cmake build-essential libffi-dev
 
       - name: Install dependencies
         run: |
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.12']
+        python-version: ['3.12.8']
     steps:
       - uses: actions/checkout@v4
 
@@ -72,7 +72,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libdbus-1-dev pkg-config
+          sudo apt-get install -y libdbus-1-dev pkg-config cmake build-essential libffi-dev
 
       - name: Install dependencies
         run: |
@@ -167,12 +167,12 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.12.8'
 
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libdbus-1-dev pkg-config
+          sudo apt-get install -y libdbus-1-dev pkg-config cmake build-essential libffi-dev
 
       - name: Install dependencies
         run: |
