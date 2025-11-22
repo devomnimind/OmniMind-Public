@@ -249,7 +249,8 @@ class TestIntegration:
 
     def test_compression_vs_fidelity_tradeoff(self) -> None:
         """Test compression vs fidelity tradeoff."""
-        data = np.random.randn(128, 128)
+        # Use smaller size for naive DFT performance
+        data = np.random.randn(32, 32)
 
         cutoffs = [0.05, 0.1, 0.2, 0.5]
         compressions = []

@@ -38,14 +38,28 @@ def backend_server():
     os.environ["OMNIMIND_DASHBOARD_PASS"] = "test_pass"
 
     # Start server in background
+    env = os.environ.copy()
+    project_root = Path(__file__).parent.parent
+    env["PYTHONPATH"] = str(project_root)
+    import sys
     server_process = subprocess.Popen(
-        ["uvicorn", "web.backend.main:app", "--port", "8001"],
+        [sys.executable, str(project_root / "run_test_server.py")],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
+        env=env,
+        cwd=str(project_root),
     )
 
-    # Wait for server to start
-    time.sleep(3)
+    # Wait for server to start (increased for slow environments)
+    time.sleep(10)
+
+    # Check if server is still running
+    if server_process.poll() is not None:
+        stdout, stderr = server_process.communicate()
+        print(f"Server failed to start. Return code: {server_process.returncode}")
+        print(f"STDOUT: {stdout.decode()}")
+        print(f"STDERR: {stderr.decode()}")
+        pytest.fail("Backend server failed to start")
 
     yield "http://localhost:8001"
 

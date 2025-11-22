@@ -251,6 +251,13 @@ All checks must pass before merging.
 
 **If any step fails, fix it immediately before proceeding.**
 
+### 6. Working Directory Discipline (CRITICAL)
+
+- **ALWAYS** execute commands from the project root: `/home/fahbrain/projects/omnimind`
+- **NEVER** execute commands from `~/projects` or other parent directories.
+- **VERIFY** `pwd` before running critical commands if unsure.
+- **CLEANUP** any files accidentally created in parent directories immediately.
+
 ## Hardware & Environment Constraints
 
 ### Hardware Configuration (Auto-Detected)

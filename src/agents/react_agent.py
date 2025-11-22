@@ -395,7 +395,7 @@ Your response:"""
             )
             return
 
-        def _onboard():
+        def _onboard() -> None:
             try:
                 onboarding = SupabaseMemoryOnboarding(config=config, memory=self.memory)
                 report = onboarding.seed_collection()
@@ -414,7 +414,10 @@ Your response:"""
 
         # Run in background thread
         import threading
-        thread = threading.Thread(target=_onboard, daemon=True, name="SupabaseOnboarding")
+
+        thread = threading.Thread(
+            target=_onboard, daemon=True, name="SupabaseOnboarding"
+        )
         thread.start()
         logger.info("Supabase memory onboarding started in background")
 
