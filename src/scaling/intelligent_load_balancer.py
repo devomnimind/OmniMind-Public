@@ -262,6 +262,16 @@ class IntelligentLoadBalancer:
 
         return total_score
 
+    def _select_least_loaded_node(self, available_nodes: List[NodeInfo]) -> NodeInfo:
+        """Select the least loaded node from available nodes."""
+        return min(available_nodes, key=lambda n: n.get_load_factor())
+
+    def _select_round_robin_node(self, available_nodes: List[NodeInfo]) -> NodeInfo:
+        """Select node using round-robin strategy."""
+        node = available_nodes[self._round_robin_index % len(available_nodes)]
+        self._round_robin_index += 1
+        return node
+
     def select_node(
         self, nodes: List[NodeInfo], task: Optional[DistributedTask] = None
     ) -> Optional[NodeInfo]:
@@ -301,15 +311,13 @@ class IntelligentLoadBalancer:
                 return selected_node
             else:
                 # Not enough data - fall back to least loaded
-                return min(available_nodes, key=lambda n: n.get_load_factor())
+                return self._select_least_loaded_node(available_nodes)
 
         elif self.strategy == "least_loaded":
-            return min(available_nodes, key=lambda n: n.get_load_factor())
+            return self._select_least_loaded_node(available_nodes)
 
         elif self.strategy == "round_robin":
-            node = available_nodes[self._round_robin_index % len(available_nodes)]
-            self._round_robin_index += 1
-            return node
+            return self._select_round_robin_node(available_nodes)
 
         elif self.strategy == "weighted_least_loaded":
             # Consider both current load and historical performance
@@ -336,11 +344,11 @@ class IntelligentLoadBalancer:
 
                 return best_node
             else:
-                return min(available_nodes, key=lambda n: n.get_load_factor())
+                return self._select_least_loaded_node(available_nodes)
 
         else:
             # Default to least loaded
-            return min(available_nodes, key=lambda n: n.get_load_factor())
+            return self._select_least_loaded_node(available_nodes)
 
     def get_cluster_predictions(
         self, nodes: List[NodeInfo]

@@ -135,6 +135,16 @@ class LoadBalancer:
         self.strategy = strategy
         self._round_robin_index = 0
 
+    def _select_least_loaded_node(self, available_nodes: List[NodeInfo]) -> NodeInfo:
+        """Select the least loaded node from available nodes."""
+        return min(available_nodes, key=lambda n: n.get_load_factor())
+
+    def _select_round_robin_node(self, available_nodes: List[NodeInfo]) -> NodeInfo:
+        """Select node using round-robin strategy."""
+        node = available_nodes[self._round_robin_index % len(available_nodes)]
+        self._round_robin_index += 1
+        return node
+
     def select_node(
         self, nodes: List[NodeInfo], task: Optional[DistributedTask] = None
     ) -> Optional[NodeInfo]:
@@ -152,17 +162,15 @@ class LoadBalancer:
                 available_nodes = capable_nodes
 
         if self.strategy == "least_loaded":
-            return min(available_nodes, key=lambda n: n.get_load_factor())
+            return self._select_least_loaded_node(available_nodes)
         elif self.strategy == "round_robin":
-            node = available_nodes[self._round_robin_index % len(available_nodes)]
-            self._round_robin_index += 1
-            return node
+            return self._select_round_robin_node(available_nodes)
         elif self.strategy == "random":
             import random
 
             return random.choice(available_nodes)
         else:
-            return min(available_nodes, key=lambda n: n.get_load_factor())
+            return self._select_least_loaded_node(available_nodes)
 
 
 class ClusterCoordinator:

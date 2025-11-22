@@ -19,6 +19,8 @@ Camadas:
 
 from __future__ import annotations
 
+from .tool_base import ToolCategory, AuditedTool
+
 import asyncio
 import json
 import os
@@ -29,9 +31,7 @@ import threading
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 from pathlib import Path
-from enum import Enum
 import logging
-from dataclasses import dataclass, asdict
 
 
 logger = logging.getLogger(__name__)
@@ -39,115 +39,6 @@ logger = logging.getLogger(__name__)
 
 def _current_utc_timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-
-
-class ToolCategory(Enum):
-    """Categorias de ferramentas do framework"""
-
-    PERCEPTION = "perception"
-    ACTION = "action"
-    ORCHESTRATION = "orchestration"
-    INTEGRATION = "integration"
-    MEMORY = "memory"
-    SECURITY = "security"
-    REASONING = "reasoning"
-    PERSONALITY = "personality"
-    FEEDBACK = "feedback"
-    TELEMETRY = "telemetry"
-    WORKFLOW = "workflow"
-
-
-@dataclass
-class ToolAuditLog:
-    """Registro auditado de cada ferramenta executada com cadeia SHA-256"""
-
-    tool_name: str
-    timestamp: str
-    user: str
-    action: str
-    input_hash: str
-    output_hash: str
-    status: str
-    error_msg: Optional[str] = None
-    prev_hash: str = "0"
-
-    def to_dict(self) -> Dict[str, Any]:
-        return asdict(self)
-
-
-class AuditedTool:
-    """Classe base para todas as ferramentas com auditoria P0 imutável"""
-
-    def __init__(self, name: str, category: ToolCategory):
-        self.name = name
-        self.category = category
-        self.audit_log_path = Path.home() / ".omnimind" / "audit" / "tools.log"
-        self.audit_log_path.parent.mkdir(parents=True, exist_ok=True)
-        self.last_hash = self._get_last_hash()
-
-    def _get_last_hash(self) -> str:
-        """Obtém último hash da cadeia de auditoria"""
-        if self.audit_log_path.exists():
-            try:
-                with open(self.audit_log_path, "r") as f:
-                    lines = f.readlines()
-                    if lines:
-                        last_entry = json.loads(lines[-1])
-                        return last_entry.get("output_hash", "0")  # type: ignore[no-any-return]
-            except (OSError, json.JSONDecodeError):
-                return "0"
-        return "0"
-
-    def _compute_hash(self, content: Any) -> str:
-        """Calcula hash SHA-256 de conteúdo"""
-        if isinstance(content, str):
-            content = content.encode("utf-8")
-        elif not isinstance(content, bytes):
-            content = json.dumps(content, sort_keys=True, default=str).encode("utf-8")
-
-        return hashlib.sha256(content).hexdigest()
-
-    def _audit_action(
-        self,
-        action: str,
-        input_data: Any,
-        output_data: Any,
-        status: str,
-        error: Optional[str] = None,
-    ) -> None:
-        """Registra ação em cadeia imutável de auditoria"""
-        input_hash = self._compute_hash(input_data)
-        output_hash = self._compute_hash(output_data)
-
-        audit_entry = ToolAuditLog(
-            tool_name=self.name,
-            timestamp=_current_utc_timestamp(),
-            user=os.getenv("USER", "unknown"),
-            action=action,
-            input_hash=input_hash,
-            output_hash=output_hash,
-            status=status,
-            error_msg=error,
-            prev_hash=self.last_hash,
-        )
-
-        # Escrever em log imutável
-        try:
-            with open(self.audit_log_path, "a") as f:
-                f.write(json.dumps(audit_entry.to_dict()) + "\n")
-
-            # Atualizar último hash
-            self.last_hash = output_hash
-
-            logger.info(f"[AUDIT] {self.name}: {action} - Status: {status}")
-        except Exception as e:
-            logger.error(f"Failed to audit {self.name}: {e}")
-
-    def execute(self, *args: Any, **kwargs: Any) -> Any:
-        """Método abstrato - deve ser sobrescrito pelas subclasses"""
-        raise NotImplementedError(
-            f"{self.__class__.__name__}.{self.name}.execute() deve ser implementado"
-        )
 
 
 # ============================================================================
@@ -900,10 +791,19 @@ class SecurityAgentTool(AuditedTool):
     def __init__(self, config_path: str = "config/security.yaml"):
         super().__init__("security_agent", ToolCategory.SECURITY)
         self.config_path = config_path
-        from ..security.security_agent import SecurityAgent
-
-        self._agent = SecurityAgent(self.config_path)
+        self._agent: Optional[Any] = (
+            None  # Lazy initialization to avoid circular import
+        )
         self._monitor_thread: Optional[threading.Thread] = None
+
+    @property
+    def agent(self) -> Any:
+        """Lazy load SecurityAgent to avoid circular imports."""
+        if self._agent is None:
+            from ..security.security_agent import SecurityAgent
+
+            self._agent = SecurityAgent(self.config_path)
+        return self._agent
 
     def execute(
         self, action: str, params: Optional[Dict[str, Any]] = None
@@ -916,11 +816,11 @@ class SecurityAgentTool(AuditedTool):
             elif action == "stop_monitoring":
                 result = self._stop_monitoring()
             elif action == "generate_report":
-                result = {"report": self._agent.generate_security_report()}
+                result = {"report": self.agent.generate_security_report()}
             elif action == "check_threat":
                 result = {
                     "threats": [
-                        event.__dict__ for event in self._agent.event_history[:10]
+                        event.__dict__ for event in self.agent.event_history[:10]
                     ]
                 }
             else:
@@ -944,7 +844,7 @@ class SecurityAgentTool(AuditedTool):
     def _stop_monitoring(self) -> Dict[str, str]:
         if not self._monitor_thread:
             return {"status": "not_running"}
-        self._agent.request_stop()
+        self.agent.request_stop()
         self._monitor_thread.join(timeout=10)
         if self._monitor_thread.is_alive():
             return {"status": "shutdown_pending"}
@@ -953,7 +853,7 @@ class SecurityAgentTool(AuditedTool):
 
     def _run_monitoring(self) -> None:
         try:
-            asyncio.run(self._agent.start_continuous_monitoring())
+            asyncio.run(self.agent.start_continuous_monitoring())
         except Exception as exc:
             logger.error("Security monitoring loop failed: %s", exc)
 

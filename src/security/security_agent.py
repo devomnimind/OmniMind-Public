@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional
 import psutil
 import yaml
 
-from ..tools.omnimind_tools import AuditedTool, ToolCategory
+from ..tools.tool_base import AuditedTool, ToolCategory
 from .playbooks.data_exfiltration_response import DataExfiltrationPlaybook
 from .playbooks.intrusion_response import IntrusionPlaybook
 from .playbooks.malware_response import MalwarePlaybook
