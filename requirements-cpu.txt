@@ -41,6 +41,7 @@ rich>=13.7.0
 psutil>=5.9.6
 PyYAML>=6.0.1
 requests>=2.31.0
+cryptography>=42.0.0
 
 # Sistema D-Bus (Linux only - skip on macOS/Windows)
 dbus-python>=1.3.0; sys_platform == 'linux'
