@@ -1,0 +1,121 @@
+{
+  "external_drive_content": {
+    "/mnt": {
+      "exists": true,
+      "is_mounted": true,
+      "contents": {
+        "directories": [
+          "dev_brain_clean"
+        ],
+        "file_types": {},
+        "total_files": 0,
+        "total_dirs": 1,
+        "project_indicators": {
+          "python_projects": 0,
+          "node_projects": 0,
+          "git_repos": 0,
+          "data_files": 0
+        }
+      }
+    },
+    "/media": {
+      "exists": true,
+      "is_mounted": true,
+      "contents": {
+        "directories": [
+          "cdrom"
+        ],
+        "file_types": {},
+        "total_files": 0,
+        "total_dirs": 1,
+        "project_indicators": {
+          "python_projects": 0,
+          "node_projects": 0,
+          "git_repos": 0,
+          "data_files": 0
+        }
+      }
+    },
+    "/mnt/external": {
+      "exists": false,
+      "is_mounted": false
+    },
+    "/media/external": {
+      "exists": false,
+      "is_mounted": false
+    },
+    "/mnt/backup": {
+      "exists": false,
+      "is_mounted": false
+    },
+    "/media/backup": {
+      "exists": false,
+      "is_mounted": false
+    }
+  },
+  "project_repositories": {
+    "current_workspace": {
+      "remotes": {
+        "command": "git remote -v",
+        "returncode": 0,
+        "stdout": "origin\thttps://github.com/devomnimind/OmniMind (fetch)\norigin\thttps://github.com/devomnimind/OmniMind (push)",
+        "stderr": ""
+      },
+      "status": {
+        "command": "git status --porcelain | wc -l",
+        "returncode": 0,
+        "stdout": "2",
+        "stderr": ""
+      },
+      "commits": {
+        "command": "git rev-list --count HEAD",
+        "returncode": 0,
+        "stdout": "369",
+        "stderr": ""
+      },
+      "contributors": {
+        "command": "git shortlog -sn | wc -l",
+        "returncode": 0,
+        "stdout": "5",
+        "stderr": ""
+      }
+    },
+    "other_projects": {
+      "omnimind": {
+        "command": "cd /home/fahbrain/projects/omnimind && git remote -v && echo \"---\" && git rev-list --count HEAD",
+        "returncode": 0,
+        "stdout": "origin\thttps://github.com/devomnimind/OmniMind (fetch)\norigin\thttps://github.com/devomnimind/OmniMind (push)\n---\n369",
+        "stderr": ""
+      }
+    }
+  },
+  "training_resources": {
+    "./data": {
+      "exists": true,
+      "size": {
+        "command": "du -sh ./data",
+        "returncode": 0,
+        "stdout": "2,8M\t./data",
+        "stderr": ""
+      },
+      "file_count": {
+        "command": "find ./data -type f | wc -l",
+        "returncode": 0,
+        "stdout": "93",
+        "stderr": ""
+      },
+      "dataset_files": {
+        "command": "find ./data -name \"*.json\" -o -name \"*.csv\" -o -name \"*.txt\" | wc -l",
+        "returncode": 0,
+        "stdout": "45",
+        "stderr": ""
+      }
+    },
+    "training_scripts": {
+      "command": "find . -name \"*train*.py\" -o -name \"*training*.py\" | wc -l",
+      "returncode": 0,
+      "stdout": "86",
+      "stderr": ""
+    }
+  }
+}

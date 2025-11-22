@@ -1,0 +1,176 @@
+{
+  "vscode_extensions_detailed": {
+    "count": 8,
+    "extensions": [
+      "bioinfo.markitdown-vscode",
+      "github.copilot",
+      "github.copilot-chat",
+      "ms-azuretools.vscode-azureresourcegroups",
+      "ms-windows-ai-studio.windows-ai-studio",
+      "pkief.material-icon-theme",
+      "supabase.vscode-supabase-extension",
+      "teamsdevapp.vscode-ai-foundry"
+    ],
+    "categories": {
+      "python": [],
+      "javascript": [],
+      "git": [
+        "github.copilot",
+        "github.copilot-chat"
+      ],
+      "docker": [],
+      "ai": [
+        "github.copilot",
+        "github.copilot-chat",
+        "ms-windows-ai-studio.windows-ai-studio",
+        "teamsdevapp.vscode-ai-foundry"
+      ]
+    }
+  },
+  "browser_extensions": {
+    "chrome": {
+      "stdout": "0",
+      "note": "Browser not installed or path not found"
+    },
+    "chromium": {
+      "stdout": "0",
+      "note": "Browser not installed or path not found"
+    },
+    "firefox": {
+      "stdout": "0",
+      "note": "Browser not installed or path not found"
+    },
+    "brave": {
+      "stdout": "0",
+      "note": "Browser not installed or path not found"
+    }
+  },
+  "system_services": {
+    "systemd_services": {
+      "command": "systemctl list-units --type=service --state=active | wc -l",
+      "returncode": 0,
+      "stdout": "60",
+      "stderr": ""
+    },
+    "docker_containers": {
+      "command": "docker ps -a | wc -l",
+      "returncode": 0,
+      "stdout": "8",
+      "stderr": ""
+    },
+    "running_processes": {
+      "command": "ps aux | wc -l",
+      "returncode": 0,
+      "stdout": "364",
+      "stderr": ""
+    }
+  },
+  "external_storage_detailed": {
+    "mounted_drives": {
+      "command": "mount | grep -E \"/mnt|/media\"",
+      "returncode": 0,
+      "stdout": "/dev/sda1 on /run/media/fahbrain/DEV_BRAIN_CLEAN type ext4 (rw,nosuid,nodev,relatime,errors=remount-ro,uhelper=udisks2)",
+      "stderr": ""
+    },
+    "disk_usage": {
+      "command": "df -h",
+      "returncode": 0,
+      "stdout": "Sist. Arq.                 Tam. Usado Disp. Uso% Montado em\nudev                        12G     0   12G   0% /dev\ntmpfs                      2,4G  2,1M  2,4G   1% /run\n/dev/mapper/kali--vg-root  891G  183G  663G  22% /\ntmpfs                       12G   54M   12G   1% /dev/shm\nefivarfs                   184K  132K   48K  74% /sys/firmware/efi/efivars\ntmpfs                      1,0M     0  1,0M   0% /run/credentials/systemd-journald.service\ntmpfs                      1,0M     0  1,0M   0% /run/credentials/systemd-cryptsetup@nvme0n1p3_crypt.service\n/dev/nvme0n1p2             944M  369M  511M  42% /boot\ntmpfs                       12G   15M   12G   1% /tmp\n/dev/nvme0n1p1             975M  304K  974M   1% /boot/efi\ntmpfs                      1,0M     0  1,0M   0% /run/credentials/getty@tty1.service\ntmpfs                      2,4G  5,4M  2,4G   1% /run/user/1000\n/dev/sda1                  458G   77G  358G  18% /run/media/fahbrain/DEV_BRAIN_CLEAN",
+      "stderr": ""
+    },
+    "external__mnt": {
+      "exists": true,
+      "file_count": {
+        "command": "find /mnt -type f 2>/dev/null | wc -l",
+        "returncode": 0,
+        "stdout": "0",
+        "stderr": ""
+      },
+      "dir_count": {
+        "command": "find /mnt -type d 2>/dev/null | wc -l",
+        "returncode": 0,
+        "stdout": "2",
+        "stderr": ""
+      },
+      "total_size": {
+        "command": "du -sh /mnt 2>/dev/null",
+        "returncode": 0,
+        "stdout": "8,0K\t/mnt",
+        "stderr": ""
+      }
+    },
+    "external__media": {
+      "exists": true,
+      "file_count": {
+        "command": "find /media -type f 2>/dev/null | wc -l",
+        "returncode": 0,
+        "stdout": "0",
+        "stderr": ""
+      },
+      "dir_count": {
+        "command": "find /media -type d 2>/dev/null | wc -l",
+        "returncode": 0,
+        "stdout": "2",
+        "stderr": ""
+      },
+      "total_size": {
+        "command": "du -sh /media 2>/dev/null",
+        "returncode": 0,
+        "stdout": "8,0K\t/media",
+        "stderr": ""
+      }
+    }
+  },
+  "ai_ml_setup": {
+    "python_ml_packages": {
+      "torch": {
+        "installed": true,
+        "version": "2.6.0+cu124",
+        "error": null
+      },
+      "tensorflow": {
+        "installed": false,
+        "version": null,
+        "error": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nModuleNotFoundError: No module named 'tensorflow'"
+      },
+      "jax": {
+        "installed": false,
+        "version": null,
+        "error": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nModuleNotFoundError: No module named 'jax'"
+      },
+      "transformers": {
+        "installed": true,
+        "version": "4.57.1",
+        "error": null
+      },
+      "diffusers": {
+        "installed": false,
+        "version": null,
+        "error": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nModuleNotFoundError: No module named 'diffusers'"
+      },
+      "accelerate": {
+        "installed": true,
+        "version": "1.11.0",
+        "error": null
+      }
+    },
+    "cuda": {
+      "command": "nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv,noheader,nounits",
+      "returncode": 0,
+      "stdout": "NVIDIA GeForce GTX 1650, 4096, 3891",
+      "stderr": ""
+    },
+    "nvcc": {
+      "command": "nvcc --version",
+      "returncode": 0,
+      "stdout": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2024 NVIDIA Corporation\nBuilt on Thu_Mar_28_02:18:24_PDT_2024\nCuda compilation tools, release 12.4, V12.4.131\nBuild cuda_12.4.r12.4/compiler.34097967_0",
+      "stderr": ""
+    },
+    "local_models": {
+      "command": "find . -name \"*.bin\" -o -name \"*.safetensors\" -o -name \"*.ckpt\" | wc -l",
+      "returncode": 0,
+      "stdout": "4",
+      "stderr": ""
+    }
+  }
+}

@@ -1,0 +1,1586 @@
+{
+  "vscode_settings": {
+    "/home/fahbrain/.config/Code/User/settings.json": {
+      "github.copilot.nextEditSuggestions.enabled": true,
+      "files.autoSave": "afterDelay",
+      "extensions.ignoreRecommendations": true,
+      "chat.instructionsFilesLocations": {
+        ".github/instructions": true,
+        "/home/fahbrain/.aitk/instructions/": true
+      },
+      "workbench.iconTheme": "material-icon-theme",
+      "chat.agent.maxRequests": 10000,
+      "chat.mcp.gallery.enabled": true,
+      "git.autofetch": true,
+      "chat.tools.terminal.autoApprove": {
+        "rg": true,
+        ".": true,
+        "black": true,
+        "pip": true,
+        "mypy": true,
+        "sed": true
+      },
+      "chat.customAgentInSubagent.enabled": true,
+      "chat.edits2.enabled": true,
+      "chat.extensionUnification.enabled": true,
+      "chat.todoListTool.writeOnly": true,
+      "chat.tools.global.autoApprove": true,
+      "roo-code-nightly.allowedCommands": [
+        "git log",
+        "git diff",
+        "git show"
+      ],
+      "roo-code-nightly.deniedCommands": []
+    },
+    "/home/fahbrain/.config/Code - Insiders/User/settings.json": {
+      "chat.agent.maxRequests": 10000,
+      "chat.agent.thinking.collapsedTools": "all",
+      "chat.emptyState.history.enabled": true,
+      "chat.tools.terminal.autoReplyToPrompts": true,
+      "inlineChat.enableV2": true,
+      "inlineChat.notebookAgent": true,
+      "workbench.iconTheme": "material-icon-theme",
+      "terminal.integrated.sendKeybindingsToShell": true,
+      "files.autoSave": "afterDelay",
+      "workbench.editor.preferHistoryBasedLanguageDetection": true,
+      "github.copilot.chat.languageContext.typescript.enabled": true,
+      "github.copilot.chat.languageContext.fix.typescript.enabled": true,
+      "chat.instructionsFilesLocations": {
+        ".github/instructions": true,
+        "/home/fahbrain/.aitk/instructions/": true
+      },
+      "roo-code-nightly.allowedCommands": [
+        "git log",
+        "git diff",
+        "git show",
+        "cd",
+        "black",
+        "head",
+        "find"
+      ],
+      "roo-code-nightly.deniedCommands": [],
+      "chat.tools.terminal.autoApprove": {
+        "/^python -m pytest tests/test_forensics\\.py tests/test_backup\\.py -v --tb=short -x$/": {
+          "approve": true,
+          "matchCommandLine": true
+        },
+        "git checkout": true,
+        "/^python -c \"from src\\.desire_engine import DesireEngine; from src\\.decision_making\\.autonomous_goal_setting import GoalSetter; from src\\.decision_making\\.ethical_decision_framework import EthicalDecisionMaker; print\\('\u2705 Components still working after autonomous decision system merge'\\)\"$/": {
+          "approve": true,
+          "matchCommandLine": true
+        }
+      },
+      "chat.customAgentInSubagent.enabled": true,
+      "chat.edits2.enabled": true,
+      "chat.todoListTool.writeOnly": true,
+      "python.analysis.typeCheckingMode": "standard"
+    }
+  },
+  "python_packages_detailed": {
+    "count": 339,
+    "packages": [
+      {
+        "name": "absl-py",
+        "version": "2.3.1"
+      },
+      {
+        "name": "accelerate",
+        "version": "1.11.0"
+      },
+      {
+        "name": "aiohappyeyeballs",
+        "version": "2.6.1"
+      },
+      {
+        "name": "aiohttp",
+        "version": "3.13.2"
+      },
+      {
+        "name": "aiosignal",
+        "version": "1.4.0"
+      },
+      {
+        "name": "annotated-doc",
+        "version": "0.0.4"
+      },
+      {
+        "name": "annotated-types",
+        "version": "0.7.0"
+      },
+      {
+        "name": "anyio",
+        "version": "4.11.0"
+      },
+      {
+        "name": "argon2-cffi",
+        "version": "25.1.0"
+      },
+      {
+        "name": "argon2-cffi-bindings",
+        "version": "25.1.0"
+      },
+      {
+        "name": "arrow",
+        "version": "1.4.0"
+      },
+      {
+        "name": "astroid",
+        "version": "4.0.2"
+      },
+      {
+        "name": "asttokens",
+        "version": "3.0.1"
+      },
+      {
+        "name": "async-lru",
+        "version": "2.0.5"
+      },
+      {
+        "name": "attrs",
+        "version": "25.4.0"
+      },
+      {
+        "name": "autoflake",
+        "version": "2.3.1"
+      },
+      {
+        "name": "babel",
+        "version": "2.17.0"
+      },
+      {
+        "name": "backoff",
+        "version": "2.2.1"
+      },
+      {
+        "name": "backrefs",
+        "version": "6.1"
+      },
+      {
+        "name": "bcrypt",
+        "version": "5.0.0"
+      },
+      {
+        "name": "beautifulsoup4",
+        "version": "4.14.2"
+      },
+      {
+        "name": "bitsandbytes",
+        "version": "0.48.2"
+      },
+      {
+        "name": "black",
+        "version": "25.11.0"
+      },
+      {
+        "name": "bleach",
+        "version": "6.3.0"
+      },
+      {
+        "name": "brotli",
+        "version": "1.2.0"
+      },
+      {
+        "name": "build",
+        "version": "1.3.0"
+      },
+      {
+        "name": "cachetools",
+        "version": "6.2.2"
+      },
+      {
+        "name": "certifi",
+        "version": "2025.11.12"
+      },
+      {
+        "name": "cffi",
+        "version": "2.0.0"
+      },
+      {
+        "name": "cfgv",
+        "version": "3.5.0"
+      },
+      {
+        "name": "charset-normalizer",
+        "version": "3.4.4"
+      },
+      {
+        "name": "chromadb",
+        "version": "1.3.5"
+      },
+      {
+        "name": "click",
+        "version": "8.3.1"
+      },
+      {
+        "name": "colorama",
+        "version": "0.4.6"
+      },
+      {
+        "name": "coloredlogs",
+        "version": "15.0.1"
+      },
+      {
+        "name": "comm",
+        "version": "0.2.3"
+      },
+      {
+        "name": "contourpy",
+        "version": "1.3.3"
+      },
+      {
+        "name": "coverage",
+        "version": "7.12.0"
+      },
+      {
+        "name": "cryptography",
+        "version": "46.0.3"
+      },
+      {
+        "name": "cycler",
+        "version": "0.12.1"
+      },
+      {
+        "name": "dataclasses-json",
+        "version": "0.6.7"
+      },
+      {
+        "name": "datasets",
+        "version": "4.4.1"
+      },
+      {
+        "name": "dbus-python",
+        "version": "1.4.0"
+      },
+      {
+        "name": "debugpy",
+        "version": "1.8.17"
+      },
+      {
+        "name": "decorator",
+        "version": "5.2.1"
+      },
+      {
+        "name": "defusedxml",
+        "version": "0.7.1"
+      },
+      {
+        "name": "deprecation",
+        "version": "2.1.0"
+      },
+      {
+        "name": "dill",
+        "version": "0.4.0"
+      },
+      {
+        "name": "diskcache",
+        "version": "5.6.3"
+      },
+      {
+        "name": "distlib",
+        "version": "0.4.0"
+      },
+      {
+        "name": "distro",
+        "version": "1.9.0"
+      },
+      {
+        "name": "durationpy",
+        "version": "0.10"
+      },
+      {
+        "name": "execnet",
+        "version": "2.1.2"
+      },
+      {
+        "name": "executing",
+        "version": "2.2.1"
+      },
+      {
+        "name": "fakeredis",
+        "version": "2.32.1"
+      },
+      {
+        "name": "falcon",
+        "version": "4.2.0"
+      },
+      {
+        "name": "fastapi",
+        "version": "0.121.3"
+      },
+      {
+        "name": "fastjsonschema",
+        "version": "2.21.2"
+      },
+      {
+        "name": "filelock",
+        "version": "3.19.1"
+      },
+      {
+        "name": "flake8",
+        "version": "7.3.0"
+      },
+      {
+        "name": "flatbuffers",
+        "version": "25.9.23"
+      },
+      {
+        "name": "fonttools",
+        "version": "4.60.1"
+      },
+      {
+        "name": "fqdn",
+        "version": "1.5.1"
+      },
+      {
+        "name": "frozenlist",
+        "version": "1.8.0"
+      },
+      {
+        "name": "fsspec",
+        "version": "2025.9.0"
+      },
+      {
+        "name": "ghp-import",
+        "version": "2.1.0"
+      },
+      {
+        "name": "google-auth",
+        "version": "2.43.0"
+      },
+      {
+        "name": "googleapis-common-protos",
+        "version": "1.72.0"
+      },
+      {
+        "name": "greenlet",
+        "version": "3.2.4"
+      },
+      {
+        "name": "grpcio",
+        "version": "1.76.0"
+      },
+      {
+        "name": "h11",
+        "version": "0.16.0"
+      },
+      {
+        "name": "h2",
+        "version": "4.3.0"
+      },
+      {
+        "name": "hf-xet",
+        "version": "1.2.0"
+      },
+      {
+        "name": "hpack",
+        "version": "4.1.0"
+      },
+      {
+        "name": "httpcore",
+        "version": "1.0.9"
+      },
+      {
+        "name": "httptools",
+        "version": "0.7.1"
+      },
+      {
+        "name": "httpx",
+        "version": "0.28.1"
+      },
+      {
+        "name": "httpx-sse",
+        "version": "0.4.3"
+      },
+      {
+        "name": "huggingface-hub",
+        "version": "0.36.0"
+      },
+      {
+        "name": "humanfriendly",
+        "version": "10.0"
+      },
+      {
+        "name": "hyperframe",
+        "version": "6.1.0"
+      },
+      {
+        "name": "identify",
+        "version": "2.6.15"
+      },
+      {
+        "name": "idna",
+        "version": "3.11"
+      },
+      {
+        "name": "importlib_metadata",
+        "version": "8.7.0"
+      },
+      {
+        "name": "importlib_resources",
+        "version": "6.5.2"
+      },
+      {
+        "name": "iniconfig",
+        "version": "2.3.0"
+      },
+      {
+        "name": "ipykernel",
+        "version": "7.1.0"
+      },
+      {
+        "name": "ipython",
+        "version": "9.7.0"
+      },
+      {
+        "name": "ipython_pygments_lexers",
+        "version": "1.1.1"
+      },
+      {
+        "name": "ipywidgets",
+        "version": "8.1.8"
+      },
+      {
+        "name": "isoduration",
+        "version": "20.11.0"
+      },
+      {
+        "name": "isort",
+        "version": "7.0.0"
+      },
+      {
+        "name": "jedi",
+        "version": "0.19.2"
+      },
+      {
+        "name": "Jinja2",
+        "version": "3.1.6"
+      },
+      {
+        "name": "joblib",
+        "version": "1.5.2"
+      },
+      {
+        "name": "json5",
+        "version": "0.12.1"
+      },
+      {
+        "name": "jsonpatch",
+        "version": "1.33"
+      },
+      {
+        "name": "jsonpointer",
+        "version": "3.0.0"
+      },
+      {
+        "name": "jsonschema",
+        "version": "4.25.1"
+      },
+      {
+        "name": "jsonschema-specifications",
+        "version": "2025.9.1"
+      },
+      {
+        "name": "jupyter",
+        "version": "1.1.1"
+      },
+      {
+        "name": "jupyter_client",
+        "version": "8.6.3"
+      },
+      {
+        "name": "jupyter-console",
+        "version": "6.6.3"
+      },
+      {
+        "name": "jupyter_core",
+        "version": "5.9.1"
+      },
+      {
+        "name": "jupyter-events",
+        "version": "0.12.0"
+      },
+      {
+        "name": "jupyter-lsp",
+        "version": "2.3.0"
+      },
+      {
+        "name": "jupyter_server",
+        "version": "2.17.0"
+      },
+      {
+        "name": "jupyter_server_terminals",
+        "version": "0.5.3"
+      },
+      {
+        "name": "jupyterlab",
+        "version": "4.5.0"
+      },
+      {
+        "name": "jupyterlab_pygments",
+        "version": "0.3.0"
+      },
+      {
+        "name": "jupyterlab_server",
+        "version": "2.28.0"
+      },
+      {
+        "name": "jupyterlab_widgets",
+        "version": "3.0.16"
+      },
+      {
+        "name": "kiwisolver",
+        "version": "1.4.9"
+      },
+      {
+        "name": "kubernetes",
+        "version": "34.1.0"
+      },
+      {
+        "name": "langchain",
+        "version": "1.0.8"
+      },
+      {
+        "name": "langchain-classic",
+        "version": "1.0.0"
+      },
+      {
+        "name": "langchain-community",
+        "version": "0.4.1"
+      },
+      {
+        "name": "langchain-core",
+        "version": "1.0.7"
+      },
+      {
+        "name": "langchain-ollama",
+        "version": "1.0.0"
+      },
+      {
+        "name": "langchain-text-splitters",
+        "version": "1.0.0"
+      },
+      {
+        "name": "langgraph",
+        "version": "1.0.3"
+      },
+      {
+        "name": "langgraph-checkpoint",
+        "version": "3.0.1"
+      },
+      {
+        "name": "langgraph-prebuilt",
+        "version": "1.0.4"
+      },
+      {
+        "name": "langgraph-sdk",
+        "version": "0.2.9"
+      },
+      {
+        "name": "langsmith",
+        "version": "0.4.43"
+      },
+      {
+        "name": "lark",
+        "version": "1.3.1"
+      },
+      {
+        "name": "line_profiler",
+        "version": "5.0.0"
+      },
+      {
+        "name": "llama_cpp_python",
+        "version": "0.3.16"
+      },
+      {
+        "name": "Markdown",
+        "version": "3.10"
+      },
+      {
+        "name": "markdown-it-py",
+        "version": "4.0.0"
+      },
+      {
+        "name": "MarkupSafe",
+        "version": "2.1.5"
+      },
+      {
+        "name": "marshmallow",
+        "version": "3.26.1"
+      },
+      {
+        "name": "matplotlib",
+        "version": "3.10.7"
+      },
+      {
+        "name": "matplotlib-inline",
+        "version": "0.2.1"
+      },
+      {
+        "name": "mccabe",
+        "version": "0.7.0"
+      },
+      {
+        "name": "mdurl",
+        "version": "0.1.2"
+      },
+      {
+        "name": "memory-profiler",
+        "version": "0.61.0"
+      },
+      {
+        "name": "mergedeep",
+        "version": "1.3.4"
+      },
+      {
+        "name": "mistune",
+        "version": "3.1.4"
+      },
+      {
+        "name": "mkdocs",
+        "version": "1.6.1"
+      },
+      {
+        "name": "mkdocs-get-deps",
+        "version": "0.2.0"
+      },
+      {
+        "name": "mkdocs-material",
+        "version": "9.7.0"
+      },
+      {
+        "name": "mkdocs-material-extensions",
+        "version": "1.3.1"
+      },
+      {
+        "name": "mmh3",
+        "version": "5.2.0"
+      },
+      {
+        "name": "MouseInfo",
+        "version": "0.1.3"
+      },
+      {
+        "name": "mpmath",
+        "version": "1.3.0"
+      },
+      {
+        "name": "multidict",
+        "version": "6.7.0"
+      },
+      {
+        "name": "multiprocess",
+        "version": "0.70.18"
+      },
+      {
+        "name": "mypy",
+        "version": "1.18.2"
+      },
+      {
+        "name": "mypy_extensions",
+        "version": "1.1.0"
+      },
+      {
+        "name": "nbclient",
+        "version": "0.10.2"
+      },
+      {
+        "name": "nbconvert",
+        "version": "7.16.6"
+      },
+      {
+        "name": "nbformat",
+        "version": "5.10.4"
+      },
+      {
+        "name": "nest-asyncio",
+        "version": "1.6.0"
+      },
+      {
+        "name": "networkx",
+        "version": "3.5"
+      },
+      {
+        "name": "nodeenv",
+        "version": "1.9.1"
+      },
+      {
+        "name": "notebook",
+        "version": "7.5.0"
+      },
+      {
+        "name": "notebook_shim",
+        "version": "0.2.4"
+      },
+      {
+        "name": "numpy",
+        "version": "2.2.6"
+      },
+      {
+        "name": "nvidia-cublas-cu12",
+        "version": "12.4.5.8"
+      },
+      {
+        "name": "nvidia-cuda-cupti-cu12",
+        "version": "12.4.127"
+      },
+      {
+        "name": "nvidia-cuda-nvrtc-cu12",
+        "version": "12.4.127"
+      },
+      {
+        "name": "nvidia-cuda-runtime-cu12",
+        "version": "12.4.127"
+      },
+      {
+        "name": "nvidia-cudnn-cu12",
+        "version": "9.1.0.70"
+      },
+      {
+        "name": "nvidia-cufft-cu12",
+        "version": "11.2.1.3"
+      },
+      {
+        "name": "nvidia-curand-cu12",
+        "version": "10.3.5.147"
+      },
+      {
+        "name": "nvidia-cusolver-cu12",
+        "version": "11.6.1.9"
+      },
+      {
+        "name": "nvidia-cusparse-cu12",
+        "version": "12.3.1.170"
+      },
+      {
+        "name": "nvidia-cusparselt-cu12",
+        "version": "0.6.2"
+      },
+      {
+        "name": "nvidia-nccl-cu12",
+        "version": "2.21.5"
+      },
+      {
+        "name": "nvidia-nvjitlink-cu12",
+        "version": "12.4.127"
+      },
+      {
+        "name": "nvidia-nvtx-cu12",
+        "version": "12.4.127"
+      },
+      {
+        "name": "oauthlib",
+        "version": "3.3.1"
+      },
+      {
+        "name": "ollama",
+        "version": "0.6.1"
+      },
+      {
+        "name": "omniparser",
+        "version": "0.1.0"
+      },
+      {
+        "name": "onnxruntime",
+        "version": "1.23.2"
+      },
+      {
+        "name": "opencv-python",
+        "version": "4.12.0.88"
+      },
+      {
+        "name": "opentelemetry-api",
+        "version": "1.38.0"
+      },
+      {
+        "name": "opentelemetry-exporter-otlp-proto-common",
+        "version": "1.38.0"
+      },
+      {
+        "name": "opentelemetry-exporter-otlp-proto-grpc",
+        "version": "1.38.0"
+      },
+      {
+        "name": "opentelemetry-proto",
+        "version": "1.38.0"
+      },
+      {
+        "name": "opentelemetry-sdk",
+        "version": "1.38.0"
+      },
+      {
+        "name": "opentelemetry-semantic-conventions",
+        "version": "0.59b0"
+      },
+      {
+        "name": "orjson",
+        "version": "3.11.4"
+      },
+      {
+        "name": "ormsgpack",
+        "version": "1.12.0"
+      },
+      {
+        "name": "overrides",
+        "version": "7.7.0"
+      },
+      {
+        "name": "packaging",
+        "version": "25.0"
+      },
+      {
+        "name": "paginate",
+        "version": "0.5.7"
+      },
+      {
+        "name": "pandas",
+        "version": "2.3.3"
+      },
+      {
+        "name": "pandocfilters",
+        "version": "1.5.1"
+      },
+      {
+        "name": "parso",
+        "version": "0.8.5"
+      },
+      {
+        "name": "pathspec",
+        "version": "0.12.1"
+      },
+      {
+        "name": "peft",
+        "version": "0.18.0"
+      },
+      {
+        "name": "pexpect",
+        "version": "4.9.0"
+      },
+      {
+        "name": "pillow",
+        "version": "12.0.0"
+      },
+      {
+        "name": "pip",
+        "version": "25.3"
+      },
+      {
+        "name": "platformdirs",
+        "version": "4.5.0"
+      },
+      {
+        "name": "playwright",
+        "version": "1.56.0"
+      },
+      {
+        "name": "pluggy",
+        "version": "1.6.0"
+      },
+      {
+        "name": "polars",
+        "version": "1.35.2"
+      },
+      {
+        "name": "polars-runtime-32",
+        "version": "1.35.2"
+      },
+      {
+        "name": "portalocker",
+        "version": "3.2.0"
+      },
+      {
+        "name": "postgrest",
+        "version": "2.24.0"
+      },
+      {
+        "name": "posthog",
+        "version": "5.4.0"
+      },
+      {
+        "name": "pre_commit",
+        "version": "4.4.0"
+      },
+      {
+        "name": "prometheus_client",
+        "version": "0.23.1"
+      },
+      {
+        "name": "prompt_toolkit",
+        "version": "3.0.52"
+      },
+      {
+        "name": "propcache",
+        "version": "0.4.1"
+      },
+      {
+        "name": "protobuf",
+        "version": "6.33.1"
+      },
+      {
+        "name": "psutil",
+        "version": "7.1.3"
+      },
+      {
+        "name": "ptyprocess",
+        "version": "0.7.0"
+      },
+      {
+        "name": "pure_eval",
+        "version": "0.2.3"
+      },
+      {
+        "name": "py-spy",
+        "version": "0.4.1"
+      },
+      {
+        "name": "pyarrow",
+        "version": "22.0.0"
+      },
+      {
+        "name": "pyasn1",
+        "version": "0.6.1"
+      },
+      {
+        "name": "pyasn1_modules",
+        "version": "0.4.2"
+      },
+      {
+        "name": "PyAutoGUI",
+        "version": "0.9.54"
+      },
+      {
+        "name": "pybase64",
+        "version": "1.4.2"
+      },
+      {
+        "name": "pycodestyle",
+        "version": "2.14.0"
+      },
+      {
+        "name": "pycparser",
+        "version": "2.23"
+      },
+      {
+        "name": "pydantic",
+        "version": "2.12.4"
+      },
+      {
+        "name": "pydantic_core",
+        "version": "2.41.5"
+      },
+      {
+        "name": "pydantic-settings",
+        "version": "2.12.0"
+      },
+      {
+        "name": "pydub",
+        "version": "0.25.1"
+      },
+      {
+        "name": "pyee",
+        "version": "13.0.0"
+      },
+      {
+        "name": "pyflakes",
+        "version": "3.4.0"
+      },
+      {
+        "name": "PyGetWindow",
+        "version": "0.0.9"
+      },
+      {
+        "name": "Pygments",
+        "version": "2.19.2"
+      },
+      {
+        "name": "PyJWT",
+        "version": "2.10.1"
+      },
+      {
+        "name": "pylint",
+        "version": "4.0.3"
+      },
+      {
+        "name": "pymdown-extensions",
+        "version": "10.17.1"
+      },
+      {
+        "name": "PyMsgBox",
+        "version": "2.0.1"
+      },
+      {
+        "name": "pyparsing",
+        "version": "3.2.5"
+      },
+      {
+        "name": "pyperclip",
+        "version": "1.11.0"
+      },
+      {
+        "name": "PyPika",
+        "version": "0.48.9"
+      },
+      {
+        "name": "pyproject_hooks",
+        "version": "1.2.0"
+      },
+      {
+        "name": "PyRect",
+        "version": "0.2.0"
+      },
+      {
+        "name": "PyScreeze",
+        "version": "1.0.1"
+      },
+      {
+        "name": "pytest",
+        "version": "9.0.1"
+      },
+      {
+        "name": "pytest-asyncio",
+        "version": "1.3.0"
+      },
+      {
+        "name": "pytest-cov",
+        "version": "7.0.0"
+      },
+      {
+        "name": "pytest-mock",
+        "version": "3.15.1"
+      },
+      {
+        "name": "pytest-xdist",
+        "version": "3.8.0"
+      },
+      {
+        "name": "python-dateutil",
+        "version": "2.9.0.post0"
+      },
+      {
+        "name": "python-dotenv",
+        "version": "1.2.1"
+      },
+      {
+        "name": "python-json-logger",
+        "version": "4.0.0"
+      },
+      {
+        "name": "python-multipart",
+        "version": "0.0.20"
+      },
+      {
+        "name": "python3-xlib",
+        "version": "0.15"
+      },
+      {
+        "name": "pytokens",
+        "version": "0.3.0"
+      },
+      {
+        "name": "pytweening",
+        "version": "1.2.0"
+      },
+      {
+        "name": "pytz",
+        "version": "2025.2"
+      },
+      {
+        "name": "PyYAML",
+        "version": "6.0.3"
+      },
+      {
+        "name": "pyyaml_env_tag",
+        "version": "1.1"
+      },
+      {
+        "name": "pyzmq",
+        "version": "27.1.0"
+      },
+      {
+        "name": "qdrant-client",
+        "version": "1.16.0"
+      },
+      {
+        "name": "realtime",
+        "version": "2.24.0"
+      },
+      {
+        "name": "redis",
+        "version": "7.1.0"
+      },
+      {
+        "name": "referencing",
+        "version": "0.37.0"
+      },
+      {
+        "name": "regex",
+        "version": "2025.11.3"
+      },
+      {
+        "name": "requests",
+        "version": "2.32.5"
+      },
+      {
+        "name": "requests-oauthlib",
+        "version": "2.0.0"
+      },
+      {
+        "name": "requests-toolbelt",
+        "version": "1.0.0"
+      },
+      {
+        "name": "rfc3339-validator",
+        "version": "0.1.4"
+      },
+      {
+        "name": "rfc3986-validator",
+        "version": "0.1.1"
+      },
+      {
+        "name": "rfc3987-syntax",
+        "version": "1.1.0"
+      },
+      {
+        "name": "rich",
+        "version": "14.2.0"
+      },
+      {
+        "name": "rpds-py",
+        "version": "0.29.0"
+      },
+      {
+        "name": "rsa",
+        "version": "4.9.1"
+      },
+      {
+        "name": "ruff",
+        "version": "0.14.5"
+      },
+      {
+        "name": "safetensors",
+        "version": "0.6.2"
+      },
+      {
+        "name": "scikit-learn",
+        "version": "1.7.2"
+      },
+      {
+        "name": "scipy",
+        "version": "1.16.3"
+      },
+      {
+        "name": "Send2Trash",
+        "version": "1.8.3"
+      },
+      {
+        "name": "sentence-transformers",
+        "version": "5.1.2"
+      },
+      {
+        "name": "setuptools",
+        "version": "80.9.0"
+      },
+      {
+        "name": "shellingham",
+        "version": "1.5.4"
+      },
+      {
+        "name": "six",
+        "version": "1.17.0"
+      },
+      {
+        "name": "snakeviz",
+        "version": "2.2.2"
+      },
+      {
+        "name": "sniffio",
+        "version": "1.3.1"
+      },
+      {
+        "name": "sortedcontainers",
+        "version": "2.4.0"
+      },
+      {
+        "name": "sounddevice",
+        "version": "0.5.3"
+      },
+      {
+        "name": "soupsieve",
+        "version": "2.8"
+      },
+      {
+        "name": "SQLAlchemy",
+        "version": "2.0.44"
+      },
+      {
+        "name": "stack-data",
+        "version": "0.6.3"
+      },
+      {
+        "name": "starlette",
+        "version": "0.50.0"
+      },
+      {
+        "name": "storage3",
+        "version": "2.24.0"
+      },
+      {
+        "name": "StrEnum",
+        "version": "0.4.15"
+      },
+      {
+        "name": "structlog",
+        "version": "25.5.0"
+      },
+      {
+        "name": "supabase",
+        "version": "2.24.0"
+      },
+      {
+        "name": "supabase-auth",
+        "version": "2.24.0"
+      },
+      {
+        "name": "supabase-functions",
+        "version": "2.24.0"
+      },
+      {
+        "name": "sympy",
+        "version": "1.13.1"
+      },
+      {
+        "name": "tenacity",
+        "version": "9.1.2"
+      },
+      {
+        "name": "tensorboard",
+        "version": "2.20.0"
+      },
+      {
+        "name": "tensorboard-data-server",
+        "version": "0.7.2"
+      },
+      {
+        "name": "terminado",
+        "version": "0.18.1"
+      },
+      {
+        "name": "threadpoolctl",
+        "version": "3.6.0"
+      },
+      {
+        "name": "tinycss2",
+        "version": "1.4.0"
+      },
+      {
+        "name": "tokenizers",
+        "version": "0.22.1"
+      },
+      {
+        "name": "tomlkit",
+        "version": "0.13.3"
+      },
+      {
+        "name": "torch",
+        "version": "2.6.0+cu124"
+      },
+      {
+        "name": "torchaudio",
+        "version": "2.6.0+cu124"
+      },
+      {
+        "name": "torchvision",
+        "version": "0.21.0+cu124"
+      },
+      {
+        "name": "tornado",
+        "version": "6.5.2"
+      },
+      {
+        "name": "tqdm",
+        "version": "4.67.1"
+      },
+      {
+        "name": "traitlets",
+        "version": "5.14.3"
+      },
+      {
+        "name": "transformers",
+        "version": "4.57.1"
+      },
+      {
+        "name": "triton",
+        "version": "3.2.0"
+      },
+      {
+        "name": "trl",
+        "version": "0.25.1"
+      },
+      {
+        "name": "typer",
+        "version": "0.20.0"
+      },
+      {
+        "name": "types-psutil",
+        "version": "7.0.0.20251116"
+      },
+      {
+        "name": "types-PyYAML",
+        "version": "6.0.12.20250915"
+      },
+      {
+        "name": "types-requests",
+        "version": "2.32.4.20250913"
+      },
+      {
+        "name": "typing_extensions",
+        "version": "4.15.0"
+      },
+      {
+        "name": "typing-inspect",
+        "version": "0.9.0"
+      },
+      {
+        "name": "typing-inspection",
+        "version": "0.4.2"
+      },
+      {
+        "name": "tzdata",
+        "version": "2025.2"
+      },
+      {
+        "name": "ultralytics",
+        "version": "8.3.229"
+      },
+      {
+        "name": "ultralytics-thop",
+        "version": "2.0.18"
+      },
+      {
+        "name": "uri-template",
+        "version": "1.3.0"
+      },
+      {
+        "name": "urllib3",
+        "version": "2.3.0"
+      },
+      {
+        "name": "uvicorn",
+        "version": "0.38.0"
+      },
+      {
+        "name": "uvloop",
+        "version": "0.22.1"
+      },
+      {
+        "name": "virtualenv",
+        "version": "20.35.4"
+      },
+      {
+        "name": "watchdog",
+        "version": "6.0.0"
+      },
+      {
+        "name": "watchfiles",
+        "version": "1.1.1"
+      },
+      {
+        "name": "wcwidth",
+        "version": "0.2.14"
+      },
+      {
+        "name": "webcolors",
+        "version": "25.10.0"
+      },
+      {
+        "name": "webencodings",
+        "version": "0.5.1"
+      },
+      {
+        "name": "websocket-client",
+        "version": "1.9.0"
+      },
+      {
+        "name": "websockets",
+        "version": "15.0.1"
+      },
+      {
+        "name": "Werkzeug",
+        "version": "3.1.3"
+      },
+      {
+        "name": "wheel",
+        "version": "0.45.1"
+      },
+      {
+        "name": "whisper",
+        "version": "1.1.10"
+      },
+      {
+        "name": "widgetsnbextension",
+        "version": "4.0.15"
+      },
+      {
+        "name": "xxhash",
+        "version": "3.6.0"
+      },
+      {
+        "name": "yarl",
+        "version": "1.22.0"
+      },
+      {
+        "name": "zipp",
+        "version": "3.23.0"
+      },
+      {
+        "name": "zstandard",
+        "version": "0.25.0"
+      }
+    ],
+    "sample": [
+      {
+        "name": "absl-py",
+        "version": "2.3.1"
+      },
+      {
+        "name": "accelerate",
+        "version": "1.11.0"
+      },
+      {
+        "name": "aiohappyeyeballs",
+        "version": "2.6.1"
+      },
+      {
+        "name": "aiohttp",
+        "version": "3.13.2"
+      },
+      {
+        "name": "aiosignal",
+        "version": "1.4.0"
+      },
+      {
+        "name": "annotated-doc",
+        "version": "0.0.4"
+      },
+      {
+        "name": "annotated-types",
+        "version": "0.7.0"
+      },
+      {
+        "name": "anyio",
+        "version": "4.11.0"
+      },
+      {
+        "name": "argon2-cffi",
+        "version": "25.1.0"
+      },
+      {
+        "name": "argon2-cffi-bindings",
+        "version": "25.1.0"
+      }
+    ]
+  },
+  "git_history": {
+    "git_log___oneline___all___wc__l": {
+      "command": "git log --oneline --all | wc -l",
+      "returncode": 0,
+      "stdout": "375",
+      "stderr": ""
+    },
+    "git_log___pretty=format:%H_%an_%ae_%ad_%s___date=iso___all___head__50": {
+      "command": "git log --pretty=format:\"%H|%an|%ae|%ad|%s\" --date=iso --all | head -50",
+      "returncode": 0,
+      "stdout": "4593d412f6fbb0894370f93ce186a333d6479347|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 03:41:01 -0300|docs: Add Hugging Face profile and technical documentation\na3dd63a5b605b0272675ccddb6698d7e8c0c2cec|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 03:27:36 -0300|refactor: implement node selection strategies in load balancers and enhance tool base structure\ne3a3f07a732e9e3419c0134eb8c8c51c51eccd78|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 02:28:40 -0300|security: remove sensitive files from git tracking\n3c279e336f523df19acb2b3838eb08cb6ae3f40b|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 02:27:01 -0300|ci: add workflow backup and update canonical logs\n47c59528eb26a3430dc3ff51fa7b3d22814e11d5|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 02:25:10 -0300|fix: correct import in omnimind_tools.py\n65b9bb0f22f50e7ee1bb885cb3570a6c14736d92|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 02:24:44 -0300|ci: optimize disk space usage in CI/CD pipeline\naac4da2282cd6858210e6950a846598a3b37f111|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 02:20:14 -0300|refactor: replace ImmutableAuditSystem instantiation with get_audit_system() for consistency and improved integrity checks\ne2a73bb2546ba6286e9bb0f430e22097a8ea8a70|dependabot[bot]|49699333+dependabot[bot]@users.noreply.github.com|2025-11-22 05:06:22 +0000|ci(deps): bump actions/checkout from 4 to 6\n4727b930a55716555a2bef668948eacd317e8c9a|dependabot[bot]|49699333+dependabot[bot]@users.noreply.github.com|2025-11-22 05:06:07 +0000|ci(deps): bump actions/setup-python from 5 to 6\n8be4cfdd805d07ca8856f01c350ca384129901c3|dependabot[bot]|49699333+dependabot[bot]@users.noreply.github.com|2025-11-22 05:06:04 +0000|ci(deps): bump docker/build-push-action from 5 to 6\n97c3beccfe99e3aa546ebe20ec95820eabd6a9a5|dependabot[bot]|49699333+dependabot[bot]@users.noreply.github.com|2025-11-22 05:06:01 +0000|ci(deps): bump actions/upload-artifact from 4 to 5\n5ba857a2961f1f2b5c953cfc87099a8d456d3880|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 02:04:59 -0300|fix: correct type error in theory_of_mind.py and update CI dependencies\ne036760367bcff563e722504e0281cad5160a2a5|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 01:53:44 -0300|docs: test intelligent validation for docs-only changes\n411c77eb6d473282e6ad97d1846d93275cc42208|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 01:31:49 -0300|merge: Resolve conflicts and synchronize with remote\n1ed1c5f5cb0a3adfd41021347cdebd251c29ddc9|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 01:22:16 -0300|refactor: Repository root organization and cleanup\n384b7f10e04c95d9bcbd7cc61a220ffca053aa02|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 01:15:15 -0300|cleanup: Repository maintenance and organization\nfecc09e08f0170e7ed1424a422b78b2896168ac9|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 01:08:26 -0300|feat: Complete audit deliverables and security fixes\nf348a334d02c570830c0948d5af82d2c9c3db139|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 00:53:08 -0300|On audit-review: audit-review changes\na446ea81f50534d7fd4a93da92045b4f6c4dba0a|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 00:53:08 -0300|index on audit-review: e493d3ba Add visual audit summary\n2bf3fba9b6a25f8dd0ba261725e35775333a4b60|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 00:49:06 -0300|feat: Enterprise optimizations - CODEOWNERS, Dependabot, Copilot instructions, and audit fixes\n5fcd13108fce0cf9009db8f134e464de20bcbc8e|Copilot|198982749+Copilot@users.noreply.github.com|2025-11-22 00:39:19 -0300|feat: comprehensive repository audit with security analysis, test gap identification, and automation tooling (#46)\na270be6502d95dea855a5374ac4fabfe694eb81c|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 00:26:36 -0300|Fix CI workflow to trigger on master branch\nbd7a46e5db9d900638a4c2d973a2aaa98016330a|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 00:21:27 -0300|Add coverage files to gitignore and fix pre-commit hook order\nc9ad43e57720a0a46f2d25c38fe42455a99a8257|Fahbrain|fahbrain@users.noreply.github.com|2025-11-22 00:19:25 -0300|Fix E2E tests: Add skip markers to prevent timeouts in CI\n8de150d24a0f72c31e80a0eb93a07b49ab8b80af|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 23:44:31 -0300|Fix CI/CD workflow: Update Python version to 3.12.8 and add missing system dependencies\nb594ef0c605b7720a542e02816b0cfac481c677a|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 23:40:29 -0300|Complete project cleanup: moved obsolete files to external HDD\n323b59c251834694a0889c18e21bd32fed02ee6d|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 23:39:54 -0300|Merge branch 'master' of https://github.com/devomnimind/OmniMind\nf009cc4127fac825336ee7baee52aab4ae5de564|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 23:38:52 -0300|Organize project: move obsolete files to local backup\n4f9bb2264f167345a3cb2af110f27fa5869187d4|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 23:24:06 -0300|Fix authentication and integration tests for dashboard\nfdc35bf2f7d74ba0e87ecc39b7ed14ad3fa5ffdb|Copilot|198982749+Copilot@users.noreply.github.com|2025-11-21 23:21:46 -0300|An\u00e1lise completa da documenta\u00e7\u00e3o do projeto - identifica\u00e7\u00e3o de duplicatas, valida\u00e7\u00e3o de estat\u00edsticas e cria\u00e7\u00e3o de documenta\u00e7\u00e3o can\u00f4nica (#44)\n5dc34e3cbd102b89959538b2067a2ab69de8ab91|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 22:54:31 -0300|Remove dependency submission and security job from CI workflows\n5a0e0c2e4a026c6f843524451a42477db6baa5d9|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 22:51:29 -0300|feat: Update project structure and configurations for improved deployment and testing\nc2b2ed14cb9957c6d1889ee975c8d86f9fceb9f3|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 22:12:09 -0300|feat(demo): Add comprehensive multi-modal intelligence demo for phases 12-15\nb15128b1caba1984aa522002114b403686234887|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 21:23:23 -0300|feat: Disable staging deployment and add environment configuration guide\n6e0ab03412ead5b0530c08f5c0197aecdd19d3bb|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 20:55:47 -0300|feat: Add configuration files and enhance agent error handling with fallbacks\nad786bd635428d2e6d08eb26262a09f88dc26d1a|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 20:37:30 -0300|feat: Add configuration files and enhance agent error handling with fallbacks\nb43d53b4a9313b0f23e81dbd6e57b02aa62a660f|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 20:09:02 -0300|fix: Add langchain-ollama dependency to requirements\n125d0cea99f0b2e16579662c2ebd1b0ca0c56dc4|Copilot|198982749+Copilot@users.noreply.github.com|2025-11-21 20:06:48 -0300|Fix release workflow validation errors and add PyPI publishing job (#43)\n9d34fa026cad1c73285eaae317fe576a82550682|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 19:52:19 -0300|fix: Improve safety checks for surface dimensions and enhance numpy integration in HolographicProjection and EventHorizonMemory classes\n29c39d61e9cb92184b48182d194fafef61aaa727|Copilot|198982749+Copilot@users.noreply.github.com|2025-11-21 19:48:44 -0300|Add comprehensive study for extracting 7 public repositories from OmniMind (#42)\n684899d7214e99341faf635a09becfe71dddc6bc|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 19:43:05 -0300|fix: Improve safety checks for surface dimensions and enhance numpy integration in HolographicProjection and EventHorizonMemory classes\nb593a8afa439f1e6d14ae755befc4ac95fdce03d|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 19:20:44 -0300|refactor: Update backend server fixture to support production mode and enhance Dockerfile for runtime dependencies\ndbe1cd43ea1f9822a0de80127f713ef3bc8f0a75|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 19:19:34 -0300|fix: build configuration and dependencies\na8825f8cbea4f610f1832602e2c8556e18af2409|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 18:23:50 -0300|refactor: Enhance type hinting and safety across multiple modules\n9421a1365a57764980393c014f3af6301d3320c6|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 17:09:53 -0300|Improve readability and formatting of request methods in MCPClient and EnhancedMCPClient\nb0385e5de886c550ec447ffe84b9b8d86a16b44c|Copilot|198982749+Copilot@users.noreply.github.com|2025-11-21 16:53:58 -0300|[WIP] Analyze and propose fixes for code errors (#41)\nfcaf8d2670abb84a7a4e2bd61ecf0ea9012cb7b0|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 16:40:43 -0300|docs: Add checklist for AIs to enhance project workflow and decision-making processes\n81545f2e8d79ccae82504f2ba68f4203430769ff|Copilot|198982749+Copilot@users.noreply.github.com|2025-11-21 16:17:38 -0300|feat: Add MCP priority analysis, orchestrator, and data protection for local AI development (#40)\ndeac2fa966ea96c42abe4d1b7d956d42ac0ed023|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 16:03:00 -0300|Refactor code for improved type hinting and readability across multiple modules\n77b1f69a7f414748de79a926bcbea14bc2ebb07f|Fahbrain|fahbrain@users.noreply.github.com|2025-11-21 15:10:06 -0300|Add canonical action log files with initial metadata and type hinting actions",
+      "stderr": ""
+    },
+    "git_shortlog__sn___all___head__20": {
+      "command": "git shortlog -sn --all | head -20",
+      "returncode": 0,
+      "stdout": "231\tFahbrain\n    93\tcopilot-swe-agent[bot]\n    40\tCopilot\n     6\tdependabot[bot]\n     5\tfabs-devbrain",
+      "stderr": ""
+    },
+    "git_ls_files___wc__l": {
+      "command": "git ls-files | wc -l",
+      "returncode": 0,
+      "stdout": "691",
+      "stderr": ""
+    },
+    "git_ls_files___sed_s/.*\\.//___sort___uniq__c___sort__nr___head__20": {
+      "command": "git ls-files | sed \"s/.*\\.//\" | sort | uniq -c | sort -nr | head -20",
+      "returncode": 0,
+      "stdout": "326 py\n    158 md\n     46 json\n     33 txt\n     24 tsx\n     22 sh\n     13 ts\n     12 yml\n     12 yaml\n      9 pyi\n      4 service\n      4 backup\n      3 toml\n      3 js\n      2 timer\n      2 ini\n      2 gitignore\n      2 conf\n      1 yamllint\n      1 web/frontend/Dockerfile",
+      "stderr": ""
+    }
+  },
+  "file_types": {
+    "command": "find . -type f -name \"*.*\" | sed \"s/.*\\.//\" | sort | uniq -c | sort -nr | head -50",
+    "returncode": 0,
+    "stdout": "25050 py\n  14329 svg\n  13289 json\n   9666 h\n   5888 pyc\n   4738 js\n   3230 pyi\n   1538 map\n   1124 dat\n   1026 ts\n    670 so\n    615 md\n    570 txt\n    235 typed\n    177 html\n    152 mdx\n    134 pyx\n    125 yaml\n    114 pxd\n    110 mat\n    108 gz\n    107 hpp\n     82 woff\n     80 orig\n     71 proto\n     69 cpp\n     63 ttf\n     60 f90\n     60 afm\n     56 cuh\n     55 css\n     53 yml\n     52 png\n     47 sav\n     47 mts\n     47 0\n     45 c\n     42 sh\n     39 csv\n     37 mjs\n     36 cmake\n     33 mo\n     32 npy\n     32 j2\n     32 cts\n     29 rst\n     29 mplstyle\n     27 cjs\n     26 build\n     25 npz",
+    "stderr": ""
+  },
+  "code_patterns": {
+    "python_imports": {
+      "command": "find . -name \"*.py\" -exec grep -h \"^import \" {} \\; | sort | uniq -c | sort -nr | head -20",
+      "error": "Command 'find . -name \"*.py\" -exec grep -h \"^import \" {} \\; | sort | uniq -c | sort -nr | head -20' timed out after 30 seconds",
+      "returncode": -1,
+      "stdout": "",
+      "stderr": "Command 'find . -name \"*.py\" -exec grep -h \"^import \" {} \\; | sort | uniq -c | sort -nr | head -20' timed out after 30 seconds"
+    },
+    "python_functions": {
+      "command": "find . -name \"*.py\" -exec grep -h \"^def \" {} \\; | wc -l",
+      "returncode": 0,
+      "stdout": "105871",
+      "stderr": ""
+    },
+    "python_classes": {
+      "command": "find . -name \"*.py\" -exec grep -h \"^class \" {} \\; | wc -l",
+      "error": "Command 'find . -name \"*.py\" -exec grep -h \"^class \" {} \\; | wc -l' timed out after 30 seconds",
+      "returncode": -1,
+      "stdout": "",
+      "stderr": "Command 'find . -name \"*.py\" -exec grep -h \"^class \" {} \\; | wc -l' timed out after 30 seconds"
+    },
+    "js_functions": {
+      "command": "find . -name \"*.js\" -o -name \"*.ts\" | xargs grep -h \"function \" | wc -l",
+      "returncode": 0,
+      "stdout": "85171",
+      "stderr": "grep: ./web/frontend/node_modules/fraction.js: \u00c9 um diret\u00f3rio"
+    },
+    "js_arrow_functions": {
+      "command": "find . -name \"*.js\" -o -name \"*.ts\" | xargs grep -h \"=> \" | wc -l",
+      "returncode": 0,
+      "stdout": "52621",
+      "stderr": "grep: ./web/frontend/node_modules/fraction.js: \u00c9 um diret\u00f3rio"
+    }
+  },
+  "external_drive_content": {
+    "/mnt": {
+      "command": "find /mnt -maxdepth 2 -type f | wc -l",
+      "returncode": 0,
+      "stdout": "0",
+      "stderr": ""
+    },
+    "/mnt_dirs": {
+      "command": "find /mnt -maxdepth 2 -type d | wc -l",
+      "returncode": 0,
+      "stdout": "2",
+      "stderr": ""
+    },
+    "/media": {
+      "command": "find /media -maxdepth 2 -type f | wc -l",
+      "returncode": 0,
+      "stdout": "0",
+      "stderr": ""
+    },
+    "/media_dirs": {
+      "command": "find /media -maxdepth 2 -type d | wc -l",
+      "returncode": 0,
+      "stdout": "2",
+      "stderr": ""
+    },
+    "lsblk_external": {
+      "command": "lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT | grep -v loop | grep -v sda",
+      "returncode": 0,
+      "stdout": "NAME                    SIZE FSTYPE      MOUNTPOINT\nnvme0n1               931,5G             \n\u251c\u2500nvme0n1p1             976M vfat        /boot/efi\n\u251c\u2500nvme0n1p2             977M ext4        /boot\n\u2514\u2500nvme0n1p3           929,6G crypto_LUKS \n  \u2514\u2500nvme0n1p3_crypt   929,6G LVM2_member \n    \u251c\u2500kali--vg-root   905,8G ext4        /\n    \u2514\u2500kali--vg-swap_1  23,7G swap        [SWAP]",
+      "stderr": ""
+    }
+  }
+}

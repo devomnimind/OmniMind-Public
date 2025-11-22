@@ -1,0 +1,31 @@
+{
+  "github_models": {
+    "enabled": true,
+    "rate_limit_buffer": 100,
+    "preferred_models": {
+      "text_classification": "copilot-chat",
+      "code_generation": "copilot-chat", 
+      "text_generation": "gpt-4o-mini"
+    }
+  },
+  "hugging_face": {
+    "enabled": true,
+    "cache_dir": "logs/ml_cache",
+    "download_limit_buffer": 1000,
+    "upload_limit_buffer": 500
+  },
+  "monitoring": {
+    "enabled": true,
+    "check_interval_seconds": 30,
+    "alert_thresholds": {
+      "github_requests": 100,
+      "hf_downloads": 1000,
+      "hf_uploads_mb": 500
+    }
+  },
+  "optimization": {
+    "auto_fallback": true,
+    "cost_optimization": true,
+    "local_cache_enabled": true
+  }
+}

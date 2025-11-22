@@ -1,0 +1,114 @@
+{
+  "cursor_projects": {
+    "scanned_locations": [
+      "/home/fahbrain/projects",
+      "/home/fahbrain/Documents",
+      "/home/fahbrain/Desktop",
+      "/home/fahbrain/workspace",
+      "/home/fahbrain/code"
+    ],
+    "projects": {
+      "/home/fahbrain/projects": [
+        {
+          "name": "omnimind",
+          "path": "/home/fahbrain/projects/omnimind",
+          "is_git_repo": true,
+          "has_cursor_config": false,
+          "git_remotes": "origin\thttps://github.com/devomnimind/OmniMind (fetch)\norigin\thttps://github.com/devomnimind/OmniMind (push)"
+        }
+      ]
+    }
+  },
+  "antigravity_projects": {
+    "search_patterns": [
+      "antigravity",
+      "anti-gravity",
+      "antigrav",
+      "xkcd",
+      "easter.egg"
+    ],
+    "found_projects": {
+      "antigravity": {
+        "files": [
+          "/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/jedi/third_party/typeshed/stdlib/2and3/antigravity.pyi",
+          "/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/mypy/typeshed/stdlib/antigravity.pyi"
+        ],
+        "count": 2
+      },
+      "antigrav": {
+        "files": [
+          "/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/jedi/third_party/typeshed/stdlib/2and3/antigravity.pyi",
+          "/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/mypy/typeshed/stdlib/antigravity.pyi"
+        ],
+        "count": 2
+      }
+    },
+    "xkcd_references": {
+      "command": "find /home/fahbrain -name \"*xkcd*\" -o -name \"*easter*\" -type f 2>/dev/null | head -10",
+      "returncode": 0,
+      "stdout": "/home/fahbrain/.vscode-insiders/extensions/ms-python.python-2025.18.0-linux-x64/python_files/lib/jedilsp/jedi/third_party/typeshed/third_party/2and3/dateutil/easter.pyi\n/home/fahbrain/.vscode-insiders/extensions/ms-python.vscode-pylance-2025.9.1/dist/typeshed-fallback/stubs/seaborn/seaborn/colors/xkcd_rgb.pyi\n/home/fahbrain/.vscode-insiders/extensions/ms-python.vscode-pylance-2025.9.1/dist/typeshed-fallback/stubs/python-dateutil/dateutil/easter.pyi\n/home/fahbrain/.vscode-insiders/extensions/ms-python.vscode-pylance-2025.9.1/dist/typeshed-fallback/stubs/boltons/boltons/easterutils.pyi\n/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/pandas/tests/tseries/offsets/test_easter.py\n/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/jedi/third_party/typeshed/third_party/2and3/dateutil/easter.pyi\n/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/material/templates/.icons/material/egg-easter.svg\n/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/material/templates/.icons/simple/chinaeasternairlines.svg\n/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/dateutil/easter.py\n/home/fahbrain/.config/Code/User/globalStorage/bioinfo.markitdown-vscode/markitdown-venv/lib/python3.13/site-packages/pandas/tests/tseries/offsets/test_easter.py",
+      "stderr": ""
+    }
+  },
+  "cursor_settings_detailed": {},
+  "development_workflow": {
+    "development_tools": {
+      "docker": {
+        "installed": true,
+        "version": "Docker version 27.5.1+dfsg4, build cab968b3"
+      },
+      "docker_compose": {
+        "installed": true,
+        "version": "Docker Compose version 2.32.4-3"
+      },
+      "kubectl": {
+        "installed": false,
+        "version": null
+      },
+      "helm": {
+        "installed": false,
+        "version": null
+      },
+      "terraform": {
+        "installed": false,
+        "version": null
+      },
+      "ansible": {
+        "installed": false,
+        "version": null
+      },
+      "poetry": {
+        "installed": false,
+        "version": null
+      },
+      "pipenv": {
+        "installed": false,
+        "version": null
+      },
+      "conda": {
+        "installed": false,
+        "version": null
+      },
+      "npm": {
+        "installed": true,
+        "version": "9.2.0"
+      },
+      "yarn": {
+        "installed": false,
+        "version": null
+      },
+      "pnpm": {
+        "installed": false,
+        "version": null
+      }
+    },
+    "ci_cd_files": {
+      ".github/workflows": 0,
+      ".gitlab-ci.yml": 0,
+      "Jenkinsfile": 0,
+      "azure-pipelines.yml": 0,
+      "Dockerfile": 2,
+      "docker-compose.yml": 1
+    }
+  }
+}
