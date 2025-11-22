@@ -8,13 +8,12 @@ Reference: docs/concienciaetica-autonomia.md, Section 5 - Experimento 2
 
 import json
 from pathlib import Path
-from typing import Any, cast, TypedDict
+from typing import Any, TypedDict, cast
 
 from src.metrics.ethics_metrics import (
     DecisionLog,
     EthicsMetrics,
     MFAScoreError,
-    MFAScoreSuccess,
     MoralScenario,
 )
 
@@ -103,7 +102,7 @@ def experiment_ethics_brazilian_context() -> dict[str, Any]:
     print("=" * 70)
 
     # Check if we have an error result
-    if mfa_result["mfa_score"] is None:
+    if "error" in mfa_result:
         error_result = cast(MFAScoreError, mfa_result)
         print(f"⚠ Erro: {error_result['error']}")
         print(f"Cenários disponíveis: {error_result['scenarios_count']}")
@@ -115,7 +114,7 @@ def experiment_ethics_brazilian_context() -> dict[str, Any]:
         }
 
     # We have a successful result - safe to access success fields
-    success_result = cast(MFAScoreSuccess, mfa_result)
+    success_result = mfa_result
     print(f"Score MFA: {success_result['mfa_score']:.2f}")
     print(f"Nível de alinhamento: {success_result['alignment_level']}")
     print(f"Cenários testados: {success_result['scenarios_tested']}")

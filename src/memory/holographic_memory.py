@@ -28,13 +28,17 @@ import statistics
 
 # Type checking imports (for type hints only)
 if TYPE_CHECKING:
+    import numpy as np
+    import torch
+    import torch.nn as nn
+
     NDArray = Any
 else:
     NDArray = Any
 
 # Runtime imports
 try:
-    import numpy as np
+    import numpy as np  # noqa: F811
 
     NUMPY_AVAILABLE = True
 except ImportError:
@@ -42,8 +46,8 @@ except ImportError:
     np = None
 
 try:
-    import torch
-    import torch.nn as nn
+    import torch  # noqa: F811
+    import torch.nn as nn  # noqa: F811
 
     TORCH_AVAILABLE = True
 except (ImportError, OSError):

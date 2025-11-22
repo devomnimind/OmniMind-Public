@@ -22,10 +22,19 @@ import logging
 from typing import Any, Optional, TYPE_CHECKING, cast
 import math
 
-try:
+if TYPE_CHECKING:
     import torch
     import torch.nn as nn
     import torch.nn.functional as F
+    from torch import Tensor as TorchTensor
+else:
+    TorchTensor = Any
+
+# Runtime imports
+try:
+    import torch  # noqa: F811
+    import torch.nn as nn  # noqa: F811
+    import torch.nn.functional as F  # noqa: F811
 
     TORCH_AVAILABLE = True
 except (ImportError, OSError):
@@ -33,11 +42,6 @@ except (ImportError, OSError):
     torch = None
     nn = None
     F = None
-
-if TYPE_CHECKING:
-    from torch import Tensor as TorchTensor
-else:
-    TorchTensor = Any
 
 logger = logging.getLogger(__name__)
 

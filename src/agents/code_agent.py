@@ -250,17 +250,18 @@ Your response:"""
         """
         # Verificar cache
         if filepath in self._ast_cache:
-            structure = self._ast_cache[filepath]
+            cached_structure = self._ast_cache[filepath]
         else:
-            structure = self.ast_parser.parse_file(filepath)
-            if structure:
-                self._ast_cache[filepath] = structure
+            cached_structure = self.ast_parser.parse_file(filepath)
+            if cached_structure:
+                self._ast_cache[filepath] = cached_structure
 
-        if not structure:
-            return {"error": f"Failed to parse {filepath}"}
+        # At this point cached_structure is guaranteed to be not None
+        assert cached_structure is not None
+        parsed_structure = cached_structure
 
         return {
-            "filepath": structure.filepath,
+            "filepath": parsed_structure.filepath,
             "classes": [
                 {
                     "name": c.name,
@@ -268,7 +269,7 @@ Your response:"""
                     "docstring": c.docstring,
                     "bases": c.bases,
                 }
-                for c in structure.classes
+                for c in parsed_structure.classes
             ],
             "functions": [
                 {
@@ -278,12 +279,12 @@ Your response:"""
                     "return_type": f.return_type,
                     "docstring": f.docstring,
                 }
-                for f in structure.functions
+                for f in parsed_structure.functions
             ],
-            "imports": [i.name for i in structure.imports],
-            "dependencies": list(structure.dependencies),
-            "complexity": structure.complexity,
-            "lines_of_code": structure.lines_of_code,
+            "imports": [i.name for i in parsed_structure.imports],
+            "dependencies": list(parsed_structure.dependencies),
+            "complexity": parsed_structure.complexity,
+            "lines_of_code": parsed_structure.lines_of_code,
         }
 
     def validate_code_syntax(self, code: str) -> Dict[str, Any]:
@@ -328,7 +329,7 @@ Your response:"""
     def generate_code_skeleton(
         self,
         class_name: str,
-        methods: List[tuple[str, List[str], str]],
+        methods: List[tuple[str, List[str], str | None]],
         docstring: str = "",
     ) -> str:
         """
