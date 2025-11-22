@@ -25,7 +25,7 @@ License: MIT
 from __future__ import annotations
 
 from typing import Dict, List, Optional, Any, Tuple
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 import numpy as np
 import torch
 import torch.nn as nn

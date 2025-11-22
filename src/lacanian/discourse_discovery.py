@@ -22,8 +22,8 @@ License: MIT
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Any, Tuple, Set
-from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Any, Set
+from dataclasses import dataclass
 from enum import Enum
 import re
 import logging
@@ -531,7 +531,7 @@ def demonstrate_lacanian_discourse_discovery() -> None:
         print(f"Discurso dominante: {result.dominant_discourse.value.upper()}")
         print(f"Assinatura emocional: {result.emotional_signature.value}")
         print(f"Confiança: {result.confidence:.2%}")
-        print(f"Scores:")
+        print("Scores:")
         for discourse, score in sorted(
             result.discourse_scores.items(), key=lambda x: x[1], reverse=True
         ):
@@ -558,7 +558,7 @@ def demonstrate_lacanian_discourse_discovery() -> None:
     exported = analyzer.export_analysis()
 
     print(f"Total de análises exportadas: {len(exported)}")
-    print(f"Exemplo de análise exportada:")
+    print("Exemplo de análise exportada:")
     print(f"  Discurso: {exported[0]['dominant_discourse']}")
     print(f"  Confiança: {exported[0]['confidence']:.2%}")
     print()

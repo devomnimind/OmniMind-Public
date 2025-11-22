@@ -375,7 +375,7 @@ def demonstrate_production_ethics() -> None:
     # Simula respostas AI
     try:
         from src.metrics.ethics_metrics import MoralFoundation
-    except:
+    except ImportError:
         from enum import Enum
 
         class MoralFoundation(Enum):

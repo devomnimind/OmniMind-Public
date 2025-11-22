@@ -300,8 +300,6 @@ class TestFreudianMind:
         """Test psychic state updates."""
         mind = FreudianMind()
 
-        initial_tension = mind.state.tension
-
         actions = [
             Action("pleasant", 0.9, 0.1, -0.5),  # Pleasant but immoral
         ]
