@@ -130,8 +130,11 @@ class PerformanceBenchmark:
             import torch
             from src.lacanian.free_energy_lacanian import ActiveInferenceAgent
             
+            # Reduced dimensions for faster benchmarking
+            # Production values: sensory_dim=128, symbolic_dim=256, imaginary_dim=512
+            # Benchmark values: 50% reduction to enable rapid iteration
             agent = ActiveInferenceAgent(
-                sensory_dim=64,  # Reduzido para benchmark
+                sensory_dim=64,
                 symbolic_dim=128,
                 imaginary_dim=256
             )
