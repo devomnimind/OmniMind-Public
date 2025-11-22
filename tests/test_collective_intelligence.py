@@ -6,12 +6,16 @@ Grupo 5 - Phase 1: Testes básicos de inicialização e métodos principais
 
 import pytest
 import time
+import math
 
 # Collective Learning
 from src.collective_intelligence.collective_learning import (
     SharedExperience,
     KnowledgeBase,
     ConsensusLearning,
+    FederatedLearning,
+    CollectiveLearner,
+    MultiAgentTrainer,
 )
 
 # Distributed Solver
@@ -48,8 +52,8 @@ class TestSharedExperience:
         assert exp.agent_id == ""
         assert exp.context == {}
         assert exp.action == ""
-        assert exp.outcome == 0.0
-        assert exp.confidence == 0.5
+        assert math.isclose(exp.outcome, 0.0)
+        assert math.isclose(exp.confidence, 0.5)
 
     def test_initialization_with_values(self) -> None:
         """Testa inicialização com valores customizados."""
@@ -64,8 +68,8 @@ class TestSharedExperience:
         assert exp.agent_id == "agent-1"
         assert exp.context == {"key": "value"}
         assert exp.action == "test_action"
-        assert exp.outcome == 1.0
-        assert exp.confidence == 0.9
+        assert math.isclose(exp.outcome, 1.0)
+        assert math.isclose(exp.confidence, 0.9)
 
     def test_timestamp_is_set(self) -> None:
         """Testa que timestamp é definido automaticamente."""
@@ -209,7 +213,7 @@ class TestEmergentPattern:
         )
 
         assert pattern.pattern_type == PatternType.SYNCHRONIZATION
-        assert pattern.confidence == 0.8
+        assert math.isclose(pattern.confidence, 0.8)
 
     def test_initialization_with_participants(self) -> None:
         """Testa inicialização com participantes."""
@@ -219,7 +223,7 @@ class TestEmergentPattern:
             participants=["agent1", "agent2"],
         )
 
-        assert pattern.confidence == 0.9
+        assert math.isclose(pattern.confidence, 0.9)
         assert len(pattern.participants) == 2
 
 
@@ -331,6 +335,172 @@ class TestCollectiveIntelligenceIntegration:
 
         # Deve gerenciar múltiplos agentes
         assert coordinator is not None
+
+
+class TestConsensusLearning:
+    """Testes adicionais para ConsensusLearning."""
+
+    def test_share_experience(self) -> None:
+        """Testa compartilhamento de experiência."""
+        learning = ConsensusLearning(num_agents=3)
+        exp = SharedExperience(agent_id="agent1", action="test", outcome=1.0)
+
+        learning.share_experience("agent1", exp)
+
+        assert len(learning.knowledge_base.experiences) == 1
+        assert learning.knowledge_base.experiences[0].agent_id == "agent1"
+
+    def test_get_consensus_model(self) -> None:
+        """Testa obtenção do modelo de consenso."""
+        learning = ConsensusLearning(num_agents=2)
+
+        # Adicionar modelos de agentes
+        learning.update_agent_model("agent1", {"accuracy": 0.8, "loss": 0.2})
+        learning.update_agent_model("agent2", {"accuracy": 0.9, "loss": 0.1})
+
+        model = learning.get_consensus_model()
+
+        assert isinstance(model, dict)
+        assert "accuracy" in model
+        assert "loss" in model
+
+    def test_update_agent_model(self) -> None:
+        """Testa atualização do modelo de um agente."""
+        learning = ConsensusLearning(num_agents=2)
+
+        model = {"accuracy": 0.85, "loss": 0.15}
+        learning.update_agent_model("agent1", model)
+
+        assert "agent1" in learning.agent_models
+        assert math.isclose(learning.agent_models["agent1"]["accuracy"], 0.85)
+
+
+class TestFederatedLearning:
+    """Testes adicionais para FederatedLearning."""
+
+    def test_initialize_global_model(self) -> None:
+        """Testa inicialização do modelo global."""
+        fed = FederatedLearning(num_agents=3)
+
+        model = {"weights": [1, 2, 3], "bias": 0.5}
+        fed.initialize_global_model(model)
+
+        assert fed.global_model == model
+
+    def test_get_global_model(self) -> None:
+        """Testa obtenção do modelo global."""
+        fed = FederatedLearning(num_agents=2)
+
+        model = {"layer1": [0.1, 0.2], "layer2": [0.3, 0.4]}
+        fed.initialize_global_model(model)
+
+        retrieved = fed.get_global_model()
+        assert retrieved == model
+
+    def test_submit_local_update(self) -> None:
+        """Testa submissão de atualização local."""
+        fed = FederatedLearning(num_agents=2)
+
+        local_model = {"weights": [0.5, 0.6], "bias": 0.2}
+        fed.submit_local_update("agent1", local_model)
+
+        assert "agent1" in fed.local_models
+        assert fed.local_models["agent1"] == local_model
+
+    def test_aggregate_updates(self) -> None:
+        """Testa agregação de atualizações."""
+        fed = FederatedLearning(num_agents=2)
+
+        # Inicializar modelo global
+        fed.initialize_global_model({"weights": [1.0, 1.0], "bias": 0.0})
+
+        # Submeter atualizações locais
+        fed.submit_local_update("agent1", {"weights": [0.8, 0.9], "bias": 0.1})
+        fed.submit_local_update("agent2", {"weights": [1.2, 1.1], "bias": -0.1})
+
+        aggregated = fed.aggregate_updates()
+
+        assert isinstance(aggregated, dict)
+        assert "weights" in aggregated
+        assert "bias" in aggregated
+
+
+class TestCollectiveLearner:
+    """Testes adicionais para CollectiveLearner."""
+
+    def test_learn_from_experience(self) -> None:
+        """Testa aprendizado a partir de experiência."""
+        learner = CollectiveLearner(num_agents=2)
+
+        exp = SharedExperience(agent_id="agent1", action="learn", outcome=0.9)
+        learner.learn_from_experience("agent1", exp)
+
+        # Verificar se foi adicionado ao knowledge base do ConsensusLearning
+        if isinstance(learner.learner, ConsensusLearning):
+            assert len(learner.learner.knowledge_base.experiences) == 1
+
+    def test_update_model(self) -> None:
+        """Testa atualização do modelo."""
+        learner = CollectiveLearner(num_agents=2)
+
+        update = {"learning_rate": 0.01, "momentum": 0.9}
+        learner.update_model("agent1", update)
+
+        # Verificar se foi atualizado no ConsensusLearning
+        if isinstance(learner.learner, ConsensusLearning):
+            assert "agent1" in learner.learner.agent_models
+
+    def test_get_collective_model(self) -> None:
+        """Testa obtenção do modelo coletivo."""
+        learner = CollectiveLearner(num_agents=2)
+
+        model = learner.get_collective_model()
+
+        assert isinstance(model, dict)
+        # Para ConsensusLearning sem modelos, retorna vazio
+
+    def test_synchronize(self) -> None:
+        """Testa sincronização."""
+        learner = CollectiveLearner(num_agents=2)
+
+        # Adicionar alguns dados
+        exp = SharedExperience(agent_id="agent1", action="sync", outcome=0.7)
+        learner.learn_from_experience("agent1", exp)
+
+        result = learner.synchronize()
+
+        assert isinstance(result, dict)
+
+
+class TestMultiAgentTrainer:
+    """Testes adicionais para MultiAgentTrainer."""
+
+    def test_train_episode(self) -> None:
+        """Testa treinamento de episódio."""
+        trainer = MultiAgentTrainer(num_agents=2)
+
+        # Criar experiências
+        experiences = [
+            SharedExperience(agent_id="agent1", action="forward", outcome=1.0),
+            SharedExperience(agent_id="agent2", action="turn", outcome=0.8),
+        ]
+
+        # Treinar um episódio
+        metrics = trainer.train_episode(experiences)
+
+        assert isinstance(metrics, dict)
+        assert "episode" in metrics
+        assert metrics["episode"] == 1
+
+    def test_get_metrics(self) -> None:
+        """Testa obtenção de métricas."""
+        trainer = MultiAgentTrainer(num_agents=2)
+
+        metrics = trainer.get_metrics()
+
+        assert isinstance(metrics, dict)
+        assert "num_agents" in metrics
+        assert metrics["num_agents"] == 2
 
 
 # Pytest configuration
