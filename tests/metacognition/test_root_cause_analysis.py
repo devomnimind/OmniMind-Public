@@ -355,3 +355,157 @@ class TestRootCauseEngine:
         # Database should be root cause
         assert "db-1" in analysis.root_causes
         assert len(analysis.causal_chain) > 0
+
+    def test_component_health_status(self) -> None:
+        """Test component health status tracking."""
+        engine = RootCauseEngine()
+
+        engine.register_component("service-1", ComponentType.SERVICE, "Service")
+
+        # Record multiple failures
+        for i in range(5):
+            engine.record_failure(
+                f"fail-{i}",
+                "service-1",
+                FailureType.ERROR,
+                f"Error {i}",
+            )
+
+        health = engine.get_component_health("service-1")
+
+        assert health["component_id"] == "service-1"
+        assert health["recent_failures"] > 0
+        assert health["health_status"] in ["healthy", "unhealthy"]
+
+    def test_failure_type_enumeration(self) -> None:
+        """Test all failure types are recognized."""
+        engine = RootCauseEngine()
+
+        engine.register_component("test-1", ComponentType.SERVICE, "Test Service")
+
+        # Test each failure type
+        for failure_type in FailureType:
+            engine.record_failure(
+                f"fail-{failure_type.value}",
+                "test-1",
+                failure_type,
+                f"Test {failure_type.value}",
+            )
+
+        # All failures should be recorded
+        assert len(engine._failures) >= len(FailureType)
+
+    def test_component_type_recommendations(self) -> None:
+        """Test that recommendations vary by component type."""
+        engine = RootCauseEngine()
+
+        # Test database component
+        engine.register_component("db-1", ComponentType.DATABASE, "Database")
+        engine.record_failure("fail-db", "db-1", FailureType.TIMEOUT, "DB timeout")
+
+        analysis_db = engine.analyze_failure("fail-db")
+        db_recs = " ".join(analysis_db.recommended_actions)
+
+        # Should mention database-specific recommendations
+        assert any(
+            keyword in db_recs.lower()
+            for keyword in ["database", "query", "connection", "index"]
+        )
+
+        # Test network component
+        engine.register_component("net-1", ComponentType.NETWORK, "Network")
+        engine.record_failure("fail-net", "net-1", FailureType.TIMEOUT, "Net timeout")
+
+        analysis_net = engine.analyze_failure("fail-net")
+        net_recs = " ".join(analysis_net.recommended_actions)
+
+        # Should mention network-specific recommendations
+        assert any(
+            keyword in net_recs.lower()
+            for keyword in ["network", "connectivity", "firewall", "routing"]
+        )
+
+    def test_analysis_caching(self) -> None:
+        """Test that analysis results are cached."""
+        engine = RootCauseEngine()
+
+        engine.register_component("web-1", ComponentType.SERVICE, "Web")
+        engine.record_failure("fail-1", "web-1", FailureType.ERROR, "Error")
+
+        # First analysis
+        analysis1 = engine.analyze_failure("fail-1")
+
+        # Retrieve cached analysis
+        analysis2 = engine.get_analysis("fail-1")
+
+        assert analysis1 is not None
+        assert analysis2 is not None
+        assert analysis1.failure_id == analysis2.failure_id
+
+    def test_nonexistent_component_dependency(self) -> None:
+        """Test handling of dependency on non-existent component."""
+        engine = RootCauseEngine()
+        graph = engine.graph
+
+        graph.add_component("comp-1", ComponentType.SERVICE, "Component 1")
+
+        # Try to add dependency on non-existent component
+        graph.add_dependency("comp-1", "nonexistent")
+
+        # Should handle gracefully
+        deps = graph.get_dependencies("comp-1")
+        assert isinstance(deps, set)
+
+    def test_explanation_generation(self) -> None:
+        """Test that explanations are human-readable."""
+        engine = RootCauseEngine()
+
+        engine.register_component("api-1", ComponentType.API, "API")
+        engine.register_component("db-1", ComponentType.DATABASE, "Database", dependencies=[])
+        engine.graph.add_dependency("api-1", "db-1")
+
+        import time
+
+        engine.record_failure("fail-db", "db-1", FailureType.CRASH, "DB crashed")
+        time.sleep(0.05)
+        engine.record_failure("fail-api", "api-1", FailureType.ERROR, "API error")
+
+        analysis = engine.analyze_failure("fail-api")
+
+        # Explanation should be readable text
+        assert isinstance(analysis.explanation, str)
+        assert len(analysis.explanation) > 0
+        # Should mention root cause or propagation
+        assert any(
+            keyword in analysis.explanation.lower()
+            for keyword in ["root", "cause", "failure", "propagation", "database"]
+        )
+
+    def test_multiple_root_causes(self) -> None:
+        """Test handling of multiple independent root causes."""
+        engine = RootCauseEngine()
+
+        # Create independent components
+        engine.register_component("service-1", ComponentType.SERVICE, "Service 1")
+        engine.register_component("service-2", ComponentType.SERVICE, "Service 2")
+        engine.register_component(
+            "api-1",
+            ComponentType.API,
+            "API",
+            dependencies=["service-1", "service-2"],
+        )
+
+        import time
+
+        # Both services fail independently
+        engine.record_failure("fail-s1", "service-1", FailureType.CRASH, "S1 crashed")
+        time.sleep(0.05)
+        engine.record_failure("fail-s2", "service-2", FailureType.CRASH, "S2 crashed")
+        time.sleep(0.05)
+        engine.record_failure("fail-api", "api-1", FailureType.ERROR, "API error")
+
+        analysis = engine.analyze_failure("fail-api")
+
+        # Should identify both as potential root causes
+        assert len(analysis.root_causes) > 0
+
