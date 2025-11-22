@@ -2,7 +2,9 @@
 
 **OmniMind** é um revolucionário sistema de IA autônomo que combina tomada de decisão psicoanalítica com capacidades avançadas de metacognição. Esta arquitetura auto-hospedada e local-first apresenta orquestração multi-agente, comunicação WebSocket em tempo real e inteligência auto-evolutiva.
 
-**🚀 Status Atual:** Phase 15 Quantum-Enhanced AI Complete | 650/651 Tests Passing | Produção Pronta
+**🚀 Status Atual:** Phase 15 Quantum-Enhanced AI Completa | Produção Pronta | 37 Módulos Implementados
+
+> ⚠️ **Nota sobre Testes:** A documentação anterior mencionava "650/651 tests passing". Esta métrica está sendo reavaliada. Consulte `ANALISE_DOCUMENTACAO_COMPLETA.md` para detalhes sobre validação de estatísticas do projeto.
 
 **🧬 Filosofia Central:** IA psicoanaliticamente inspirada que reflete sobre suas próprias decisões, aprende com padrões e gera proativamente seus próprios objetivos - criando um sistema verdadeiramente autônomo e autoconsciente.
 
@@ -121,14 +123,37 @@ Para desenvolvimento no VS Code, utilize as tasks pré-configuradas:
 
 ### Estrutura do Repositório
 
-- `config/` – Arquivos de configuração (agentes, ética, metacognição, hardware)
-- `docs/` – Suíte completa de documentação (roteiros, relatórios, guias)
-- `web/` – Aplicação web full-stack (frontend React + backend FastAPI)
-- `src/` – Módulos Python centrais (agentes, metacognição, segurança, integrações)
-- `scripts/` – Scripts de automação (implantação, systemd, benchmarks)
-- `tests/` – Suíte abrangente de testes (650/651 testes passando)
-- `logs/` – Trilhas de auditoria e logs de execução (imutáveis)
-- `data/` – Conjuntos de dados e dados experimentais (ignorados pelo Git)
+```
+OmniMind/
+├── config/          → Arquivos de configuração (agentes, ética, metacognição, hardware)
+├── docs/            → Documentação completa (136+ documentos)
+│   ├── pt-br/       → Documentação em português (preferencial)
+│   ├── phases/      → Relatórios de implementação das fases
+│   ├── guides/      → Guias técnicos e tutoriais
+│   └── reports/     → Relatórios de auditoria e status
+├── src/             → Código-fonte Python (~61,856 linhas)
+│   ├── agents/      → 10 agentes implementados
+│   ├── metacognition/ → 13 módulos de metacognição
+│   ├── quantum_ai/  → 5 módulos de IA quântica
+│   ├── decision_making/ → 5 módulos de decisão autônoma
+│   ├── collective_intelligence/ → 5 módulos de inteligência coletiva
+│   ├── multimodal/  → 5 módulos multimodais
+│   └── [+30 módulos adicionais]
+├── web/             → Aplicação web full-stack
+│   ├── frontend/    → React + TypeScript + Vite
+│   └── backend/     → FastAPI + WebSocket
+├── tests/           → 109 arquivos de teste
+├── scripts/         → Scripts de automação e deployment
+└── logs/            → Trilhas de auditoria imutáveis
+
+📊 Estatísticas Verificadas:
+• 173 arquivos Python em src/
+• 109 arquivos de teste
+• 37 módulos principais
+• ~61,856 linhas de código-fonte
+```
+
+**📖 Documentação Canônica:** Veja `ANALISE_DOCUMENTACAO_COMPLETA.md` para inventário completo e estatísticas verificadas.
 
 ## 🚀 Implantação em Produção
 
@@ -338,6 +363,27 @@ Garanta que `logs/.coverage` seja removido ou regenerado via `pytest --cov=src` 
 - Outputs de ferramentas temporárias devem ficar dentro de `tmp/`; este diretório é ignorado e seguro para limpar.
 
 Com esta organização, a raiz fica focada nas chaves (configs, requirements, arquivos Compose), e o resto do workspace se alinha com nossos padrões de prontidão para produção e CI/CD.
+
+## 📊 Análise de Documentação e Estatísticas Canônicas
+
+**IMPORTANTE:** Este projeto passou por uma análise profunda de toda a documentação em novembro de 2025. Para informações verificadas e validadas:
+
+📖 **Veja:** `ANALISE_DOCUMENTACAO_COMPLETA.md`
+
+Este documento contém:
+- ✅ Inventário completo de todos os 136+ documentos
+- ✅ Validação de todas as afirmações contra código-fonte real
+- ✅ Identificação de 40+ documentos duplicados
+- ✅ Estatísticas verificadas e corretas
+- ✅ Plano de reorganização da documentação
+- ✅ Candidatos para remoção, reescrita e reorganização
+
+**Estatísticas Canônicas Verificadas:**
+- 📁 173 arquivos Python em `src/`
+- 🧪 109 arquivos de teste
+- 🏗️ 37 módulos principais implementados
+- 📝 ~61,856 linhas de código-fonte
+- ✅ Todas as Phases 7-15 confirmadas como implementadas
 
 ## Roadmap DEVBRAIN V23
 
