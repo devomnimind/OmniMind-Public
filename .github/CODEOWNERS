@@ -1,0 +1,26 @@
+# Code Owners for OmniMind
+# https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global owners (all files)
+* @fabs-devbrain
+
+# Core AI modules
+/src/agents/ @fabs-devbrain
+/src/memory/ @fabs-devbrain
+/src/metacognition/ @fabs-devbrain
+/src/consciousness/ @fabs-devbrain
+
+# Security and audit
+/src/security/ @fabs-devbrain
+/src/audit/ @fabs-devbrain
+
+# Web components
+/web/ @fabs-devbrain
+
+# CI/CD and configuration
+/.github/ @fabs-devbrain
+/scripts/ @fabs-devbrain
+
+# Documentation
+/docs/ @fabs-devbrain
+README.md @fabs-devbrain

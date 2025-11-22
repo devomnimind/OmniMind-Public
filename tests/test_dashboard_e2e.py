@@ -3,7 +3,6 @@ import importlib
 import json
 from pathlib import Path
 from typing import Any, Dict, Tuple
-import os
 
 import pytest
 from fastapi.testclient import TestClient

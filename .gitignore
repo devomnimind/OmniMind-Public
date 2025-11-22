@@ -122,3 +122,4 @@ config/dashboard_auth.json
 # ------------------------------------------------------------------
 mnt/
 /mnt/dev_brain_clean/lost+found
+*.pyc
