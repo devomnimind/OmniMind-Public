@@ -131,3 +131,5 @@ mnt/
 /mnt/dev_brain_clean/lost+found
 *.pyc
 .sonar/
+# Integrity baseline files (temporary test artifacts)
+data/integrity_baselines/baseline_tmp_*.json
