@@ -1,0 +1,40 @@
+﻿2025-11-22T04:42:18.6410908Z Current runner version: '2.329.0'
+2025-11-22T04:42:18.6446099Z ##[group]Runner Image Provisioner
+2025-11-22T04:42:18.6447295Z Hosted Compute Agent
+2025-11-22T04:42:18.6448144Z Version: 20251016.436
+2025-11-22T04:42:18.6449126Z Commit: 8ab8ac8bfd662a3739dab9fe09456aba92132568
+2025-11-22T04:42:18.6450309Z Build Date: 2025-10-15T20:44:12Z
+2025-11-22T04:42:18.6451239Z ##[endgroup]
+2025-11-22T04:42:18.6452443Z ##[group]Operating System
+2025-11-22T04:42:18.6453399Z Ubuntu
+2025-11-22T04:42:18.6454100Z 24.04.3
+2025-11-22T04:42:18.6454899Z LTS
+2025-11-22T04:42:18.6455618Z ##[endgroup]
+2025-11-22T04:42:18.6456476Z ##[group]Runner Image
+2025-11-22T04:42:18.6457354Z Image: ubuntu-24.04
+2025-11-22T04:42:18.6458314Z Version: 20251112.124.1
+2025-11-22T04:42:18.6460124Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251112.124/images/ubuntu/Ubuntu2404-Readme.md
+2025-11-22T04:42:18.6463318Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251112.124
+2025-11-22T04:42:18.6464989Z ##[endgroup]
+2025-11-22T04:42:18.6466885Z ##[group]GITHUB_TOKEN Permissions
+2025-11-22T04:42:18.6469424Z Contents: read
+2025-11-22T04:42:18.6470232Z Metadata: read
+2025-11-22T04:42:18.6471112Z Packages: read
+2025-11-22T04:42:18.6472214Z ##[endgroup]
+2025-11-22T04:42:18.6475128Z Secret source: Actions
+2025-11-22T04:42:18.6476370Z Prepare workflow directory
+2025-11-22T04:42:18.7156834Z Prepare all required actions
+2025-11-22T04:42:18.7296899Z Complete job name: Notification
+2025-11-22T04:42:18.8740044Z ##[group]Run if [ "failure" = "failure" ] || \
+2025-11-22T04:42:18.8741486Z [36;1mif [ "failure" = "failure" ] || \[0m
+2025-11-22T04:42:18.8742956Z [36;1m   [ "failure" = "failure" ]; then[0m
+2025-11-22T04:42:18.8744005Z [36;1m  echo "CI failed"[0m
+2025-11-22T04:42:18.8745021Z [36;1m  exit 1[0m
+2025-11-22T04:42:18.8745917Z [36;1melse[0m
+2025-11-22T04:42:18.8746752Z [36;1m  echo "CI passed"[0m
+2025-11-22T04:42:18.8747794Z [36;1mfi[0m
+2025-11-22T04:42:18.9421312Z shell: /usr/bin/bash -e {0}
+2025-11-22T04:42:18.9423353Z ##[endgroup]
+2025-11-22T04:42:18.9779371Z CI failed
+2025-11-22T04:42:18.9832799Z ##[error]Process completed with exit code 1.
+2025-11-22T04:42:18.9982501Z Cleaning up orphan processes

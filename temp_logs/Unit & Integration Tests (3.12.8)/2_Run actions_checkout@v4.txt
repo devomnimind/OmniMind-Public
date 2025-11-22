@@ -1,0 +1,71 @@
+﻿2025-11-22T04:41:19.0984298Z ##[group]Run actions/checkout@v4
+2025-11-22T04:41:19.0985567Z with:
+2025-11-22T04:41:19.0986319Z   repository: devomnimind/OmniMind
+2025-11-22T04:41:19.0987515Z   token: ***
+2025-11-22T04:41:19.0988243Z   ssh-strict: true
+2025-11-22T04:41:19.0988999Z   ssh-user: git
+2025-11-22T04:41:19.0989771Z   persist-credentials: true
+2025-11-22T04:41:19.0990849Z   clean: true
+2025-11-22T04:41:19.0991639Z   sparse-checkout-cone-mode: true
+2025-11-22T04:41:19.0992569Z   fetch-depth: 1
+2025-11-22T04:41:19.0993310Z   fetch-tags: false
+2025-11-22T04:41:19.0994075Z   show-progress: true
+2025-11-22T04:41:19.0994883Z   lfs: false
+2025-11-22T04:41:19.0995592Z   submodules: false
+2025-11-22T04:41:19.0996376Z   set-safe-directory: true
+2025-11-22T04:41:19.0997471Z ##[endgroup]
+2025-11-22T04:41:19.2152502Z Syncing repository: devomnimind/OmniMind
+2025-11-22T04:41:19.2157497Z ##[group]Getting Git version info
+2025-11-22T04:41:19.2159664Z Working directory is '/home/runner/work/OmniMind/OmniMind'
+2025-11-22T04:41:19.2163091Z [command]/usr/bin/git version
+2025-11-22T04:41:19.2242588Z git version 2.51.2
+2025-11-22T04:41:19.2276720Z ##[endgroup]
+2025-11-22T04:41:19.2289389Z Temporarily overriding HOME='/home/runner/work/_temp/9401c6a6-f557-493b-91d1-3e9f9b77c599' before making global git config changes
+2025-11-22T04:41:19.2295341Z Adding repository directory to the temporary git global config as a safe directory
+2025-11-22T04:41:19.2308703Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/OmniMind/OmniMind
+2025-11-22T04:41:19.2348115Z Deleting the contents of '/home/runner/work/OmniMind/OmniMind'
+2025-11-22T04:41:19.2353578Z ##[group]Initializing the repository
+2025-11-22T04:41:19.2358167Z [command]/usr/bin/git init /home/runner/work/OmniMind/OmniMind
+2025-11-22T04:41:19.2482281Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-11-22T04:41:19.2486136Z hint: is subject to change. To configure the initial branch name to use in all
+2025-11-22T04:41:19.2490903Z hint: of your new repositories, which will suppress this warning, call:
+2025-11-22T04:41:19.2493311Z hint:
+2025-11-22T04:41:19.2495028Z hint: 	git config --global init.defaultBranch <name>
+2025-11-22T04:41:19.2497225Z hint:
+2025-11-22T04:41:19.2499035Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-11-22T04:41:19.2502314Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-11-22T04:41:19.2504753Z hint:
+2025-11-22T04:41:19.2506008Z hint: 	git branch -m <name>
+2025-11-22T04:41:19.2507397Z hint:
+2025-11-22T04:41:19.2509285Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-11-22T04:41:19.2512641Z Initialized empty Git repository in /home/runner/work/OmniMind/OmniMind/.git/
+2025-11-22T04:41:19.2519155Z [command]/usr/bin/git remote add origin https://github.com/devomnimind/OmniMind
+2025-11-22T04:41:19.2548509Z ##[endgroup]
+2025-11-22T04:41:19.2551248Z ##[group]Disabling automatic garbage collection
+2025-11-22T04:41:19.2554015Z [command]/usr/bin/git config --local gc.auto 0
+2025-11-22T04:41:19.2586908Z ##[endgroup]
+2025-11-22T04:41:19.2591244Z ##[group]Setting up auth
+2025-11-22T04:41:19.2594370Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-11-22T04:41:19.2630117Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-11-22T04:41:19.2986418Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-11-22T04:41:19.3022277Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-11-22T04:41:19.3254249Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-11-22T04:41:19.3288572Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-11-22T04:41:19.3542588Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-11-22T04:41:19.3579476Z ##[endgroup]
+2025-11-22T04:41:19.3583432Z ##[group]Fetching the repository
+2025-11-22T04:41:19.3592462Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +411c77eb6d473282e6ad97d1846d93275cc42208:refs/remotes/origin/master
+2025-11-22T04:41:20.0171425Z From https://github.com/devomnimind/OmniMind
+2025-11-22T04:41:20.0172857Z  * [new ref]         411c77eb6d473282e6ad97d1846d93275cc42208 -> origin/master
+2025-11-22T04:41:20.0240519Z ##[endgroup]
+2025-11-22T04:41:20.0241377Z ##[group]Determining the checkout info
+2025-11-22T04:41:20.0242297Z ##[endgroup]
+2025-11-22T04:41:20.0248456Z [command]/usr/bin/git sparse-checkout disable
+2025-11-22T04:41:20.0322249Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-11-22T04:41:20.0377732Z ##[group]Checking out the ref
+2025-11-22T04:41:20.0382449Z [command]/usr/bin/git checkout --progress --force -B master refs/remotes/origin/master
+2025-11-22T04:41:20.1236767Z Reset branch 'master'
+2025-11-22T04:41:20.1250993Z branch 'master' set up to track 'origin/master'.
+2025-11-22T04:41:20.1253460Z ##[endgroup]
+2025-11-22T04:41:20.1329846Z [command]/usr/bin/git log -1 --format=%H
+2025-11-22T04:41:20.1365112Z 411c77eb6d473282e6ad97d1846d93275cc42208

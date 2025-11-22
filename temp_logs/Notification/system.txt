@@ -1,0 +1,5 @@
+2025-11-22T04:42:15.6720000Z Requested labels: ubuntu-latest
+2025-11-22T04:42:15.6720000Z Job defined at: devomnimind/OmniMind/.github/workflows/ci.yml@refs/heads/master
+2025-11-22T04:42:15.6720000Z Waiting for a runner to pick up this job...
+2025-11-22T04:42:15.6740000Z Job is waiting for a hosted runner to come online.
+2025-11-22T04:42:15.6750000Z Job is about to start running on the hosted runner: GitHub Actions 1000000111

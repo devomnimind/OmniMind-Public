@@ -191,7 +191,7 @@ fi
 # 6. Type checking (sempre para mudanças em código)
 if [[ "$VALIDATION_LEVEL" == "FULL" ]] || [[ "$VALIDATION_LEVEL" == "TESTS_ONLY" ]]; then
     log "Executando type checking (mypy) - modo lenient..."
-    MYPY_OUTPUT=$(mypy src tests --show-error-codes 2>&1 | grep -E "(error|note)" | head -20)
+    MYPY_OUTPUT=$(mypy src tests --config-file mypy.ini --show-error-codes 2>&1 | grep -E "(error|note)" | head -20)
     if echo "$MYPY_OUTPUT" | grep -q "error"; then
         warning "Erros de tipo detectados (modo lenient ativo):"
         echo "$MYPY_OUTPUT" | head -10

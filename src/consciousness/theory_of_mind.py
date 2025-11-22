@@ -186,7 +186,8 @@ class TheoryOfMind:
             return []
 
         # Get recent actions
-        actions = self._action_history[entity_id][-recent_actions:]
+        num_recent = recent_actions or 5  # Default to 5 if None
+        actions = self._action_history[entity_id][-num_recent:]
 
         # Analyze action patterns
         intents: List[Intent] = []

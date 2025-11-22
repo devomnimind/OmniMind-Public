@@ -1,0 +1,138 @@
+﻿2025-11-22T04:41:31.7480664Z ##[group]Run sudo apt-get update
+2025-11-22T04:41:31.7481046Z [36;1msudo apt-get update[0m
+2025-11-22T04:41:31.7481508Z [36;1msudo apt-get install -y libdbus-1-dev pkg-config cmake build-essential libffi-dev[0m
+2025-11-22T04:41:31.7519259Z shell: /usr/bin/bash -e {0}
+2025-11-22T04:41:31.7519499Z env:
+2025-11-22T04:41:31.7519747Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.8/x64
+2025-11-22T04:41:31.7520445Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.8/x64/lib/pkgconfig
+2025-11-22T04:41:31.7520837Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.8/x64
+2025-11-22T04:41:31.7521176Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.8/x64
+2025-11-22T04:41:31.7521505Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.8/x64
+2025-11-22T04:41:31.7522145Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.8/x64/lib
+2025-11-22T04:41:31.7522430Z ##[endgroup]
+2025-11-22T04:41:31.9553226Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2025-11-22T04:41:32.0107420Z Get:6 https://packages.microsoft.com/repos/azure-cli noble InRelease [3564 B]
+2025-11-22T04:41:32.0612373Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2025-11-22T04:41:32.0775395Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2025-11-22T04:41:32.0889477Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2025-11-22T04:41:32.1270600Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2025-11-22T04:41:32.1378850Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2025-11-22T04:41:33.1063412Z Get:8 https://packages.microsoft.com/repos/azure-cli noble/main amd64 Packages [1763 B]
+2025-11-22T04:41:33.1643807Z Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [54.5 kB]
+2025-11-22T04:41:33.1821508Z Get:10 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [72.7 kB]
+2025-11-22T04:41:33.1895653Z Get:11 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [11.2 kB]
+2025-11-22T04:41:33.2222908Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1620 kB]
+2025-11-22T04:41:33.2794170Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [303 kB]
+2025-11-22T04:41:33.2831453Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [175 kB]
+2025-11-22T04:41:33.3109185Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 c-n-f Metadata [15.7 kB]
+2025-11-22T04:41:33.3419899Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1500 kB]
+2025-11-22T04:41:33.3771853Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [304 kB]
+2025-11-22T04:41:33.3805402Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [377 kB]
+2025-11-22T04:41:33.4189475Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 c-n-f Metadata [31.4 kB]
+2025-11-22T04:41:33.4298867Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [2307 kB]
+2025-11-22T04:41:33.4704355Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [526 kB]
+2025-11-22T04:41:33.5638923Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]
+2025-11-22T04:41:33.5817207Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [5808 B]
+2025-11-22T04:41:33.5824355Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+2025-11-22T04:41:33.6232506Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7156 B]
+2025-11-22T04:41:33.6354215Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [11.0 kB]
+2025-11-22T04:41:33.6375909Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [212 B]
+2025-11-22T04:41:33.6816153Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]
+2025-11-22T04:41:33.6901582Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1317 kB]
+2025-11-22T04:41:33.7254798Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [216 kB]
+2025-11-22T04:41:33.7287962Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [21.6 kB]
+2025-11-22T04:41:33.7779535Z Get:32 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 c-n-f Metadata [9452 B]
+2025-11-22T04:41:33.7804172Z Get:33 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [909 kB]
+2025-11-22T04:41:33.8213728Z Get:34 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [205 kB]
+2025-11-22T04:41:33.8259489Z Get:35 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [52.2 kB]
+2025-11-22T04:41:33.9079685Z Get:36 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 c-n-f Metadata [19.4 kB]
+2025-11-22T04:41:33.9407490Z Get:37 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [2153 kB]
+2025-11-22T04:41:33.9841257Z Get:38 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [490 kB]
+2025-11-22T04:41:34.0312878Z Get:39 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Components [212 B]
+2025-11-22T04:41:34.0339334Z Get:40 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [5956 B]
+2025-11-22T04:41:34.0428270Z Get:41 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [208 B]
+2025-11-22T04:41:45.9446355Z Fetched 13.1 MB in 3s (4633 kB/s)
+2025-11-22T04:41:46.7532243Z Reading package lists...
+2025-11-22T04:41:46.7884438Z Reading package lists...
+2025-11-22T04:41:47.0017424Z Building dependency tree...
+2025-11-22T04:41:47.0025562Z Reading state information...
+2025-11-22T04:41:47.1966154Z pkg-config is already the newest version (1.8.1-2build1).
+2025-11-22T04:41:47.1971140Z libffi-dev is already the newest version (3.4.6-1build1).
+2025-11-22T04:41:47.1975105Z libffi-dev set to manually installed.
+2025-11-22T04:41:47.1981477Z The following additional packages will be installed:
+2025-11-22T04:41:47.1983051Z   cmake-data libjsoncpp25 librhash0
+2025-11-22T04:41:47.1984313Z Suggested packages:
+2025-11-22T04:41:47.1984720Z   cmake-doc cmake-format elpa-cmake-mode ninja-build
+2025-11-22T04:41:47.2508551Z The following NEW packages will be installed:
+2025-11-22T04:41:47.2520560Z   build-essential cmake cmake-data libdbus-1-dev libjsoncpp25 librhash0
+2025-11-22T04:41:47.2721339Z 0 upgraded, 6 newly installed, 0 to remove and 49 not upgraded.
+2025-11-22T04:41:47.2722564Z Need to get 13.8 MB of archives.
+2025-11-22T04:41:47.2724588Z After this operation, 50.1 MB of additional disk space will be used.
+2025-11-22T04:41:47.2725423Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2025-11-22T04:41:47.3126224Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 build-essential amd64 12.10ubuntu1 [4928 B]
+2025-11-22T04:41:47.3210323Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libjsoncpp25 amd64 1.9.5-6build1 [82.8 kB]
+2025-11-22T04:41:47.3403922Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 librhash0 amd64 1.4.3-3build1 [129 kB]
+2025-11-22T04:41:47.3537018Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 cmake-data all 3.28.3-1build7 [2155 kB]
+2025-11-22T04:41:47.3839535Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 cmake amd64 3.28.3-1build7 [11.2 MB]
+2025-11-22T04:41:47.4680087Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libdbus-1-dev amd64 1.14.10-4ubuntu4.1 [190 kB]
+2025-11-22T04:41:47.7503661Z Fetched 13.8 MB in 0s (65.7 MB/s)
+2025-11-22T04:41:47.8142943Z Selecting previously unselected package build-essential.
+2025-11-22T04:41:47.8987542Z (Reading database ... 
+2025-11-22T04:41:47.8990279Z (Reading database ... 5%
+2025-11-22T04:41:47.8991245Z (Reading database ... 10%
+2025-11-22T04:41:47.8991602Z (Reading database ... 15%
+2025-11-22T04:41:47.8991910Z (Reading database ... 20%
+2025-11-22T04:41:47.8992226Z (Reading database ... 25%
+2025-11-22T04:41:47.8992807Z (Reading database ... 30%
+2025-11-22T04:41:47.8993360Z (Reading database ... 35%
+2025-11-22T04:41:47.8993709Z (Reading database ... 40%
+2025-11-22T04:41:47.8994046Z (Reading database ... 45%
+2025-11-22T04:41:47.8994385Z (Reading database ... 50%
+2025-11-22T04:41:48.0144542Z (Reading database ... 55%
+2025-11-22T04:41:48.4626901Z (Reading database ... 60%
+2025-11-22T04:41:48.6405762Z (Reading database ... 65%
+2025-11-22T04:41:48.7427554Z (Reading database ... 70%
+2025-11-22T04:41:48.8637455Z (Reading database ... 75%
+2025-11-22T04:41:49.5054093Z (Reading database ... 80%
+2025-11-22T04:41:50.4140987Z (Reading database ... 85%
+2025-11-22T04:41:51.2002488Z (Reading database ... 90%
+2025-11-22T04:41:52.1808268Z (Reading database ... 95%
+2025-11-22T04:41:52.1809382Z (Reading database ... 100%
+2025-11-22T04:41:52.1810461Z (Reading database ... 216225 files and directories currently installed.)
+2025-11-22T04:41:52.1862740Z Preparing to unpack .../0-build-essential_12.10ubuntu1_amd64.deb ...
+2025-11-22T04:41:52.1895182Z Unpacking build-essential (12.10ubuntu1) ...
+2025-11-22T04:41:52.2192701Z Selecting previously unselected package libjsoncpp25:amd64.
+2025-11-22T04:41:52.2334828Z Preparing to unpack .../1-libjsoncpp25_1.9.5-6build1_amd64.deb ...
+2025-11-22T04:41:52.2365532Z Unpacking libjsoncpp25:amd64 (1.9.5-6build1) ...
+2025-11-22T04:41:52.2645902Z Selecting previously unselected package librhash0:amd64.
+2025-11-22T04:41:52.2784916Z Preparing to unpack .../2-librhash0_1.4.3-3build1_amd64.deb ...
+2025-11-22T04:41:52.2801979Z Unpacking librhash0:amd64 (1.4.3-3build1) ...
+2025-11-22T04:41:52.3150679Z Selecting previously unselected package cmake-data.
+2025-11-22T04:41:52.3289958Z Preparing to unpack .../3-cmake-data_3.28.3-1build7_all.deb ...
+2025-11-22T04:41:52.3420593Z Unpacking cmake-data (3.28.3-1build7) ...
+2025-11-22T04:41:53.0453065Z Selecting previously unselected package cmake.
+2025-11-22T04:41:53.0609669Z Preparing to unpack .../4-cmake_3.28.3-1build7_amd64.deb ...
+2025-11-22T04:41:53.0621743Z Unpacking cmake (3.28.3-1build7) ...
+2025-11-22T04:41:53.2718355Z Selecting previously unselected package libdbus-1-dev:amd64.
+2025-11-22T04:41:53.2862610Z Preparing to unpack .../5-libdbus-1-dev_1.14.10-4ubuntu4.1_amd64.deb ...
+2025-11-22T04:41:53.2877053Z Unpacking libdbus-1-dev:amd64 (1.14.10-4ubuntu4.1) ...
+2025-11-22T04:41:53.3639091Z Setting up libdbus-1-dev:amd64 (1.14.10-4ubuntu4.1) ...
+2025-11-22T04:41:53.5307704Z Setting up libjsoncpp25:amd64 (1.9.5-6build1) ...
+2025-11-22T04:41:53.5338342Z Setting up librhash0:amd64 (1.4.3-3build1) ...
+2025-11-22T04:41:53.5372433Z Setting up build-essential (12.10ubuntu1) ...
+2025-11-22T04:41:53.5406680Z Setting up cmake-data (3.28.3-1build7) ...
+2025-11-22T04:41:53.5484005Z Setting up cmake (3.28.3-1build7) ...
+2025-11-22T04:41:53.5529972Z Processing triggers for libc-bin (2.39-0ubuntu8.6) ...
+2025-11-22T04:41:53.6799900Z Processing triggers for man-db (2.12.0-4build2) ...
+2025-11-22T04:41:53.6945437Z Not building database; man-db/auto-update is not 'true'.
+2025-11-22T04:41:53.6973031Z Processing triggers for sgml-base (1.31) ...
+2025-11-22T04:41:54.8526798Z 
+2025-11-22T04:41:54.8528743Z Running kernel seems to be up-to-date.
+2025-11-22T04:41:54.8529345Z 
+2025-11-22T04:41:54.8531306Z No services need to be restarted.
+2025-11-22T04:41:54.8532581Z 
+2025-11-22T04:41:54.8532745Z No containers need to be restarted.
+2025-11-22T04:41:54.8533019Z 
+2025-11-22T04:41:54.8533200Z No user sessions are running outdated binaries.
+2025-11-22T04:41:54.8533496Z 
+2025-11-22T04:41:54.8533806Z No VM guests are running outdated hypervisor (qemu) binaries on this host.

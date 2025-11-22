@@ -1,0 +1,1168 @@
+﻿2025-11-22T04:41:55.8711325Z ##[group]Run python -m pip install --upgrade pip
+2025-11-22T04:41:55.8711732Z [36;1mpython -m pip install --upgrade pip[0m
+2025-11-22T04:41:55.8712026Z [36;1mpip install black flake8 mypy pylint[0m
+2025-11-22T04:41:55.8712314Z [36;1mpip install -r requirements.txt[0m
+2025-11-22T04:41:55.8746804Z shell: /usr/bin/bash -e {0}
+2025-11-22T04:41:55.8747032Z env:
+2025-11-22T04:41:55.8747268Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.8/x64
+2025-11-22T04:41:55.8747666Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.8/x64/lib/pkgconfig
+2025-11-22T04:41:55.8748054Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.8/x64
+2025-11-22T04:41:55.8748382Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.8/x64
+2025-11-22T04:41:55.8748710Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.8/x64
+2025-11-22T04:41:55.8749038Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.8/x64/lib
+2025-11-22T04:41:55.8749533Z ##[endgroup]
+2025-11-22T04:41:56.2610978Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.12.8/x64/lib/python3.12/site-packages (25.3)
+2025-11-22T04:41:56.9630467Z Collecting black
+2025-11-22T04:41:57.0219715Z   Downloading black-25.11.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (85 kB)
+2025-11-22T04:41:57.0754750Z Collecting flake8
+2025-11-22T04:41:57.0794938Z   Downloading flake8-7.3.0-py2.py3-none-any.whl.metadata (3.8 kB)
+2025-11-22T04:41:57.2464330Z Collecting mypy
+2025-11-22T04:41:57.2503200Z   Downloading mypy-1.18.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.2 kB)
+2025-11-22T04:41:57.3136524Z Collecting pylint
+2025-11-22T04:41:57.3179103Z   Downloading pylint-4.0.3-py3-none-any.whl.metadata (12 kB)
+2025-11-22T04:41:57.3434143Z Collecting click>=8.0.0 (from black)
+2025-11-22T04:41:57.3473937Z   Downloading click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
+2025-11-22T04:41:57.3602284Z Collecting mypy-extensions>=0.4.3 (from black)
+2025-11-22T04:41:57.3638940Z   Downloading mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
+2025-11-22T04:41:57.3830817Z Collecting packaging>=22.0 (from black)
+2025-11-22T04:41:57.3873973Z   Downloading packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+2025-11-22T04:41:57.4024740Z Collecting pathspec>=0.9.0 (from black)
+2025-11-22T04:41:57.4062155Z   Downloading pathspec-0.12.1-py3-none-any.whl.metadata (21 kB)
+2025-11-22T04:41:57.4302741Z Collecting platformdirs>=2 (from black)
+2025-11-22T04:41:57.4341257Z   Downloading platformdirs-4.5.0-py3-none-any.whl.metadata (12 kB)
+2025-11-22T04:41:57.4497946Z Collecting pytokens>=0.3.0 (from black)
+2025-11-22T04:41:57.4532736Z   Downloading pytokens-0.3.0-py3-none-any.whl.metadata (2.0 kB)
+2025-11-22T04:41:57.4675663Z Collecting mccabe<0.8.0,>=0.7.0 (from flake8)
+2025-11-22T04:41:57.4713627Z   Downloading mccabe-0.7.0-py2.py3-none-any.whl.metadata (5.0 kB)
+2025-11-22T04:41:57.4871766Z Collecting pycodestyle<2.15.0,>=2.14.0 (from flake8)
+2025-11-22T04:41:57.4908423Z   Downloading pycodestyle-2.14.0-py2.py3-none-any.whl.metadata (4.5 kB)
+2025-11-22T04:41:57.5065768Z Collecting pyflakes<3.5.0,>=3.4.0 (from flake8)
+2025-11-22T04:41:57.5102141Z   Downloading pyflakes-3.4.0-py2.py3-none-any.whl.metadata (3.5 kB)
+2025-11-22T04:41:57.5340831Z Collecting typing_extensions>=4.6.0 (from mypy)
+2025-11-22T04:41:57.5378265Z   Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+2025-11-22T04:41:57.5854279Z Collecting astroid<=4.1.dev0,>=4.0.2 (from pylint)
+2025-11-22T04:41:57.5892013Z   Downloading astroid-4.0.2-py3-none-any.whl.metadata (4.4 kB)
+2025-11-22T04:41:57.6081979Z Collecting dill>=0.3.6 (from pylint)
+2025-11-22T04:41:57.6119424Z   Downloading dill-0.4.0-py3-none-any.whl.metadata (10 kB)
+2025-11-22T04:41:57.6583571Z Collecting isort!=5.13,<8,>=5 (from pylint)
+2025-11-22T04:41:57.6627597Z   Downloading isort-7.0.0-py3-none-any.whl.metadata (11 kB)
+2025-11-22T04:41:57.6930664Z Collecting tomlkit>=0.10.1 (from pylint)
+2025-11-22T04:41:57.6968341Z   Downloading tomlkit-0.13.3-py3-none-any.whl.metadata (2.8 kB)
+2025-11-22T04:41:57.7122963Z Downloading black-25.11.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.7 MB)
+2025-11-22T04:41:57.7298879Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 118.5 MB/s  0:00:00
+2025-11-22T04:41:57.7339104Z Downloading flake8-7.3.0-py2.py3-none-any.whl (57 kB)
+2025-11-22T04:41:57.7401411Z Downloading mccabe-0.7.0-py2.py3-none-any.whl (7.3 kB)
+2025-11-22T04:41:57.7460371Z Downloading pycodestyle-2.14.0-py2.py3-none-any.whl (31 kB)
+2025-11-22T04:41:57.7521321Z Downloading pyflakes-3.4.0-py2.py3-none-any.whl (63 kB)
+2025-11-22T04:41:57.7597894Z Downloading mypy-1.18.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (13.3 MB)
+2025-11-22T04:41:57.8294399Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.3/13.3 MB 196.2 MB/s  0:00:00
+2025-11-22T04:41:57.8333097Z Downloading pylint-4.0.3-py3-none-any.whl (536 kB)
+2025-11-22T04:41:57.8422679Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 64.1 MB/s  0:00:00
+2025-11-22T04:41:57.8460702Z Downloading astroid-4.0.2-py3-none-any.whl (276 kB)
+2025-11-22T04:41:57.8539125Z Downloading isort-7.0.0-py3-none-any.whl (94 kB)
+2025-11-22T04:41:57.8602621Z Downloading click-8.3.1-py3-none-any.whl (108 kB)
+2025-11-22T04:41:57.8665632Z Downloading dill-0.4.0-py3-none-any.whl (119 kB)
+2025-11-22T04:41:57.8729442Z Downloading mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+2025-11-22T04:41:57.8792233Z Downloading packaging-25.0-py3-none-any.whl (66 kB)
+2025-11-22T04:41:57.8853703Z Downloading pathspec-0.12.1-py3-none-any.whl (31 kB)
+2025-11-22T04:41:57.8913471Z Downloading platformdirs-4.5.0-py3-none-any.whl (18 kB)
+2025-11-22T04:41:57.8974312Z Downloading pytokens-0.3.0-py3-none-any.whl (12 kB)
+2025-11-22T04:41:57.9042004Z Downloading tomlkit-0.13.3-py3-none-any.whl (38 kB)
+2025-11-22T04:41:57.9111594Z Downloading typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+2025-11-22T04:41:57.9874625Z Installing collected packages: typing_extensions, tomlkit, pytokens, pyflakes, pycodestyle, platformdirs, pathspec, packaging, mypy-extensions, mccabe, isort, dill, click, astroid, pylint, mypy, flake8, black
+2025-11-22T04:42:00.7197367Z 
+2025-11-22T04:42:00.7224060Z Successfully installed astroid-4.0.2 black-25.11.0 click-8.3.1 dill-0.4.0 flake8-7.3.0 isort-7.0.0 mccabe-0.7.0 mypy-1.18.2 mypy-extensions-1.1.0 packaging-25.0 pathspec-0.12.1 platformdirs-4.5.0 pycodestyle-2.14.0 pyflakes-3.4.0 pylint-4.0.3 pytokens-0.3.0 tomlkit-0.13.3 typing_extensions-4.15.0
+2025-11-22T04:42:01.1682544Z Processing ./third_party/omniparser
+2025-11-22T04:42:01.1699122Z   Installing build dependencies: started
+2025-11-22T04:42:02.0391687Z   Installing build dependencies: finished with status 'done'
+2025-11-22T04:42:02.0396939Z   Getting requirements to build wheel: started
+2025-11-22T04:42:02.5427472Z   Getting requirements to build wheel: finished with status 'done'
+2025-11-22T04:42:02.5437491Z   Preparing metadata (pyproject.toml): started
+2025-11-22T04:42:02.7434148Z   Preparing metadata (pyproject.toml): finished with status 'done'
+2025-11-22T04:42:02.8550956Z Collecting pytest>=9.0.0 (from -r requirements.txt (line 5))
+2025-11-22T04:42:02.9104444Z   Downloading pytest-9.0.1-py3-none-any.whl.metadata (7.6 kB)
+2025-11-22T04:42:02.9306810Z Collecting pytest-cov>=7.0.0 (from -r requirements.txt (line 6))
+2025-11-22T04:42:02.9350016Z   Downloading pytest_cov-7.0.0-py3-none-any.whl.metadata (31 kB)
+2025-11-22T04:42:02.9676156Z Collecting pytest-asyncio>=1.3.0 (from -r requirements.txt (line 7))
+2025-11-22T04:42:02.9718262Z   Downloading pytest_asyncio-1.3.0-py3-none-any.whl.metadata (4.1 kB)
+2025-11-22T04:42:02.9774649Z Requirement already satisfied: pylint>=3.0.0 in /opt/hostedtoolcache/Python/3.12.8/x64/lib/python3.12/site-packages (from -r requirements.txt (line 8)) (4.0.3)
+2025-11-22T04:42:02.9781400Z Requirement already satisfied: mypy>=1.0.0 in /opt/hostedtoolcache/Python/3.12.8/x64/lib/python3.12/site-packages (from -r requirements.txt (line 9)) (1.18.2)
+2025-11-22T04:42:02.9785589Z Requirement already satisfied: black>=24.0.0 in /opt/hostedtoolcache/Python/3.12.8/x64/lib/python3.12/site-packages (from -r requirements.txt (line 10)) (25.11.0)
+2025-11-22T04:42:03.0725138Z Collecting langchain>=0.1.20 (from -r requirements.txt (line 13))
+2025-11-22T04:42:03.0763121Z   Downloading langchain-1.0.8-py3-none-any.whl.metadata (4.9 kB)
+2025-11-22T04:42:03.1360609Z Collecting langgraph>=0.0.30 (from -r requirements.txt (line 14))
+2025-11-22T04:42:03.1401286Z   Downloading langgraph-1.0.3-py3-none-any.whl.metadata (7.8 kB)
+2025-11-22T04:42:03.1703667Z Collecting langchain-community>=0.0.45 (from -r requirements.txt (line 15))
+2025-11-22T04:42:03.1744362Z   Downloading langchain_community-0.4.1-py3-none-any.whl.metadata (3.0 kB)
+2025-11-22T04:42:03.1940471Z Collecting langchain-ollama>=0.0.1 (from -r requirements.txt (line 16))
+2025-11-22T04:42:03.1981408Z   Downloading langchain_ollama-1.0.0-py3-none-any.whl.metadata (2.1 kB)
+2025-11-22T04:42:03.2218176Z Collecting llama-cpp-python>=0.2.80 (from -r requirements.txt (line 19))
+2025-11-22T04:42:03.2273110Z   Downloading llama_cpp_python-0.3.16.tar.gz (50.7 MB)
+2025-11-22T04:42:03.5275554Z      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 50.7/50.7 MB 174.3 MB/s  0:00:00
+2025-11-22T04:42:04.6706090Z   Installing build dependencies: started
+2025-11-22T04:42:05.7043093Z   Installing build dependencies: finished with status 'done'
+2025-11-22T04:42:05.7048862Z   Getting requirements to build wheel: started
+2025-11-22T04:42:06.4593148Z   Getting requirements to build wheel: finished with status 'done'
+2025-11-22T04:42:06.4602510Z   Preparing metadata (pyproject.toml): started
+2025-11-22T04:42:06.6982119Z   Preparing metadata (pyproject.toml): finished with status 'done'
+2025-11-22T04:42:06.7497795Z Collecting torch>=2.2.0 (from -r requirements.txt (line 20))
+2025-11-22T04:42:06.7537776Z   Downloading torch-2.9.1-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (30 kB)
+2025-11-22T04:42:06.8041881Z Collecting transformers>=4.37.0 (from -r requirements.txt (line 21))
+2025-11-22T04:42:06.8079422Z   Downloading transformers-4.57.1-py3-none-any.whl.metadata (43 kB)
+2025-11-22T04:42:07.0248536Z Collecting bitsandbytes>=0.43.0 (from -r requirements.txt (line 22))
+2025-11-22T04:42:07.0283512Z   Downloading bitsandbytes-0.48.2-py3-none-manylinux_2_24_x86_64.whl.metadata (10 kB)
+2025-11-22T04:42:07.0468892Z Collecting peft>=0.7.0 (from -r requirements.txt (line 23))
+2025-11-22T04:42:07.0506835Z   Downloading peft-0.18.0-py3-none-any.whl.metadata (14 kB)
+2025-11-22T04:42:07.0791929Z Collecting trl>=0.7.10 (from -r requirements.txt (line 24))
+2025-11-22T04:42:07.0831725Z   Downloading trl-0.25.1-py3-none-any.whl.metadata (11 kB)
+2025-11-22T04:42:07.1198778Z Collecting datasets>=2.16.0 (from -r requirements.txt (line 25))
+2025-11-22T04:42:07.1276029Z   Downloading datasets-4.4.1-py3-none-any.whl.metadata (19 kB)
+2025-11-22T04:42:07.1809218Z Collecting accelerate>=0.27.0 (from -r requirements.txt (line 26))
+2025-11-22T04:42:07.1846959Z   Downloading accelerate-1.12.0-py3-none-any.whl.metadata (19 kB)
+2025-11-22T04:42:07.2138947Z Collecting tensorboard>=2.15.0 (from -r requirements.txt (line 27))
+2025-11-22T04:42:07.2175695Z   Downloading tensorboard-2.20.0-py3-none-any.whl.metadata (1.8 kB)
+2025-11-22T04:42:07.2546636Z Collecting qdrant-client<2.0.0,>=1.16.0 (from -r requirements.txt (line 30))
+2025-11-22T04:42:07.2590336Z   Downloading qdrant_client-1.16.0-py3-none-any.whl.metadata (11 kB)
+2025-11-22T04:42:07.3840614Z Collecting pydantic>=2.5.0 (from -r requirements.txt (line 33))
+2025-11-22T04:42:07.3884934Z   Downloading pydantic-2.12.4-py3-none-any.whl.metadata (89 kB)
+2025-11-22T04:42:07.4105394Z Collecting python-dotenv>=1.0.0 (from -r requirements.txt (line 34))
+2025-11-22T04:42:07.4143554Z   Downloading python_dotenv-1.2.1-py3-none-any.whl.metadata (25 kB)
+2025-11-22T04:42:07.4574024Z Collecting rich>=13.7.0 (from -r requirements.txt (line 37))
+2025-11-22T04:42:07.4611586Z   Downloading rich-14.2.0-py3-none-any.whl.metadata (18 kB)
+2025-11-22T04:42:07.5368321Z Collecting psutil>=5.9.6 (from -r requirements.txt (line 38))
+2025-11-22T04:42:07.5408999Z   Downloading psutil-7.1.3-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl.metadata (23 kB)
+2025-11-22T04:42:07.5878238Z Collecting PyYAML>=6.0.1 (from -r requirements.txt (line 39))
+2025-11-22T04:42:07.5918811Z   Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2025-11-22T04:42:07.6454919Z Collecting requests>=2.31.0 (from -r requirements.txt (line 40))
+2025-11-22T04:42:07.6499367Z   Downloading requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+2025-11-22T04:42:07.6648354Z Collecting dbus-python>=1.3.0 (from -r requirements.txt (line 43))
+2025-11-22T04:42:07.6709184Z   Downloading dbus-python-1.4.0.tar.gz (232 kB)
+2025-11-22T04:42:07.7242186Z   Installing build dependencies: started
+2025-11-22T04:42:08.9016451Z   Installing build dependencies: finished with status 'done'
+2025-11-22T04:42:08.9022101Z   Getting requirements to build wheel: started
+2025-11-22T04:42:09.0780357Z   Getting requirements to build wheel: finished with status 'done'
+2025-11-22T04:42:09.0788600Z   Preparing metadata (pyproject.toml): started
+2025-11-22T04:42:13.6061839Z   Preparing metadata (pyproject.toml): finished with status 'error'
+2025-11-22T04:42:13.6413937Z   error: subprocess-exited-with-error
+2025-11-22T04:42:13.6414719Z   
+2025-11-22T04:42:13.6421596Z   × Preparing metadata (pyproject.toml) did not run successfully.
+2025-11-22T04:42:13.6422774Z   │ exit code: 1
+2025-11-22T04:42:13.6423633Z   ╰─> [1007 lines of output]
+2025-11-22T04:42:13.6426468Z       + meson setup /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i -Dbuildtype=release -Db_ndebug=if-release -Db_vscrt=md --native-file=/tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-python-native-file.ini
+2025-11-22T04:42:13.6431850Z       The Meson build system
+2025-11-22T04:42:13.6432742Z       Version: 1.9.1
+2025-11-22T04:42:13.6436650Z       Source dir: /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e
+2025-11-22T04:42:13.6437736Z       Build dir: /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i
+2025-11-22T04:42:13.6438531Z       Build type: native build
+2025-11-22T04:42:13.6438927Z       Project name: dbus-python
+2025-11-22T04:42:13.6439330Z       Project version: 1.4.0
+2025-11-22T04:42:13.6439928Z       C compiler for the host machine: cc (gcc 13.3.0 "cc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0")
+2025-11-22T04:42:13.6464485Z       C linker for the host machine: cc ld.bfd 2.42
+2025-11-22T04:42:13.6464994Z       Host machine cpu family: x86_64
+2025-11-22T04:42:13.6465421Z       Host machine cpu: x86_64
+2025-11-22T04:42:13.6465875Z       Compiler for C supports arguments -fno-common: YES
+2025-11-22T04:42:13.6466592Z       Compiler for C supports arguments -Wno-missing-field-initializers: YES
+2025-11-22T04:42:13.6467430Z       Compiler for C supports arguments -Wno-declaration-after-statement: YES
+2025-11-22T04:42:13.6468110Z       Compiler for C supports arguments -Wno-inline: YES
+2025-11-22T04:42:13.6468730Z       Compiler for C supports arguments -Wno-redundant-decls: YES
+2025-11-22T04:42:13.6469378Z       Compiler for C supports arguments -Wno-switch-default: YES
+2025-11-22T04:42:13.6470021Z       Compiler for C supports arguments -Wno-write-strings: YES
+2025-11-22T04:42:13.6470937Z       Compiler for C supports arguments -Wcast-align: YES
+2025-11-22T04:42:13.6471552Z       Compiler for C supports arguments -Wdouble-promotion: YES
+2025-11-22T04:42:13.6472209Z       Compiler for C supports arguments -Wduplicated-cond: YES
+2025-11-22T04:42:13.6472822Z       Compiler for C supports arguments -Wfloat-equal: YES
+2025-11-22T04:42:13.6473455Z       Compiler for C supports arguments -Wformat-nonliteral: YES
+2025-11-22T04:42:13.6474109Z       Compiler for C supports arguments -Wformat-security: YES
+2025-11-22T04:42:13.6475184Z       Compiler for C supports arguments -Wformat=2: YES
+2025-11-22T04:42:13.6475765Z       Compiler for C supports arguments -Winit-self: YES
+2025-11-22T04:42:13.6476333Z       Compiler for C supports arguments -Wlogical-op: YES
+2025-11-22T04:42:13.6476987Z       Compiler for C supports arguments -Wmissing-declarations: YES
+2025-11-22T04:42:13.6477634Z       Compiler for C supports arguments -Wmissing-format-attribute: YES
+2025-11-22T04:42:13.6478276Z       Compiler for C supports arguments -Wmissing-include-dirs: YES
+2025-11-22T04:42:13.6478879Z       Compiler for C supports arguments -Wmissing-noreturn: YES
+2025-11-22T04:42:13.6479540Z       Compiler for C supports arguments -Wnull-dereference: YES
+2025-11-22T04:42:13.6488172Z       Compiler for C supports arguments -Wpacked: YES
+2025-11-22T04:42:13.6488853Z       Compiler for C supports arguments -Wpointer-arith: YES
+2025-11-22T04:42:13.6489764Z       Compiler for C supports arguments -Wshadow: YES
+2025-11-22T04:42:13.6490651Z       Compiler for C supports arguments -Wswitch-enum: YES
+2025-11-22T04:42:13.6491255Z       Compiler for C supports arguments -Wundef: YES
+2025-11-22T04:42:13.6491908Z       Compiler for C supports arguments -Wunused-but-set-variable: YES
+2025-11-22T04:42:13.6492619Z       Compiler for C supports arguments -Wjump-misses-init: YES
+2025-11-22T04:42:13.6493314Z       Compiler for C supports arguments -Wmissing-prototypes: YES
+2025-11-22T04:42:13.6493939Z       Compiler for C supports arguments -Wnested-externs: YES
+2025-11-22T04:42:13.6494601Z       Compiler for C supports arguments -Wold-style-definition: YES
+2025-11-22T04:42:13.6495316Z       Compiler for C supports arguments -Wpointer-sign: YES
+2025-11-22T04:42:13.6495974Z       Compiler for C supports arguments -Wstrict-prototypes: YES
+2025-11-22T04:42:13.6496625Z       Configuring _dbus-python-config.h using configuration
+2025-11-22T04:42:13.6497108Z       
+2025-11-22T04:42:13.6497438Z       Executing subproject dbus-gmain
+2025-11-22T04:42:13.6497839Z       
+2025-11-22T04:42:13.6498157Z       dbus-gmain| Project name: dbus-gmain
+2025-11-22T04:42:13.6498627Z       dbus-gmain| Project version: undefined
+2025-11-22T04:42:13.6499362Z       dbus-gmain| C compiler for the host machine: cc (gcc 13.3.0 "cc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0")
+2025-11-22T04:42:13.6500321Z       dbus-gmain| C linker for the host machine: cc ld.bfd 2.42
+2025-11-22T04:42:13.6501003Z       dbus-gmain| Compiler for C supports arguments -fno-common: YES (cached)
+2025-11-22T04:42:13.6501872Z       dbus-gmain| Compiler for C supports arguments -Wno-missing-field-initializers: YES (cached)
+2025-11-22T04:42:13.6502714Z       dbus-gmain| Compiler for C supports arguments -Wcast-align: YES (cached)
+2025-11-22T04:42:13.6503395Z       dbus-gmain| Compiler for C supports arguments -Wdouble-promotion: YES (cached)
+2025-11-22T04:42:13.6504084Z       dbus-gmain| Compiler for C supports arguments -Wduplicated-branches: YES
+2025-11-22T04:42:13.6504835Z       dbus-gmain| Compiler for C supports arguments -Wduplicated-cond: YES (cached)
+2025-11-22T04:42:13.6505702Z       dbus-gmain| Compiler for C supports arguments -Wfloat-equal: YES (cached)
+2025-11-22T04:42:13.6506539Z       dbus-gmain| Compiler for C supports arguments -Wformat-nonliteral: YES (cached)
+2025-11-22T04:42:13.6507475Z       dbus-gmain| Compiler for C supports arguments -Wformat-security: YES (cached)
+2025-11-22T04:42:13.6508289Z       dbus-gmain| Compiler for C supports arguments -Wformat=2: YES (cached)
+2025-11-22T04:42:13.6509062Z       dbus-gmain| Compiler for C supports arguments -Winit-self: YES (cached)
+2025-11-22T04:42:13.6509845Z       dbus-gmain| Compiler for C supports arguments -Wlogical-op: YES (cached)
+2025-11-22T04:42:13.6514826Z       dbus-gmain| Compiler for C supports arguments -Wmissing-declarations: YES (cached)
+2025-11-22T04:42:13.6515739Z       dbus-gmain| Compiler for C supports arguments -Wmissing-format-attribute: YES (cached)
+2025-11-22T04:42:13.6516618Z       dbus-gmain| Compiler for C supports arguments -Wmissing-include-dirs: YES (cached)
+2025-11-22T04:42:13.6517579Z       dbus-gmain| Compiler for C supports arguments -Wmissing-noreturn: YES (cached)
+2025-11-22T04:42:13.6518382Z       dbus-gmain| Compiler for C supports arguments -Wnull-dereference: YES (cached)
+2025-11-22T04:42:13.6519196Z       dbus-gmain| Compiler for C supports arguments -Wpacked: YES (cached)
+2025-11-22T04:42:13.6519934Z       dbus-gmain| Compiler for C supports arguments -Wpointer-arith: YES (cached)
+2025-11-22T04:42:13.6520838Z       dbus-gmain| Compiler for C supports arguments -Wredundant-decls: YES
+2025-11-22T04:42:13.6522069Z       dbus-gmain| Compiler for C supports arguments -Wshadow: YES (cached)
+2025-11-22T04:42:13.6525475Z       dbus-gmain| Compiler for C supports arguments -Wswitch-default: YES
+2025-11-22T04:42:13.6526269Z       dbus-gmain| Compiler for C supports arguments -Wswitch-enum: YES (cached)
+2025-11-22T04:42:13.6527045Z       dbus-gmain| Compiler for C supports arguments -Wundef: YES (cached)
+2025-11-22T04:42:13.6528190Z       dbus-gmain| Compiler for C supports arguments -Wunused-but-set-variable: YES (cached)
+2025-11-22T04:42:13.6529050Z       dbus-gmain| Compiler for C supports arguments -Wwrite-strings: YES
+2025-11-22T04:42:13.6529834Z       dbus-gmain| Compiler for C supports arguments -Wdeclaration-after-statement: YES
+2025-11-22T04:42:13.6533100Z       dbus-gmain| Compiler for C supports arguments -Wjump-misses-init: YES (cached)
+2025-11-22T04:42:13.6533999Z       dbus-gmain| Compiler for C supports arguments -Wmissing-prototypes: YES (cached)
+2025-11-22T04:42:13.6534840Z       dbus-gmain| Compiler for C supports arguments -Wnested-externs: YES (cached)
+2025-11-22T04:42:13.6535694Z       dbus-gmain| Compiler for C supports arguments -Wold-style-definition: YES (cached)
+2025-11-22T04:42:13.6536534Z       dbus-gmain| Compiler for C supports arguments -Wpointer-sign: YES (cached)
+2025-11-22T04:42:13.6537362Z       dbus-gmain| Compiler for C supports arguments -Wstrict-prototypes: YES (cached)
+2025-11-22T04:42:13.6538129Z       dbus-gmain| Found pkg-config: YES (/usr/bin/pkg-config) 1.8.1
+2025-11-22T04:42:13.6538784Z       dbus-gmain| Run-time dependency dbus-1 found: YES 1.14.10
+2025-11-22T04:42:13.6539390Z       dbus-gmain| Found CMake: /usr/local/bin/cmake (3.31.6)
+2025-11-22T04:42:13.6540291Z       dbus-gmain| Run-time dependency glib-2.0 found: NO (tried pkgconfig and cmake)
+2025-11-22T04:42:13.6540890Z       
+2025-11-22T04:42:13.6542375Z       ../subprojects/dbus-gmain/meson.build:108:11: ERROR: Dependency "glib-2.0" not found, tried pkgconfig and cmake
+2025-11-22T04:42:13.6543286Z       
+2025-11-22T04:42:13.6544156Z       A full log can be found at /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-logs/meson-log.txt
+2025-11-22T04:42:13.6546600Z ##[group]==== CI platform detected, click here for meson-log.txt contents. ====
+2025-11-22T04:42:13.6547269Z       Build started at 2025-11-22T04:42:10.343695
+2025-11-22T04:42:13.6547882Z       Main binary: /opt/hostedtoolcache/Python/3.12.8/x64/bin/python
+2025-11-22T04:42:13.6549413Z       Build Options: -Dbuildtype=release -Db_ndebug=if-release -Db_vscrt=md --native-file=/tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-python-native-file.ini
+2025-11-22T04:42:13.6550999Z       Python system: Linux
+2025-11-22T04:42:13.6551379Z       The Meson build system
+2025-11-22T04:42:13.6551736Z       Version: 1.9.1
+2025-11-22T04:42:13.6552307Z       Source dir: /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e
+2025-11-22T04:42:13.6553299Z       Build dir: /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i
+2025-11-22T04:42:13.6554073Z       Build type: native build
+2025-11-22T04:42:13.6554462Z       Project name: dbus-python
+2025-11-22T04:42:13.6554859Z       Project version: 1.4.0
+2025-11-22T04:42:13.6555213Z       -----------
+2025-11-22T04:42:13.6555585Z       Detecting compiler via: `cc --version` -> 0
+2025-11-22T04:42:13.6556019Z       stdout:
+2025-11-22T04:42:13.6556656Z       cc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+2025-11-22T04:42:13.6557157Z       Copyright (C) 2023 Free Software Foundation, Inc.
+2025-11-22T04:42:13.6557799Z       This is free software; see the source for copying conditions.  There is NO
+2025-11-22T04:42:13.6558605Z       warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+2025-11-22T04:42:13.6559198Z       -----------
+2025-11-22T04:42:13.6559534Z       Running command: -cpp -x c -E -dM -
+2025-11-22T04:42:13.6559945Z       -----
+2025-11-22T04:42:13.6560619Z       -----------
+2025-11-22T04:42:13.6561016Z       Detecting linker via: `cc -Wl,--version` -> 0
+2025-11-22T04:42:13.6561469Z       stdout:
+2025-11-22T04:42:13.6561798Z       GNU ld (GNU Binutils for Ubuntu) 2.42
+2025-11-22T04:42:13.6562287Z       Copyright (C) 2024 Free Software Foundation, Inc.
+2025-11-22T04:42:13.6562937Z       This program is free software; you may redistribute it under the terms of
+2025-11-22T04:42:13.6563934Z       the GNU General Public License version 3 or (at your option) a later version.
+2025-11-22T04:42:13.6564595Z       This program has absolutely no warranty.
+2025-11-22T04:42:13.6565024Z       -----------
+2025-11-22T04:42:13.6565306Z       stderr:
+2025-11-22T04:42:13.6565605Z       collect2 version 13.3.0
+2025-11-22T04:42:13.6571708Z       /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/cc3hZmML.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. --version -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+2025-11-22T04:42:13.6577963Z       -----------
+2025-11-22T04:42:13.6578300Z       Sanity testing C compiler: cc
+2025-11-22T04:42:13.6578720Z       Is cross compiler: False.
+2025-11-22T04:42:13.6579404Z       Sanity check compiler command line: cc sanitycheckc.c -o sanitycheckc.exe -D_FILE_OFFSET_BITS=64
+2025-11-22T04:42:13.6580529Z       Sanity check compile stdout:
+2025-11-22T04:42:13.6580923Z       
+2025-11-22T04:42:13.6581184Z       -----
+2025-11-22T04:42:13.6581507Z       Sanity check compile stderr:
+2025-11-22T04:42:13.6581872Z       
+2025-11-22T04:42:13.6582129Z       -----
+2025-11-22T04:42:13.6583089Z       Running test binary command:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/sanitycheckc.exe
+2025-11-22T04:42:13.6584155Z       -----------
+2025-11-22T04:42:13.6585069Z       Sanity check: `/tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/sanitycheckc.exe` -> 0
+2025-11-22T04:42:13.6586324Z       C compiler for the host machine: cc (gcc 13.3.0 "cc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0")
+2025-11-22T04:42:13.6587010Z       C linker for the host machine: cc ld.bfd 2.42
+2025-11-22T04:42:13.6587446Z       -----------
+2025-11-22T04:42:13.6587825Z       Detecting archiver via: `gcc-ar --version` -> 0
+2025-11-22T04:42:13.6588276Z       stdout:
+2025-11-22T04:42:13.6588604Z       GNU ar (GNU Binutils for Ubuntu) 2.42
+2025-11-22T04:42:13.6589085Z       Copyright (C) 2024 Free Software Foundation, Inc.
+2025-11-22T04:42:13.6589756Z       This program is free software; you may redistribute it under the terms of
+2025-11-22T04:42:13.6590958Z       the GNU General Public License version 3 or (at your option) any later version.
+2025-11-22T04:42:13.6591636Z       This program has absolutely no warranty.
+2025-11-22T04:42:13.6592062Z       -----------
+2025-11-22T04:42:13.6592353Z       -----------
+2025-11-22T04:42:13.6592705Z       Detecting compiler via: `cc --version` -> 0
+2025-11-22T04:42:13.6593137Z       stdout:
+2025-11-22T04:42:13.6593466Z       cc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+2025-11-22T04:42:13.6593954Z       Copyright (C) 2023 Free Software Foundation, Inc.
+2025-11-22T04:42:13.6594591Z       This is free software; see the source for copying conditions.  There is NO
+2025-11-22T04:42:13.6595447Z       warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+2025-11-22T04:42:13.6596039Z       -----------
+2025-11-22T04:42:13.6596392Z       Running command: -cpp -x c -E -dM -
+2025-11-22T04:42:13.6597001Z       -----
+2025-11-22T04:42:13.6597278Z       -----------
+2025-11-22T04:42:13.6597642Z       Detecting linker via: `cc -Wl,--version` -> 0
+2025-11-22T04:42:13.6598088Z       stdout:
+2025-11-22T04:42:13.6598418Z       GNU ld (GNU Binutils for Ubuntu) 2.42
+2025-11-22T04:42:13.6598901Z       Copyright (C) 2024 Free Software Foundation, Inc.
+2025-11-22T04:42:13.6599555Z       This program is free software; you may redistribute it under the terms of
+2025-11-22T04:42:13.6600591Z       the GNU General Public License version 3 or (at your option) a later version.
+2025-11-22T04:42:13.6601271Z       This program has absolutely no warranty.
+2025-11-22T04:42:13.6601687Z       -----------
+2025-11-22T04:42:13.6601974Z       stderr:
+2025-11-22T04:42:13.6602267Z       collect2 version 13.3.0
+2025-11-22T04:42:13.6608486Z       /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccO8LBR1.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. --version -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+2025-11-22T04:42:13.6614873Z       -----------
+2025-11-22T04:42:13.6615222Z       Sanity testing C compiler: cc
+2025-11-22T04:42:13.6615627Z       Is cross compiler: False.
+2025-11-22T04:42:13.6616328Z       Sanity check compiler command line: cc sanitycheckc.c -o sanitycheckc.exe -D_FILE_OFFSET_BITS=64
+2025-11-22T04:42:13.6617074Z       Sanity check compile stdout:
+2025-11-22T04:42:13.6617453Z       
+2025-11-22T04:42:13.6617713Z       -----
+2025-11-22T04:42:13.6618017Z       Sanity check compile stderr:
+2025-11-22T04:42:13.6618391Z       
+2025-11-22T04:42:13.6618654Z       -----
+2025-11-22T04:42:13.6619620Z       Running test binary command:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/sanitycheckc.exe
+2025-11-22T04:42:13.6620959Z       -----------
+2025-11-22T04:42:13.6621918Z       Sanity check: `/tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/sanitycheckc.exe` -> 0
+2025-11-22T04:42:13.6623161Z       C compiler for the build machine: cc (gcc 13.3.0 "cc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0")
+2025-11-22T04:42:13.6623876Z       C linker for the build machine: cc ld.bfd 2.42
+2025-11-22T04:42:13.6624527Z       -----------
+2025-11-22T04:42:13.6624893Z       Detecting archiver via: `gcc-ar --version` -> 0
+2025-11-22T04:42:13.6625334Z       stdout:
+2025-11-22T04:42:13.6625646Z       GNU ar (GNU Binutils for Ubuntu) 2.42
+2025-11-22T04:42:13.6626134Z       Copyright (C) 2024 Free Software Foundation, Inc.
+2025-11-22T04:42:13.6626773Z       This program is free software; you may redistribute it under the terms of
+2025-11-22T04:42:13.6627571Z       the GNU General Public License version 3 or (at your option) any later version.
+2025-11-22T04:42:13.6628258Z       This program has absolutely no warranty.
+2025-11-22T04:42:13.6628689Z       -----------
+2025-11-22T04:42:13.6629022Z       Build machine cpu family: x86_64
+2025-11-22T04:42:13.6629435Z       Build machine cpu: x86_64
+2025-11-22T04:42:13.6629830Z       Host machine cpu family: x86_64
+2025-11-22T04:42:13.6630584Z       Host machine cpu: x86_64
+2025-11-22T04:42:13.6630967Z       Target machine cpu family: x86_64
+2025-11-22T04:42:13.6631402Z       Target machine cpu: x86_64
+2025-11-22T04:42:13.6631777Z       Running compile:
+2025-11-22T04:42:13.6632708Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpucc2y5qk
+2025-11-22T04:42:13.6633688Z       Code:
+2025-11-22T04:42:13.6633974Z       extern int i;
+2025-11-22T04:42:13.6634264Z       int i;
+2025-11-22T04:42:13.6634533Z       
+2025-11-22T04:42:13.6634791Z       -----------
+2025-11-22T04:42:13.6636838Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpucc2y5qk/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpucc2y5qk/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fno-common` -> 0
+2025-11-22T04:42:13.6639111Z       Compiler for C supports arguments -fno-common: YES
+2025-11-22T04:42:13.6639600Z       Running compile:
+2025-11-22T04:42:13.6640784Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp8vyrcf3i
+2025-11-22T04:42:13.6641780Z       Code:
+2025-11-22T04:42:13.6642067Z       extern int i;
+2025-11-22T04:42:13.6642369Z       int i;
+2025-11-22T04:42:13.6642628Z       
+2025-11-22T04:42:13.6642931Z       -----------
+2025-11-22T04:42:13.6645199Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp8vyrcf3i/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp8vyrcf3i/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wmissing-field-initializers -Wno-missing-field-initializers` -> 0
+2025-11-22T04:42:13.6647767Z       Compiler for C supports arguments -Wno-missing-field-initializers: YES
+2025-11-22T04:42:13.6648399Z       Running compile:
+2025-11-22T04:42:13.6649312Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp9oiqpecp
+2025-11-22T04:42:13.6650464Z       Code:
+2025-11-22T04:42:13.6650736Z       extern int i;
+2025-11-22T04:42:13.6651025Z       int i;
+2025-11-22T04:42:13.6651296Z       
+2025-11-22T04:42:13.6651551Z       -----------
+2025-11-22T04:42:13.6653849Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp9oiqpecp/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp9oiqpecp/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wdeclaration-after-statement -Wno-declaration-after-statement` -> 0
+2025-11-22T04:42:13.6656604Z       Compiler for C supports arguments -Wno-declaration-after-statement: YES
+2025-11-22T04:42:13.6685047Z       Running compile:
+2025-11-22T04:42:13.6686018Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpx9_c_wa0
+2025-11-22T04:42:13.6687265Z       Code:
+2025-11-22T04:42:13.6687573Z       extern int i;
+2025-11-22T04:42:13.6687871Z       int i;
+2025-11-22T04:42:13.6688147Z       
+2025-11-22T04:42:13.6688421Z       -----------
+2025-11-22T04:42:13.6690652Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpx9_c_wa0/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpx9_c_wa0/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Winline -Wno-inline` -> 0
+2025-11-22T04:42:13.6692859Z       Compiler for C supports arguments -Wno-inline: YES
+2025-11-22T04:42:13.6693330Z       Running compile:
+2025-11-22T04:42:13.6694266Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpb4s8fnrn
+2025-11-22T04:42:13.6695495Z       Code:
+2025-11-22T04:42:13.6695785Z       extern int i;
+2025-11-22T04:42:13.6696086Z       int i;
+2025-11-22T04:42:13.6696365Z       
+2025-11-22T04:42:13.6696637Z       -----------
+2025-11-22T04:42:13.6698798Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpb4s8fnrn/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpb4s8fnrn/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wredundant-decls -Wno-redundant-decls` -> 0
+2025-11-22T04:42:13.6702575Z       Compiler for C supports arguments -Wno-redundant-decls: YES
+2025-11-22T04:42:13.6703130Z       Running compile:
+2025-11-22T04:42:13.6704063Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpk5k7svav
+2025-11-22T04:42:13.6705039Z       Code:
+2025-11-22T04:42:13.6705313Z       extern int i;
+2025-11-22T04:42:13.6705628Z       int i;
+2025-11-22T04:42:13.6705889Z       
+2025-11-22T04:42:13.6706156Z       -----------
+2025-11-22T04:42:13.6708295Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpk5k7svav/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpk5k7svav/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wswitch-default -Wno-switch-default` -> 0
+2025-11-22T04:42:13.6710832Z       Compiler for C supports arguments -Wno-switch-default: YES
+2025-11-22T04:42:13.6711378Z       Running compile:
+2025-11-22T04:42:13.6712286Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpq1lvxxfy
+2025-11-22T04:42:13.6713255Z       Code:
+2025-11-22T04:42:13.6713530Z       extern int i;
+2025-11-22T04:42:13.6713837Z       int i;
+2025-11-22T04:42:13.6714102Z       
+2025-11-22T04:42:13.6714380Z       -----------
+2025-11-22T04:42:13.6716510Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpq1lvxxfy/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpq1lvxxfy/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wwrite-strings -Wno-write-strings` -> 0
+2025-11-22T04:42:13.6718847Z       Compiler for C supports arguments -Wno-write-strings: YES
+2025-11-22T04:42:13.6719384Z       Running compile:
+2025-11-22T04:42:13.6720528Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp2380k6or
+2025-11-22T04:42:13.6721530Z       Code:
+2025-11-22T04:42:13.6721819Z       extern int i;
+2025-11-22T04:42:13.6722115Z       int i;
+2025-11-22T04:42:13.6722393Z       
+2025-11-22T04:42:13.6722656Z       -----------
+2025-11-22T04:42:13.6724733Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp2380k6or/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp2380k6or/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wcast-align` -> 0
+2025-11-22T04:42:13.6727146Z       Compiler for C supports arguments -Wcast-align: YES
+2025-11-22T04:42:13.6727649Z       Running compile:
+2025-11-22T04:42:13.6728569Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpvvfw79wu
+2025-11-22T04:42:13.6729533Z       Code:
+2025-11-22T04:42:13.6729815Z       extern int i;
+2025-11-22T04:42:13.6730274Z       int i;
+2025-11-22T04:42:13.6730549Z       
+2025-11-22T04:42:13.6730793Z       -----------
+2025-11-22T04:42:13.6732756Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpvvfw79wu/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpvvfw79wu/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wdouble-promotion` -> 0
+2025-11-22T04:42:13.6735220Z       Compiler for C supports arguments -Wdouble-promotion: YES
+2025-11-22T04:42:13.6735741Z       Running compile:
+2025-11-22T04:42:13.6736651Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp352fownf
+2025-11-22T04:42:13.6737614Z       Code:
+2025-11-22T04:42:13.6737900Z       extern int i;
+2025-11-22T04:42:13.6738185Z       int i;
+2025-11-22T04:42:13.6738457Z       
+2025-11-22T04:42:13.6738724Z       -----------
+2025-11-22T04:42:13.6741004Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp352fownf/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp352fownf/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wduplicated-cond` -> 0
+2025-11-22T04:42:13.6743296Z       Compiler for C supports arguments -Wduplicated-cond: YES
+2025-11-22T04:42:13.6743840Z       Running compile:
+2025-11-22T04:42:13.6744776Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp5o80dei8
+2025-11-22T04:42:13.6745774Z       Code:
+2025-11-22T04:42:13.6746043Z       extern int i;
+2025-11-22T04:42:13.6746341Z       int i;
+2025-11-22T04:42:13.6746605Z       
+2025-11-22T04:42:13.6746869Z       -----------
+2025-11-22T04:42:13.6748873Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp5o80dei8/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp5o80dei8/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wfloat-equal` -> 0
+2025-11-22T04:42:13.6751254Z       Compiler for C supports arguments -Wfloat-equal: YES
+2025-11-22T04:42:13.6751758Z       Running compile:
+2025-11-22T04:42:13.6752640Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp5v5n4rj_
+2025-11-22T04:42:13.6753605Z       Code:
+2025-11-22T04:42:13.6753873Z       extern int i;
+2025-11-22T04:42:13.6754167Z       int i;
+2025-11-22T04:42:13.6754427Z       
+2025-11-22T04:42:13.6754700Z       -----------
+2025-11-22T04:42:13.6756718Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp5v5n4rj_/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp5v5n4rj_/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wformat-nonliteral` -> 0
+2025-11-22T04:42:13.6758966Z       Compiler for C supports arguments -Wformat-nonliteral: YES
+2025-11-22T04:42:13.6759493Z       Running compile:
+2025-11-22T04:42:13.6760622Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpt80bive0
+2025-11-22T04:42:13.6761624Z       Code:
+2025-11-22T04:42:13.6761890Z       extern int i;
+2025-11-22T04:42:13.6762374Z       int i;
+2025-11-22T04:42:13.6762651Z       
+2025-11-22T04:42:13.6762908Z       -----------
+2025-11-22T04:42:13.6764949Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpt80bive0/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpt80bive0/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wformat-security` -> 0
+2025-11-22T04:42:13.6767180Z       Compiler for C supports arguments -Wformat-security: YES
+2025-11-22T04:42:13.6767699Z       Running compile:
+2025-11-22T04:42:13.6768620Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpz8xhyyjk
+2025-11-22T04:42:13.6769564Z       Code:
+2025-11-22T04:42:13.6769844Z       extern int i;
+2025-11-22T04:42:13.6770301Z       int i;
+2025-11-22T04:42:13.6770753Z       
+2025-11-22T04:42:13.6770994Z       -----------
+2025-11-22T04:42:13.6772944Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpz8xhyyjk/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpz8xhyyjk/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wformat=2` -> 0
+2025-11-22T04:42:13.6775100Z       Compiler for C supports arguments -Wformat=2: YES
+2025-11-22T04:42:13.6775558Z       Running compile:
+2025-11-22T04:42:13.6776449Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp_fxdw_5m
+2025-11-22T04:42:13.6777399Z       Code:
+2025-11-22T04:42:13.6777681Z       extern int i;
+2025-11-22T04:42:13.6777972Z       int i;
+2025-11-22T04:42:13.6778243Z       
+2025-11-22T04:42:13.6778495Z       -----------
+2025-11-22T04:42:13.6780694Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp_fxdw_5m/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp_fxdw_5m/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Winit-self` -> 0
+2025-11-22T04:42:13.6782874Z       Compiler for C supports arguments -Winit-self: YES
+2025-11-22T04:42:13.6783365Z       Running compile:
+2025-11-22T04:42:13.6784293Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpuljm2dj9
+2025-11-22T04:42:13.6785268Z       Code:
+2025-11-22T04:42:13.6785541Z       extern int i;
+2025-11-22T04:42:13.6785840Z       int i;
+2025-11-22T04:42:13.6786100Z       
+2025-11-22T04:42:13.6786369Z       -----------
+2025-11-22T04:42:13.6788384Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpuljm2dj9/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpuljm2dj9/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wlogical-op` -> 0
+2025-11-22T04:42:13.6790757Z       Compiler for C supports arguments -Wlogical-op: YES
+2025-11-22T04:42:13.6791241Z       Running compile:
+2025-11-22T04:42:13.6792139Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmphoeja2kx
+2025-11-22T04:42:13.6793122Z       Code:
+2025-11-22T04:42:13.6793402Z       extern int i;
+2025-11-22T04:42:13.6793806Z       int i;
+2025-11-22T04:42:13.6794062Z       
+2025-11-22T04:42:13.6794329Z       -----------
+2025-11-22T04:42:13.6796427Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmphoeja2kx/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmphoeja2kx/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wmissing-declarations` -> 0
+2025-11-22T04:42:13.6798734Z       Compiler for C supports arguments -Wmissing-declarations: YES
+2025-11-22T04:42:13.6799478Z       Running compile:
+2025-11-22T04:42:13.6800645Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpxpsu9n39
+2025-11-22T04:42:13.6801645Z       Code:
+2025-11-22T04:42:13.6801916Z       extern int i;
+2025-11-22T04:42:13.6802206Z       int i;
+2025-11-22T04:42:13.6802478Z       
+2025-11-22T04:42:13.6802735Z       -----------
+2025-11-22T04:42:13.6804816Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpxpsu9n39/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpxpsu9n39/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wmissing-format-attribute` -> 0
+2025-11-22T04:42:13.6807149Z       Compiler for C supports arguments -Wmissing-format-attribute: YES
+2025-11-22T04:42:13.6807915Z       Running compile:
+2025-11-22T04:42:13.6808816Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpxdtlidsk
+2025-11-22T04:42:13.6809796Z       Code:
+2025-11-22T04:42:13.6810080Z       extern int i;
+2025-11-22T04:42:13.6810531Z       int i;
+2025-11-22T04:42:13.6810798Z       
+2025-11-22T04:42:13.6811060Z       -----------
+2025-11-22T04:42:13.6813123Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpxdtlidsk/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpxdtlidsk/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wmissing-include-dirs` -> 0
+2025-11-22T04:42:13.6815434Z       Compiler for C supports arguments -Wmissing-include-dirs: YES
+2025-11-22T04:42:13.6815979Z       Running compile:
+2025-11-22T04:42:13.6816890Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpn33jl8rt
+2025-11-22T04:42:13.6817869Z       Code:
+2025-11-22T04:42:13.6818153Z       extern int i;
+2025-11-22T04:42:13.6818448Z       int i;
+2025-11-22T04:42:13.6818725Z       
+2025-11-22T04:42:13.6818985Z       -----------
+2025-11-22T04:42:13.6821230Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpn33jl8rt/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpn33jl8rt/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wmissing-noreturn` -> 0
+2025-11-22T04:42:13.6823499Z       Compiler for C supports arguments -Wmissing-noreturn: YES
+2025-11-22T04:42:13.6824018Z       Running compile:
+2025-11-22T04:42:13.6824937Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp2x4vl1n5
+2025-11-22T04:42:13.6825931Z       Code:
+2025-11-22T04:42:13.6826205Z       extern int i;
+2025-11-22T04:42:13.6826498Z       int i;
+2025-11-22T04:42:13.6826783Z       
+2025-11-22T04:42:13.6827059Z       -----------
+2025-11-22T04:42:13.6829060Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp2x4vl1n5/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp2x4vl1n5/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wnull-dereference` -> 0
+2025-11-22T04:42:13.6831471Z       Compiler for C supports arguments -Wnull-dereference: YES
+2025-11-22T04:42:13.6832001Z       Running compile:
+2025-11-22T04:42:13.6832916Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpl_urt9hk
+2025-11-22T04:42:13.6833882Z       Code:
+2025-11-22T04:42:13.6834163Z       extern int i;
+2025-11-22T04:42:13.6834450Z       int i;
+2025-11-22T04:42:13.6834735Z       
+2025-11-22T04:42:13.6835003Z       -----------
+2025-11-22T04:42:13.6836934Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpl_urt9hk/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpl_urt9hk/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wpacked` -> 0
+2025-11-22T04:42:13.6839386Z       Compiler for C supports arguments -Wpacked: YES
+2025-11-22T04:42:13.6839862Z       Running compile:
+2025-11-22T04:42:13.6841022Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmplyn7qag9
+2025-11-22T04:42:13.6842012Z       Code:
+2025-11-22T04:42:13.6842289Z       extern int i;
+2025-11-22T04:42:13.6842586Z       int i;
+2025-11-22T04:42:13.6842838Z       
+2025-11-22T04:42:13.6843091Z       -----------
+2025-11-22T04:42:13.6845094Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmplyn7qag9/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmplyn7qag9/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wpointer-arith` -> 0
+2025-11-22T04:42:13.6847507Z       Compiler for C supports arguments -Wpointer-arith: YES
+2025-11-22T04:42:13.6848017Z       Running compile:
+2025-11-22T04:42:13.6848938Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpy9b29zzb
+2025-11-22T04:42:13.6849903Z       Code:
+2025-11-22T04:42:13.6850337Z       extern int i;
+2025-11-22T04:42:13.6850624Z       int i;
+2025-11-22T04:42:13.6850867Z       
+2025-11-22T04:42:13.6851124Z       -----------
+2025-11-22T04:42:13.6853105Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpy9b29zzb/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpy9b29zzb/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wshadow` -> 0
+2025-11-22T04:42:13.6855286Z       Compiler for C supports arguments -Wshadow: YES
+2025-11-22T04:42:13.6855770Z       Running compile:
+2025-11-22T04:42:13.6856676Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpf1alw27t
+2025-11-22T04:42:13.6857653Z       Code:
+2025-11-22T04:42:13.6857930Z       extern int i;
+2025-11-22T04:42:13.6858220Z       int i;
+2025-11-22T04:42:13.6858484Z       
+2025-11-22T04:42:13.6858738Z       -----------
+2025-11-22T04:42:13.6860982Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpf1alw27t/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpf1alw27t/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wswitch-enum` -> 0
+2025-11-22T04:42:13.6863219Z       Compiler for C supports arguments -Wswitch-enum: YES
+2025-11-22T04:42:13.6863722Z       Running compile:
+2025-11-22T04:42:13.6864655Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpd41_guzs
+2025-11-22T04:42:13.6865605Z       Code:
+2025-11-22T04:42:13.6865887Z       extern int i;
+2025-11-22T04:42:13.6866164Z       int i;
+2025-11-22T04:42:13.6866428Z       
+2025-11-22T04:42:13.6866685Z       -----------
+2025-11-22T04:42:13.6868618Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpd41_guzs/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpd41_guzs/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wundef` -> 0
+2025-11-22T04:42:13.6870881Z       Compiler for C supports arguments -Wundef: YES
+2025-11-22T04:42:13.6871328Z       Running compile:
+2025-11-22T04:42:13.6872198Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp9k0rk6c4
+2025-11-22T04:42:13.6873350Z       Code:
+2025-11-22T04:42:13.6873631Z       extern int i;
+2025-11-22T04:42:13.6873918Z       int i;
+2025-11-22T04:42:13.6874182Z       
+2025-11-22T04:42:13.6874437Z       -----------
+2025-11-22T04:42:13.6876497Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp9k0rk6c4/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp9k0rk6c4/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wunused-but-set-variable` -> 0
+2025-11-22T04:42:13.6878843Z       Compiler for C supports arguments -Wunused-but-set-variable: YES
+2025-11-22T04:42:13.6879406Z       Running compile:
+2025-11-22T04:42:13.6880551Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpsq1hhp31
+2025-11-22T04:42:13.6881739Z       Code:
+2025-11-22T04:42:13.6882010Z       extern int i;
+2025-11-22T04:42:13.6882312Z       int i;
+2025-11-22T04:42:13.6882572Z       
+2025-11-22T04:42:13.6882834Z       -----------
+2025-11-22T04:42:13.6884860Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpsq1hhp31/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpsq1hhp31/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wjump-misses-init` -> 0
+2025-11-22T04:42:13.6887154Z       Compiler for C supports arguments -Wjump-misses-init: YES
+2025-11-22T04:42:13.6887687Z       Running compile:
+2025-11-22T04:42:13.6888610Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpnpofw7ax
+2025-11-22T04:42:13.6889587Z       Code:
+2025-11-22T04:42:13.6889848Z       extern int i;
+2025-11-22T04:42:13.6890322Z       int i;
+2025-11-22T04:42:13.6890581Z       
+2025-11-22T04:42:13.6890830Z       -----------
+2025-11-22T04:42:13.6892891Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpnpofw7ax/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpnpofw7ax/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wmissing-prototypes` -> 0
+2025-11-22T04:42:13.6895366Z       Compiler for C supports arguments -Wmissing-prototypes: YES
+2025-11-22T04:42:13.6895921Z       Running compile:
+2025-11-22T04:42:13.6896828Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpspq82p__
+2025-11-22T04:42:13.6897789Z       Code:
+2025-11-22T04:42:13.6898060Z       extern int i;
+2025-11-22T04:42:13.6898362Z       int i;
+2025-11-22T04:42:13.6898627Z       
+2025-11-22T04:42:13.6898881Z       -----------
+2025-11-22T04:42:13.6901123Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpspq82p__/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpspq82p__/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wnested-externs` -> 0
+2025-11-22T04:42:13.6903371Z       Compiler for C supports arguments -Wnested-externs: YES
+2025-11-22T04:42:13.6903883Z       Running compile:
+2025-11-22T04:42:13.6904883Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp335222q6
+2025-11-22T04:42:13.6905829Z       Code:
+2025-11-22T04:42:13.6906112Z       extern int i;
+2025-11-22T04:42:13.6906400Z       int i;
+2025-11-22T04:42:13.6906674Z       
+2025-11-22T04:42:13.6906923Z       -----------
+2025-11-22T04:42:13.6908964Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp335222q6/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp335222q6/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wold-style-definition` -> 0
+2025-11-22T04:42:13.6911662Z       Compiler for C supports arguments -Wold-style-definition: YES
+2025-11-22T04:42:13.6912218Z       Running compile:
+2025-11-22T04:42:13.6913140Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpu_e8mp_x
+2025-11-22T04:42:13.6914106Z       Code:
+2025-11-22T04:42:13.6914392Z       extern int i;
+2025-11-22T04:42:13.6914681Z       int i;
+2025-11-22T04:42:13.6914955Z       
+2025-11-22T04:42:13.6915225Z       -----------
+2025-11-22T04:42:13.6917227Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpu_e8mp_x/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpu_e8mp_x/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wpointer-sign` -> 0
+2025-11-22T04:42:13.6919599Z       Compiler for C supports arguments -Wpointer-sign: YES
+2025-11-22T04:42:13.6920352Z       Running compile:
+2025-11-22T04:42:13.6921283Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpcvnjls20
+2025-11-22T04:42:13.6922247Z       Code:
+2025-11-22T04:42:13.6922514Z       extern int i;
+2025-11-22T04:42:13.6922807Z       int i;
+2025-11-22T04:42:13.6923068Z       
+2025-11-22T04:42:13.6923335Z       -----------
+2025-11-22T04:42:13.6925378Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpcvnjls20/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpcvnjls20/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wstrict-prototypes` -> 0
+2025-11-22T04:42:13.6927665Z       Compiler for C supports arguments -Wstrict-prototypes: YES
+2025-11-22T04:42:13.6928317Z       Configuring _dbus-python-config.h using configuration
+2025-11-22T04:42:13.6928814Z       
+2025-11-22T04:42:13.6929125Z       Executing subproject dbus-gmain
+2025-11-22T04:42:13.6929510Z       
+2025-11-22T04:42:13.6929802Z       Project name: dbus-gmain
+2025-11-22T04:42:13.6930441Z       Project version: undefined
+2025-11-22T04:42:13.6931022Z       C compiler for the host machine: cc (gcc 13.3.0 "cc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0")
+2025-11-22T04:42:13.6931684Z       C linker for the host machine: cc ld.bfd 2.42
+2025-11-22T04:42:13.6932347Z       C compiler for the build machine: cc (gcc 13.3.0 "cc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0")
+2025-11-22T04:42:13.6933012Z       C linker for the build machine: cc ld.bfd 2.42
+2025-11-22T04:42:13.6933445Z       Using cached compile:
+2025-11-22T04:42:13.6935462Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpucc2y5qk/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpucc2y5qk/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fno-common
+2025-11-22T04:42:13.6937575Z       
+2025-11-22T04:42:13.6937843Z       Code:
+2025-11-22T04:42:13.6938129Z        extern int i;
+2025-11-22T04:42:13.6938444Z       int i;
+2025-11-22T04:42:13.6938757Z       
+2025-11-22T04:42:13.6939035Z       Cached compiler stdout:
+2025-11-22T04:42:13.6939387Z       
+2025-11-22T04:42:13.6939660Z       Cached compiler stderr:
+2025-11-22T04:42:13.6940008Z       
+2025-11-22T04:42:13.6940656Z       Compiler for C supports arguments -fno-common: YES (cached)
+2025-11-22T04:42:13.6941242Z       Using cached compile:
+2025-11-22T04:42:13.6943584Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp8vyrcf3i/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp8vyrcf3i/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wmissing-field-initializers -Wno-missing-field-initializers
+2025-11-22T04:42:13.6946149Z       
+2025-11-22T04:42:13.6946425Z       Code:
+2025-11-22T04:42:13.6946706Z        extern int i;
+2025-11-22T04:42:13.6947011Z       int i;
+2025-11-22T04:42:13.6947279Z       
+2025-11-22T04:42:13.6947597Z       Cached compiler stdout:
+2025-11-22T04:42:13.6947970Z       
+2025-11-22T04:42:13.6948259Z       Cached compiler stderr:
+2025-11-22T04:42:13.6948617Z       
+2025-11-22T04:42:13.6949139Z       Compiler for C supports arguments -Wno-missing-field-initializers: YES (cached)
+2025-11-22T04:42:13.6949802Z       Using cached compile:
+2025-11-22T04:42:13.6952019Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp2380k6or/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp2380k6or/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wcast-align
+2025-11-22T04:42:13.6954311Z       
+2025-11-22T04:42:13.6954575Z       Code:
+2025-11-22T04:42:13.6954854Z        extern int i;
+2025-11-22T04:42:13.6955163Z       int i;
+2025-11-22T04:42:13.6955425Z       
+2025-11-22T04:42:13.6955708Z       Cached compiler stdout:
+2025-11-22T04:42:13.6956046Z       
+2025-11-22T04:42:13.6956333Z       Cached compiler stderr:
+2025-11-22T04:42:13.6956679Z       
+2025-11-22T04:42:13.6957091Z       Compiler for C supports arguments -Wcast-align: YES (cached)
+2025-11-22T04:42:13.6957618Z       Using cached compile:
+2025-11-22T04:42:13.6959712Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpvvfw79wu/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpvvfw79wu/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wdouble-promotion
+2025-11-22T04:42:13.6962076Z       
+2025-11-22T04:42:13.6962402Z       Code:
+2025-11-22T04:42:13.6962679Z        extern int i;
+2025-11-22T04:42:13.6962973Z       int i;
+2025-11-22T04:42:13.6963240Z       
+2025-11-22T04:42:13.6963523Z       Cached compiler stdout:
+2025-11-22T04:42:13.6963865Z       
+2025-11-22T04:42:13.6964138Z       Cached compiler stderr:
+2025-11-22T04:42:13.6964485Z       
+2025-11-22T04:42:13.6964919Z       Compiler for C supports arguments -Wdouble-promotion: YES (cached)
+2025-11-22T04:42:13.6965475Z       Running compile:
+2025-11-22T04:42:13.6966404Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpg_uba08z
+2025-11-22T04:42:13.6967393Z       Code:
+2025-11-22T04:42:13.6967679Z       extern int i;
+2025-11-22T04:42:13.6967970Z       int i;
+2025-11-22T04:42:13.6968240Z       
+2025-11-22T04:42:13.6968498Z       -----------
+2025-11-22T04:42:13.6970691Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpg_uba08z/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpg_uba08z/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wduplicated-branches` -> 0
+2025-11-22T04:42:13.6972990Z       Compiler for C supports arguments -Wduplicated-branches: YES
+2025-11-22T04:42:13.6973559Z       Using cached compile:
+2025-11-22T04:42:13.6975640Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp352fownf/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp352fownf/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wduplicated-cond
+2025-11-22T04:42:13.6977777Z       
+2025-11-22T04:42:13.6978049Z       Code:
+2025-11-22T04:42:13.6978324Z        extern int i;
+2025-11-22T04:42:13.6978637Z       int i;
+2025-11-22T04:42:13.6978911Z       
+2025-11-22T04:42:13.6979209Z       Cached compiler stdout:
+2025-11-22T04:42:13.6979557Z       
+2025-11-22T04:42:13.6979860Z       Cached compiler stderr:
+2025-11-22T04:42:13.6980452Z       
+2025-11-22T04:42:13.6980905Z       Compiler for C supports arguments -Wduplicated-cond: YES (cached)
+2025-11-22T04:42:13.6981684Z       Using cached compile:
+2025-11-22T04:42:13.6983799Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp5o80dei8/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp5o80dei8/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wfloat-equal
+2025-11-22T04:42:13.6985938Z       
+2025-11-22T04:42:13.6986203Z       Code:
+2025-11-22T04:42:13.6986486Z        extern int i;
+2025-11-22T04:42:13.6986785Z       int i;
+2025-11-22T04:42:13.6987062Z       
+2025-11-22T04:42:13.6987337Z       Cached compiler stdout:
+2025-11-22T04:42:13.6987683Z       
+2025-11-22T04:42:13.6987963Z       Cached compiler stderr:
+2025-11-22T04:42:13.6988307Z       
+2025-11-22T04:42:13.6988730Z       Compiler for C supports arguments -Wfloat-equal: YES (cached)
+2025-11-22T04:42:13.6989475Z       Using cached compile:
+2025-11-22T04:42:13.6991754Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp5v5n4rj_/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp5v5n4rj_/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wformat-nonliteral
+2025-11-22T04:42:13.6993864Z       
+2025-11-22T04:42:13.6994139Z       Code:
+2025-11-22T04:42:13.6994425Z        extern int i;
+2025-11-22T04:42:13.6994727Z       int i;
+2025-11-22T04:42:13.6995047Z       
+2025-11-22T04:42:13.6995331Z       Cached compiler stdout:
+2025-11-22T04:42:13.6995685Z       
+2025-11-22T04:42:13.6995958Z       Cached compiler stderr:
+2025-11-22T04:42:13.6996307Z       
+2025-11-22T04:42:13.6996748Z       Compiler for C supports arguments -Wformat-nonliteral: YES (cached)
+2025-11-22T04:42:13.6997340Z       Using cached compile:
+2025-11-22T04:42:13.6999431Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpt80bive0/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpt80bive0/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wformat-security
+2025-11-22T04:42:13.7001864Z       
+2025-11-22T04:42:13.7002144Z       Code:
+2025-11-22T04:42:13.7002441Z        extern int i;
+2025-11-22T04:42:13.7002748Z       int i;
+2025-11-22T04:42:13.7003021Z       
+2025-11-22T04:42:13.7003300Z       Cached compiler stdout:
+2025-11-22T04:42:13.7003662Z       
+2025-11-22T04:42:13.7003941Z       Cached compiler stderr:
+2025-11-22T04:42:13.7004285Z       
+2025-11-22T04:42:13.7004722Z       Compiler for C supports arguments -Wformat-security: YES (cached)
+2025-11-22T04:42:13.7005309Z       Using cached compile:
+2025-11-22T04:42:13.7007381Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpz8xhyyjk/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpz8xhyyjk/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wformat=2
+2025-11-22T04:42:13.7009503Z       
+2025-11-22T04:42:13.7009788Z       Code:
+2025-11-22T04:42:13.7010073Z        extern int i;
+2025-11-22T04:42:13.7010568Z       int i;
+2025-11-22T04:42:13.7010822Z       
+2025-11-22T04:42:13.7011117Z       Cached compiler stdout:
+2025-11-22T04:42:13.7011443Z       
+2025-11-22T04:42:13.7011721Z       Cached compiler stderr:
+2025-11-22T04:42:13.7012059Z       
+2025-11-22T04:42:13.7012454Z       Compiler for C supports arguments -Wformat=2: YES (cached)
+2025-11-22T04:42:13.7012976Z       Using cached compile:
+2025-11-22T04:42:13.7014984Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp_fxdw_5m/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp_fxdw_5m/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Winit-self
+2025-11-22T04:42:13.7017294Z       
+2025-11-22T04:42:13.7017570Z       Code:
+2025-11-22T04:42:13.7017853Z        extern int i;
+2025-11-22T04:42:13.7018173Z       int i;
+2025-11-22T04:42:13.7018442Z       
+2025-11-22T04:42:13.7018730Z       Cached compiler stdout:
+2025-11-22T04:42:13.7019077Z       
+2025-11-22T04:42:13.7019363Z       Cached compiler stderr:
+2025-11-22T04:42:13.7019702Z       
+2025-11-22T04:42:13.7020350Z       Compiler for C supports arguments -Winit-self: YES (cached)
+2025-11-22T04:42:13.7020921Z       Using cached compile:
+2025-11-22T04:42:13.7023026Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpuljm2dj9/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpuljm2dj9/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wlogical-op
+2025-11-22T04:42:13.7025359Z       
+2025-11-22T04:42:13.7025628Z       Code:
+2025-11-22T04:42:13.7025927Z        extern int i;
+2025-11-22T04:42:13.7026235Z       int i;
+2025-11-22T04:42:13.7026508Z       
+2025-11-22T04:42:13.7026783Z       Cached compiler stdout:
+2025-11-22T04:42:13.7027137Z       
+2025-11-22T04:42:13.7027411Z       Cached compiler stderr:
+2025-11-22T04:42:13.7027767Z       
+2025-11-22T04:42:13.7028177Z       Compiler for C supports arguments -Wlogical-op: YES (cached)
+2025-11-22T04:42:13.7028720Z       Using cached compile:
+2025-11-22T04:42:13.7030982Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmphoeja2kx/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmphoeja2kx/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wmissing-declarations
+2025-11-22T04:42:13.7033139Z       
+2025-11-22T04:42:13.7033419Z       Code:
+2025-11-22T04:42:13.7033714Z        extern int i;
+2025-11-22T04:42:13.7034024Z       int i;
+2025-11-22T04:42:13.7034295Z       
+2025-11-22T04:42:13.7034587Z       Cached compiler stdout:
+2025-11-22T04:42:13.7034941Z       
+2025-11-22T04:42:13.7035222Z       Cached compiler stderr:
+2025-11-22T04:42:13.7035579Z       
+2025-11-22T04:42:13.7036035Z       Compiler for C supports arguments -Wmissing-declarations: YES (cached)
+2025-11-22T04:42:13.7036644Z       Using cached compile:
+2025-11-22T04:42:13.7038794Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpxpsu9n39/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpxpsu9n39/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wmissing-format-attribute
+2025-11-22T04:42:13.7041230Z       
+2025-11-22T04:42:13.7041508Z       Code:
+2025-11-22T04:42:13.7041784Z        extern int i;
+2025-11-22T04:42:13.7042090Z       int i;
+2025-11-22T04:42:13.7042363Z       
+2025-11-22T04:42:13.7042645Z       Cached compiler stdout:
+2025-11-22T04:42:13.7042989Z       
+2025-11-22T04:42:13.7043282Z       Cached compiler stderr:
+2025-11-22T04:42:13.7043610Z       
+2025-11-22T04:42:13.7044094Z       Compiler for C supports arguments -Wmissing-format-attribute: YES (cached)
+2025-11-22T04:42:13.7044725Z       Using cached compile:
+2025-11-22T04:42:13.7046849Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpxdtlidsk/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpxdtlidsk/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wmissing-include-dirs
+2025-11-22T04:42:13.7049010Z       
+2025-11-22T04:42:13.7049272Z       Code:
+2025-11-22T04:42:13.7049550Z        extern int i;
+2025-11-22T04:42:13.7049853Z       int i;
+2025-11-22T04:42:13.7050283Z       
+2025-11-22T04:42:13.7050564Z       Cached compiler stdout:
+2025-11-22T04:42:13.7050907Z       
+2025-11-22T04:42:13.7051184Z       Cached compiler stderr:
+2025-11-22T04:42:13.7051518Z       
+2025-11-22T04:42:13.7052178Z       Compiler for C supports arguments -Wmissing-include-dirs: YES (cached)
+2025-11-22T04:42:13.7052768Z       Using cached compile:
+2025-11-22T04:42:13.7054877Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpn33jl8rt/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpn33jl8rt/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wmissing-noreturn
+2025-11-22T04:42:13.7057015Z       
+2025-11-22T04:42:13.7057272Z       Code:
+2025-11-22T04:42:13.7057546Z        extern int i;
+2025-11-22T04:42:13.7057838Z       int i;
+2025-11-22T04:42:13.7058103Z       
+2025-11-22T04:42:13.7058377Z       Cached compiler stdout:
+2025-11-22T04:42:13.7058723Z       
+2025-11-22T04:42:13.7058993Z       Cached compiler stderr:
+2025-11-22T04:42:13.7059515Z       
+2025-11-22T04:42:13.7059945Z       Compiler for C supports arguments -Wmissing-noreturn: YES (cached)
+2025-11-22T04:42:13.7060780Z       Using cached compile:
+2025-11-22T04:42:13.7062867Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp2x4vl1n5/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp2x4vl1n5/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wnull-dereference
+2025-11-22T04:42:13.7064993Z       
+2025-11-22T04:42:13.7065265Z       Code:
+2025-11-22T04:42:13.7065544Z        extern int i;
+2025-11-22T04:42:13.7065841Z       int i;
+2025-11-22T04:42:13.7066110Z       
+2025-11-22T04:42:13.7066391Z       Cached compiler stdout:
+2025-11-22T04:42:13.7066735Z       
+2025-11-22T04:42:13.7067009Z       Cached compiler stderr:
+2025-11-22T04:42:13.7067350Z       
+2025-11-22T04:42:13.7067777Z       Compiler for C supports arguments -Wnull-dereference: YES (cached)
+2025-11-22T04:42:13.7068368Z       Using cached compile:
+2025-11-22T04:42:13.7070551Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpl_urt9hk/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpl_urt9hk/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wpacked
+2025-11-22T04:42:13.7072595Z       
+2025-11-22T04:42:13.7072857Z       Code:
+2025-11-22T04:42:13.7073135Z        extern int i;
+2025-11-22T04:42:13.7073441Z       int i;
+2025-11-22T04:42:13.7073699Z       
+2025-11-22T04:42:13.7073992Z       Cached compiler stdout:
+2025-11-22T04:42:13.7074330Z       
+2025-11-22T04:42:13.7074604Z       Cached compiler stderr:
+2025-11-22T04:42:13.7074933Z       
+2025-11-22T04:42:13.7075319Z       Compiler for C supports arguments -Wpacked: YES (cached)
+2025-11-22T04:42:13.7075826Z       Using cached compile:
+2025-11-22T04:42:13.7077919Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmplyn7qag9/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmplyn7qag9/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wpointer-arith
+2025-11-22T04:42:13.7080066Z       
+2025-11-22T04:42:13.7080583Z       Code:
+2025-11-22T04:42:13.7080874Z        extern int i;
+2025-11-22T04:42:13.7081170Z       int i;
+2025-11-22T04:42:13.7081442Z       
+2025-11-22T04:42:13.7081733Z       Cached compiler stdout:
+2025-11-22T04:42:13.7082078Z       
+2025-11-22T04:42:13.7082350Z       Cached compiler stderr:
+2025-11-22T04:42:13.7082687Z       
+2025-11-22T04:42:13.7083114Z       Compiler for C supports arguments -Wpointer-arith: YES (cached)
+2025-11-22T04:42:13.7083664Z       Running compile:
+2025-11-22T04:42:13.7084589Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp63wiihq9
+2025-11-22T04:42:13.7085584Z       Code:
+2025-11-22T04:42:13.7085869Z       extern int i;
+2025-11-22T04:42:13.7086165Z       int i;
+2025-11-22T04:42:13.7086658Z       
+2025-11-22T04:42:13.7086928Z       -----------
+2025-11-22T04:42:13.7088956Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp63wiihq9/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp63wiihq9/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wredundant-decls` -> 0
+2025-11-22T04:42:13.7091384Z       Compiler for C supports arguments -Wredundant-decls: YES
+2025-11-22T04:42:13.7091920Z       Using cached compile:
+2025-11-22T04:42:13.7093978Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpy9b29zzb/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpy9b29zzb/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wshadow
+2025-11-22T04:42:13.7096369Z       
+2025-11-22T04:42:13.7096645Z       Code:
+2025-11-22T04:42:13.7096936Z        extern int i;
+2025-11-22T04:42:13.7097241Z       int i;
+2025-11-22T04:42:13.7097519Z       
+2025-11-22T04:42:13.7097799Z       Cached compiler stdout:
+2025-11-22T04:42:13.7098152Z       
+2025-11-22T04:42:13.7098427Z       Cached compiler stderr:
+2025-11-22T04:42:13.7098775Z       
+2025-11-22T04:42:13.7099158Z       Compiler for C supports arguments -Wshadow: YES (cached)
+2025-11-22T04:42:13.7099671Z       Running compile:
+2025-11-22T04:42:13.7100830Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp9atandbf
+2025-11-22T04:42:13.7101822Z       Code:
+2025-11-22T04:42:13.7102103Z       extern int i;
+2025-11-22T04:42:13.7102387Z       int i;
+2025-11-22T04:42:13.7102653Z       
+2025-11-22T04:42:13.7102904Z       -----------
+2025-11-22T04:42:13.7104951Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp9atandbf/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp9atandbf/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wswitch-default` -> 0
+2025-11-22T04:42:13.7107232Z       Compiler for C supports arguments -Wswitch-default: YES
+2025-11-22T04:42:13.7107757Z       Using cached compile:
+2025-11-22T04:42:13.7109836Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpf1alw27t/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpf1alw27t/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wswitch-enum
+2025-11-22T04:42:13.7112091Z       
+2025-11-22T04:42:13.7112354Z       Code:
+2025-11-22T04:42:13.7112637Z        extern int i;
+2025-11-22T04:42:13.7112939Z       int i;
+2025-11-22T04:42:13.7113212Z       
+2025-11-22T04:42:13.7113504Z       Cached compiler stdout:
+2025-11-22T04:42:13.7113853Z       
+2025-11-22T04:42:13.7114140Z       Cached compiler stderr:
+2025-11-22T04:42:13.7114490Z       
+2025-11-22T04:42:13.7114894Z       Compiler for C supports arguments -Wswitch-enum: YES (cached)
+2025-11-22T04:42:13.7115436Z       Using cached compile:
+2025-11-22T04:42:13.7117457Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpd41_guzs/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpd41_guzs/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wundef
+2025-11-22T04:42:13.7119504Z       
+2025-11-22T04:42:13.7119770Z       Code:
+2025-11-22T04:42:13.7120040Z        extern int i;
+2025-11-22T04:42:13.7120581Z       int i;
+2025-11-22T04:42:13.7120846Z       
+2025-11-22T04:42:13.7121122Z       Cached compiler stdout:
+2025-11-22T04:42:13.7121460Z       
+2025-11-22T04:42:13.7121735Z       Cached compiler stderr:
+2025-11-22T04:42:13.7122078Z       
+2025-11-22T04:42:13.7122436Z       Compiler for C supports arguments -Wundef: YES (cached)
+2025-11-22T04:42:13.7123141Z       Using cached compile:
+2025-11-22T04:42:13.7125273Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp9k0rk6c4/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp9k0rk6c4/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wunused-but-set-variable
+2025-11-22T04:42:13.7127448Z       
+2025-11-22T04:42:13.7127724Z       Code:
+2025-11-22T04:42:13.7127997Z        extern int i;
+2025-11-22T04:42:13.7128301Z       int i;
+2025-11-22T04:42:13.7128557Z       
+2025-11-22T04:42:13.7128836Z       Cached compiler stdout:
+2025-11-22T04:42:13.7129169Z       
+2025-11-22T04:42:13.7129454Z       Cached compiler stderr:
+2025-11-22T04:42:13.7129782Z       
+2025-11-22T04:42:13.7130423Z       Compiler for C supports arguments -Wunused-but-set-variable: YES (cached)
+2025-11-22T04:42:13.7131211Z       Running compile:
+2025-11-22T04:42:13.7132135Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpwqmqb7nb
+2025-11-22T04:42:13.7133067Z       Code:
+2025-11-22T04:42:13.7133317Z       extern int i;
+2025-11-22T04:42:13.7133603Z       int i;
+2025-11-22T04:42:13.7133847Z       
+2025-11-22T04:42:13.7134084Z       -----------
+2025-11-22T04:42:13.7136012Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpwqmqb7nb/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpwqmqb7nb/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wwrite-strings` -> 0
+2025-11-22T04:42:13.7138125Z       Compiler for C supports arguments -Wwrite-strings: YES
+2025-11-22T04:42:13.7138598Z       Running compile:
+2025-11-22T04:42:13.7139451Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmphh002xng
+2025-11-22T04:42:13.7140593Z       Code:
+2025-11-22T04:42:13.7140841Z       extern int i;
+2025-11-22T04:42:13.7141116Z       int i;
+2025-11-22T04:42:13.7141348Z       
+2025-11-22T04:42:13.7141588Z       -----------
+2025-11-22T04:42:13.7143585Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmphh002xng/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmphh002xng/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wdeclaration-after-statement` -> 0
+2025-11-22T04:42:13.7145846Z       Compiler for C supports arguments -Wdeclaration-after-statement: YES
+2025-11-22T04:42:13.7146403Z       Using cached compile:
+2025-11-22T04:42:13.7148417Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpsq1hhp31/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpsq1hhp31/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wjump-misses-init
+2025-11-22T04:42:13.7150651Z       
+2025-11-22T04:42:13.7150894Z       Code:
+2025-11-22T04:42:13.7151136Z        extern int i;
+2025-11-22T04:42:13.7151389Z       int i;
+2025-11-22T04:42:13.7151617Z       
+2025-11-22T04:42:13.7151871Z       Cached compiler stdout:
+2025-11-22T04:42:13.7152190Z       
+2025-11-22T04:42:13.7152446Z       Cached compiler stderr:
+2025-11-22T04:42:13.7152763Z       
+2025-11-22T04:42:13.7153172Z       Compiler for C supports arguments -Wjump-misses-init: YES (cached)
+2025-11-22T04:42:13.7153703Z       Using cached compile:
+2025-11-22T04:42:13.7155719Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpnpofw7ax/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpnpofw7ax/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wmissing-prototypes
+2025-11-22T04:42:13.7157943Z       
+2025-11-22T04:42:13.7158172Z       Code:
+2025-11-22T04:42:13.7158426Z        extern int i;
+2025-11-22T04:42:13.7158702Z       int i;
+2025-11-22T04:42:13.7158948Z       
+2025-11-22T04:42:13.7159206Z       Cached compiler stdout:
+2025-11-22T04:42:13.7159521Z       
+2025-11-22T04:42:13.7159779Z       Cached compiler stderr:
+2025-11-22T04:42:13.7160089Z       
+2025-11-22T04:42:13.7160729Z       Compiler for C supports arguments -Wmissing-prototypes: YES (cached)
+2025-11-22T04:42:13.7161271Z       Using cached compile:
+2025-11-22T04:42:13.7163265Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpspq82p__/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpspq82p__/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wnested-externs
+2025-11-22T04:42:13.7165425Z       
+2025-11-22T04:42:13.7165654Z       Code:
+2025-11-22T04:42:13.7165915Z        extern int i;
+2025-11-22T04:42:13.7166185Z       int i;
+2025-11-22T04:42:13.7166435Z       
+2025-11-22T04:42:13.7166690Z       Cached compiler stdout:
+2025-11-22T04:42:13.7167010Z       
+2025-11-22T04:42:13.7167248Z       Cached compiler stderr:
+2025-11-22T04:42:13.7167563Z       
+2025-11-22T04:42:13.7167952Z       Compiler for C supports arguments -Wnested-externs: YES (cached)
+2025-11-22T04:42:13.7168462Z       Using cached compile:
+2025-11-22T04:42:13.7170642Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp335222q6/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmp335222q6/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wold-style-definition
+2025-11-22T04:42:13.7172526Z       
+2025-11-22T04:42:13.7172771Z       Code:
+2025-11-22T04:42:13.7173030Z        extern int i;
+2025-11-22T04:42:13.7173312Z       int i;
+2025-11-22T04:42:13.7173572Z       
+2025-11-22T04:42:13.7173821Z       Cached compiler stdout:
+2025-11-22T04:42:13.7174151Z       
+2025-11-22T04:42:13.7174400Z       Cached compiler stderr:
+2025-11-22T04:42:13.7174717Z       
+2025-11-22T04:42:13.7175134Z       Compiler for C supports arguments -Wold-style-definition: YES (cached)
+2025-11-22T04:42:13.7175687Z       Using cached compile:
+2025-11-22T04:42:13.7177642Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpu_e8mp_x/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpu_e8mp_x/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wpointer-sign
+2025-11-22T04:42:13.7179629Z       
+2025-11-22T04:42:13.7179862Z       Code:
+2025-11-22T04:42:13.7180291Z        extern int i;
+2025-11-22T04:42:13.7180586Z       int i;
+2025-11-22T04:42:13.7180840Z       
+2025-11-22T04:42:13.7181094Z       Cached compiler stdout:
+2025-11-22T04:42:13.7181409Z       
+2025-11-22T04:42:13.7181671Z       Cached compiler stderr:
+2025-11-22T04:42:13.7181982Z       
+2025-11-22T04:42:13.7182378Z       Compiler for C supports arguments -Wpointer-sign: YES (cached)
+2025-11-22T04:42:13.7182897Z       Using cached compile:
+2025-11-22T04:42:13.7184941Z       Cached command line:  cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpcvnjls20/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpcvnjls20/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -Wstrict-prototypes
+2025-11-22T04:42:13.7186987Z       
+2025-11-22T04:42:13.7187217Z       Code:
+2025-11-22T04:42:13.7187470Z        extern int i;
+2025-11-22T04:42:13.7187740Z       int i;
+2025-11-22T04:42:13.7187985Z       
+2025-11-22T04:42:13.7188244Z       Cached compiler stdout:
+2025-11-22T04:42:13.7188559Z       
+2025-11-22T04:42:13.7188813Z       Cached compiler stderr:
+2025-11-22T04:42:13.7189120Z       
+2025-11-22T04:42:13.7189693Z       Compiler for C supports arguments -Wstrict-prototypes: YES (cached)
+2025-11-22T04:42:13.7190547Z       Pkg-config binary missing from cross or native file, or env var undefined.
+2025-11-22T04:42:13.7191193Z       Trying a default Pkg-config fallback at pkg-config
+2025-11-22T04:42:13.7191711Z       Found pkg-config: YES (/usr/bin/pkg-config) 1.8.1
+2025-11-22T04:42:13.7192372Z       Determining dependency 'dbus-1' with pkg-config executable '/usr/bin/pkg-config'
+2025-11-22T04:42:13.7193151Z       env[PKG_CONFIG_PATH]: /opt/hostedtoolcache/Python/3.12.8/x64/lib/pkgconfig
+2025-11-22T04:42:13.7193724Z       env[PKG_CONFIG]: /usr/bin/pkg-config
+2025-11-22T04:42:13.7194112Z       -----------
+2025-11-22T04:42:13.7194487Z       Called: `/usr/bin/pkg-config --modversion dbus-1` -> 0
+2025-11-22T04:42:13.7194938Z       stdout:
+2025-11-22T04:42:13.7195230Z       1.14.10
+2025-11-22T04:42:13.7195642Z       -----------
+2025-11-22T04:42:13.7196092Z       env[PKG_CONFIG_PATH]: /opt/hostedtoolcache/Python/3.12.8/x64/lib/pkgconfig
+2025-11-22T04:42:13.7196672Z       env[PKG_CONFIG]: /usr/bin/pkg-config
+2025-11-22T04:42:13.7197051Z       -----------
+2025-11-22T04:42:13.7197391Z       Called: `/usr/bin/pkg-config --cflags dbus-1` -> 0
+2025-11-22T04:42:13.7197814Z       stdout:
+2025-11-22T04:42:13.7198232Z       -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include
+2025-11-22T04:42:13.7198757Z       -----------
+2025-11-22T04:42:13.7199208Z       env[PKG_CONFIG_PATH]: /opt/hostedtoolcache/Python/3.12.8/x64/lib/pkgconfig
+2025-11-22T04:42:13.7199783Z       env[PKG_CONFIG_ALLOW_SYSTEM_LIBS]: 1
+2025-11-22T04:42:13.7200402Z       env[PKG_CONFIG]: /usr/bin/pkg-config
+2025-11-22T04:42:13.7200786Z       -----------
+2025-11-22T04:42:13.7201130Z       Called: `/usr/bin/pkg-config --libs dbus-1` -> 0
+2025-11-22T04:42:13.7201547Z       stdout:
+2025-11-22T04:42:13.7201843Z       -L/usr/lib/x86_64-linux-gnu -ldbus-1
+2025-11-22T04:42:13.7202223Z       -----------
+2025-11-22T04:42:13.7202682Z       env[PKG_CONFIG_PATH]: /opt/hostedtoolcache/Python/3.12.8/x64/lib/pkgconfig
+2025-11-22T04:42:13.7203261Z       env[PKG_CONFIG]: /usr/bin/pkg-config
+2025-11-22T04:42:13.7203642Z       -----------
+2025-11-22T04:42:13.7203977Z       Called: `/usr/bin/pkg-config --libs dbus-1` -> 0
+2025-11-22T04:42:13.7204401Z       stdout:
+2025-11-22T04:42:13.7204659Z       -ldbus-1
+2025-11-22T04:42:13.7204915Z       -----------
+2025-11-22T04:42:13.7205195Z       Running compile:
+2025-11-22T04:42:13.7206060Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpo5is6wjh
+2025-11-22T04:42:13.7207003Z       Code:
+2025-11-22T04:42:13.7207246Z       
+2025-11-22T04:42:13.7207509Z               #include<stddef.h>
+2025-11-22T04:42:13.7207858Z               #include<stdio.h>
+2025-11-22T04:42:13.7208204Z               int main(void) {
+2025-11-22T04:42:13.7208591Z                   printf("%ld\n", (long)(sizeof(void *)));
+2025-11-22T04:42:13.7209009Z                   return 0;
+2025-11-22T04:42:13.7209330Z               }
+2025-11-22T04:42:13.7209588Z       -----------
+2025-11-22T04:42:13.7211602Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpo5is6wjh/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpo5is6wjh/output.exe -D_FILE_OFFSET_BITS=64 -O0` -> 0
+2025-11-22T04:42:13.7213561Z       Program stdout:
+2025-11-22T04:42:13.7213848Z       
+2025-11-22T04:42:13.7214091Z       8
+2025-11-22T04:42:13.7214320Z       
+2025-11-22T04:42:13.7214571Z       Program stderr:
+2025-11-22T04:42:13.7214850Z       
+2025-11-22T04:42:13.7215088Z       
+2025-11-22T04:42:13.7215342Z       Running compile:
+2025-11-22T04:42:13.7216197Z       Working directory:  /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpo5wibook
+2025-11-22T04:42:13.7217118Z       Code:
+2025-11-22T04:42:13.7217365Z       
+2025-11-22T04:42:13.7217768Z       -----------
+2025-11-22T04:42:13.7219759Z       Command line: `cc /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpo5wibook/testfile.c -o /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/tmpo5wibook/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 --print-search-dirs` -> 0
+2025-11-22T04:42:13.7222007Z       stdout:
+2025-11-22T04:42:13.7222313Z       install: /usr/lib/gcc/x86_64-linux-gnu/13/
+2025-11-22T04:42:13.7224591Z       programs: =/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/bin/
+2025-11-22T04:42:13.7229985Z       libraries: =/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/13/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/13/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+2025-11-22T04:42:13.7233521Z       -----------
+2025-11-22T04:42:13.7233865Z       Run-time dependency dbus-1 found: YES 1.14.10
+2025-11-22T04:42:13.7234516Z       Determining dependency 'glib-2.0' with pkg-config executable '/usr/bin/pkg-config'
+2025-11-22T04:42:13.7235313Z       env[PKG_CONFIG_PATH]: /opt/hostedtoolcache/Python/3.12.8/x64/lib/pkgconfig
+2025-11-22T04:42:13.7235898Z       env[PKG_CONFIG]: /usr/bin/pkg-config
+2025-11-22T04:42:13.7236287Z       -----------
+2025-11-22T04:42:13.7236662Z       Called: `/usr/bin/pkg-config --modversion glib-2.0` -> 1
+2025-11-22T04:42:13.7237114Z       stderr:
+2025-11-22T04:42:13.7237516Z       Package glib-2.0 was not found in the pkg-config search path.
+2025-11-22T04:42:13.7238140Z       Perhaps you should add the directory containing `glib-2.0.pc'
+2025-11-22T04:42:13.7238690Z       to the PKG_CONFIG_PATH environment variable
+2025-11-22T04:42:13.7239207Z       Package 'glib-2.0', required by 'virtual:world', not found
+2025-11-22T04:42:13.7239675Z       -----------
+2025-11-22T04:42:13.7239985Z       CMake binary for host machine is not cached
+2025-11-22T04:42:13.7240859Z       CMake binary missing from cross or native file, or env var undefined.
+2025-11-22T04:42:13.7241449Z       Trying a default CMake fallback at cmake
+2025-11-22T04:42:13.7241884Z       Found CMake: /usr/local/bin/cmake (3.31.6)
+2025-11-22T04:42:13.7242324Z       Extracting basic cmake information
+2025-11-22T04:42:13.7242862Z       CMake Toolchain: Calling CMake once to generate the compiler state
+2025-11-22T04:42:13.7244179Z       Calling CMake (['/usr/local/bin/cmake']) in /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/__CMake_compiler_info__ with:
+2025-11-22T04:42:13.7245365Z         - "--trace-expand"
+2025-11-22T04:42:13.7245712Z         - "--trace-format=json-v1"
+2025-11-22T04:42:13.7246089Z         - "--no-warn-unused-cli"
+2025-11-22T04:42:13.7246463Z         - "--trace-redirect=cmake_trace.txt"
+2025-11-22T04:42:13.7246854Z         - "-G"
+2025-11-22T04:42:13.7247108Z         - "Ninja"
+2025-11-22T04:42:13.7248268Z         - "-DCMAKE_TOOLCHAIN_FILE=/tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/__CMake_compiler_info__/CMakeMesonTempToolchainFile.cmake"
+2025-11-22T04:42:13.7249516Z         - "."
+2025-11-22T04:42:13.7250302Z       CMake trace warning: add_executable() non imported executables are not supported
+2025-11-22T04:42:13.7252036Z       CMake TRACE: /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/__CMake_compiler_info__/CMakeFiles/CMakeScratch/TryCompile-HcAlRz/CMakeLists.txt:22 add_executable(['cmTC_0f277'])
+2025-11-22T04:42:13.7253717Z       CMake trace warning: target_link_libraries() TARGET cmTC_0f277 not found
+2025-11-22T04:42:13.7255467Z       CMake TRACE: /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/__CMake_compiler_info__/CMakeFiles/CMakeScratch/TryCompile-HcAlRz/CMakeLists.txt:28 target_link_libraries(['cmTC_0f277', ''])
+2025-11-22T04:42:13.7257823Z       !meson_ci!/ci_include "/tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/cmake_glib-2.0/CMakeMesonToolchainFile.cmake"
+2025-11-22T04:42:13.7259201Z       Try CMake generator: auto
+2025-11-22T04:42:13.7260369Z       !meson_ci!/ci_include "/tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/cmake_glib-2.0/CMakeLists.txt"
+2025-11-22T04:42:13.7262145Z       Calling CMake (['/usr/local/bin/cmake']) in /tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/cmake_glib-2.0 with:
+2025-11-22T04:42:13.7263251Z         - "--trace-expand"
+2025-11-22T04:42:13.7263594Z         - "--trace-format=json-v1"
+2025-11-22T04:42:13.7263966Z         - "--no-warn-unused-cli"
+2025-11-22T04:42:13.7264350Z         - "--trace-redirect=cmake_trace.txt"
+2025-11-22T04:42:13.7265539Z         - "-DCMAKE_TOOLCHAIN_FILE=/tmp/pip-install-akzqdfuq/dbus-python_78e10b9e66f64404acb762bfbcd2899e/.mesonpy-cjylab_i/meson-private/cmake_glib-2.0/CMakeMesonToolchainFile.cmake"
+2025-11-22T04:42:13.7266711Z         - "."
+2025-11-22T04:42:13.7267089Z         -- Module search paths:    ['/', '/opt', '/usr', '/usr/local']
+2025-11-22T04:42:13.7267653Z         -- CMake root:             /usr/local/share/cmake-3.31
+2025-11-22T04:42:13.7268153Z         -- CMake architectures:    ['x86_64-linux-gnu']
+2025-11-22T04:42:13.7268813Z         -- CMake lib search paths: ['lib', 'lib32', 'lib64', 'libx32', 'share', '', 'lib/x86_64-linux-gnu']
+2025-11-22T04:42:13.7269489Z       Preliminary CMake check failed. Aborting.
+2025-11-22T04:42:13.7270053Z       Run-time dependency glib-2.0 found: NO (tried pkgconfig and cmake)
+2025-11-22T04:42:13.7270706Z       
+2025-11-22T04:42:13.7271685Z       ../subprojects/dbus-gmain/meson.build:108:11: ERROR: Dependency "glib-2.0" not found, tried pkgconfig and cmake
+2025-11-22T04:42:13.7272577Z       
+2025-11-22T04:42:13.7273407Z ##[endgroup]
+2025-11-22T04:42:13.7273874Z       
+2025-11-22T04:42:13.7274218Z       [end of output]
+2025-11-22T04:42:13.7274649Z   
+2025-11-22T04:42:13.7275393Z   note: This error originates from a subprocess, and is likely not a problem with pip.
+2025-11-22T04:42:13.7276188Z error: metadata-generation-failed
+2025-11-22T04:42:13.7276588Z 
+2025-11-22T04:42:13.7277265Z × Encountered error while generating package metadata.
+2025-11-22T04:42:13.7278010Z ╰─> dbus-python
+2025-11-22T04:42:13.7278338Z 
+2025-11-22T04:42:13.7278656Z note: This is an issue with the package mentioned above, not pip.
+2025-11-22T04:42:13.7279313Z hint: See above for details.
+2025-11-22T04:42:13.8982541Z ##[error]Process completed with exit code 1.
