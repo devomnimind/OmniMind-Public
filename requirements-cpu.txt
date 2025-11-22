@@ -16,25 +16,22 @@ langgraph>=0.0.30
 langchain-community>=0.0.45
 langchain-ollama>=0.0.1
 
-# LLM local (CPU-only builds)
-llama-cpp-python>=0.2.80  # CPU-only by default
-torch>=2.2.0  # Will install CPU version if CUDA not available
+# LLM local (CPU versions)
+torch>=2.2.0
 transformers>=4.37.0
-# bitsandbytes>=0.43.0  # OPTIONAL: GPU quantization (skip for CPU)
-peft>=0.7.0
-trl>=0.7.10
 datasets>=2.16.0
 accelerate>=0.27.0
-tensorboard>=2.15.0
 
-# Vector database para memória episódica (LOCAL-FIRST)
-# Prefer ChromaDB (already in main requirements) for local-first
-chromadb>=0.4.1  # Local, no server needed
-qdrant-client>=1.16.0,<2.0.0  # For testing with local Qdrant server
+# Vector database para memória episódica
+qdrant-client>=1.16.0,<2.0.0
 
-# Modelos e dados
-pydantic>=2.5.0
-python-dotenv>=1.0.0
+# Web dashboard
+fastapi>=0.110.0
+uvicorn>=0.23.0
+
+# Database
+redis>=5.4.0
+chromadb>=0.4.1
 
 # Utilitários
 rich>=13.7.0
@@ -42,46 +39,4 @@ psutil>=5.9.6
 PyYAML>=6.0.1
 requests>=2.31.0
 cryptography>=42.0.0
-
-# Sistema D-Bus (Linux only - skip on macOS/Windows)
-dbus-python>=1.3.0; sys_platform == 'linux'
-
-# Logs estruturados
-structlog>=24.0.0
-
-# Análise de performance
-memory-profiler>=0.61.0
-
-# Web dashboard
-fastapi>=0.110.0
-uvicorn>=0.23.0
-
-# Database (LOCAL-FIRST alternatives to Supabase)
-# Option 1: SQLite (no dependencies, built into Python)
-# Option 2: PostgreSQL local
-# psycopg2-binary>=2.9.0  # If using local PostgreSQL
-# sqlalchemy>=2.0.0  # If using SQLAlchemy ORM
-
-# Redis (LOCAL-FIRST)
-fakeredis>=1.9.0  # No Redis server needed for development/testing
-redis>=5.4.0  # For production with local Redis server
-
-# DEVBRAIN V23 senses (CPU-compatible)
-# chromadb>=0.4.1  # Already included above
-omniparser @ file:./third_party/omniparser
-# ultralytics>=8.1.0  # OPTIONAL: YOLO models (CPU-capable but slow)
-# pyautogui>=0.9.54  # OPTIONAL: GUI automation
 numpy>=1.26.0
-# pydub>=0.25.1  # OPTIONAL: Audio processing
-# whisper>=1.1.10  # OPTIONAL: OpenAI Whisper (CPU-capable)
-# falcon>=3.0.0  # Web framework (not needed if using FastAPI)
-# sounddevice>=0.4.9  # OPTIONAL: Audio I/O
-
-# Optimization frameworks (from autootimizacao-hardware-omnidev.md)
-scikit-optimize>=0.9.0  # Bayesian optimization
-# bayesian-optimization>=1.4.0  # Alternative Bayesian opt library
-
-# Additional utilities for local deployment
-watchdog>=3.0.0  # File system monitoring
-aiofiles>=23.0.0  # Async file I/O
-httpx>=0.25.0  # Modern HTTP client
