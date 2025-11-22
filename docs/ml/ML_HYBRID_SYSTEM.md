@@ -10,10 +10,10 @@ Este sistema implementa uma abordagem híbrida inteligente para treinamento e in
 
 ```
 ML Hybrid System/
-├── hybrid_ml_optimizer.py      # 🧠 Otimizador principal
-├── ml_cli_tool.py             # 💻 Interface CLI
+├── scripts/ml/hybrid_ml_optimizer.py      # 🧠 Otimizador principal
+├── scripts/ml/ml_cli_tool.py             # 💻 Interface CLI
 ├── ml_monitor.py              # 📊 Monitor contínuo
-├── setup_hybrid_ml.sh         # ⚙️ Configuração completa
+├── scripts/ml/setup_hybrid_ml.sh         # ⚙️ Configuração completa
 ├── start_ml_hybrid.sh         # 🚀 Inicialização rápida
 └── config/ml/
     └── hybrid_config.json     # 🔧 Configuração centralizada
@@ -21,7 +21,7 @@ ML Hybrid System/
 
 ## 📊 Componentes Implementados
 
-### 1. 🤖 Hybrid ML Optimizer (`hybrid_ml_optimizer.py`)
+### 1. 🤖 Hybrid ML Optimizer (`scripts/ml/hybrid_ml_optimizer.py`)
 **Propósito:** Otimizador inteligente que escolhe automaticamente o melhor provedor baseado na tarefa e limites disponíveis.
 
 #### Funcionalidades:
@@ -51,25 +51,25 @@ print(f"Modelo usado: {result['model_choice']['chosen_model']}")
 print(f"Resposta: {result['response']}")
 ```
 
-### 2. 💻 ML CLI Tool (`ml_cli_tool.py`)
+### 2. 💻 ML CLI Tool (`scripts/ml/ml_cli_tool.py`)
 **Propósito:** Interface de linha de comando completa para operações ML híbridas.
 
 #### Comandos Disponíveis:
 ```bash
 # Verificar limites atuais
-python ml_cli_tool.py limits
+python scripts/ml/ml_cli_tool.py limits
 
 # Otimizar escolha de modelo para tarefa
-python ml_cli_tool.py optimize --task code_generation
+python scripts/ml/ml_cli_tool.py optimize --task code_generation
 
 # Executar chamada otimizada
-python ml_cli_tool.py call --task sentiment_analysis --prompt "Texto para analisar"
+python scripts/ml/ml_cli_tool.py call --task sentiment_analysis --prompt "Texto para analisar"
 
 # Gerar relatório de uso
-python ml_cli_tool.py report
+python scripts/ml/ml_cli_tool.py report
 
 # Iniciar treinamento híbrido simulado
-python ml_cli_tool.py train
+python scripts/ml/ml_cli_tool.py train
 ```
 
 #### Exemplo de Output:
@@ -107,7 +107,7 @@ python ml_cli_tool.py train
 
 #### Comando:
 ```bash
-./setup_hybrid_ml.sh
+scripts/ml/setup_hybrid_ml.sh
 ```
 
 ### 5. 🚀 Start Script (`start_ml_hybrid.sh`)
@@ -200,22 +200,22 @@ python ml_cli_tool.py train
 ### 1. Configuração Inicial
 ```bash
 # Configurar ambiente completo
-./setup_hybrid_ml.sh
+scripts/ml/setup_hybrid_ml.sh
 
 # Verificar se tudo está OK
-python ml_cli_tool.py limits
+python scripts/ml/ml_cli_tool.py limits
 ```
 
 ### 2. Uso Básico
 ```bash
 # Otimizar para geração de código
-python ml_cli_tool.py optimize --task code_generation
+python scripts/ml/ml_cli_tool.py optimize --task code_generation
 
 # Fazer chamada otimizada
-python ml_cli_tool.py call --task code_generation --prompt "Crie uma função de ordenação"
+python scripts/ml/ml_cli_tool.py call --task code_generation --prompt "Crie uma função de ordenação"
 
 # Ver relatório de uso
-python ml_cli_tool.py report
+python scripts/ml/ml_cli_tool.py report
 ```
 
 ### 3. Monitoramento Contínuo
@@ -281,7 +281,7 @@ result = optimizer.call_optimized_model(
 - **Arquivos de Configuração:** `config/ml/hybrid_config.json`
 - **Logs de Uso:** `logs/ml_usage.log`
 - **Alertas:** `logs/ml_alerts.log`
-- **Dados de Treinamento:** `training_data_collection/`
+- **Dados de Treinamento:** `data/ml/training_data_collection/`
 
 ---
 

@@ -35,7 +35,7 @@ class HybridMLOptimizer:
     def __init__(self):
         self.rate_limits = RateLimits()
         self.models_cache = {}
-        self.training_data_path = Path("training_data_collection")
+        self.training_data_path = Path("data/ml/training_data_collection")
         
     def check_github_limits(self) -> Dict:
         """Verifica limites atuais do GitHub"""

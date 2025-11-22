@@ -54,7 +54,7 @@ except Exception as e:
 # 2. Cria estrutura de diretórios
 echo "📁 Criando estrutura de diretórios..."
 mkdir -p logs/ml_cache
-mkdir -p training_data_collection/models
+mkdir -p data/ml/training_data_collection/models
 mkdir -p config/ml
 
 # 3. Testa scripts criados
@@ -66,7 +66,7 @@ python -c "from hybrid_ml_optimizer import HybridMLOptimizer; opt = HybridMLOpti
 
 # Testa CLI
 echo "   Testando ml_cli_tool.py..."
-python ml_cli_tool.py limits > /dev/null && echo "✅ CLI Tool OK"
+python scripts/ml/ml_cli_tool.py limits > /dev/null && echo "✅ CLI Tool OK"
 
 # Testa monitor
 echo "   Testando ml_monitor.py..."

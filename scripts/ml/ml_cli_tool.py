@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ML CLI Tool - Interface de linha de comando para otimização híbrida
-Uso: python ml_cli_tool.py <comando> [opções]
+Uso: python scripts/ml/ml_cli_tool.py <comando> [opções]
 """
 
 import argparse
@@ -90,7 +90,7 @@ class MLCLI:
         print("📋 Carregando dados de treinamento...")
         
         # Carrega plano de treinamento
-        plan_path = Path("training_data_collection/comprehensive_training_plan.json")
+        plan_path = Path("data/ml/training_data_collection/comprehensive_training_plan.json")
         if plan_path.exists():
             with open(plan_path) as f:
                 plan = json.load(f)
@@ -112,11 +112,11 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Exemplos de uso:
-  python ml_cli_tool.py limits
-  python ml_cli_tool.py optimize --task code_generation
-  python ml_cli_tool.py call --task text_classification --prompt "Classifique este texto: ..."
-  python ml_cli_tool.py report
-  python ml_cli_tool.py train
+  python scripts/ml/ml_cli_tool.py limits
+  python scripts/ml/ml_cli_tool.py optimize --task code_generation
+  python scripts/ml/ml_cli_tool.py call --task text_classification --prompt "Classifique este texto: ..."
+  python scripts/ml/ml_cli_tool.py report
+  python scripts/ml/ml_cli_tool.py train
         """
     )
     
