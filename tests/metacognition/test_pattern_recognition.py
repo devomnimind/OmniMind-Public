@@ -62,9 +62,7 @@ class TestDetectRepetitiveBehavior:
     def test_no_repetition(self) -> None:
         """Test with no repetitive patterns."""
         pr = PatternRecognition()
-        operations = [
-            {"tool_name": f"tool{i}"} for i in range(10)
-        ]  # All different
+        operations = [{"tool_name": f"tool{i}"} for i in range(10)]  # All different
 
         result = pr.detect_repetitive_behavior(operations)
 
@@ -112,10 +110,11 @@ class TestDetectRepetitiveBehavior:
         """Test that patterns are sorted by repetitions."""
         pr = PatternRecognition()
         # Create operations with varying repetitions
-        operations = (
-            [{"tool_name": "A"}, {"tool_name": "B"}] * 10
-            + [{"tool_name": "X"}, {"tool_name": "Y"}, {"tool_name": "Z"}] * 3
-        )
+        operations = [{"tool_name": "A"}, {"tool_name": "B"}] * 10 + [
+            {"tool_name": "X"},
+            {"tool_name": "Y"},
+            {"tool_name": "Z"},
+        ] * 3
 
         result = pr.detect_repetitive_behavior(operations)
 
@@ -208,7 +207,9 @@ class TestDetectBias:
         pr = PatternRecognition(sensitivity=0.5)
 
         # Medium severity (70-80%)
-        operations_medium = [{"tool_name": "tool1"}] * 75 + [{"tool_name": "tool2"}] * 25
+        operations_medium = [{"tool_name": "tool1"}] * 75 + [
+            {"tool_name": "tool2"}
+        ] * 25
         result_medium = pr.detect_bias(operations_medium)
 
         if len(result_medium["biases"]) > 0:
@@ -271,7 +272,9 @@ class TestDetectAnomalies:
 
         result = pr.detect_anomalies(operations)
 
-        failure_anomalies = [a for a in result["anomalies"] if a["type"] == "high_failure_rate"]
+        failure_anomalies = [
+            a for a in result["anomalies"] if a["type"] == "high_failure_rate"
+        ]
 
         assert len(failure_anomalies) > 0
         assert failure_anomalies[0]["failures"] >= 5
@@ -373,7 +376,9 @@ class TestCalculateDiversityScore:
     def test_high_diversity(self) -> None:
         """Test high diversity (many different tools)."""
         pr = PatternRecognition()
-        operations = [{"tool_name": f"tool_{i}", "agent": f"agent_{i}"} for i in range(20)]
+        operations = [
+            {"tool_name": f"tool_{i}", "agent": f"agent_{i}"} for i in range(20)
+        ]
 
         result = pr.calculate_diversity_score(operations)
 

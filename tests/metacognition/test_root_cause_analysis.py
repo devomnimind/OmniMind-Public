@@ -461,7 +461,9 @@ class TestRootCauseEngine:
         engine = RootCauseEngine()
 
         engine.register_component("api-1", ComponentType.API, "API")
-        engine.register_component("db-1", ComponentType.DATABASE, "Database", dependencies=[])
+        engine.register_component(
+            "db-1", ComponentType.DATABASE, "Database", dependencies=[]
+        )
         engine.graph.add_dependency("api-1", "db-1")
 
         import time
@@ -508,4 +510,3 @@ class TestRootCauseEngine:
 
         # Should identify both as potential root causes
         assert len(analysis.root_causes) > 0
-

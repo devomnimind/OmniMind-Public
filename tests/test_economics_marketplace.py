@@ -316,9 +316,7 @@ class TestMarketplaceAgent:
         assert approved is False
 
     @pytest.mark.asyncio
-    async def test_publish_to_platforms_success(
-        self, temp_state_file: Path
-    ) -> None:
+    async def test_publish_to_platforms_success(self, temp_state_file: Path) -> None:
         """Testa publicação para plataformas."""
         agent = MarketplaceAgent(state_file=temp_state_file)
 

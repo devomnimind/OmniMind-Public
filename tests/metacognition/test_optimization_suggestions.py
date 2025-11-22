@@ -413,7 +413,14 @@ class TestGenerateSuggestions:
         performance_data = {"tool_performance": {"slow_tool": {"avg": 8.0}}}
         failure_data = {"failure_by_tool": {"bad_tool": 6}, "total_failures": 10}
         bias_data = {
-            "biases": [{"severity": "high", "type": "tool", "name": "tool1", "usage_ratio": 0.85}]
+            "biases": [
+                {
+                    "severity": "high",
+                    "type": "tool",
+                    "name": "tool1",
+                    "usage_ratio": 0.85,
+                }
+            ]
         }
         resource_data = {"avg_cpu_percent": 85.0, "avg_memory_percent": 50.0}
 
@@ -433,7 +440,10 @@ class TestGenerateSuggestions:
 
         # Create data that will generate different priorities
         performance_data = {"tool_performance": {"slow1": {"avg": 7.0}}}  # Medium
-        failure_data = {"failure_by_tool": {"bad": 12}, "total_failures": 15}  # Critical
+        failure_data = {
+            "failure_by_tool": {"bad": 12},
+            "total_failures": 15,
+        }  # Critical
 
         suggestions = optimizer.generate_suggestions(
             performance_data=performance_data,
@@ -450,10 +460,7 @@ class TestGenerateSuggestions:
 
         # Generate data for many suggestions
         performance_data = {
-            "tool_performance": {
-                f"slow_tool_{i}": {"avg": 10.0}
-                for i in range(5)
-            }
+            "tool_performance": {f"slow_tool_{i}": {"avg": 10.0} for i in range(5)}
         }
 
         suggestions = optimizer.generate_suggestions(performance_data=performance_data)
@@ -523,10 +530,7 @@ class TestIntegration:
         optimizer = OptimizationSuggestions()
 
         performance_data = {
-            "tool_performance": {
-                f"tool{i}": {"avg": 10.0}
-                for i in range(5)
-            }
+            "tool_performance": {f"tool{i}": {"avg": 10.0} for i in range(5)}
         }
 
         suggestions = optimizer.generate_suggestions(performance_data=performance_data)

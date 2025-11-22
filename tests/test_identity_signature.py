@@ -83,9 +83,7 @@ class TestReputationScore:
         """Testa atualização com tarefa bem-sucedida."""
         rep = ReputationScore()
 
-        rep.update_from_task(
-            success=True, quality_score=0.9, autonomy_level=0.8
-        )
+        rep.update_from_task(success=True, quality_score=0.9, autonomy_level=0.8)
 
         assert rep.total_tasks == 1
         assert rep.successful_tasks == 1
@@ -100,9 +98,7 @@ class TestReputationScore:
         """Testa atualização com tarefa falhada."""
         rep = ReputationScore()
 
-        rep.update_from_task(
-            success=False, quality_score=0.3, autonomy_level=0.5
-        )
+        rep.update_from_task(success=False, quality_score=0.3, autonomy_level=0.5)
 
         assert rep.total_tasks == 1
         assert rep.successful_tasks == 0
@@ -116,14 +112,10 @@ class TestReputationScore:
 
         # 3 tarefas bem-sucedidas
         for _ in range(3):
-            rep.update_from_task(
-                success=True, quality_score=0.9, autonomy_level=0.8
-            )
+            rep.update_from_task(success=True, quality_score=0.9, autonomy_level=0.8)
 
         # 1 tarefa falhada
-        rep.update_from_task(
-            success=False, quality_score=0.4, autonomy_level=0.6
-        )
+        rep.update_from_task(success=False, quality_score=0.4, autonomy_level=0.6)
 
         assert rep.total_tasks == 4
         assert rep.successful_tasks == 3
@@ -135,16 +127,12 @@ class TestReputationScore:
         rep = ReputationScore()
 
         # Primeira tarefa com qualidade alta
-        rep.update_from_task(
-            success=True, quality_score=1.0, autonomy_level=1.0
-        )
+        rep.update_from_task(success=True, quality_score=1.0, autonomy_level=1.0)
         first_quality = rep.code_quality
         first_autonomy = rep.autonomy
 
         # Segunda tarefa com qualidade baixa
-        rep.update_from_task(
-            success=True, quality_score=0.0, autonomy_level=0.0
-        )
+        rep.update_from_task(success=True, quality_score=0.0, autonomy_level=0.0)
 
         # Scores devem estar entre os valores (não simplesmente média)
         # alpha = 0.1, então novo_score = 0.9 * old + 0.1 * new
@@ -161,11 +149,9 @@ class TestReputationScore:
 
         # overall = 0.3*code + 0.3*completion + 0.2*autonomy + 0.2*reliability
         expected = 0.8 * 0.3 + 0.9 * 0.3 + 0.7 * 0.2 + 0.85 * 0.2
-        
+
         # Calcular através de update
-        rep.update_from_task(
-            success=True, quality_score=0.8, autonomy_level=0.7
-        )
+        rep.update_from_task(success=True, quality_score=0.8, autonomy_level=0.7)
 
         # Overall score deve ser aproximadamente o esperado
         assert 0.0 <= rep.overall_score <= 1.0
@@ -173,9 +159,7 @@ class TestReputationScore:
     def test_to_dict(self) -> None:
         """Testa conversão para dicionário."""
         rep = ReputationScore()
-        rep.update_from_task(
-            success=True, quality_score=0.9, autonomy_level=0.8
-        )
+        rep.update_from_task(success=True, quality_score=0.9, autonomy_level=0.8)
 
         rep_dict = rep.to_dict()
 
@@ -196,6 +180,7 @@ class TestAgentIdentity:
         yield temp_dir / "identity_state.json"
         # Cleanup
         import shutil
+
         shutil.rmtree(temp_dir, ignore_errors=True)
 
     def test_initialization_default(self, temp_state_file: Path) -> None:
@@ -225,7 +210,7 @@ class TestAgentIdentity:
     def test_generate_agent_id(self, temp_state_file: Path) -> None:
         """Testa geração de ID único."""
         identity1 = AgentIdentity(state_file=temp_state_file)
-        
+
         temp_state_file2 = temp_state_file.parent / "identity_state2.json"
         identity2 = AgentIdentity(state_file=temp_state_file2)
 
@@ -324,25 +309,16 @@ class TestAgentIdentity:
     def test_state_persistence(self, temp_state_file: Path) -> None:
         """Testa persistência de estado."""
         # Criar identidade e fazer algumas operações
-        identity1 = AgentIdentity(
-            agent_id="test-agent", state_file=temp_state_file
-        )
+        identity1 = AgentIdentity(agent_id="test-agent", state_file=temp_state_file)
         identity1.sign_work("artifact1")
-        identity1.update_reputation(
-            success=True, quality_score=0.9, autonomy_level=0.8
-        )
+        identity1.update_reputation(success=True, quality_score=0.9, autonomy_level=0.8)
 
         # Criar nova instância com mesmo state_file
-        identity2 = AgentIdentity(
-            agent_id="test-agent", state_file=temp_state_file
-        )
+        identity2 = AgentIdentity(agent_id="test-agent", state_file=temp_state_file)
 
         # Estado deve ser restaurado
         assert identity2.reputation.total_tasks == identity1.reputation.total_tasks
-        assert (
-            identity2.reputation.overall_score
-            == identity1.reputation.overall_score
-        )
+        assert identity2.reputation.overall_score == identity1.reputation.overall_score
 
     def test_signature_audit_log(self, temp_state_file: Path) -> None:
         """Testa log de auditoria de assinaturas."""

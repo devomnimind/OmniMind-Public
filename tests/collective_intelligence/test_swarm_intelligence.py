@@ -137,9 +137,7 @@ class TestSwarmCoordinator:
         def quadratic(pos: List[float]) -> float:
             return sum(x**2 for x in pos)
 
-        best_position, best_fitness = coordinator.optimize(
-            quadratic, max_iterations=50
-        )
+        best_position, best_fitness = coordinator.optimize(quadratic, max_iterations=50)
 
         # Should find near-optimal solution
         assert best_fitness < 1.0  # Should be close to 0

@@ -221,6 +221,7 @@ class TestDataProcessingRecord:
 
         # Small delay to ensure different timestamp
         import time
+
         time.sleep(0.01)
 
         record2 = DataProcessingRecord(

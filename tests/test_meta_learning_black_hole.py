@@ -55,8 +55,7 @@ class TestBlackHoleMetaLearner:
 
         # Densidade baixa E volume grande
         should_collapse = learner.check_collapse_condition(
-            knowledge_mass=0.1,
-            knowledge_volume=100.0  # Densidade = 0.001
+            knowledge_mass=0.1, knowledge_volume=100.0  # Densidade = 0.001
         )
 
         # Com densidade muito baixa e volume muito grande, não deve colapsar
@@ -69,8 +68,7 @@ class TestBlackHoleMetaLearner:
 
         # Densidade alta
         should_collapse = learner.check_collapse_condition(
-            knowledge_mass=1000.0,
-            knowledge_volume=1.0  # Densidade = 1000.0
+            knowledge_mass=1000.0, knowledge_volume=1.0  # Densidade = 1000.0
         )
 
         # Com densidade muito alta, deve causar colapso
@@ -81,8 +79,7 @@ class TestBlackHoleMetaLearner:
         learner = BlackHoleMetaLearner()
 
         should_collapse = learner.check_collapse_condition(
-            knowledge_mass=100.0,
-            knowledge_volume=0.0  # Volume zero
+            knowledge_mass=100.0, knowledge_volume=0.0  # Volume zero
         )
 
         assert should_collapse is False
@@ -92,8 +89,7 @@ class TestBlackHoleMetaLearner:
         learner = BlackHoleMetaLearner()
 
         should_collapse = learner.check_collapse_condition(
-            knowledge_mass=100.0,
-            knowledge_volume=1e-15  # Volume muito pequeno
+            knowledge_mass=100.0, knowledge_volume=1e-15  # Volume muito pequeno
         )
 
         assert should_collapse is False
@@ -213,10 +209,11 @@ class TestBlackHoleMetaLearner:
 
         # Raio de Schwarzschild: r_s = 2GM/c²
         mass = 100.0
-        
+
         # Usar método interno se existir, ou calcular diretamente
         from src.meta_learning.black_hole_collapse import G_CONSTANT, C_CONSTANT
-        r_s = 2 * G_CONSTANT * mass / (C_CONSTANT ** 2)
+
+        r_s = 2 * G_CONSTANT * mass / (C_CONSTANT**2)
 
         assert r_s > 0.0
         # Para massa normalizada, valor deve ser razoável
@@ -265,17 +262,17 @@ class TestBlackHoleMetaLearner:
         # Radiação de Hawking deve conter teoremas derivados
         assert len(meta.hawking_radiation) >= 0
         assert isinstance(meta.hawking_radiation, list)
-        
+
     def test_get_statistics(self) -> None:
         """Testa obtenção de estatísticas."""
         learner = BlackHoleMetaLearner()
-        
+
         # Fazer alguns colapsos
         for i in range(3):
             learner.collapse_to_meta_level({f"fact{i}": f"value{i}"})
-        
+
         stats = learner.get_statistics()
-        
+
         assert isinstance(stats, dict)
         assert "total_meta_levels" in stats
         assert "current_level" in stats
