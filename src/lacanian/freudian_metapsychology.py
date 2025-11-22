@@ -773,9 +773,7 @@ def demonstrate_freudian_mind() -> None:
     print("-" * 70)
     print(f"Ação escolhida: {chosen_action.description}")
     defense_name = (
-        resolution.defense_mechanism.value
-        if resolution.defense_mechanism
-        else "None"
+        resolution.defense_mechanism.value if resolution.defense_mechanism else "None"
     )
     print(f"Mecanismo de defesa: {defense_name}")
     print(f"Qualidade do compromisso: {resolution.compromise_quality:.2f}")
