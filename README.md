@@ -397,4 +397,4 @@ O diretório `DEVBRAIN_V23/` agora hospeda o trabalho fundamental para o Masterp
 - `infrastructure/` → Redis Streams, gateway FastAPI e ChromaDB vector store.
 - `atlas/` → self-healing, auto-training e ATLAS (futuro).
 
-O Masterplan guia cada nova implementação, começando pela visão multimodal (`sensory/visual_cortex.py`) e o Event Bus redis (`infrastructure/event_bus.py`). Consulte `DEVBRAIN_V23/README.md` e os documentos anexados (`docs/Masterplan/`) para manter o alinhamento estratégico antes de avançar nas fases seguintes.# Test comment
+O Masterplan guia cada nova implementação, começando pela visão multimodal (`sensory/visual_cortex.py`) e o Event Bus redis (`infrastructure/event_bus.py`). Consulte `DEVBRAIN_V23/README.md` e os documentos anexados (`docs/Masterplan/`) para manter o alinhamento estratégico antes de avançar nas fases seguintes.
