@@ -270,8 +270,8 @@ class TestTypeEdgeCases:
             "metadata": {"count": 2},
         }
         assert isinstance(complex_value, dict)
-        assert isinstance(complex_value["data"], list)  # type: ignore
-        assert len(complex_value["data"]) == 2  # type: ignore
+        assert isinstance(complex_value["data"], list)
+        assert len(complex_value["data"]) == 2
 
     def test_json_dict_with_special_keys(self) -> None:
         """Testa JSONDict com chaves especiais."""
