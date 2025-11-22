@@ -329,6 +329,10 @@ class TestUIInteraction:
 class TestPerformance:
     """Performance and load testing."""
 
+    @pytest.mark.skipif(
+        not os.environ.get("RUN_E2E_TESTS"),
+        reason="E2E tests require running server (set RUN_E2E_TESTS=1)",
+    )
     @pytest.mark.asyncio
     async def test_api_response_time(self, backend_server: str):
         """Test API response times are acceptable."""
@@ -343,6 +347,10 @@ class TestPerformance:
             assert response.status_code == 200
             assert duration < 0.5, f"Health endpoint too slow: {duration:.3f}s"
 
+    @pytest.mark.skipif(
+        not os.environ.get("RUN_E2E_TESTS"),
+        reason="E2E tests require running server (set RUN_E2E_TESTS=1)",
+    )
     @pytest.mark.asyncio
     async def test_concurrent_requests(
         self, backend_server: str, auth_credentials: Dict[str, str]
@@ -369,6 +377,10 @@ class TestPerformance:
 class TestSecurityIntegration:
     """Test security features integration."""
 
+    @pytest.mark.skipif(
+        not os.environ.get("RUN_E2E_TESTS"),
+        reason="E2E tests require running server (set RUN_E2E_TESTS=1)",
+    )
     @pytest.mark.asyncio
     async def test_audit_logging(
         self, backend_server: str, auth_credentials: Dict[str, str]
@@ -386,6 +398,10 @@ class TestSecurityIntegration:
             data = response.json()
             assert "validation" in data
 
+    @pytest.mark.skipif(
+        not os.environ.get("RUN_E2E_TESTS"),
+        reason="E2E tests require running server (set RUN_E2E_TESTS=1)",
+    )
     @pytest.mark.asyncio
     async def test_rate_limiting(self, backend_server: str):
         """Test rate limiting (if enabled)."""
@@ -409,6 +425,10 @@ class TestSecurityIntegration:
 class TestDataIntegrity:
     """Test data integrity across components."""
 
+    @pytest.mark.skipif(
+        not os.environ.get("RUN_E2E_TESTS"),
+        reason="E2E tests require running server (set RUN_E2E_TESTS=1)",
+    )
     @pytest.mark.asyncio
     async def test_task_state_consistency(
         self, backend_server: str, auth_credentials: Dict[str, str]
@@ -440,6 +460,10 @@ class TestDataIntegrity:
 class TestErrorHandling:
     """Test error handling and recovery."""
 
+    @pytest.mark.skipif(
+        not os.environ.get("RUN_E2E_TESTS"),
+        reason="E2E tests require running server (set RUN_E2E_TESTS=1)",
+    )
     @pytest.mark.asyncio
     async def test_invalid_task_input(
         self, backend_server: str, auth_credentials: Dict[str, str]
@@ -460,6 +484,10 @@ class TestErrorHandling:
             # Should handle gracefully (either accept or reject with proper error)
             assert response.status_code in [200, 400, 422]
 
+    @pytest.mark.skipif(
+        not os.environ.get("RUN_E2E_TESTS"),
+        reason="E2E tests require running server (set RUN_E2E_TESTS=1)",
+    )
     @pytest.mark.asyncio
     async def test_service_recovery(self, backend_server: str):
         """Test service can recover from errors."""
