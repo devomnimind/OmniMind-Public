@@ -1,5 +1,41 @@
 # 🧠 OmniMind - Instruções para GitHub Copilot
 
+## 📋 PROTOCOLO DE COMUNICAÇÃO COM O COPILOT
+
+**SEMPRE siga este padrão:**
+
+1. **NO CHAT:** 
+   - Máximo 3-4 linhas de resposta
+   - **OBRIGATÓRIO:** Sempre terminar com próximas recomendações
+   - Exemplos: "Deseja corrigir os outros 24 módulos?" ou "Continuamos com security_monitor ou audit?"
+   - Formato: `✅ [O que foi feito] | 🎯 [Próximas opções: A, B, ou C?]`
+
+2. **NO TERMINAL:** 
+   - Sem visualizações ASCII/tabelas desnecessárias
+   - Apenas output essencial
+   - Status com emojis: ✅, ❌, ⚠️, 🔴, etc.
+
+3. **DOCUMENTAÇÃO:** 
+   - Somente o essencial ao projeto
+   - **NÃO** criar documentos de sessão de desenvolvimento
+   - **NÃO** criar arquivos na raiz
+   - Apenas em: `data/test_reports/`, `src/`, `tests/`, `scripts/`
+
+4. **ESTRUTURA DE RESPOSTA NO CHAT:**
+   ```
+   [STATUS] Resumo em 1-2 linhas
+   [NÚMEROS] Métricas relevantes
+   [AÇÃO] Próximas recomendações com opções claras
+   ```
+
+5. **EXEMPLOS DE PRÓXIMAS RECOMENDAÇÕES:**
+   - "Corrigir os outros 24 testes de security_monitor?"
+   - "Aumentar cobertura de 79% para 85% (8-10h adicionais)?"
+   - "Voltar a corrigir audit.py ou continuar com tools?"
+   - "Deploy em staging após validação?"
+
+---
+
 ## Resumo do Projeto
 
 **OmniMind** é um sistema autônomo e revolucionário de IA que combina tomada de decisão psicanalítica com capacidades avançadas de metacognição. Trata-se de uma arquitetura de grau de produção, autoconsciente e psicanalítica, com orquestração multi-agentes, comunicação WebSocket em tempo real e inteligência auto-evolutiva.
