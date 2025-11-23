@@ -127,19 +127,23 @@ class TestAsyncMCPClient:
         mock_client.aclose.assert_called_once()
 
     @pytest.mark.asyncio
-    @patch("src.integrations.mcp_client_async.httpx")
-    async def test_send_request_success(self, mock_httpx: Mock) -> None:
+    @patch("httpx.AsyncClient")
+    async def test_send_request_success(self, mock_async_client: Mock) -> None:
         """Testa envio de request bem-sucedido."""
-        mock_response = AsyncMock()
+        # Create mock response
+        mock_response = MagicMock()
         mock_response.status_code = 200
-        mock_response.json.return_value = {"result": "success"}
+        mock_response.json.return_value = {
+            "jsonrpc": "2.0",
+            "id": "test_id",
+            "result": {"result": "success"}
+        }
+        mock_response.raise_for_status = MagicMock()
 
-        mock_client = AsyncMock()
-        mock_client.post.return_value = mock_response
-
-        mock_httpx.AsyncClient.return_value = mock_client
-        mock_httpx.Timeout = MagicMock()
-        mock_httpx.Limits = MagicMock()
+        # Create mock client instance
+        mock_client_instance = AsyncMock()
+        mock_client_instance.post.return_value = mock_response
+        mock_async_client.return_value = mock_client_instance
 
         client = AsyncMCPClient()
         await client.connect()
@@ -203,7 +207,7 @@ class TestAsyncMCPClient:
         await client.connect()
 
         with pytest.raises((MCPTimeoutError, Exception)):
-            await client.send_request(method="test_method")
+            await client.send_request(method="test_method", params={})
 
     @pytest.mark.asyncio
     @patch("src.integrations.mcp_client_async.httpx")
@@ -224,7 +228,7 @@ class TestAsyncMCPClient:
         await client.connect()
 
         with pytest.raises((MCPConnectionError, Exception)):
-            await client.send_request(method="test_method")
+            await client.send_request(method="test_method", params={})
 
     @pytest.mark.asyncio
     @patch("src.integrations.mcp_client_async.httpx")
@@ -305,7 +309,7 @@ class TestAsyncMCPClientEdgeCases:
 
         # Try to send without connecting first
         with pytest.raises(Exception):
-            await client.send_request(method="test")
+            await client.send_request(method="test", params={})
 
     @pytest.mark.asyncio
     @patch("src.integrations.mcp_client_async.httpx")
@@ -342,7 +346,7 @@ class TestAsyncMCPClientEdgeCases:
 
         # Should fail after retries exhausted
         with pytest.raises(Exception):
-            await client.send_request(method="test")
+            await client.send_request(method="test", params={})
 
 
 if __name__ == "__main__":

@@ -215,6 +215,21 @@ class AsyncMCPClient:
             raise last_exception
         raise MCPClientError(f"Request failed after {self.max_retries} retries")
 
+    async def send_request(self, method: str, params: Dict[str, Any]) -> Any:
+        """Send generic MCP request.
+
+        Args:
+            method: MCP method name
+            params: Method parameters
+
+        Returns:
+            Result from MCP server
+
+        Raises:
+            MCPClientError: If request fails
+        """
+        return await self._request_with_retry(method, params)
+
     async def read_file(self, path: str, encoding: str = "utf-8") -> str:
         """Read file contents from MCP server.
 
