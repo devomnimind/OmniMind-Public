@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import pytest
 import asyncio
-from unittest.mock import Mock, patch, AsyncMock
+from unittest.mock import Mock, patch
 from datetime import datetime, timezone
 from pathlib import Path
 import tempfile
@@ -138,9 +138,7 @@ class TestAlertingSystem:
         return mock
 
     @pytest.fixture
-    def alerting_system(
-        self, mock_audit_system: Mock
-    ) -> AlertingSystem:
+    def alerting_system(self, mock_audit_system: Mock) -> AlertingSystem:
         """Cria instância do sistema de alertas com mock."""
         return AlertingSystem(audit_system=mock_audit_system)
 
@@ -208,9 +206,7 @@ class TestAlertingSystem:
         assert alerting_system.stats["total_alerts"] == initial_total + 1
         assert alerting_system.stats["by_severity"]["info"] == 1
 
-    def test_create_alert_saves_to_file(
-        self, alerting_system: AlertingSystem
-    ) -> None:
+    def test_create_alert_saves_to_file(self, alerting_system: AlertingSystem) -> None:
         """Testa que alerta é salvo em arquivo."""
         alert = alerting_system.create_alert(
             severity=AlertSeverity.CRITICAL,
@@ -394,7 +390,7 @@ class TestAlertingSystem:
         )
         alerting_system.resolve_alert(alert1.id)
 
-        alert2 = alerting_system.create_alert(
+        alerting_system.create_alert(
             severity=AlertSeverity.WARNING,
             category=AlertCategory.SECURITY,
             title="Test 2",

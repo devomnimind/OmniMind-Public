@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import pytest
 from pathlib import Path
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch
 from datetime import datetime, timedelta, timezone
 import tempfile
 import json

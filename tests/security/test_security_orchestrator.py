@@ -15,8 +15,8 @@ from __future__ import annotations
 
 import asyncio
 import pytest
-from unittest.mock import Mock, patch, MagicMock, AsyncMock
-from datetime import datetime, timezone
+from typing import Any
+from unittest.mock import Mock, patch, AsyncMock
 
 from src.security.security_orchestrator import (
     SecurityOrchestrator,
@@ -24,7 +24,6 @@ from src.security.security_orchestrator import (
     SecurityReport,
     run_security_audit,
 )
-from src.audit.alerting_system import AlertSeverity, AlertCategory
 
 
 class TestSecurityStatus:
@@ -103,9 +102,9 @@ class TestSecurityOrchestrator:
     ) -> None:
         """Testa cálculo de risk score com baixo risco."""
         network_health = {"health_score": 100}
-        network_anomalies = []
-        web_vulnerabilities = []
-        security_events = []
+        network_anomalies: list[dict[str, Any]] = []
+        web_vulnerabilities: list[dict[str, Any]] = []
+        security_events: list[dict[str, Any]] = []
 
         risk_score = orchestrator._calculate_risk_score(
             network_health, network_anomalies, web_vulnerabilities, security_events
@@ -118,9 +117,9 @@ class TestSecurityOrchestrator:
     ) -> None:
         """Testa cálculo de risk score com problemas de rede."""
         network_health = {"health_score": 50}  # 50% health
-        network_anomalies = []
-        web_vulnerabilities = []
-        security_events = []
+        network_anomalies: list[dict[str, Any]] = []
+        web_vulnerabilities: list[dict[str, Any]] = []
+        security_events: list[dict[str, Any]] = []
 
         risk_score = orchestrator._calculate_risk_score(
             network_health, network_anomalies, web_vulnerabilities, security_events
@@ -134,9 +133,13 @@ class TestSecurityOrchestrator:
     ) -> None:
         """Testa cálculo de risk score com anomalias de rede."""
         network_health = {"health_score": 100}
-        network_anomalies = [Mock(), Mock(), Mock()]  # 3 anomalies
-        web_vulnerabilities = []
-        security_events = []
+        network_anomalies: list[dict[str, Any]] = [
+            Mock(),
+            Mock(),
+            Mock(),
+        ]  # 3 anomalies
+        web_vulnerabilities: list[dict[str, Any]] = []
+        security_events: list[dict[str, Any]] = []
 
         risk_score = orchestrator._calculate_risk_score(
             network_health, network_anomalies, web_vulnerabilities, security_events
@@ -150,13 +153,13 @@ class TestSecurityOrchestrator:
     ) -> None:
         """Testa cálculo de risk score com vulnerabilidades críticas."""
         network_health = {"health_score": 100}
-        network_anomalies = []
-        web_vulnerabilities = [
+        network_anomalies: list[dict[str, Any]] = []
+        web_vulnerabilities: list[dict[str, Any]] = [
             {"severity": "CRITICAL"},
             {"severity": "CRITICAL"},
             {"severity": "HIGH"},
         ]
-        security_events = []
+        security_events: list[dict[str, Any]] = []
 
         risk_score = orchestrator._calculate_risk_score(
             network_health, network_anomalies, web_vulnerabilities, security_events
@@ -170,9 +173,9 @@ class TestSecurityOrchestrator:
     ) -> None:
         """Testa cálculo de risk score com eventos de segurança."""
         network_health = {"health_score": 100}
-        network_anomalies = []
-        web_vulnerabilities = []
-        security_events = [Mock(), Mock()]  # 2 events
+        network_anomalies: list[dict[str, Any]] = []
+        web_vulnerabilities: list[dict[str, Any]] = []
+        security_events: list[dict[str, Any]] = [Mock(), Mock()]  # 2 events
 
         risk_score = orchestrator._calculate_risk_score(
             network_health, network_anomalies, web_vulnerabilities, security_events
@@ -375,26 +378,29 @@ class TestSecurityOrchestrator:
     ) -> None:
         """Testa início de monitoramento contínuo."""
         # Mock monitoring methods
-        orchestrator._monitor_network = AsyncMock()
-        orchestrator._monitor_web_applications = AsyncMock()
-        orchestrator._monitor_system_security = AsyncMock()
+        with patch.object(orchestrator, "_monitor_network", new_callable=AsyncMock):
+            with patch.object(
+                orchestrator, "_monitor_web_applications", new_callable=AsyncMock
+            ):
+                with patch.object(
+                    orchestrator, "_monitor_system_security", new_callable=AsyncMock
+                ):
+                    # Start monitoring in background
+                    monitoring_task = asyncio.create_task(
+                        orchestrator.start_continuous_monitoring()
+                    )
 
-        # Start monitoring in background
-        monitoring_task = asyncio.create_task(
-            orchestrator.start_continuous_monitoring()
-        )
+                    # Give it time to start
+                    await asyncio.sleep(0.1)
 
-        # Give it time to start
-        await asyncio.sleep(0.1)
+                    # Verify monitoring is active
+                    assert orchestrator.monitoring_active is True
 
-        # Verify monitoring is active
-        assert orchestrator.monitoring_active is True
+                    # Stop monitoring
+                    orchestrator.stop_continuous_monitoring()
 
-        # Stop monitoring
-        orchestrator.stop_continuous_monitoring()
-
-        # Give it time to stop
-        await asyncio.sleep(0.1)
+                    # Give it time to stop
+                    await asyncio.sleep(0.1)
 
         # Cancel task
         monitoring_task.cancel()
@@ -471,7 +477,7 @@ class TestConvenienceFunctions:
         )
         mock_orchestrator_class.return_value = mock_instance
 
-        result = run_security_audit()
+        run_security_audit()
 
         mock_orchestrator_class.assert_called_once()
         mock_instance.run_full_security_audit.assert_called_once()

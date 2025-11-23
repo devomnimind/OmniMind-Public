@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import pytest
 from pathlib import Path
-from unittest.mock import Mock, patch, mock_open
+from unittest.mock import Mock, patch
 import tempfile
 
 from src.security.dlp import (
@@ -124,9 +124,7 @@ class TestDLPValidator:
     @pytest.fixture
     def temp_policy_file(self) -> Path:
         """Cria arquivo de políticas temporário."""
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".yaml", delete=False
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
             f.write(
                 """
 policies:
@@ -336,9 +334,7 @@ policies:
 
     def test_load_policies_invalid_yaml(self) -> None:
         """Testa carregamento de YAML inválido."""
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".yaml", delete=False
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
             f.write("invalid: yaml: content: [")
             path = Path(f.name)
 
@@ -355,9 +351,7 @@ policies:
 
     def test_load_policies_not_list(self) -> None:
         """Testa carregamento quando policies não é uma lista."""
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".yaml", delete=False
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
             f.write(
                 """
 policies: not_a_list

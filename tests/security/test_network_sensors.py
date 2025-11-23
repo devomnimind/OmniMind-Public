@@ -13,8 +13,7 @@ Cobertura de:
 from __future__ import annotations
 
 import pytest
-from unittest.mock import Mock, patch, MagicMock
-from datetime import datetime, timezone
+from unittest.mock import Mock, patch
 
 from src.security.network_sensors import (
     NetworkSensorGanglia,
@@ -201,9 +200,7 @@ class TestNetworkSensorGanglia:
         assert "error" in result
         assert "timeout" in result["error"]
 
-    def test_parse_nmap_output_single_host(
-        self, sensor: NetworkSensorGanglia
-    ) -> None:
+    def test_parse_nmap_output_single_host(self, sensor: NetworkSensorGanglia) -> None:
         """Testa parse de saída do nmap com um host."""
         nmap_output = """
         Nmap scan report for 192.168.1.1
@@ -266,7 +263,7 @@ class TestNetworkSensorGanglia:
         nmap_output = """
         Nmap scan report for 192.168.1.1
         22/tcp open ssh
-        
+
         Nmap scan report for 192.168.1.2
         80/tcp open http
         """
@@ -446,7 +443,7 @@ class TestConvenienceFunctions:
         mock_instance.scan_network = Mock(return_value={"hosts": []})
         mock_sensor_class.return_value = mock_instance
 
-        result = scan_local_network()
+        scan_local_network()
 
         mock_sensor_class.assert_called_once()
         mock_instance.scan_network.assert_called_with("127.0.0.1", scan_type="service")
