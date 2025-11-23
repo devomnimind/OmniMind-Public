@@ -402,8 +402,8 @@ Registre ANTES de execução:
 ### Exemplos de Formato
 
 ```bash
-./scripts/canonical_log.sh log CODE_AGENT FILE_MODIFIED src/main.py SUCCESS "Arquivo atualizado com nova funcionalidade"
-./scripts/canonical_log.sh log TEST_RUNNER UNIT_TESTS_EXECUTED tests/ SUCCESS "95% de cobertura alcançada"
+./scripts/core/canonical_log.sh log CODE_AGENT FILE_MODIFIED src/main.py SUCCESS "Arquivo atualizado com nova funcionalidade"
+./scripts/core/canonical_log.sh log TEST_RUNNER UNIT_TESTS_EXECUTED tests/ SUCCESS "95% de cobertura alcançada"
 ```
 
 ### Integridade & Imutabilidade
