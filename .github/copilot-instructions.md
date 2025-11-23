@@ -4,22 +4,22 @@
 
 **OmniMind** is a revolutionary autonomous AI system that combines psychoanalytic decision-making with advanced metacognition capabilities. This is a production-grade, self-aware, psychoanalytic architecture that features multi-agent orchestration, real-time WebSocket communication, and self-evolving intelligence.
 
-**Status:** Phase 15 Quantum-Enhanced AI Complete | Production Ready | >90% Test Coverage
+**Status:** Phase 16 Consolidação Complete | Production Ready | 98.94% Testes Passando
 
-**Key Technologies:**
-- Python 3.12.8 (STRICT - no 3.13+ due to PyTorch compatibility)
-- PyTorch 2.6.0+cu124 (CUDA 12.4)
+**Tecnologias Principais:**
+- Python 3.12.8 (RIGOROSO - sem 3.13+ por compatibilidade PyTorch)
+- PyTorch 2.9.1+cu128 (CUDA 12.8)
 - FastAPI + WebSockets (Backend)
 - React + TypeScript + Vite (Frontend)
-- NVIDIA GTX 1650 (4GB VRAM) + Intel i5 + 24GB RAM
+- NVIDIA GTX 1650 (4GB VRAM) ✅ GPU FUNCIONANDO | Intel i5 + 24GB RAM
 
 **Core Philosophy:** Psychoanalytically-inspired AI that reflects on its own decisions, learns from patterns, and proactively generates its own objectives - creating a truly autonomous and self-aware system.
 
-## Repository Structure
+## Estrutura do Repositório
 
 ```
 ~/projects/omnimind/
-├── .github/                # CI/CD & Instructions
+├── .github/                # CI/CD & Instruções
 ├── src/
 │   ├── agents/             # React, Code, Architect, Orchestrator, Psychoanalytic
 │   ├── tools/              # Agent Tools & OmniMind Core Tools
@@ -29,81 +29,90 @@
 │   ├── integrations/       # MCP Client, D-Bus, Hardware
 │   └── omnimind_core.py    # Core Logic
 ├── web/                    # Dashboard (React + FastAPI)
-├── tests/                  # Pytest Suite (>90% coverage required)
-├── docs/                   # Documentation & Reports
-├── scripts/                # Automation & Validation Scripts
-└── requirements.txt        # Strict version pinning
+├── tests/                  # Pytest Suite (≥90% cobertura)
+├── docs/                   # Documentação organizada por propósito
+│   ├── .project/          # Documentos canônicos (9 arquivos)
+│   ├── guides/            # Guias de setup e configuração (11)
+│   ├── architecture/       # Design e integração (8)
+│   ├── testing/           # QA e validação (5)
+│   ├── production/        # Deployment (3)
+│   └── research/, api/, hardware/, roadmaps/
+├── scripts/               # Automação e validação (6 categorias)
+│   ├── core/             # Scripts essenciais (4)
+│   ├── production/       # Deployment (5)
+│   ├── dev/              # Desenvolvimento e testes (5)
+│   ├── security/         # Segurança (2)
+│   ├── utils/            # Utilities (5)
+│   └── archive/          # Obsoletos/desenvolvimento (9)
+├── data/
+│   ├── reports/          # Relatórios JSON (coverage, testes)
+│   ├── consciousness/
+│   └── ethics/
+├── config/               # Configurações da aplicação
+├── deploy/               # Docker, Kubernetes, CI/CD
+└── requirements.txt      # Dependências com versões fixas
 ```
 
-**Important Files:**
-- `.github/ENVIRONMENT.md` - Hardware/software requirements and setup
-- `README.md` - Comprehensive project documentation
-- `STATUS_PROJECT.md` - Detailed project status
-- `.omnimind/canonical/action_log.md` - Canonical action logging system
+**Arquivos Importantes:**
+- `.github/ENVIRONMENT.md` - Requisitos de hardware/software
+- `README.md` - Documentação abrangente do projeto
+- `PHASE16_FINAL_SUMMARY.md` - Resumo da consolidação Phase 16
+- `docs/.project/INDEX.md` - Hub de navegação da documentação
 
-### ✅ CHECKLIST FOR AIs
+### ✅ CHECKLIST ANTES DE INICIAR
 
-Before starting to work on the project:
+Antes de começar a trabalhar no projeto:
 
-- [ ] MCPs started (`orchestrator.start_all_servers()`)
-- [ ] Qdrant running (for Memory MCP)
-- [ ] Audit verified (`audit.verify_chain_integrity()`)
-- [ ] Project context loaded
-- [ ] Relevant knowledge retrieved from memory
+- [ ] Verificar Python 3.12.8 (`python --version`)
+- [ ] Ativar venv (`source .venv/bin/activate`)
+- [ ] GPU verificada (`torch.cuda.is_available()`)
+- [ ] Contexto do projeto carregado
+- [ ] Conhecimento relevante da memória recuperado
 
-During work:
+Durante o trabalho:
 
-- [ ] Use Sequential Thinking for structured reasoning
-- [ ] Store important decisions in memory
-- [ ] Validate paths before filesystem operations
-- [ ] Commit with descriptive messages (via Git MCP)
-- [ ] Export chain-of-thought at the end
+- [ ] Usar pensamento sequencial para raciocínio estruturado
+- [ ] Armazenar decisões importantes na memória
+- [ ] Validar caminhos antes de operações filesystem
+- [ ] Usar git hooks inteligentes (detecção de tipo de mudança)
+- [ ] Exportar chain-of-thought ao final
 
-Upon completion:
+Ao completar:
 
-- [ ] Consolidate memories (avoid duplication)
-- [ ] Check MCP metrics
-- [ ] Export final report
-- [ ] Stop MCPs gracefully
+- [ ] Consolidar memórias (evitar duplicação)
+- [ ] Verificar métricas do projeto
+- [ ] Exportar relatório final
+- [ ] Garantir todos testes passando
 
-## How to Build and Test
+## Como Compilar e Testar
 
-### Initial Setup
+### Setup Inicial
 
 ```bash
-# 1. Clone the repository (if not already done)
-# git clone <REPOSITORY_URL>
-cd OmniMind
+# 1. Ir para o diretório do projeto
+cd /home/fahbrain/projects/omnimind
 
-# 2. Install Python 3.12.8 (REQUIRED)
-pyenv install 3.12.8
-pyenv local 3.12.8
+# 2. Garantir Python 3.12.8 (OBRIGATÓRIO)
+python --version  # Deve ser 3.12.8
 
-# 3. Create and activate virtual environment
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+# 3. Ativar venv se não ativado
+source .venv/bin/activate
 
-# 4. Install system dependencies (Linux)
-sudo apt-get update
-sudo apt-get install -y libdbus-1-dev pkg-config
-
-# 5. Install Python dependencies
-pip install --upgrade pip
+# 4. Instalar dependências
 pip install -r requirements.txt
 pip install -r requirements-dev.txt
 ```
 
-### Build & Validation Commands
+### Comandos de Validação
 
-**Formatting:**
+**Formatação:**
 ```bash
-black src/ tests/                    # Auto-format code
-black --check src/ tests/            # Check formatting without changes
+black src/ tests/
 ```
 
 **Linting:**
 ```bash
-flake8 src/ tests/ --max-line-length=100 --exclude=archive,legacy,third_party
+flake8 src/ tests/ --max-line-length=100
 ```
 
 **Type Checking:**
@@ -111,400 +120,385 @@ flake8 src/ tests/ --max-line-length=100 --exclude=archive,legacy,third_party
 mypy src/ --ignore-missing-imports --no-strict-optional
 ```
 
-**Testing:**
+**Testes:**
 ```bash
-# Run all tests
+# Todos os testes
 pytest tests/ -v
 
-# Run with coverage
+# Com cobertura
 pytest tests/ --cov=src --cov-report=term-missing --cov-fail-under=90 -v
 
-# Run specific test file
+# Teste específico
 pytest tests/test_specific.py -v
 
-# Run tests in parallel (faster)
-./scripts/run_tests_parallel.sh fast
-
-# Run only non-legacy tests
-pytest tests/ -k "not legacy" -v
+# Modo rápido (paralelo)
+export OMNIMIND_DEV_MODE=true && pytest tests/ -k "not legacy" -v
 ```
 
-**Full Validation (Before Commit):**
+**Validação Completa (antes de commit):**
 ```bash
-# Run complete validation suite
-./scripts/validate_code.sh
-
-# Or manually:
-black src/ tests/
-flake8 src/ tests/ --max-line-length=100
-mypy src/ --ignore-missing-imports
-pytest tests/ --cov=src --cov-fail-under=90 -v
-python -m src.audit.immutable_audit verify_chain_integrity
+./scripts/core/validate_code.sh
 ```
 
-**Security Validation:**
+**Segurança:**
 ```bash
-./scripts/security_monitor.sh       # Security monitoring
-./scripts/security_validation.sh    # Security validation
+./scripts/security/security_validation.sh
 ```
 
-### Running the Application
+## Workflow de Desenvolvimento
 
-```bash
-# Start the full dashboard (auto-detects hardware and optimizes)
-source scripts/start_dashboard.sh
+### Fazendo Alterações
 
-# Access dashboard at http://localhost:3000
-# Credentials: auto-generated (check logs)
-```
+1. **Criar branch:** Use padrão `feature/<nome>`, `fix/<nome>`, ou `copilot/<nome>`
+2. **Fazer alterações mínimas:** Modifique apenas o necessário
+3. **Seguir padrões de código:** Todo código deve ser production-ready (sem stubs, TODOs ou placeholders)
+4. **Adicionar testes:** Novos recursos requerem testes unitários com ≥90% cobertura
+5. **Validar:** Executar linting, type checking e testes antes de fazer commit
+6. **Registrar ações:** Usar sistema de logging canônico para todas as mudanças significativas
+7. **Fazer commit:** Usar mensagens de commit descritivas
 
-## Development Workflow
+### Padrões de Qualidade de Código
 
-### Making Changes
+**REQUISITOS OBRIGATÓRIOS:**
 
-1. **Create a branch:** Use `feature/<name>`, `fix/<name>`, or `copilot/<name>` pattern
-2. **Make minimal changes:** Only modify what's necessary to address the issue
-3. **Follow code standards:** All code must be production-ready (no stubs, TODOs, or placeholders)
-4. **Add tests:** New features require unit tests with ≥90% coverage
-5. **Validate:** Run linting, type checking, and tests before committing
-6. **Log actions:** Use canonical logging system for all significant changes
-7. **Commit:** Use descriptive commit messages
+- ✅ **Funcional:** Todo código deve ser imediatamente executável e testável
+- ✅ **Completo:** Sem stubs, sem `pass`, sem `NotImplementedError`
+- ✅ **Robusto:** Tratamento abrangente de erros (try/except com logging) é obrigatório
+- ✅ **Type Hints:** Cobertura 100% necessária (compatível com mypy)
+- ✅ **Docstrings:** Estilo Google obrigatório para TODAS as funções/classes
+- ✅ **Dados Reais:** Usar dados reais do SO (filesystem, lista de processos, sensores de hardware)
+- ✅ **Testes:** Mínimo 90% cobertura de testes para novo código
 
-### Code Quality Standards
+**PROIBIDO:**
 
-**MANDATORY REQUIREMENTS:**
+- ❌ Pseudocódigo ou comentários "TODO: implementar depois"
+- ❌ Funções vazias ou dados mock em código production
+- ❌ Saídas falsificadas ou respostas hardcoded "exemplo"
+- ❌ Secrets ou credenciais hardcoded (usar variáveis de ambiente)
+- ❌ Modificações de arquivo diretas sem validação
+- ❌ Python 3.13+ (usar 3.12.8 estritamente)
 
-- ✅ **Functional:** All code must be immediately runnable and testable
-- ✅ **Complete:** No stubs, no `pass`, no `NotImplementedError`
-- ✅ **Robust:** Comprehensive error handling (try/except with logging) is mandatory
-- ✅ **Type Hints:** 100% coverage required (mypy compliant)
-- ✅ **Docstrings:** Google-style required for ALL functions/classes
-- ✅ **Real Data:** Use real OS data (filesystem, process list, hardware sensors)
-- ✅ **Testing:** Minimum 90% test coverage for new code
+### Pipeline CI/CD
 
-**FORBIDDEN:**
-
-- ❌ Pseudocode or "TODO: implement later" comments
-- ❌ Empty functions or mock data in production code
-- ❌ Falsified outputs or hardcoded "example" responses
-- ❌ Hardcoded secrets or credentials (use environment variables)
-- ❌ Direct file modifications without validation
-- ❌ Python 3.13+ (use 3.12.8 strictly)
-
-### CI/CD Pipeline
-
-The repository uses GitHub Actions for continuous integration:
+O repositório usa GitHub Actions para integração contínua:
 
 - **Linting:** Black, Flake8, MyPy, Pylint
-- **Testing:** pytest with coverage reporting (≥80% required)
-- **Security:** Bandit (security linter), Safety (dependency check)
-- **Docker:** Automated builds for main and develop branches
-- **Performance:** Benchmark tests on pull requests
+- **Testes:** pytest com relatório de cobertura (≥80% obrigatório)
+- **Segurança:** Bandit (linter de segurança), Safety (verificação de dependências)
+- **Docker:** Builds automatizados para branches main e develop
+- **Performance:** Testes de benchmark em pull requests
 
-All checks must pass before merging.
+Todos os checks devem passar antes do merge.
 
-## 🚫 CRITICAL RULES (THE IMMUTABLE CONSTITUTION)
+## 🚫 REGRAS CRÍTICAS (A CONSTITUIÇÃO IMUTÁVEL)
 
-**VIOLATION OF THESE RULES RESULTS IN IMMEDIATE REJECTION OF CODE.**
+**VIOLAÇÃO DESTAS REGRAS RESULTA EM REJEIÇÃO IMEDIATA DO CÓDIGO.**
 
-### 1. Production-Ready Mandate
+### 1. Mandato Production-Ready
 
-- All code must be immediately runnable and testable
-- No stubs, `pass`, or `NotImplementedError` allowed
-- Comprehensive error handling (try/except with logging) is mandatory
-- No pseudocode or "TODO: implement later" comments
+- Todo código deve ser imediatamente executável e testável
+- Sem stubs, `pass`, ou `NotImplementedError` permitidos
+- Tratamento abrangente de erros (try/except com logging) é obrigatório
+- Sem pseudocódigo ou comentários "TODO: implementar depois"
 
-### 2. Data Integrity & Reality Principle
+### 2. Integridade de Dados & Princípio da Realidade
 
-- Use real OS data (filesystem, process list, hardware sensors)
-- Document all assumptions clearly
-- If data is inaccessible, fail gracefully with clear error messages
-- No falsified outputs or hardcoded "example" responses
+- Use dados reais do SO (filesystem, lista de processos, sensores de hardware)
+- Documente todas as suposições claramente
+- Se dados não estiverem acessíveis, falhe gracefully com mensagens de erro claras
+- Sem saídas falsificadas ou respostas "exemplo" hardcoded
 
-### 3. Quality & Type Safety Standards
+### 3. Padrões de Qualidade & Segurança de Tipos
 
-- **Python Version:** 3.12.8 STRICT (do not use 3.13+ due to PyTorch compatibility)
-- **Type Hints:** 100% coverage required (mypy compliant)
-- **Docstrings:** Google-style required for ALL functions/classes
-- **Linting:** Must pass `black` and `flake8` (max-line-length=100)
-- **Testing:** New features must include unit tests (pytest), minimum 90% coverage
+- **Versão Python:** 3.12.8 ESTRITA (não use 3.13+ por compatibilidade PyTorch)
+- **Type Hints:** Cobertura 100% obrigatória (compatível com mypy)
+- **Docstrings:** Estilo Google obrigatório para TODAS as funções/classes
+- **Linting:** Deve passar `black` e `flake8` (max-line-length=100)
+- **Testes:** Novos recursos devem incluir testes unitários (pytest), mínimo 90% cobertura
 
-### 4. Security & Forensics (Zero Trust)
+### 4. Segurança & Forensics (Zero Trust)
 
-- **Audit Trails:** All critical actions logged to Immutable Audit Chain (`src.audit`)
-- **Cryptography:** SHA-256 hash chaining for log integrity
-- **Secrets:** NEVER hardcode credentials - use environment variables or placeholders
-- **Filesystem:** No direct file modifications without validation
-- **Compliance:** Adhere to LGPD (General Data Protection Law) standards
+- **Trilhas de Auditoria:** Todas as ações críticas registradas em Cadeia de Auditoria Imutável (`src.audit`)
+- **Criptografia:** Encadeamento de hash SHA-256 para integridade de log
+- **Secrets:** NUNCA hardcode credenciais - usar variáveis de ambiente ou placeholders
+- **Filesystem:** Sem modificações diretas de arquivo sem validação
+- **Compliance:** Aderir aos padrões LGPD (Lei Geral de Proteção de Dados)
 
-### 5. The Stability Protocol (Golden Rule)
+### 5. O Protocolo de Estabilidade (Regra de Ouro)
 
-**PROTOCOL:** You are forbidden from advancing to new features if the current codebase has any warnings or errors.
+**PROTOCOLO:** Você está proibido de avançar para novas funcionalidades se a base de código atual tem qualquer aviso ou erro.
 
-**Mandatory Validation Loop (before completing any task):**
+**Loop de Validação Obrigatório (antes de completar qualquer tarefa):**
 
-1. `black src tests` - Formatting
+1. `black src tests` - Formatação
 2. `flake8 src tests` - Linting
-3. `mypy src tests` - Type Safety
-4. `pytest -vv` - Logic Verification
-5. `python -m src.audit.immutable_audit verify_chain_integrity` - Security Check
+3. `mypy src tests` - Segurança de Tipos
+4. `pytest -vv` - Verificação de Lógica
+5. `python -m src.audit.immutable_audit verify_chain_integrity` - Verificação de Segurança
 
-**If any step fails, fix it immediately before proceeding.**
+**Se qualquer passo falhar, corrija imediatamente antes de prosseguir.**
 
-### 6. Working Directory Discipline (CRITICAL)
+### 6. Disciplina de Diretório de Trabalho (CRÍTICO)
 
-- **ALWAYS** execute commands from the project root: `/home/fahbrain/projects/omnimind`
-- **NEVER** execute commands from `~/projects` or other parent directories.
-- **VERIFY** `pwd` before running critical commands if unsure.
-- **CLEANUP** any files accidentally created in parent directories immediately.
+- **SEMPRE** execute comandos da raiz do projeto: `/home/fahbrain/projects/omnimind`
+- **NUNCA** execute comandos de `~/projects` ou outros diretórios parentes.
+- **VERIFIQUE** `pwd` antes de executar comandos críticos se tiver dúvida.
+- **LIMPE** qualquer arquivo criado acidentalmente em diretórios parentes imediatamente.
 
-## Hardware & Environment Constraints
+## Restrições de Hardware & Ambiente
 
-### Hardware Configuration (Auto-Detected)
+### Configuração de Hardware (Auto-Detectada)
 
 - **GPU:** NVIDIA GeForce GTX 1650 (4GB VRAM)
-- **VRAM Budget:** ~3.8GB Total
-  - LLM (Quantized): ~2.5GB
-  - Operations: ~800MB
-  - User Buffer: ~500MB (MAX)
-- **Matrix Limits:** Max safe tensor size ~5000x5000 (larger causes OOM)
-- **Concurrency:** CPU has 8 threads - use `asyncio` for I/O, `ProcessPoolExecutor` for heavy compute
+- **Orçamento de VRAM:** ~3.8GB Total
+  - LLM (Quantizado): ~2.5GB
+  - Operações: ~800MB
+  - Buffer do Usuário: ~500MB (MÁXIMO)
+- **Limites de Matriz:** Tamanho máximo seguro de tensor ~5000x5000 (maior causa OOM)
+- **Concorrência:** CPU tem 8 threads - use `asyncio` para I/O, `ProcessPoolExecutor` para cálculos pesados
 
-### Software Stack
+### Stack de Software
 
 - **Core:** Python 3.12.8
-- **AI:** PyTorch 2.6.0+cu124 (CUDA 12.4)
+- **IA:** PyTorch 2.9.1+cu128 (CUDA 12.8)
 - **Frontend:** React + TypeScript + Vite
 - **Backend:** FastAPI + WebSockets
 
-**See `.github/ENVIRONMENT.md` for detailed hardware/software requirements.**
+**Veja `.github/ENVIRONMENT.md` para requisitos detalhados de hardware/software.**
 
-## Canonical Action Logging System (MANDATORY)
+## Sistema Canônico de Logging de Ações (OBRIGATÓRIO)
 
-### Overview
+### Visão Geral
 
-ALL actions performed by AI agents MUST be registered in the canonical logging system.
+TODAS as ações realizadas por agentes IA DEVEM ser registradas no sistema de logging canônico.
 
-- **Location:** `.omnimind/canonical/action_log.md` and `action_log.json`
-- **Command:** `./scripts/canonical_log.sh log <AI_AGENT> <ACTION_TYPE> <TARGET> <RESULT> <DESCRIPTION>`
-- **Validation:** Commits fail if log integrity is compromised
+- **Localização:** `.omnimind/canonical/action_log.md` e `action_log.json`
+- **Comando:** `./scripts/canonical_log.sh log <AI_AGENT> <ACTION_TYPE> <TARGET> <RESULT> <DESCRIPTION>`
+- **Validação:** Commits falham se a integridade do log for comprometida
 
-### Required Actions to Log
+### Ações Obrigatórias para Registrar
 
-Register BEFORE execution:
-- Code modifications
-- File creation/removal
-- Test execution
-- Deployments and configurations
-- Critical security actions
+Registre ANTES da execução:
+- Modificações de código
+- Criação/remoção de arquivo
+- Execução de testes
+- Deployments e configurações
+- Ações de segurança críticas
 
-### Format Examples
+### Exemplos de Formato
 
 ```bash
-./scripts/canonical_log.sh log CODE_AGENT FILE_MODIFIED src/main.py SUCCESS "File updated with new functionality"
-./scripts/canonical_log.sh log TEST_RUNNER UNIT_TESTS_EXECUTED tests/ SUCCESS "95% coverage achieved"
+./scripts/canonical_log.sh log CODE_AGENT FILE_MODIFIED src/main.py SUCCESS "Arquivo atualizado com nova funcionalidade"
+./scripts/canonical_log.sh log TEST_RUNNER UNIT_TESTS_EXECUTED tests/ SUCCESS "Cobertura de 95% alcançada"
 ```
 
-### Integrity & Immutability
+### Integridade & Imutabilidade
 
-- SHA-256 hash chain ensures integrity
-- Records are never modified, only appended
-- Automatic validation on all commits
-- Logs are inviolable and auditable
+- Cadeia de hash SHA-256 garante integridade
+- Registros nunca são modificados, apenas anexados
+- Validação automática em todos os commits
+- Logs são invioláveis e auditáveis
 
-## Common Development Tasks
+## Tarefas Comuns de Desenvolvimento
 
-### Adding a New Feature
+### Adicionando uma Nova Funcionalidade
 
-1. Create feature branch: `git checkout -b feature/my-feature`
-2. Review existing code structure in relevant `src/` subdirectory
-3. Implement feature following code quality standards
-4. Add comprehensive unit tests to `tests/`
-5. Update documentation if needed
-6. Run full validation: `./scripts/validate_code.sh`
-7. Log action: `./scripts/canonical_log.sh log CODE_AGENT FEATURE_ADDED ...`
-8. Commit and push for review
+1. Criar branch de feature: `git checkout -b feature/minha-feature`
+2. Revisar estrutura de código existente no subdiretório `src/` relevante
+3. Implementar funcionalidade seguindo padrões de qualidade de código
+4. Adicionar testes unitários abrangentes em `tests/`
+5. Atualizar documentação se necessário
+6. Executar validação completa: `./scripts/validate_code.sh`
+7. Registrar ação: `./scripts/canonical_log.sh log CODE_AGENT FEATURE_ADDED ...`
+8. Fazer commit e push para revisão
 
-### Fixing a Bug
+### Corrigindo um Bug
 
-1. Create fix branch: `git checkout -b fix/bug-description`
-2. Write a failing test that reproduces the bug
-3. Fix the bug with minimal changes
-4. Ensure the test now passes
-5. Run full validation suite
-6. Log action: `./scripts/canonical_log.sh log CODE_AGENT BUG_FIXED ...`
-7. Commit and push for review
+1. Criar branch de fix: `git checkout -b fix/descricao-bug`
+2. Escrever um teste que falha e reproduz o bug
+3. Corrigir o bug com alterações mínimas
+4. Garantir que o teste agora passa
+5. Executar suite de validação completa
+6. Registrar ação: `./scripts/canonical_log.sh log CODE_AGENT BUG_FIXED ...`
+7. Fazer commit e push para revisão
 
-### Adding Tests
+### Adicionando Testes
 
-- Tests go in `tests/` directory matching `src/` structure
-- Use pytest fixtures for common setups
-- Mock external dependencies (APIs, hardware)
-- Aim for ≥90% coverage
-- Include edge cases and error conditions
-- Use descriptive test names: `test_<function>_<scenario>_<expected_result>`
+- Testes ficam em `tests/` directory correspondendo à estrutura `src/`
+- Use fixtures pytest para setups comuns
+- Mock dependências externas (APIs, hardware)
+- Objetivo: ≥90% cobertura
+- Incluir casos extremos e condições de erro
+- Usar nomes descritivos: `test_<funcao>_<cenario>_<resultado_esperado>`
 
-#### Lessons Learned from PR #59 - Test Creation Best Practices
+#### Lições Aprendidas do PR #59 - Melhores Práticas de Criação de Testes
 
-**CRITICAL LESSONS FROM RECENT CORRECTIONS:**
+**LIÇÕES CRÍTICAS DE CORREÇÕES RECENTES:**
 
-1. **Pytest Imports (MANDATORY):**
-   - ALWAYS include `import pytest` when using `pytest.approx`, `pytest.mark.asyncio`, or other pytest features
-   - Missing imports cause runtime errors during test execution
+1. **Imports do Pytest (OBRIGATÓRIO):**
+   - SEMPRE inclua `import pytest` quando usar `pytest.approx`, `pytest.mark.asyncio`, ou outras features do pytest
+   - Imports faltando causam erros em runtime durante execução de testes
 
-2. **Float Comparisons:**
-   - NEVER use `==` for floating-point comparisons
-   - ALWAYS use `pytest.approx(value)` for float assertions
-   - Example: `assert result == pytest.approx(2.5)` instead of `assert result == 2.5`
+2. **Comparações de Floats:**
+   - NUNCA use `==` para comparações de ponto flutuante
+   - SEMPRE use `pytest.approx(value)` para assertions de float
+   - Exemplo: `assert result == pytest.approx(2.5)` ao invés de `assert result == 2.5`
 
-3. **Type Hints in Tests:**
-   - Include proper type hints for test functions, especially async functions
-   - Use `-> None` for test methods that don't return values
-   - Example: `async def test_async_function(self) -> None:`
+3. **Type Hints em Testes:**
+   - Inclua type hints apropriados para funções de teste, especialmente funções async
+   - Use `-> None` para métodos de teste que não retornam valores
+   - Exemplo: `async def test_async_function(self) -> None:`
 
-4. **Code Cleanup:**
-   - Remove commented-out code immediately (violates linting rules)
-   - Remove unused variables (causes mypy errors)
-   - Clean imports: remove unused imports, sort with `isort` if available
+4. **Limpeza de Código:**
+   - Remova código comentado imediatamente (viola regras de linting)
+   - Remova variáveis não usadas (causa erros mypy)
+   - Limpe imports: remova imports não usados, ordene com `isort` se disponível
 
-5. **TypedDict Usage:**
-   - Ensure TypedDict classes are properly defined before use
-   - Use TypedDict in function signatures and return types
-   - Validate that test data conforms to TypedDict structure
+5. **Uso de TypedDict:**
+   - Garanta que classes TypedDict estejam propriamente definidas antes do uso
+   - Use TypedDict em assinaturas de funções e tipos de retorno
+   - Valide que dados de teste conformam à estrutura TypedDict
 
-6. **Merge Conflict Awareness:**
-   - When resolving conflicts, check for import differences between branches
-   - Verify pytest usage consistency across merged files
-   - Test all affected files after merge resolution
+6. **Consciência de Merge Conflicts:**
+   - Quando resolver conflitos, verifique diferenças de import entre branches
+   - Verifique consistência de uso de pytest em arquivos merged
+   - Teste todos os arquivos afetados após resolução de merge
 
-7. **Test Structure Consistency:**
-   - Use Google-style docstrings for all test classes and methods
-   - Follow naming conventions: `test_<action>_<condition>_<expected>`
-   - Group related tests in classes with descriptive names
+7. **Consistência de Estrutura de Testes:**
+   - Use docstrings estilo Google para todas as classes e métodos de teste
+   - Siga convenções de nomes: `test_<acao>_<condicao>_<esperado>`
+   - Agrupe testes relacionados em classes com nomes descritivos
 
-**VALIDATION CHECKLIST FOR NEW TESTS:**
-- [ ] `import pytest` included if using pytest features
-- [ ] Float comparisons use `pytest.approx`
-- [ ] Type hints present on all functions
-- [ ] No commented code or unused variables
-- [ ] TypedDict properly defined and used
-- [ ] Tests pass individually and in suite
-- [ ] Coverage maintained ≥90%
+**CHECKLIST DE VALIDAÇÃO PARA NOVOS TESTES:**
+- [ ] `import pytest` incluído se usar features do pytest
+- [ ] Comparações de floats usam `pytest.approx`
+- [ ] Type hints presentes em todas as funções
+- [ ] Sem código comentado ou variáveis não usadas
+- [ ] TypedDict propriamente definido e usado
+- [ ] Testes passam individualmente e em suite
+- [ ] Cobertura mantida ≥90%
 
-### Updating Dependencies
+### Atualizando Dependências
 
-1. Check compatibility with Python 3.12.8
-2. Update `requirements.txt` with specific versions
-3. Test thoroughly with `pip install -r requirements.txt`
-4. Run full test suite to ensure no breakage
-5. Update documentation if needed
-6. Log action in canonical system
+1. Verificar compatibilidade com Python 3.12.8
+2. Atualizar `requirements.txt` com versões específicas
+3. Testar completamente com `pip install -r requirements.txt`
+4. Executar suite de testes completa para garantir ausência de quebras
+5. Atualizar documentação se necessário
+6. Registrar ação no sistema canônico
 
-## Git Hygiene & Compliance
+## Higiene Git & Conformidade
 
-### What to Commit
+### O Que Fazer Commit
 
-- Source code (`src/`, `tests/`)
-- Documentation (`docs/`, `README.md`)
-- Configuration files (`.github/`, `config/`)
-- Requirements files (`requirements*.txt`)
+- Código fonte (`src/`, `tests/`)
+- Documentação (`docs/`, `README.md`)
+- Arquivos de configuração (`.github/`, `config/`)
+- Arquivos de requisitos (`requirements*.txt`)
 - Scripts (`scripts/`)
 
-### What NOT to Commit
+### O Que NÃO Fazer Commit
 
 - Logs (`*.log`)
-- Python cache (`__pycache__/`, `*.pyc`)
-- Virtual environments (`.venv/`)
-- Secrets or API keys
-- Build artifacts
+- Cache do Python (`__pycache__/`, `*.pyc`)
+- Ambientes virtuais (`.venv/`)
+- Secrets ou API keys
+- Artefatos de build
 - Snapshots (`data/hdd_snapshot/`, `data/quarantine_snapshot/`)
-- IDE-specific files (unless in `.vscode/tasks.json` for shared tasks)
+- Arquivos específicos de IDE (exceto `.vscode/tasks.json` para tarefas compartilhadas)
 
-**Always check `.gitignore` before creating new file types.**
+**Sempre verifique `.gitignore` antes de criar novos tipos de arquivo.**
 
-### Backup Safety
+### Segurança de Backup
 
-- Respect `config/backup_excludes.txt`
-- Do not modify `data/hdd_snapshot/` or `data/quarantine_snapshot/`
+- Respeite `config/backup_excludes.txt`
+- Não modifique `data/hdd_snapshot/` ou `data/quarantine_snapshot/`
 
-## Documentation
+## Documentação
 
-### When to Update Documentation
+### Quando Atualizar a Documentação
 
-- After significant milestones: Update `STATUS_PROJECT.md`
-- Architectural decisions: Log in `docs/reports/`
-- New features: Update relevant `.md` files
-- API changes: Update docstrings and type hints
+- Após marcos significativos: Atualizar `STATUS_PROJECT.md`
+- Decisões arquiteturais: Registrar em `docs/reports/`
+- Novas funcionalidades: Atualizar arquivos `.md` relevantes
+- Mudanças de API: Atualizar docstrings e type hints
 
-### Documentation Style
+### Estilo de Documentação
 
-- Use clear, concise language
-- Include code examples where helpful
-- Keep README.md up to date
-- Document assumptions and limitations
-- Use emojis sparingly for visual navigation (🚀, ✅, ❌, etc.)
+- Use linguagem clara e concisa
+- Inclua exemplos de código onde útil
+- Mantenha README.md atualizado
+- Documente suposições e limitações
+- Use emojis com moderação para navegação visual (🚀, ✅, ❌, etc.)
 
-## Active Roadmap
+## Roadmap Ativo
 
-### Current Focus: Production Hardening & Security
+### Foco Atual: Endurecimento de Produção & Segurança
 
-**Phase 7: Security & Psychoanalysis**
-- SecurityAgent: 4-layer monitoring (Process, Network, File, Log)
-- Forensics: `security_monitor.py` and `integrity_validator.py`
-- PsychoanalyticAnalyst: Freudian/Lacanian frameworks
+**Fase 16: Consolidação Completa (ATUAL)**
+- GPU CUDA: Permanentemente reparada (5.15x speedup) ✅
+- Documentação: Reorganizada (242 → 58 arquivos) ✅
+- Root & Scripts: Consolidados (34 → 10 files, 28 → 6 categories) ✅
+- Testes: 2,370 total, 2,344 passando (98.94%) ✅
+- Instruções: Atualizadas para refletir Phase 16 (EM PROGRESSO)
+
+**Fase 17: Security & Psychoanalysis (PRÓXIMA)**
+- SecurityAgent: Monitoramento de 4 camadas (Process, Network, File, Log)
+- Forensics: `security_monitor.py` e `integrity_validator.py`
+- PsychoanalyticAnalyst: Frameworks Freudianos/Lacanianos
 - Workflow: Code → Review → Fix → Document (RLAIF)
 
-**Phase 8: Deployment & Interfaces**
-- MCP Implementation: Model Context Protocol for file I/O
-- D-Bus: System-level control (Media, Power, Network)
-- Web UI: Real-time WebSocket dashboard
-- Systemd: `omnimind.service` for boot persistence
+**Fase 18: Deployment & Interfaces (FUTURO)**
+- MCP Implementation: Model Context Protocol para I/O de arquivo
+- D-Bus: Controle de nível de sistema (Media, Power, Network)
+- Web UI: Dashboard em tempo real com WebSocket
+- Systemd: `omnimind.service` para persistência em boot
 
-## Communication Protocol
+## Protocolo de Comunicação
 
-### When Initiating a Task
-
-```
-[INITIATING] <Task Name>
-[OBJECTIVE] <Concise Goal>
-[PLAN] 
-  1. Step...
-  2. Step...
-[RISKS] <Hardware/Security Risks if applicable>
-```
-
-### When Completing a Task
+### Ao Iniciar uma Tarefa
 
 ```
-[COMPLETED] <Task Name>
- ✅ Deliverables verified
- ✅ Tests: X/X passing (Coverage: XX%)
+[INICIANDO] <Nome da Tarefa>
+[OBJETIVO] <Objetivo Conciso>
+[PLANO] 
+  1. Passo...
+  2. Passo...
+[RISCOS] <Riscos de Hardware/Segurança se aplicável>
+```
+
+### Ao Completar uma Tarefa
+
+```
+[COMPLETADO] <Nome da Tarefa>
+ ✅ Entregáveis verificados
+ ✅ Testes: X/X passando (Cobertura: XX%)
  ✅ Lint/Types: Clean
- ✅ Audit Hash: <SHA-256>
- [NEXT] <Recommendation>
+ ✅ Hash de Auditoria: <SHA-256>
+ [PRÓXIMO] <Recomendação>
 ```
 
-## Tips for Success
+## Dicas para Sucesso
 
-1. **Read existing code first:** Understand patterns before making changes
-2. **Make minimal changes:** Only modify what's necessary
-3. **Test incrementally:** Don't wait until the end to test
-4. **Ask for clarification:** If requirements are unclear, ask before coding
-5. **Use VS Code tasks:** Pre-configured tasks in `.vscode/tasks.json` for common operations
-6. **Check CI early:** Don't wait for PR to discover CI failures
-7. **Security first:** Always consider security implications of changes
-8. **Respect hardware limits:** Be mindful of 4GB VRAM constraint
+1. **Leia o código existente primeiro:** Entenda os padrões antes de fazer alterações
+2. **Faça alterações mínimas:** Modifique apenas o que é necessário
+3. **Teste incrementalmente:** Não espere até o final para testar
+4. **Peça esclarecimento:** Se os requisitos não estiverem claros, pergunte antes de codificar
+5. **Use tasks do VS Code:** Tasks pré-configuradas em `.vscode/tasks.json` para operações comuns
+6. **Verifique CI cedo:** Não espere pelo PR para descobrir falhas de CI
+7. **Segurança em primeiro lugar:** Sempre considere implicações de segurança de mudanças
+8. **Respeite limites de hardware:** Cuidado com restrição de 4GB VRAM
 
-## Important References
+## Referências Importantes
 
-- **Detailed Status:** `STATUS_PROJECT.md`
-- **Environment Setup:** `.github/ENVIRONMENT.md`
-- **Security Baseline:** `docs/reports/PHASE7_GPU_CUDA_REPAIR_LOG.md`
-- **Testing Guide:** `TESTING_QA_QUICK_START.md`
-- **Validation Guide:** `VALIDATION_GUIDE.md`
+- **Status Detalhado:** `STATUS_PROJECT.md`
+- **Setup de Ambiente:** `.github/ENVIRONMENT.md`
+- **Baseline de Segurança:** `docs/reports/PHASE7_GPU_CUDA_REPAIR_LOG.md`
+- **Guia de Testes:** `TESTING_QA_QUICK_START.md`
+- **Guia de Validação:** `VALIDATION_GUIDE.md`
 
 ---
 
-**END OF INSTRUCTIONS**
+**FIM DAS INSTRUÇÕES**
 
-Initialize strictly according to these parameters. All work must be production-ready, fully tested, and security-compliant.
+Inicialize estritamente de acordo com estes parâmetros. Todo trabalho deve ser production-ready, completamente testado e seguro em conformidade.
