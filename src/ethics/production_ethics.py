@@ -276,7 +276,7 @@ class ProductionEthicsSystem:
         if self.ethics_metrics.decision_logs:
             trail["last_decision"] = self.ethics_metrics.decision_logs[-1].timestamp
 
-        logger.info("audit_trail_generated", **trail)
+        logger.info("audit_trail_generated", extra=trail)
 
         return trail
 

@@ -4,9 +4,6 @@ Testes para Architecture - Bekenstein Capacity.
 Group 11: Core Infrastructure - architecture/
 """
 
-import pytest
-import math
-
 from src.architecture.bekenstein_capacity import BekensteinArchitect
 
 

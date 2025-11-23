@@ -4,10 +4,8 @@ Testes para Identity - Agent Signature and Digital Identity.
 Group 14: Integration Layer - identity/
 """
 
-import hashlib
 import json
 import tempfile
-from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -34,9 +32,9 @@ class TestWorkSignature:
         assert sig.agent_id == "test-agent"
         assert sig.artifact_hash == "abc123"
         assert sig.timestamp == "2024-01-01T00:00:00Z"
-        assert sig.autonomy_level == 0.8
+        assert sig.autonomy_level == pytest.approx(0.8)
         assert sig.human_oversight is None
-        assert sig.reputation_at_signing == 0.0
+        assert sig.reputation_at_signing == pytest.approx(0.0)
         assert sig.metadata == {}
 
     def test_to_dict(self) -> None:
@@ -56,9 +54,9 @@ class TestWorkSignature:
         assert isinstance(sig_dict, dict)
         assert sig_dict["agent_id"] == "test-agent"
         assert sig_dict["artifact_hash"] == "abc123"
-        assert sig_dict["autonomy_level"] == 0.8
+        assert sig_dict["autonomy_level"] == pytest.approx(0.8)
         assert sig_dict["human_oversight"] == "John Doe"
-        assert sig_dict["reputation_at_signing"] == 0.75
+        assert sig_dict["reputation_at_signing"] == pytest.approx(0.75)
         assert sig_dict["metadata"]["key"] == "value"
 
 
@@ -69,12 +67,12 @@ class TestReputationScore:
         """Testa inicialização com valores padrão."""
         rep = ReputationScore()
 
-        assert rep.overall_score == 0.0
-        assert rep.code_quality == 0.0
-        assert rep.task_completion == 0.0
-        assert rep.autonomy == 0.0
-        assert rep.reliability == 0.0
-        assert rep.community_feedback == 0.0
+        assert rep.overall_score == pytest.approx(0.0)
+        assert rep.code_quality == pytest.approx(0.0)
+        assert rep.task_completion == pytest.approx(0.0)
+        assert rep.autonomy == pytest.approx(0.0)
+        assert rep.reliability == pytest.approx(0.0)
+        assert rep.community_feedback == pytest.approx(0.0)
         assert rep.total_tasks == 0
         assert rep.successful_tasks == 0
         assert rep.failed_tasks == 0
@@ -88,7 +86,7 @@ class TestReputationScore:
         assert rep.total_tasks == 1
         assert rep.successful_tasks == 1
         assert rep.failed_tasks == 0
-        assert rep.task_completion == 1.0  # 100% success rate
+        assert rep.task_completion == pytest.approx(1.0)  # 100% success rate
         assert rep.code_quality > 0.0
         assert rep.autonomy > 0.0
         assert rep.reliability > 0.0
@@ -103,7 +101,7 @@ class TestReputationScore:
         assert rep.total_tasks == 1
         assert rep.successful_tasks == 0
         assert rep.failed_tasks == 1
-        assert rep.task_completion == 0.0
+        assert rep.task_completion == pytest.approx(0.0)
         assert rep.overall_score >= 0.0
 
     def test_update_multiple_tasks(self) -> None:
@@ -120,7 +118,7 @@ class TestReputationScore:
         assert rep.total_tasks == 4
         assert rep.successful_tasks == 3
         assert rep.failed_tasks == 1
-        assert rep.task_completion == 0.75  # 75% success rate
+        assert rep.task_completion == pytest.approx(0.75)  # 75% success rate
 
     def test_exponential_moving_average(self) -> None:
         """Testa que scores usam média móvel exponencial."""
@@ -148,7 +146,7 @@ class TestReputationScore:
         rep.reliability = 0.85
 
         # overall = 0.3*code + 0.3*completion + 0.2*autonomy + 0.2*reliability
-        expected = 0.8 * 0.3 + 0.9 * 0.3 + 0.7 * 0.2 + 0.85 * 0.2
+        # expected = 0.8 * 0.3 + 0.9 * 0.3 + 0.7 * 0.2 + 0.85 * 0.2
 
         # Calcular através de update
         rep.update_from_task(success=True, quality_score=0.8, autonomy_level=0.7)
@@ -234,7 +232,7 @@ class TestAgentIdentity:
         assert isinstance(signature, WorkSignature)
         assert signature.agent_id == identity.agent_id
         assert len(signature.artifact_hash) == 64  # SHA-256 hex
-        assert signature.autonomy_level == 0.9
+        assert signature.autonomy_level == pytest.approx(0.9)
         assert signature.human_oversight == "John Doe"
         assert signature.metadata["language"] == "python"
         assert len(identity.signatures) == 1

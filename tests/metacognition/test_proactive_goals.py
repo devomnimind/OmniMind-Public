@@ -4,10 +4,8 @@ Tests for proactive goal generation and repository analysis.
 Total: 29 tests covering all goal generation capabilities.
 """
 
-import pytest
 import json
 from pathlib import Path
-from typing import List
 
 from src.metacognition.proactive_goals import (
     GoalCategory,

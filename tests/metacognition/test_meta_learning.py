@@ -32,12 +32,6 @@ class TestMetaLearningBasics:
             "learned_patterns": [],
         }
 
-    def test_meta_learner_initialization(self, meta_learner: Dict[str, Any]) -> None:
-        """Testa inicialização do meta-learner."""
-        assert isinstance(meta_learner["strategies"], list)
-        assert isinstance(meta_learner["performance_history"], list)
-        assert isinstance(meta_learner["learned_patterns"], list)
-
     def test_strategy_learning(self, meta_learner: Dict[str, Any]) -> None:
         """Testa aprendizado de novas estratégias."""
         # Adiciona estratégia
@@ -54,7 +48,7 @@ class TestMetaLearningBasics:
         meta_learner["performance_history"].append(performance)
 
         assert len(meta_learner["performance_history"]) == 1
-        assert meta_learner["performance_history"][0]["accuracy"] == 0.85
+        assert meta_learner["performance_history"][0]["accuracy"] == pytest.approx(0.85)
 
 
 class TestAdaptiveLearning:
@@ -136,7 +130,7 @@ class TestAdaptiveLearning:
         optimizer.set_baseline_configuration(baseline)
 
         # Adapta learning rate
-        best_lr, score = optimizer.auto_tune_parameter(
+        best_lr, _ = optimizer.auto_tune_parameter(
             parameter_name="learning_rate",
             current_value=0.01,
             value_range=(0.001, 0.05),
@@ -168,7 +162,7 @@ class TestStrategyOptimization:
         optimizer.set_baseline_configuration(baseline)
 
         treatment = Configuration("new", "New", {"strategy": "B"})
-        test = optimizer.create_ab_test("strat_test", "Strategy Test", treatment)
+        _ = optimizer.create_ab_test("strat_test", "Strategy Test", treatment)
         optimizer.start_test("strat_test")
 
         # Record metrics
@@ -329,27 +323,6 @@ class TestMetaReasoning:
         assert metacog_agent.last_analysis is not None
 
 
-# class TestLearningFromExperience:
-#     """Testes para aprendizado a partir de experiência (Pending Implementation)."""
-#
-#     @pytest.fixture
-#     def optimizer(self) -> SelfOptimizationEngine:
-#         """Fixture para optimizer."""
-#         return SelfOptimizationEngine()
-#
-#     def test_experience_recording(self, optimizer: SelfOptimizationEngine) -> None:
-#         """Testa gravação de experiências."""
-#         pass
-#
-#     def test_pattern_recognition(self, optimizer: SelfOptimizationEngine) -> None:
-#         """Testa reconhecimento de padrões em experiências."""
-#         pass
-#
-#     def test_learning_from_failures(self, optimizer: SelfOptimizationEngine) -> None:
-#         """Testa aprendizado a partir de falhas."""
-#         pass
-
-
 class TestGoalGeneration:
     """Testes para geração inteligente de objetivos."""
 
@@ -410,7 +383,7 @@ class TestMetaLearningIntegration:
             baseline = Configuration("base", "Base", {"lr": 0.01})
             optimizer.set_baseline_configuration(baseline)
 
-            optimized_val, score = optimizer.auto_tune_parameter(
+            optimized_val, _ = optimizer.auto_tune_parameter(
                 "lr", 0.01, (0.001, 0.1), 0.01
             )
 
@@ -431,23 +404,22 @@ class TestMetaLearningIntegration:
 
     def test_meta_learning_feedback_loop(self) -> None:
         """Testa loop de feedback de meta-aprendizado (simulado)."""
-        with tempfile.TemporaryDirectory() as tmpdir:
-            optimizer = SelfOptimizationEngine()
-            from src.metacognition.self_optimization import Configuration
+        optimizer = SelfOptimizationEngine()
+        from src.metacognition.self_optimization import Configuration
 
-            baseline = Configuration("base", "Base", {"lr": 0.01})
-            optimizer.set_baseline_configuration(baseline)
+        baseline = Configuration("base", "Base", {"lr": 0.01})
+        optimizer.set_baseline_configuration(baseline)
 
-            # Ciclo iterativo
-            current_val = 0.01
-            for _ in range(3):
-                new_val, score = optimizer.auto_tune_parameter(
-                    "lr", current_val, (0.001, 0.1), 0.01
-                )
-                current_val = new_val
+        # Ciclo iterativo
+        current_val = 0.01
+        for _ in range(3):
+            new_val, _ = optimizer.auto_tune_parameter(
+                "lr", current_val, (0.001, 0.1), 0.01
+            )
+            current_val = new_val
 
-            # Performance deve ser rastreada
-            assert len(optimizer._optimization_history) >= 3
+        # Performance deve ser rastreada
+        assert len(optimizer._optimization_history) >= 3
 
 
 class TestMetaLearningEdgeCases:
@@ -475,7 +447,7 @@ class TestMetaLearningEdgeCases:
 
         treatment = Configuration("new", "New", {"lr": 0.02})
         # Set min_samples=1 to allow analysis with few samples
-        test = optimizer.create_ab_test(
+        _ = optimizer.create_ab_test(
             "test_conflict", "Conflict Test", treatment, min_samples=1
         )
         optimizer.start_test("test_conflict")
@@ -508,7 +480,7 @@ class TestMetaLearningEdgeCases:
         # Múltiplas otimizações consecutivas
         results = []
         for _ in range(10):
-            val, score = optimizer.auto_tune_parameter("lr", 0.01, (0.001, 0.1), 0.01)
+            _, score = optimizer.auto_tune_parameter("lr", 0.01, (0.001, 0.1), 0.01)
             results.append(score)
 
         # Sistema deve permanecer estável

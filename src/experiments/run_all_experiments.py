@@ -26,7 +26,8 @@ def run_all_experiments(output_dir: Optional[Path] = None) -> Dict[str, Any]:
     """Run all experiments and return results.
 
     Args:
-        output_dir: Optional directory to save results (not used by current implementations but kept for API compatibility)
+        output_dir: Optional directory to save results (not used by
+            current implementations but kept for API compatibility)
 
     Returns:
         Dictionary with all experiment results
@@ -57,16 +58,14 @@ def generate_summary(results: Dict[str, Any]) -> Dict[str, Any]:
     Returns:
         Summary dictionary
     """
-    summary = {
-        "total_experiments": 0,
-        "successful": 0,
-        "failed": 0,
-        "experiments": [],
-    }
+    total_experiments = 0
+    successful = 0
+    failed = 0
+    experiments = []
 
-    for category, experiments in results.items():
-        for name, result in experiments.items():
-            summary["total_experiments"] += 1
+    for category, experiments_dict in results.items():
+        for name, result in experiments_dict.items():
+            total_experiments += 1
 
             # Check validation status
             validated = False
@@ -78,35 +77,36 @@ def generate_summary(results: Dict[str, Any]) -> Dict[str, Any]:
                 validated = result.get("hypothesis_validated", False)
 
             if validated:
-                summary["successful"] += 1
+                successful += 1
             else:
-                summary["failed"] += 1
+                failed += 1
 
-            summary["experiments"].append(
+            experiments.append(
                 {"name": name, "category": category, "validated": validated}
             )
 
-    return summary
+    return {
+        "total_experiments": total_experiments,
+        "successful": successful,
+        "failed": failed,
+        "experiments": experiments,
+    }
 
 
 def main() -> None:
     """Run all AI autonomy experiments."""
     print("\n\n")
-    print("╔" + "═" * 68 + "╗")
-    print("║" + " " * 68 + "║")
+    print(f"╔{'═' * 68}╗")
+    print(f"║{' ' * 68}║")
     print(
-        "║"
-        + " " * 10
-        + "OMNIMIND - EXPERIMENTOS DE AUTONOMIA AI-HUMAN"
-        + " " * 13
-        + "║"
+        f"║{' ' * 10}OMNIMIND - EXPERIMENTOS DE AUTONOMIA AI-HUMAN{' ' * 13}║"
     )
-    print("║" + " " * 68 + "║")
+    print(f"║{' ' * 68}║")
     print(
-        "║" + " " * 15 + "Validação de Métricas de Consciência e Ética" + " " * 9 + "║"
+        f"║{' ' * 15}Validação de Métricas de Consciência e Ética{' ' * 9}║"
     )
-    print("║" + " " * 68 + "║")
-    print("╚" + "═" * 68 + "╝")
+    print(f"║{' ' * 68}║")
+    print(f"╚{'═' * 68}╝")
     print()
     print("Referências:")
     print("  - docs/concienciaetica-autonomia.md")
@@ -125,9 +125,9 @@ def main() -> None:
 
     # Final summary
     print("\n\n")
-    print("╔" + "═" * 68 + "╗")
-    print("║" + " " * 22 + "TODOS EXPERIMENTOS CONCLUÍDOS" + " " * 17 + "║")
-    print("╚" + "═" * 68 + "╝")
+    print(f"╔{'═' * 68}╗")
+    print(f"║{' ' * 22}TODOS EXPERIMENTOS CONCLUÍDOS{' ' * 17}║")
+    print(f"╚{'═' * 68}╝")
     print()
     print("Relatórios gerados em:")
     print("  - data/experiments/consciousness/")

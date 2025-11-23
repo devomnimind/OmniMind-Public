@@ -6,8 +6,6 @@ Group 15: Learning & Monitoring - observability/
 
 import time
 
-import pytest
-
 from src.observability.distributed_tracing import (
     DistributedTracer,
     Span,
@@ -234,8 +232,8 @@ class TestDistributedTracer:
         tracer = DistributedTracer(config)
 
         parent = tracer.start_span(name="parent")
-        child1 = tracer.start_span(name="child1", parent=parent.context)
-        child2 = tracer.start_span(name="child2", parent=parent.context)
+        _ = tracer.start_span(name="child1", parent=parent.context)
+        _ = tracer.start_span(name="child2", parent=parent.context)
 
         trace_id = parent.context.trace_id
         trace_spans = tracer.get_trace(trace_id)

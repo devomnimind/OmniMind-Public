@@ -337,7 +337,7 @@ class TestCollectiveIntelligenceIntegration:
         assert coordinator is not None
 
 
-class TestConsensusLearning:
+class TestConsensusLearningAdvanced:
     """Testes adicionais para ConsensusLearning."""
 
     def test_share_experience(self) -> None:

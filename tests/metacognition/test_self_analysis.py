@@ -4,11 +4,10 @@ Tests for analyzing agent's own decision-making and execution patterns.
 Total: 29 tests covering all self-analysis capabilities.
 """
 
-import pytest
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Dict, List
+import pytest
 
 from src.metacognition.self_analysis import SelfAnalysis
 
@@ -179,7 +178,7 @@ class TestAnalyzeDecisionPatterns:
         analyzer = SelfAnalysis(hash_chain_path=str(log_file))
         result = analyzer.analyze_decision_patterns(lookback_hours=1)
 
-        assert result["success_rate"] == 0.75
+        assert result["success_rate"] == pytest.approx(0.75)
 
     def test_tool_usage_tracking(self, tmp_path: Path) -> None:
         """Test tool usage tracking."""
@@ -251,8 +250,8 @@ class TestAnalyzeExecutionTimes:
 
         tool1_stats = result["tool_performance"]["tool1"]
         assert tool1_stats["count"] == 3
-        assert tool1_stats["avg"] == 2.0
-        assert tool1_stats["min"] == 1.5
+        assert tool1_stats["avg"] == pytest.approx(2.0)
+        assert tool1_stats["min"] == pytest.approx(1.5)
         assert tool1_stats["max"] == 2.5
 
     def test_missing_duration_handled(self, tmp_path: Path) -> None:
@@ -412,8 +411,8 @@ class TestAnalyzeResourceUsage:
         analyzer = SelfAnalysis(hash_chain_path=str(log_file))
         result = analyzer.analyze_resource_usage()
 
-        assert result["avg_cpu_percent"] == 60.0
-        assert result["avg_memory_percent"] == 70.0
+        assert result["avg_cpu_percent"] == pytest.approx(60.0)
+        assert result["avg_memory_percent"] == pytest.approx(70.0)
         assert result["samples"] == 2
 
 

@@ -4,9 +4,7 @@ Testes para Compliance - GDPR Framework.
 Group 13: System Services - compliance/
 """
 
-from datetime import datetime, timedelta, UTC
-
-import pytest
+from datetime import datetime
 
 from src.compliance.gdpr_compliance import (
     ConsentStatus,

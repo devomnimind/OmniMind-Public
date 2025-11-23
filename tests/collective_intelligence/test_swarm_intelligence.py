@@ -4,8 +4,8 @@ Tests for bio-inspired swarm algorithms including PSO and ACO.
 Total: 29 tests covering all aspects of swarm intelligence.
 """
 
-import pytest
 from typing import List
+import pytest
 
 from src.collective_intelligence.swarm_intelligence import (
     AntColonyOptimizer,
@@ -24,14 +24,14 @@ class TestSwarmConfiguration:
         """Test default swarm configuration values."""
         config = SwarmConfiguration()
 
-        assert config.cohesion_weight == 0.3
-        assert config.separation_weight == 0.4
-        assert config.alignment_weight == 0.3
-        assert config.max_velocity == 1.0
-        assert config.perception_radius == 5.0
-        assert config.inertia == 0.7
-        assert config.cognitive_weight == 1.5
-        assert config.social_weight == 1.5
+        assert config.cohesion_weight == pytest.approx(0.3)
+        assert config.separation_weight == pytest.approx(0.4)
+        assert config.alignment_weight == pytest.approx(0.3)
+        assert config.max_velocity == pytest.approx(1.0)
+        assert config.perception_radius == pytest.approx(5.0)
+        assert config.inertia == pytest.approx(0.7)
+        assert config.cognitive_weight == pytest.approx(1.5)
+        assert config.social_weight == pytest.approx(1.5)
 
     def test_custom_configuration(self) -> None:
         """Test custom swarm configuration."""
@@ -43,11 +43,11 @@ class TestSwarmConfiguration:
             inertia=0.9,
         )
 
-        assert config.cohesion_weight == 0.5
-        assert config.separation_weight == 0.3
-        assert config.alignment_weight == 0.2
-        assert config.max_velocity == 2.0
-        assert config.inertia == 0.9
+        assert config.cohesion_weight == pytest.approx(0.5)
+        assert config.separation_weight == pytest.approx(0.3)
+        assert config.alignment_weight == pytest.approx(0.2)
+        assert config.max_velocity == pytest.approx(2.0)
+        assert config.inertia == pytest.approx(0.9)
 
 
 class TestSwarmAgent:
@@ -189,7 +189,7 @@ class TestSwarmCoordinator:
         metrics = coordinator.get_swarm_metrics()
 
         assert metrics["num_agents"] == 10
-        assert metrics["avg_fitness"] == 4.5  # Average of 0-9
+        assert metrics["avg_fitness"] == pytest.approx(4.5)  # Average of 0-9
         assert "diversity" in metrics
         assert "iteration" in metrics
 
@@ -221,9 +221,9 @@ class TestParticleSwarmOptimizer:
 
         assert pso.coordinator.dimension == 3
         assert pso.coordinator.num_agents == 25
-        assert pso.coordinator.config.inertia == 0.8
-        assert pso.coordinator.config.cognitive_weight == 1.2
-        assert pso.coordinator.config.social_weight == 1.8
+        assert pso.coordinator.config.inertia == pytest.approx(0.8)
+        assert pso.coordinator.config.cognitive_weight == pytest.approx(1.2)
+        assert pso.coordinator.config.social_weight == pytest.approx(1.8)
 
     def test_pso_optimize_sphere_function(self) -> None:
         """Test PSO on sphere function."""
@@ -248,7 +248,7 @@ class TestParticleSwarmOptimizer:
             x, y = pos[0], pos[1]
             return (1 - x) ** 2 + 100 * (y - x**2) ** 2
 
-        best_position, best_value = pso.optimize(rosenbrock, max_iterations=100)
+        _, best_value = pso.optimize(rosenbrock, max_iterations=100)
 
         # Should make progress towards minimum at (1, 1)
         assert best_value < 100.0  # Should improve from random initialization

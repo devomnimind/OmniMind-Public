@@ -4,9 +4,9 @@ Tests for behavioral pattern detection and anomaly identification.
 Total: 29 tests covering all pattern recognition capabilities.
 """
 
+from datetime import datetime
+
 import pytest
-from datetime import datetime, timedelta
-from typing import Any, Dict, List
 
 from src.metacognition.pattern_recognition import PatternRecognition
 
@@ -18,22 +18,22 @@ class TestPatternRecognitionInitialization:
         """Test default initialization."""
         pr = PatternRecognition()
 
-        assert pr.sensitivity == 0.7
+        assert pr.sensitivity == pytest.approx(0.7)
         assert pr._patterns == {}
 
     def test_custom_sensitivity(self) -> None:
         """Test initialization with custom sensitivity."""
         pr = PatternRecognition(sensitivity=0.9)
 
-        assert pr.sensitivity == 0.9
+        assert pr.sensitivity == pytest.approx(0.9)
 
     def test_sensitivity_bounds(self) -> None:
         """Test that sensitivity can be set at boundaries."""
         pr_min = PatternRecognition(sensitivity=0.0)
         pr_max = PatternRecognition(sensitivity=1.0)
 
-        assert pr_min.sensitivity == 0.0
-        assert pr_max.sensitivity == 1.0
+        assert pr_min.sensitivity == pytest.approx(0.0)
+        assert pr_max.sensitivity == pytest.approx(1.0)
 
 
 class TestDetectRepetitiveBehavior:
@@ -184,7 +184,7 @@ class TestDetectBias:
         bias = result["biases"][0]
         assert bias["type"] == "tool"
         assert bias["name"] == "tool1"
-        assert bias["usage_ratio"] == 0.8
+        assert bias["usage_ratio"] == pytest.approx(0.8)
         assert bias["severity"] in ["medium", "high"]  # 0.8 is exactly on boundary
 
     def test_agent_bias_detected(self) -> None:
@@ -260,7 +260,7 @@ class TestDetectAnomalies:
 
         assert len(slow_anomalies) > 0
         assert slow_anomalies[0]["operation"] == "slow"
-        assert slow_anomalies[0]["duration"] == 100.0
+        assert slow_anomalies[0]["duration"] == pytest.approx(100.0)
 
     def test_high_failure_rate_anomaly(self) -> None:
         """Test detection of high failure rate."""
@@ -359,7 +359,7 @@ class TestCalculateDiversityScore:
         pr = PatternRecognition()
         result = pr.calculate_diversity_score([])
 
-        assert result["diversity_score"] == 0.0
+        assert result["diversity_score"] == pytest.approx(0.0)
         assert result["message"] == "No operations to analyze"
 
     def test_low_diversity(self) -> None:

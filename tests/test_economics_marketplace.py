@@ -181,7 +181,7 @@ class TestMarketplaceAgent:
         tool_artifact = '''"""
         High quality tool with documentation.
         """
-        
+
         def process_data(data: list[str]) -> dict[str, int]:
             """Process data and return statistics."""
             try:

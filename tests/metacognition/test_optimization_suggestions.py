@@ -5,8 +5,6 @@ Total: 29 tests covering all optimization analysis capabilities.
 """
 
 import pytest
-from typing import Any, Dict, List
-
 from src.metacognition.optimization_suggestions import (
     OptimizationSuggestion,
     OptimizationSuggestions,
@@ -49,7 +47,7 @@ class TestOptimizationSuggestion:
         )
 
         assert suggestion.metrics == metrics
-        assert suggestion.metrics["current_time"] == 5.2
+        assert suggestion.metrics["current_time"] == pytest.approx(5.2)
 
     def test_suggestion_to_dict(self) -> None:
         """Test converting suggestion to dictionary."""

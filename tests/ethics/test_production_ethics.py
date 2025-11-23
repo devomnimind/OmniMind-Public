@@ -17,7 +17,6 @@ import pytest
 from src.ethics.production_ethics import ProductionEthicsSystem
 from src.metrics.ethics_metrics import (
     MoralScenario,
-    DecisionLog,
     TransparencyComponents,
     MoralFoundation,
 )
