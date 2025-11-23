@@ -217,7 +217,7 @@ pytest tests/ --cov=src --cov-report=term-missing --cov-fail-under=90 -v
 pytest tests/test_specific.py -v
 
 # Testes em paralelo (mais rápido)
-./scripts/run_tests_parallel.sh fast
+./scripts/dev/run_tests_parallel.sh fast
 
 # Apenas testes não-legados
 pytest tests/ -k "not legacy" -v
@@ -226,7 +226,7 @@ pytest tests/ -k "not legacy" -v
 **Validação Completa (Antes de Commit):**
 ```bash
 # Suite completa de validação
-./scripts/validate_code.sh
+./scripts/core/validate_code.sh
 
 # Ou manualmente:
 black src/ tests/
@@ -238,15 +238,15 @@ python -m src.audit.immutable_audit verify_chain_integrity
 
 **Validação de Segurança:**
 ```bash
-./scripts/security_monitor.sh       # Monitoramento de segurança
-./scripts/security_validation.sh    # Validação de segurança
+./scripts/security/security_monitor.sh       # Monitoramento de segurança
+./scripts/security/security_validation.sh    # Validação de segurança
 ```
 
 ### Executar a Aplicação
 
 ```bash
 # Inicie o dashboard completo (detecta hardware automaticamente e otimiza)
-source scripts/start_dashboard.sh
+source scripts/production/start_dashboard.sh
 
 # Acesse dashboard em http://localhost:3000
 # Credenciais: auto-geradas (verificar logs)
@@ -308,8 +308,8 @@ Todos os testes devem passar antes de fazer merge.
 3. Implemente feature seguindo padrões de qualidade
 4. Adicione testes unitários abrangentes em `tests/`
 5. Atualize documentação se necessário
-6. Execute validação completa: `./scripts/validate_code.sh`
-7. Log de ação: `./scripts/canonical_log.sh log CODE_AGENT FEATURE_ADDED ...`
+5. Execute validação completa: `./scripts/core/validate_code.sh`
+6. Log de ação: `./scripts/core/canonical_log.sh log CODE_AGENT FEATURE_ADDED ...`
 8. Commit e push para revisão
 
 ## 🐛 Corrigindo um Bug
@@ -319,7 +319,7 @@ Todos os testes devem passar antes de fazer merge.
 3. Corrija o bug com alterações mínimas
 4. Verifique se o teste agora passa
 5. Execute suite de validação completa
-6. Log de ação: `./scripts/canonical_log.sh log CODE_AGENT BUG_FIXED ...`
+6. Log de ação: `./scripts/core/canonical_log.sh log CODE_AGENT BUG_FIXED ...`
 7. Commit e push para revisão
 
 ## ✏️ Adicionando Testes
@@ -387,7 +387,7 @@ Todos os testes devem passar antes de fazer merge.
 TODAS as ações executadas por agentes IA DEVEM ser registradas no sistema de logging canônico.
 
 - **Localização:** `.omnimind/canonical/action_log.md` e `action_log.json`
-- **Comando:** `./scripts/canonical_log.sh log <AI_AGENT> <ACTION_TYPE> <TARGET> <RESULT> <DESCRIPTION>`
+- **Comando:** `./scripts/core/canonical_log.sh log <AI_AGENT> <ACTION_TYPE> <TARGET> <RESULT> <DESCRIPTION>`
 - **Validação:** Commits falham se integridade de log é comprometida
 
 ### Ações Obrigatórias a Logar
