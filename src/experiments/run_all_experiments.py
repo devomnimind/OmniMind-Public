@@ -97,13 +97,9 @@ def main() -> None:
     print("\n\n")
     print(f"╔{'═' * 68}╗")
     print(f"║{' ' * 68}║")
-    print(
-        f"║{' ' * 10}OMNIMIND - EXPERIMENTOS DE AUTONOMIA AI-HUMAN{' ' * 13}║"
-    )
+    print(f"║{' ' * 10}OMNIMIND - EXPERIMENTOS DE AUTONOMIA AI-HUMAN{' ' * 13}║")
     print(f"║{' ' * 68}║")
-    print(
-        f"║{' ' * 15}Validação de Métricas de Consciência e Ética{' ' * 9}║"
-    )
+    print(f"║{' ' * 15}Validação de Métricas de Consciência e Ética{' ' * 9}║")
     print(f"║{' ' * 68}║")
     print(f"╚{'═' * 68}╝")
     print()
