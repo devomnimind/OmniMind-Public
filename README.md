@@ -12,7 +12,7 @@
 - ✅ **Black:** Código formatado corretamente
 - ✅ **Flake8:** Sem erros de linting (limite 100 caracteres)
 - ✅ **MyPy:** Type hints validados (modo lenient ativo)
-- ✅ **Pytest:** 1290 testes passando, 5 falhando, 1 pulado (cobertura 90%+)
+- ✅ **Pytest:** 1,899 testes executáveis, ~85% cobertura (alvo: ≥90%)
 - ✅ **Audit Chain:** Integridade verificada (hash chain imutável)
 - ✅ **Benchmarks:** CPU, memória, disco e GPU executados com sucesso
 - ✅ **Serviços:** 3 serviços ativos (backend, frontend, qdrant)
@@ -29,18 +29,28 @@
 **📋 Sistema de Tarefas:** Implementado gerenciamento automático de tarefas com validação em tempo real. 2/5 tarefas completadas automaticamente.
 ## 🧪 Sistema de Testes - Guia Completo
 
-### 📊 Estatísticas de Testes
+### 📊 Estatísticas de Testes (Atualizadas - Nov 2025)
 
-**Suite Ativa (Sistema Real):**
-- **2,538 testes coletados** - Cobertura completa do sistema OmniMind
-- **1,290 testes passando** - Funcionalidades validadas e operacionais
-- **5 testes falhando** - Issues identificados para correção
-- **1 teste pulado** - Dependências não disponíveis no ambiente atual
-- **Cobertura:** 90%+ do código-fonte
+**Suite de Testes Atual:**
+- **2,412 funções de teste definidas** - Cobertura completa do sistema OmniMind
+- **1,899 testes executáveis** - Com todas as dependências instaladas (78.7%)
+- **474 testes bloqueados** - Por dependências Python faltantes (19.7%)
+- **39 testes com skip condicional** - Baseados em ambiente/hardware (1.6%)
+- **Cobertura de código:** ~85% (alvo: ≥90%)
 
-**Suite Legada:**
-- **0 testes legados** - Todos os testes são do sistema ativo
-- **Diretório `tests/legacy/` não existe** - Sistema limpo e atualizado
+**Detalhamento por Status:**
+- ✅ **Executáveis:** 1,899 testes (requerem `pip install -r requirements.txt`)
+- ⚠️ **Bloqueados:** 474 testes (numpy, torch, fastapi, cryptography, etc.)
+- ⏭️ **Skip condicional:** 39 testes (hardware específico, Redis, etc.)
+
+**Para executar todos os testes:**
+```bash
+# 1. Instalar todas as dependências
+pip install -r requirements.txt
+
+# 2. Executar suite completa
+pytest tests/
+```
 
 ### 🎯 Comandos de Teste e suas Diferenças
 
@@ -50,10 +60,10 @@ pytest
 # OU
 python -m pytest
 ```
-**O que faz:** Executa todos os 2,538 testes do sistema
-**Resultado esperado:** `1290 passed, 5 failed, 1 skipped`
+**O que faz:** Executa todos os testes coletados pelo pytest
+**Resultado esperado:** Varia de acordo com dependências instaladas
 **Quando usar:** Validação completa antes de commits/merge
-**Tempo aproximado:** 13-15 minutos
+**Tempo aproximado:** 10-15 minutos (com todas as dependências)
 
 #### 2. **`pytest tests/`** (Diretório Específico)
 ```bash

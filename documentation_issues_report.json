@@ -1,0 +1,455 @@
+{
+  "timestamp": "2025-11-23T14:16:25.283627",
+  "total_issues": 59,
+  "issues_by_file": {
+    "README.md": 15,
+    "pytest.ini": 2,
+    ".coveragerc": 6,
+    "docs/analysis_reports/ANALISE_DOCUMENTACAO_COMPLETA.md": 8,
+    "docs/analysis_reports/RESUMO_ANALISE_DOCUMENTACAO.md": 2,
+    "docs/analysis_reports/INDICE_ANALISE_DOCUMENTACAO.md": 1,
+    "docs/architecture/MCP_PRIORITY_ANALYSIS.md": 1,
+    "docs/canonical/PROJECT_STATISTICS.md": 2,
+    "docs/phases/PHASE12_COMPLETION_SUMMARY.md": 1,
+    "docs/reports/current_warnings.md": 1,
+    "docs/reports/IMPLEMENTATION_REPORT_ADVANCED_FEATURES.md": 2,
+    "docs/roadmaps/OMNIMIND_REMOTE_DEVELOPMENT_ROADMAP.md": 1,
+    "docs/roadmaps/MEDIUM_PRIORITY_ACTION_PLAN.md": 1,
+    "docs/implementation_reports/IMPLEMENTATION_REPORT_ADVANCED_FEATURES.md": 2,
+    "docs/status_reports/VISUAL_SUMMARY_MEDIUM_PRIORITY.md": 1,
+    "docs/status_reports/PROJECT_STATE_20251119.md": 6,
+    "docs/status_reports/OMNIMIND_COMPREHENSIVE_PENDENCIES_REPORT_20251119.md": 1,
+    "docs/status_reports/MEDIUM_PRIORITY_STATUS_README.md": 3,
+    "docs/status_reports/MEDIUM_PRIORITY_IMPLEMENTATION_STATUS.md": 1,
+    "docs/status_reports/EXISTING_IMPLEMENTATIONS_INVENTORY.md": 2
+  },
+  "all_issues": [
+    {
+      "file": "README.md",
+      "line": 15,
+      "found": "1290 test",
+      "context": "ts validados (modo lenient ativo)\n- ✅ **Pytest:** 1290 testes passando, 5 falhando, 1 pulado (cobertura 90%+)",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 35,
+      "found": "538 test",
+      "context": " de Testes\n\n**Suite Ativa (Sistema Real):**\n- **2,538 testes coletados** - Cobertura completa do sistema Omn",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 36,
+      "found": "290 test",
+      "context": "** - Cobertura completa do sistema OmniMind\n- **1,290 testes passando** - Funcionalidades validadas e operac",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 37,
+      "found": "5 test",
+      "context": "** - Funcionalidades validadas e operacionais\n- **5 testes falhando** - Issues identificados para correção",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 38,
+      "found": "1 test",
+      "context": "lhando** - Issues identificados para correção\n- **1 teste pulado** - Dependências não disponíveis no ambie",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 42,
+      "found": "0 test",
+      "context": "ra:** 90%+ do código-fonte\n\n**Suite Legada:**\n- **0 testes legados** - Todos os testes são do sistema ativ",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 53,
+      "found": "538 test",
+      "context": "n -m pytest\n```\n**O que faz:** Executa todos os 2,538 testes do sistema\n**Resultado esperado:** `1290 passed",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 129,
+      "found": "5 test",
+      "context": "issing\n```\n\n### 🚨 Testes com Falhas Conhecidas\n\n**5 testes falhando atualmente:**\n- Principalmente relacio",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 134,
+      "found": "1 test",
+      "context": "do sistema\n- Documentados para correção futura\n\n**1 teste pulado:**\n- Dependências condicionais não atendi",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 145,
+      "found": "538 test",
+      "context": "Performance:** Benchmarks e limites\n\n**Todos os 2,538 testes são do sistema ativo** - não há distinção entre",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 291,
+      "found": "538 test",
+      "context": "quivos Python total (excluindo virtual env)\n• **2,538 testes ativos** (1290 passando, 5 falhando, 1 pulado)\n",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 470,
+      "found": "14 test",
+      "context": "/test_audit.py -v --cov=src.audit\n\n# Esperado: 14/14 testes passando\n```\n\n**Documentação de Referência:**\n-",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 486,
+      "found": "900 test",
+      "context": "k \"not e2e\" --tb=no -q\n# Resultado esperado: ~800-900 testes passando rapidamente\n```\n\n### Para Validação Co",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 507,
+      "found": "1 test",
+      "context": "est_send_request_success -v\n# Resultado esperado: 1 teste passando\n```\n\n**Nota:** Todos os 2,538 testes sã",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "README.md",
+      "line": 510,
+      "found": "538 test",
+      "context": "erado: 1 teste passando\n```\n\n**Nota:** Todos os 2,538 testes são do sistema ativo. Não há testes \"legados\" -",
+      "type": "test_count_reference"
+    },
+    {
+      "file": "pytest.ini",
+      "line": 21,
+      "found": "--ignore=tests/legacy",
+      "type": "legacy_exclusion",
+      "suggestion": "Verificar se diretório legacy ainda existe"
+    },
+    {
+      "file": "pytest.ini",
+      "line": 22,
+      "found": "--maxfail=5",
+      "type": "low_maxfail",
+      "suggestion": "Increase --maxfail to allow full test collection"
+    },
+    {
+      "file": ".coveragerc",
+      "line": 3,
+      "found": "src/agents/orchestrator_agent.py",
+      "type": "coverage_exclusion",
+      "suggestion": "Verificar se arquivo ainda deve ser excluído"
+    },
+    {
+      "file": ".coveragerc",
+      "line": 4,
+      "found": "src/agents/react_agent.py",
+      "type": "coverage_exclusion",
+      "suggestion": "Verificar se arquivo ainda deve ser excluído"
+    },
+    {
+      "file": ".coveragerc",
+      "line": 5,
+      "found": "src/agents/react_agent_broken.py",
+      "type": "coverage_exclusion",
+      "suggestion": "Verificar se arquivo ainda deve ser excluído"
+    },
+    {
+      "file": ".coveragerc",
+      "line": 6,
+      "found": "src/agents/debug_agent.py",
+      "type": "coverage_exclusion",
+      "suggestion": "Verificar se arquivo ainda deve ser excluído"
+    },
+    {
+      "file": ".coveragerc",
+      "line": 7,
+      "found": "src/security/security_agent.py",
+      "type": "coverage_exclusion",
+      "suggestion": "Verificar se arquivo ainda deve ser excluído"
+    },
+    {
+      "file": ".coveragerc",
+      "line": 8,
+      "found": "src/tools/*.py",
+      "type": "coverage_exclusion",
+      "suggestion": "Verificar se arquivo ainda deve ser excluído"
+    },
+    {
+      "file": "docs/analysis_reports/ANALISE_DOCUMENTACAO_COMPLETA.md",
+      "line": 29,
+      "found": "651 tests",
+      "context": "s 2. **AFIRMAÇÃO NÃO VERIFICADA:** \"650/651 tests passing\" - não foi possível confirmar (",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/analysis_reports/ANALISE_DOCUMENTACAO_COMPLETA.md",
+      "line": 33,
+      "found": "105 tests",
+      "context": "TESTE DUVIDOSAS:** Claims variam entre \"105 tests\", \"229 tests\", \"650/651 tests\" 5. **DOC",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/analysis_reports/ANALISE_DOCUMENTACAO_COMPLETA.md",
+      "line": 33,
+      "found": "229 tests",
+      "context": "AS:** Claims variam entre \"105 tests\", \"229 tests\", \"650/651 tests\" 5. **DOCUMENTAÇÃO EM ",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/analysis_reports/ANALISE_DOCUMENTACAO_COMPLETA.md",
+      "line": 33,
+      "found": "651 tests",
+      "context": "am entre \"105 tests\", \"229 tests\", \"650/651 tests\" 5. **DOCUMENTAÇÃO EM INGLÊS:** Violaçã",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/analysis_reports/ANALISE_DOCUMENTACAO_COMPLETA.md",
+      "line": 316,
+      "found": "651 Tests",
+      "context": "ntação:**  1. README.md (linha 5): \"650/651 Tests Passing\" 2. DOCUMENTATION_INDEX.md (lin",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/analysis_reports/ANALISE_DOCUMENTACAO_COMPLETA.md",
+      "line": 318,
+      "found": "229 tests",
+      "context": "provados\" 3. AUDITORIA_CONSOLIDADA.md: \"229 tests, 56 errors\" 4. Outro documento: \"105 te",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/analysis_reports/ANALISE_DOCUMENTACAO_COMPLETA.md",
+      "line": 319,
+      "found": "105 tests",
+      "context": " tests, 56 errors\" 4. Outro documento: \"105 tests\"  **Status real:** - ❌ **NÃO VERIFICÁVE",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/analysis_reports/ANALISE_DOCUMENTACAO_COMPLETA.md",
+      "line": 533,
+      "found": "651 tests",
+      "context": "--------|-------------|--------| | \"650/651 tests passing\" | README.md:5 | Não verificáve",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/analysis_reports/RESUMO_ANALISE_DOCUMENTACAO.md",
+      "line": 41,
+      "found": "651 tests",
+      "context": "  #### 3. Claims Não Verificadas - \"650/651 tests passing\" - NÃO CONFIRMADO - Números con",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/analysis_reports/RESUMO_ANALISE_DOCUMENTACAO.md",
+      "line": 42,
+      "found": "651 test",
+      "context": "O - Números conflitantes: 105, 229, 650/651 testes  #### 4. Idioma Incorreto - **95% da ",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/analysis_reports/INDICE_ANALISE_DOCUMENTACAO.md",
+      "line": 180,
+      "found": "651 tests",
+      "context": "``  ### Claims Não Verificados - ❌ \"650/651 tests passing\" - NÃO CONFIRMADO - ❌ Números d",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/architecture/MCP_PRIORITY_ANALYSIS.md",
+      "line": 47,
+      "found": "651 test",
+      "context": "analítica 6. **Production-Ready** - 650/651 testes passando  ### Necessidades Identifica",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/canonical/PROJECT_STATISTICS.md",
+      "line": 105,
+      "found": "651 tests",
+      "context": "_teste: 109 claims_anteriores:   - \"650/651 tests passing\" (❌ não verificado)   - \"229 te",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/canonical/PROJECT_STATISTICS.md",
+      "line": 106,
+      "found": "229 tests",
+      "context": " tests passing\" (❌ não verificado)   - \"229 tests\" (❌ não verificado)    status_real: \"❌ ",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/phases/PHASE12_COMPLETION_SUMMARY.md",
+      "line": 67,
+      "found": "105 tests",
+      "context": "cal-first)  ### 2. Comprehensive Tests (105 tests)  ``` tests/multimodal/ ├── __init__.py",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/reports/current_warnings.md",
+      "line": 103,
+      "found": "111 test",
+      "context": "pings/structlog.pyi — zero mypy errors, 111 testes passando **Hardware benchmark realiza",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/reports/IMPLEMENTATION_REPORT_ADVANCED_FEATURES.md",
+      "line": 14,
+      "found": "107 tests",
+      "context": "ness metrics.  ### Key Achievements - **107 tests passing** (100% success rate) - **3,286",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/reports/IMPLEMENTATION_REPORT_ADVANCED_FEATURES.md",
+      "line": 210,
+      "found": "107 tests",
+      "context": "| **1,861 lines** | **2,211 lines** | **107 tests** |  ---  ## 🔄 Integration Points  ### ",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/roadmaps/OMNIMIND_REMOTE_DEVELOPMENT_ROADMAP.md",
+      "line": 17,
+      "found": "651 tests",
+      "context": "+cu124 + CUDA 12.4 ✅ - **Quality:** 650/651 tests passing, 99.8% type safety ✅  ### Next ",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/roadmaps/MEDIUM_PRIORITY_ACTION_PLAN.md",
+      "line": 13,
+      "found": "105 tests",
+      "context": "*Phase 12 Multi-Modal:** 100% COMPLETO (105 tests passing) - ✅ **Containerization:** 70% ",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/implementation_reports/IMPLEMENTATION_REPORT_ADVANCED_FEATURES.md",
+      "line": 14,
+      "found": "107 tests",
+      "context": "ness metrics.  ### Key Achievements - **107 tests passing** (100% success rate) - **3,286",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/implementation_reports/IMPLEMENTATION_REPORT_ADVANCED_FEATURES.md",
+      "line": 210,
+      "found": "107 tests",
+      "context": "| **1,861 lines** | **2,211 lines** | **107 tests** |  ---  ## 🔄 Integration Points  ### ",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/VISUAL_SUMMARY_MEDIUM_PRIORITY.md",
+      "line": 53,
+      "found": "105 test",
+      "context": " Audio, Fusion, Embodied ✅ Falta: Nada! 105 testes passando ```  ---  ## 🏆 Item 4 - Phas",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/PROJECT_STATE_20251119.md",
+      "line": 63,
+      "found": "171 test",
+      "context": ".yaml │   └── security.yaml ├── tests/ (171 testes passando) └── docs/ (documentação com",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/PROJECT_STATE_20251119.md",
+      "line": 122,
+      "found": "651 test",
+      "context": "(remote development) **Qualidade:** 650/651 testes, 99.8% type safety, build production ",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/PROJECT_STATE_20251119.md",
+      "line": 128,
+      "found": "289 test",
+      "context": "(remote development) **Qualidade:** 289/289 testes, 100% type safety, enterprise-ready  ",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/PROJECT_STATE_20251119.md",
+      "line": 144,
+      "found": "289 test",
+      "context": "(remote development) **Qualidade:** 289/289 testes, 100% type safety, consciousness-read",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/PROJECT_STATE_20251119.md",
+      "line": 159,
+      "found": "289 test",
+      "context": "(remote development) **Qualidade:** 289/289 testes, 100% type safety, production-ready  ",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/PROJECT_STATE_20251119.md",
+      "line": 298,
+      "found": "171 test",
+      "context": "rage:** 100% - **Test Coverage:** Alta (171 testes) - **Linting:** 0 violações - **Docum",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/OMNIMIND_COMPREHENSIVE_PENDENCIES_REPORT_20251119.md",
+      "line": 701,
+      "found": "289 tests",
+      "context": "* - **Test Coverage:** 95%+ (atual: 289/289 tests) - **Security Score:** A+ (atual: Básic",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/MEDIUM_PRIORITY_STATUS_README.md",
+      "line": 37,
+      "found": "105 test",
+      "context": "*Phase 12 Multi-Modal:** 100% COMPLETO (105 testes passando) - ✅ **3 de 4 itens:** Têm b",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/MEDIUM_PRIORITY_STATUS_README.md",
+      "line": 295,
+      "found": "105 tests",
+      "context": "estes Existentes ```bash # Multi-Modal (105 tests) pytest tests/multimodal/ -v  # Observa",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/MEDIUM_PRIORITY_STATUS_README.md",
+      "line": 391,
+      "found": "105 tests",
+      "context": "   ├── multimodal/                    # 105 tests ✅     ├── observability/               ",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/MEDIUM_PRIORITY_IMPLEMENTATION_STATUS.md",
+      "line": 654,
+      "found": "105 tests",
+      "context": "terativo)  **Métricas:** - ✅ Total: 105/105 tests passing - ✅ Coverage: 100% - ✅ Código: ",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/EXISTING_IMPLEMENTATIONS_INVENTORY.md",
+      "line": 411,
+      "found": "105 tests",
+      "context": " | ✅ 65% | | Multi-Modal | 4 | 76.5KB | 105 tests | ✅ 100% | | **TOTAL** | **25** | **334",
+      "type": "specific_test_count"
+    },
+    {
+      "file": "docs/status_reports/EXISTING_IMPLEMENTATIONS_INVENTORY.md",
+      "line": 421,
+      "found": "105 tests",
+      "context": "ptimization: 33+ tests └── Multi-Modal: 105 tests  Taxa de Aprovação: 100% ✅ Coverage: ~9",
+      "type": "specific_test_count"
+    }
+  ],
+  "current_stats": {
+    "total_test_files": 139,
+    "total_test_functions_defined": 2412,
+    "total_async_tests": 155,
+    "files_with_import_errors": 36,
+    "tests_blocked_by_imports": 474,
+    "files_with_skip_markers": 8,
+    "total_skip_decorators": 0,
+    "total_skipif_decorators": 39,
+    "total_xfail_decorators": 0,
+    "expected_runnable_tests": 1899,
+    "modules_without_tests": 55,
+    "critical_modules_without_tests": 25
+  }
+}

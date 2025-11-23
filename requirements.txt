@@ -42,6 +42,9 @@ requests>=2.31.0
 # Sistema D-Bus (Linux)
 dbus-python>=1.3.0
 
+# Segurança e criptografia
+cryptography>=41.0.0
+
 # Logs estruturados
 structlog>=24.0.0
 
