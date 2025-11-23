@@ -817,6 +817,173 @@ class SecurityMonitor:
             for event in events
         ]
 
+    def get_running_processes(self) -> List[ProcessSnapshot]:
+        """
+        Get list of currently running processes.
+        Public wrapper for testing and monitoring.
+        """
+        processes = []
+        try:
+            for proc in psutil.process_iter(
+                [
+                    "pid",
+                    "name",
+                    "cpu_percent",
+                    "memory_percent",
+                    "status",
+                    "create_time",
+                    "username",
+                ]
+            ):
+                try:
+                    # Get process info
+                    info = proc.as_dict(
+                        [
+                            "pid",
+                            "name",
+                            "cpu_percent",
+                            "memory_percent",
+                            "status",
+                            "create_time",
+                            "username",
+                        ]
+                    )
+
+                    # Get command line
+                    try:
+                        cmdline = proc.cmdline()
+                    except (psutil.AccessDenied, psutil.NoSuchProcess):
+                        cmdline = []
+
+                    snapshot = ProcessSnapshot(
+                        pid=info["pid"],
+                        name=info["name"] or "",
+                        cmdline=cmdline,
+                        cpu_percent=info.get("cpu_percent", 0.0) or 0.0,
+                        memory_percent=info.get("memory_percent", 0.0) or 0.0,
+                        status=info.get("status", ""),
+                        create_time=info.get("create_time", 0.0) or 0.0,
+                        username=info.get("username", ""),
+                    )
+                    processes.append(snapshot)
+
+                except (
+                    psutil.NoSuchProcess,
+                    psutil.AccessDenied,
+                    psutil.ZombieProcess,
+                ):
+                    continue
+
+        except Exception as e:
+            self.logger.error(f"Failed to get running processes: {e}")
+
+        return processes
+
+    def is_suspicious_process(self, proc: ProcessSnapshot) -> bool:
+        """
+        Check if a process is suspicious.
+        Public wrapper for _is_suspicious_process for testing.
+        """
+        return self._is_suspicious_process(proc)
+
+    def create_security_event(
+        self,
+        event_type: AnomalyType,
+        threat_level: ThreatLevel,
+        description: str,
+        process_info: Optional[Dict[str, Any]] = None,
+    ) -> SecurityEvent:
+        """
+        Create and record a security event.
+        Public wrapper for creating security events.
+        """
+        event = SecurityEvent(
+            timestamp=datetime.now(timezone.utc).isoformat(),
+            event_type=event_type,
+            threat_level=threat_level,
+            description=description,
+            process_info=process_info,
+        )
+
+        # Add to event history
+        self.event_history.append(event)
+        if len(self.event_history) > self.max_history_size:
+            self.event_history = self.event_history[-self.max_history_size :]
+
+        # Log to audit system
+        self.audit_system.log_action(
+            "security_event",
+            {
+                "event_type": event_type.value,
+                "threat_level": threat_level.value,
+                "description": description,
+            },
+            category="security",
+        )
+
+        return event
+
+    def monitor_system_resources(self) -> Dict[str, float]:
+        """
+        Monitor current system resource usage.
+        Public wrapper for testing resource monitoring.
+        """
+        try:
+            cpu_percent = psutil.cpu_percent(interval=0.1)
+            memory = psutil.virtual_memory()
+            disk = psutil.disk_usage("/")
+
+            return {
+                "cpu_percent": cpu_percent,
+                "memory_percent": memory.percent,
+                "disk_percent": disk.percent,
+            }
+        except Exception as e:
+            self.logger.error(f"Failed to monitor system resources: {e}")
+            return {
+                "cpu_percent": 0.0,
+                "memory_percent": 0.0,
+                "disk_percent": 0.0,
+            }
+
+    def detect_resource_anomaly(self, resource_type: str, value: float) -> bool:
+        """
+        Detect if a resource value is anomalous.
+        Public method for testing anomaly detection.
+
+        Args:
+            resource_type: Type of resource ('cpu', 'memory', 'disk')
+            value: Resource usage value (percentage)
+
+        Returns:
+            True if anomalous, False otherwise
+        """
+        thresholds = {
+            "cpu": self.cpu_threshold,
+            "memory": self.memory_threshold,
+            "disk": 90.0,  # Default disk threshold
+        }
+
+        threshold = thresholds.get(resource_type, 90.0)
+        return value > threshold
+
+    def establish_baseline(self) -> None:
+        """
+        Establish baseline for monitoring (synchronous wrapper).
+        For testing purposes - calls async version in a new event loop.
+        """
+        # Simple synchronous version for testing
+        try:
+            # Get current processes as baseline
+            processes = self.get_running_processes()
+            for proc in processes:
+                self.baseline_processes[proc.pid] = proc
+
+            self.logger.info(f"Baseline established with {len(processes)} processes")
+
+        except Exception as e:
+            self.logger.error(f"Failed to establish baseline: {e}")
+
 
 # Convenience functions
 _security_monitor: Optional[SecurityMonitor] = None

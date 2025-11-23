@@ -185,7 +185,9 @@ class TestSecurityMonitor:
         monitor = SecurityMonitor(monitoring_interval=30)
 
         assert monitor.monitoring_interval == 30
-        assert monitor.suspicious_processes == set()
+        # suspicious_processes is initialized with known suspicious names
+        assert isinstance(monitor.suspicious_processes, set)
+        assert len(monitor.suspicious_processes) > 0
         assert monitor.baseline_processes == {}
 
     @patch("src.security.security_monitor.get_audit_system")
@@ -316,10 +318,13 @@ class TestSecurityMonitor:
         monitor = SecurityMonitor()
         monitor.cpu_threshold = 80.0
 
-        with patch("psutil.cpu_percent", return_value=95.0):
-            anomaly = monitor.detect_resource_anomaly()
+        # Test high CPU value
+        anomaly = monitor.detect_resource_anomaly("cpu", 95.0)
+        assert anomaly is True
 
-            assert anomaly is not None or anomaly is None
+        # Test normal CPU value
+        normal = monitor.detect_resource_anomaly("cpu", 50.0)
+        assert normal is False
 
     @patch("src.security.security_monitor.get_audit_system")
     def test_detect_high_memory_anomaly(self, mock_audit: Mock) -> None:
@@ -329,12 +334,13 @@ class TestSecurityMonitor:
         monitor = SecurityMonitor()
         monitor.memory_threshold = 85.0
 
-        with patch("psutil.virtual_memory") as mock_mem:
-            mock_mem.return_value = MagicMock(percent=95.0)
+        # Test high memory value
+        anomaly = monitor.detect_resource_anomaly("memory", 95.0)
+        assert anomaly is True
 
-            anomaly = monitor.detect_resource_anomaly()
-
-            assert anomaly is not None or anomaly is None
+        # Test normal memory value
+        normal = monitor.detect_resource_anomaly("memory", 60.0)
+        assert normal is False
 
     @patch("src.security.security_monitor.get_audit_system")
     def test_log_security_event(self, mock_audit: Mock) -> None:

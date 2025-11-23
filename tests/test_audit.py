@@ -246,7 +246,7 @@ class TestModuleInterface:
 
     def test_imports(self) -> None:
         """Testa que todas as exportações estão disponíveis."""
-        from audit import ImmutableAuditSystem, get_audit_system, log_action
+        from src.audit import ImmutableAuditSystem, get_audit_system, log_action
 
         assert ImmutableAuditSystem is not None
         assert get_audit_system is not None
@@ -254,7 +254,7 @@ class TestModuleInterface:
 
     def test_singleton_pattern(self) -> None:
         """Testa que get_audit_system retorna singleton."""
-        from audit import get_audit_system
+        from src.audit import get_audit_system
 
         instance1 = get_audit_system()
         instance2 = get_audit_system()

@@ -173,7 +173,7 @@ class TestWriteFileTool:
         with patch("builtins.open", side_effect=PermissionError("Access denied")):
             result = tool.execute("/readonly/file.txt", "content")
 
-            assert "Error" in result or "denied" in result.lower()
+            assert result is False  # Tool returns False on error
 
     def test_write_creates_directories(
         self, tool: WriteFileTool, tmp_path: Path
@@ -198,13 +198,15 @@ class TestExecuteCommandTool:
         """Testa execução de comando simples."""
         result = tool.execute("echo 'Hello'")
 
-        assert "Hello" in result or isinstance(result, str)
+        assert isinstance(result, dict)
+        assert "Hello" in result.get("stdout", "")
 
     def test_execute_command_with_error(self, tool: ExecuteCommandTool) -> None:
         """Testa execução de comando com erro."""
         result = tool.execute("nonexistent_command_xyz")
 
-        assert "Error" in result or "not found" in result.lower()
+        assert isinstance(result, dict)
+        assert result.get("status") in ["FAILED", "ERROR", "BLOCKED"]
 
     @patch("subprocess.run")
     def test_execute_command_timeout(
@@ -215,9 +217,11 @@ class TestExecuteCommandTool:
 
         mock_run.side_effect = subprocess.TimeoutExpired("cmd", 5)
 
-        result = tool.execute("long_running_command")
+        # Use allowed command so it doesn't get blocked
+        result = tool.execute("python -c 'import time; time.sleep(100)'")
 
-        assert "timeout" in result.lower() or "Error" in result
+        assert isinstance(result, dict)
+        assert result.get("status") == "TIMEOUT"
 
 
 class TestPlanTaskTool:
@@ -231,17 +235,17 @@ class TestPlanTaskTool:
     def test_plan_task_creation(self, tool: PlanTaskTool) -> None:
         """Testa criação de plano de tarefa."""
         result = tool.execute(
-            task="Implement new feature",
-            context={"priority": "high"},
+            task_description="Implement new feature",
+            complexity="high",
         )
 
-        assert isinstance(result, (str, dict))
+        assert isinstance(result, dict)
 
     def test_plan_task_with_empty_context(self, tool: PlanTaskTool) -> None:
         """Testa planejamento sem contexto."""
-        result = tool.execute(task="Simple task")
+        result = tool.execute(task_description="Simple task")
 
-        assert isinstance(result, (str, dict))
+        assert isinstance(result, dict)
 
 
 class TestNewTaskTool:
@@ -255,11 +259,12 @@ class TestNewTaskTool:
     def test_create_new_task(self, tool: NewTaskTool) -> None:
         """Testa criação de nova tarefa."""
         result = tool.execute(
-            task="New implementation",
+            task_name="New implementation",
+            assigned_to="agent",
             priority="high",
         )
 
-        assert isinstance(result, (str, dict))
+        assert isinstance(result, dict)
 
 
 class TestEpisodicMemoryTool:
@@ -274,10 +279,10 @@ class TestEpisodicMemoryTool:
         """Testa armazenamento de memória."""
         result = tool.execute(
             action="store",
-            content="Important event happened",
+            data={"event": "Important event happened"},
         )
 
-        assert isinstance(result, (str, dict))
+        assert isinstance(result, dict)
 
     def test_retrieve_memory(self, tool: EpisodicMemoryTool) -> None:
         """Testa recuperação de memória."""
@@ -292,7 +297,8 @@ class TestEpisodicMemoryTool:
         """Testa ação inválida."""
         result = tool.execute(action="invalid_action")
 
-        assert "Error" in result or isinstance(result, str)
+        # Invalid action returns None (no matching action)
+        assert result is None
 
 
 class TestAuditSecurityTool:
@@ -305,21 +311,15 @@ class TestAuditSecurityTool:
 
     def test_audit_operation(self, tool: AuditSecurityTool) -> None:
         """Testa auditoria de operação."""
-        result = tool.execute(
-            operation="file_access",
-            details={"path": "/test/file.txt"},
-        )
+        result = tool.execute(check_type="permissions")
 
-        assert isinstance(result, (str, dict))
+        assert isinstance(result, dict)
 
     def test_audit_security_event(self, tool: AuditSecurityTool) -> None:
         """Testa auditoria de evento de segurança."""
-        result = tool.execute(
-            operation="security_check",
-            details={"severity": "high"},
-        )
+        result = tool.execute(check_type="audit_chain")
 
-        assert isinstance(result, (str, dict))
+        assert isinstance(result, dict)
 
 
 class TestToolAuditing:
@@ -367,11 +367,11 @@ class TestToolErrorHandling:
         """Testa proteção contra shell injection."""
         tool = ExecuteCommandTool()
 
-        # Potentially dangerous command
+        # Potentially dangerous command - echo is allowed, rm is not
         result = tool.execute("echo test && rm -rf /")
 
-        # Should complete or error safely
-        assert isinstance(result, str)
+        # Should return dict with result
+        assert isinstance(result, dict)
 
 
 if __name__ == "__main__":
