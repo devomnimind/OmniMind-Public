@@ -26,6 +26,7 @@ from src.security.forensics_system import (
     EvidenceCollector,
     IncidentAnalyzer,
     ForensicsSystem,
+    LogAnalyzer,
 )
 
 
@@ -413,6 +414,594 @@ class TestForensicsSystem:
 
         assert isinstance(report, ForensicsReport)
         assert report.incident_id == incident.id
+
+
+class TestLogAnalyzer:
+    """Testes para LogAnalyzer."""
+
+    def test_analyzer_initialization(self) -> None:
+        """Testa inicialização do analisador de logs."""
+        analyzer = LogAnalyzer()
+        
+        assert hasattr(analyzer, "security_patterns")
+        assert hasattr(analyzer, "threat_indicators")
+        assert "failed_login" in analyzer.security_patterns
+        assert "brute_force" in analyzer.threat_indicators
+
+    def test_analyze_logs_with_security_events(self) -> None:
+        """Testa análise de logs com eventos de segurança."""
+        analyzer = LogAnalyzer()
+        
+        log_content = """
+        2025-11-23 10:00:00 ERROR: Failed login attempt for user admin
+        2025-11-23 10:01:00 WARNING: Access denied to /etc/passwd
+        2025-11-23 10:02:00 INFO: Normal operation
+        2025-11-23 10:03:00 SECURITY ALERT: Intrusion detected
+        """
+        
+        analysis = analyzer.analyze_logs(log_content, "test.log")
+        
+        assert isinstance(analysis, dict)
+        assert "security_events" in analysis
+        assert "threat_indicators" in analysis
+        assert "severity_score" in analysis
+        assert "recommendations" in analysis
+        assert analysis["log_source"] == "test.log"
+        assert analysis["total_lines"] > 0
+
+    def test_analyze_logs_empty(self) -> None:
+        """Testa análise de logs vazios."""
+        analyzer = LogAnalyzer()
+        
+        analysis = analyzer.analyze_logs("", "empty.log")
+        
+        assert analysis["log_source"] == "empty.log"
+        assert analysis["severity_score"] == 0
+        assert len(analysis["security_events"]) == 0
+
+    def test_analyze_logs_with_threat_indicators(self) -> None:
+        """Testa análise de logs com indicadores de ameaça."""
+        analyzer = LogAnalyzer()
+        
+        log_content = """
+        2025-11-23 10:00:00 Multiple failed login attempts detected
+        2025-11-23 10:01:00 Password guessing behavior observed
+        2025-11-23 10:02:00 Port scan detected from 192.168.1.100
+        2025-11-23 10:03:00 Exploit attempt: CVE-2024-1234
+        """
+        
+        analysis = analyzer.analyze_logs(log_content, "security.log")
+        
+        assert len(analysis["threat_indicators"]) > 0
+        assert analysis["severity_score"] > 0
+        assert len(analysis["recommendations"]) > 0
+
+    def test_correlate_events_empty(self) -> None:
+        """Testa correlação de eventos vazios."""
+        analyzer = LogAnalyzer()
+        
+        correlated = analyzer.correlate_events([])
+        
+        assert isinstance(correlated, list)
+        assert len(correlated) == 0
+
+    def test_correlate_events_single(self) -> None:
+        """Testa correlação de um único evento."""
+        analyzer = LogAnalyzer()
+        
+        events = [
+            {
+                "timestamp": "2025-11-23T10:00:00Z",
+                "pattern": "failed_login",
+                "content": "Failed login"
+            }
+        ]
+        
+        correlated = analyzer.correlate_events(events)
+        
+        assert isinstance(correlated, list)
+
+    def test_correlate_events_multiple_same_pattern(self) -> None:
+        """Testa correlação de eventos com mesmo padrão."""
+        analyzer = LogAnalyzer()
+        
+        events = [
+            {
+                "timestamp": "2025-11-23T10:00:00Z",
+                "pattern": "failed_login",
+                "content": "Failed login 1"
+            },
+            {
+                "timestamp": "2025-11-23T10:01:00Z",
+                "pattern": "failed_login",
+                "content": "Failed login 2"
+            },
+            {
+                "timestamp": "2025-11-23T10:02:00Z",
+                "pattern": "failed_login",
+                "content": "Failed login 3"
+            }
+        ]
+        
+        correlated = analyzer.correlate_events(events)
+        
+        assert isinstance(correlated, list)
+
+
+class TestEvidenceCollectorExtended:
+    """Testes estendidos para EvidenceCollector."""
+
+    @pytest.fixture
+    def temp_evidence_dir(self, tmp_path: Path) -> Path:
+        """Cria diretório temporário para evidências."""
+        return tmp_path / "forensics" / "evidence"
+
+    def test_collect_network_evidence(self, temp_evidence_dir: Path) -> None:
+        """Testa coleta de evidências de rede."""
+        collector = EvidenceCollector(evidence_dir=str(temp_evidence_dir))
+        
+        with patch("subprocess.run") as mock_run:
+            mock_run.return_value.returncode = 0
+            mock_run.return_value.stdout = "Proto Local Address State\ntcp 0.0.0.0:80 LISTEN\n"
+            
+            evidence = collector.collect_network_evidence()
+            
+            assert isinstance(evidence, list)
+
+    def test_collect_network_evidence_fallback(
+        self, temp_evidence_dir: Path
+    ) -> None:
+        """Testa coleta de evidências de rede com fallback."""
+        collector = EvidenceCollector(evidence_dir=str(temp_evidence_dir))
+        
+        with patch("subprocess.run") as mock_run:
+            # Simulate ss command not found
+            mock_run.side_effect = [
+                FileNotFoundError("ss not found"),
+                MagicMock(returncode=0, stdout="Proto Local Address\ntcp 0.0.0.0:80\n")
+            ]
+            
+            evidence = collector.collect_network_evidence()
+            
+            assert isinstance(evidence, list)
+
+    def test_collect_network_evidence_error(
+        self, temp_evidence_dir: Path
+    ) -> None:
+        """Testa tratamento de erro na coleta de evidências de rede."""
+        collector = EvidenceCollector(evidence_dir=str(temp_evidence_dir))
+        
+        with patch("subprocess.run") as mock_run:
+            # Both ss and netstat fail
+            mock_run.side_effect = [
+                FileNotFoundError("ss not found"),
+                Exception("Network error")
+            ]
+            
+            evidence = collector.collect_network_evidence()
+            
+            assert isinstance(evidence, list)
+            assert len(evidence) == 0
+
+    def test_collect_system_metrics(self, temp_evidence_dir: Path) -> None:
+        """Testa coleta de métricas do sistema."""
+        collector = EvidenceCollector(evidence_dir=str(temp_evidence_dir))
+        
+        evidence = collector.collect_system_metrics()
+        
+        assert isinstance(evidence, list)
+
+    def test_collect_system_metrics_error(
+        self, temp_evidence_dir: Path
+    ) -> None:
+        """Testa tratamento de erro na coleta de métricas."""
+        collector = EvidenceCollector(evidence_dir=str(temp_evidence_dir))
+        
+        with patch("builtins.open", side_effect=Exception("File error")):
+            evidence = collector.collect_system_metrics()
+            
+            assert isinstance(evidence, list)
+            assert len(evidence) == 0
+
+    def test_save_evidence(
+        self, temp_evidence_dir: Path
+    ) -> None:
+        """Testa salvamento de evidências."""
+        collector = EvidenceCollector(evidence_dir=str(temp_evidence_dir))
+        
+        evidence_items = [
+            EvidenceItem(
+                id="test_001",
+                type=EvidenceType.LOG_ENTRY,
+                timestamp="2025-11-23T00:00:00Z",
+                source="test.log",
+                content={"message": "test"},
+            )
+        ]
+        
+        collector.save_evidence(evidence_items)
+        
+        # Verify file was created
+        saved_file = temp_evidence_dir / "test_001.json"
+        assert saved_file.exists()
+
+    def test_save_evidence_error(
+        self, temp_evidence_dir: Path
+    ) -> None:
+        """Testa tratamento de erro no salvamento de evidências."""
+        collector = EvidenceCollector(evidence_dir=str(temp_evidence_dir))
+        
+        evidence_items = [
+            EvidenceItem(
+                id="test_002",
+                type=EvidenceType.LOG_ENTRY,
+                timestamp="2025-11-23T00:00:00Z",
+                source="test.log",
+                content={"message": "test"},
+            )
+        ]
+        
+        with patch("builtins.open", side_effect=Exception("Write error")):
+            # Should not raise exception
+            collector.save_evidence(evidence_items)
+
+    def test_collect_log_evidence_with_pattern_match(
+        self, temp_evidence_dir: Path, tmp_path: Path
+    ) -> None:
+        """Testa coleta de evidências de log com padrão correspondente."""
+        log_file = tmp_path / "security.log"
+        log_file.write_text(
+            "2025-11-23 ERROR: Security breach\n"
+            "2025-11-23 WARNING: Unauthorized access\n"
+            "2025-11-23 INFO: Normal operation\n"
+        )
+        
+        collector = EvidenceCollector(evidence_dir=str(temp_evidence_dir))
+        
+        evidence = collector.collect_log_evidence(
+            log_files=[str(log_file)],
+            patterns=[r"ERROR.*Security", r"WARNING.*Unauthorized"]
+        )
+        
+        assert isinstance(evidence, list)
+
+    def test_collect_log_evidence_error_handling(
+        self, temp_evidence_dir: Path, tmp_path: Path
+    ) -> None:
+        """Testa tratamento de erro na coleta de logs."""
+        log_file = tmp_path / "test.log"
+        log_file.write_text("test content")
+        
+        collector = EvidenceCollector(evidence_dir=str(temp_evidence_dir))
+        
+        with patch("builtins.open", side_effect=Exception("Read error")):
+            evidence = collector.collect_log_evidence(
+                log_files=[str(log_file)],
+                patterns=["test"]
+            )
+            
+            assert isinstance(evidence, list)
+
+    def test_collect_file_system_evidence_directory(
+        self, temp_evidence_dir: Path, tmp_path: Path
+    ) -> None:
+        """Testa coleta de evidências de diretório."""
+        test_dir = tmp_path / "test_directory"
+        test_dir.mkdir()
+        (test_dir / "file1.txt").write_text("content 1")
+        (test_dir / "file2.txt").write_text("content 2")
+        (test_dir / "subdir").mkdir()
+        
+        collector = EvidenceCollector(evidence_dir=str(temp_evidence_dir))
+        
+        evidence = collector.collect_file_system_evidence([str(test_dir)])
+        
+        assert isinstance(evidence, list)
+        if len(evidence) > 0:
+            assert evidence[0].type == EvidenceType.FILE_SYSTEM
+
+    def test_collect_file_system_evidence_error(
+        self, temp_evidence_dir: Path, tmp_path: Path
+    ) -> None:
+        """Testa tratamento de erro na coleta de evidências do filesystem."""
+        collector = EvidenceCollector(evidence_dir=str(temp_evidence_dir))
+        
+        test_file = tmp_path / "test.txt"
+        test_file.write_text("test")
+        
+        with patch("pathlib.Path.stat", side_effect=Exception("Stat error")):
+            evidence = collector.collect_file_system_evidence([str(test_file)])
+            
+            assert isinstance(evidence, list)
+
+
+class TestForensicsSystemExtended:
+    """Testes estendidos para ForensicsSystem."""
+
+    @pytest.fixture
+    def temp_forensics_dir(self, tmp_path: Path) -> Path:
+        """Cria diretório temporário para forensics."""
+        return tmp_path / "forensics"
+
+    def test_collect_evidence_log_type(
+        self, temp_forensics_dir: Path, tmp_path: Path
+    ) -> None:
+        """Testa coleta de evidências do tipo log."""
+        system = ForensicsSystem(forensics_dir=str(temp_forensics_dir))
+        
+        incident = system.create_incident(
+            title="Test Incident",
+            description="Test",
+            severity=IncidentSeverity.MEDIUM,
+            detected_by="test",
+        )
+        
+        log_file = tmp_path / "test.log"
+        log_file.write_text("ERROR: Test error\n")
+        
+        with patch.object(
+            system.evidence_collector,
+            "collect_log_evidence",
+            return_value=[
+                EvidenceItem(
+                    id="log_001",
+                    type=EvidenceType.LOG_ENTRY,
+                    timestamp="2025-11-23T00:00:00Z",
+                    source=str(log_file),
+                    content={"message": "test"},
+                )
+            ]
+        ):
+            evidence = system.collect_evidence(
+                incident.id,
+                ["log"]
+            )
+            
+            assert isinstance(evidence, list)
+
+    def test_collect_evidence_network_type(
+        self, temp_forensics_dir: Path
+    ) -> None:
+        """Testa coleta de evidências do tipo network."""
+        system = ForensicsSystem(forensics_dir=str(temp_forensics_dir))
+        
+        incident = system.create_incident(
+            title="Network Incident",
+            description="Test",
+            severity=IncidentSeverity.HIGH,
+            detected_by="network_monitor",
+        )
+        
+        with patch.object(
+            system.evidence_collector,
+            "collect_network_evidence",
+            return_value=[
+                EvidenceItem(
+                    id="net_001",
+                    type=EvidenceType.NETWORK_CONNECTION,
+                    timestamp="2025-11-23T00:00:00Z",
+                    source="system",
+                    content={"connections": []},
+                )
+            ]
+        ):
+            evidence = system.collect_evidence(
+                incident.id,
+                ["network"]
+            )
+            
+            assert isinstance(evidence, list)
+
+    def test_collect_evidence_process_type(
+        self, temp_forensics_dir: Path
+    ) -> None:
+        """Testa coleta de evidências do tipo process."""
+        system = ForensicsSystem(forensics_dir=str(temp_forensics_dir))
+        
+        incident = system.create_incident(
+            title="Process Incident",
+            description="Test",
+            severity=IncidentSeverity.MEDIUM,
+            detected_by="process_monitor",
+        )
+        
+        with patch.object(
+            system.evidence_collector,
+            "collect_process_evidence",
+            return_value=[
+                EvidenceItem(
+                    id="proc_001",
+                    type=EvidenceType.PROCESS_INFO,
+                    timestamp="2025-11-23T00:00:00Z",
+                    source="system",
+                    content={"processes": []},
+                )
+            ]
+        ):
+            evidence = system.collect_evidence(
+                incident.id,
+                ["process"]
+            )
+            
+            assert isinstance(evidence, list)
+
+    def test_collect_evidence_filesystem_type(
+        self, temp_forensics_dir: Path
+    ) -> None:
+        """Testa coleta de evidências do tipo filesystem."""
+        system = ForensicsSystem(forensics_dir=str(temp_forensics_dir))
+        
+        incident = system.create_incident(
+            title="Filesystem Incident",
+            description="Test",
+            severity=IncidentSeverity.LOW,
+            detected_by="fs_monitor",
+        )
+        
+        with patch.object(
+            system.evidence_collector,
+            "collect_file_system_evidence",
+            return_value=[
+                EvidenceItem(
+                    id="fs_001",
+                    type=EvidenceType.FILE_SYSTEM,
+                    timestamp="2025-11-23T00:00:00Z",
+                    source="/test/path",
+                    content={"type": "file"},
+                )
+            ]
+        ):
+            evidence = system.collect_evidence(
+                incident.id,
+                ["filesystem"]
+            )
+            
+            assert isinstance(evidence, list)
+
+    def test_collect_evidence_metrics_type(
+        self, temp_forensics_dir: Path
+    ) -> None:
+        """Testa coleta de evidências do tipo metrics."""
+        system = ForensicsSystem(forensics_dir=str(temp_forensics_dir))
+        
+        incident = system.create_incident(
+            title="Metrics Incident",
+            description="Test",
+            severity=IncidentSeverity.LOW,
+            detected_by="metrics_monitor",
+        )
+        
+        with patch.object(
+            system.evidence_collector,
+            "collect_system_metrics",
+            return_value=[
+                EvidenceItem(
+                    id="metrics_001",
+                    type=EvidenceType.SYSTEM_METRICS,
+                    timestamp="2025-11-23T00:00:00Z",
+                    source="system",
+                    content={"cpu": 50},
+                )
+            ]
+        ):
+            evidence = system.collect_evidence(
+                incident.id,
+                ["metrics"]
+            )
+            
+            assert isinstance(evidence, list)
+
+    def test_analyze_incident(
+        self, temp_forensics_dir: Path
+    ) -> None:
+        """Testa análise de incidente."""
+        system = ForensicsSystem(forensics_dir=str(temp_forensics_dir))
+        
+        incident = system.create_incident(
+            title="Analyze Test",
+            description="Test analysis",
+            severity=IncidentSeverity.HIGH,
+            detected_by="test",
+        )
+        
+        analysis = system.analyze_incident(incident.id)
+        
+        assert isinstance(analysis, dict)
+
+    def test_get_incident_status(
+        self, temp_forensics_dir: Path
+    ) -> None:
+        """Testa obtenção de status de incidente."""
+        system = ForensicsSystem(forensics_dir=str(temp_forensics_dir))
+        
+        incident = system.create_incident(
+            title="Status Test",
+            description="Test status",
+            severity=IncidentSeverity.MEDIUM,
+            detected_by="test",
+        )
+        
+        status = system.get_incident_status(incident.id)
+        
+        assert status is not None
+        assert status.id == incident.id
+
+    def test_get_incident_status_not_found(
+        self, temp_forensics_dir: Path
+    ) -> None:
+        """Testa obtenção de status de incidente inexistente."""
+        system = ForensicsSystem(forensics_dir=str(temp_forensics_dir))
+        
+        status = system.get_incident_status("nonexistent_id")
+        
+        assert status is None
+
+    def test_list_incidents_all(
+        self, temp_forensics_dir: Path
+    ) -> None:
+        """Testa listagem de todos os incidentes."""
+        system = ForensicsSystem(forensics_dir=str(temp_forensics_dir))
+        
+        system.create_incident(
+            title="Incident 1",
+            description="Test 1",
+            severity=IncidentSeverity.LOW,
+            detected_by="test",
+        )
+        
+        system.create_incident(
+            title="Incident 2",
+            description="Test 2",
+            severity=IncidentSeverity.HIGH,
+            detected_by="test",
+        )
+        
+        incidents = system.list_incidents()
+        
+        assert isinstance(incidents, list)
+        assert len(incidents) >= 2
+
+    def test_list_incidents_by_severity(
+        self, temp_forensics_dir: Path
+    ) -> None:
+        """Testa listagem de todos os incidentes (sem filtro de severidade)."""
+        system = ForensicsSystem(forensics_dir=str(temp_forensics_dir))
+        
+        system.create_incident(
+            title="High Severity",
+            description="Test high",
+            severity=IncidentSeverity.HIGH,
+            detected_by="test",
+        )
+        
+        system.create_incident(
+            title="Low Severity",
+            description="Test low",
+            severity=IncidentSeverity.LOW,
+            detected_by="test",
+        )
+        
+        all_incidents = system.list_incidents()
+        
+        assert isinstance(all_incidents, list)
+        assert len(all_incidents) >= 2
+
+    def test_list_incidents_by_status(
+        self, temp_forensics_dir: Path
+    ) -> None:
+        """Testa listagem de incidentes por status."""
+        system = ForensicsSystem(forensics_dir=str(temp_forensics_dir))
+        
+        system.create_incident(
+            title="Open Incident",
+            description="Test open",
+            severity=IncidentSeverity.MEDIUM,
+            detected_by="test",
+        )
+        
+        open_incidents = system.list_incidents(status_filter=IncidentStatus.OPEN)
+        
+        assert isinstance(open_incidents, list)
 
 
 if __name__ == "__main__":

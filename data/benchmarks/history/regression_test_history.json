@@ -1,0 +1,26 @@
+[
+  {
+    "timestamp": "2025-11-23T21:32:02.176524",
+    "iterations": 3,
+    "mean_time_ms": 1.067021666680527,
+    "mean_memory_mb": 44.87109375,
+    "mean_cpu_percent": 0.0,
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-11-23T21:32:31.750663",
+    "iterations": 3,
+    "mean_time_ms": 1.0658726666671707,
+    "mean_memory_mb": 43.09375,
+    "mean_cpu_percent": 0.0,
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-11-23T21:32:40.549189",
+    "iterations": 3,
+    "mean_time_ms": 1.0674523333212467,
+    "mean_memory_mb": 43.07421875,
+    "mean_cpu_percent": 0.0,
+    "metadata": {}
+  }
+]
