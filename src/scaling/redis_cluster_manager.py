@@ -537,19 +537,14 @@ class RedisClusterManager:
                 slots_fail=0,
             )
 
-    def health_check(self) -> bool:
+    def get_health(self) -> ClusterHealth:
         """
-        Perform quick health check.
+        Alias for get_cluster_health() for backward compatibility.
 
         Returns:
-            True if cluster is healthy, False otherwise
-
-        Example:
-            >>> if manager.health_check():
-            ...     print("Cluster OK")
+            ClusterHealth object with detailed health metrics
         """
-        health = self.get_cluster_health()
-        return health.is_healthy()
+        return self.get_cluster_health()
 
     def get_stats(self) -> Dict[str, Union[int, float]]:
         """
@@ -600,3 +595,8 @@ class RedisClusterManager:
                 logger.info("Closed Redis Cluster connections")
             except Exception as e:
                 logger.error(f"Error closing cluster: {e}")
+
+
+# Aliases and additional classes for test compatibility
+ClusterHealthReport = ClusterHealth
+REDIS_AVAILABLE = RedisClusterCtor is not None

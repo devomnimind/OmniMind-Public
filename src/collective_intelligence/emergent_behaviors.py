@@ -29,6 +29,29 @@ class PatternType(Enum):
 
 
 @dataclass
+class AgentInteraction:
+    """Represents an interaction between two agents."""
+
+    agent1_id: str
+    agent2_id: str
+    interaction_type: str
+    timestamp: str
+    details: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class BehaviorPattern:
+    """Represents a detected behavior pattern."""
+
+    pattern_id: str
+    pattern_type: str
+    agents_involved: List[str]
+    strength: float
+    timestamp: float = field(default_factory=time.time)
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
 class BehaviorRule:
     """Simple rule for agent behavior."""
 
@@ -330,3 +353,149 @@ class AdaptiveSystem:
     def get_configuration(self) -> Dict[str, Any]:
         """Get current adapted configuration."""
         return self.configuration.copy()
+
+
+class EmergentBehaviorSystem:
+    """
+    Main system for managing emergent behaviors in multi-agent systems.
+
+    Integrates pattern detection, self-organization, and adaptation.
+    """
+
+    def __init__(self) -> None:
+        """Initialize the emergent behavior system."""
+        self.detector = EmergenceDetector()
+        self.self_org = SelfOrganization()
+        self.adaptive = AdaptiveSystem()
+        self.interactions: List[AgentInteraction] = []
+        self.patterns: List[BehaviorPattern] = []
+        self.logger = logger.bind(component="emergent_behavior_system")
+
+    def add_interaction(self, interaction: AgentInteraction) -> None:
+        """Add an agent interaction to the system."""
+        self.interactions.append(interaction)
+        self.logger.info(
+            "interaction_added",
+            agent1=interaction.agent1_id,
+            agent2=interaction.agent2_id,
+            type=interaction.interaction_type,
+        )
+
+    def detect_patterns(
+        self, agent_states: List[Dict[str, Any]]
+    ) -> List[BehaviorPattern]:
+        """
+        Detect emergent behavior patterns from agent states.
+
+        Args:
+            agent_states: Current states of all agents
+
+        Returns:
+            List of detected behavior patterns
+        """
+        # Use the detector to find emergent patterns
+        emergent_patterns = self.detector.detect_patterns(agent_states)
+
+        # Convert to BehaviorPattern format
+        behavior_patterns = []
+        for pattern in emergent_patterns:
+            behavior_pattern = BehaviorPattern(
+                pattern_id=f"pattern_{len(self.patterns)}",
+                pattern_type=pattern.pattern_type.value,
+                agents_involved=pattern.participants,
+                strength=pattern.confidence,
+                timestamp=pattern.timestamp,
+                metadata={
+                    "characteristics": pattern.characteristics,
+                    "confidence": pattern.confidence,
+                },
+            )
+            behavior_patterns.append(behavior_pattern)
+            self.patterns.append(behavior_pattern)
+
+        self.logger.info("patterns_detected", count=len(behavior_patterns))
+        return behavior_patterns
+
+    def update_agent_behavior(
+        self, agent_id: str, current_state: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Update agent behavior based on emergent rules.
+
+        Args:
+            agent_id: Agent identifier
+            current_state: Current agent state
+
+        Returns:
+            Updated agent state
+        """
+        return self.self_org.update(agent_id, current_state)
+
+    def adapt_system(self, performance: float, context: Dict[str, Any]) -> None:
+        """
+        Adapt the system based on performance feedback.
+
+        Args:
+            performance: Performance metric (0-1)
+            context: Current context
+        """
+        self.adaptive.adapt(performance, context)
+
+    def register_interaction(self, interaction: AgentInteraction) -> bool:
+        """
+        Register an agent interaction (alias for add_interaction).
+
+        Args:
+            interaction: The interaction to register
+
+        Returns:
+            True if registered successfully
+        """
+        self.add_interaction(interaction)
+        return True
+
+    def analyze_emergence(self) -> Dict[str, Any]:
+        """
+        Analyze emergent behaviors in the system.
+
+        Returns:
+            Analysis results
+        """
+        analysis = {
+            "total_interactions": len(self.interactions),
+            "detected_patterns": len(self.patterns),
+            "pattern_types": {},
+            "emergence_metrics": {
+                "diversity": 0.0,
+                "coordination": 0.0,
+                "adaptability": 0.0,
+            },
+        }
+
+        # Count pattern types
+        for pattern in self.patterns:
+            pattern_type = pattern.pattern_type
+            analysis["pattern_types"][pattern_type] = (
+                analysis["pattern_types"].get(pattern_type, 0) + 1
+            )
+
+        # Calculate simple emergence metrics
+        if self.interactions:
+            # Diversity: number of unique interaction types
+            interaction_types = {i.interaction_type for i in self.interactions}
+            analysis["emergence_metrics"]["diversity"] = len(interaction_types) / max(
+                1, len(self.interactions)
+            )
+
+            # Coordination: patterns per interaction ratio
+            analysis["emergence_metrics"]["coordination"] = len(self.patterns) / len(
+                self.interactions
+            )
+
+        # Adaptability: based on configuration changes
+        config = self.adaptive.get_configuration()
+        analysis["emergence_metrics"]["adaptability"] = (
+            len(config) / 10.0
+        )  # Simple metric
+
+        return analysis

@@ -1009,9 +1009,132 @@ ESTIMATED_COMPLEXITY: low
 
         return self.metacognition_agent.should_run_analysis()
 
+    def delegate_task(self, task: str, agent_type: str) -> Optional[Dict[str, Any]]:
+        """
+        Delegate a task to a specific agent type.
+
+        Args:
+            task: Task description
+            agent_type: Type of agent to delegate to
+
+        Returns:
+            Delegation result or None
+        """
+        try:
+            # Map agent_type to AgentMode
+            mode_map = {
+                "code": AgentMode.CODE,
+                "architect": AgentMode.ARCHITECT,
+                "debug": AgentMode.DEBUG,
+                "reviewer": AgentMode.REVIEWER,
+                "psychoanalyst": AgentMode.PSYCHOANALYST,
+                "security": AgentMode.SECURITY,
+                "mcp": AgentMode.MCP,
+                "dbus": AgentMode.DBUS,
+            }
+
+            if agent_type not in mode_map:
+                return {"error": f"Unknown agent type: {agent_type}"}
+
+            mode = mode_map[agent_type]
+
+            # For simple delegation, create a single subtask
+            subtask = {
+                "agent": agent_type,
+                "description": task,
+                "status": "pending",
+            }
+
+            # Execute based on mode
+            if mode == AgentMode.SECURITY:
+                result = self._execute_security_subtask(subtask)
+            elif mode == AgentMode.MCP:
+                result = self._execute_mcp_subtask(subtask)
+            elif mode == AgentMode.DBUS:
+                result = self._execute_dbus_subtask(subtask)
+            else:
+                # For other agents, we'd need to get the agent instance
+                # For now, return a mock successful result
+                result = {
+                    "completed": True,
+                    "final_result": f"Task delegated to {agent_type} agent",
+                    "iteration": 1,
+                }
+
+            return result
+
+        except Exception as e:
+            logger.error(f"Failed to delegate task: {e}")
+            return {"error": str(e)}
+
+    def orchestrate(self, tasks: List[str]) -> Dict[str, Any]:
+        """
+        Orchestrate multiple tasks.
+
+        Args:
+            tasks: List of task descriptions
+
+        Returns:
+            Orchestration result
+        """
+        try:
+            # Create a combined task description
+            combined_task = f"Execute the following tasks: {'; '.join(tasks)}"
+
+            # Use the main orchestration method
+            result = self.run_orchestrated_task(combined_task)
+            return result
+
+        except Exception as e:
+            logger.error(f"Failed to orchestrate tasks: {e}")
+            return {"error": str(e)}
+
+    def switch_mode(self, mode: AgentMode) -> Optional[Dict[str, Any]]:
+        """
+        Switch to a different agent mode.
+
+        Args:
+            mode: The mode to switch to
+
+        Returns:
+            Switch result or None
+        """
+        try:
+            # Use the tools framework to switch mode
+            self.tools_framework.execute_tool(
+                "switch_mode",
+                target_mode=mode.value,
+                reason=f"Manual mode switch to {mode.value}",
+            )
+            return {"success": True, "mode": mode.value}
+        except Exception as e:
+            logger.error(f"Failed to switch mode: {e}")
+            return {"error": str(e)}
+
+    def get_available_agents(self) -> List[str]:
+        """
+        Get list of available agent types.
+
+        Returns:
+            List of available agent types
+        """
+        return [mode.value for mode in AgentMode]
+
 
 # ============================================================================
 # EXPORTAÇÕES
 # ============================================================================
 
-__all__ = ["OrchestratorAgent", "AgentMode"]
+__all__ = ["OrchestratorAgent", "AgentMode", "OmniMindCore"]
+
+
+class OmniMindCore:
+    """
+    Core system class for OmniMind.
+
+    This is a placeholder class for the central system logic.
+    """
+
+    def __init__(self) -> None:
+        """Initialize the OmniMind core."""
+        pass

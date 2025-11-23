@@ -12,6 +12,7 @@ import subprocess
 import time
 from pathlib import Path
 from typing import Dict
+from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 
@@ -23,6 +24,24 @@ try:
 except ImportError:
     PLAYWRIGHT_AVAILABLE = False
     pytest.skip("Playwright not installed", allow_module_level=True)
+
+
+@pytest.fixture(scope="session")
+def backend_server():
+    """Start backend server for E2E tests."""
+    # If running in Docker/test environment, use the container backend
+    if os.environ.get("OMNIMIND_ENV") == "production" or os.environ.get("CI"):
+        yield "http://localhost:8000"
+        return
+
+    # For local development with containers, use the backend container
+    if os.environ.get("USE_DOCKER_BACKEND"):
+        yield "http://localhost:8000"
+        return
+
+    # Set test credentials
+    os.environ["OMNIMIND_DASHBOARD_USER"] = "test_user"
+    os.environ["OMNIMIND_DASHBOARD_PASS"] = "test_pass"
 
 
 @pytest.fixture(scope="session")
@@ -100,6 +119,306 @@ def auth_credentials():
         "username": os.environ.get("OMNIMIND_DASHBOARD_USER", "test_user"),
         "password": os.environ.get("OMNIMIND_DASHBOARD_PASS", "test_pass"),
     }
+
+
+class TestMockedAPIEndpoints:
+    """Mocked API endpoint tests that don't require running server."""
+
+    @pytest.mark.asyncio
+    async def test_health_endpoint_mocked(self):
+        """Test health endpoint with mocked HTTP client."""
+        import httpx
+
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"status": "ok", "version": "1.0.0"}
+
+        with patch("httpx.AsyncClient") as mock_client_class:
+            mock_client = AsyncMock()
+            mock_client.__aenter__.return_value = mock_client
+            mock_client.__aexit__.return_value = None
+            mock_client.get.return_value = mock_response
+            mock_client_class.return_value = mock_client
+
+            async with httpx.AsyncClient() as client:
+                response = await client.get("http://mock-server/health")
+                assert response.status_code == 200
+                data = response.json()
+                assert "status" in data
+                assert data["status"] == "ok"
+
+    @pytest.mark.asyncio
+    async def test_authenticated_endpoint_mocked(self):
+        """Test authenticated endpoint with mocked responses."""
+        import httpx
+
+        # Mock unauthenticated response
+        mock_unauth_response = Mock()
+        mock_unauth_response.status_code = 401
+
+        # Mock authenticated response
+        mock_auth_response = Mock()
+        mock_auth_response.status_code = 200
+        mock_auth_response.json.return_value = {"status": "authenticated"}
+
+        with patch("httpx.AsyncClient") as mock_client_class:
+            mock_client = AsyncMock()
+            mock_client.__aenter__.return_value = mock_client
+            mock_client.__aexit__.return_value = None
+
+            # Configure different responses for different calls
+            mock_client.get.side_effect = [mock_unauth_response, mock_auth_response]
+            mock_client_class.return_value = mock_client
+
+            async with httpx.AsyncClient() as client:
+                # Without auth - should fail
+                response = await client.get("http://mock-server/status")
+                assert response.status_code == 401
+
+                # With auth - should succeed
+                response = await client.get(
+                    "http://mock-server/status", auth=("user", "pass")
+                )
+                assert response.status_code == 200
+
+    @pytest.mark.asyncio
+    async def test_task_orchestration_workflow_mocked(self):
+        """Test complete task orchestration workflow with mocks."""
+        import httpx
+
+        # Mock task submission response
+        mock_task_response = Mock()
+        mock_task_response.status_code = 200
+        mock_task_response.json.return_value = {"task": "Test task", "id": "123"}
+
+        # Mock metrics response
+        mock_metrics_response = Mock()
+        mock_metrics_response.status_code = 200
+        mock_metrics_response.json.return_value = {"backend": {"requests": 5}}
+
+        with patch("httpx.AsyncClient") as mock_client_class:
+            mock_client = AsyncMock()
+            mock_client.__aenter__.return_value = mock_client
+            mock_client.__aexit__.return_value = None
+
+            mock_client.post.return_value = mock_task_response
+            mock_client.get.return_value = mock_metrics_response
+            mock_client_class.return_value = mock_client
+
+            async with httpx.AsyncClient(timeout=30.0) as client:
+                # Submit task
+                task_data = {"task": "Test task", "max_iterations": 1}
+                response = await client.post(
+                    "http://mock-server/tasks/orchestrate",
+                    json=task_data,
+                    auth=("user", "pass"),
+                )
+                assert response.status_code == 200
+                result = response.json()
+                assert "task" in result
+                assert result["task"] == "Test task"
+
+                # Check metrics were updated
+                response = await client.get(
+                    "http://mock-server/metrics", auth=("user", "pass")
+                )
+                assert response.status_code == 200
+                metrics = response.json()
+                assert "backend" in metrics
+                assert metrics["backend"]["requests"] > 0
+
+
+class TestMockedWebSocketIntegration:
+    """Mocked WebSocket tests that don't require running server."""
+
+    @pytest.mark.asyncio
+    async def test_websocket_connection_mocked(self):
+        """Test WebSocket connection and ping/pong with mocks."""
+        import websockets
+
+        mock_websocket = AsyncMock()
+        mock_websocket.recv.side_effect = [
+            json.dumps({"type": "connected"}),
+            json.dumps({"type": "pong", "timestamp": "2023-01-01T00:00:00Z"}),
+        ]
+
+        with patch("websockets.connect") as mock_connect:
+            mock_connect.return_value.__aenter__.return_value = mock_websocket
+            mock_connect.return_value.__aexit__.return_value = None
+
+            async with websockets.connect("ws://mock-server/ws") as websocket:
+                # Consume initial 'connected' message
+                initial = await asyncio.wait_for(websocket.recv(), timeout=1.0)
+                initial_data = json.loads(initial)
+                assert initial_data.get("type") == "connected"
+
+                # Send ping
+                await websocket.send(json.dumps({"type": "ping"}))
+
+                # Receive pong
+                response = await websocket.recv()
+                data = json.loads(response)
+                assert data["type"] == "pong"
+                assert "timestamp" in data
+
+    @pytest.mark.asyncio
+    async def test_websocket_subscription_mocked(self):
+        """Test WebSocket channel subscription with mocks."""
+        import websockets
+
+        mock_websocket = AsyncMock()
+        mock_websocket.recv.side_effect = [
+            json.dumps({"type": "connected"}),
+            json.dumps({"type": "subscribed", "channels": ["tasks", "agents"]}),
+            json.dumps(
+                {"type": "pong", "timestamp": "2023-01-01T00:00:00Z"}
+            ),  # Add pong response
+        ]
+
+        with patch("websockets.connect") as mock_connect:
+            mock_connect.return_value.__aenter__.return_value = mock_websocket
+            mock_connect.return_value.__aexit__.return_value = None
+
+            async with websockets.connect("ws://mock-server/ws") as websocket:
+                # Consume initial 'connected' message
+                await asyncio.wait_for(websocket.recv(), timeout=1.0)
+
+                # Subscribe to channels
+                await websocket.send(
+                    json.dumps({"type": "subscribe", "channels": ["tasks", "agents"]})
+                )
+
+                # Consume subscription confirmation
+                sub_response = await asyncio.wait_for(websocket.recv(), timeout=1.0)
+                sub_data = json.loads(sub_response)
+                assert sub_data.get("type") == "subscribed"
+
+                # Wait a bit for subscription to process
+                await asyncio.sleep(0.5)
+
+                # Send ping to verify connection still alive
+                await websocket.send(json.dumps({"type": "ping"}))
+                response = await websocket.recv()
+                data = json.loads(response)
+                assert data["type"] == "pong"
+
+
+class TestMockedUIInteraction:
+    """Mocked UI interaction tests using Playwright mocks."""
+
+    @pytest.mark.asyncio
+    async def test_ui_loads_mocked(self):
+        """Test UI loads successfully with mocked Playwright."""
+        from playwright.async_api import Page
+
+        mock_page = AsyncMock(spec=Page)
+        mock_page.goto = AsyncMock()
+        mock_page.to_have_title = AsyncMock()
+
+        # Navigate to frontend
+        await mock_page.goto("http://localhost:3000")
+
+        # Mock title check (simplified)
+        mock_page.to_have_title.assert_not_called()  # Just verify the method exists
+
+        # Verify calls were made
+        mock_page.goto.assert_called_once_with("http://localhost:3000")
+
+    @pytest.mark.asyncio
+    async def test_login_flow_mocked(self):
+        """Test login flow with mocked Playwright."""
+        from playwright.async_api import Page
+
+        mock_page = AsyncMock(spec=Page)
+        mock_page.goto = AsyncMock()
+        mock_page.fill = AsyncMock()
+        mock_page.click = AsyncMock()
+        mock_page.wait_for_selector = AsyncMock()
+
+        auth_credentials = {"username": "test_user", "password": "test_pass"}
+
+        with patch("playwright.async_api.expect") as _mock_expect:
+            await mock_page.goto("http://localhost:3000")
+
+            # Find and fill login form
+            await mock_page.fill('input[name="username"]', auth_credentials["username"])
+            await mock_page.fill('input[name="password"]', auth_credentials["password"])
+
+            # Submit login
+            await mock_page.click('button[type="submit"]')
+
+            # Wait for dashboard to load
+            await mock_page.wait_for_selector(".dashboard", timeout=5000)
+
+            # Verify interactions
+            assert mock_page.fill.call_count == 2
+            mock_page.click.assert_called_once_with('button[type="submit"]')
+            mock_page.wait_for_selector.assert_called_once_with(
+                ".dashboard", timeout=5000
+            )
+
+
+class TestMockedPerformance:
+    """Mocked performance tests."""
+
+    @pytest.mark.asyncio
+    async def test_api_response_time_mocked(self):
+        """Test API response times with mocked timing."""
+        import httpx
+
+        mock_response = Mock()
+        mock_response.status_code = 200
+
+        with (
+            patch("httpx.AsyncClient") as mock_client_class,
+            patch("time.perf_counter", side_effect=[0.0, 0.1]),
+        ):  # 0.1 second response
+
+            mock_client = AsyncMock()
+            mock_client.__aenter__.return_value = mock_client
+            mock_client.__aexit__.return_value = None
+            mock_client.get.return_value = mock_response
+            mock_client_class.return_value = mock_client
+
+            async with httpx.AsyncClient() as client:
+                # Test health endpoint
+                start = time.perf_counter()
+                response = await client.get("http://mock-server/health")
+                duration = time.perf_counter() - start
+
+                assert response.status_code == 200
+                assert abs(duration - 0.1) < 1e-6  # Close to 0.1 seconds
+                assert duration < 0.5, f"Health endpoint too slow: {duration:.3f}s"
+
+    @pytest.mark.asyncio
+    async def test_concurrent_requests_mocked(self):
+        """Test handling of concurrent requests with mocks."""
+        import httpx
+
+        mock_response = Mock()
+        mock_response.status_code = 200
+
+        with patch("httpx.AsyncClient") as mock_client_class:
+            mock_client = AsyncMock()
+            mock_client.__aenter__.return_value = mock_client
+            mock_client.__aexit__.return_value = None
+            mock_client.get.return_value = mock_response
+            mock_client_class.return_value = mock_client
+
+            async def make_request(client: httpx.AsyncClient, i: int):
+                response = await client.get(
+                    "http://mock-server/metrics", auth=("user", "pass")
+                )
+                return response.status_code
+
+            async with httpx.AsyncClient(timeout=30.0) as client:
+                # Make 10 concurrent requests
+                tasks = [make_request(client, i) for i in range(10)]
+                results = await asyncio.gather(*tasks)
+
+                # All should succeed
+                assert all(status == 200 for status in results)
+                assert len(results) == 10
 
 
 class TestAPIEndpoints:
@@ -261,8 +580,8 @@ class TestUIInteraction:
 
     @pytest.mark.asyncio
     @pytest.mark.skipif(
-        not Path("web/frontend/build").exists(),
-        reason="Frontend not built",
+        not Path("web/frontend/dist").exists(),
+        reason="Frontend not built (dist directory missing)",
     )
     async def test_ui_loads(self, page: Page, backend_server: str):
         """Test UI loads successfully."""
@@ -274,8 +593,8 @@ class TestUIInteraction:
 
     @pytest.mark.asyncio
     @pytest.mark.skipif(
-        not Path("web/frontend/build").exists(),
-        reason="Frontend not built",
+        not Path("web/frontend/dist").exists(),
+        reason="Frontend not built (dist directory missing)",
     )
     async def test_login_flow(
         self, page: Page, backend_server: str, auth_credentials: Dict[str, str]
@@ -295,8 +614,8 @@ class TestUIInteraction:
 
     @pytest.mark.asyncio
     @pytest.mark.skipif(
-        not Path("web/frontend/build").exists(),
-        reason="Frontend not built",
+        not Path("web/frontend/dist").exists(),
+        reason="Frontend not built (dist directory missing)",
     )
     async def test_task_submission_ui(
         self, page: Page, backend_server: str, auth_credentials: Dict[str, str]

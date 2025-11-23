@@ -632,6 +632,7 @@ class ForensicsSystem:
 
     def __init__(
         self,
+        forensics_dir: Optional[str] = None,
         evidence_dir: Optional[str] = None,
         reports_dir: Optional[str] = None,
         audit_system: Optional[Any] = None,
@@ -640,10 +641,17 @@ class ForensicsSystem:
         Initialize Forensics System.
 
         Args:
+            forensics_dir: Base directory for forensics data (backward compatibility)
             evidence_dir: Directory for evidence storage
             reports_dir: Directory for reports
             audit_system: Audit system instance
         """
+        # Handle backward compatibility
+        if forensics_dir and not evidence_dir:
+            evidence_dir = forensics_dir
+        if forensics_dir and not reports_dir:
+            reports_dir = str(Path(forensics_dir) / "reports")
+
         self.evidence_collector = EvidenceCollector(evidence_dir)
         self.log_analyzer = LogAnalyzer()
         self.audit_system = audit_system or get_audit_system()
@@ -1249,3 +1257,126 @@ if __name__ == "__main__":
     # Generate report
     report = forensics.generate_report(incident.id)
     print(f"Report generated with {len(report.findings)} findings")
+
+
+class IncidentAnalyzer:
+    """
+    Analyzes security incidents and generates insights.
+
+    This class provides methods to analyze incidents, generate timelines,
+    and assess risks based on collected evidence.
+    """
+
+    def __init__(self) -> None:
+        """Initialize the incident analyzer."""
+        self.logger = logging.getLogger(__name__)
+
+    def analyze_incident(self, incident: Incident) -> Dict[str, Any]:
+        """
+        Analyze a security incident.
+
+        Args:
+            incident: The incident to analyze
+
+        Returns:
+            Dict containing analysis results
+        """
+        analysis = {
+            "incident_id": incident.id,
+            "severity": incident.severity.value,
+            "status": incident.status.value,
+            "risk_assessment": self.assess_risk(incident),
+            "timeline": [],  # Would be populated with evidence timeline
+            "recommendations": self._generate_recommendations(incident),
+        }
+        return analysis
+
+    def generate_timeline(
+        self, evidence_list: List[EvidenceItem]
+    ) -> List[Dict[str, Any]]:
+        """
+        Generate a chronological timeline from evidence.
+
+        Args:
+            evidence_list: List of evidence items
+
+        Returns:
+            List of timeline events sorted by timestamp
+        """
+        timeline = []
+        for evidence in evidence_list:
+            event = {
+                "timestamp": evidence.timestamp,
+                "type": evidence.type.value,
+                "source": evidence.source,
+                "description": f"Evidence collected: {evidence.type.value}",
+                "evidence_id": evidence.id,
+            }
+            timeline.append(event)
+
+        # Sort by timestamp
+        timeline.sort(key=lambda x: x["timestamp"])
+        return timeline
+
+    def assess_risk(self, incident: Incident) -> Dict[str, Any]:
+        """
+        Assess the risk level of an incident.
+
+        Args:
+            incident: The incident to assess
+
+        Returns:
+            Dict containing risk assessment
+        """
+        # Base risk on severity
+        severity_scores = {
+            IncidentSeverity.LOW: 1,
+            IncidentSeverity.MEDIUM: 3,
+            IncidentSeverity.HIGH: 7,
+            IncidentSeverity.CRITICAL: 10,
+        }
+
+        base_score = severity_scores.get(incident.severity, 5)
+
+        # Adjust based on status
+        if incident.status == IncidentStatus.RESOLVED:
+            risk_level = "Low"
+            adjusted_score = base_score * 0.3
+        elif incident.status == IncidentStatus.CONTAINED:
+            risk_level = "Medium"
+            adjusted_score = base_score * 0.7
+        else:
+            risk_level = "High" if base_score >= 7 else "Medium"
+            adjusted_score = base_score
+
+        return {
+            "risk_level": risk_level,
+            "risk_score": adjusted_score,
+            "severity": incident.severity.value,
+            "status": incident.status.value,
+            "assessment_date": datetime.now(timezone.utc).isoformat(),
+        }
+
+    def _generate_recommendations(self, incident: Incident) -> List[str]:
+        """
+        Generate recommendations based on incident analysis.
+
+        Args:
+            incident: The incident being analyzed
+
+        Returns:
+            List of recommendation strings
+        """
+        recommendations = []
+
+        if incident.severity in [IncidentSeverity.HIGH, IncidentSeverity.CRITICAL]:
+            recommendations.append("Immediate containment procedures required")
+            recommendations.append("Escalate to security team leadership")
+
+        if incident.status == IncidentStatus.OPEN:
+            recommendations.append("Begin incident investigation immediately")
+
+        recommendations.append("Collect additional evidence and logs")
+        recommendations.append("Review access controls and permissions")
+
+        return recommendations

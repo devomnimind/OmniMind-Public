@@ -259,7 +259,8 @@ def visual_tester():
 
 @pytest.mark.asyncio
 @pytest.mark.skipif(
-    not Path("web/frontend/build").exists(), reason="Frontend not built"
+    not Path("web/frontend/dist").exists(),
+    reason="Frontend not built (dist directory missing)",
 )
 async def test_homepage_visual(page: Page, visual_tester: VisualRegressionTester):
     """Test homepage visual appearance."""
@@ -275,7 +276,8 @@ async def test_homepage_visual(page: Page, visual_tester: VisualRegressionTester
 
 @pytest.mark.asyncio
 @pytest.mark.skipif(
-    not Path("web/frontend/build").exists(), reason="Frontend not built"
+    not Path("web/frontend/dist").exists(),
+    reason="Frontend not built (dist directory missing)",
 )
 async def test_login_page_visual(page: Page, visual_tester: VisualRegressionTester):
     """Test login page visual appearance."""
@@ -289,7 +291,8 @@ async def test_login_page_visual(page: Page, visual_tester: VisualRegressionTest
 
 @pytest.mark.asyncio
 @pytest.mark.skipif(
-    not Path("web/frontend/build").exists(), reason="Frontend not built"
+    not Path("web/frontend/dist").exists(),
+    reason="Frontend not built (dist directory missing)",
 )
 async def test_dashboard_visual(page: Page, visual_tester: VisualRegressionTester):
     """Test dashboard visual appearance."""
@@ -311,7 +314,8 @@ async def test_dashboard_visual(page: Page, visual_tester: VisualRegressionTeste
 
 @pytest.mark.asyncio
 @pytest.mark.skipif(
-    not Path("web/frontend/build").exists(), reason="Frontend not built"
+    not Path("web/frontend/dist").exists(),
+    reason="Frontend not built (dist directory missing)",
 )
 async def test_task_form_visual(page: Page, visual_tester: VisualRegressionTester):
     """Test task form visual appearance."""

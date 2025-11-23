@@ -12,7 +12,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 # datetime imported but not used directly - used via datetime.now()
 from enum import Enum
@@ -21,6 +21,24 @@ from typing import Any, Callable, Dict, List, Optional
 import psutil
 
 logger = logging.getLogger(__name__)
+
+
+@dataclass
+class SystemState:
+    """Current system state for homeostasis monitoring."""
+
+    cpu_usage: float
+    memory_usage: float
+    temperature: float
+    timestamp: float = field(default_factory=time.time)
+
+    def is_healthy(self) -> bool:
+        """Check if system state is healthy."""
+        return (
+            self.cpu_usage < 80.0
+            and self.memory_usage < 80.0
+            and self.temperature < 70.0
+        )
 
 
 class ResourceState(str, Enum):
@@ -118,6 +136,47 @@ class HomeostaticController:
         # Emergency throttling state
         self._throttled = False
         self._throttle_start: Optional[float] = None
+        self._regulation_history: List[Dict[str, Any]] = []
+
+    def get_current_state(self) -> SystemState:
+        """Get current system state."""
+        metrics = self._collect_metrics()
+        return SystemState(
+            cpu_usage=metrics.cpu_percent,
+            memory_usage=metrics.memory_percent,
+            temperature=50.0,  # Placeholder - would need actual temperature sensor
+            timestamp=metrics.timestamp,
+        )
+
+    def regulate(self) -> Dict[str, Any]:
+        """Apply homeostasis regulation."""
+        if not self._current_metrics:
+            return {"action": "no_metrics", "success": False}
+
+        state = self._current_metrics.get_overall_state()
+        action = {"action": "none", "success": True}
+
+        if state == ResourceState.EMERGENCY:
+            action = {"action": "emergency_throttle", "success": True}
+            self._activate_throttling()
+        elif state == ResourceState.CRITICAL:
+            action = {"action": "reduce_load", "success": True}
+        elif state in (ResourceState.WARNING, ResourceState.GOOD):
+            action = {"action": "monitor", "success": True}
+
+        self._regulation_history.append(
+            {"timestamp": time.time(), "state": state.value, "action": action["action"]}
+        )
+
+        return action
+
+    def check_and_adjust(self) -> Dict[str, Any]:
+        """Check resources and adjust if needed."""
+        return self.regulate()
+
+    def get_history(self) -> List[Dict[str, Any]]:
+        """Get regulation history."""
+        return self._regulation_history.copy()
 
     def register_state_callback(
         self, callback: Callable[[ResourceState], None]
