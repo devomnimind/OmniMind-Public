@@ -1,0 +1,48 @@
+[Unit]
+Description=OmniMind AI Agent System
+Documentation=https://github.com/fabs-devbrain/OmniMind
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=%i
+Group=%i
+WorkingDirectory=/home/%i/projects/omnimind
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+Environment="OMNIMIND_WORKSPACE=/home/%i/projects/omnimind"
+Environment="OMNIMIND_LOG_LEVEL=INFO"
+
+# Virtual environment activation
+ExecStartPre=/bin/bash -c 'source .venv/bin/activate'
+
+# Main service
+ExecStart=/home/%i/projects/omnimind/.venv/bin/python -m uvicorn web.backend.main:app --host 0.0.0.0 --port 8000 --log-level info
+
+# Restart policy
+Restart=on-failure
+RestartSec=10s
+StartLimitBurst=5
+StartLimitInterval=300
+
+# Resource limits
+MemoryMax=4G
+CPUQuota=200%
+TasksMax=100
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/%i/projects/omnimind/logs /home/%i/projects/omnimind/data
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=omnimind
+
+[Install]
+WantedBy=multi-user.target

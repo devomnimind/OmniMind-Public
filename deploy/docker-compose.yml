@@ -1,7 +1,7 @@
 services:
   backend:
     build:
-      context: .
+      context: ..
       dockerfile: web/backend/Dockerfile
     ports:
       - "8000:8000"
@@ -22,7 +22,7 @@ services:
 
   frontend:
     build:
-      context: .
+      context: ..
       dockerfile: web/frontend/Dockerfile
     ports:
       - "3000:80"

@@ -1,0 +1,14 @@
+[Unit]
+Description=OmniMind Security Validation
+After=network.target
+
+[Service]
+Type=oneshot
+Environment=PYTHONPATH=%h/projects/omnimind
+WorkingDirectory=%h/projects/omnimind
+ExecStart=%h/projects/omnimind/scripts/security_validation.sh
+StandardOutput=append:%h/projects/omnimind/logs/security_validation.log
+StandardError=append:%h/projects/omnimind/logs/security_validation.log
+
+[Install]
+WantedBy=multi-user.target

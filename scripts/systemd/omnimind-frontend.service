@@ -1,0 +1,17 @@
+[Unit]
+Description=OmniMind Frontend Dashboard
+After=network.target omnimind-backend.service
+Requires=omnimind-backend.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/fahbrain/projects/omnimind
+EnvironmentFile=/home/fahbrain/projects/omnimind/.env
+ExecStart=/usr/bin/docker-compose -f deploy/docker-compose.yml up frontend
+ExecStop=/usr/bin/docker-compose -f deploy/docker-compose.yml stop frontend
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

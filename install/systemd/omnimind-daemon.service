@@ -1,0 +1,51 @@
+[Unit]
+Description=OmniMind Autonomous Daemon
+Documentation=https://github.com/fabs-devbrain/OmniMind
+After=network-online.target omnimind.service
+Wants=network-online.target
+Requires=omnimind.service
+
+[Service]
+Type=simple
+User=__OMNIMIND_USER__
+Group=__OMNIMIND_USER__
+WorkingDirectory=__PROJECT_ROOT__
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+Environment="OMNIMIND_WORKSPACE=__PROJECT_ROOT__"
+Environment="OMNIMIND_LOG_LEVEL=INFO"
+Environment="DAEMON_CHECK_INTERVAL=30"
+Environment="OMNIMIND_CLOUD_ENABLED=false"
+
+# Virtual environment activation
+ExecStartPre=/bin/bash -c 'source __PROJECT_ROOT__/.venv/bin/activate'
+
+# Main daemon service
+ExecStart=/bin/bash -c 'source __PROJECT_ROOT__/.venv/bin/activate && __PROJECT_ROOT__/.venv/bin/python -m src.daemon'
+
+# Restart policy
+Restart=on-failure
+RestartSec=10s
+StartLimitBurst=5
+StartLimitInterval=300
+
+# Resource limits (brakes)
+MemoryMax=2G
+CPUQuota=50%
+TasksMax=50
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=__PROJECT_ROOT__/logs __PROJECT_ROOT__/data
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=omnimind-daemon
+
+[Install]
+WantedBy=multi-user.target
