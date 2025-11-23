@@ -152,3 +152,4 @@ data/forensics/evidence/*.json
 # Audit Logs
 # ------------------------------------------------------------------
 *.jsonl
+scripts/archive/security/upload_secrets.sh

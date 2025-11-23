@@ -152,7 +152,12 @@ HOOK_TYPE=${OMNIMIND_HOOK_TYPE:-"unknown"}
 # Ajustar nível de validação baseado no hook
 if [[ "$HOOK_TYPE" == "pre-commit" ]]; then
     # Pre-commit: sempre fazer pelo menos validações básicas, mas pode ser mais leve
-    if [[ "$VALIDATION_LEVEL" == "FULL" ]] && [[ "$DEV_MODE" == "true" ]]; then
+    
+    # Se é ONLY docs ou scripts (reorganização/limpeza), pular testes completamente
+    if [[ "$VALIDATION_LEVEL" == "DOCS_ONLY" ]] || [[ "$VALIDATION_LEVEL" == "CONFIG_ONLY" ]]; then
+        info "Mudanças estruturais apenas (docs/scripts) - pulando testes"
+        VALIDATION_LEVEL="DOCS_ONLY"
+    elif [[ "$VALIDATION_LEVEL" == "FULL" ]] && [[ "$DEV_MODE" == "true" ]]; then
         # No modo desenvolvimento, reduzir para CONFIG_ONLY no pre-commit
         VALIDATION_LEVEL="CONFIG_ONLY"
         info "Modo desenvolvimento ativo - reduzindo validações no pre-commit"
