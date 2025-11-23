@@ -133,3 +133,15 @@ mnt/
 .sonar/
 # Integrity baseline files (temporary test artifacts)
 data/integrity_baselines/baseline_tmp_*.json
+
+# ------------------------------------------------------------------
+# Experiment Artifacts & Reports
+# ------------------------------------------------------------------
+data/experiments/**/*_snapshot_*.json
+data/experiments/**/*_report.json
+data/experiments/**/consolidated_report.json
+
+# ------------------------------------------------------------------
+# Audit Logs
+# ------------------------------------------------------------------
+*.jsonl

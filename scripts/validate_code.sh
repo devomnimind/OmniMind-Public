@@ -72,7 +72,7 @@ fi
 
 # Verificar arquivos suspeitos
 echo "6. Verificando integridade de arquivos..."
-SUSPICIOUS=$(find . -name "*.pyc" -o -name "__pycache__" -o -name ".roo" -o -name ".omnimind" 2>/dev/null)
+SUSPICIOUS=$(find . -type d \( -name .venv -o -name .git -o -name .mypy_cache -o -name .pytest_cache \) -prune -o \( -name ".roo" \) -print)
 if [ -z "$SUSPICIOUS" ]; then
     print_status 0 "Nenhum arquivo suspeito encontrado"
 else

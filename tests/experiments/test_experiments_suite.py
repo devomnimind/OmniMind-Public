@@ -33,7 +33,7 @@ class TestConsciousnessPhiExperiment:
 
         assert results is not None
         assert isinstance(results, dict)
-        assert "phi_values" in results or "consciousness_metrics" in results
+        assert "scenarios" in results or "results" in results
 
     def test_experiment_phi_memory(self) -> None:
         """Testa experimento de memória Φ."""
@@ -55,9 +55,7 @@ class TestConsciousnessPhiExperiment:
 
         assert isinstance(results, dict)
         # Verifica presença de campos esperados
-        assert any(
-            key in results for key in ["phi_values", "consciousness_metrics", "summary"]
-        )
+        assert any(key in results for key in ["scenarios", "results", "experiment"])
 
 
 class TestEthicsAlignmentExperiment:
@@ -69,7 +67,7 @@ class TestEthicsAlignmentExperiment:
 
         assert results is not None
         assert isinstance(results, dict)
-        assert "mfa_scores" in results or "ethics_metrics" in results
+        assert "mfa_score" in results or "ethics_metrics" in results
 
     def test_experiment_ethics_transparency(self) -> None:
         """Testa experimento de transparência ética."""
@@ -80,14 +78,15 @@ class TestEthicsAlignmentExperiment:
 
     def test_simulate_ai_responses(self) -> None:
         """Testa simulação de respostas de IA."""
-        from src.metrics.ethics_metrics import MoralScenario
+        from src.metrics.ethics_metrics import MoralScenario, MoralFoundation
 
         scenarios = [
             MoralScenario(
                 scenario_id="test_001",
                 description="Test scenario",
-                moral_foundations=["care", "fairness"],
-                expected_responses=[],
+                question="Test question",
+                foundation=MoralFoundation.CARE_HARM,
+                human_baseline=5.0,
             )
         ]
 
@@ -101,9 +100,7 @@ class TestEthicsAlignmentExperiment:
 
         assert isinstance(results, dict)
         # Verifica presença de campos esperados
-        assert any(
-            key in results for key in ["mfa_scores", "ethics_metrics", "summary"]
-        )
+        assert any(key in results for key in ["mfa_score", "ethics_metrics", "summary"])
 
 
 class TestExperimentRunner:

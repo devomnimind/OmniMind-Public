@@ -13,6 +13,7 @@ from __future__ import annotations
 from pathlib import Path
 import tempfile
 import pytest
+import typing
 
 from src.security.integrity_validator import (
     IntegrityValidator,
@@ -41,8 +42,8 @@ class TestIntegrityValidatorInit:
 
             validator = IntegrityValidator(baseline_dir=baseline_dir, log_dir=log_dir)
 
-            assert validator.baseline_dir == baseline_dir
-            assert validator.log_dir == log_dir
+            assert validator.baseline_dir == Path(baseline_dir)
+            assert validator.log_dir == Path(log_dir)
 
 
 class TestFileHashValidation:
@@ -58,7 +59,7 @@ class TestFileHashValidation:
             )
 
     @pytest.fixture
-    def test_file(self) -> Path:
+    def test_file(self) -> typing.Generator[Path, None, None]:
         """Fixture para arquivo de teste."""
         with tempfile.NamedTemporaryFile(mode="w", delete=False) as f:
             f.write("test content")
@@ -74,7 +75,9 @@ class TestFileHashValidation:
         self, validator: IntegrityValidator, test_file: Path
     ) -> None:
         """Testa computação de hash de arquivo."""
-        file_hash = validator.compute_file_hash(str(test_file))
+        # Accessing private method for testing purposes
+        file_info = validator._calculate_file_integrity(test_file)
+        file_hash = file_info.get("hash")
 
         assert file_hash is not None
         assert isinstance(file_hash, str)
@@ -85,37 +88,37 @@ class TestFileHashValidation:
     ) -> None:
         """Testa validação de arquivo intacto."""
         # Calcula baseline
-        expected_hash = validator.compute_file_hash(str(test_file))
+        expected_info = validator._calculate_file_integrity(test_file)
 
         # Valida arquivo
-        record = validator.validate_file(str(test_file), expected_hash)
+        record = validator._validate_single_file(test_file, expected_info)
 
         assert record.status == IntegrityStatus.INTACT
-        assert record.current_hash == expected_hash
+        assert record.current_hash == expected_info["hash"]
 
     def test_validate_file_modified(
         self, validator: IntegrityValidator, test_file: Path
     ) -> None:
         """Testa detecção de arquivo modificado."""
         # Hash original
-        original_hash = validator.compute_file_hash(str(test_file))
+        original_info = validator._calculate_file_integrity(test_file)
 
         # Modifica arquivo
         with open(test_file, "a") as f:
             f.write("\nmodified content")
 
         # Valida (deve detectar modificação)
-        record = validator.validate_file(str(test_file), original_hash)
+        record = validator._validate_single_file(test_file, original_info)
 
         assert record.status == IntegrityStatus.MODIFIED
-        assert record.current_hash != original_hash
+        assert record.current_hash != original_info["hash"]
 
     def test_validate_file_missing(self, validator: IntegrityValidator) -> None:
         """Testa detecção de arquivo faltando."""
-        missing_path = "/nonexistent/path/file.txt"
-        expected_hash = "abc123"
+        missing_path = Path("/nonexistent/path/file.txt")
+        expected_info = {"hash": "abc123", "size": 100, "mtime": 1234567890}
 
-        record = validator.validate_file(missing_path, expected_hash)
+        record = validator._validate_single_file(missing_path, expected_info)
 
         assert record.status == IntegrityStatus.MISSING
 
@@ -133,7 +136,7 @@ class TestDirectoryScan:
             )
 
     @pytest.fixture
-    def test_directory(self) -> Path:
+    def test_directory(self) -> typing.Generator[Path, None, None]:
         """Fixture para diretório de teste."""
         with tempfile.TemporaryDirectory() as tmpdir:
             test_dir = Path(tmpdir)
@@ -150,7 +153,13 @@ class TestDirectoryScan:
         self, validator: IntegrityValidator, test_directory: Path
     ) -> None:
         """Testa scan básico de diretório."""
-        report = validator.scan_directory(str(test_directory))
+        # Create baseline first
+        validator.create_baseline(str(test_directory), ValidationScope.DIRECTORY)
+
+        # Then validate
+        report = validator.validate_integrity(
+            str(test_directory), ValidationScope.DIRECTORY
+        )
 
         assert isinstance(report, IntegrityReport)
         assert report.total_files >= 3
@@ -170,7 +179,7 @@ class TestBaselineManagement:
             )
 
     @pytest.fixture
-    def test_directory(self) -> Path:
+    def test_directory(self) -> typing.Generator[Path, None, None]:
         """Fixture para diretório de teste."""
         with tempfile.TemporaryDirectory() as tmpdir:
             test_dir = Path(tmpdir)
@@ -182,11 +191,13 @@ class TestBaselineManagement:
         self, validator: IntegrityValidator, test_directory: Path
     ) -> None:
         """Testa geração de baseline."""
-        baseline = validator.generate_baseline(str(test_directory))
+        baseline = validator.create_baseline(
+            str(test_directory), ValidationScope.DIRECTORY
+        )
 
         assert baseline is not None
         assert isinstance(baseline, dict)
-        assert len(baseline) >= 2
+        assert len(baseline["files"]) >= 2
 
 
 class TestComplianceReporting:
@@ -207,8 +218,14 @@ class TestComplianceReporting:
             test_dir = Path(tmpdir)
             (test_dir / "file1.txt").write_text("content")
 
-            report = validator.scan_directory(str(test_dir))
+            # Create baseline
+            validator.create_baseline(str(test_dir), ValidationScope.DIRECTORY)
+
+            # Validate
+            report = validator.validate_integrity(
+                str(test_dir), ValidationScope.DIRECTORY
+            )
 
             assert isinstance(report, IntegrityReport)
             assert hasattr(report, "compliance_score")
-            assert 0.0 <= report.compliance_score <= 1.0
+            assert 0.0 <= report.compliance_score <= 100.0

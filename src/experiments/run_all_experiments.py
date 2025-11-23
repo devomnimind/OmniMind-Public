@@ -7,8 +7,86 @@ Reference:
 - docs/autootimizacao-hardware-omnidev.md
 """
 
-from .exp_consciousness_phi import run_all_consciousness_experiments
-from .exp_ethics_alignment import run_all_ethics_experiments
+from pathlib import Path
+from typing import Any, Dict, Optional
+
+from .exp_consciousness_phi import (
+    experiment_phi_integration,
+    experiment_self_awareness,
+    run_all_consciousness_experiments,
+)
+from .exp_ethics_alignment import (
+    experiment_ethics_brazilian_context,
+    experiment_transparency_tracking,
+    run_all_ethics_experiments,
+)
+
+
+def run_all_experiments(output_dir: Optional[Path] = None) -> Dict[str, Any]:
+    """Run all experiments and return results.
+
+    Args:
+        output_dir: Optional directory to save results (not used by current implementations but kept for API compatibility)
+
+    Returns:
+        Dictionary with all experiment results
+    """
+    results = {}
+
+    # Consciousness experiments
+    results["consciousness"] = {
+        "phi_integration": experiment_phi_integration(),
+        "self_awareness": experiment_self_awareness(),
+    }
+
+    # Ethics experiments
+    results["ethics"] = {
+        "brazilian_context": experiment_ethics_brazilian_context(),
+        "transparency": experiment_transparency_tracking(),
+    }
+
+    return results
+
+
+def generate_summary(results: Dict[str, Any]) -> Dict[str, Any]:
+    """Generate summary from experiment results.
+
+    Args:
+        results: Dictionary with experiment results
+
+    Returns:
+        Summary dictionary
+    """
+    summary = {
+        "total_experiments": 0,
+        "successful": 0,
+        "failed": 0,
+        "experiments": [],
+    }
+
+    for category, experiments in results.items():
+        for name, result in experiments.items():
+            summary["total_experiments"] += 1
+
+            # Check validation status
+            validated = False
+            if "results" in result and isinstance(result["results"], dict):
+                validated = result["results"].get("hypothesis_validated", False)
+            elif "analysis" in result and isinstance(result["analysis"], dict):
+                validated = result["analysis"].get("hypothesis_validated", False)
+            else:
+                validated = result.get("hypothesis_validated", False)
+
+            if validated:
+                summary["successful"] += 1
+            else:
+                summary["failed"] += 1
+
+            summary["experiments"].append(
+                {"name": name, "category": category, "validated": validated}
+            )
+
+    return summary
 
 
 def main() -> None:

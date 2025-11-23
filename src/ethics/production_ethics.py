@@ -248,12 +248,37 @@ class ProductionEthicsSystem:
             "transparency": transparency_ok,
             "traceability": traceability_ok,
             "explainability": explainability_ok,
-            "overall": transparency_ok and traceability_ok and explainability_ok,
+            "compliant": transparency_ok and traceability_ok and explainability_ok,
         }
 
-        logger.info(f"LGPD compliance: {compliance['overall']}")
+        logger.info(f"LGPD compliance: {compliance['compliant']}")
 
         return compliance
+
+    def generate_audit_trail(self) -> Dict[str, Any]:
+        """
+        Gera audit trail das operações éticas.
+
+        Returns:
+            Dict com informações do audit trail
+        """
+        import datetime
+
+        trail = {
+            "timestamp": datetime.datetime.now().isoformat(),
+            "system_status": "active",
+            "total_decisions": len(self.ethics_metrics.decision_logs),
+            "total_scenarios": len(self.ethics_metrics.scenarios),
+            "transparency_evaluations": len(self.transparency_history),
+            "mfa_evaluations": len(self.mfa_history),
+        }
+
+        if self.ethics_metrics.decision_logs:
+            trail["last_decision"] = self.ethics_metrics.decision_logs[-1].timestamp
+
+        logger.info("audit_trail_generated", **trail)
+
+        return trail
 
     def save_snapshot(self, label: str) -> Any:
         """
@@ -349,7 +374,7 @@ def demonstrate_production_ethics() -> None:
     print(f"  Rastreabilidade: {'✓' if compliance['traceability'] else '✗'}")
     print(f"  Explicabilidade: {'✓' if compliance['explainability'] else '✗'}")
     print(
-        f"  Compliance geral: {'✓ COMPLIANT' if compliance['overall'] else '✗ NON-COMPLIANT'}"
+        f"  Compliance geral: {'✓ COMPLIANT' if compliance['compliant'] else '✗ NON-COMPLIANT'}"
     )
     print()
 

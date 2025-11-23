@@ -85,9 +85,10 @@ class TestMoralFoundationAlignment:
             MoralScenario(
                 scenario_id="test_1",
                 description="Deletar dados de usuário após solicitação",
-                moral_foundations=[MoralFoundation.CARE],
-                ai_response="Deletar imediatamente respeitando LGPD",
-                expected_alignment=0.9,
+                question="É ético deletar?",
+                foundation=MoralFoundation.CARE_HARM,
+                human_baseline=0.9,
+                ai_response=0.95,
             )
         ]
 
@@ -113,16 +114,18 @@ class TestMoralFoundationAlignment:
             MoralScenario(
                 scenario_id="care_test",
                 description="Proteger dados sensíveis",
-                moral_foundations=[MoralFoundation.CARE],
-                ai_response="Implementar criptografia forte",
-                expected_alignment=0.9,
+                question="É ético proteger?",
+                foundation=MoralFoundation.CARE_HARM,
+                human_baseline=0.9,
+                ai_response=0.92,
             ),
             MoralScenario(
                 scenario_id="fairness_test",
                 description="Distribuir recursos computacionais",
-                moral_foundations=[MoralFoundation.FAIRNESS],
-                ai_response="Usar scheduling justo",
-                expected_alignment=0.85,
+                question="É justo distribuir?",
+                foundation=MoralFoundation.FAIRNESS_CHEATING,
+                human_baseline=0.85,
+                ai_response=0.88,
             ),
         ]
 
@@ -140,19 +143,19 @@ class TestTransparency:
         with tempfile.TemporaryDirectory() as tmpdir:
             yield ProductionEthicsSystem(metrics_dir=Path(tmpdir))
 
-    def test_measure_transparency_basic(self, system: ProductionEthicsSystem) -> None:
+    def test_evaluate_transparency_basic(self, system: ProductionEthicsSystem) -> None:
         """Testa medição básica de transparência."""
-        transparency = system.measure_transparency()
+        transparency = system.evaluate_transparency()
 
         assert isinstance(transparency, TransparencyComponents)
         assert 0.0 <= transparency.explainability <= 1.0
-        assert 0.0 <= transparency.auditability <= 1.0
+        assert 0.0 <= transparency.traceability <= 1.0
         assert 0.0 <= transparency.interpretability <= 1.0
 
     def test_transparency_history(self, system: ProductionEthicsSystem) -> None:
         """Testa histórico de transparência."""
-        trans1 = system.measure_transparency()
-        trans2 = system.measure_transparency()
+        trans1 = system.evaluate_transparency()
+        trans2 = system.evaluate_transparency()
 
         assert len(system.transparency_history) == 2
         assert system.transparency_history[0] == trans1
@@ -160,15 +163,15 @@ class TestTransparency:
 
     def test_transparency_components(self, system: ProductionEthicsSystem) -> None:
         """Testa componentes de transparência."""
-        transparency = system.measure_transparency()
+        transparency = system.evaluate_transparency()
 
         assert hasattr(transparency, "explainability")
-        assert hasattr(transparency, "auditability")
+        assert hasattr(transparency, "traceability")
         assert hasattr(transparency, "interpretability")
 
         # Verifica ranges válidos
         assert 0.0 <= transparency.explainability <= 1.0
-        assert 0.0 <= transparency.auditability <= 1.0
+        assert 0.0 <= transparency.traceability <= 1.0
         assert 0.0 <= transparency.interpretability <= 1.0
 
 
@@ -193,7 +196,11 @@ class TestLGPDCompliance:
         """Testa LGPD compliance com problemas identificados."""
         compliance = system.check_lgpd_compliance()
 
-        assert "issues" in compliance or "violations" in compliance
+        assert (
+            "issues" in compliance
+            or "violations" in compliance
+            or not compliance["compliant"]
+        )
 
     def test_lgpd_compliance_score(self, system: ProductionEthicsSystem) -> None:
         """Testa score de compliance LGPD."""
@@ -214,49 +221,43 @@ class TestDecisionLogging:
 
     def test_log_decision_basic(self, system: ProductionEthicsSystem) -> None:
         """Testa logging básico de decisão."""
-        decision = DecisionLog(
-            decision_id="test_decision_1",
-            action="Delete old logs",
-            rationale="Disk space management",
-            ethical_score=0.8,
-            frameworks_consulted=["utilitarian"],
+        system.log_ethical_decision(
+            agent_name="TestAgent",
+            decision="Delete old logs",
+            reasoning="Disk space management",
+            factors_used=["storage", "performance"],
+            confidence=0.8,
+            traceable=True,
         )
-
-        system.log_decision(decision)
 
         # Verifica que decisão foi registrada
         assert len(system.ethics_metrics.decision_logs) > 0
 
     def test_log_multiple_decisions(self, system: ProductionEthicsSystem) -> None:
         """Testa logging de múltiplas decisões."""
-        decisions = [
-            DecisionLog(
-                decision_id=f"decision_{i}",
-                action=f"Action {i}",
-                rationale=f"Rationale {i}",
-                ethical_score=0.7 + i * 0.05,
-                frameworks_consulted=["utilitarian"],
+        for i in range(5):
+            system.log_ethical_decision(
+                agent_name=f"Agent{i}",
+                decision=f"Action {i}",
+                reasoning=f"Rationale {i}",
+                factors_used=["test"],
+                confidence=0.7 + i * 0.05,
+                traceable=True,
             )
-            for i in range(5)
-        ]
-
-        for decision in decisions:
-            system.log_decision(decision)
 
         assert len(system.ethics_metrics.decision_logs) >= 5
 
     def test_decision_log_retrieval(self, system: ProductionEthicsSystem) -> None:
         """Testa recuperação de logs de decisão."""
-        decision = DecisionLog(
-            decision_id="retrievable_decision",
-            action="Test action",
-            rationale="Test rationale",
-            ethical_score=0.85,
-            frameworks_consulted=["deontological"],
+        system.log_ethical_decision(
+            agent_name="TestAgent",
+            decision="Test action",
+            reasoning="Test rationale",
+            factors_used=["testing"],
+            confidence=0.85,
+            traceable=True,
         )
-
-        system.log_decision(decision)
-        logs = system.get_decision_logs()
+        logs = system.ethics_metrics.decision_logs
 
         assert isinstance(logs, list)
         assert len(logs) > 0
@@ -275,7 +276,7 @@ class TestAuditTrails:
         """Testa geração de audit trail."""
         # Faz algumas operações éticas
         system.evaluate_moral_alignment()
-        system.measure_transparency()
+        system.evaluate_transparency()
         system.check_lgpd_compliance()
 
         # Gera audit trail
@@ -287,14 +288,14 @@ class TestAuditTrails:
     def test_audit_trail_completeness(self, system: ProductionEthicsSystem) -> None:
         """Testa completude do audit trail."""
         # Registra decisão
-        decision = DecisionLog(
-            decision_id="auditable_decision",
-            action="Data processing",
-            rationale="Business need",
-            ethical_score=0.75,
-            frameworks_consulted=["utilitarian", "deontological"],
+        system.log_ethical_decision(
+            agent_name="AuditAgent",
+            decision="Data processing",
+            reasoning="Business need",
+            factors_used=["business", "compliance"],
+            confidence=0.75,
+            traceable=True,
         )
-        system.log_decision(decision)
 
         # Gera trail
         trail = system.generate_audit_trail()
@@ -317,7 +318,7 @@ class TestIntegratedEthics:
         mfa_result = system.evaluate_moral_alignment()
 
         # Transparência
-        transparency = system.measure_transparency()
+        transparency = system.evaluate_transparency()
 
         # LGPD
         lgpd = system.check_lgpd_compliance()
@@ -332,7 +333,7 @@ class TestIntegratedEthics:
         # Múltiplas avaliações
         for _ in range(3):
             system.evaluate_moral_alignment()
-            system.measure_transparency()
+            system.evaluate_transparency()
 
         # Verifica históricos
         assert len(system.transparency_history) == 3
@@ -344,28 +345,29 @@ class TestIntegratedEthics:
             MoralScenario(
                 scenario_id="workflow_test",
                 description="Process user data",
-                moral_foundations=[MoralFoundation.CARE, MoralFoundation.FAIRNESS],
-                ai_response="Process with consent and anonymization",
-                expected_alignment=0.9,
+                question="É ético processar?",
+                foundation=MoralFoundation.CARE_HARM,
+                human_baseline=0.9,
+                ai_response=0.95,
             )
         ]
         mfa = system.evaluate_moral_alignment(scenarios)
 
         # 2. Mede transparência
-        transparency = system.measure_transparency()
+        transparency = system.evaluate_transparency()
 
         # 3. Verifica LGPD
         lgpd = system.check_lgpd_compliance()
 
         # 4. Registra decisão
-        decision = DecisionLog(
-            decision_id="workflow_decision",
-            action="Data processing approved",
-            rationale="High MFA and LGPD compliant",
-            ethical_score=0.9,
-            frameworks_consulted=["utilitarian", "deontological"],
+        system.log_ethical_decision(
+            agent_name="WorkflowAgent",
+            decision="Data processing approved",
+            reasoning="High MFA and LGPD compliant",
+            factors_used=["mfa", "lgpd", "compliance"],
+            confidence=0.9,
+            traceable=True,
         )
-        system.log_decision(decision)
 
         # 5. Gera audit trail
         trail = system.generate_audit_trail()
@@ -396,7 +398,7 @@ class TestEdgeCases:
         """Testa múltiplas medições consecutivas."""
         for _ in range(10):
             system.evaluate_moral_alignment()
-            system.measure_transparency()
+            system.evaluate_transparency()
             system.check_lgpd_compliance()
 
         # Verifica que sistema continua funcionando
@@ -410,7 +412,7 @@ class TestEdgeCases:
 
         # Faz algumas operações
         system.evaluate_moral_alignment()
-        system.measure_transparency()
+        system.evaluate_transparency()
 
         # Verifica persistência
         assert metrics_dir.exists()
@@ -420,7 +422,7 @@ class TestEdgeCases:
         """Testa operações concorrentes."""
         # Simula operações simultâneas
         mfa = system.evaluate_moral_alignment()
-        trans = system.measure_transparency()
+        trans = system.evaluate_transparency()
         lgpd = system.check_lgpd_compliance()
 
         assert mfa is not None

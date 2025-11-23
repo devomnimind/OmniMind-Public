@@ -22,9 +22,8 @@ if [[ $EUID -eq 0 ]]; then
    exit 1
 fi
 
-# Get the script directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 echo -e "${YELLOW}📁 Project root: $PROJECT_ROOT${NC}"
 
