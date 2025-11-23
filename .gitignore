@@ -71,6 +71,7 @@ dist/
 # Runtime databases & vector stores
 data/qdrant/
 data/tmp/
+deploy/data/
 
 # Snapshots / quarantines / backups created during recovery
 data/hdd_snapshot/
@@ -140,6 +141,12 @@ data/integrity_baselines/baseline_tmp_*.json
 data/experiments/**/*_snapshot_*.json
 data/experiments/**/*_report.json
 data/experiments/**/consolidated_report.json
+
+# ------------------------------------------------------------------
+# Forensics & Security Incidents (runtime artifacts)
+# ------------------------------------------------------------------
+data/forensics/incidents/*.json
+data/forensics/evidence/*.json
 
 # ------------------------------------------------------------------
 # Audit Logs
