@@ -100,6 +100,7 @@ class NeuralComponent:
         query: str,
         context: Optional[Dict[str, Any]] = None,
         chain_of_thought: bool = True,
+        use_cache: bool = True,
     ) -> NeuralInference:
         """
         Realizar inferência neural sobre query.
@@ -108,13 +109,34 @@ class NeuralComponent:
             query: Pergunta ou problema
             context: Contexto adicional
             chain_of_thought: Incluir raciocínio passo-a-passo
+            use_cache: Usar cache de respostas (padrão: True)
 
         Returns:
             NeuralInference com resposta e confiança
         """
         from src.neurosymbolic.metrics_collector import get_metrics_collector
+        from src.neurosymbolic.response_cache import get_response_cache
 
         logger.info(f"Neural inference ({self.provider}): {query[:100]}...")
+
+        # Verificar cache primeiro
+        if use_cache:
+            cache = get_response_cache()
+            cached = cache.get(query, context)
+            if cached:
+                logger.info(
+                    f"Cache HIT ({cached.backend}): {cached.hits} hits, "
+                    f"age={time.time() - cached.timestamp:.0f}s"
+                )
+                return NeuralInference(
+                    answer=cached.answer,
+                    confidence=cached.confidence,
+                    raw_output={
+                        "source": "cache",
+                        "backend": cached.backend,
+                        "hits": cached.hits,
+                    },
+                )
 
         start_time = time.time()
         success = False
@@ -131,6 +153,17 @@ class NeuralComponent:
                 result = self._infer_stub(query)
 
             success = True
+
+            # Armazenar em cache
+            if use_cache:
+                cache.put(
+                    query=query,
+                    answer=result.answer,
+                    confidence=result.confidence,
+                    backend=self.provider,
+                    context=context,
+                )
+
             return result
 
         except Exception as e:
@@ -147,9 +180,8 @@ class NeuralComponent:
                 backend=self.provider,
                 latency_seconds=latency,
                 success=success,
-                error=error_msg
+                error=error_msg,
             )
-
 
     def _infer_hf_space(
         self, query: str, context: Optional[Dict[str, Any]] = None
