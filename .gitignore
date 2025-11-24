@@ -7,6 +7,8 @@ __pycache__/
 *.pyo
 *.so
 .pytest_cache/
+.omnimind_temp_archive/
+temp_spaces/
 .mypy_cache/
 .ruff_cache/
 .coverage
@@ -155,4 +157,6 @@ data/forensics/evidence/*.json
 scripts/archive/security/upload_secrets.sh
 .cursor/
 .cursorignore
-temp_spaces/
+# External archive (moved to external drive) – never versioned
+omnimind_archive_*/
+

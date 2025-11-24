@@ -1,89 +1,17 @@
 [
   {
-    "timestamp": "2025-11-23T21:32:02.176524",
+    "timestamp": "2025-11-24T10:24:59.765465",
     "iterations": 3,
-    "mean_time_ms": 1.067021666680527,
-    "mean_memory_mb": 44.87109375,
+    "mean_time_ms": 1.0863320003409171,
+    "mean_memory_mb": 757.14453125,
     "mean_cpu_percent": 0.0,
     "metadata": {}
   },
   {
-    "timestamp": "2025-11-23T21:32:31.750663",
+    "timestamp": "2025-11-24T10:30:21.735478",
     "iterations": 3,
-    "mean_time_ms": 1.0658726666671707,
-    "mean_memory_mb": 43.09375,
-    "mean_cpu_percent": 0.0,
-    "metadata": {}
-  },
-  {
-    "timestamp": "2025-11-23T21:32:40.549189",
-    "iterations": 3,
-    "mean_time_ms": 1.0674523333212467,
-    "mean_memory_mb": 43.07421875,
-    "mean_cpu_percent": 0.0,
-    "metadata": {}
-  },
-  {
-    "timestamp": "2025-11-23T19:33:08.519114",
-    "iterations": 3,
-    "mean_time_ms": 1.083333335069862,
-    "mean_memory_mb": 748.98828125,
-    "mean_cpu_percent": 0.0,
-    "metadata": {}
-  },
-  {
-    "timestamp": "2025-11-23T20:10:50.449058",
-    "iterations": 3,
-    "mean_time_ms": 1.085752667374133,
-    "mean_memory_mb": 738.33984375,
-    "mean_cpu_percent": 0.0,
-    "metadata": {}
-  },
-  {
-    "timestamp": "2025-11-23T20:39:41.462080",
-    "iterations": 3,
-    "mean_time_ms": 1.0947876665644192,
-    "mean_memory_mb": 754.8671875,
-    "mean_cpu_percent": 0.0,
-    "metadata": {}
-  },
-  {
-    "timestamp": "2025-11-23T21:45:04.985007",
-    "iterations": 3,
-    "mean_time_ms": 1.0755286651450053,
-    "mean_memory_mb": 727.91796875,
-    "mean_cpu_percent": 0.0,
-    "metadata": {}
-  },
-  {
-    "timestamp": "2025-11-23T21:50:07.825242",
-    "iterations": 3,
-    "mean_time_ms": 1.0638296662364155,
-    "mean_memory_mb": 735.15234375,
-    "mean_cpu_percent": 0.0,
-    "metadata": {}
-  },
-  {
-    "timestamp": "2025-11-23T21:51:04.694784",
-    "iterations": 3,
-    "mean_time_ms": 1.0621263330297854,
-    "mean_memory_mb": 754.58984375,
-    "mean_cpu_percent": 0.0,
-    "metadata": {}
-  },
-  {
-    "timestamp": "2025-11-23T22:25:45.695173",
-    "iterations": 3,
-    "mean_time_ms": 1.0660413317964412,
-    "mean_memory_mb": 523.77734375,
-    "mean_cpu_percent": 0.0,
-    "metadata": {}
-  },
-  {
-    "timestamp": "2025-11-24T08:39:13.303565",
-    "iterations": 3,
-    "mean_time_ms": 1.3145583332819417,
-    "mean_memory_mb": 751.88671875,
+    "mean_time_ms": 1.077489998957996,
+    "mean_memory_mb": 732.77734375,
     "mean_cpu_percent": 0.0,
     "metadata": {}
   }

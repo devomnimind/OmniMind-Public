@@ -331,18 +331,16 @@ class NeuralComponent:
                 payload = {"model": self.model_name, "prompt": text}
                 response = requests.post(url, json=payload, timeout=self.timeout)
                 response.raise_for_status()
-                return response.json().get("embedding", [])
+                embedding = response.json().get("embedding", [])
+                # Ensure correct dimension (768). Truncate if longer.
+                if isinstance(embedding, list) and len(embedding) > 768:
+                    embedding = embedding[:768]
+                return embedding
 
             elif self.provider == "huggingface" and self.hf_token:
                 api_url = f"https://api-inference.huggingface.co/pipeline/feature-extraction/{self.model_name}"
                 headers = {"Authorization": f"Bearer {self.hf_token}"}
                 payload = {"inputs": text}
-
-                response = requests.post(
-                    api_url, headers=headers, json=payload, timeout=self.timeout
-                )
-                response.raise_for_status()
-
                 # Retorna lista de floats (embedding) ou lista de lista (batch)
                 data = response.json()
                 if isinstance(data, list) and len(data) > 0:

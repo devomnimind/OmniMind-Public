@@ -20,6 +20,11 @@
 
 **🛡️ Segurança:** Sistema auditável com hash chain imutável. Todas as modificações registradas no log canônico.
 
+**🧹 Workspace & Archiving:**
+- **Limpeza:** Arquivos temporários, logs antigos e backups movidos para archive externo.
+- **Archive Externo:** `/run/media/fahbrain/DEV_BRAIN_CLEAN/omnimind_archive_2024-11-24/`
+- **Política:** `.omnimind_temp_archive/` e `omnimind_archive_*/` são ignorados pelo git para manter o repositório leve.
+
 **📈 Métricas de Performance (23-Nov-2025 - Phase 15):**
 - **CPU:** Loop: 69.76ms, Math: 48.19ms, Hash: 303.15ms, Compressão: 40.23ms
 - **Disco:** Write: 1136 MB/s, Read: 7563 MB/s
