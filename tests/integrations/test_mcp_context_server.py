@@ -11,9 +11,7 @@ Cobertura de:
 
 from __future__ import annotations
 
-
 from src.integrations.mcp_context_server import ContextMCPServer
-
 
 class TestContextMCPServer:
     """Testes para o servidor MCP de contexto."""

@@ -11,9 +11,7 @@ Cobertura de:
 
 from __future__ import annotations
 
-
 from src.integrations.mcp_system_info_server import SystemInfoMCPServer
-
 
 class TestSystemInfoMCPServer:
     """Testes para o servidor MCP de informações do sistema."""
