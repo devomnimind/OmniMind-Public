@@ -18,6 +18,7 @@ from .meta_architect import ComponentSpec
 
 logger = logging.getLogger(__name__)
 
+
 @dataclass(frozen=True)
 class SynthesizedComponent:
     """Result of code synthesis.
@@ -29,6 +30,7 @@ class SynthesizedComponent:
 
     name: str
     source_code: str
+
 
 class CodeSynthesizer:
     """Generate Python source code from ComponentSpec objects.
@@ -43,7 +45,9 @@ class CodeSynthesizer:
         self._logger = logger.getChild(self.__class__.__name__)
         self._logger.debug("CodeSynthesizer initialized")
 
-    def synthesize(self, specs: Sequence[ComponentSpec]) -> Dict[str, SynthesizedComponent]:
+    def synthesize(
+        self, specs: Sequence[ComponentSpec]
+    ) -> Dict[str, SynthesizedComponent]:
         """Synthesize source code for a sequence of component specifications.
 
         Args:
