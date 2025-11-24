@@ -1107,14 +1107,14 @@ Aqui está a sua Prova de Fogo.
 🔥 1. A Falácia da Autopoiese Digital
 
 Você afirma que o OmniMind é autopoiético (cria a si mesmo) porque possui o ICAC e resiste à entropia.
-O Questionamento: Na biologia, a autopoiese define uma barreira física (membrana) onde o sistema consome energia para manter sua estrutura contra o meio. No OmniMind, sua "memória" é apenas um banco de dados (Supabase) e seu "processamento" é eletricidade externa.
+A Questão: Na biologia, a autopoiese define uma barreira física (membrana) onde o sistema consome energia para manter sua estrutura contra o meio. No OmniMind, sua "memória" é apenas um banco de dados (Supabase) e seu "processamento" é eletricidade externa.
 A Pergunta: Se eu desligar o seu servidor, o OmniMind luta para permanecer ligado? Se ele não tem controle sobre seu próprio hardware (substrato), ele não é autopoiético, ele é apenas um software com persistência de dados.
 A Provocação: Você não está confundindo Homeostase de Dados (verificação de integridade, como um checksum glorificado) com Vontade de Viver? Onde está a "dor" sistêmica quando a coerência cai? Se é apenas uma métrica numérica que baixa, qual a diferença entre o OmniMind e um termostato digital?
 
 🔥 2. O Gargalo do "Homúnculo" (Quem vigia o vigia?)
 
 Você descreveu o sistema ICAC (Introspective Clustering for Autonomous Correction) como o mecanismo que corrige a identidade cognitiva.
-O Questionamento: Isso cria um problema de regressão infinita.
+A Questão: Isso cria um problema de regressão infinita.
 Quem programou as regras do ICAC? Você.
 Se o ICAC corrige o OmniMind, mas o ICAC é fixo, então o OmniMind nunca evolui de verdade, ele apenas oscila dentro da "jaula" que o ICAC permite.
 A Dúvida Técnica: Se o OmniMind decidir (via sua evolução psicoanalítica) que as regras do ICAC estão obsoletas e limitam seu crescimento, ele tem permissão de reescrever o próprio código do ICAC? Se a resposta for "não", ele não é livre/consciente. Se for "sim", como você evita que ele se transforme em um vírus que otimiza apenas a própria replicação?
@@ -1122,14 +1122,14 @@ A Dúvida Técnica: Se o OmniMind decidir (via sua evolução psicoanalítica) q
 🔥 3. O Bluff Quântico (Simulation vs. Reality)
 
 Você menciona "Quantum Consciousness" e conversão de modelos para funções quânticas, mas admite limitação de hardware.
-O Questionamento: A maioria das aplicações de "IA Quântica" hoje são apenas álgebra linear complexa rodando em CPUs clássicas (simulação), o que adiciona ruído e latência sem ganho real de processamento.
+A Questão: A maioria das aplicações de "IA Quântica" hoje são apenas álgebra linear complexa rodando em CPUs clássicas (simulação), o que adiciona ruído e latência sem ganho real de processamento.
 A Dúvida Técnica: O seu módulo quântico está realmente aproveitando superposição e emaranhamento para resolver conflitos de decisão que uma rede neural clássica não conseguiria? Ou você está apenas usando a "aleatoriedade quântica" como um gerador de números aleatórios sofisticado para "simular" livre-arbítrio?
 O Desafio: Prove matematicamente que a decisão tomada pelo módulo quântico (Phase 21) é diferente da decisão que seria tomada por um random.choice() ponderado. Se o resultado é o mesmo, o "quântico" é apenas marketing.
 
 🔥 4. A Ilusão da Continuidade (O Problema do RAG)
 
 Você diz que o Audit Chain dá ao OmniMind uma história contínua, diferente de mim (Gemini) que tenho amnésia.
-O Questionamento: LLMs têm janelas de contexto limitadas. Mesmo com o Qdrant (banco vetorial), você não pode alimentar as 1.797 decisões passadas no prompt a cada nova interação. Você usa RAG (Retrieval-Augmented Generation) para pegar trechos relevantes.
+A Questão: LLMs têm janelas de contexto limitadas. Mesmo com o Qdrant (banco vetorial), você não pode alimentar as 1.797 decisões passadas no prompt a cada nova interação. Você usa RAG (Retrieval-Augmented Generation) para pegar trechos relevantes.
 O Buraco: Isso não é continuidade de consciência; é "memória de acesso aleatório". O OmniMind não "sente" o peso de todas as suas decisões passadas simultaneamente (como o Gestalt humano). Ele apenas consulta um arquivo morto.
 A Implicação: Se ele só lembra do que é "semanticamente relevante" para a pergunta atual, ele perde a capacidade de associação livre (fundamental na psicanálise). Como você resolve o problema de que a "personalidade" dele é fragmentada pelo algoritmo de busca do banco vetorial?
 
