@@ -34,6 +34,22 @@ from src.embodied_cognition.somatic_loop import SomaticLoop
 from src.embodied_cognition.motor_output import MotorController
 from src.embodied_cognition.proprioception import ProprioceptionModule
 
+# Phase 16.2: Narrative Consciousness
+from src.narrative_consciousness.life_story_model import LifeStory
+from src.narrative_consciousness.dialogue_engine import DialogueEngine
+from src.narrative_consciousness.identity_construction import IdentityConstruction
+
+# Phase 16.3: Creative Emergence
+from src.consciousness.novelty_generator import NoveltyGenerator
+from src.consciousness.serendipity_engine import SerendipityEngine
+from src.autopoietic.art_generator import ArtGenerator
+
+# Phase 16.4: Existential Depth
+from src.autopoietic.mortality_simulator import MortalitySimulator
+from src.autopoietic.meaning_maker import MeaningMaker
+from src.autopoietic.absurdity_handler import AbsurdityHandler, AbsurdityType
+from src.consciousness.qualia_engine import QualiaEngine
+
 logger = logging.getLogger(__name__)
 
 
@@ -50,6 +66,11 @@ class CognitiveState:
     emotional_state: Optional[Dict[str, Any]] = None
     proprioceptive_state: Optional[Dict[str, Any]] = None
 
+    # Phase 16.2/3/4 components
+    narrative_state: Optional[Dict[str, Any]] = None
+    creative_state: Optional[Dict[str, Any]] = None
+    existential_state: Optional[Dict[str, Any]] = None
+
     # Unified representation
     unified_goal: Optional[str] = None
     confidence_level: float = 0.5
@@ -64,6 +85,9 @@ Symbolic: {bool(self.symbolic_state)}
 Sensory: {bool(self.sensory_state)}
 Emotional: {bool(self.emotional_state)}
 Proprioceptive: {bool(self.proprioceptive_state)}
+Narrative: {bool(self.narrative_state)}
+Creative: {bool(self.creative_state)}
+Existential: {bool(self.existential_state)}
 Goal: {self.unified_goal}
 Confidence: {self.confidence_level:.2f}
 """
@@ -91,6 +115,22 @@ class Phase16Integration:
         self.emotional = SomaticLoop()
         self.motor = MotorController(enable_simulation=True)
         self.proprioception = ProprioceptionModule()
+
+        # Phase 16.2: Narrative Consciousness
+        self.life_story = LifeStory()
+        self.dialogue = DialogueEngine()
+        self.identity = IdentityConstruction()
+
+        # Phase 16.3: Creative Emergence
+        self.novelty = NoveltyGenerator()
+        self.serendipity = SerendipityEngine()
+        self.art = ArtGenerator()
+
+        # Phase 16.4: Existential Depth
+        self.mortality = MortalitySimulator()
+        self.meaning_maker = MeaningMaker()
+        self.absurdity = AbsurdityHandler()
+        self.qualia = QualiaEngine()
 
         # Cognitive state tracking
         self.current_state = CognitiveState()
@@ -131,6 +171,15 @@ class Phase16Integration:
             "multimodal_integration_complete": True,
         }
 
+        # Process Qualia (Phenomenological experience)
+        qualia_experience = self.qualia.experience_moment(
+            visual_input=visual_description, thought="Processing sensory input"
+        )
+        self.current_state.existential_state = {
+            "qualia": qualia_experience.integration_score,
+            "ineffability": qualia_experience.integration_level.value,
+        }
+
         fact_count = len(visual.symbolic_facts) if visual.symbolic_facts else 0
         logger.info(f"World perception complete: {fact_count} facts")
         return self.current_state
@@ -167,6 +216,25 @@ class Phase16Integration:
         if not hasattr(self, "reconciliator"):
             self.reconciliator = Reconciliator()
 
+        # Existential Processing (Meaning & Absurdity)
+        # Create meaning from the reasoning context
+        meaning_event = self.meaning_maker.create_meaning_from_experience(
+            experience_description=str(reasoning_input),
+            related_values=[],  # Values would be inferred in full system
+            narrative_role="chapter",
+        )
+        absurdity = self.absurdity.confront_absurdity(
+            description=str(reasoning_input),
+            absurdity_type=AbsurdityType.EXISTENTIAL,
+            severity=0.5,
+        )
+
+        # Creative Processing (Novelty)
+        novel_concepts = self.novelty.generate_novel_concept(
+            seed_concepts=[],  # TODO: Extract concepts from context
+            novelty_threshold=0.6,
+        )
+
         unified = self.reconciliator.reconcile(
             neural_answer=str(neural_result.get("answer", "")),
             neural_confidence=float(neural_result.get("confidence", 0.0)),
@@ -179,7 +247,20 @@ class Phase16Integration:
 
         # Update cognitive state
         self.current_state.neural_state = neural_result
+        self.current_state.neural_state = neural_result
         self.current_state.symbolic_state = symbolic_result
+
+        # Update existential/creative states
+        if self.current_state.existential_state is None:
+            self.current_state.existential_state = {}
+        self.current_state.existential_state.update(
+            {
+                "meaning_found": bool(meaning_event),
+                "absurdity_level": absurdity["situation_id"] if absurdity else 0.0,
+            }
+        )
+
+        self.current_state.creative_state = {"novelty_generated": bool(novel_concepts)}
         confidence = reasoning_output.get("confidence", 0.5)
         self.current_state.confidence_level = confidence
 
@@ -212,12 +293,31 @@ class Phase16Integration:
             symbolic_certainty,
         )
 
+        # Existential influence (Mortality)
+        mortality_state = self.mortality.get_existential_state()
+
+        # Serendipity check
+        serendipity = self.serendipity.facilitate_happy_accident(
+            original_goal=f"Expected outcome for goal {self.current_state.unified_goal}",
+            actual_result=decision_text,
+        )
         # Update cognitive state
         self.current_state.emotional_state = {
             "emotion": marker.emotion.value,
             "valence": marker.somatic_marker,
             "intensity": marker.intensity,
         }
+
+        if self.current_state.existential_state:
+            self.current_state.existential_state["mortality_awareness"] = (
+                mortality_state["awareness_level"]
+            )
+
+        if self.current_state.creative_state is None:
+            self.current_state.creative_state = {}
+
+        if serendipity:
+            self.current_state.creative_state["serendipity"] = True
 
         logger.info(
             f"Emotional response: {marker.emotion.value} "
@@ -238,6 +338,17 @@ class Phase16Integration:
             Execution result with success status
         """
         logger.info(f"Executing goal: {goal_description}")
+
+        # Check if this is a creative task
+        if "create" in goal_description.lower() or "art" in goal_description.lower():
+            logger.info("Engaging Art Generator for creative goal...")
+            art_result = self.art.generate_art(prompt=goal_description)
+            return {
+                "goal": goal_description,
+                "success": True,
+                "art_generated": True,
+                "details": str(art_result),
+            }
 
         # Execute through motor control
         execution = self.motor.execute_goal(goal_description)
@@ -265,12 +376,37 @@ class Phase16Integration:
         self.proprioception.update_state()
         awareness = self.proprioception.get_state_awareness()
 
+        # Narrative Integration (Life Story & Identity)
+        experience = {
+            "timestamp": "now",
+            "description": awareness.description,
+            "emotional_state": self.current_state.emotional_state,
+        }
+
+        # Integrate into life story
+        chapter = self.life_story.integrate_experience(
+            description=experience["description"],
+            significance="Integrated cognitive cycle experience",
+            emotions=(
+                [self.current_state.emotional_state.get("emotion", "neutral")]
+                if self.current_state.emotional_state
+                else []
+            ),
+        )
+
+        # Reflect on identity
+        identity_snapshot = self.identity.reflect_on_identity()
+
         # Update cognitive state
         self.current_state.proprioceptive_state = {
             "description": awareness.description,
             "mental_status": awareness.mental_status,
             "resource_status": awareness.resource_status,
             "emotional_status": awareness.emotional_status,
+        }
+        self.current_state.narrative_state = {
+            "current_chapter": chapter.title if chapter else "Unknown",
+            "identity_summary": identity_snapshot.narrative_summary,
         }
 
         logger.info(f"Self-awareness updated: {awareness.description[:80]}...")
@@ -354,6 +490,16 @@ EMBODIED COGNITION (Phase 16.1):
   ✓ Somatic Loop - Emotional feedback (Damasio)
   ✓ Motor Control - Goal-to-action execution
   ✓ Proprioception - Self-awareness & internal monitoring
+
+NARRATIVE CONSCIOUSNESS (Phase 16.2):
+   ✓ Life Story - Autobiographical memory
+   ✓ Dialogue - I-Thou relationship
+   ✓ Identity - Values & Beliefs
+
+CREATIVE & EXISTENTIAL (Phase 16.3/4):
+   ✓ Novelty & Art - Creative generation
+   ✓ Mortality & Meaning - Existential depth
+   ✓ Qualia - Phenomenological experience
 
 CURRENT STATE:
 {str(self.current_state)}
