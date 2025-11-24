@@ -74,7 +74,7 @@ omnimind/
 │   ├── tools/                    # Ferramentas do sistema
 │   └── workflows/                # Workflows de automação
 │
-├── tests/                        # 209 arquivos de teste (2,370 testes)
+├── tests/                        # 209 arquivos de teste (3,409 testes)
 ├── docs/                         # Documentação completa (120+ arquivos)
 │   ├── .project/                 # Status do projeto e fase atual
 │   ├── architecture/             # Documentação de arquitetura detalhada
@@ -466,7 +466,7 @@ Framework HCHAC (Human-Centric Hybrid Adaptive Coevolution) para evolução conj
 
 ### Capacidade
 - **Eventos de Auditoria:** 1,797 eventos (exemplo atual)
-- **Testes:** 2,370 testes totais, 2,344 aprovados (98.94%)
+- **Testes:** 3,409 testes totais, 3,407 aprovados (99.88%)
 - **Cobertura de Código:** ~85% (meta: ≥90%)
 - **Módulos Python:** 239 arquivos em src/
 

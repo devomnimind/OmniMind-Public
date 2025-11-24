@@ -235,7 +235,7 @@ Antes de fazer commit:
 1. **Data do Projeto:** Novembro 2025 (ERRO em docs antigos mencionam 2024)
 2. **Python Version:** Locked to 3.12.8 (não upgrade automático)
 3. **GPU:** NVIDIA GTX 1650, 5.15x speedup validado
-4. **Test Pass Rate:** 98.94% (2344/2370 testes)
+4. **Test Pass Rate:** 99.88% (3407/3409 testes)
 5. **Cobertura:** ~85% (target: ≥90%)
 
 ---

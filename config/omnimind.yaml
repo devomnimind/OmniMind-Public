@@ -30,6 +30,14 @@ supabase:
   service_role_key: "${OMNIMIND_SUPABASE_SERVICE_ROLE_KEY}"
   project_id: "${OMNIMIND_SUPABASE_PROJECT}"
 
+# Quantum Configuration
+quantum:
+  backend: "simulator" # Options: "simulator", "ibmq", "dwave"
+  ibmq_token: "${IBMQ_API_TOKEN}"
+  dwave_token: "${DWAVE_API_TOKEN}"
+  dwave_solver: "Advantage_system6.4"
+  use_real_hardware: false # Set to true to use actual QPU
+
 # Security Configuration
 security:
   jwt_secret: "change-this-in-production-to-a-secure-random-string"

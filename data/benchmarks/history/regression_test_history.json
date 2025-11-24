@@ -30,5 +30,13 @@
     "mean_memory_mb": 997.66015625,
     "mean_cpu_percent": 0.0,
     "metadata": {}
+  },
+  {
+    "timestamp": "2025-11-24T16:27:13.506253",
+    "iterations": 3,
+    "mean_time_ms": 1.1048713349737227,
+    "mean_memory_mb": 969.2734375,
+    "mean_cpu_percent": 0.0,
+    "metadata": {}
   }
 ]

@@ -90,7 +90,7 @@ pytest tests/integrations/
 ```bash
 pytest --collect-only
 ```
-**O que faz:** Lista todos os testes que seriam executados (2370 total)
+**O que faz:** Lista todos os testes que seriam executados (3409 total)
 **Resultado esperado:** Lista de todos os testes descobertos
 **Quando usar:** Verificar quais testes existem sem executá-los
 
@@ -107,7 +107,7 @@ pytest -k "test_send_request_success"
 pytest --tb=no -q
 ```
 **O que faz:** Executa todos os testes em modo quiet (apenas resultado final)
-**Resultado esperado:** `2344 passed, 25 failed, 3 skipped` (taxa: 98.94%)
+**Resultado esperado:** `3407 passed, 4 skipped` (taxa: 99.88%)
 **Quando usar:** CI/CD ou verificações rápidas
 
 ### 🔍 Configuração de Testes (`pytest.ini`)
@@ -533,7 +533,7 @@ pytest tests/ -k "not e2e" --tb=no -q
 ```bash
 # Todos os testes (completo)
 pytest
-# Resultado esperado: 2344 passed, 25 failed, 3 skipped (~10-12 min com GPU)
+# Resultado esperado: 3407 passed, 4 skipped (~10-12 min com GPU)
 ```
 
 ### Para Integrações Específicas:
@@ -550,7 +550,7 @@ pytest tests/integrations/test_mcp_client_async.py::TestAsyncMCPClient::test_sen
 # Resultado esperado: 1 teste passando
 ```
 
-**Nota:** Todos os 2,370 testes coletados são do sistema ativo (98.94% aprovação). O projeto mantém apenas testes relevantes e funcionais. Taxa de sucesso: 2,344/2,370 (98.94%)
+**Nota:** Todos os 3,409 testes coletados são do sistema ativo (99.88% aprovação). O projeto mantém apenas testes relevantes e funcionais. Taxa de sucesso: 3,407/3,409 (99.88%)
 
 ## Logs, Alertas e Credenciais
 

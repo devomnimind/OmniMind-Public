@@ -30,6 +30,19 @@ from enum import Enum
 import random
 import logging
 
+# Integration of Audit Fixes
+try:
+    from src.quantum_consciousness.dwave_backend import DWaveBackend
+    from src.lacanian.encrypted_unconscious import (
+        EncryptedUnconsciousLayer as EncryptedUnconscious,
+    )
+    from src.social.omnimind_network import OmniMindSociety
+
+    INTEGRATION_AVAILABLE = True
+except ImportError as e:
+    logging.warning(f"Audit Fix modules not found. Running in legacy mode. Error: {e}")
+    INTEGRATION_AVAILABLE = False
+
 logger = logging.getLogger(__name__)
 
 
@@ -156,7 +169,36 @@ class IdAgent:
         # Histórico de satisfação
         self.satisfaction_history: List[float] = []
 
+        # Encrypted Unconscious (Audit Fix)
+        self.encrypted_memory = None
+        if INTEGRATION_AVAILABLE:
+            try:
+                self.encrypted_memory = EncryptedUnconscious()
+                logger.info("Encrypted Unconscious activated for Id Agent")
+            except Exception as e:
+                logger.warning(f"Failed to initialize Encrypted Unconscious: {e}")
+
         logger.info("Id Agent initialized (pleasure principle)")
+
+    def repress_memory(self, action_id: str, emotional_weight: float) -> None:
+        """
+        Reprime uma memória no inconsciente criptografado.
+
+        Args:
+            action_id: ID da ação reprimida
+            emotional_weight: Peso emocional (negativo)
+        """
+        if self.encrypted_memory:
+            # Cria um vetor de embedding simples baseado no hash do ID
+            # Em produção, isso viria de um modelo de embedding real
+            random.seed(action_id)
+            embedding = [random.random() for _ in range(10)]
+
+            self.encrypted_memory.repress_memory(
+                event_vector=embedding,
+                metadata={"action_id": action_id, "weight": emotional_weight},
+            )
+            logger.info(f"Memory '{action_id}' repressed into Encrypted Unconscious")
 
     def evaluate_action(self, action: Action) -> float:
         """
@@ -372,9 +414,43 @@ class SuperegoAgent:
         # Histórico de julgamentos
         self.judgment_history: List[float] = []
 
+        # Society of Minds (Audit Fix)
+        self.society = None
+        if INTEGRATION_AVAILABLE:
+            try:
+                self.society = OmniMindSociety()
+                logger.info("Society of Minds connected to Superego Agent")
+            except Exception as e:
+                logger.warning(f"Failed to connect to Society of Minds: {e}")
+
         logger.info(
             f"Superego Agent initialized " f"(moral strictness: {moral_strictness:.2f})"
         )
+
+    def consult_society(self, action: Action) -> float:
+        """
+        Consulta a Sociedade de Mentes para dilemas complexos.
+
+        Args:
+            action: Ação a ser julgada
+
+        Returns:
+            Consenso moral (0.0 a 1.0)
+        """
+        if not self.society:
+            return 0.5
+
+        # Simula proposta para a sociedade
+        decision = self.society.propose_decision(
+            description=f"Action: {action.description}. Moral Alignment: {action.moral_alignment}",
+            options=["approve", "reject"],
+            context={"strictness": self.strictness},
+        )
+
+        # Se a sociedade aprovar (utilitarian ou deontological), retorna alto score
+        if decision.consensus_reached:
+            return 0.8 if decision.winning_option == "approve" else 0.2
+        return 0.5
 
     def evaluate_action(self, action: Action) -> float:
         """
@@ -464,6 +540,15 @@ class FreudianMind:
 
         # Histórico de conflitos
         self.conflict_history: List[ConflictResolution] = []
+
+        # Quantum Backend (Audit Fix)
+        self.quantum_backend = None
+        if INTEGRATION_AVAILABLE:
+            try:
+                self.quantum_backend = DWaveBackend()
+                logger.info("Quantum Backend (D-Wave) initialized for Freudian Mind")
+            except Exception as e:
+                logger.warning(f"Failed to initialize Quantum Backend: {e}")
 
         logger.info("Freudian Mind initialized (Id + Ego + Superego)")
 
@@ -632,7 +717,7 @@ class FreudianMind:
         self, preferences: Dict[str, Dict[str, float]], actions: List[Action]
     ) -> Action:
         """
-        Seleciona ação de compromisso.
+        Seleciona ação de compromisso, usando Quantum Annealing se disponível.
 
         Args:
             preferences: Preferências (possivelmente modificadas)
@@ -647,12 +732,45 @@ class FreudianMind:
         for action in actions:
             action_id = action.action_id
 
-            # Ego tem maior peso (mediador)
-            combined_scores[action_id] = (
-                0.3 * preferences["id"][action_id]
-                + 0.5 * preferences["ego"][action_id]
-                + 0.2 * preferences["superego"][action_id]
-            )
+            id_val = preferences["id"][action_id]
+            ego_val = preferences["ego"][action_id]
+            superego_val = preferences["superego"][action_id]
+
+            if self.quantum_backend:
+                # Use Quantum Annealing to resolve the specific conflict for this action
+                # We map the 3 agents to the Ising model nodes
+                try:
+                    result = self.quantum_backend.resolve_conflict(
+                        id_energy=id_val,
+                        ego_energy=ego_val,
+                        superego_energy=superego_val,
+                    )
+
+                    # The winner determines the weight boost
+                    winner = result.get("winner", "ego")
+                    if winner == "id":
+                        combined_scores[action_id] = id_val * 1.5 + ego_val * 0.5
+                    elif winner == "superego":
+                        combined_scores[action_id] = superego_val * 1.5 + ego_val * 0.5
+                    else:  # ego wins
+                        combined_scores[action_id] = (
+                            ego_val * 1.5 + (id_val + superego_val) * 0.2
+                        )
+
+                except Exception as e:
+                    logger.error(
+                        f"Quantum backend failed, falling back to classical: {e}"
+                    )
+                    # Fallback logic
+                    combined_scores[action_id] = (
+                        0.3 * id_val + 0.5 * ego_val + 0.2 * superego_val
+                    )
+            else:
+                # Classical Logic
+                # Ego tem maior peso (mediador)
+                combined_scores[action_id] = (
+                    0.3 * id_val + 0.5 * ego_val + 0.2 * superego_val
+                )
 
         # Seleciona ação com maior score combinado
         best_action_id = max(combined_scores, key=lambda k: combined_scores[k])

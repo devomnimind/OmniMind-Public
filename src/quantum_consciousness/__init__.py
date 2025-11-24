@@ -12,23 +12,24 @@ Focus: Simulation first (Qiskit Aer simulator), QPU integration is future work.
 
 Author: OmniMind Project
 License: MIT
+# ...existing code...
 """
 
-from src.quantum_consciousness.quantum_cognition import (
+from .quantum_cognition import (
     QuantumCognitionEngine,
     QuantumDecisionMaker,
     QuantumState as QCState,
     SuperpositionDecision,
 )
 
-from src.quantum_consciousness.quantum_memory import (
+from .quantum_memory import (
     QuantumMemorySystem,
     QuantumMemoryCell,
     HybridQLearning,
     QuantumMemoryComparison,
 )
 
-from src.quantum_consciousness.qpu_interface import (
+from .qpu_interface import (
     QPUInterface,
     QPUBackend,
     SimulatorBackend,
@@ -36,12 +37,14 @@ from src.quantum_consciousness.qpu_interface import (
     BackendType,
 )
 
-from src.quantum_consciousness.hybrid_cognition import (
+from .hybrid_cognition import (
     HybridCognitionSystem,
     ClassicalQuantumBridge,
     CognitionMetrics,
     OptimizationStrategy,
 )
+
+from .dwave_backend import DWaveBackend
 
 __all__ = [
     # Quantum Cognition
@@ -60,11 +63,13 @@ __all__ = [
     "SimulatorBackend",
     "IBMQBackend",
     "BackendType",
+    "DWaveBackend",
     # Hybrid Cognition
     "HybridCognitionSystem",
     "ClassicalQuantumBridge",
     "CognitionMetrics",
     "OptimizationStrategy",
 ]
+# ...existing code...
 
 __version__ = "0.1.0-experimental"

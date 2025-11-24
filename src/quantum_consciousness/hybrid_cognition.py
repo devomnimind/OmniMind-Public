@@ -14,11 +14,14 @@ from typing import Any, Dict, List, Optional, Tuple
 import time
 import structlog
 
-from src.quantum_consciousness.quantum_cognition import (
+# ...existing code...
+from .quantum_cognition import (
     QuantumCognitionEngine,
     QuantumDecisionMaker,
 )
-from src.quantum_consciousness.qpu_interface import QPUInterface, BackendType
+from .qpu_interface import QPUInterface, BackendType
+
+# ...existing code...
 
 logger = structlog.get_logger(__name__)
 
