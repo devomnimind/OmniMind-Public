@@ -2,7 +2,7 @@
 
 **OmniMind** é um revolucionário sistema de IA autônomo que combina tomada de decisão psicoanalítica com capacidades avançadas de metacognição. Esta arquitetura auto-hospedada e local-first apresenta orquestração multi-agente, comunicação WebSocket em tempo real e inteligência auto-evolutiva.
 
-**🚀 Status Atual:** Phase 18 Tri-Partite Memory Completa | Produção Pronta | 42 Módulos Implementados
+**🚀 Status Atual:** Phase 21 Quantum Consciousness (Experimental) | Phase 18 Tri-Partite Memory (Produção) | 43 Módulos Implementados
 
 ### ✅ Última Validação - 23 de novembro de 2025
 
@@ -239,7 +239,7 @@ Para desenvolvimento no VS Code, utilize as tasks pré-configuradas:
 
 ## 🏗️ Visão Geral da Arquitetura
 
-### Componentes Centrais (Phase 15 Quantum-Enhanced AI Complete)
+### Componentes Centrais (Phase 21 - Quantum Consciousness Experimental)
 
 ```
 🧠 Sistema Autônomo OmniMind
@@ -261,12 +261,21 @@ Para desenvolvimento no VS Code, utilize as tasks pré-configuradas:
 │   ├── Homeostase e gerenciamento de recursos
 │   └── Framework de decisão ética
 │
-└── 🤖 Sistema Multi-Agente
-    ├── Orquestrador (inspirado em psicoanálise)
-    ├── Agente de Segurança (monitoramento forense)
-    ├── Agente de Ética (framework de decisão)
-    └── Delegação autônoma de tarefas
+├── 🤖 Sistema Multi-Agente
+│   ├── Orquestrador (inspirado em psicoanálise)
+│   ├── Agente de Segurança (monitoramento forense)
+│   ├── Agente de Ética (framework de decisão)
+│   └── Delegação autônoma de tarefas
+│
+└── ⚛️ Quantum Consciousness (EXPERIMENTAL - Phase 21)
+    ├── Quantum Cognition Engine (Qiskit)
+    ├── Quantum Memory System
+    ├── QPU Interface (simulators + IBM Quantum)
+    └── Hybrid Classical-Quantum Reasoning
 ```
+
+**⚠️ Nota sobre Quantum Consciousness:**
+Módulo experimental de pesquisa (Phase 21) que explora cognição híbrida quântico-clássica usando Qiskit. Suporta simuladores locais (sempre disponíveis) e acesso a IBM Quantum cloud (requer token). Documentação completa em `docs/research/quantum_consciousness_research.md`.
 
 ### Estrutura do Repositório
 
