@@ -1,0 +1,16 @@
+src/integrations/mcp_orchestrator.py:            TODO: Implementar health check via endpoint HTTP/gRPC para verificação
+src/integrations/mcp_orchestrator.py:        # TODO: Implementar health check via endpoint HTTP/gRPC
+src/experiments/run_all_experiments.py:    print(f"║{' ' * 22}TODOS EXPERIMENTOS CONCLUÍDOS{' ' * 17}║")
+src/coevolution/hchac_framework.py:        # TODO: Usar agente psicanalítico para questionar premissas
+src/coevolution/hchac_framework.py:        # TODO: Implementar lógica de execução colaborativa real
+src/coevolution/hchac_framework.py:        # TODO: Métricas reais de aprendizado
+src/embodied_cognition/motor_output.py:            # TODO: Implement ROS action execution
+src/phase16_integration.py:            seed_concepts=[],  # TODO: Extract concepts from context
+src/tools/code_generator.py:        # TODO: Implement agent logic
+src/tools/code_generator.py:        # TODO: Implement error handling test
+src/tools/code_generator.py:        # TODO: Implement endpoint logic
+src/tools/code_generator.py:                    f"        # TODO: Implement test\n"
+src/tools/code_generator.py:        description = func.__doc__.strip() if func.__doc__ else "TODO: Add description"
+src/tools/code_generator.py:            params.append(f"    {name} ({param_type}): TODO: Describe parameter")
+src/tools/code_generator.py:    {return_type}: TODO: Describe return value
+src/tools/ast_parser.py:            lines.append(f'        """TODO: Implement {method_name}"""')

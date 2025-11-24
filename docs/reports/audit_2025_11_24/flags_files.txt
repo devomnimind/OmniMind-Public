@@ -1,0 +1,7 @@
+src/integrations/mcp_orchestrator.py
+src/experiments/run_all_experiments.py
+src/coevolution/hchac_framework.py
+src/embodied_cognition/motor_output.py
+src/phase16_integration.py
+src/tools/code_generator.py
+src/tools/ast_parser.py
