@@ -47,7 +47,7 @@ class NeuralComponent:
         model_name: str = "ollama/qwen2:7b-instruct",
         temperature: float = 0.7,
         max_tokens: int = 2048,
-        timeout: float = 30.0,
+        timeout: float = 60.0,
     ):
         """
         Inicializa componente neural.
