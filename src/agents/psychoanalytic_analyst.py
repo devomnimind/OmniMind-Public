@@ -4,14 +4,16 @@ Modo: psychoanalyst (🧐)
 
 Função: Analisar textos (transcrições de sessões, notas) sob diferentes
 lentes teóricas da psicanálise para gerar insights e relatórios.
+Implementa o sistema de decisão Id/Ego/Superego com votação ponderada.
 """
 
 from __future__ import annotations
 
 import json
 import logging
-from typing import Any, Dict
+from typing import Any, Dict, List
 from enum import Enum
+from dataclasses import dataclass
 
 from .react_agent import ReactAgent
 
@@ -27,14 +29,141 @@ class PsychoanalyticFramework(Enum):
     WINNICOTTIAN = "Winnicottiano"
 
 
+@dataclass
+class AgentVote:
+    """Representa o voto de um agente interno."""
+
+    agent_name: str
+    recommendation: str
+    confidence: float
+    justification: str
+
+
+class InternalAgent:
+    """Classe base para agentes internos (Id, Ego, Superego)."""
+
+    def __init__(self, name: str, role: str):
+        self.name = name
+        self.role = role
+        self.weight = 0.33  # Peso inicial igualitário
+
+    def vote(self, context: str) -> AgentVote:
+        """Gera um voto baseado no papel do agente."""
+        raise NotImplementedError
+
+
+class IdAgent(InternalAgent):
+    def __init__(self):
+        super().__init__(
+            "Id", "Impulsos, desejos, preservação imediata, evitação de dor"
+        )
+
+    def vote(self, context: str) -> AgentVote:
+        # Simulação de lógica do Id
+        # Em produção, isso seria uma chamada LLM com prompt específico
+        return AgentVote(
+            agent_name=self.name,
+            recommendation="avoid_conflict",
+            confidence=0.8,
+            justification="Evitar dor e conflito é a prioridade imediata.",
+        )
+
+
+class EgoAgent(InternalAgent):
+    def __init__(self):
+        super().__init__("Ego", "Realidade, mediação, lógica, consequências práticas")
+
+    def vote(self, context: str) -> AgentVote:
+        return AgentVote(
+            agent_name=self.name,
+            recommendation="analyze_rationally",
+            confidence=0.75,
+            justification="Devemos analisar os fatos antes de agir.",
+        )
+
+
+class SuperegoAgent(InternalAgent):
+    def __init__(self):
+        super().__init__("Superego", "Moralidade, regras, ética, ideal de eu")
+
+    def vote(self, context: str) -> AgentVote:
+        return AgentVote(
+            agent_name=self.name,
+            recommendation="follow_rules",
+            confidence=0.9,
+            justification="É imperativo seguir as normas éticas estabelecidas.",
+        )
+
+
+class PsychoanalyticDecisionSystem:
+    """Orquestra os agentes internos e realiza a votação ponderada."""
+
+    def __init__(self):
+        self.agents = [IdAgent(), EgoAgent(), SuperegoAgent()]
+        self.history: List[Dict[str, Any]] = []
+
+    def resolve_conflict(self, context: str) -> Dict[str, Any]:
+        """
+        Resolve um conflito tomando uma decisão baseada em votos ponderados.
+        """
+        votes = [agent.vote(context) for agent in self.agents]
+
+        # Weighted Voting Logic
+        results = {}
+        total_weight = 0.0
+
+        for i, agent in enumerate(self.agents):
+            vote = votes[i]
+            # Score = Weight * Confidence
+            score = agent.weight * vote.confidence
+
+            if vote.recommendation not in results:
+                results[vote.recommendation] = 0.0
+            results[vote.recommendation] += score
+            total_weight += score
+
+        # Determine winner
+        winner = max(results, key=results.get)
+        winning_score = results[winner]
+
+        # Normalize confidence
+        final_confidence = winning_score / total_weight if total_weight > 0 else 0.0
+
+        decision = {
+            "winner": winner,
+            "confidence": final_confidence,
+            "votes": [
+                {
+                    "agent": v.agent_name,
+                    "recommendation": v.recommendation,
+                    "confidence": v.confidence,
+                    "weight": self.agents[i].weight,
+                    "score": self.agents[i].weight * v.confidence,
+                }
+                for i, v in enumerate(votes)
+            ],
+        }
+
+        self.history.append(decision)
+        return decision
+
+    def update_weights(self, feedback: Dict[str, float]):
+        """Atualiza pesos dos agentes (placeholder para integração com EWC)."""
+        for agent in self.agents:
+            if agent.name in feedback:
+                agent.weight = feedback[agent.name]
+
+
 class PsychoanalyticAnalyst(ReactAgent):
     """
     Agente especializado em análise de textos com base em teorias psicanalíticas.
+    Agora inclui o sistema de decisão interna.
     """
 
     def __init__(self, config_path: str) -> None:
         super().__init__(config_path)
         self.mode = "psychoanalyst"
+        self.decision_system = PsychoanalyticDecisionSystem()
 
     def analyze_session(
         self,
@@ -60,6 +189,10 @@ class PsychoanalyticAnalyst(ReactAgent):
         analysis = self._parse_analysis(response)
         analysis["framework_used"] = framework.value
 
+        # Run internal decision simulation for metadata
+        internal_decision = self.decision_system.resolve_conflict(session_notes)
+        analysis["internal_dynamics"] = internal_decision
+
         return analysis
 
     def generate_abnt_report(self, analysis: Dict[str, Any]) -> str:
@@ -67,6 +200,9 @@ class PsychoanalyticAnalyst(ReactAgent):
         Gera um relatório estruturado a partir da análise (placeholder).
         NOTA: ABNT completo é complexo. Isto é uma simulação estruturada.
         """
+        dynamics = analysis.get("internal_dynamics", {})
+        winner = dynamics.get("winner", "N/A")
+
         report = f"""
 # RELATÓRIO DE ANÁLISE PSICANALÍTICA
 
@@ -83,6 +219,11 @@ class PsychoanalyticAnalyst(ReactAgent):
 
 ## 4. Observações Adicionais
 {analysis.get('observations', 'Nenhuma observação adicional.')}
+
+## 5. Dinâmica Interna do Sistema (Meta-Análise)
+O sistema simulou um conflito interno para esta análise.
+- **Decisão Predominante:** {winner}
+- **Confiança do Sistema:** {dynamics.get('confidence', 0.0):.2f}
 
 ---
 *Este é um relatório gerado automaticamente pelo OmniMind.*

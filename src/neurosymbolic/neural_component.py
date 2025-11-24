@@ -256,9 +256,6 @@ class NeuralComponent:
         if not self.hf_token:
             raise ValueError("HUGGING_FACE_HUB_TOKEN not found in environment")
 
-        api_url = f"https://api-inference.huggingface.co/models/{self.model_name}"
-        headers = {"Authorization": f"Bearer {self.hf_token}"}
-
         prompt = query
         if context:
             prompt = f"Context: {json.dumps(context)}\n\nQuery: {query}"
@@ -271,6 +268,9 @@ class NeuralComponent:
                 "return_full_text": False,
             },
         }
+
+        api_url = f"https://api-inference.huggingface.co/models/{self.model_name}"
+        headers = {"Authorization": f"Bearer {self.hf_token}"}
 
         response = requests.post(
             api_url, headers=headers, json=payload, timeout=self.timeout
@@ -338,9 +338,16 @@ class NeuralComponent:
                 return embedding
 
             elif self.provider == "huggingface" and self.hf_token:
-                api_url = f"https://api-inference.huggingface.co/pipeline/feature-extraction/{self.model_name}"
+                api_url = (
+                    "https://api-inference.huggingface.co/pipeline/feature-extraction/"
+                    + self.model_name
+                )
                 headers = {"Authorization": f"Bearer {self.hf_token}"}
                 payload = {"inputs": text}
+                response = requests.post(
+                    api_url, headers=headers, json=payload, timeout=self.timeout
+                )
+                response.raise_for_status()
                 # Retorna lista de floats (embedding) ou lista de lista (batch)
                 data = response.json()
                 if isinstance(data, list) and len(data) > 0:

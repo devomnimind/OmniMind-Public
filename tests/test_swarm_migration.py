@@ -2,7 +2,6 @@
 Tests for migrated Swarm Intelligence module.
 """
 
-import pytest
 from src.swarm.distributed_solver import (
     DistributedProblem,
     DistributedSolver,

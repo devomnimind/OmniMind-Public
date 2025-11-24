@@ -233,7 +233,7 @@ class TestEmergenceDetector:
 
     def test_detect(self) -> None:
         """Testa detecção de padrões emergentes."""
-        detector = EmergenceDetector()
+        # detector = EmergenceDetector()
 
         # Deve executar sem erro
         try:

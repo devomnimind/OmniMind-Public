@@ -83,7 +83,9 @@ class QuantumMemoryCell:
 
         # Measure to collapse state
         probs = np.abs(self.quantum_state) ** 2
-        if len(probs) > 0:
+        # Normalize probabilities to ensure they sum to 1.0 (avoid floating point errors)
+        if len(probs) > 0 and np.sum(probs) > 0:
+            probs = probs / np.sum(probs)  # Normalize
             idx = np.random.choice(len(probs), p=probs)
             return float(np.real(self.quantum_state[idx]))
         return 0.0
@@ -327,7 +329,9 @@ class HybridQLearning:
 
         # Get measured outcome
         outcome = list(counts.keys())[0]
-        action_idx = int(outcome, 2) % self.num_actions
+        # Remove spaces from outcome (Qiskit format with multiple classical registers)
+        outcome_str = outcome.replace(" ", "")
+        action_idx = int(outcome_str, 2) % self.num_actions
 
         action = f"action_{action_idx}"
 

@@ -183,11 +183,17 @@ class TestSuperpositionDecision:
     def test_superposition_decision_collapse_multiple_times(self) -> None:
         """Testa múltiplos colapsos de decisão."""
         options = ["a", "b", "c", "d"]
-        state = QuantumState(num_qubits=3)
+        # Create equal superposition: (|000⟩ + |001⟩ + |010⟩ + |011⟩) / 2
+        # For 4 options, we need 2 qubits in superposition
+        sv = np.array([0.5, 0.5, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0], dtype=complex)
+        state = QuantumState(num_qubits=3, statevector=sv)
         probs = {opt: 0.25 for opt in options}
 
         results = []
         for _ in range(20):
+            # Recreate state for each iteration (measurement collapses state)
+            sv = np.array([0.5, 0.5, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0], dtype=complex)
+            state = QuantumState(num_qubits=3, statevector=sv)
             decision = SuperpositionDecision(
                 options=options, quantum_state=state, probabilities=probs
             )
@@ -247,7 +253,9 @@ class TestQuantumDecisionMaker:
         assert circuit is not None
         assert isinstance(counts, dict)
         # Bell state should only measure |00⟩ and |11⟩
-        assert all(outcome in ["00", "11"] for outcome in counts.keys())
+        # Remove spaces from outcomes and check first 2 bits (qubits 0-1)
+        cleaned_outcomes = [outcome.replace(" ", "")[:2] for outcome in counts.keys()]
+        assert all(outcome in ["00", "11"] for outcome in cleaned_outcomes)
 
     def test_decision_maker_without_qiskit(self) -> None:
         """Testa decision maker sem Qiskit (fallback clássico)."""

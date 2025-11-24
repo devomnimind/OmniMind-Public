@@ -102,8 +102,9 @@ class SuperpositionDecision:
             return self.final_decision
 
         outcome = self.quantum_state.measure()
-        # Map outcome to option
-        outcome_int = int(outcome, 2) % len(self.options)
+        # Map outcome to option (remove spaces from outcome first)
+        outcome_clean = outcome.replace(" ", "")
+        outcome_int = int(outcome_clean, 2) % len(self.options)
         self.final_decision = self.options[outcome_int]
         self.confidence = self.probabilities.get(self.final_decision, 0.0)
 
@@ -150,13 +151,20 @@ class QuantumCognitionEngine:
         )
 
     def create_superposition(
-        self, qubits: Optional[List[int]] = None
+        self, qubits: Optional[List[int]] = None, weights: Optional[List[float]] = None
     ) -> QuantumCircuit:
         """
-        Create quantum superposition using Hadamard gates.
+        Create quantum superposition.
+
+        If weights are provided, uses Ry gates to create biased superposition.
+        If no weights, uses Hadamard gates for uniform superposition.
 
         Args:
-            qubits: List of qubit indices to put in superposition. If None, all qubits.
+            qubits: List of qubit indices.
+            weights: List of weights for biasing (must match length of qubits).
+                     Weight 0.5 = uniform (Hadamard equivalent).
+                     Weight > 0.5 = bias towards |1⟩.
+                     Weight < 0.5 = bias towards |0⟩.
 
         Returns:
             QuantumCircuit in superposition state
@@ -170,11 +178,23 @@ class QuantumCognitionEngine:
 
         target_qubits = qubits if qubits is not None else list(range(self.num_qubits))
 
-        for qubit in target_qubits:
-            qc.h(qubit)  # Hadamard gate creates superposition
+        if weights:
+            if len(weights) != len(target_qubits):
+                raise ValueError("Number of weights must match number of target qubits")
+
+            for i, qubit in enumerate(target_qubits):
+                # Map weight [0, 1] to theta [0, pi]
+                # weight 0 -> state |0> -> theta = 0
+                # weight 1 -> state |1> -> theta = pi
+                # weight 0.5 -> superposition -> theta = pi/2
+                theta = 2 * np.arcsin(np.sqrt(weights[i]))
+                qc.ry(theta, qubit)
+        else:
+            for qubit in target_qubits:
+                qc.h(qubit)  # Hadamard gate creates uniform superposition
 
         logger.debug(
-            "superposition_created", qubits=target_qubits, num_qubits=self.num_qubits
+            "superposition_created", qubits=target_qubits, biased=bool(weights)
         )
 
         return qc
@@ -291,7 +311,10 @@ class QuantumDecisionMaker:
 
         Args:
             options: List of decision options
-            weights: Optional weights for biasing decision (not implemented yet)
+            weights: Optional weights for biasing decision.
+                     If provided, must be a list of floats [0, 1] for each qubit.
+                     Note: This implementation currently maps 1 weight per qubit.
+                     For complex option weighting, a more sophisticated encoding is needed.
 
         Returns:
             SuperpositionDecision with quantum state
@@ -311,7 +334,17 @@ class QuantumDecisionMaker:
             )
 
         # Create superposition circuit
-        circuit = self.engine.create_superposition()
+        # If weights are provided, we need to map them to qubits.
+        # This is a simplification. Real encoding of arbitrary option weights is complex.
+        # Here we assume weights map 1:1 to qubits for demonstration of bias.
+        qubit_weights = None
+        if weights:
+            # Pad or truncate weights to match num_qubits
+            qubit_weights = weights[: self.num_qubits]
+            while len(qubit_weights) < self.num_qubits:
+                qubit_weights.append(0.5)  # Default to uniform
+
+        circuit = self.engine.create_superposition(weights=qubit_weights)
 
         # Get quantum state
         q_state = self.engine.get_statevector(circuit)
@@ -334,6 +367,7 @@ class QuantumDecisionMaker:
             "quantum_decision_created",
             num_options=len(options),
             probabilities=option_probs,
+            biased=bool(weights),
         )
 
         return decision
