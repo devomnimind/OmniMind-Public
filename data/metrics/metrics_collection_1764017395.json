@@ -1,0 +1,915 @@
+{
+  "timestamp": "2025-11-24T17:49:53.751719",
+  "iterations": 50,
+  "data": [
+    {
+      "iteration": 0,
+      "chosen_action": "action_0",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "superego"
+      ],
+      "psychic_state": {
+        "tension": 0.2,
+        "anxiety": 0.1,
+        "satisfaction": 0.0,
+        "guilt": 0.0
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 1,
+      "chosen_action": "action_1",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.1,
+        "anxiety": 0.05,
+        "satisfaction": 0.5993672302724423,
+        "guilt": 0.22234629475116907
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 2,
+      "chosen_action": "action_2",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 1.1795560550758453,
+        "guilt": 0.46695496309122453
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 3,
+      "chosen_action": "action_3",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 1.9603905270591597,
+        "guilt": 0.46726944652922564
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 4,
+      "chosen_action": "action_4",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "superego"
+      ],
+      "psychic_state": {
+        "tension": 0.2,
+        "anxiety": 0.1,
+        "satisfaction": 1.9603905270591597,
+        "guilt": 0.46726944652922564
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 5,
+      "chosen_action": "action_5",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.1,
+        "anxiety": 0.05,
+        "satisfaction": 2.578975533484317,
+        "guilt": 0.7608774041664869
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 6,
+      "chosen_action": "action_6",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 3.2782222781025103,
+        "guilt": 0.7608774041664869
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 7,
+      "chosen_action": "action_7",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 3.9614009715214262,
+        "guilt": 0.7608774041664869
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 8,
+      "chosen_action": "action_8",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "superego"
+      ],
+      "psychic_state": {
+        "tension": 0.2,
+        "anxiety": 0.1,
+        "satisfaction": 3.9614009715214262,
+        "guilt": 1.0279331215437313
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 9,
+      "chosen_action": "action_9",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "superego"
+      ],
+      "psychic_state": {
+        "tension": 0.4,
+        "anxiety": 0.2,
+        "satisfaction": 3.9614009715214262,
+        "guilt": 1.5210315968121082
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 10,
+      "chosen_action": "action_10",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.30000000000000004,
+        "anxiety": 0.15000000000000002,
+        "satisfaction": 4.271610502299955,
+        "guilt": 1.5210315968121082
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 11,
+      "chosen_action": "action_11",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "id",
+        "ego"
+      ],
+      "psychic_state": {
+        "tension": 0.20000000000000004,
+        "anxiety": 0.10000000000000002,
+        "satisfaction": 5.2699527172453875,
+        "guilt": 1.6887817304386987
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 12,
+      "chosen_action": "action_12",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.10000000000000003,
+        "anxiety": 0.05000000000000002,
+        "satisfaction": 5.755595891077726,
+        "guilt": 1.6887817304386987
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 13,
+      "chosen_action": "action_13",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 2.7755575615628914e-17,
+        "anxiety": 1.3877787807814457e-17,
+        "satisfaction": 6.172743538775685,
+        "guilt": 2.073848214726495
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 14,
+      "chosen_action": "action_14",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 6.846273863587559,
+        "guilt": 2.073848214726495
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 15,
+      "chosen_action": "action_15",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 7.607473693245253,
+        "guilt": 2.073848214726495
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 16,
+      "chosen_action": "action_16",
+      "conflict_quality": 0.0,
+      "agents_satisfied": [],
+      "psychic_state": {
+        "tension": 0.2,
+        "anxiety": 0.1,
+        "satisfaction": 7.607473693245253,
+        "guilt": 2.5116212136264724
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 17,
+      "chosen_action": "action_17",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.1,
+        "anxiety": 0.05,
+        "satisfaction": 8.08755858238213,
+        "guilt": 2.5116212136264724
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 18,
+      "chosen_action": "action_18",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 8.761783185639228,
+        "guilt": 2.5116212136264724
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 19,
+      "chosen_action": "action_19",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 9.63594152964331,
+        "guilt": 2.5116212136264724
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 20,
+      "chosen_action": "action_20",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 10.385209471462145,
+        "guilt": 2.8592455701793567
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 21,
+      "chosen_action": "action_21",
+      "conflict_quality": 0.0,
+      "agents_satisfied": [],
+      "psychic_state": {
+        "tension": 0.2,
+        "anxiety": 0.1,
+        "satisfaction": 10.385209471462145,
+        "guilt": 3.259117957372115
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 22,
+      "chosen_action": "action_22",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "superego"
+      ],
+      "psychic_state": {
+        "tension": 0.4,
+        "anxiety": 0.2,
+        "satisfaction": 10.385209471462145,
+        "guilt": 3.4286701360921894
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 23,
+      "chosen_action": "action_23",
+      "conflict_quality": 0.0,
+      "agents_satisfied": [],
+      "psychic_state": {
+        "tension": 0.6000000000000001,
+        "anxiety": 0.30000000000000004,
+        "satisfaction": 10.385209471462145,
+        "guilt": 3.4286701360921894
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 24,
+      "chosen_action": "action_24",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.5000000000000001,
+        "anxiety": 0.25000000000000006,
+        "satisfaction": 10.904385162350243,
+        "guilt": 3.99366009125386
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 25,
+      "chosen_action": "action_25",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.40000000000000013,
+        "anxiety": 0.20000000000000007,
+        "satisfaction": 11.759111532452629,
+        "guilt": 3.99366009125386
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 26,
+      "chosen_action": "action_26",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.30000000000000016,
+        "anxiety": 0.15000000000000008,
+        "satisfaction": 12.459999766550599,
+        "guilt": 3.99366009125386
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 27,
+      "chosen_action": "action_27",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "id",
+        "ego"
+      ],
+      "psychic_state": {
+        "tension": 0.20000000000000015,
+        "anxiety": 0.10000000000000007,
+        "satisfaction": 13.22990432376357,
+        "guilt": 3.99366009125386
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 28,
+      "chosen_action": "action_28",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.10000000000000014,
+        "anxiety": 0.05000000000000007,
+        "satisfaction": 14.183904320048901,
+        "guilt": 4.685551632656461
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 29,
+      "chosen_action": "action_29",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 1.3877787807814457e-16,
+        "anxiety": 6.938893903907228e-17,
+        "satisfaction": 14.835912914550638,
+        "guilt": 5.287084785079999
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 30,
+      "chosen_action": "action_30",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 15.648259032147772,
+        "guilt": 5.414565974443736
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 31,
+      "chosen_action": "action_31",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 16.09533672799226,
+        "guilt": 5.414565974443736
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 32,
+      "chosen_action": "action_32",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 17.00311133527408,
+        "guilt": 6.109903241520566
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 33,
+      "chosen_action": "action_33",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 17.556745596726,
+        "guilt": 6.109903241520566
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 34,
+      "chosen_action": "action_34",
+      "conflict_quality": 0.0,
+      "agents_satisfied": [],
+      "psychic_state": {
+        "tension": 0.2,
+        "anxiety": 0.1,
+        "satisfaction": 17.556745596726,
+        "guilt": 6.109903241520566
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 35,
+      "chosen_action": "action_35",
+      "conflict_quality": 0.0,
+      "agents_satisfied": [],
+      "psychic_state": {
+        "tension": 0.4,
+        "anxiety": 0.2,
+        "satisfaction": 17.556745596726,
+        "guilt": 6.489796313933852
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 36,
+      "chosen_action": "action_36",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.30000000000000004,
+        "anxiety": 0.15000000000000002,
+        "satisfaction": 18.271089698686918,
+        "guilt": 6.489796313933852
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 37,
+      "chosen_action": "action_37",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.20000000000000004,
+        "anxiety": 0.10000000000000002,
+        "satisfaction": 18.6202757300909,
+        "guilt": 6.861225121623264
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 38,
+      "chosen_action": "action_38",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.10000000000000003,
+        "anxiety": 0.05000000000000002,
+        "satisfaction": 19.346167332258904,
+        "guilt": 6.924618629701628
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 39,
+      "chosen_action": "action_39",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 2.7755575615628914e-17,
+        "anxiety": 1.3877787807814457e-17,
+        "satisfaction": 20.10366638985504,
+        "guilt": 6.924618629701628
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 40,
+      "chosen_action": "action_40",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 20.898500516939823,
+        "guilt": 7.142694360446148
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 41,
+      "chosen_action": "action_41",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 21.667310084691174,
+        "guilt": 7.142694360446148
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 42,
+      "chosen_action": "action_42",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "id",
+        "ego"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 22.604479707541422,
+        "guilt": 7.142694360446148
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 43,
+      "chosen_action": "action_43",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 23.291386327257165,
+        "guilt": 7.142694360446148
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 44,
+      "chosen_action": "action_44",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 23.73890980788914,
+        "guilt": 7.3258633591746305
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 45,
+      "chosen_action": "action_45",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 24.44128300204685,
+        "guilt": 7.3258633591746305
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 46,
+      "chosen_action": "action_46",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 25.207035884294022,
+        "guilt": 7.3258633591746305
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 47,
+      "chosen_action": "action_47",
+      "conflict_quality": 0.6666666666666666,
+      "agents_satisfied": [
+        "superego",
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.0,
+        "anxiety": 0.0,
+        "satisfaction": 25.592781974810258,
+        "guilt": 7.3258633591746305
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": false
+    },
+    {
+      "iteration": 48,
+      "chosen_action": "action_48",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "superego"
+      ],
+      "psychic_state": {
+        "tension": 0.2,
+        "anxiety": 0.1,
+        "satisfaction": 25.592781974810258,
+        "guilt": 7.3258633591746305
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    },
+    {
+      "iteration": 49,
+      "chosen_action": "action_49",
+      "conflict_quality": 0.3333333333333333,
+      "agents_satisfied": [
+        "id"
+      ],
+      "psychic_state": {
+        "tension": 0.1,
+        "anxiety": 0.05,
+        "satisfaction": 26.44591201218717,
+        "guilt": 7.3258633591746305
+      },
+      "quantum_backend_active": true,
+      "encrypted_unconscious_active": true,
+      "society_consensus_active": true,
+      "repression_event": true
+    }
+  ],
+  "duration_seconds": 1.6158466339111328
+}

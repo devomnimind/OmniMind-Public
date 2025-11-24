@@ -32,7 +32,7 @@ import logging
 
 # Integration of Audit Fixes
 try:
-    from src.quantum_consciousness.dwave_backend import DWaveBackend
+    from src.quantum_consciousness.quantum_backend import DWaveBackend
     from src.lacanian.encrypted_unconscious import (
         EncryptedUnconsciousLayer as EncryptedUnconscious,
     )
@@ -546,7 +546,9 @@ class FreudianMind:
         if INTEGRATION_AVAILABLE:
             try:
                 self.quantum_backend = DWaveBackend()
-                logger.info("Quantum Backend (D-Wave) initialized for Freudian Mind")
+                logger.info(
+                    f"Quantum Backend ({self.quantum_backend.provider.upper()}) initialized for Freudian Mind"
+                )
             except Exception as e:
                 logger.warning(f"Failed to initialize Quantum Backend: {e}")
 

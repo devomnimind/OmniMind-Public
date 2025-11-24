@@ -34,9 +34,12 @@ sounddevice>=0.5.0
 # Quantum
 qiskit>=2.2.0
 qiskit-aer>=0.17.0
+qiskit-algorithms>=0.3.0
+qiskit-optimization>=0.6.0
 cirq>=1.6.0
 dwave-system>=1.23.0
 dimod>=0.12.14
+neal>=0.6.0
 # Security / Privacy
 tenseal>=0.3.14
 # Additional needed

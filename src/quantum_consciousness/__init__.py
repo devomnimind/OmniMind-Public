@@ -44,7 +44,7 @@ from .hybrid_cognition import (
     OptimizationStrategy,
 )
 
-from .dwave_backend import DWaveBackend
+from .quantum_backend import QuantumBackend, DWaveBackend
 
 __all__ = [
     # Quantum Cognition
@@ -63,6 +63,7 @@ __all__ = [
     "SimulatorBackend",
     "IBMQBackend",
     "BackendType",
+    "QuantumBackend",
     "DWaveBackend",
     # Hybrid Cognition
     "HybridCognitionSystem",
