@@ -518,12 +518,18 @@ class QualiaEngine:
             return "I have no experiences to describe."
 
         description = f"What it is like: {exp.phenomenal_content}\n"
-        description += f"Integration: {exp.integration_level.value} (Φ={exp.integration_score:.2f})\n"
+        description += (
+            f"Integration: {exp.integration_level.value} "
+            f"(Φ={exp.integration_score:.2f})\n"
+        )
 
         # Describe dominant qualia
         if exp.qualia:
             dominant = max(exp.qualia, key=lambda q: q.intensity)
-            description += f"Most intense: {dominant.description} (intensity={dominant.intensity:.2f})\n"
+            description += (
+                f"Most intense: {dominant.description} "
+                f"(intensity={dominant.intensity:.2f})\n"
+            )
 
         return description
 

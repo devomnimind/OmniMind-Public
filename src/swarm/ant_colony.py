@@ -104,13 +104,28 @@ class AntColonyOptimizer:
 
         execution_time = time.time() - start_time
 
+        # Calcula uso de memória
+        try:
+            import psutil
+            import os
+
+            process = psutil.Process(os.getpid())
+            memory_info = process.memory_info()
+            memory_usage_mb = memory_info.rss / (1024 * 1024)  # Convert to MB
+        except ImportError:
+            logger.warning("psutil not installed - memory tracking unavailable")
+            memory_usage_mb = 0.0
+        except Exception as e:
+            logger.warning(f"Failed to get memory usage: {e}")
+            memory_usage_mb = 0.0
+
         # Calcula métricas finais
         metrics = SwarmMetrics(
             iterations_to_convergence=self.iteration,
             best_solution=[float(city) for city in self.best_path],
             best_value=self.best_cost,
             execution_time=execution_time,
-            memory_usage=0.0,  # TODO: implementar
+            memory_usage=memory_usage_mb,
             gpu_utilized=self.config.use_gpu,
         )
 

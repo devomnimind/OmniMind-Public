@@ -66,10 +66,15 @@ class IdentityModel:
 
     def __str__(self) -> str:
         """Identity description."""
+        characteristics = (
+            ", ".join(self.defining_characteristics[:3])
+            if self.defining_characteristics
+            else "Evolving"
+        )
         return f"""
 Identity: {self.name}
 Core Values: {', '.join(self.core_values) if self.core_values else 'Developing'}
-Characteristics: {', '.join(self.defining_characteristics[:3]) if self.defining_characteristics else 'Evolving'}
+Characteristics: {characteristics}
 Strengths: {', '.join(self.strengths[:3]) if self.strengths else 'Discovering'}
 """
 

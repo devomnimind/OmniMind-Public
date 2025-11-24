@@ -83,16 +83,66 @@ class StrategicForgetting:
         return len(to_remove)
 
     def prune_episodic_memory(
-        self, episodes: List[Dict[str, Any]]
+        self,
+        episodes: List[Dict[str, Any]],
+        min_emotional_intensity: float = 0.3,
+        max_age_days: int = 90,
+        preserve_count: int = 100,
     ) -> List[Dict[str, Any]]:
         """
-        Prune episodic memory list (simulation).
+        Prune episodic memory based on emotional intensity and age.
+
+        Preserves episodes with:
+        - High emotional intensity (>= min_emotional_intensity)
+        - Recent timestamp (< max_age_days)
+        - Top N most emotionally salient memories
 
         Args:
-            episodes: List of episodes.
+            episodes: List of episode dictionaries.
+            min_emotional_intensity: Minimum emotional intensity to retain.
+            max_age_days: Maximum age in days to retain low-intensity episodes.
+            preserve_count: Minimum number of episodes to always preserve.
 
         Returns:
-            Pruned list of episodes.
+            Pruned list of episodes, sorted by emotional salience.
         """
-        # TODO: Implement episodic pruning based on emotional intensity
-        return episodes
+        if not episodes:
+            return []
+
+        cutoff_date = datetime.now() - timedelta(days=max_age_days)
+        retained = []
+
+        for episode in episodes:
+            # Extract episode properties
+            emotional_intensity = episode.get("emotional_intensity", 0.0)
+            timestamp = episode.get("timestamp", datetime.now())
+            if isinstance(timestamp, str):
+                timestamp = datetime.fromisoformat(timestamp)
+
+            # Retention criteria
+            is_emotionally_salient = emotional_intensity >= min_emotional_intensity
+            is_recent = timestamp >= cutoff_date
+
+            if is_emotionally_salient or is_recent:
+                retained.append(episode)
+
+        # Sort by emotional intensity (descending) to prioritize salient memories
+        retained.sort(key=lambda e: e.get("emotional_intensity", 0.0), reverse=True)
+
+        # Always preserve top N most salient memories, even if old
+        if len(retained) < preserve_count and len(episodes) > len(retained):
+            # Add remaining episodes sorted by salience
+            remaining = [e for e in episodes if e not in retained]
+            remaining.sort(
+                key=lambda e: e.get("emotional_intensity", 0.0), reverse=True
+            )
+            to_add = preserve_count - len(retained)
+            retained.extend(remaining[:to_add])
+
+        pruned_count = len(episodes) - len(retained)
+        logger.info(
+            f"Pruned {pruned_count} episodic memories. "
+            f"Retained {len(retained)} based on emotional salience."
+        )
+
+        return retained

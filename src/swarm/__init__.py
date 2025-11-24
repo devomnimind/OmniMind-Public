@@ -37,6 +37,24 @@ from src.swarm.ant_colony import AntColonyOptimizer
 from src.swarm.emergence_detector import EmergenceDetector
 from src.swarm.swarm_manager import SwarmManager
 
+from src.swarm.distributed_solver import (
+    DistributedProblem,
+    DistributedSolution,
+    DistributedSolver,
+    ConsensusProtocol,
+    TaskDecomposer,
+    SolutionAggregator,
+)
+
+from src.swarm.collective_learning import (
+    CollectiveLearner,
+    KnowledgeBase,
+    SharedExperience,
+    ConsensusLearning,
+    FederatedLearning,
+    MultiAgentTrainer,
+)
+
 from src.swarm.utils import (
     euclidean_distance,
     manhattan_distance,
@@ -76,6 +94,20 @@ __all__ = [
     "clamp_velocity",
     "detect_clustering",
     "estimate_memory_usage",
+    # Distributed Solving (Migrated)
+    "DistributedProblem",
+    "DistributedSolution",
+    "DistributedSolver",
+    "ConsensusProtocol",
+    "TaskDecomposer",
+    "SolutionAggregator",
+    # Collective Learning (Migrated)
+    "CollectiveLearner",
+    "KnowledgeBase",
+    "SharedExperience",
+    "ConsensusLearning",
+    "FederatedLearning",
+    "MultiAgentTrainer",
 ]
 
 __version__ = "1.0.0"

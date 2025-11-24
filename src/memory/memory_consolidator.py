@@ -106,17 +106,66 @@ class MemoryConsolidator:
             "episodes_processed": len(episodes),
         }
 
-    def extract_relationships(self, episodes: List[Dict[str, Any]]) -> int:
+    def extract_relationships(
+        self, episodes: List[Dict[str, Any]], min_cooccurrence: int = 2
+    ) -> int:
         """
         Extract relationships between concepts from episodes.
 
-        Heuristic: If two concepts appear in the same episode frequently, relate them.
+        Analyzes co-occurrence patterns: if two concepts appear in the same
+        episode frequently, a relationship is created between them.
 
         Args:
-            episodes: List of episodes.
+            episodes: List of episodes with 'tags' or 'content'.
+            min_cooccurrence: Minimum number of co-occurrences to create relationship.
 
         Returns:
             Number of relationships created.
         """
-        # TODO: Implement co-occurrence analysis
-        return 0
+        if not episodes:
+            return 0
+
+        # Track co-occurrences
+        from collections import defaultdict
+        from itertools import combinations
+
+        cooccurrence_counts: Dict[tuple, int] = defaultdict(int)
+
+        for episode in episodes:
+            # Extract terms from episode
+            terms = set()
+
+            if "tags" in episode:
+                terms.update(episode["tags"])
+
+            if "content" in episode and isinstance(episode["content"], str):
+                words = [w.lower().strip(".,!?") for w in episode["content"].split()]
+                significant_words = [w for w in words if len(w) > 4]
+                terms.update(significant_words)
+
+            # Count co-occurrences (all pairs)
+            for term_a, term_b in combinations(sorted(terms), 2):
+                cooccurrence_counts[(term_a, term_b)] += 1
+
+        # Create relationships for frequent co-occurrences
+        relationships_created = 0
+
+        for (concept_a, concept_b), count in cooccurrence_counts.items():
+            if count >= min_cooccurrence:
+                # Verify both concepts exist in semantic memory
+                if self.semantic_memory.retrieve_concept(
+                    concept_a
+                ) and self.semantic_memory.retrieve_concept(concept_b):
+                    # Create bidirectional relationship
+                    self.semantic_memory.relate_concepts(
+                        concept_a,
+                        concept_b,
+                        relationship_type="cooccurs_with",
+                        strength=min(count / 10.0, 1.0),  # Normalize strength
+                    )
+                    relationships_created += 1
+
+        logger.info(
+            f"Extracted {relationships_created} relationships from co-occurrence analysis."
+        )
+        return relationships_created

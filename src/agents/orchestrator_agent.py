@@ -1132,9 +1132,41 @@ class OmniMindCore:
     """
     Core system class for OmniMind.
 
-    This is a placeholder class for the central system logic.
+    Provides centralized access to the orchestrator and system state.
     """
 
-    def __init__(self) -> None:
-        """Initialize the OmniMind core."""
-        pass
+    def __init__(self, config_path: str = "config/agent_config.yaml") -> None:
+        """Initialize the OmniMind core.
+
+        Args:
+            config_path: Path to agent configuration
+        """
+        self.config_path = config_path
+        self.orchestrator: Optional[OrchestratorAgent] = None
+        self._initialized = False
+
+        logger.info(f"OmniMindCore initialized with config: {config_path}")
+
+    def initialize(self) -> None:
+        """Initialize the core components."""
+        if self._initialized:
+            logger.warning("OmniMindCore already initialized")
+            return
+
+        try:
+            self.orchestrator = OrchestratorAgent(self.config_path)
+            self._initialized = True
+            logger.info("OmniMindCore fully initialized")
+        except Exception as e:
+            logger.error(f"Failed to initialize OmniMindCore: {e}")
+            raise
+
+    def get_orchestrator(self) -> Optional[OrchestratorAgent]:
+        """Get the orchestrator instance.
+
+        Returns:
+            OrchestratorAgent instance or None if not initialized
+        """
+        if not self._initialized:
+            logger.warning("OmniMindCore not initialized - call initialize() first")
+        return self.orchestrator

@@ -8,15 +8,18 @@ Collective Intelligence Module (LEGACY).
 Provides distributed problem-solving capabilities through swarm intelligence
 and emergent behavior analysis.
 """
+
 import warnings
 
+# Issue deprecation warning
 warnings.warn(
     "src.collective_intelligence is deprecated. Use src.swarm instead.",
     DeprecationWarning,
-    stacklevel=2
+    stacklevel=2,
 )
 
-from src.collective_intelligence.swarm_intelligence import (
+# flake8: noqa: E402 (imports intentionally after warning)
+from src.collective_intelligence.swarm_intelligence import (  # noqa: E402
     SwarmAgent,
     SwarmCoordinator,
     SwarmBehavior,
@@ -25,7 +28,7 @@ from src.collective_intelligence.swarm_intelligence import (
     AntColonyOptimizer,
 )
 
-from src.collective_intelligence.distributed_solver import (
+from src.collective_intelligence.distributed_solver import (  # noqa: E402
     DistributedProblem,
     DistributedSolution,
     DistributedSolver,
@@ -34,7 +37,7 @@ from src.collective_intelligence.distributed_solver import (
     SolutionAggregator,
 )
 
-from src.collective_intelligence.emergent_behaviors import (
+from src.collective_intelligence.emergent_behaviors import (  # noqa: E402
     EmergentPattern,
     BehaviorRule,
     EmergenceDetector,
@@ -43,7 +46,7 @@ from src.collective_intelligence.emergent_behaviors import (
     AdaptiveSystem,
 )
 
-from src.collective_intelligence.collective_learning import (
+from src.collective_intelligence.collective_learning import (  # noqa: E402
     CollectiveLearner,
     KnowledgeBase,
     SharedExperience,

@@ -36,14 +36,35 @@ class ParticleSwarmOptimizer:
     - Detecção de convergência
     """
 
-    def __init__(self, config: Optional[PSOConfig] = None):
+    def __init__(
+        self,
+        config: Optional[PSOConfig] = None,
+        dimension: Optional[int] = None,
+        num_particles: Optional[int] = None,
+    ) -> None:
         """
         Inicializa otimizador PSO.
 
         Args:
             config: Configuração PSO (usa padrão se None)
+            dimension: Sobrescreve a dimensão se fornecido
+            num_particles: Sobrescreve o número de partículas se fornecido
         """
-        self.config = config or PSOConfig()
+        # Permitir sobrescrita de parâmetros via argumentos individuais
+        if config is None:
+            base_config = PSOConfig()
+            if dimension is not None:
+                base_config.dimension = dimension
+            if num_particles is not None:
+                base_config.num_particles = num_particles
+            self.config = base_config
+        else:
+            # Se config fornecido, ainda permite sobrescrita opcional
+            self.config = config
+            if dimension is not None:
+                self.config.dimension = dimension
+            if num_particles is not None:
+                self.config.num_particles = num_particles
         self.particles: List[Particle] = []
         self.global_best_position: List[float] = []
         self.global_best_fitness = float("inf")
@@ -115,13 +136,28 @@ class ParticleSwarmOptimizer:
 
         execution_time = time.time() - start_time
 
+        # Calcula uso de memória
+        try:
+            import psutil
+            import os
+
+            process = psutil.Process(os.getpid())
+            memory_info = process.memory_info()
+            memory_usage_mb = memory_info.rss / (1024 * 1024)  # Convert to MB
+        except ImportError:
+            logger.warning("psutil not installed - memory tracking unavailable")
+            memory_usage_mb = 0.0
+        except Exception as e:
+            logger.warning(f"Failed to get memory usage: {e}")
+            memory_usage_mb = 0.0
+
         # Calcula métricas finais
         metrics = SwarmMetrics(
             iterations_to_convergence=self.iteration,
             best_solution=self.global_best_position.copy(),
             best_value=self.global_best_fitness,
             execution_time=execution_time,
-            memory_usage=0.0,  # TODO: implementar
+            memory_usage=memory_usage_mb,
             gpu_utilized=self.config.use_gpu,
         )
 

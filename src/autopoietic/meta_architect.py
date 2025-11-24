@@ -18,7 +18,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
-from typing import Dict, List, Mapping, Sequence
+from typing import List, Mapping, Sequence
 
 logger = logging.getLogger(__name__)
 
