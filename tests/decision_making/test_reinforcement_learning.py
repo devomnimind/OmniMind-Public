@@ -207,9 +207,7 @@ class TestRLComponents:
         """Testa criação de RLAction."""
         from src.decision_making.reinforcement_learning import RLAction
 
-        action = RLAction(
-            action_id="move", parameters={"direction": "left"}, cost=0.5
-        )
+        action = RLAction(action_id="move", parameters={"direction": "left"}, cost=0.5)
 
         assert action.action_id == "move"
         assert action.parameters == {"direction": "left"}

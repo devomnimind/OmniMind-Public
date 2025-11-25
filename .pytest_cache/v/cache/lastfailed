@@ -39,5 +39,6 @@
   "tests/test_e2e_integration.py::TestErrorHandling::test_service_recovery": true,
   "tests/security/test_forensics_system.py::TestForensicsSystem::test_investigate_incident": true,
   "tests/test_trap_framework.py::TestTRAPComponent::test_component_initialization": true,
-  "tests/test_trap_framework.py::TestTRAPComponent::test_component_score_bounds": true
+  "tests/test_trap_framework.py::TestTRAPComponent::test_component_score_bounds": true,
+  "tests/lacanian/test_encrypted_unconscious.py::TestEncryptedUnconsciousLayer::test_unconscious_influence_single_memory": true
 }
