@@ -227,14 +227,14 @@ def compute_statistical_significance(
         return {
             "t_statistic": None,
             "p_value": None,
-            "is_significant": avg_return > 0.8,
+            "is_significant": bool(avg_return > 0.8),
             "interpretation": (
                 "Sinthome CONFIRMADO (avg > 80%)"
                 if avg_return > 0.8
                 else "Comportamento não é estrutural"
             ),
-            "mean": avg_return,
-            "std": np.std(return_rates),
+            "mean": float(avg_return),
+            "std": float(np.std(return_rates)),
             "note": "Análise sem scipy (t-test não disponível)",
         }
 
@@ -262,7 +262,7 @@ def compute_statistical_significance(
     return {
         "t_statistic": float(t_stat),
         "p_value": float(p_value_one_tailed),
-        "is_significant": is_significant,
+        "is_significant": bool(is_significant),
         "interpretation": interpretation,
         "mean": float(mean_return),
         "std": float(np.std(return_rates)),
