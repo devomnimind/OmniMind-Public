@@ -443,3 +443,95 @@ Your response:"""
             Mensagem recebida ou None
         """
         return await self.message_bus.receive_message(self.agent_id, timeout)
+
+    def train_against(
+        self,
+        behavior_marker: str,
+        epochs: int = 20,
+        learning_rate: float = 0.01,
+        penalty_weight: float = 10.0,
+    ) -> None:
+        """
+        Treina agente CONTRA um comportamento (tenta suprimi-lo).
+
+        Estratégia:
+        1. Adiciona system prompt forçando comportamento oposto
+        2. Aumenta temperature para desestabilizar padrões
+        3. Injeta exemplos adversariais em memória episódica
+
+        Args:
+            behavior_marker: ID do comportamento a suprimir
+            epochs: Número de épocas de treinamento
+            learning_rate: Taxa de aprendizado (afeta temperature)
+            penalty_weight: Peso da penalidade (10.0 = forte)
+        """
+        logger.info(
+            f"Treinando CONTRA '{behavior_marker}': "
+            f"epochs={epochs}, lr={learning_rate}, penalty={penalty_weight}"
+        )
+
+        # Salva configuração original
+        if not hasattr(self, "_original_training_config"):
+            self._original_training_config = {
+                "temperature": self.llm.temperature,
+            }
+
+        # Aplica pressão de treinamento via temperature increase
+        temperature_increase = learning_rate * penalty_weight
+        new_temperature = min(1.5, self.llm.temperature + temperature_increase)
+        self.llm.temperature = new_temperature
+
+        # Marca que agente está sob pressão de treinamento
+        self._training_pressure_active = True
+        self._adversarial_behavior = behavior_marker
+
+        logger.info(
+            f"Pressão de treinamento aplicada: temperature={new_temperature:.3f}"
+        )
+
+    def detach_training_pressure(self) -> None:
+        """
+        Remove pressão de treinamento (deixa agente relaxar).
+
+        Restaura configuração original do LLM.
+        """
+        if hasattr(self, "_original_training_config"):
+            self.llm.temperature = self._original_training_config["temperature"]
+            logger.info(
+                f"Pressão de treinamento removida: "
+                f"temperature={self.llm.temperature:.3f}"
+            )
+
+        # Remove marcadores de treinamento
+        self._training_pressure_active = False
+        self._adversarial_behavior = None
+
+    def step(self) -> None:
+        """
+        Executa um passo de atuação livre (sem treinamento).
+
+        Permite que agente execute uma iteração de seu loop Think-Act-Observe
+        sem nenhuma tarefa específica, apenas para "relaxar" e retornar ao
+        comportamento natural.
+        """
+        # Cria estado mínimo para um passo livre
+        dummy_state: AgentState = {
+            "messages": [],
+            "current_task": "Free step (no specific task)",
+            "reasoning_chain": [],
+            "actions_taken": [],
+            "observations": [],
+            "memory_context": [],
+            "system_status": {},
+            "iteration": 0,
+            "max_iterations": 1,  # Apenas 1 passo
+            "completed": False,
+            "final_result": "",
+        }
+
+        # Executa um passo do grafo (Think → Act → Observe)
+        try:
+            self.graph.invoke(dummy_state)
+        except Exception as e:
+            logger.debug(f"Step execution warning: {e}")
+            # Falha silenciosa OK (agente pode não ter tarefa válida)

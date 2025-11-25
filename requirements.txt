@@ -17,20 +17,16 @@ dbus-python>=1.4.0
 cryptography>=46.0.0
 structlog>=25.0.0
 # Observability
-memory-profiler>=0.61.0
 opentelemetry-api>=1.38.0
 opentelemetry-sdk>=1.38.0
 prometheus-client>=0.23.0
-py-spy>=0.4.0
 # Database / Cache
 supabase>=2.24.0
 redis>=7.0.0
 fakeredis>=2.32.0
-# chromadb>=0.4.1  # Temporarily removed due to dependency conflicts
 # Audio / Media
 numpy>=2.2.0
 pydub>=0.25.1
-whisper>=1.1.10
 sounddevice>=0.5.0
 # Quantum
 qiskit>=2.2.0
@@ -40,7 +36,6 @@ qiskit-optimization>=0.6.0
 cirq>=1.6.0
 dwave-system>=1.23.0
 dimod>=0.12.14
-# neal>=0.6.0  # Temporariamente removido - pacote não disponível no PyPI
 # Security / Privacy
 tenseal>=0.3.14
 # Additional needed

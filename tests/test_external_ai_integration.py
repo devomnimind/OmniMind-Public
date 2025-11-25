@@ -7,7 +7,6 @@ import asyncio
 import pytest
 import os
 from unittest.mock import AsyncMock, patch
-from typing import Dict, Any
 
 from src.integrations.external_ai_providers import (
     GeminiProvider,
