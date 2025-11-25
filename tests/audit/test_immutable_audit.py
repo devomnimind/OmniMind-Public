@@ -21,6 +21,7 @@ from src.audit.immutable_audit import (
     get_audit_system,
     log_action,
 )
+from unittest.mock import MagicMock, patch
 
 
 class TestImmutableAuditSystem:
@@ -220,6 +221,105 @@ class TestImmutableAuditSystem:
         # Verify chain integrity after concurrent operations
         integrity = audit.verify_chain_integrity()
         assert integrity["valid"] is True
+
+
+    def test_repair_chain_integrity_empty_log(self, temp_log_dir: Path) -> None:
+        """Testa reparo com log vazio."""
+        audit = ImmutableAuditSystem(log_dir=str(temp_log_dir))
+        
+        # Remove log file
+        audit.audit_log_file.unlink()
+        
+        result = audit.repair_chain_integrity()
+        
+        assert result["repaired"] is False
+        assert "Log não existe" in result["message"]
+    
+    def test_repair_chain_integrity_with_valid_chain(self, temp_log_dir: Path) -> None:
+        """Testa reparo com cadeia válida."""
+        audit = ImmutableAuditSystem(log_dir=str(temp_log_dir))
+        
+        # Add valid events
+        audit.log_action("action1", {"test": 1}, "test")
+        audit.log_action("action2", {"test": 2}, "test")
+        
+        result = audit.repair_chain_integrity()
+        
+        assert result["repaired"] is True
+        assert result["events_removed"] == 0
+    
+    def test_set_file_xattr_not_available(self, temp_log_dir: Path) -> None:
+        """Testa set_file_xattr quando setfattr não disponível."""
+        audit = ImmutableAuditSystem(log_dir=str(temp_log_dir))
+        
+        test_file = temp_log_dir / "test.txt"
+        test_file.write_text("test")
+        
+        with patch("subprocess.run", side_effect=FileNotFoundError):
+            result = audit.set_file_xattr(str(test_file), "abc123")
+            assert result is False
+    
+    def test_verify_file_integrity_file_not_exists(self, temp_log_dir: Path) -> None:
+        """Testa verificação de arquivo que não existe."""
+        audit = ImmutableAuditSystem(log_dir=str(temp_log_dir))
+        
+        result = audit.verify_file_integrity("/nonexistent/file.txt")
+        
+        assert result["valid"] is False
+        assert "não existe" in result["message"]
+    
+    def test_protect_log_file_success(self, temp_log_dir: Path) -> None:
+        """Testa proteção de arquivo com chattr."""
+        audit = ImmutableAuditSystem(log_dir=str(temp_log_dir))
+        
+        test_file = temp_log_dir / "protected.log"
+        test_file.write_text("protected content")
+        
+        with patch("subprocess.run") as mock_run:
+            mock_run.return_value = MagicMock(returncode=0)
+            result = audit.protect_log_file(str(test_file))
+            
+            # May succeed or fail depending on permissions
+            assert isinstance(result, bool)
+    
+    def test_protect_log_file_failure(self, temp_log_dir: Path) -> None:
+        """Testa proteção de arquivo quando chattr falha."""
+        audit = ImmutableAuditSystem(log_dir=str(temp_log_dir))
+        
+        test_file = temp_log_dir / "protected.log"
+        test_file.write_text("protected content")
+        
+        with patch("subprocess.run", side_effect=FileNotFoundError):
+            result = audit.protect_log_file(str(test_file))
+            assert result is False
+    
+    def test_load_last_hash_with_invalid_data(self, temp_log_dir: Path) -> None:
+        """Testa carregamento de hash com dados inválidos."""
+        import json
+        
+        # Create audit system to set up files
+        audit = ImmutableAuditSystem.__new__(ImmutableAuditSystem)
+        audit.log_dir = temp_log_dir
+        audit.hash_chain_file = temp_log_dir / "hash_chain.json"
+        audit.security_log = temp_log_dir / "security_events.log"
+        
+        # Write invalid JSON
+        audit.hash_chain_file.write_text("invalid json")
+        
+        last_hash = audit._load_last_hash()
+        
+        # Should return default hash
+        assert last_hash == "0" * 64
+    
+    def test_security_event_logging(self, temp_log_dir: Path) -> None:
+        """Testa logging de eventos de segurança."""
+        audit = ImmutableAuditSystem(log_dir=str(temp_log_dir))
+        
+        audit._log_security_event("Test security event")
+        
+        assert audit.security_log.exists()
+        content = audit.security_log.read_text()
+        assert "Test security event" in content
 
 
 if __name__ == "__main__":

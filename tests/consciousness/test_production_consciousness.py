@@ -425,3 +425,126 @@ class TestEdgeCases:
         # Verifica que diretório ainda existe
         assert metrics_dir.exists()
         assert metrics_dir.is_dir()
+
+
+class TestConsciousnessReport:
+    """Testes para geração de relatórios de consciência."""
+
+    @pytest.fixture
+    def system(self) -> ProductionConsciousnessSystem:
+        """Fixture para sistema de consciência."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            yield ProductionConsciousnessSystem(metrics_dir=Path(tmpdir))
+
+    def test_get_consciousness_report_empty(
+        self, system: ProductionConsciousnessSystem
+    ) -> None:
+        """Testa relatório sem medições."""
+        report = system.get_consciousness_report()
+
+        assert "phi_metrics" in report
+        assert "self_awareness" in report
+        assert "system_metrics" in report
+
+        # Valores devem ser zero
+        assert report["phi_metrics"]["current"] == 0.0
+        assert report["phi_metrics"]["mean"] == 0.0
+        assert report["phi_metrics"]["history_length"] == 0
+
+    def test_get_consciousness_report_with_data(
+        self, system: ProductionConsciousnessSystem
+    ) -> None:
+        """Testa relatório com dados."""
+        agents = ["agent1", "agent2", "agent3"]
+
+        # Faz algumas medições
+        system.measure_phi(agents)
+        system.measure_phi(agents)
+        system.measure_self_awareness(
+            agent_name="Agent1",
+            has_memory=True,
+            has_autonomous_goals=True,
+            self_description_quality=0.8,
+            limitation_awareness=0.7,
+        )
+
+        report = system.get_consciousness_report()
+
+        # Verifica phi_metrics
+        assert report["phi_metrics"]["current"] > 0.0
+        assert report["phi_metrics"]["mean"] > 0.0
+        assert report["phi_metrics"]["history_length"] == 2
+
+        # Verifica self_awareness
+        assert report["self_awareness"]["current"] > 0.0
+        assert report["self_awareness"]["mean"] > 0.0
+        assert report["self_awareness"]["history_length"] == 1
+
+        # Verifica system_metrics
+        assert report["system_metrics"]["total_connections"] >= 0
+        assert report["system_metrics"]["total_feedback_loops"] >= 0
+
+    def test_report_mean_calculation(
+        self, system: ProductionConsciousnessSystem
+    ) -> None:
+        """Testa cálculo de média no relatório."""
+        agents = ["agent1", "agent2"]
+
+        # Faz 3 medições de phi
+        phi1 = system.measure_phi(agents)
+        phi2 = system.measure_phi(agents)
+        phi3 = system.measure_phi(agents)
+
+        report = system.get_consciousness_report()
+
+        # Verifica média
+        expected_mean = (phi1 + phi2 + phi3) / 3
+        assert abs(report["phi_metrics"]["mean"] - expected_mean) < 0.001
+
+
+class TestSaveSnapshot:
+    """Testes para salvamento de snapshots."""
+
+    @pytest.fixture
+    def system(self) -> ProductionConsciousnessSystem:
+        """Fixture para sistema de consciência."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            yield ProductionConsciousnessSystem(metrics_dir=Path(tmpdir))
+
+    def test_save_snapshot_basic(self, system: ProductionConsciousnessSystem) -> None:
+        """Testa salvamento básico de snapshot."""
+        # Faz algumas medições
+        system.measure_phi(["agent1", "agent2"])
+
+        snapshot_path = system.save_snapshot("test_snapshot")
+
+        assert isinstance(snapshot_path, Path)
+
+    def test_save_snapshot_with_data(
+        self, system: ProductionConsciousnessSystem
+    ) -> None:
+        """Testa snapshot com dados."""
+        # Faz medições
+        system.measure_phi(["agent1", "agent2", "agent3"])
+        system.measure_self_awareness(
+            agent_name="TestAgent",
+            has_memory=True,
+            has_autonomous_goals=True,
+            self_description_quality=0.9,
+            limitation_awareness=0.85,
+        )
+
+        snapshot_path = system.save_snapshot("full_snapshot")
+
+        assert isinstance(snapshot_path, Path)
+
+    def test_save_multiple_snapshots(
+        self, system: ProductionConsciousnessSystem
+    ) -> None:
+        """Testa múltiplos snapshots."""
+        labels = ["snapshot1", "snapshot2", "snapshot3"]
+
+        for label in labels:
+            system.measure_phi(["agent1"])
+            snapshot_path = system.save_snapshot(label)
+            assert isinstance(snapshot_path, Path)
