@@ -37,36 +37,6 @@ class TestEncryptedUnconsciousLayer:
         else:
             assert layer.context is None
 
-    def test_quantize_event(self, layer: EncryptedUnconsciousLayer) -> None:
-        """Testa quantização de vetor de evento."""
-        event_vector = np.array([0.1, 0.5, 0.9, -0.3])
-
-        quantized = layer._quantize_event(event_vector)
-
-        assert isinstance(quantized, list)
-        assert len(quantized) == len(event_vector)
-        assert all(isinstance(x, int) for x in quantized)
-
-        # Verify scaling
-        assert quantized[0] == 100  # 0.1 * 1000
-        assert quantized[1] == 500  # 0.5 * 1000
-        assert quantized[2] == 900  # 0.9 * 1000
-        assert quantized[3] == -300  # -0.3 * 1000
-
-    def test_quantize_event_with_floats(self, layer: EncryptedUnconsciousLayer) -> None:
-        """Testa quantização com diferentes valores float."""
-        test_cases = [
-            np.array([0.0]),
-            np.array([1.0]),
-            np.array([-1.0]),
-            np.array([0.123, 0.456, 0.789]),
-        ]
-
-        for event_vector in test_cases:
-            quantized = layer._quantize_event(event_vector)
-            assert len(quantized) == len(event_vector)
-            assert all(isinstance(x, int) for x in quantized)
-
     def test_repress_memory_mock_mode(self) -> None:
         """Testa repressão de memória em modo mock (TenSEAL não disponível)."""
         if TENSEAL_AVAILABLE:
@@ -101,7 +71,7 @@ class TestEncryptedUnconsciousLayer:
         log_entry = layer.audit_log[0]
         assert log_entry["event"] == "repression"
         assert log_entry["accessible_to_ego"] is False
-        assert log_entry["encryption"] == "BFV post-quantum 128-bit"
+        assert log_entry["encryption"] == "CKKS post-quantum 128-bit"
         assert "content_hash" in log_entry
         assert log_entry["metadata"] == metadata
 

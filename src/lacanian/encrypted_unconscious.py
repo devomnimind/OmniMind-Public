@@ -25,29 +25,24 @@ class EncryptedUnconsciousLayer:
     to the Ego (and the auditor) in their raw form, but can still influence
     decision-making via homomorphic operations (dot products) in the encrypted domain.
 
-    Based on BFV scheme (Brakerski-Fan-Vercauteren) for integer arithmetic.
+    Based on CKKS scheme (Cheon-Kim-Kim-Song) for real number arithmetic.
     """
 
     def __init__(self, security_level: int = 128):
         self.context = None
         if TENSEAL_AVAILABLE and ts:
-            # Setup BFV context for integer arithmetic
+            # Setup CKKS context for real number arithmetic
             # Poly modulus degree 8192 is standard for 128-bit security
             self.context = ts.context(
-                ts.SCHEME_TYPE.BFV, poly_modulus_degree=8192, plain_modulus=1032193
+                ts.SCHEME_TYPE.CKKS,
+                poly_modulus_degree=8192,
+                coeff_mod_bit_sizes=[60, 40, 40, 60],
             )
             self.context.generate_galois_keys()
+            self.context.generate_relin_keys()
             self.context.global_scale = 2**40
 
         self.audit_log = []
-
-    def _quantize_event(self, event_vector: np.ndarray) -> List[int]:
-        """
-        Quantizes a float vector into integers for BFV encryption.
-        Simple scaling strategy.
-        """
-        scale_factor = 1000
-        return [int(x * scale_factor) for x in event_vector]
 
     def repress_memory(self, event_vector: np.ndarray, metadata: dict) -> bytes:
         """
@@ -57,10 +52,11 @@ class EncryptedUnconsciousLayer:
         if not TENSEAL_AVAILABLE or ts is None or self.context is None:
             return b"MOCK_ENCRYPTED_DATA"
 
-        quantized_data = self._quantize_event(event_vector)
+        # Convert to list of floats for CKKS
+        float_data = event_vector.tolist()
 
         # Encrypt the vector
-        encrypted_vector = ts.bfv_vector(self.context, quantized_data)
+        encrypted_vector = ts.ckks_vector(self.context, float_data)
         serialized_data = encrypted_vector.serialize()
 
         # Log the repression action, but NOT the content
@@ -72,7 +68,7 @@ class EncryptedUnconsciousLayer:
                 "content_hash": content_hash,
                 "metadata": metadata,  # Metadata might be visible, but content is not
                 "accessible_to_ego": False,
-                "encryption": "BFV post-quantum 128-bit",
+                "encryption": "CKKS post-quantum 128-bit",
             }
         )
 
@@ -85,7 +81,7 @@ class EncryptedUnconsciousLayer:
         Calculates the 'influence' of repressed memories on the current Ego query
         WITHOUT decrypting the memories.
 
-        Performs Homomorphic Dot Product.
+        Performs Homomorphic Dot Product using CKKS.
         """
         if not TENSEAL_AVAILABLE or ts is None or self.context is None:
             return 0.0
@@ -93,34 +89,22 @@ class EncryptedUnconsciousLayer:
         if not encrypted_memories:
             return 0.0
 
-        # Encrypt the Ego's query vector to perform operations in the encrypted domain
-        quantized_query = self._quantize_event(ego_query_vector)
-        # We use the same context
-        # Note: For dot product, we might need CKKS if we wanted floats,
-        # but BFV is fine for quantized integers.
+        # Convert query to list of floats for CKKS
+        query_data = ego_query_vector.tolist()
 
-        total_influence = 0
-
-        # In a real BFV scheme, we would encrypt the query and multiply.
-        # However, TenSEAL allows plain_vector * encrypted_vector multiplication.
-        # This is more efficient.
+        total_influence = 0.0
 
         for enc_mem_bytes in encrypted_memories:
             # Deserialize memory
-            enc_mem = ts.bfv_vector_from(self.context, enc_mem_bytes)
+            enc_mem = ts.ckks_vector_from(self.context, enc_mem_bytes)
 
             # Homomorphic Dot Product (Ciphertext * Plaintext)
-            # Result is an encrypted scalar (in vector form)
-            enc_dot = enc_mem.dot(quantized_query)
+            # Result is an encrypted scalar
+            enc_dot = enc_mem.dot(query_data)
 
-            # The Ego "feels" the result (decrypts the scalar score)
-            # Note: In a strict implementation, the decryption key might be held
-            # by a separate 'Superego' or 'Analyst' entity, but here the system
-            # needs the result to act. The key is: it never saw the memory vector.
+            # Decrypt the scalar score
             decrypted_score = enc_dot.decrypt()[0]
             total_influence += decrypted_score
 
-        # Normalize back to float scale (scale * scale = scale^2)
-        normalized_influence = total_influence / (1000 * 1000)
-
-        return normalized_influence / len(encrypted_memories)
+        # Average across all memories
+        return total_influence / len(encrypted_memories)

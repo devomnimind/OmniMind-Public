@@ -11,9 +11,8 @@ Cobertura de:
 
 from __future__ import annotations
 
-import asyncio
 import time
-from unittest.mock import AsyncMock, Mock, patch
+from unittest.mock import Mock, patch
 
 import pytest
 
