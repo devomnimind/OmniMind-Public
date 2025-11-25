@@ -52,9 +52,7 @@ class CodeReviewWorkflow:
         for iteration in range(1, max_iterations + 1):
             code = self._read_content(str(target_path))
             review = self._evaluate_code(code)
-            history.append(
-                IterationRecord(iteration=iteration, review=review, fixes=[])
-            )
+            history.append(IterationRecord(iteration=iteration, review=review, fixes=[]))
 
             if review["overall_score"] >= min_score:
                 success = True
@@ -292,9 +290,7 @@ class CodeReviewWorkflow:
         return stripped.startswith('"""') or stripped.startswith("'''")
 
     def _add_module_docstring(self, task_description: str, code: str) -> str:
-        docstring = (
-            f'"""Implementação gerada pelo workflow para: {task_description}."""\n\n'
-        )
+        docstring = f'"""Implementação gerada pelo workflow para: {task_description}."""\n\n'
         stripped = code.lstrip()
         return docstring + stripped
 

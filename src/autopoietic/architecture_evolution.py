@@ -38,9 +38,7 @@ class ArchitectureEvolution:
         self._logger = logger.getChild(self.__class__.__name__)
         self._logger.debug("ArchitectureEvolution initialized")
 
-    def propose_evolution(
-        self, existing_specs: Mapping[str, ComponentSpec]
-    ) -> List[ComponentSpec]:
+    def propose_evolution(self, existing_specs: Mapping[str, ComponentSpec]) -> List[ComponentSpec]:
         """Generate evolved specifications from existing ones.
 
         Args:

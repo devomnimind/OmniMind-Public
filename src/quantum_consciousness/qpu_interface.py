@@ -118,9 +118,7 @@ class SimulatorBackend(QPUBackend):
             self.simulator = AerSimulator()
         else:
             self.simulator = None
-            logger.warning(
-                "qiskit_aer_not_available", msg="Install with: pip install qiskit-aer"
-            )
+            logger.warning("qiskit_aer_not_available", msg="Install with: pip install qiskit-aer")
 
         logger.info(
             "simulator_backend_initialized",
@@ -143,9 +141,7 @@ class SimulatorBackend(QPUBackend):
         result = job.result()
         counts = result.get_counts()
 
-        logger.info(
-            "simulator_execution_complete", shots=shots, num_outcomes=len(counts)
-        )
+        logger.info("simulator_execution_complete", shots=shots, num_outcomes=len(counts))
 
         return counts
 
@@ -173,9 +169,7 @@ class IBMQBackend(QPUBackend):
     Falls back to simulator if credentials not available.
     """
 
-    def __init__(
-        self, token: Optional[str] = None, use_least_busy: bool = True
-    ) -> None:
+    def __init__(self, token: Optional[str] = None, use_least_busy: bool = True) -> None:
         """
         Initialize IBMQ backend.
 
@@ -207,18 +201,14 @@ class IBMQBackend(QPUBackend):
             try:
                 from qiskit_ibm_runtime import QiskitRuntimeService
 
-                self.service = QiskitRuntimeService(
-                    channel="ibm_quantum", token=self.token
-                )
+                self.service = QiskitRuntimeService(channel="ibm_quantum", token=self.token)
 
                 if self.use_least_busy:
                     # Get least busy backend
                     backends = self.service.backends(simulator=False, operational=True)
                     if backends:
                         # Sort by queue length
-                        self.ibm_backend = min(
-                            backends, key=lambda b: b.status().pending_jobs
-                        )
+                        self.ibm_backend = min(backends, key=lambda b: b.status().pending_jobs)
                 else:
                     # Get default backend
                     self.ibm_backend = self.service.backend()
@@ -244,9 +234,7 @@ class IBMQBackend(QPUBackend):
             return simulator.execute(circuit, shots)
 
         # Transpile for backend
-        pm = generate_preset_pass_manager(
-            backend=self.ibm_backend, optimization_level=1
-        )
+        pm = generate_preset_pass_manager(backend=self.ibm_backend, optimization_level=1)
         transpiled = pm.run(circuit)
 
         # Execute on quantum hardware
@@ -326,9 +314,7 @@ class QPUInterface:
         logger.info(
             "qpu_interface_initialized",
             preferred=preferred_backend.value,
-            active=(
-                self.active_backend.get_info().name if self.active_backend else "None"
-            ),
+            active=(self.active_backend.get_info().name if self.active_backend else "None"),
             num_backends=len(self.backends),
         )
 
@@ -434,8 +420,6 @@ class QPUInterface:
         self.active_backend = self.backends[backend_type]
         logger.info(
             "backend_switched",
-            new_backend=(
-                self.active_backend.get_info().name if self.active_backend else "None"
-            ),
+            new_backend=(self.active_backend.get_info().name if self.active_backend else "None"),
         )
         return True

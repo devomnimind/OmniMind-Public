@@ -29,9 +29,7 @@ class TestImmutableAuditSystem:
         """Cria instância do sistema de auditoria para testes."""
         return ImmutableAuditSystem(log_dir=temp_audit_dir)
 
-    def test_initialization(
-        self, audit_system: ImmutableAuditSystem, temp_audit_dir: str
-    ) -> None:
+    def test_initialization(self, audit_system: ImmutableAuditSystem, temp_audit_dir: str) -> None:
         """Testa inicialização do sistema."""
         assert audit_system.log_dir == Path(temp_audit_dir)
         assert audit_system.last_hash == "0" * 64 or len(audit_system.last_hash) == 64
@@ -79,9 +77,7 @@ class TestImmutableAuditSystem:
             # Pelo menos 4 eventos (init + 3 testes)
             assert len(lines) >= 4
 
-    def test_verify_chain_integrity_valid(
-        self, audit_system: ImmutableAuditSystem
-    ) -> None:
+    def test_verify_chain_integrity_valid(self, audit_system: ImmutableAuditSystem) -> None:
         """Testa verificação de cadeia íntegra."""
         # Registrar algumas ações
         audit_system.log_action("action1", {"test": 1})
@@ -94,9 +90,7 @@ class TestImmutableAuditSystem:
         assert result["events_verified"] >= 3  # init + 2 ações
         assert "corrupted_events" not in result or len(result["corrupted_events"]) == 0
 
-    def test_verify_chain_integrity_corrupted(
-        self, audit_system: ImmutableAuditSystem
-    ) -> None:
+    def test_verify_chain_integrity_corrupted(self, audit_system: ImmutableAuditSystem) -> None:
         """Testa detecção de cadeia corrompida."""
         # Registrar ações
         audit_system.log_action("action1", {"test": 1})
@@ -270,6 +264,4 @@ def pytest_configure(config: pytest.Config) -> None:
 
 if __name__ == "__main__":
     # Executar testes com pytest
-    pytest.main(
-        [__file__, "-v", "--tb=short", "--cov=audit", "--cov-report=term-missing"]
-    )
+    pytest.main([__file__, "-v", "--tb=short", "--cov=audit", "--cov-report=term-missing"])

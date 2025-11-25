@@ -161,9 +161,9 @@ class SomaticLoop:
             return {"decision_bias": 0.0}
 
         # Calculate average emotional valence
-        avg_valence = sum(
-            em.somatic_marker * em.intensity for em in recent_emotions
-        ) / len(recent_emotions)
+        avg_valence = sum(em.somatic_marker * em.intensity for em in recent_emotions) / len(
+            recent_emotions
+        )
 
         # Calculate risk aversion (how many negative emotions recently)
         negative_count = sum(1 for em in recent_emotions if em.somatic_marker < -0.3)

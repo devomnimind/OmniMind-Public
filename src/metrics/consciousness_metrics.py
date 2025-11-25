@@ -172,9 +172,7 @@ class ConsciousnessMetrics:
         self.feedback_loops: List[FeedbackLoop] = []
         self.history: List[ConsciousnessSnapshot] = []
 
-        logger.info(
-            "consciousness_metrics_initialized", metrics_dir=str(self.metrics_dir)
-        )
+        logger.info("consciousness_metrics_initialized", metrics_dir=str(self.metrics_dir))
 
     def add_connection(self, connection: AgentConnection) -> None:
         """Register an agent connection.
@@ -228,14 +226,12 @@ class ConsciousnessMetrics:
 
         # Count effective connections
         effective_connections = sum(
-            conn.weight * (1.5 if conn.bidirectional else 1.0)
-            for conn in self.connections
+            conn.weight * (1.5 if conn.bidirectional else 1.0) for conn in self.connections
         )
 
         # Count feedback loops weighted by complexity
         effective_loops = sum(
-            len(loop.agents_involved) * (loop.iterations_count + 1)
-            for loop in self.feedback_loops
+            len(loop.agents_involved) * (loop.iterations_count + 1) for loop in self.feedback_loops
         )
 
         # Integration factor: more loops = higher integration
@@ -346,9 +342,7 @@ class ConsciousnessMetrics:
 
         return snapshot_data
 
-    def get_trend(
-        self, window: int = 10
-    ) -> Union[TrendAnalysis, InsufficientDataTrend]:
+    def get_trend(self, window: int = 10) -> Union[TrendAnalysis, InsufficientDataTrend]:
         """Calculate trend in consciousness metrics.
 
         Args:

@@ -45,9 +45,7 @@ class TestGDPRCompliance:
         subject = controller.register_data_subject("user123")
 
         # Grant consent
-        subject.grant_consent(
-            "analytics", [DataCategory.BEHAVIORAL], RetentionPeriod.SIX_MONTHS
-        )
+        subject.grant_consent("analytics", [DataCategory.BEHAVIORAL], RetentionPeriod.SIX_MONTHS)
 
         # Check valid consent
         assert subject.has_consent("analytics", DataCategory.BEHAVIORAL)
@@ -117,9 +115,7 @@ class TestGDPRCompliance:
         subject = controller.register_data_subject("user123", "user@example.com")
 
         # Grant consent and process data
-        subject.grant_consent(
-            "analytics", [DataCategory.BEHAVIORAL], RetentionPeriod.SIX_MONTHS
-        )
+        subject.grant_consent("analytics", [DataCategory.BEHAVIORAL], RetentionPeriod.SIX_MONTHS)
         controller.process_data(
             "user123",
             DataProcessingPurpose.LEGITIMATE_INTERESTS,
@@ -141,9 +137,7 @@ class TestGDPRCompliance:
         subject = controller.register_data_subject("user123", "user@example.com")
 
         # Grant consent and process data
-        subject.grant_consent(
-            "analytics", [DataCategory.BEHAVIORAL], RetentionPeriod.SIX_MONTHS
-        )
+        subject.grant_consent("analytics", [DataCategory.BEHAVIORAL], RetentionPeriod.SIX_MONTHS)
         controller.process_data(
             "user123",
             DataProcessingPurpose.LEGITIMATE_INTERESTS,
@@ -167,15 +161,11 @@ class TestGDPRCompliance:
         subject = controller.register_data_subject("user123")
 
         # Grant consent with short retention
-        subject.grant_consent(
-            "analytics", [DataCategory.BEHAVIORAL], RetentionPeriod.SESSION_ONLY
-        )
+        subject.grant_consent("analytics", [DataCategory.BEHAVIORAL], RetentionPeriod.SESSION_ONLY)
 
         # Manually expire the consent by setting old date
         old_date = datetime.now(timezone.utc) - timedelta(hours=25)
-        subject.consents[list(subject.consents.keys())[0]][
-            "expires_at"
-        ] = old_date.isoformat()
+        subject.consents[list(subject.consents.keys())[0]]["expires_at"] = old_date.isoformat()
 
         # Run retention enforcement
         cleaned_count = controller.enforce_data_retention()

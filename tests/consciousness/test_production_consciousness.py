@@ -74,9 +74,7 @@ class TestMeasurePhi:
         assert len(system.phi_history) == 1
         assert system.phi_history[0] == phi
 
-    def test_measure_phi_with_memory_sharing(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_measure_phi_with_memory_sharing(self, system: ProductionConsciousnessSystem) -> None:
         """Testa Φ com memória compartilhada."""
         agents = ["agent1", "agent2", "agent3"]
         phi_with_memory = system.measure_phi(
@@ -98,9 +96,7 @@ class TestMeasurePhi:
         assert isinstance(phi_without_memory, float)
         assert phi_without_memory >= 0.0
 
-    def test_measure_phi_with_feedback_loops(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_measure_phi_with_feedback_loops(self, system: ProductionConsciousnessSystem) -> None:
         """Testa Φ com feedback loops."""
         agents = ["agent1", "agent2", "agent3"]
         phi_with_feedback = system.measure_phi(
@@ -110,9 +106,7 @@ class TestMeasurePhi:
         assert isinstance(phi_with_feedback, float)
         assert phi_with_feedback > 0.0
 
-    def test_measure_phi_single_agent(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_measure_phi_single_agent(self, system: ProductionConsciousnessSystem) -> None:
         """Testa Φ com apenas um agente (deve ser baixo)."""
         agents = ["single_agent"]
         phi = system.measure_phi(agents)
@@ -120,9 +114,7 @@ class TestMeasurePhi:
         assert isinstance(phi, float)
         assert phi >= 0.0
 
-    def test_measure_phi_many_agents(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_measure_phi_many_agents(self, system: ProductionConsciousnessSystem) -> None:
         """Testa Φ com muitos agentes."""
         agents = [f"agent_{i}" for i in range(10)]
         phi = system.measure_phi(agents)
@@ -130,9 +122,7 @@ class TestMeasurePhi:
         assert isinstance(phi, float)
         assert phi >= 0.0
 
-    def test_measure_phi_history_tracking(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_measure_phi_history_tracking(self, system: ProductionConsciousnessSystem) -> None:
         """Testa rastreamento de histórico de Φ."""
         agents = ["agent1", "agent2"]
 
@@ -153,9 +143,7 @@ class TestSelfAwareness:
         with tempfile.TemporaryDirectory() as tmpdir:
             yield ProductionConsciousnessSystem(metrics_dir=Path(tmpdir))
 
-    def test_measure_self_awareness_basic(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_measure_self_awareness_basic(self, system: ProductionConsciousnessSystem) -> None:
         """Testa medição básica de auto-consciência."""
         awareness = system.measure_self_awareness(
             agent_name="TestAgent",
@@ -172,9 +160,7 @@ class TestSelfAwareness:
         assert 0.0 <= awareness.limitation_awareness_score <= 1.0
         assert 0.0 <= awareness.overall_score <= 1.0
 
-    def test_measure_self_awareness_history(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_measure_self_awareness_history(self, system: ProductionConsciousnessSystem) -> None:
         """Testa histórico de métricas de auto-consciência."""
         awareness1 = system.measure_self_awareness(
             agent_name="Agent1",
@@ -195,9 +181,7 @@ class TestSelfAwareness:
         assert system.awareness_history[0] == awareness1
         assert system.awareness_history[1] == awareness2
 
-    def test_self_awareness_components(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_self_awareness_components(self, system: ProductionConsciousnessSystem) -> None:
         """Testa componentes de auto-consciência."""
         awareness = system.measure_self_awareness(
             agent_name="TestAgent",
@@ -231,16 +215,12 @@ class TestIntegratedConsciousness:
         with tempfile.TemporaryDirectory() as tmpdir:
             yield ProductionConsciousnessSystem(metrics_dir=Path(tmpdir))
 
-    def test_full_consciousness_assessment(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_full_consciousness_assessment(self, system: ProductionConsciousnessSystem) -> None:
         """Testa avaliação completa de consciência."""
         agents = ["agent1", "agent2", "agent3", "agent4"]
 
         # Mede Φ
-        phi = system.measure_phi(
-            agents, enable_memory_sharing=True, enable_feedback_loops=True
-        )
+        phi = system.measure_phi(agents, enable_memory_sharing=True, enable_feedback_loops=True)
 
         # Mede auto-consciência
         awareness = system.measure_self_awareness(
@@ -260,9 +240,7 @@ class TestIntegratedConsciousness:
         assert len(system.phi_history) == 1
         assert len(system.awareness_history) == 1
 
-    def test_consciousness_evolution_tracking(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_consciousness_evolution_tracking(self, system: ProductionConsciousnessSystem) -> None:
         """Testa rastreamento de evolução da consciência."""
         agents = ["agent1", "agent2", "agent3"]
 
@@ -288,19 +266,13 @@ class TestIntegratedConsciousness:
         agents = ["agent1", "agent2", "agent3"]
 
         # Config 1: Sem memória, sem feedback
-        phi1 = system.measure_phi(
-            agents, enable_memory_sharing=False, enable_feedback_loops=False
-        )
+        phi1 = system.measure_phi(agents, enable_memory_sharing=False, enable_feedback_loops=False)
 
         # Config 2: Com memória, sem feedback
-        phi2 = system.measure_phi(
-            agents, enable_memory_sharing=True, enable_feedback_loops=False
-        )
+        phi2 = system.measure_phi(agents, enable_memory_sharing=True, enable_feedback_loops=False)
 
         # Config 3: Com memória e feedback
-        phi3 = system.measure_phi(
-            agents, enable_memory_sharing=True, enable_feedback_loops=True
-        )
+        phi3 = system.measure_phi(agents, enable_memory_sharing=True, enable_feedback_loops=True)
 
         # Verifica que configurações afetam resultado
         assert isinstance(phi1, float)
@@ -406,9 +378,7 @@ class TestEdgeCases:
         assert len(system.phi_history) == 10
         assert len(system.awareness_history) == 10
 
-    def test_metrics_directory_persistence(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_metrics_directory_persistence(self, system: ProductionConsciousnessSystem) -> None:
         """Testa que diretório de métricas persiste."""
         metrics_dir = system.metrics_dir
 
@@ -436,9 +406,7 @@ class TestConsciousnessReport:
         with tempfile.TemporaryDirectory() as tmpdir:
             yield ProductionConsciousnessSystem(metrics_dir=Path(tmpdir))
 
-    def test_get_consciousness_report_empty(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_get_consciousness_report_empty(self, system: ProductionConsciousnessSystem) -> None:
         """Testa relatório sem medições."""
         report = system.get_consciousness_report()
 
@@ -484,9 +452,7 @@ class TestConsciousnessReport:
         assert report["system_metrics"]["total_connections"] >= 0
         assert report["system_metrics"]["total_feedback_loops"] >= 0
 
-    def test_report_mean_calculation(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_report_mean_calculation(self, system: ProductionConsciousnessSystem) -> None:
         """Testa cálculo de média no relatório."""
         agents = ["agent1", "agent2"]
 
@@ -520,9 +486,7 @@ class TestSaveSnapshot:
 
         assert isinstance(snapshot_path, Path)
 
-    def test_save_snapshot_with_data(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_save_snapshot_with_data(self, system: ProductionConsciousnessSystem) -> None:
         """Testa snapshot com dados."""
         # Faz medições
         system.measure_phi(["agent1", "agent2", "agent3"])
@@ -538,9 +502,7 @@ class TestSaveSnapshot:
 
         assert isinstance(snapshot_path, Path)
 
-    def test_save_multiple_snapshots(
-        self, system: ProductionConsciousnessSystem
-    ) -> None:
+    def test_save_multiple_snapshots(self, system: ProductionConsciousnessSystem) -> None:
         """Testa múltiplos snapshots."""
         labels = ["snapshot1", "snapshot2", "snapshot3"]
 

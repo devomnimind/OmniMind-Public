@@ -49,9 +49,7 @@ class GraphQLSupabaseHelper:
         if not config.service_role_key:
             raise GraphQLSupabaseError("Service role key required for GraphQL helper")
         self.config = config
-        self.session: GraphQLSession = session or cast(
-            GraphQLSession, requests.Session()
-        )
+        self.session: GraphQLSession = session or cast(GraphQLSession, requests.Session())
         self.endpoint = f"{config.url.rstrip('/')}/graphql/v1"
         self.headers = {
             "apikey": config.service_role_key,
@@ -61,9 +59,7 @@ class GraphQLSupabaseHelper:
         self.max_retries = max_retries
         self.backoff_factor = backoff_factor
 
-    def _post(
-        self, query: str, variables: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
+    def _post(self, query: str, variables: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         payload = {"query": query, "variables": variables or {}}
         logger.debug("GraphQL request payload %s", payload)
         attempt = 0
@@ -144,9 +140,7 @@ query CollectionPage($first: Int!, $after: String) {{
         page = 0
         while True:
             page += 1
-            page_data = self.fetch_page(
-                collection, node_fields, first=page_size, after=after
-            )
+            page_data = self.fetch_page(collection, node_fields, first=page_size, after=after)
             for node in page_data.nodes:
                 yield node
                 fetched += 1
@@ -164,6 +158,4 @@ query CollectionPage($first: Int!, $after: String) {{
         page_size: int = 50,
         max_pages: Optional[int] = None,
     ) -> List[Dict[str, Any]]:
-        return list(
-            self.iterate_collection(collection, node_fields, page_size, max_pages)
-        )
+        return list(self.iterate_collection(collection, node_fields, page_size, max_pages))

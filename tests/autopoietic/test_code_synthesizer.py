@@ -9,9 +9,7 @@ from src.autopoietic.code_synthesizer import CodeSynthesizer, ComponentSpec
 
 
 def test_synthesize_single_spec() -> None:
-    spec = ComponentSpec(
-        name="example_component", type="synthesizer", config={"key": "value"}
-    )
+    spec = ComponentSpec(name="example_component", type="synthesizer", config={"key": "value"})
     synthesizer = CodeSynthesizer()
     result = synthesizer.synthesize([spec])
     assert "example_component" in result

@@ -314,8 +314,7 @@ class MemoryLeakDetector:
             "allocations_checked": self.allocation_count,
             "potential_leaks": self.potential_leaks,
             "live_objects_by_type": {
-                obj_type.__name__: count
-                for obj_type, count in self.object_creation_count.items()
+                obj_type.__name__: count for obj_type, count in self.object_creation_count.items()
             },
         }
 
@@ -523,8 +522,7 @@ class MemoryOptimizer:
             percent = stats.get("current_percent", 0)
             if percent > 75:
                 suggestions.append(
-                    f"High memory usage ({percent:.1f}%). "
-                    "Review and optimize data structures."
+                    f"High memory usage ({percent:.1f}%). " "Review and optimize data structures."
                 )
 
         # Check for leaks
@@ -537,8 +535,6 @@ class MemoryOptimizer:
 
         # Check GC
         if "gc_threshold_tuned" not in self.optimizations_applied:
-            suggestions.append(
-                "Consider optimizing GC thresholds for better performance"
-            )
+            suggestions.append("Consider optimizing GC thresholds for better performance")
 
         return suggestions

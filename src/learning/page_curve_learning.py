@@ -143,8 +143,7 @@ class PageCurveLearner:
                 self.page_time_epoch = self.current_epoch
                 self._enable_information_recovery_mode()
                 logger.info(
-                    f"Page time reached at epoch {self.current_epoch} "
-                    f"(entropy={entropy:.4f})"
+                    f"Page time reached at epoch {self.current_epoch} " f"(entropy={entropy:.4f})"
                 )
 
         # Update phase
@@ -186,13 +185,9 @@ class PageCurveLearner:
         data_raw: List[float] = []
         if "weights" in model_state and isinstance(model_state["weights"], Sequence):
             data_raw = [float(x) for x in model_state["weights"]]
-        elif "parameters" in model_state and isinstance(
-            model_state["parameters"], Sequence
-        ):
+        elif "parameters" in model_state and isinstance(model_state["parameters"], Sequence):
             data_raw = [float(x) for x in model_state["parameters"]]
-        elif "activations" in model_state and isinstance(
-            model_state["activations"], Sequence
-        ):
+        elif "activations" in model_state and isinstance(model_state["activations"], Sequence):
             data_raw = [float(x) for x in model_state["activations"]]
         else:
             # Default deterministic fallback using a seeded random generator
@@ -422,9 +417,7 @@ class PageCurveLearner:
         return {
             "total_epochs": len(self.entropy_history),
             "current_epoch": self.current_epoch,
-            "current_entropy": (
-                self.entropy_history[-1] if self.entropy_history else 0.0
-            ),
+            "current_entropy": (self.entropy_history[-1] if self.entropy_history else 0.0),
             "max_entropy": self.max_entropy_seen,
             "current_phase": self.current_phase.value,
             "page_time_detected": self.page_time_detected,

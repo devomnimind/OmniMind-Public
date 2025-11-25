@@ -55,12 +55,8 @@ class FirecrackerSandbox:
         kernel_env = os.environ.get("OMNIMIND_FIRECRACKER_KERNEL", "")
         rootfs_env = os.environ.get("OMNIMIND_FIRECRACKER_ROOTFS", "")
 
-        self.kernel_path = (
-            Path(kernel_path or kernel_env) if (kernel_path or kernel_env) else None
-        )
-        self.rootfs_path = (
-            Path(rootfs_path or rootfs_env) if (rootfs_path or rootfs_env) else None
-        )
+        self.kernel_path = Path(kernel_path or kernel_env) if (kernel_path or kernel_env) else None
+        self.rootfs_path = Path(rootfs_path or rootfs_env) if (rootfs_path or rootfs_env) else None
 
         self.enabled = enabled and bool(
             self.kernel_path
@@ -117,9 +113,7 @@ class FirecrackerSandbox:
         else:
             return str(payload)[:50] + "..." if len(str(payload)) > 50 else str(payload)
 
-    def _record_event(
-        self, payload_summary: str, result: SandboxResult, sandbox_name: str
-    ) -> None:
+    def _record_event(self, payload_summary: str, result: SandboxResult, sandbox_name: str) -> None:
         event = SandboxEvent(
             timestamp=datetime.now(timezone.utc).isoformat(),
             sandbox=sandbox_name,

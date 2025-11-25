@@ -124,9 +124,7 @@ class TestValueSystem:
         system = ValueSystem()
 
         v1 = system.add_value("Learning", "Desc", ValueCategory.GROWTH, importance=0.9)
-        v2 = system.add_value(
-            "Teaching", "Desc", ValueCategory.CONTRIBUTION, importance=0.8
-        )
+        v2 = system.add_value("Teaching", "Desc", ValueCategory.CONTRIBUTION, importance=0.8)
 
         alignment = system.assess_value_alignment(
             "Taught a workshop",
@@ -197,12 +195,8 @@ class TestGoalHierarchy:
         hierarchy = GoalHierarchy()
 
         parent = hierarchy.add_goal("Parent", importance=0.9)
-        child1 = hierarchy.add_goal(
-            "Child 1", importance=0.7, parent_goal_id=parent.goal_id
-        )
-        child2 = hierarchy.add_goal(
-            "Child 2", importance=0.6, parent_goal_id=parent.goal_id
-        )
+        child1 = hierarchy.add_goal("Child 1", importance=0.7, parent_goal_id=parent.goal_id)
+        child2 = hierarchy.add_goal("Child 2", importance=0.6, parent_goal_id=parent.goal_id)
 
         sub_goals = hierarchy.get_sub_goals(parent.goal_id)
 
@@ -225,12 +219,8 @@ class TestGoalHierarchy:
         hierarchy = GoalHierarchy()
 
         parent = hierarchy.add_goal("Parent", importance=0.9)
-        child1 = hierarchy.add_goal(
-            "Child 1", importance=0.7, parent_goal_id=parent.goal_id
-        )
-        child2 = hierarchy.add_goal(
-            "Child 2", importance=0.6, parent_goal_id=parent.goal_id
-        )
+        child1 = hierarchy.add_goal("Child 1", importance=0.7, parent_goal_id=parent.goal_id)
+        child2 = hierarchy.add_goal("Child 2", importance=0.6, parent_goal_id=parent.goal_id)
 
         hierarchy.update_goal_progress(child1.goal_id, 0.8)
         hierarchy.update_goal_progress(child2.goal_id, 0.6)
@@ -305,12 +295,8 @@ class TestNarrativeConstructor:
         """Test assessing narrative coherence."""
         constructor = NarrativeConstructor()
 
-        constructor.add_event(
-            "Event 1", "Meaning 1", connected_values=["v1"], significance=0.7
-        )
-        constructor.add_event(
-            "Event 2", "Meaning 2", connected_values=["v2"], significance=0.8
-        )
+        constructor.add_event("Event 1", "Meaning 1", connected_values=["v1"], significance=0.7)
+        constructor.add_event("Event 2", "Meaning 2", connected_values=["v2"], significance=0.8)
 
         coherence = constructor.assess_narrative_coherence()
 
@@ -381,17 +367,11 @@ class TestMeaningMaker:
         maker = MeaningMaker()
 
         # Add some values and goals
-        v1 = maker.values.add_value(
-            "Growth", "Desc", ValueCategory.GROWTH, importance=0.9
-        )
-        v2 = maker.values.add_value(
-            "Purpose", "Desc", ValueCategory.ACHIEVEMENT, importance=0.8
-        )
+        v1 = maker.values.add_value("Growth", "Desc", ValueCategory.GROWTH, importance=0.9)
+        v2 = maker.values.add_value("Purpose", "Desc", ValueCategory.ACHIEVEMENT, importance=0.8)
 
         maker.goals.add_goal("Master AI", importance=0.9, aligned_values=[v1.value_id])
-        maker.goals.add_goal(
-            "Help others", importance=0.8, aligned_values=[v2.value_id]
-        )
+        maker.goals.add_goal("Help others", importance=0.8, aligned_values=[v2.value_id])
 
         maker.narrative.add_event(
             "Important event",
@@ -531,9 +511,7 @@ class TestIntegration:
         """Test that narrative construction increases coherence."""
         maker = MeaningMaker()
 
-        v1 = maker.values.add_value(
-            "Value1", "Desc", ValueCategory.GROWTH, importance=0.8
-        )
+        v1 = maker.values.add_value("Value1", "Desc", ValueCategory.GROWTH, importance=0.8)
 
         # Without narrative
         profile_before = maker.assess_life_meaning()

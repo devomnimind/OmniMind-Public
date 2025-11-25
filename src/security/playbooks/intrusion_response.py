@@ -63,11 +63,7 @@ class IntrusionPlaybook:
             if hasattr(event, "details") and isinstance(event.details, dict)
             else None
         )
-        remote = (
-            remote or event.details.get("source")
-            if hasattr(event, "details")
-            else "unknown"
-        )
+        remote = remote or event.details.get("source") if hasattr(event, "details") else "unknown"
         remote = remote or "0.0.0.0"
         command = ["sudo", "ufw", "deny", "from", str(remote)]
         if not command_available(command[0]):
@@ -102,9 +98,7 @@ class IntrusionPlaybook:
         path = f"/tmp/intrusion_{timestamp}.json"
         payload = {
             "event": getattr(event, "event_type", "intrusion"),
-            "captured_at": datetime.now(timezone.utc)
-            .isoformat()
-            .replace("+00:00", "Z"),
+            "captured_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             "evidence": evidence,
         }
         await asyncio.to_thread(self._write_artifact, path, payload)

@@ -68,9 +68,7 @@ class IssuePrediction:
             "metric_type": self.metric_type.value,
             "severity": self.severity.value,
             "probability": self.probability,
-            "predicted_time": (
-                self.predicted_time.isoformat() if self.predicted_time else None
-            ),
+            "predicted_time": (self.predicted_time.isoformat() if self.predicted_time else None),
             "description": self.description,
             "recommended_actions": self.recommended_actions,
             "confidence": self.confidence,
@@ -144,9 +142,7 @@ class TimeSeriesAnalyzer:
         slope = (n * xy_sum - x_sum * y_sum) / denominator
         return float(slope)
 
-    def detect_anomaly(
-        self, metric_type: MetricType, threshold: float = 2.0
-    ) -> Tuple[bool, float]:
+    def detect_anomaly(self, metric_type: MetricType, threshold: float = 2.0) -> Tuple[bool, float]:
         """Detect anomalies using Z-score method.
 
         Args:
@@ -302,17 +298,13 @@ class IssuePredictionEngine:
         self._prediction_history.extend(predictions)
         return predictions
 
-    def _predict_resource_exhaustion(
-        self, metric_type: MetricType
-    ) -> Optional[IssuePrediction]:
+    def _predict_resource_exhaustion(self, metric_type: MetricType) -> Optional[IssuePrediction]:
         """Predict resource exhaustion for a metric."""
         threshold = self._thresholds.get(metric_type)
         if threshold is None:
             return None
 
-        predicted_time = self.analyzer.predict_resource_exhaustion(
-            metric_type, threshold
-        )
+        predicted_time = self.analyzer.predict_resource_exhaustion(metric_type, threshold)
         if predicted_time is None:
             return None
 
@@ -323,11 +315,7 @@ class IssuePredictionEngine:
         if hours_until > 24:
             return None
 
-        severity = (
-            PredictionSeverity.CRITICAL
-            if hours_until < 1
-            else PredictionSeverity.WARNING
-        )
+        severity = PredictionSeverity.CRITICAL if hours_until < 1 else PredictionSeverity.WARNING
         probability = min(0.9, 0.5 + (24 - hours_until) / 48)
 
         stats = self.analyzer.get_statistics(metric_type)
@@ -363,9 +351,7 @@ class IssuePredictionEngine:
         if not is_anomaly:
             return None
 
-        severity = (
-            PredictionSeverity.CRITICAL if z_score > 4.0 else PredictionSeverity.WARNING
-        )
+        severity = PredictionSeverity.CRITICAL if z_score > 4.0 else PredictionSeverity.WARNING
         probability = min(0.95, z_score / 5.0)
 
         stats = self.analyzer.get_statistics(metric_type)

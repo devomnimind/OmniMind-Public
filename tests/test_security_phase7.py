@@ -72,9 +72,7 @@ def test_generate_report_includes_summary(security_agent: SecurityAgent) -> None
     assert "SUMMARY" in report
 
 
-def test_audit_action_creates_log(
-    security_agent: SecurityAgent, tmp_path: Path
-) -> None:
+def test_audit_action_creates_log(security_agent: SecurityAgent, tmp_path: Path) -> None:
     audit_log = tmp_path / "audit" / "tools.log"
     security_agent.audit_log_path = audit_log
     audit_log.parent.mkdir(parents=True, exist_ok=True)

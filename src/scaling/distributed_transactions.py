@@ -89,15 +89,11 @@ class DistributedTransaction:
 
     def all_prepared(self) -> bool:
         """Check if all participants are prepared."""
-        return all(
-            p.state == ParticipantState.PREPARED for p in self.participants.values()
-        )
+        return all(p.state == ParticipantState.PREPARED for p in self.participants.values())
 
     def any_failed(self) -> bool:
         """Check if any participant failed."""
-        return any(
-            p.state == ParticipantState.FAILED for p in self.participants.values()
-        )
+        return any(p.state == ParticipantState.FAILED for p in self.participants.values())
 
     def is_expired(self) -> bool:
         """Check if transaction has expired."""
@@ -110,9 +106,7 @@ class DistributedTransaction:
             "phase": self.phase.value,
             "participants": {pid: p.to_dict() for pid, p in self.participants.items()},
             "started_at": self.started_at.isoformat(),
-            "completed_at": (
-                self.completed_at.isoformat() if self.completed_at else None
-            ),
+            "completed_at": (self.completed_at.isoformat() if self.completed_at else None),
             "timeout_seconds": self.timeout.total_seconds(),
             "data": self.data,
         }
@@ -124,9 +118,7 @@ class TwoPhaseCommitCoordinator:
     def __init__(self) -> None:
         """Initialize coordinator."""
         self._transactions: Dict[str, DistributedTransaction] = {}
-        self._prepare_handlers: Dict[
-            str, Callable[[str, Dict[str, Any]], Awaitable[bool]]
-        ] = {}
+        self._prepare_handlers: Dict[str, Callable[[str, Dict[str, Any]], Awaitable[bool]]] = {}
         self._commit_handlers: Dict[str, Callable[[str], Awaitable[bool]]] = {}
         self._abort_handlers: Dict[str, Callable[[str], Awaitable[None]]] = {}
 
@@ -219,9 +211,7 @@ class TwoPhaseCommitCoordinator:
                     participant.error = "No prepare handler registered"
                     continue
 
-                prepare_tasks.append(
-                    self._prepare_participant(transaction, participant)
-                )
+                prepare_tasks.append(self._prepare_participant(transaction, participant))
 
             # Wait for all prepare responses
             if prepare_tasks:
@@ -291,9 +281,7 @@ class TwoPhaseCommitCoordinator:
             else:
                 participant.state = ParticipantState.FAILED
                 participant.error = "Prepare returned False"
-                logger.warning(
-                    f"Participant {participant.participant_id} failed to prepare"
-                )
+                logger.warning(f"Participant {participant.participant_id} failed to prepare")
 
         except asyncio.TimeoutError:
             participant.state = ParticipantState.FAILED
@@ -322,9 +310,7 @@ class TwoPhaseCommitCoordinator:
                 participant.commit_timestamp = datetime.now()
                 logger.debug(f"Participant {participant.participant_id} committed")
             else:
-                logger.warning(
-                    f"Participant {participant.participant_id} commit returned False"
-                )
+                logger.warning(f"Participant {participant.participant_id} commit returned False")
 
         except Exception as e:
             logger.error(f"Participant {participant.participant_id} commit error: {e}")
@@ -490,9 +476,7 @@ class SagaCoordinator:
         steps = self._sagas[saga_id]
         data = self._saga_data[saga_id]
 
-        logger.warning(
-            f"Saga {saga_id}: Compensating {failed_step_index} completed steps"
-        )
+        logger.warning(f"Saga {saga_id}: Compensating {failed_step_index} completed steps")
 
         # Compensate in reverse order
         for i in range(failed_step_index - 1, -1, -1):

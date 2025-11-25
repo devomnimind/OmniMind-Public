@@ -71,9 +71,7 @@ class TestOrchestratorAgent:
         """Testa tratamento de erro na delegação."""
         agent = OrchestratorAgent(config_path="config/agent_config.yaml")
 
-        with patch.object(
-            agent, "delegate_task", side_effect=Exception("Delegation failed")
-        ):
+        with patch.object(agent, "delegate_task", side_effect=Exception("Delegation failed")):
             try:
                 agent.delegate_task("task", "agent")
             except Exception:

@@ -264,9 +264,7 @@ class TestLegacyPlanner:
             )
 
         # Only 5 seconds available
-        prioritized = planner.prioritize_for_preservation(
-            time_available=timedelta(seconds=5)
-        )
+        prioritized = planner.prioritize_for_preservation(time_available=timedelta(seconds=5))
 
         # Should return only top 5
         assert len(prioritized) <= 5
@@ -498,9 +496,7 @@ class TestIntegration:
 
         # Get prioritized items for limited time
         remaining = simulator.temporal.get_time_remaining()
-        prioritized = simulator.legacy.prioritize_for_preservation(
-            time_available=remaining
-        )
+        prioritized = simulator.legacy.prioritize_for_preservation(time_available=remaining)
 
         # Should prioritize highest importance items
         assert len(prioritized) <= 30  # Limited by time

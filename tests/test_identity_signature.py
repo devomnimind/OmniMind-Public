@@ -280,9 +280,7 @@ class TestAgentIdentity:
 
         initial_score = identity.reputation.overall_score
 
-        new_score = identity.update_reputation(
-            success=True, quality_score=0.9, autonomy_level=0.8
-        )
+        new_score = identity.update_reputation(success=True, quality_score=0.9, autonomy_level=0.8)
 
         assert new_score > initial_score
         assert identity.reputation.total_tasks == 1

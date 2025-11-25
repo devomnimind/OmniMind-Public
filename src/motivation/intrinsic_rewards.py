@@ -46,9 +46,7 @@ class TaskOutcome:
     task_id: str
     output: Any
     reflection: str
-    timestamp: str = field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat()
-    )
+    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 
@@ -84,9 +82,7 @@ class IntrinsicMotivationEngine:
         self.satisfaction_metrics = SatisfactionMetrics()
         self.satisfaction_threshold = satisfaction_threshold
         self.improvement_threshold = improvement_threshold
-        self.state_file = (
-            state_file or Path.home() / ".omnimind" / "motivation_state.json"
-        )
+        self.state_file = state_file or Path.home() / ".omnimind" / "motivation_state.json"
         self.state_file.parent.mkdir(parents=True, exist_ok=True)
 
         # Load existing state if available
@@ -126,10 +122,7 @@ class IntrinsicMotivationEngine:
 
         # Calculate weighted satisfaction
         satisfaction: float = (
-            quality_score * 0.4
-            + correction_score * 0.3
-            + depth_score * 0.2
-            + autonomy_score * 0.1
+            quality_score * 0.4 + correction_score * 0.3 + depth_score * 0.2 + autonomy_score * 0.1
         )
 
         # Update metrics
@@ -276,12 +269,8 @@ class IntrinsicMotivationEngine:
             "consequences",
         ]
 
-        meta_count = sum(
-            1 for indicator in meta_indicators if indicator in reflection_lower
-        )
-        deep_count = sum(
-            1 for indicator in deep_indicators if indicator in reflection_lower
-        )
+        meta_count = sum(1 for indicator in meta_indicators if indicator in reflection_lower)
+        deep_count = sum(1 for indicator in deep_indicators if indicator in reflection_lower)
 
         # Base score from indicators
         score = min(1.0, (meta_count * 0.1 + deep_count * 0.12))
@@ -294,9 +283,7 @@ class IntrinsicMotivationEngine:
             score = min(1.0, score + 0.1)
 
         # Structure bonus (multiple sentences/paragraphs suggest organization)
-        sentence_count = (
-            reflection.count(".") + reflection.count("!") + reflection.count("?")
-        )
+        sentence_count = reflection.count(".") + reflection.count("!") + reflection.count("?")
         if sentence_count > 3:
             score = min(1.0, score + 0.1)
 
@@ -342,9 +329,7 @@ class IntrinsicMotivationEngine:
         suggestions = self._generate_improvement_suggestions(task, satisfaction)
         logger.info(f"Improvement suggestions: {suggestions}")
 
-    def _generate_improvement_suggestions(
-        self, task: str, satisfaction: float
-    ) -> List[str]:
+    def _generate_improvement_suggestions(self, task: str, satisfaction: float) -> List[str]:
         """
         Generate suggestions for improvement based on low satisfaction.
 
@@ -364,9 +349,7 @@ class IntrinsicMotivationEngine:
         avg_autonomy = self.satisfaction_metrics.get_average("autonomy_level")
 
         if avg_quality < 0.6:
-            suggestions.append(
-                "Focus on output quality: increase test coverage and validation"
-            )
+            suggestions.append("Focus on output quality: increase test coverage and validation")
         if avg_correction < 0.5:
             suggestions.append(
                 "Improve self-correction: add more validation steps during execution"
@@ -374,14 +357,10 @@ class IntrinsicMotivationEngine:
         if avg_depth < 0.5:
             suggestions.append("Deepen reflection: analyze root causes and patterns")
         if avg_autonomy < 0.6:
-            suggestions.append(
-                "Increase autonomy: reduce dependency on external guidance"
-            )
+            suggestions.append("Increase autonomy: reduce dependency on external guidance")
 
         if not suggestions:
-            suggestions.append(
-                "Continue current approach while monitoring for improvements"
-            )
+            suggestions.append("Continue current approach while monitoring for improvements")
 
         return suggestions
 
@@ -450,15 +429,9 @@ class IntrinsicMotivationEngine:
         """
         return {
             "self_awareness_score": self.self_awareness_score,
-            "average_quality": self.satisfaction_metrics.get_average(
-                "task_completion_quality"
-            ),
-            "average_correction": self.satisfaction_metrics.get_average(
-                "self_correction_rate"
-            ),
+            "average_quality": self.satisfaction_metrics.get_average("task_completion_quality"),
+            "average_correction": self.satisfaction_metrics.get_average("self_correction_rate"),
             "average_depth": self.satisfaction_metrics.get_average("learning_depth"),
             "average_autonomy": self.satisfaction_metrics.get_average("autonomy_level"),
-            "total_tasks_evaluated": len(
-                self.satisfaction_metrics.task_completion_quality
-            ),
+            "total_tasks_evaluated": len(self.satisfaction_metrics.task_completion_quality),
         }

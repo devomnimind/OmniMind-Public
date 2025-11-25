@@ -256,9 +256,7 @@ class APIDocumentationGenerator:
                         },
                     }
                 },
-                examples={
-                    "success": {"response": {"status": "healthy", "version": "1.0.0"}}
-                },
+                examples={"success": {"response": {"status": "healthy", "version": "1.0.0"}}},
             )
         )
 
@@ -296,17 +294,13 @@ class APIDocumentationGenerator:
                     "200": {
                         "description": "Task submitted successfully",
                         "content": {
-                            "application/json": {
-                                "schema": {"$ref": "#/components/schemas/Task"}
-                            }
+                            "application/json": {"schema": {"$ref": "#/components/schemas/Task"}}
                         },
                     },
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/json": {
-                                "schema": {"$ref": "#/components/schemas/Error"}
-                            }
+                            "application/json": {"schema": {"$ref": "#/components/schemas/Error"}}
                         },
                     },
                 },
@@ -392,17 +386,13 @@ class APIDocumentationGenerator:
                     "200": {
                         "description": "Task details",
                         "content": {
-                            "application/json": {
-                                "schema": {"$ref": "#/components/schemas/Task"}
-                            }
+                            "application/json": {"schema": {"$ref": "#/components/schemas/Task"}}
                         },
                     },
                     "404": {
                         "description": "Task not found",
                         "content": {
-                            "application/json": {
-                                "schema": {"$ref": "#/components/schemas/Error"}
-                            }
+                            "application/json": {"schema": {"$ref": "#/components/schemas/Error"}}
                         },
                     },
                 },
@@ -469,9 +459,7 @@ class APIDocumentationGenerator:
                             "application/json": {
                                 "schema": {
                                     "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/SecurityEvent"
-                                    },
+                                    "items": {"$ref": "#/components/schemas/SecurityEvent"},
                                 }
                             }
                         },
@@ -508,9 +496,7 @@ class APIDocumentationGenerator:
                             "application/json": {
                                 "schema": {
                                     "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/MetacognitionInsight"
-                                    },
+                                    "items": {"$ref": "#/components/schemas/MetacognitionInsight"},
                                 }
                             }
                         },
@@ -630,9 +616,7 @@ class APIDocumentationGenerator:
         with output_path.open("w") as f:
             f.write("# OmniMind API Documentation\n\n")
             f.write("**Version:** 1.0.0\n\n")
-            f.write(
-                "Complete REST API documentation for OmniMind Autonomous AI System.\n\n"
-            )
+            f.write("Complete REST API documentation for OmniMind Autonomous AI System.\n\n")
 
             # Group by tags
             by_tag = {}  # type: ignore[var-annotated]

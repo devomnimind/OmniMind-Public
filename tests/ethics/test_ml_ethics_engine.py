@@ -82,9 +82,7 @@ class TestConsensusDecision:
         """Test creating consensus decision."""
         scores = [
             FrameworkScore(EthicalFramework.DEONTOLOGICAL, 0.7, 0.8, "Rules ok"),
-            FrameworkScore(
-                EthicalFramework.CONSEQUENTIALIST, 0.8, 0.75, "Good outcomes"
-            ),
+            FrameworkScore(EthicalFramework.CONSEQUENTIALIST, 0.8, 0.75, "Good outcomes"),
         ]
 
         decision = ConsensusDecision(
@@ -432,12 +430,8 @@ class TestMLEthicsEngine:
         """Test that decisions are tracked in history."""
         engine = MLEthicsEngine()
 
-        context1 = EthicalContext(
-            action_description="Action 1", impact_level=ActionImpact.LOW
-        )
-        context2 = EthicalContext(
-            action_description="Action 2", impact_level=ActionImpact.MEDIUM
-        )
+        context1 = EthicalContext(action_description="Action 1", impact_level=ActionImpact.LOW)
+        context2 = EthicalContext(action_description="Action 2", impact_level=ActionImpact.MEDIUM)
 
         engine.evaluate_with_consensus(context1)
         engine.evaluate_with_consensus(context2)
@@ -500,9 +494,7 @@ class TestIntegration:
         assert len(decision.framework_scores) == 4
 
         # Learn from outcome
-        engine.learn_from_outcome(
-            decision, "Policies updated successfully", outcome_positive=True
-        )
+        engine.learn_from_outcome(decision, "Policies updated successfully", outcome_positive=True)
 
         # Check that learning occurred
         assert len(engine.decision_history) > 0

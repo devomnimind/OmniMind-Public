@@ -202,9 +202,7 @@ class TestPerformanceProfiler:
         bottlenecks = profiler.identify_bottlenecks(memory_threshold_mb=1000.0)
 
         # Should identify memory bottleneck
-        mem_bottleneck = next(
-            (b for b in bottlenecks if b.bottleneck_type == "memory_usage"), None
-        )
+        mem_bottleneck = next((b for b in bottlenecks if b.bottleneck_type == "memory_usage"), None)
         assert mem_bottleneck is not None
         assert mem_bottleneck.current_value > 1000.0
 

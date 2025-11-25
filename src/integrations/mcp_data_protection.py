@@ -213,9 +213,7 @@ class MCPDataProtection:
 
         # Cache para evitar reprocessamento
         self._hash_cache: Dict[str, str] = {} if enable_cache else {}
-        self._detection_cache: Dict[str, List[Dict[str, Any]]] = (
-            {} if enable_cache else {}
-        )
+        self._detection_cache: Dict[str, List[Dict[str, Any]]] = {} if enable_cache else {}
 
         # Estatísticas
         self.stats = {
@@ -258,9 +256,7 @@ class MCPDataProtection:
         if len(data) <= keep_chars * 2:
             return "*" * len(data)
 
-        masked = (
-            data[:keep_chars] + "*" * (len(data) - keep_chars * 2) + data[-keep_chars:]
-        )
+        masked = data[:keep_chars] + "*" * (len(data) - keep_chars * 2) + data[-keep_chars:]
         self.stats["masked"] += 1
         return masked
 
@@ -441,8 +437,7 @@ class MCPDataProtection:
                 sanitized[key] = self.sanitize_dict(value)
             elif isinstance(value, list):
                 sanitized[key] = [
-                    self.sanitize_dict(item) if isinstance(item, dict) else item
-                    for item in value
+                    self.sanitize_dict(item) if isinstance(item, dict) else item for item in value
                 ]
             elif isinstance(value, str):
                 # Proteger strings

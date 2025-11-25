@@ -236,8 +236,7 @@ class LogAnalytics:
         errors = sum(
             1
             for entry in self.log_entries
-            if entry.timestamp >= cutoff_time
-            and entry.level in (LogLevel.ERROR, LogLevel.CRITICAL)
+            if entry.timestamp >= cutoff_time and entry.level in (LogLevel.ERROR, LogLevel.CRITICAL)
         )
 
         if window_seconds > 0:
@@ -286,8 +285,7 @@ class LogAnalytics:
 
         # Analyze message patterns (first word)
         message_starts = [
-            entry.message.split()[0] if entry.message else ""
-            for entry in self.log_entries
+            entry.message.split()[0] if entry.message else "" for entry in self.log_entries
         ]
         counter = Counter(message_starts)
 
@@ -303,9 +301,7 @@ class LogAnalytics:
                 if stddev > 0:
                     z_score = abs((count - mean) / stddev)
                     if z_score > threshold:
-                        anomalies.append(
-                            f"Unusual frequency of '{pattern}': {count} occurrences"
-                        )
+                        anomalies.append(f"Unusual frequency of '{pattern}': {count} occurrences")
 
         return anomalies
 
@@ -411,9 +407,7 @@ class LogAggregator:
             pattern: Log pattern to add
         """
         self._patterns.append(pattern)
-        logger.debug(
-            "pattern_added", name=pattern.name, severity=pattern.severity.value
-        )
+        logger.debug("pattern_added", name=pattern.name, severity=pattern.severity.value)
 
     def log(
         self,
@@ -584,14 +578,10 @@ class LogAggregator:
 
         # Remove by time
         cutoff_time = time.time() - (self.config.retention_hours * 3600)
-        self._log_entries = [
-            log for log in self._log_entries if log.timestamp >= cutoff_time
-        ]
+        self._log_entries = [log for log in self._log_entries if log.timestamp >= cutoff_time]
 
         # Cleanup alerts
-        self._alerts = [
-            alert for alert in self._alerts if alert.timestamp >= cutoff_time
-        ]
+        self._alerts = [alert for alert in self._alerts if alert.timestamp >= cutoff_time]
 
     def clear_logs(self) -> None:
         """Clear all aggregated logs and alerts."""

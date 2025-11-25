@@ -94,9 +94,7 @@ class MCPOrchestrator:
         # Configurações globais
         self.global_settings = self.config.get("global_settings", {})
         self.audit_enabled = self.global_settings.get("audit_enabled", True)
-        self.health_check_interval = self.global_settings.get(
-            "health_check_interval_seconds", 60
-        )
+        self.health_check_interval = self.global_settings.get("health_check_interval_seconds", 60)
 
         # Background tasks
         self._health_check_task: Optional[asyncio.Task[None]] = None
@@ -151,9 +149,7 @@ class MCPOrchestrator:
                 command=server_config.get("command", ""),
                 args=server_config.get("args", []),
                 audit_category=server_config.get("audit_category", f"mcp_{name}"),
-                port=server_config.get(
-                    "port", 4321
-                ),  # Porta padrão 4321 se não especificada
+                port=server_config.get("port", 4321),  # Porta padrão 4321 se não especificada
                 features=server_config.get("features", {}),
                 security=server_config.get("security", {}),
                 metadata=server_config,
@@ -294,9 +290,7 @@ class MCPOrchestrator:
             # Processo parece estar rodando
             self.status[name].running = True
             self.status[name].uptime_seconds = 0.0
-            logger.info(
-                "Servidor MCP %s iniciado com sucesso (PID=%d)", name, process.pid
-            )
+            logger.info("Servidor MCP %s iniciado com sucesso (PID=%d)", name, process.pid)
             return True
 
         except FileNotFoundError:
@@ -470,9 +464,7 @@ class MCPOrchestrator:
                 else:
                     # Porta não está respondendo, mas processo está rodando
                     # Marcar como não saudável mas não reiniciar imediatamente
-                    logger.debug(
-                        "Servidor %s: porta %d não está respondendo", name, config.port
-                    )
+                    logger.debug("Servidor %s: porta %d não está respondendo", name, config.port)
                     self.status[name].healthy = False
                     self.status[name].last_health_check = time.time()
                     return False
@@ -510,9 +502,7 @@ class MCPOrchestrator:
                                 )
                                 continue
                         # Processo não está rodando, reiniciar
-                        logger.warning(
-                            "Servidor %s não está rodando, tentando reiniciar", name
-                        )
+                        logger.warning("Servidor %s não está rodando, tentando reiniciar", name)
                         self.restart_server(name)
 
                 await asyncio.sleep(self.health_check_interval)

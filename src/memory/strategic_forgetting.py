@@ -133,9 +133,7 @@ class StrategicForgetting:
         if len(retained) < preserve_count and len(episodes) > len(retained):
             # Add remaining episodes sorted by salience
             remaining = [e for e in episodes if e not in retained]
-            remaining.sort(
-                key=lambda e: e.get("emotional_intensity", 0.0), reverse=True
-            )
+            remaining.sort(key=lambda e: e.get("emotional_intensity", 0.0), reverse=True)
             to_add = preserve_count - len(retained)
             retained.extend(remaining[:to_add])
 

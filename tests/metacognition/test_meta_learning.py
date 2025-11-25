@@ -196,9 +196,7 @@ class TestStrategyOptimization:
         optimizer.set_baseline_configuration(baseline)
 
         treatment = Configuration("new", "New", {"strategy": "B"})
-        test = optimizer.create_ab_test(
-            "strat_test_2", "Strategy Test 2", treatment, min_samples=1
-        )
+        test = optimizer.create_ab_test("strat_test_2", "Strategy Test 2", treatment, min_samples=1)
         optimizer.start_test("strat_test_2")
 
         # Record metrics (Treatment better)
@@ -305,9 +303,7 @@ class TestMetaReasoning:
         assert health["status"] == "ok"
         assert "health" in health
 
-    def test_reasoning_strategy_selection(
-        self, metacog_agent: MetacognitionAgent
-    ) -> None:
+    def test_reasoning_strategy_selection(self, metacog_agent: MetacognitionAgent) -> None:
         """Testa seleção de estratégia (via suggestions)."""
         suggestions = metacog_agent.get_top_suggestions()
 
@@ -345,9 +341,7 @@ class TestGoalGeneration:
 
         # Se há goals, verifica se estão ordenados por impacto
         if goals:
-            impacts = [
-                g.get("impact_metrics", {}).get("total_impact", 0) for g in goals
-            ]
+            impacts = [g.get("impact_metrics", {}).get("total_impact", 0) for g in goals]
             # Verifica se está ordenado decrescentemente (maior impacto primeiro)
             assert (
                 all(impacts[i] >= impacts[i + 1] for i in range(len(impacts) - 1))
@@ -383,9 +377,7 @@ class TestMetaLearningIntegration:
             baseline = Configuration("base", "Base", {"lr": 0.01})
             optimizer.set_baseline_configuration(baseline)
 
-            optimized_val, _ = optimizer.auto_tune_parameter(
-                "lr", 0.01, (0.001, 0.1), 0.01
-            )
+            optimized_val, _ = optimizer.auto_tune_parameter("lr", 0.01, (0.001, 0.1), 0.01)
 
             # 3. Meta-cognição
             hash_chain = Path(tmpdir) / "hash_chain.json"
@@ -413,9 +405,7 @@ class TestMetaLearningIntegration:
         # Ciclo iterativo
         current_val = 0.01
         for _ in range(3):
-            new_val, _ = optimizer.auto_tune_parameter(
-                "lr", current_val, (0.001, 0.1), 0.01
-            )
+            new_val, _ = optimizer.auto_tune_parameter("lr", current_val, (0.001, 0.1), 0.01)
             current_val = new_val
 
         # Performance deve ser rastreada
@@ -447,9 +437,7 @@ class TestMetaLearningEdgeCases:
 
         treatment = Configuration("new", "New", {"lr": 0.02})
         # Set min_samples=1 to allow analysis with few samples
-        _ = optimizer.create_ab_test(
-            "test_conflict", "Conflict Test", treatment, min_samples=1
-        )
+        _ = optimizer.create_ab_test("test_conflict", "Conflict Test", treatment, min_samples=1)
         optimizer.start_test("test_conflict")
 
         # Experiências contraditórias (metrics)

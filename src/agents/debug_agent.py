@@ -44,27 +44,19 @@ class DebugAgent(ReactAgent):
         try:
             # Bloquear escrita
             if action in ["write_to_file", "update_file", "insert_content"]:
-                return (
-                    "DebugAgent cannot modify files. Delegate to CodeAgent for fixes."
-                )
+                return "DebugAgent cannot modify files. Delegate to CodeAgent for fixes."
 
             # Comandos limitados
             if action == "execute_command":
                 command = args.get("command", "")
                 if not any(cmd in command for cmd in self.allowed_commands):
-                    return (
-                        f"Command not allowed. Debug commands: {self.allowed_commands}"
-                    )
+                    return f"Command not allowed. Debug commands: {self.allowed_commands}"
 
             if action not in self.tools_framework.tools:
                 return f"Unknown tool: {action}"
 
             result: Any = self.tools_framework.execute_tool(action, **args)
-            return (
-                json.dumps(result, indent=2)
-                if isinstance(result, (dict, list))
-                else str(result)
-            )
+            return json.dumps(result, indent=2) if isinstance(result, (dict, list)) else str(result)
         except Exception as exc:
             return f"Error: {str(exc)}"
 
@@ -79,10 +71,7 @@ class DebugAgent(ReactAgent):
             else str(system_status)
         )
         memory_str = "\n".join(
-            [
-                f"- {ep['task']}: {ep['result'][:120]}..."
-                for ep in (similar_episodes or [])
-            ]
+            [f"- {ep['task']}: {ep['result'][:120]}..." for ep in (similar_episodes or [])]
         )
 
         prompt = f"""You are DebugAgent 🪲, an expert debugger and diagnostician.

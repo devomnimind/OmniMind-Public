@@ -15,9 +15,7 @@ class MCPClientError(Exception):
 
 
 class MCPClient:
-    def __init__(
-        self, endpoint: str = "http://127.0.0.1:4321/mcp", timeout: float = 15.0
-    ) -> None:
+    def __init__(self, endpoint: str = "http://127.0.0.1:4321/mcp", timeout: float = 15.0) -> None:
         self.endpoint = endpoint
         self.timeout = timeout
         self._headers = {"Content-Type": "application/json"}
@@ -41,9 +39,7 @@ class MCPClient:
             with urllib.request.urlopen(request, timeout=self.timeout) as response:
                 body = response.read().decode("utf-8")
         except urllib.error.HTTPError as exc:
-            raise MCPClientError(
-                f"MCP client HTTP error: {exc.code} {exc.reason}"
-            ) from exc
+            raise MCPClientError(f"MCP client HTTP error: {exc.code} {exc.reason}") from exc
         except urllib.error.URLError as exc:
             raise MCPClientError(f"MCP client connection error: {exc}") from exc
         try:
@@ -65,9 +61,7 @@ class MCPClient:
             ),
         )
 
-    def write_file(
-        self, path: str, content: str, encoding: str = "utf-8"
-    ) -> Dict[str, Any]:
+    def write_file(self, path: str, content: str, encoding: str = "utf-8") -> Dict[str, Any]:
         return cast(
             Dict[str, Any],
             self._request(

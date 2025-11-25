@@ -43,9 +43,7 @@ def temp_backup_dir(tmp_path: Path) -> Path:
 
 
 @pytest.fixture
-def backup_manager(
-    temp_source_dir: Path, temp_backup_dir: Path
-) -> GeoDistributedBackupManager:
+def backup_manager(temp_source_dir: Path, temp_backup_dir: Path) -> GeoDistributedBackupManager:
     """Create backup manager instance."""
     return GeoDistributedBackupManager(
         source_dir=temp_source_dir,
@@ -187,9 +185,7 @@ def test_list_restore_points(backup_manager: GeoDistributedBackupManager) -> Non
     assert len(points) == initial_count + 1
 
 
-def test_restore_from_point(
-    backup_manager: GeoDistributedBackupManager, tmp_path: Path
-) -> None:
+def test_restore_from_point(backup_manager: GeoDistributedBackupManager, tmp_path: Path) -> None:
     """Test restoring from restore point."""
     # Create backup
     backup_manager.create_backup(regions=[BackupRegion.PRIMARY])
@@ -297,18 +293,14 @@ def test_multiple_regions_backup(
     backup_manager.locations[BackupRegion.SECONDARY].enabled = True
 
     # Create backup to both regions
-    manifests = backup_manager.create_backup(
-        regions=[BackupRegion.PRIMARY, BackupRegion.SECONDARY]
-    )
+    manifests = backup_manager.create_backup(regions=[BackupRegion.PRIMARY, BackupRegion.SECONDARY])
 
     assert len(manifests) == 2
     assert BackupRegion.PRIMARY in manifests
     assert BackupRegion.SECONDARY in manifests
 
 
-def test_backup_with_errors(
-    backup_manager: GeoDistributedBackupManager, tmp_path: Path
-) -> None:
+def test_backup_with_errors(backup_manager: GeoDistributedBackupManager, tmp_path: Path) -> None:
     """Test backup handling with errors."""
     # Create invalid location with a path that can be created but will fail sync
     invalid_dir = tmp_path / "invalid_sync"

@@ -142,9 +142,7 @@ class VariationalCircuit:
         self.num_qubits = num_qubits
         self.num_layers = num_layers
         self.num_params = num_qubits * num_layers * 2  # Rotations per layer
-        self.parameters = [
-            random.uniform(0, 2 * math.pi) for _ in range(self.num_params)
-        ]
+        self.parameters = [random.uniform(0, 2 * math.pi) for _ in range(self.num_params)]
         self.logger = logger.bind(component="variational_circuit")
 
     def forward(self, inputs: List[float]) -> float:

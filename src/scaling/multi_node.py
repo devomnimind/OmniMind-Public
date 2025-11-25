@@ -64,10 +64,7 @@ class NodeInfo:
 
     def can_accept_task(self) -> bool:
         """Check if node can accept new tasks."""
-        return (
-            self.status == NodeStatus.ACTIVE
-            and self.current_tasks < self.max_concurrent_tasks
-        )
+        return self.status == NodeStatus.ACTIVE and self.current_tasks < self.max_concurrent_tasks
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
@@ -117,9 +114,7 @@ class DistributedTask:
             "assigned_node": self.assigned_node,
             "created_at": self.created_at.isoformat(),
             "started_at": self.started_at.isoformat() if self.started_at else None,
-            "completed_at": (
-                self.completed_at.isoformat() if self.completed_at else None
-            ),
+            "completed_at": (self.completed_at.isoformat() if self.completed_at else None),
             "result": self.result,
             "error": self.error,
             "retry_count": self.retry_count,
@@ -155,9 +150,7 @@ class LoadBalancer:
             return None
 
         if task and task.task_type:
-            capable_nodes = [
-                n for n in available_nodes if task.task_type in n.capabilities
-            ]
+            capable_nodes = [n for n in available_nodes if task.task_type in n.capabilities]
             if capable_nodes:
                 available_nodes = capable_nodes
 
@@ -218,9 +211,7 @@ class ClusterCoordinator:
     def get_cluster_status(self) -> Dict[str, Any]:
         """Get overall cluster status."""
         total_nodes = len(self.nodes)
-        active_nodes = sum(
-            1 for n in self.nodes.values() if n.status == NodeStatus.ACTIVE
-        )
+        active_nodes = sum(1 for n in self.nodes.values() if n.status == NodeStatus.ACTIVE)
         total_capacity = sum(n.max_concurrent_tasks for n in self.nodes.values())
         current_load = sum(n.current_tasks for n in self.nodes.values())
 
@@ -231,15 +222,9 @@ class ClusterCoordinator:
             "offline_nodes": total_nodes - active_nodes,
             "total_capacity": total_capacity,
             "current_load": current_load,
-            "load_percentage": (
-                (current_load / total_capacity * 100) if total_capacity > 0 else 0
-            ),
-            "pending_tasks": sum(
-                1 for t in self.tasks.values() if t.status == TaskStatus.PENDING
-            ),
-            "running_tasks": sum(
-                1 for t in self.tasks.values() if t.status == TaskStatus.RUNNING
-            ),
+            "load_percentage": ((current_load / total_capacity * 100) if total_capacity > 0 else 0),
+            "pending_tasks": sum(1 for t in self.tasks.values() if t.status == TaskStatus.PENDING),
+            "running_tasks": sum(1 for t in self.tasks.values() if t.status == TaskStatus.RUNNING),
             "nodes": [node.to_dict() for node in self.nodes.values()],
         }
 

@@ -31,14 +31,10 @@ class TestCanonicalLogger:
         """Cria instância do CanonicalLogger para testes."""
         return CanonicalLogger(temp_base_dir)
 
-    def test_initialization(
-        self, canonical_logger: CanonicalLogger, temp_base_dir: Path
-    ) -> None:
+    def test_initialization(self, canonical_logger: CanonicalLogger, temp_base_dir: Path) -> None:
         """Testa inicialização do CanonicalLogger."""
         assert canonical_logger.base_dir == temp_base_dir
-        assert (
-            canonical_logger.canonical_dir == temp_base_dir / ".omnimind" / "canonical"
-        )
+        assert canonical_logger.canonical_dir == temp_base_dir / ".omnimind" / "canonical"
         assert canonical_logger.canonical_dir.exists()
         assert canonical_logger.md_file.exists()
         assert canonical_logger.json_file.exists()
@@ -156,9 +152,7 @@ class TestCanonicalLogger:
 
         assert is_valid is True
 
-    def test_validate_integrity_corrupted(
-        self, canonical_logger: CanonicalLogger
-    ) -> None:
+    def test_validate_integrity_corrupted(self, canonical_logger: CanonicalLogger) -> None:
         """Testa detecção de cadeia corrompida."""
         # Registrar ações válidas
         canonical_logger.log_action("AGENT1", "ACTION1", "target1", "SUCCESS", "Test 1")
@@ -179,9 +173,7 @@ class TestCanonicalLogger:
 
         assert is_valid is False
 
-    def test_validate_integrity_empty_log(
-        self, canonical_logger: CanonicalLogger
-    ) -> None:
+    def test_validate_integrity_empty_log(self, canonical_logger: CanonicalLogger) -> None:
         """Testa validação de log vazio."""
         # Log recém-criado sem ações deve ser válido
         is_valid = canonical_logger.validate_integrity()
@@ -291,9 +283,7 @@ class TestCanonicalLogger:
         assert data["system_integrity"]["total_records"] == 2
         assert "last_validation" in data["system_integrity"]
 
-    def test_automatic_actions_empty_list(
-        self, canonical_logger: CanonicalLogger
-    ) -> None:
+    def test_automatic_actions_empty_list(self, canonical_logger: CanonicalLogger) -> None:
         """Testa que automatic_actions é uma lista vazia por padrão."""
         canonical_logger.log_action("AGENT", "ACTION", "target", "SUCCESS", "test")
 
@@ -302,9 +292,7 @@ class TestCanonicalLogger:
 
         assert data["action_log"][0]["automatic_actions"] == []
 
-    def test_previous_hash_initialization(
-        self, canonical_logger: CanonicalLogger
-    ) -> None:
+    def test_previous_hash_initialization(self, canonical_logger: CanonicalLogger) -> None:
         """Testa que o primeiro registro usa hash inicial correto."""
         canonical_logger.log_action("FIRST", "ACTION", "target", "SUCCESS", "first")
 

@@ -193,9 +193,7 @@ Your response:"""
         if req_file.exists():
             with open(req_file, "r") as f:
                 dependencies["python"] = [
-                    line.strip()
-                    for line in f
-                    if line.strip() and not line.startswith("#")
+                    line.strip() for line in f if line.strip() and not line.startswith("#")
                 ]
 
         # Procurar por package.json

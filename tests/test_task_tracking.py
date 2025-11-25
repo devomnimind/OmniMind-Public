@@ -268,7 +268,5 @@ def test_task_error_tracking(client, sample_task):
 
     # Check history contains error events
     history = tasks._task_execution_history.get(task_id, [])
-    error_events = [
-        e for e in history if e["event"] == "operation" and not e["success"]
-    ]
+    error_events = [e for e in history if e["event"] == "operation" and not e["success"]]
     assert len(error_events) == len(errors)

@@ -264,9 +264,7 @@ class TestEthicalDecisionMaker:
 
     def test_evaluate_option_consequentialist(self) -> None:
         """Testa avaliação sob framework consequencialista."""
-        maker = EthicalDecisionMaker(
-            primary_framework=EthicalFramework.CONSEQUENTIALIST
-        )
+        maker = EthicalDecisionMaker(primary_framework=EthicalFramework.CONSEQUENTIALIST)
 
         dilemma = EthicalDilemma(
             dilemma_id="test_004",

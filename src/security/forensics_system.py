@@ -170,15 +170,11 @@ class EvidenceCollector:
                         evidence_items.append(evidence)
 
             except Exception as e:
-                self.logger.error(
-                    f"Failed to collect log evidence from {log_file}: {e}"
-                )
+                self.logger.error(f"Failed to collect log evidence from {log_file}: {e}")
 
         return evidence_items
 
-    def collect_file_system_evidence(
-        self, target_paths: List[str]
-    ) -> List[EvidenceItem]:
+    def collect_file_system_evidence(self, target_paths: List[str]) -> List[EvidenceItem]:
         """
         Collect file system evidence.
 
@@ -221,9 +217,7 @@ class EvidenceCollector:
                         "type": "directory",
                         "total_files": len([f for f in files if f.is_file()]),
                         "total_dirs": len([f for f in files if f.is_dir()]),
-                        "total_size": sum(
-                            f.stat().st_size for f in files if f.is_file()
-                        ),
+                        "total_size": sum(f.stat().st_size for f in files if f.is_file()),
                     }
 
                     evidence = EvidenceItem(
@@ -237,9 +231,7 @@ class EvidenceCollector:
                     evidence_items.append(evidence)
 
             except Exception as e:
-                self.logger.error(
-                    f"Failed to collect file system evidence from {target_path}: {e}"
-                )
+                self.logger.error(f"Failed to collect file system evidence from {target_path}: {e}")
 
         return evidence_items
 
@@ -254,9 +246,7 @@ class EvidenceCollector:
 
         try:
             # Use netstat or ss to get network connections
-            result = subprocess.run(
-                ["ss", "-tuln"], capture_output=True, text=True, timeout=10
-            )
+            result = subprocess.run(["ss", "-tuln"], capture_output=True, text=True, timeout=10)
 
             if result.returncode == 0:
                 connections = result.stdout.strip().split("\n")[1:]  # Skip header
@@ -312,9 +302,7 @@ class EvidenceCollector:
         evidence_items = []
 
         try:
-            result = subprocess.run(
-                ["ps", "aux"], capture_output=True, text=True, timeout=10
-            )
+            result = subprocess.run(["ps", "aux"], capture_output=True, text=True, timeout=10)
 
             if result.returncode == 0:
                 processes = result.stdout.strip().split("\n")[1:]  # Skip header
@@ -421,18 +409,10 @@ class LogAnalyzer:
 
         # Common security patterns
         self.security_patterns = {
-            "failed_login": re.compile(
-                r"failed.*login|authentication.*failed", re.IGNORECASE
-            ),
-            "suspicious_access": re.compile(
-                r"access.*denied|permission.*denied", re.IGNORECASE
-            ),
-            "unusual_activity": re.compile(
-                r"unusual.*activity|anomalous.*behavior", re.IGNORECASE
-            ),
-            "security_alert": re.compile(
-                r"security.*alert|intrusion.*detected", re.IGNORECASE
-            ),
+            "failed_login": re.compile(r"failed.*login|authentication.*failed", re.IGNORECASE),
+            "suspicious_access": re.compile(r"access.*denied|permission.*denied", re.IGNORECASE),
+            "unusual_activity": re.compile(r"unusual.*activity|anomalous.*behavior", re.IGNORECASE),
+            "security_alert": re.compile(r"security.*alert|intrusion.*detected", re.IGNORECASE),
             "privilege_escalation": re.compile(
                 r"privilege.*escalation|sudo.*attempt", re.IGNORECASE
             ),
@@ -502,14 +482,10 @@ class LogAnalyzer:
 
         # Generate recommendations
         if analysis["security_events"]:
-            analysis["recommendations"].append(
-                "Review security events for potential incidents"
-            )
+            analysis["recommendations"].append("Review security events for potential incidents")
 
         if analysis["threat_indicators"]:
-            analysis["recommendations"].append(
-                "Investigate threat indicators immediately"
-            )
+            analysis["recommendations"].append("Investigate threat indicators immediately")
             analysis["recommendations"].append("Consider isolating affected systems")
 
         if analysis["severity_score"] > 10:
@@ -566,8 +542,7 @@ class LogAnalyzer:
                         "group_size": len(group),
                         "pattern": group[0].get("pattern"),
                         "time_range": (
-                            f"{group[0].get('timestamp')} to "
-                            f"{group[-1].get('timestamp')}"
+                            f"{group[0].get('timestamp')} to " f"{group[-1].get('timestamp')}"
                         ),
                         "events": group,
                     }
@@ -715,9 +690,7 @@ class ForensicsSystem:
         self.logger.info(f"Created incident: {incident.id}")
         return incident
 
-    def collect_evidence(
-        self, incident_id: str, evidence_types: List[str]
-    ) -> List[EvidenceItem]:
+    def collect_evidence(self, incident_id: str, evidence_types: List[str]) -> List[EvidenceItem]:
         """
         Collect evidence for an incident.
 
@@ -742,9 +715,7 @@ class ForensicsSystem:
                 "logs/audit.log",
                 "logs/application.log",
             ]
-            evidence_items.extend(
-                self.evidence_collector.collect_log_evidence(log_files)
-            )
+            evidence_items.extend(self.evidence_collector.collect_log_evidence(log_files))
 
         if "filesystem" in evidence_types:
             target_paths = [
@@ -813,9 +784,7 @@ class ForensicsSystem:
         }
 
         # Analyze log evidence
-        log_evidence = [
-            e for e in incident.evidence_items if e.type == EvidenceType.LOG_ENTRY
-        ]
+        log_evidence = [e for e in incident.evidence_items if e.type == EvidenceType.LOG_ENTRY]
         for evidence in log_evidence:
             if "matches" in evidence.content:
                 # Analyze the matched log content
@@ -836,9 +805,7 @@ class ForensicsSystem:
             analysis["correlations"] = correlations
 
         # Risk assessment
-        total_severity = sum(
-            log.get("severity_score", 0) for log in analysis["log_analysis"]
-        )
+        total_severity = sum(log.get("severity_score", 0) for log in analysis["log_analysis"])
         threat_count = sum(
             len(log.get("threat_indicators", [])) for log in analysis["log_analysis"]
         )
@@ -945,9 +912,7 @@ class ForensicsSystem:
         """
         return self._load_incident(incident_id)
 
-    def list_incidents(
-        self, status_filter: Optional[IncidentStatus] = None
-    ) -> List[Incident]:
+    def list_incidents(self, status_filter: Optional[IncidentStatus] = None) -> List[Incident]:
         """
         List all incidents.
 
@@ -970,9 +935,7 @@ class ForensicsSystem:
                         incidents.append(incident)
 
                 except Exception as e:
-                    self.logger.error(
-                        f"Failed to load incident from {incident_file}: {e}"
-                    )
+                    self.logger.error(f"Failed to load incident from {incident_file}: {e}")
 
         except Exception as e:
             self.logger.error(f"Failed to list incidents: {e}")
@@ -1152,9 +1115,7 @@ class ForensicsSystem:
 
             log_analysis = incident.analysis.get("log_analysis", [])
             if log_analysis:
-                total_events = sum(
-                    len(log.get("security_events", [])) for log in log_analysis
-                )
+                total_events = sum(len(log.get("security_events", [])) for log in log_analysis)
                 findings.append(f"Security Events Detected: {total_events}")
 
         findings.append(f"Evidence Items Collected: {len(incident.evidence_items)}")
@@ -1200,20 +1161,14 @@ def get_forensics_system() -> ForensicsSystem:
     return _forensics_system
 
 
-def create_security_incident(
-    title: str, description: str, severity: str = "medium"
-) -> Incident:
+def create_security_incident(title: str, description: str, severity: str = "medium") -> Incident:
     """Create a security incident."""
     system = get_forensics_system()
     severity_enum = IncidentSeverity(severity.lower())
-    return system.create_incident(
-        title, description, severity_enum, "automated_detection"
-    )
+    return system.create_incident(title, description, severity_enum, "automated_detection")
 
 
-def collect_incident_evidence(
-    incident_id: str, evidence_types: List[str]
-) -> List[EvidenceItem]:
+def collect_incident_evidence(incident_id: str, evidence_types: List[str]) -> List[EvidenceItem]:
     """Collect evidence for an incident."""
     system = get_forensics_system()
     return system.collect_evidence(incident_id, evidence_types)
@@ -1250,9 +1205,7 @@ if __name__ == "__main__":
 
     # Analyze incident
     analysis = forensics.analyze_incident(incident.id)
-    print(
-        f"Analysis complete - Risk level: {analysis['risk_assessment']['risk_level']}"
-    )
+    print(f"Analysis complete - Risk level: {analysis['risk_assessment']['risk_level']}")
 
     # Generate report
     report = forensics.generate_report(incident.id)
@@ -1291,9 +1244,7 @@ class IncidentAnalyzer:
         }
         return analysis
 
-    def generate_timeline(
-        self, evidence_list: List[EvidenceItem]
-    ) -> List[Dict[str, Any]]:
+    def generate_timeline(self, evidence_list: List[EvidenceItem]) -> List[Dict[str, Any]]:
         """
         Generate a chronological timeline from evidence.
 

@@ -122,8 +122,7 @@ class Signifier:
             # Compute element-wise mean across context vectors
             length = len(context_vectors[0])
             context_mean = [
-                statistics.mean([vec[i] for vec in context_vectors])
-                for i in range(length)
+                statistics.mean([vec[i] for vec in context_vectors]) for i in range(length)
             ]
             # Mix own vector with context mean
             return [
@@ -185,9 +184,7 @@ class SignifierChain:
             return self.chain[1:] + [self.chain[0]]
         return self.chain.copy()
 
-    def metaphoric_substitution(
-        self, old_signifier: str, new_signifier: str
-    ) -> SignifierChain:
+    def metaphoric_substitution(self, old_signifier: str, new_signifier: str) -> SignifierChain:
         """
         Substituição metafórica.
 
@@ -203,9 +200,7 @@ class SignifierChain:
         """
         new_chain = [new_signifier if s == old_signifier else s for s in self.chain]
 
-        return SignifierChain(
-            chain=new_chain, quilting_points=self.quilting_points.copy()
-        )
+        return SignifierChain(chain=new_chain, quilting_points=self.quilting_points.copy())
 
 
 class LacanianGraphII:
@@ -261,9 +256,7 @@ class LacanianGraphII:
             position: Posição estrutural
             jouissance: Intensidade de jouissance
         """
-        signifier = Signifier(
-            symbol=symbol, position=position, jouissance_intensity=jouissance
-        )
+        signifier = Signifier(symbol=symbol, position=position, jouissance_intensity=jouissance)
 
         self.signifiers[symbol] = signifier
         self.big_other.add(symbol)
@@ -343,17 +336,15 @@ class LacanianGraphII:
                     unsatisfied_connections.append(conn)
 
         # Intensidade proporcional ao não satisfeito
-        desire_intensity = len(unsatisfied_connections) / max(
-            len(subject.connections), 1
-        )
+        desire_intensity = len(unsatisfied_connections) / max(len(subject.connections), 1)
 
         # Direção do desejo (próximo significante não satisfeito)
         direction = unsatisfied_connections[0] if unsatisfied_connections else None
 
         # Jouissance = satisfação paradoxal (além do prazer)
-        jouissance = sum(
-            self.jouissance_map.get(c, 0.0) for c in unsatisfied_connections
-        ) / max(len(unsatisfied_connections), 1)
+        jouissance = sum(self.jouissance_map.get(c, 0.0) for c in unsatisfied_connections) / max(
+            len(unsatisfied_connections), 1
+        )
 
         return {
             "intensity": desire_intensity,
@@ -423,9 +414,7 @@ class LacanianGraphII:
 
         # Objeto a = signifier com posição OBJECT_A
         object_a_candidates = [
-            s
-            for s, sig in self.signifiers.items()
-            if sig.position == SignifierPosition.OBJECT_A
+            s for s, sig in self.signifiers.items() if sig.position == SignifierPosition.OBJECT_A
         ]
 
         object_a = object_a_candidates[0] if object_a_candidates else "void"
@@ -535,9 +524,7 @@ class SymbolicMatrix:
             random_seed: Seed para reprodutibilidade (opcional)
         """
         # Regras de produção
-        self.production_rules: Dict[str, List[Callable[[Any], Optional[str]]]] = (
-            defaultdict(list)
-        )
+        self.production_rules: Dict[str, List[Callable[[Any], Optional[str]]]] = defaultdict(list)
 
         # Estrutura simbólica
         self.symbolic_structure: Dict[str, Any] = {}
@@ -550,9 +537,7 @@ class SymbolicMatrix:
 
         logger.info("Symbolic matrix initialized")
 
-    def add_production_rule(
-        self, category: str, rule: Callable[[Any], Optional[str]]
-    ) -> None:
+    def add_production_rule(self, category: str, rule: Callable[[Any], Optional[str]]) -> None:
         """
         Adiciona regra de produção.
 
@@ -658,9 +643,7 @@ class DesireGraphArchitecture:
         self.graph.add_signifier("S2_skill", SignifierPosition.S2, 0.4)
 
         # Object a
-        self.graph.add_signifier(
-            "a_complete_knowledge", SignifierPosition.OBJECT_A, 0.8
-        )
+        self.graph.add_signifier("a_complete_knowledge", SignifierPosition.OBJECT_A, 0.8)
 
         # Subject
         self.graph.add_signifier("subject_AI", SignifierPosition.SUBJECT, 0.1)
@@ -674,13 +657,9 @@ class DesireGraphArchitecture:
         self.graph.position_subject("subject_AI")
 
         # Cria cadeia
-        self.graph.create_chain(
-            ["S1_knowledge", "S2_understanding", "a_complete_knowledge"]
-        )
+        self.graph.create_chain(["S1_knowledge", "S2_understanding", "a_complete_knowledge"])
 
-    def process_desire(
-        self, action_history: List[str], context: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    def process_desire(self, action_history: List[str], context: Dict[str, Any]) -> Dict[str, Any]:
         """
         Processa desejo através do grafo.
 

@@ -290,9 +290,7 @@ class DependencyManager:
             if name not in installed:
                 mismatches.append(f"{name} missing")
             elif installed[name] != pkg.version:
-                mismatches.append(
-                    f"{name}: expected {pkg.version}, got {installed[name]}"
-                )
+                mismatches.append(f"{name}: expected {pkg.version}, got {installed[name]}")
 
         if mismatches:
             logger.error(f"Lockfile verification failed: {len(mismatches)} mismatches")
@@ -371,9 +369,7 @@ class DependencyManager:
                         for vuln in data.get("vulns", []):
                             # Map severity
                             severity_str = (
-                                vuln.get("severity", [{}])[0]
-                                .get("score", "MEDIUM")
-                                .lower()
+                                vuln.get("severity", [{}])[0].get("score", "MEDIUM").lower()
                             )
                             try:
                                 severity = VulnerabilitySeverity(severity_str)
@@ -649,7 +645,5 @@ if __name__ == "__main__":
 
     # Generate report
     print("\n📄 Generating security report...")
-    report = manager.generate_security_report(
-        Path("logs/dependency_security_report.md")
-    )
+    report = manager.generate_security_report(Path("logs/dependency_security_report.md"))
     print("✓ Report saved to logs/dependency_security_report.md")

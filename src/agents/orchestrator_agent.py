@@ -100,9 +100,7 @@ class OrchestratorAgent(ReactAgent):
         self.supabase_adapter: Optional[SupabaseAdapter] = self._init_supabase_adapter()
         self.qdrant_adapter: Optional[QdrantAdapter] = self._init_qdrant_adapter()
         self.security_agent: Optional[SecurityAgent] = self._init_security_agent()
-        self.metacognition_agent: Optional[MetacognitionAgent] = (
-            self._init_metacognition_agent()
-        )
+        self.metacognition_agent: Optional[MetacognitionAgent] = self._init_metacognition_agent()
         self.dashboard_snapshot: Dict[str, Any] = {}
         self.last_mcp_result: Dict[str, Any] = {}
         self.last_dbus_result: Dict[str, Any] = {}
@@ -177,9 +175,7 @@ class OrchestratorAgent(ReactAgent):
                 import asyncio
 
                 asyncio.create_task(agent.start_continuous_monitoring())
-                logger.info(
-                    "SecurityAgent continuous monitoring started in background."
-                )
+                logger.info("SecurityAgent continuous monitoring started in background.")
             return agent
         except Exception as exc:
             logger.error("Failed to initialize SecurityAgent: %s", exc)
@@ -189,9 +185,7 @@ class OrchestratorAgent(ReactAgent):
         """Initialize the metacognition agent for self-analysis."""
         try:
             metacog_config = self.config.get("metacognition", {})
-            hash_chain_path = metacog_config.get(
-                "hash_chain_path", "logs/hash_chain.json"
-            )
+            hash_chain_path = metacog_config.get("hash_chain_path", "logs/hash_chain.json")
             analysis_interval = metacog_config.get("analysis_interval", 3600)
             bias_sensitivity = metacog_config.get("bias_sensitivity", 0.7)
             max_suggestions = metacog_config.get("max_suggestions", 10)
@@ -212,9 +206,7 @@ class OrchestratorAgent(ReactAgent):
         """Retorna timestamp UTC em formato ISO"""
         return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
-    def _build_dashboard_context(
-        self, plan: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
+    def _build_dashboard_context(self, plan: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Collect MCP and D-Bus state to inform the upcoming dashboard."""
         context: Dict[str, Any] = {
             "timestamp": self._timestamp(),
@@ -232,18 +224,14 @@ class OrchestratorAgent(ReactAgent):
 
         if self.dbus_system_controller:
             try:
-                context["network_status"] = (
-                    self.dbus_system_controller.get_network_status()
-                )
+                context["network_status"] = self.dbus_system_controller.get_network_status()
                 context["power_status"] = self.dbus_system_controller.get_power_status()
             except Exception as exc:
                 logger.warning("D-Bus system lookup failed: %s", exc)
 
         if self.dbus_session_controller:
             try:
-                context["media_players"] = (
-                    self.dbus_session_controller.list_media_players()
-                )
+                context["media_players"] = self.dbus_session_controller.list_media_players()
             except Exception as exc:
                 logger.warning("D-Bus session lookup failed: %s", exc)
 
@@ -278,17 +266,13 @@ class OrchestratorAgent(ReactAgent):
         self.dashboard_snapshot = context
         return context
 
-    def _record_operation(
-        self, name: str, latency: float, success: bool = True
-    ) -> None:
+    def _record_operation(self, name: str, latency: float, success: bool = True) -> None:
         self.metrics.record(name, latency, success)
 
     def _finalize_operation(
         self, name: str, start: float, result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        self._record_operation(
-            name, time.perf_counter() - start, result.get("completed", False)
-        )
+        self._record_operation(name, time.perf_counter() - start, result.get("completed", False))
         return result
 
     def metrics_summary(self) -> Dict[str, Any]:
@@ -335,16 +319,12 @@ class OrchestratorAgent(ReactAgent):
     def _plan_progress(self, plan: Optional[Dict[str, Any]]) -> Dict[str, int]:
         if not plan or not plan.get("subtasks"):
             return {"completed": 0, "failed": 0}
-        completed = sum(
-            1 for sub in plan["subtasks"] if sub.get("status") == "completed"
-        )
+        completed = sum(1 for sub in plan["subtasks"] if sub.get("status") == "completed")
         failed = sum(1 for sub in plan["subtasks"] if sub.get("status") == "failed")
         return {"completed": completed, "failed": failed}
 
     def _infer_path_from_description(self, description: str) -> Optional[str]:
-        matches: list[str] = re.findall(
-            r"\b(?:config|src|web|data|logs)/[^\s,;]+", description
-        )
+        matches: list[str] = re.findall(r"\b(?:config|src|web|data|logs)/[^\s,;]+", description)
         return matches[0] if matches else None
 
     def _execute_mcp_subtask(
@@ -363,9 +343,7 @@ class OrchestratorAgent(ReactAgent):
 
         metadata = subtask.get("metadata", {})
         description = subtask.get("description", "")
-        action = metadata.get("mcp_action") or (
-            "list" if "list" in description.lower() else "read"
-        )
+        action = metadata.get("mcp_action") or ("list" if "list" in description.lower() else "read")
         path = (
             metadata.get("path")
             or self._infer_path_from_description(description)
@@ -423,9 +401,7 @@ class OrchestratorAgent(ReactAgent):
         try:
             if any(keyword in description for keyword in ["media", "play", "pause"]):
                 if self.dbus_session_controller:
-                    details = self.dbus_session_controller.control_media_player(
-                        "playpause"
-                    )
+                    details = self.dbus_session_controller.control_media_player("playpause")
                     summary = f"Media action result: {details.get('action')}"
                 else:
                     summary = "Media controller unavailable"
@@ -438,9 +414,7 @@ class OrchestratorAgent(ReactAgent):
                     details = self.dbus_system_controller.get_power_status()
                     summary = "Power status collected"
                 elif self.dbus_session_controller:
-                    details = {
-                        "media": self.dbus_session_controller.list_media_players()
-                    }
+                    details = {"media": self.dbus_session_controller.list_media_players()}
                     summary = "Media players enumerated"
         except Exception as exc:
             result = {
@@ -581,9 +555,7 @@ ESTIMATED_COMPLEXITY: low
                         or f"{mode}_mode" in line_lower
                     ):
                         # Extrair descrição após modo
-                        task_desc = (
-                            line.split("]", 1)[-1].strip() if "]" in line else line
-                        )
+                        task_desc = line.split("]", 1)[-1].strip() if "]" in line else line
                         # Remover padrões como "- Plan Architecture:"
                         if ":" in task_desc:
                             task_desc = task_desc.split(":", 1)[-1].strip()
@@ -663,9 +635,7 @@ ESTIMATED_COMPLEXITY: low
                             "mcp",
                             "dbus",
                         ]:
-                            if any(
-                                keyword in line_lower for keyword in agent_names[mode]
-                            ):
+                            if any(keyword in line_lower for keyword in agent_names[mode]):
                                 task_desc = line.strip("0123456789.-) \t")
                                 if ":" in task_desc:
                                     task_desc = task_desc.split(":", 1)[-1].strip()
@@ -830,9 +800,7 @@ ESTIMATED_COMPLEXITY: low
                 logger.exception("Error executing subtask %d", i + 1)
                 print(f"❌ Error in subtask {i+1}: {e}")
                 results["overall_success"] = False
-                results["subtask_results"].append(
-                    {"subtask_id": i + 1, "error": str(e)}
-                )
+                results["subtask_results"].append({"subtask_id": i + 1, "error": str(e)})
 
         results["completed_at"] = self._timestamp()
 
@@ -885,9 +853,7 @@ ESTIMATED_COMPLEXITY: low
         )
 
         duration = time.perf_counter() - execution_start
-        self._record_operation(
-            "orchestrate_task", duration, execution_result["overall_success"]
-        )
+        self._record_operation("orchestrate_task", duration, execution_result["overall_success"])
 
         return {
             "task": task,
@@ -939,9 +905,7 @@ ESTIMATED_COMPLEXITY: low
                 1 for sr in execution_result["subtask_results"] if sr.get("completed")
             ),
             "failed": sum(
-                1
-                for sr in execution_result["subtask_results"]
-                if not sr.get("completed")
+                1 for sr in execution_result["subtask_results"] if not sr.get("completed")
             ),
             "overall_success": execution_result["overall_success"],
         }
@@ -967,9 +931,7 @@ ESTIMATED_COMPLEXITY: low
 
             # Log critical suggestions
             suggestions = report.get("optimization_suggestions", [])
-            critical_suggestions = [
-                s for s in suggestions if s.get("priority") == "critical"
-            ]
+            critical_suggestions = [s for s in suggestions if s.get("priority") == "critical"]
 
             if critical_suggestions:
                 logger.warning(

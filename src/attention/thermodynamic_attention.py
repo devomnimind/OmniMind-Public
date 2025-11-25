@@ -78,9 +78,7 @@ class ThermodynamicAttention(nn.Module if TORCH_AVAILABLE else object):  # type:
             entropy_weight: Weight for entropy gradient term
         """
         if not TORCH_AVAILABLE:
-            raise ImportError(
-                "PyTorch not available. ThermodynamicAttention requires torch."
-            )
+            raise ImportError("PyTorch not available. ThermodynamicAttention requires torch.")
 
         super().__init__()
 
@@ -91,9 +89,7 @@ class ThermodynamicAttention(nn.Module if TORCH_AVAILABLE else object):  # type:
         # Learnable parameters for entropy computation
         self.entropy_projection = nn.Linear(embed_dim, embed_dim)
 
-        logger.info(
-            f"ThermodynamicAttention initialized: " f"dim={embed_dim}, T={temperature}"
-        )
+        logger.info(f"ThermodynamicAttention initialized: " f"dim={embed_dim}, T={temperature}")
 
     def forward(
         self,
@@ -120,21 +116,15 @@ class ThermodynamicAttention(nn.Module if TORCH_AVAILABLE else object):  # type:
         entropies = self._local_entropy(key)  # [batch, seq_len]
 
         # Compute entropy gradients (ΔS direction)
-        entropy_gradients = self._compute_entropy_gradients(
-            entropies
-        )  # [batch, seq_len]
+        entropy_gradients = self._compute_entropy_gradients(entropies)  # [batch, seq_len]
 
         # Standard similarity-based attention scores
         # Scale by 1/sqrt(d_k) for numerical stability
-        similarity_scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(
-            self.embed_dim
-        )
+        similarity_scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(self.embed_dim)
 
         # Combine similarity with entropy gradient
         # Second law: attend to high entropy gradients
-        combined_scores = (
-            similarity_scores + self.entropy_weight * entropy_gradients.unsqueeze(1)
-        )
+        combined_scores = similarity_scores + self.entropy_weight * entropy_gradients.unsqueeze(1)
 
         # Apply mask if provided
         if mask is not None:
@@ -219,9 +209,7 @@ class ThermodynamicAttention(nn.Module if TORCH_AVAILABLE else object):  # type:
         logger.debug(f"Temperature adjusted to {self.temperature:.4f}")
 
 
-class MultiHeadThermodynamicAttention(
-    nn.Module if TORCH_AVAILABLE else object  # type: ignore
-):
+class MultiHeadThermodynamicAttention(nn.Module if TORCH_AVAILABLE else object):  # type: ignore
     """
     Multi-head thermodynamic attention.
 
@@ -247,8 +235,7 @@ class MultiHeadThermodynamicAttention(
         """
         if not TORCH_AVAILABLE:
             raise ImportError(
-                "PyTorch not available. MultiHeadThermodynamicAttention "
-                "requires torch."
+                "PyTorch not available. MultiHeadThermodynamicAttention " "requires torch."
             )
 
         super().__init__()
@@ -280,8 +267,7 @@ class MultiHeadThermodynamicAttention(
         self.dropout = nn.Dropout(dropout)
 
         logger.info(
-            f"MultiHeadThermodynamicAttention initialized: "
-            f"{num_heads} heads, dim={embed_dim}"
+            f"MultiHeadThermodynamicAttention initialized: " f"{num_heads} heads, dim={embed_dim}"
         )
 
     def forward(

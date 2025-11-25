@@ -212,9 +212,7 @@ class BidirectionalFeedback:
     def _is_escalating_conflict(self, feedback_list: List[FeedbackItem]) -> bool:
         """Detecta escalação de conflito."""
         # Simplificado: verifica se há muitas correções consecutivas
-        corrections = [
-            f for f in feedback_list if f.feedback_type == FeedbackType.CORRECTION
-        ]
+        corrections = [f for f in feedback_list if f.feedback_type == FeedbackType.CORRECTION]
 
         return len(corrections) >= len(feedback_list) * 0.7
 

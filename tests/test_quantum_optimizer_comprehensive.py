@@ -70,9 +70,7 @@ class TestQAOAOptimizer:
         qaoa = QAOAOptimizer(dimension=2, num_layers=2)
 
         # Optimize
-        solution, value = qaoa.optimize(
-            quadratic, bounds=[(-10, 10), (-10, 10)], max_iterations=20
-        )
+        solution, value = qaoa.optimize(quadratic, bounds=[(-10, 10), (-10, 10)], max_iterations=20)
 
         # Solution should be close to [0, 0]
         assert len(solution) == 2
@@ -105,15 +103,12 @@ class TestQAOAOptimizer:
         def rosenbrock(x):
             """Rosenbrock function (harder to optimize)"""
             return sum(
-                100 * (x[i + 1] - x[i] ** 2) ** 2 + (1 - x[i]) ** 2
-                for i in range(len(x) - 1)
+                100 * (x[i + 1] - x[i] ** 2) ** 2 + (1 - x[i]) ** 2 for i in range(len(x) - 1)
             )
 
         qaoa = QAOAOptimizer(dimension=2, num_layers=4)
 
-        solution, value = qaoa.optimize(
-            rosenbrock, bounds=[(-5, 5), (-5, 5)], max_iterations=50
-        )
+        solution, value = qaoa.optimize(rosenbrock, bounds=[(-5, 5), (-5, 5)], max_iterations=50)
 
         assert len(solution) == 2
         # Rosenbrock is difficult, just check it runs
@@ -128,9 +123,7 @@ class TestQAOAOptimizer:
 
         qaoa = QAOAOptimizer(dimension=2, num_layers=2)
 
-        solution, value = qaoa.optimize(
-            linear, bounds=[(-10, -1), (0, 10)], max_iterations=20
-        )
+        solution, value = qaoa.optimize(linear, bounds=[(-10, -1), (0, 10)], max_iterations=20)
 
         assert len(solution) == 2
         # Should find minimum at lower bounds
@@ -163,9 +156,7 @@ class TestQAOAOptimizer:
         dim = 5
         qaoa = QAOAOptimizer(dimension=dim, num_layers=3)
 
-        solution, value = qaoa.optimize(
-            sum_squares, bounds=[(-5, 5)] * dim, max_iterations=40
-        )
+        solution, value = qaoa.optimize(sum_squares, bounds=[(-5, 5)] * dim, max_iterations=40)
 
         assert len(solution) == dim
         assert value >= 0
@@ -179,17 +170,13 @@ class TestQAOAOptimizer:
         qaoa = QAOAOptimizer(dimension=2, num_layers=2)
 
         # Run with few iterations
-        _, value_short = qaoa.optimize(
-            sphere, bounds=[(-10, 10), (-10, 10)], max_iterations=5
-        )
+        _, value_short = qaoa.optimize(sphere, bounds=[(-10, 10), (-10, 10)], max_iterations=5)
 
         # Reset
         qaoa2 = QAOAOptimizer(dimension=2, num_layers=2)
 
         # Run with more iterations
-        _, value_long = qaoa2.optimize(
-            sphere, bounds=[(-10, 10), (-10, 10)], max_iterations=50
-        )
+        _, value_long = qaoa2.optimize(sphere, bounds=[(-10, 10), (-10, 10)], max_iterations=50)
 
         # More iterations should generally give better results
         # (though not guaranteed due to randomness)
@@ -209,14 +196,10 @@ class TestQuantumOptimizerIntegration:
         qaoa = QAOAOptimizer(dimension=2, num_layers=2)
 
         # First optimization
-        solution1, value1 = qaoa.optimize(
-            sphere, bounds=[(-5, 5), (-5, 5)], max_iterations=10
-        )
+        solution1, value1 = qaoa.optimize(sphere, bounds=[(-5, 5), (-5, 5)], max_iterations=10)
 
         # Second optimization (should reset)
-        solution2, value2 = qaoa.optimize(
-            sphere, bounds=[(-5, 5), (-5, 5)], max_iterations=10
-        )
+        solution2, value2 = qaoa.optimize(sphere, bounds=[(-5, 5), (-5, 5)], max_iterations=10)
 
         # Both should produce valid results
         assert len(solution1) == 2
@@ -233,9 +216,7 @@ class TestQuantumOptimizerIntegration:
         qaoa = QAOAOptimizer(dimension=2, num_layers=2)
 
         # Tight bounds
-        solution, value = qaoa.optimize(
-            objective, bounds=[(0, 1), (0, 1)], max_iterations=20
-        )
+        solution, value = qaoa.optimize(objective, bounds=[(0, 1), (0, 1)], max_iterations=20)
 
         # Solution should respect bounds
         assert 0 <= solution[0] <= 1

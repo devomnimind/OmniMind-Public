@@ -547,9 +547,7 @@ class FlameGraphGenerator:
         if len(text) * 7 > width:  # Rough estimation of text width
             text = node.name[: int(width / 7)] + "..."
 
-        svg_parts.append(
-            f'<text x="{x + 5}" y="{y + 15}" class="func time">{text}</text>'
-        )
+        svg_parts.append(f'<text x="{x + 5}" y="{y + 15}" class="func time">{text}</text>')
 
         # Render children
         if node.children:
@@ -563,9 +561,7 @@ class FlameGraphGenerator:
                 else:
                     child_width = width / len(node.children)
 
-                self._render_node_svg(
-                    child, child_x, child_y, child_width, svg_parts, depth + 1
-                )
+                self._render_node_svg(child, child_x, child_y, child_width, svg_parts, depth + 1)
                 child_x += child_width
 
     def save_svg(

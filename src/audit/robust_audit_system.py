@@ -32,9 +32,7 @@ class RobustChainIntegrityManager:
         # Chave secreta para HMAC (usar variável de ambiente em produção)
         default_key = "omnimind-secret-key-change-in-production"
         env_key = os.getenv("AUDIT_SECRET_KEY", default_key)
-        self.secret_key = (
-            secret_key or env_key.encode() if isinstance(env_key, str) else env_key
-        )
+        self.secret_key = secret_key or env_key.encode() if isinstance(env_key, str) else env_key
         self._load_existing_data()
 
     def _load_existing_data(self):
@@ -93,9 +91,7 @@ class RobustChainIntegrityManager:
             return ""
 
         # Nível folha: hash de cada evento
-        leaves = [
-            self._sha256_hash(json.dumps(event, sort_keys=True)) for event in events
-        ]
+        leaves = [self._sha256_hash(json.dumps(event, sort_keys=True)) for event in events]
 
         # Construir árvore de baixo para cima
         tree_levels = [leaves]
@@ -143,9 +139,7 @@ class RobustChainIntegrityManager:
 
         for level_idx in range(len(levels) - 1):
             level = levels[level_idx]
-            sibling_index = (
-                current_index + 1 if current_index % 2 == 0 else current_index - 1
-            )
+            sibling_index = current_index + 1 if current_index % 2 == 0 else current_index - 1
 
             if sibling_index < len(level):
                 proof.append(
@@ -182,9 +176,7 @@ class RobustChainIntegrityManager:
         Retorna: evento com hash de cadeia e prova de integridade
         """
         # Obter último hash da cadeia
-        previous_hash = (
-            self.chain_data[-1].get("chain_hash", "") if self.chain_data else "0" * 64
-        )
+        previous_hash = self.chain_data[-1].get("chain_hash", "") if self.chain_data else "0" * 64
 
         # Serializar evento
         event_data = json.dumps(event, sort_keys=True)
@@ -239,9 +231,7 @@ class RobustChainIntegrityManager:
                 event["integrity_valid"] = False
 
             # Verificar hash do evento
-            expected_event_hash = self._sha256_hash(
-                json.dumps(event["event"], sort_keys=True)
-            )
+            expected_event_hash = self._sha256_hash(json.dumps(event["event"], sort_keys=True))
             if event["event_hash"] != expected_event_hash:
                 corruptions.append(
                     {
@@ -309,9 +299,7 @@ class RobustChainIntegrityManager:
             json.dump(
                 {
                     "chain_exports": exports,
-                    "merkle_root": self.build_merkle_tree(
-                        [e["event"] for e in self.chain_data]
-                    ),
+                    "merkle_root": self.build_merkle_tree([e["event"] for e in self.chain_data]),
                     "export_timestamp": datetime.now().isoformat(),
                 },
                 f,
@@ -366,11 +354,7 @@ class RobustAuditSystem:
         return {
             "total_events": len(self.chain_manager.chain_data),
             "valid_events": len(
-                [
-                    e
-                    for e in self.chain_manager.chain_data
-                    if e.get("integrity_valid", False)
-                ]
+                [e for e in self.chain_manager.chain_data if e.get("integrity_valid", False)]
             ),
             "corrupted_events": len(integrity.get("corruptions", [])),
             "merkle_root": integrity.get("merkle_root", ""),
@@ -409,9 +393,7 @@ class RobustAuditSystem:
             "repaired": new_integrity["valid"],
             "recovered_events": len(recovered),
             "remaining_corruptions": len(new_integrity["corruptions"]),
-            "message": (
-                "Reparação concluída" if new_integrity["valid"] else "Reparação parcial"
-            ),
+            "message": ("Reparação concluída" if new_integrity["valid"] else "Reparação parcial"),
         }
 
 

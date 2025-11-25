@@ -206,11 +206,7 @@ class DecisionTree:
     def _evaluate_category(self, node: DecisionNode, context: Dict[str, Any]) -> str:
         """Evaluate category-based criterion."""
         category = context.get("category")
-        if (
-            isinstance(category, str)
-            and node.categories
-            and category in node.categories
-        ):
+        if isinstance(category, str) and node.categories and category in node.categories:
             return category
         return "unknown"
 
@@ -313,8 +309,7 @@ class DecisionTree:
 
         successful_decisions = sum(1 for _, success in self.decision_history if success)
         avg_confidence = (
-            sum(outcome.confidence for outcome, _ in self.decision_history)
-            / total_decisions
+            sum(outcome.confidence for outcome, _ in self.decision_history) / total_decisions
         )
 
         return {
@@ -379,9 +374,7 @@ class DecisionTreeBuilder:
 
         return self
 
-    def add_edge(
-        self, parent_id: str, child_id: str, edge_label: str
-    ) -> "DecisionTreeBuilder":
+    def add_edge(self, parent_id: str, child_id: str, edge_label: str) -> "DecisionTreeBuilder":
         """Add an edge between nodes."""
         if parent_id not in self.nodes:
             raise ValueError(f"Parent node {parent_id} not found")

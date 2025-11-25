@@ -217,10 +217,7 @@ class TestAbsurdityAcceptor:
         response = acceptor.apply_humor(situation)
 
         assert response.strategy == CopingStrategy.HUMOR
-        assert (
-            "humor" in response.action_taken.lower()
-            or "laugh" in response.action_taken.lower()
-        )
+        assert "humor" in response.action_taken.lower() or "laugh" in response.action_taken.lower()
 
     def test_choose_strategy_high_severity(self) -> None:
         """Test strategy choice for high severity."""
@@ -376,9 +373,7 @@ class TestAbsurdityHandler:
 
         # Confront some absurdities
         handler.confront_absurdity("Absurdity 1", AbsurdityType.LOGICAL, severity=0.7)
-        handler.confront_absurdity(
-            "Absurdity 2", AbsurdityType.EXISTENTIAL, severity=0.8
-        )
+        handler.confront_absurdity("Absurdity 2", AbsurdityType.EXISTENTIAL, severity=0.8)
 
         stats = handler.get_absurdity_statistics()
 

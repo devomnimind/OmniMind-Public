@@ -132,9 +132,7 @@ class TestAlertingSystem:
         mock = Mock()
         mock.log_dir = temp_log_dir
         mock.log_action = Mock(return_value="mock_hash")
-        mock.verify_chain_integrity = Mock(
-            return_value={"valid": True, "message": "OK"}
-        )
+        mock.verify_chain_integrity = Mock(return_value={"valid": True, "message": "OK"})
         return mock
 
     @pytest.fixture
@@ -142,9 +140,7 @@ class TestAlertingSystem:
         """Cria instância do sistema de alertas com mock."""
         return AlertingSystem(audit_system=mock_audit_system)
 
-    def test_initialization(
-        self, alerting_system: AlertingSystem, temp_log_dir: Path
-    ) -> None:
+    def test_initialization(self, alerting_system: AlertingSystem, temp_log_dir: Path) -> None:
         """Testa inicialização do sistema de alertas."""
         assert alerting_system is not None
         assert alerting_system.alerts_dir.exists()
@@ -178,9 +174,7 @@ class TestAlertingSystem:
 
         assert alert.details == details
 
-    def test_create_alert_with_custom_source(
-        self, alerting_system: AlertingSystem
-    ) -> None:
+    def test_create_alert_with_custom_source(self, alerting_system: AlertingSystem) -> None:
         """Testa criação de alerta com fonte customizada."""
         alert = alerting_system.create_alert(
             severity=AlertSeverity.ERROR,
@@ -243,9 +237,7 @@ class TestAlertingSystem:
         assert result is True
         assert alerting_system.active_alerts[alert.id].acknowledged is True
 
-    def test_acknowledge_nonexistent_alert(
-        self, alerting_system: AlertingSystem
-    ) -> None:
+    def test_acknowledge_nonexistent_alert(self, alerting_system: AlertingSystem) -> None:
         """Testa acknowledge de alerta inexistente."""
         result = alerting_system.acknowledge_alert("nonexistent_id")
 
@@ -305,9 +297,7 @@ class TestAlertingSystem:
 
         assert len(active) == 2
 
-    def test_get_active_alerts_by_severity(
-        self, alerting_system: AlertingSystem
-    ) -> None:
+    def test_get_active_alerts_by_severity(self, alerting_system: AlertingSystem) -> None:
         """Testa obtenção de alertas por severidade."""
         alerting_system.create_alert(
             severity=AlertSeverity.INFO,
@@ -322,16 +312,12 @@ class TestAlertingSystem:
             message="Message",
         )
 
-        critical_alerts = alerting_system.get_active_alerts(
-            severity=AlertSeverity.CRITICAL
-        )
+        critical_alerts = alerting_system.get_active_alerts(severity=AlertSeverity.CRITICAL)
 
         assert len(critical_alerts) == 1
         assert critical_alerts[0].severity == AlertSeverity.CRITICAL
 
-    def test_get_active_alerts_by_category(
-        self, alerting_system: AlertingSystem
-    ) -> None:
+    def test_get_active_alerts_by_category(self, alerting_system: AlertingSystem) -> None:
         """Testa obtenção de alertas por categoria."""
         alerting_system.create_alert(
             severity=AlertSeverity.WARNING,
@@ -346,9 +332,7 @@ class TestAlertingSystem:
             message="Message",
         )
 
-        security_alerts = alerting_system.get_active_alerts(
-            category=AlertCategory.SECURITY
-        )
+        security_alerts = alerting_system.get_active_alerts(category=AlertCategory.SECURITY)
 
         assert len(security_alerts) == 1
         assert security_alerts[0].category == AlertCategory.SECURITY
@@ -377,9 +361,7 @@ class TestAlertingSystem:
         assert active[0].id == alert2.id
         assert active[1].id == alert1.id
 
-    def test_get_alert_history(
-        self, alerting_system: AlertingSystem, temp_log_dir: Path
-    ) -> None:
+    def test_get_alert_history(self, alerting_system: AlertingSystem, temp_log_dir: Path) -> None:
         """Testa obtenção de histórico de alertas."""
         # Create and resolve some alerts
         alert1 = alerting_system.create_alert(
@@ -401,9 +383,7 @@ class TestAlertingSystem:
 
         assert len(history) >= 2
 
-    def test_get_alert_history_with_limit(
-        self, alerting_system: AlertingSystem
-    ) -> None:
+    def test_get_alert_history_with_limit(self, alerting_system: AlertingSystem) -> None:
         """Testa histórico com limite."""
         # Create multiple alerts
         for i in range(5):
@@ -479,9 +459,7 @@ class TestAlertingSystem:
 
         assert len(callback_called) == 0
 
-    def test_broadcast_with_failing_callback(
-        self, alerting_system: AlertingSystem
-    ) -> None:
+    def test_broadcast_with_failing_callback(self, alerting_system: AlertingSystem) -> None:
         """Testa broadcast com callback que falha."""
 
         def failing_callback(alert: Alert) -> None:
@@ -500,9 +478,7 @@ class TestAlertingSystem:
         assert alert is not None
 
     @pytest.mark.asyncio
-    async def test_monitor_audit_chain_healthy(
-        self, alerting_system: AlertingSystem
-    ) -> None:
+    async def test_monitor_audit_chain_healthy(self, alerting_system: AlertingSystem) -> None:
         """Testa monitoramento de audit chain saudável."""
         # Run one iteration
         task = asyncio.create_task(alerting_system.monitor_audit_chain(interval=0.1))
@@ -516,9 +492,7 @@ class TestAlertingSystem:
             pass
 
         # Should not create critical alerts
-        critical_alerts = alerting_system.get_active_alerts(
-            severity=AlertSeverity.CRITICAL
-        )
+        critical_alerts = alerting_system.get_active_alerts(severity=AlertSeverity.CRITICAL)
         assert len(critical_alerts) == 0
 
     @pytest.mark.asyncio
@@ -548,9 +522,7 @@ class TestAlertingSystem:
         )
         assert len(critical_alerts) > 0
 
-    def test_load_existing_alerts(
-        self, mock_audit_system: Mock, temp_log_dir: Path
-    ) -> None:
+    def test_load_existing_alerts(self, mock_audit_system: Mock, temp_log_dir: Path) -> None:
         """Testa carregamento de alertas existentes."""
         # Create alerts file manually
         alerts_dir = temp_log_dir / "alerts"

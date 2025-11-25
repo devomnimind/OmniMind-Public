@@ -143,18 +143,14 @@ class ProactiveGoalEngine:
         goals = []
 
         # Try to run pytest with coverage
-        success, output = self._run_command(
-            ["pytest", "--cov=src", "--cov-report=json", "-q"]
-        )
+        success, output = self._run_command(["pytest", "--cov=src", "--cov-report=json", "-q"])
 
         if success and (self.workspace_path / "coverage.json").exists():
             try:
                 with open(self.workspace_path / "coverage.json") as f:
                     coverage_data = json.load(f)
 
-                total_coverage = coverage_data.get("totals", {}).get(
-                    "percent_covered", 0
-                )
+                total_coverage = coverage_data.get("totals", {}).get("percent_covered", 0)
 
                 if total_coverage < 80:
                     goals.append(
@@ -237,9 +233,7 @@ class ProactiveGoalEngine:
         goals = []
 
         # Check for slow imports
-        success, output = self._run_command(
-            ["python", "-X", "importtime", "-c", "import src"]
-        )
+        success, output = self._run_command(["python", "-X", "importtime", "-c", "import src"])
 
         if success and "cumtime" in output:
             # Parse import times
@@ -298,9 +292,7 @@ class ProactiveGoalEngine:
         goals = []
 
         # Run flake8 to check for style issues
-        success, output = self._run_command(
-            ["flake8", "src", "tests", "--count", "--statistics"]
-        )
+        success, output = self._run_command(["flake8", "src", "tests", "--count", "--statistics"])
 
         if output:
             lines = output.strip().split("\n")

@@ -163,9 +163,7 @@ class AgentMessageBus:
         self._subscriptions[agent_id].update(message_types)
         logger.debug(f"Agent {agent_id} subscribed to {message_types}")
 
-    def add_handler(
-        self, agent_id: str, handler: Callable[[AgentMessage], None]
-    ) -> None:
+    def add_handler(self, agent_id: str, handler: Callable[[AgentMessage], None]) -> None:
         """
         Adiciona handler para processar mensagens recebidas.
 
@@ -194,16 +192,12 @@ class AgentMessageBus:
 
         # Verificar se destinatário está inscrito neste tipo de mensagem
         if message.message_type not in self._subscriptions.get(recipient, set()):
-            logger.debug(
-                f"Recipient {recipient} not subscribed to {message.message_type}"
-            )
+            logger.debug(f"Recipient {recipient} not subscribed to {message.message_type}")
             # Ainda assim enviar, deixar agente decidir
 
         # Adicionar à fila do destinatário
         await self._queues[recipient].put(message)
-        logger.debug(
-            f"Message {message.message_id} sent from {message.sender} to {recipient}"
-        )
+        logger.debug(f"Message {message.message_id} sent from {message.sender} to {recipient}")
 
     async def send_and_wait(
         self, message: AgentMessage, timeout: Optional[int] = None
@@ -228,9 +222,7 @@ class AgentMessageBus:
         await self.send_message(message)
 
         try:
-            response = await asyncio.wait_for(
-                future, timeout=timeout or message.timeout_seconds
-            )
+            response = await asyncio.wait_for(future, timeout=timeout or message.timeout_seconds)
             return response
         finally:
             if message.message_id in self._pending_responses:
@@ -254,9 +246,7 @@ class AgentMessageBus:
 
         try:
             if timeout:
-                message = await asyncio.wait_for(
-                    self._queues[agent_id].get(), timeout=timeout
-                )
+                message = await asyncio.wait_for(self._queues[agent_id].get(), timeout=timeout)
             else:
                 message = await self._queues[agent_id].get()
 
@@ -266,9 +256,7 @@ class AgentMessageBus:
                     try:
                         handler(message)
                     except Exception as exc:
-                        logger.exception(
-                            f"Error in handler for agent {agent_id}: {exc}"
-                        )
+                        logger.exception(f"Error in handler for agent {agent_id}: {exc}")
 
             return message
         except asyncio.TimeoutError:
@@ -349,9 +337,7 @@ class AgentMessageBus:
             resolution=resolution,
         )
         self._conflicts.append(conflict)
-        logger.info(
-            f"Conflict resolved: {conflict_type} between {agents} using {resolution}"
-        )
+        logger.info(f"Conflict resolved: {conflict_type} between {agents} using {resolution}")
         return conflict
 
     def get_queue_size(self, agent_id: str) -> int:
@@ -366,9 +352,7 @@ class AgentMessageBus:
             "registered_agents": len(self._queues),
             "pending_responses": len(self._pending_responses),
             "total_conflicts": len(self._conflicts),
-            "queue_sizes": {
-                agent_id: queue.qsize() for agent_id, queue in self._queues.items()
-            },
+            "queue_sizes": {agent_id: queue.qsize() for agent_id, queue in self._queues.items()},
         }
 
 

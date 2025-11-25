@@ -176,9 +176,7 @@ class TestGoalNegotiator:
         human_proposal = {"goal": "original"}
         ai_proposal = {"goal": "refined", "ai_refinements": {"hint": "value"}}
 
-        synthesized = negotiator._synthesize_proposals(
-            human_proposal, ai_proposal, convergence=0.7
-        )
+        synthesized = negotiator._synthesize_proposals(human_proposal, ai_proposal, convergence=0.7)
 
         assert "goal" in synthesized
         # Com convergência > 0.5, deve incorporar refinamentos

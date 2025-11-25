@@ -70,9 +70,7 @@ class BackupLocation:
         data = asdict(self)
         data["region"] = self.region.value
         data["path"] = str(self.path)
-        data["credentials_file"] = (
-            str(self.credentials_file) if self.credentials_file else None
-        )
+        data["credentials_file"] = str(self.credentials_file) if self.credentials_file else None
         return data
 
 
@@ -146,9 +144,7 @@ class GeoDistributedBackupManager:
         self._initialize_default_locations()
         self._load_manifests()
 
-        logger.info(
-            f"Geo-Distributed Backup Manager initialized: {self.backup_base_dir}"
-        )
+        logger.info(f"Geo-Distributed Backup Manager initialized: {self.backup_base_dir}")
 
     def _initialize_default_locations(self) -> None:
         """Initialize default backup locations."""
@@ -190,9 +186,7 @@ class GeoDistributedBackupManager:
         """
         self.locations[location.region] = location
         location.path.mkdir(parents=True, exist_ok=True, mode=0o700)
-        logger.info(
-            f"Backup location added: {location.region.value} -> {location.path}"
-        )
+        logger.info(f"Backup location added: {location.region.value} -> {location.path}")
 
     def create_backup(
         self,
@@ -557,9 +551,7 @@ class GeoDistributedBackupManager:
 
         if len(unique_checksums) > 1:
             report["consistent"] = False
-            report["discrepancies"] = [
-                f"{r.value}: {cs}" for r, cs in checksums.items()
-            ]
+            report["discrepancies"] = [f"{r.value}: {cs}" for r, cs in checksums.items()]
 
         return report
 
@@ -625,9 +617,7 @@ class GeoDistributedBackupManager:
             region = preferred_region
         else:
             # Sort by priority
-            available = [
-                (self.locations[r].priority, r) for r in restore_point.regions_available
-            ]
+            available = [(self.locations[r].priority, r) for r in restore_point.regions_available]
             available.sort()
             if not available:
                 logger.error(f"No region available for restore: {restore_id}")
@@ -735,9 +725,7 @@ class GeoDistributedBackupManager:
         restore_file = self.backup_base_dir / "restore_points.json"
         try:
             with restore_file.open("w") as f:
-                json.dump(
-                    [rp.to_dict() for rp in self.restore_points.values()], f, indent=2
-                )
+                json.dump([rp.to_dict() for rp in self.restore_points.values()], f, indent=2)
         except Exception as e:
             logger.error(f"Failed to save restore points: {e}")
 

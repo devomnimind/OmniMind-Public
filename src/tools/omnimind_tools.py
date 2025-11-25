@@ -94,9 +94,7 @@ class SearchFilesTool(AuditedTool):
 
             files = [f for f in result.stdout.strip().split("\n") if f][:max_results]
 
-            self._audit_action(
-                "search", {"dir": directory, "pattern": pattern}, files, "SUCCESS"
-            )
+            self._audit_action("search", {"dir": directory, "pattern": pattern}, files, "SUCCESS")
             return files
 
         except Exception as e:
@@ -117,9 +115,7 @@ class ListFilesTool(AuditedTool):
             directory = os.path.expanduser(directory)
 
             if not os.path.exists(directory):
-                self._audit_action(
-                    "list", directory, "", "FAILED", "Directory not found"
-                )
+                self._audit_action("list", directory, "", "FAILED", "Directory not found")
                 return []
 
             files = []
@@ -132,9 +128,7 @@ class ListFilesTool(AuditedTool):
                                 "path": path,
                                 "name": item,
                                 "type": "dir" if os.path.isdir(path) else "file",
-                                "size": (
-                                    os.path.getsize(path) if os.path.isfile(path) else 0
-                                ),
+                                "size": (os.path.getsize(path) if os.path.isfile(path) else 0),
                             }
                         )
             else:
@@ -144,9 +138,7 @@ class ListFilesTool(AuditedTool):
                         {
                             "name": item,
                             "type": "dir" if os.path.isdir(path) else "file",
-                            "size": (
-                                os.path.getsize(path) if os.path.isfile(path) else 0
-                            ),
+                            "size": (os.path.getsize(path) if os.path.isfile(path) else 0),
                         }
                     )
 
@@ -174,9 +166,7 @@ class InspectContextTool(AuditedTool):
                 "timestamp": _current_utc_timestamp(),
                 "cpu_percent": psutil.cpu_percent(interval=1),
                 "memory_percent": psutil.virtual_memory().percent,
-                "memory_available_gb": round(
-                    psutil.virtual_memory().available / (1024**3), 2
-                ),
+                "memory_available_gb": round(psutil.virtual_memory().available / (1024**3), 2),
                 "disk_percent": psutil.disk_usage("/").percent,
                 "processes": len(psutil.pids()),
                 "python_version": subprocess.getoutput("python3 --version"),
@@ -230,9 +220,7 @@ class CodebaseSearchTool(AuditedTool):
                                 }
                             )
 
-            self._audit_action(
-                "search_codebase", query, f"{len(matches)} matches", "SUCCESS"
-            )
+            self._audit_action("search_codebase", query, f"{len(matches)} matches", "SUCCESS")
             return matches[:max_results]
 
         except Exception as e:
@@ -336,9 +324,7 @@ class UpdateFileTool(AuditedTool):
                 content = f.read()
 
             if old_content not in content:
-                self._audit_action(
-                    "update", filepath, "", "FAILED", "Pattern not found"
-                )
+                self._audit_action("update", filepath, "", "FAILED", "Pattern not found")
                 return False
 
             new_file_content = content.replace(old_content, new_content, 1)
@@ -452,9 +438,7 @@ class ApplyDiffTool(AuditedTool):
             with open(filepath, "w") as f:
                 f.write("\n".join(diff_lines))
 
-            self._audit_action(
-                "apply_diff", filepath, f"{len(diff_lines)} lines", "SUCCESS"
-            )
+            self._audit_action("apply_diff", filepath, f"{len(diff_lines)} lines", "SUCCESS")
             return True
 
         except Exception as e:
@@ -502,9 +486,7 @@ class PlanTaskTool(AuditedTool):
     def __init__(self) -> None:
         super().__init__("plan_task", ToolCategory.ORCHESTRATION)
 
-    def execute(
-        self, task_description: str, complexity: str = "medium"
-    ) -> Dict[str, Any]:
+    def execute(self, task_description: str, complexity: str = "medium") -> Dict[str, Any]:
         """Cria plano de execução estruturado"""
         plan = {
             "task": task_description,
@@ -581,9 +563,7 @@ class SwitchModeTool(AuditedTool):
             "timestamp": _current_utc_timestamp(),
         }
 
-        self._audit_action(
-            "switch_mode", f"{prev_mode}->{target_mode}", result, "SUCCESS"
-        )
+        self._audit_action("switch_mode", f"{prev_mode}->{target_mode}", result, "SUCCESS")
         return result
 
 
@@ -593,9 +573,7 @@ class AttemptCompletionTool(AuditedTool):
     def __init__(self) -> None:
         super().__init__("attempt_completion", ToolCategory.ORCHESTRATION)
 
-    def execute(
-        self, task_id: str, result: str, success: bool = True
-    ) -> Dict[str, Any]:
+    def execute(self, task_id: str, result: str, success: bool = True) -> Dict[str, Any]:
         """Registra conclusão de tarefa"""
         completion = {
             "task_id": task_id,
@@ -632,16 +610,12 @@ class MCPToolTool(AuditedTool):
                 "timestamp": _current_utc_timestamp(),
             }
 
-            self._audit_action(
-                "mcp_tool", f"{mcp_server}:{tool_name}", result, "SUCCESS"
-            )
+            self._audit_action("mcp_tool", f"{mcp_server}:{tool_name}", result, "SUCCESS")
             return result
 
         except Exception as e:
             error = str(e)
-            self._audit_action(
-                "mcp_tool", f"{mcp_server}:{tool_name}", "", "ERROR", error
-            )
+            self._audit_action("mcp_tool", f"{mcp_server}:{tool_name}", "", "ERROR", error)
             return {"error": error}
 
 
@@ -713,9 +687,7 @@ class EpisodicMemoryTool(AuditedTool):
 
                 # Filtrar por query se fornecida
                 if query:
-                    memories = [
-                        m for m in memories if query.lower() in json.dumps(m).lower()
-                    ]
+                    memories = [m for m in memories if query.lower() in json.dumps(m).lower()]
 
                 self._audit_action(
                     "episodic_retrieve",
@@ -791,9 +763,7 @@ class SecurityAgentTool(AuditedTool):
     def __init__(self, config_path: str = "config/security.yaml"):
         super().__init__("security_agent", ToolCategory.SECURITY)
         self.config_path = config_path
-        self._agent: Optional[Any] = (
-            None  # Lazy initialization to avoid circular import
-        )
+        self._agent: Optional[Any] = None  # Lazy initialization to avoid circular import
         self._monitor_thread: Optional[threading.Thread] = None
 
     @property
@@ -805,9 +775,7 @@ class SecurityAgentTool(AuditedTool):
             self._agent = SecurityAgent(self.config_path)
         return self._agent
 
-    def execute(
-        self, action: str, params: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
+    def execute(self, action: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         try:
             params = params or {}
             result: Dict[str, Any]
@@ -818,11 +786,7 @@ class SecurityAgentTool(AuditedTool):
             elif action == "generate_report":
                 result = {"report": self.agent.generate_security_report()}
             elif action == "check_threat":
-                result = {
-                    "threats": [
-                        event.__dict__ for event in self.agent.event_history[:10]
-                    ]
-                }
+                result = {"threats": [event.__dict__ for event in self.agent.event_history[:10]]}
             else:
                 raise ValueError(f"Unknown action {action}")
             self._audit_action(action, params, result, "SUCCESS")
@@ -835,9 +799,7 @@ class SecurityAgentTool(AuditedTool):
     def _start_monitoring(self) -> Dict[str, str]:
         if self._monitor_thread and self._monitor_thread.is_alive():
             return {"status": "already running"}
-        self._monitor_thread = threading.Thread(
-            target=self._run_monitoring, daemon=True
-        )
+        self._monitor_thread = threading.Thread(target=self._run_monitoring, daemon=True)
         self._monitor_thread.start()
         return {"status": "monitoring_started"}
 
@@ -971,9 +933,7 @@ class CollectFeedbackTool(AuditedTool):
     def execute(self, feedback_type: str, data: Dict[str, Any]) -> bool:
         """Armazena feedback para RLAIF"""
         try:
-            feedback_path = (
-                Path.home() / ".omnimind" / "feedback" / f"{feedback_type}.jsonl"
-            )
+            feedback_path = Path.home() / ".omnimind" / "feedback" / f"{feedback_type}.jsonl"
             feedback_path.parent.mkdir(parents=True, exist_ok=True)
 
             entry = {

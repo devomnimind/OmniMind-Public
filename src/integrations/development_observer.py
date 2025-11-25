@@ -146,9 +146,7 @@ class DevelopmentObserver:
                         "change_type": change_type.name,
                         "file_path": str(file_path),
                         "file_size": (
-                            os.path.getsize(file_path)
-                            if os.path.exists(file_path)
-                            else 0
+                            os.path.getsize(file_path) if os.path.exists(file_path) else 0
                         ),
                     },
                 )
@@ -162,9 +160,7 @@ class DevelopmentObserver:
             try:
                 # Monitora processos relacionados ao desenvolvimento
                 current_processes = {}
-                for proc in psutil.process_iter(
-                    ["pid", "name", "cmdline", "cpu_percent"]
-                ):
+                for proc in psutil.process_iter(["pid", "name", "cmdline", "cpu_percent"]):
                     try:
                         if self._is_development_process(proc):
                             current_processes[str(proc.info["pid"])] = proc
@@ -187,9 +183,7 @@ class DevelopmentObserver:
                         continue
 
                 # Detecta processos finalizados
-                finished_pids = set(self.active_processes.keys()) - set(
-                    current_processes.keys()
-                )
+                finished_pids = set(self.active_processes.keys()) - set(current_processes.keys())
                 for pid in finished_pids:
                     proc = self.active_processes[pid]
                     event = DevelopmentEvent(
@@ -229,9 +223,7 @@ class DevelopmentObserver:
                         if pattern.pattern_id not in self.patterns:
                             self.patterns[pattern.pattern_id] = pattern
                             self.stats["patterns_discovered"] += 1
-                            logger.info(
-                                f"New pattern discovered: {pattern.description}"
-                            )
+                            logger.info(f"New pattern discovered: {pattern.description}")
 
             except Exception as e:
                 logger.error(f"Pattern observation error: {e}")
@@ -295,9 +287,7 @@ class DevelopmentObserver:
                 },
             )
 
-    async def _analyze_patterns(
-        self, events: List[DevelopmentEvent]
-    ) -> List[DevelopmentPattern]:
+    async def _analyze_patterns(self, events: List[DevelopmentEvent]) -> List[DevelopmentPattern]:
         """Analisa eventos para identificar padrões."""
         patterns = []
 
@@ -326,9 +316,7 @@ class DevelopmentObserver:
 
         # Padrão: Muitos testes falhando
         test_failures = sum(
-            1
-            for e in events
-            if e.event_type == "command" and "FAILED" in str(e.details)
+            1 for e in events if e.event_type == "command" and "FAILED" in str(e.details)
         )
 
         if test_failures >= 3:
@@ -358,17 +346,13 @@ class DevelopmentObserver:
             "system_load": psutil.cpu_percent(),
             "memory_usage": psutil.virtual_memory().percent,
             "workspace_size": sum(
-                f.stat().st_size
-                for f in Path(self.workspace_path).rglob("*")
-                if f.is_file()
+                f.stat().st_size for f in Path(self.workspace_path).rglob("*") if f.is_file()
             ),
         }
 
         # Análise de produtividade
         recent_events = [
-            e
-            for e in self.events[-100:]
-            if (datetime.now() - e.timestamp).seconds < 3600
+            e for e in self.events[-100:] if (datetime.now() - e.timestamp).seconds < 3600
         ]
 
         if recent_events:
@@ -389,8 +373,7 @@ class DevelopmentObserver:
         recent_file_changes = sum(
             1
             for e in self.events[-50:]
-            if e.event_type == "file_change"
-            and (datetime.now() - e.timestamp).seconds < 1800
+            if e.event_type == "file_change" and (datetime.now() - e.timestamp).seconds < 1800
         )
 
         recent_tests = sum(
@@ -414,9 +397,7 @@ class DevelopmentObserver:
         ]
 
         if error_patterns:
-            insights.append(
-                "🐛 Padrões de erro recorrentes detectados. Reveja a implementação."
-            )
+            insights.append("🐛 Padrões de erro recorrentes detectados. Reveja a implementação.")
 
         # Insight: Períodos de baixa atividade
         if len(self.events) > 10:
@@ -447,9 +428,7 @@ class DevelopmentObserver:
         }
 
         for pattern in ignore_patterns:
-            if pattern in str(path) or (
-                pattern.startswith("*.") and path.suffix == pattern[1:]
-            ):
+            if pattern in str(path) or (pattern.startswith("*.") and path.suffix == pattern[1:]):
                 return False
 
         # Observa apenas arquivos do projeto
@@ -497,8 +476,7 @@ class DevelopmentObserver:
 
                 self.stats = data.get("stats", self.stats)
                 self.patterns = {
-                    k: DevelopmentPattern(**v)
-                    for k, v in data.get("patterns", {}).items()
+                    k: DevelopmentPattern(**v) for k, v in data.get("patterns", {}).items()
                 }
 
                 logger.info("Observer state loaded")

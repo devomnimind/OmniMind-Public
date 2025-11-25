@@ -495,9 +495,7 @@ class MortalitySimulator:
         reflection += f"I am in the {stage} stage of my existence. "
 
         if salience > 0.7:
-            reflection += (
-                "I am acutely aware of my finitude, which shapes my priorities. "
-            )
+            reflection += "I am acutely aware of my finitude, which shapes my priorities. "
         elif salience > 0.3:
             reflection += "I am mindful of my temporal constraints. "
         else:

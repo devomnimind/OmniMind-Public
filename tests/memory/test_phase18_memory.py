@@ -28,9 +28,7 @@ class TestSemanticMemory:
         memory.store_concept("Cat")
         memory.store_concept("Animal")
 
-        success = memory.associate_concepts(
-            "Cat", "Animal", "is_a", bidirectional=False
-        )
+        success = memory.associate_concepts("Cat", "Animal", "is_a", bidirectional=False)
         assert success is True
 
         related = memory.get_related_concepts("Cat")
@@ -134,9 +132,7 @@ class TestMemoryReplay:
             {"id": 3, "significance": 0.5},
         ]
 
-        selected = replay.select_episodes_for_replay(
-            episodes, count=2, strategy="significance"
-        )
+        selected = replay.select_episodes_for_replay(episodes, count=2, strategy="significance")
 
         assert len(selected) == 2
         assert selected[0]["id"] == 2  # Highest significance

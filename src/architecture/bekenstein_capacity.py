@@ -39,9 +39,7 @@ class BekensteinArchitect:
         """Initialize Bekenstein architect."""
         logger.info("BekensteinArchitect initialized")
 
-    def compute_max_parameters(
-        self, compute_budget: float, spatial_extent: float
-    ) -> int:
+    def compute_max_parameters(self, compute_budget: float, spatial_extent: float) -> int:
         """
         Compute maximum parameters from Bekenstein bound.
 

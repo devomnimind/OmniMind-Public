@@ -129,9 +129,7 @@ class WebhookReceiver:
             config: Webhook configuration
         """
         self.config = config
-        self._handlers: Dict[WebhookEventType, List[Callable[[WebhookEvent], None]]] = (
-            {}
-        )
+        self._handlers: Dict[WebhookEventType, List[Callable[[WebhookEvent], None]]] = {}
 
         logger.info(
             "webhook_receiver_initialized",
@@ -375,13 +373,9 @@ class WebhookSender:
                         error=str(e),
                     )
 
-        raise WebhookError(
-            f"Failed to send webhook after {max_retries} retries"
-        ) from last_error
+        raise WebhookError(f"Failed to send webhook after {max_retries} retries") from last_error
 
-    def _make_request(
-        self, url: str, body: str, headers: Dict[str, str]
-    ) -> Dict[str, Any]:
+    def _make_request(self, url: str, body: str, headers: Dict[str, str]) -> Dict[str, Any]:
         """Make HTTP request to webhook endpoint.
 
         Args:
@@ -403,9 +397,7 @@ class WebhookSender:
         )
 
         try:
-            with urllib.request.urlopen(
-                request, timeout=self.config.timeout_seconds
-            ) as response:
+            with urllib.request.urlopen(request, timeout=self.config.timeout_seconds) as response:
                 return {
                     "status_code": response.status,
                     "body": response.read().decode("utf-8"),

@@ -165,15 +165,9 @@ class TestAdvancedRepair:
         """Testa aplicação de múltiplos patches."""
         repair = AdvancedRepair()
         patches = {
-            "repair_x": SynthesizedComponent(
-                name="repair_x", source_code="# Repair X code"
-            ),
-            "repair_y": SynthesizedComponent(
-                name="repair_y", source_code="# Repair Y code"
-            ),
-            "repair_z": SynthesizedComponent(
-                name="repair_z", source_code="# Repair Z code"
-            ),
+            "repair_x": SynthesizedComponent(name="repair_x", source_code="# Repair X code"),
+            "repair_y": SynthesizedComponent(name="repair_y", source_code="# Repair Y code"),
+            "repair_z": SynthesizedComponent(name="repair_z", source_code="# Repair Z code"),
         }
 
         applied = repair.apply_patches(patches)

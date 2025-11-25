@@ -278,9 +278,7 @@ class TestPolicyGradientAgent:
         """Testa inicialização do PolicyGradientAgent."""
         from src.decision_making.reinforcement_learning import PolicyGradientAgent
 
-        agent = PolicyGradientAgent(
-            name="pg_agent", learning_rate=0.01, discount_factor=0.95
-        )
+        agent = PolicyGradientAgent(name="pg_agent", learning_rate=0.01, discount_factor=0.95)
 
         assert agent.name == "pg_agent"
         assert agent.learning_rate == 0.01

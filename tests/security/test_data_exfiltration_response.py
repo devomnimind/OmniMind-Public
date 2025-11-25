@@ -59,18 +59,10 @@ class TestDataExfiltrationPlaybook:
             patch.object(
                 playbook, "_detect_anomalous_transfer", new_callable=AsyncMock
             ) as mock_detect,
-            patch.object(
-                playbook, "_block_connection", new_callable=AsyncMock
-            ) as mock_block,
-            patch.object(
-                playbook, "_throttle_bandwidth", new_callable=AsyncMock
-            ) as mock_throttle,
-            patch.object(
-                playbook, "_preserve_logs", new_callable=AsyncMock
-            ) as mock_preserve,
-            patch.object(
-                playbook, "_notify_team", new_callable=AsyncMock
-            ) as mock_notify,
+            patch.object(playbook, "_block_connection", new_callable=AsyncMock) as mock_block,
+            patch.object(playbook, "_throttle_bandwidth", new_callable=AsyncMock) as mock_throttle,
+            patch.object(playbook, "_preserve_logs", new_callable=AsyncMock) as mock_preserve,
+            patch.object(playbook, "_notify_team", new_callable=AsyncMock) as mock_notify,
         ):
 
             # Configure mocks
@@ -167,9 +159,7 @@ class TestDataExfiltrationPlaybook:
             assert result is not None
 
     @pytest.mark.asyncio
-    async def test_block_connection_no_remote_ip(
-        self, playbook: DataExfiltrationPlaybook
-    ) -> None:
+    async def test_block_connection_no_remote_ip(self, playbook: DataExfiltrationPlaybook) -> None:
         """Testa bloqueio de conexão sem IP remoto."""
         mock_event = MockEvent(details={})
 
@@ -205,9 +195,7 @@ class TestDataExfiltrationPlaybook:
                 assert mock_run.called or mock_skipped.called
 
     @pytest.mark.asyncio
-    async def test_throttle_bandwidth_available(
-        self, playbook: DataExfiltrationPlaybook
-    ) -> None:
+    async def test_throttle_bandwidth_available(self, playbook: DataExfiltrationPlaybook) -> None:
         """Testa throttling de bandwidth quando tc disponível."""
         with (
             patch(
@@ -230,9 +218,7 @@ class TestDataExfiltrationPlaybook:
             assert result is not None
 
     @pytest.mark.asyncio
-    async def test_throttle_bandwidth_unavailable(
-        self, playbook: DataExfiltrationPlaybook
-    ) -> None:
+    async def test_throttle_bandwidth_unavailable(self, playbook: DataExfiltrationPlaybook) -> None:
         """Testa throttling quando tc não disponível."""
         with patch(
             "src.security.playbooks.data_exfiltration_response.command_available",
@@ -279,9 +265,7 @@ class TestDataExfiltrationPlaybook:
             assert "/bin/echo" in call_args
             assert result is not None
 
-    def test_write_artifact(
-        self, playbook: DataExfiltrationPlaybook, tmp_path: Any
-    ) -> None:
+    def test_write_artifact(self, playbook: DataExfiltrationPlaybook, tmp_path: Any) -> None:
         """Testa escrita de artefato forense."""
         import json
 

@@ -78,9 +78,7 @@ class TestBiasDetector:
         detections = detector.detect_bias(result)
 
         # Deve detectar automation bias
-        automation_biases = [
-            d for d in detections if d.bias_type == BiasType.AUTOMATION_BIAS
-        ]
+        automation_biases = [d for d in detections if d.bias_type == BiasType.AUTOMATION_BIAS]
 
         if automation_biases:
             assert automation_biases[0].confidence > 0.8

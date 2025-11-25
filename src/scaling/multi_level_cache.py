@@ -511,9 +511,7 @@ class MultiLevelCache:
             "l2": self._l2.get_stats().to_dict(),
             "l3": self._l3.get_stats().to_dict(),
             "total_hits": (
-                self._l1.get_stats().hits
-                + self._l2.get_stats().hits
-                + self._l3.get_stats().hits
+                self._l1.get_stats().hits + self._l2.get_stats().hits + self._l3.get_stats().hits
             ),
             "total_misses": (
                 self._l1.get_stats().misses

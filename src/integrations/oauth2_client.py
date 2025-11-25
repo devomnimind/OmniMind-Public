@@ -363,11 +363,7 @@ class OAuth2Client:
     @staticmethod
     def _generate_code_verifier() -> str:
         """Generate PKCE code verifier."""
-        return (
-            base64.urlsafe_b64encode(secrets.token_bytes(32))
-            .decode("utf-8")
-            .rstrip("=")
-        )
+        return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode("utf-8").rstrip("=")
 
     @staticmethod
     def _generate_code_challenge(verifier: str) -> str:

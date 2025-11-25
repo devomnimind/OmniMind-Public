@@ -158,23 +158,17 @@ class AdvancedSelfReflection:
 
             if "error" not in patterns:
                 success_rate = patterns.get("success_rate", 0)
-                observations.append(
-                    f"Success rate over {lookback_hours}h: {success_rate:.2%}"
-                )
+                observations.append(f"Success rate over {lookback_hours}h: {success_rate:.2%}")
 
                 if success_rate >= 0.9:
                     insights.append(
                         "Decision-making is highly effective; maintain current approach"
                     )
                 elif success_rate >= 0.7:
-                    insights.append(
-                        "Decision-making is good but has room for improvement"
-                    )
+                    insights.append("Decision-making is good but has room for improvement")
                     action_items.append("Analyze failure patterns for optimization")
                 else:
-                    insights.append(
-                        "Decision-making effectiveness needs significant improvement"
-                    )
+                    insights.append("Decision-making effectiveness needs significant improvement")
                     action_items.append("Conduct root cause analysis on failures")
                     action_items.append("Review decision criteria and thresholds")
 
@@ -184,9 +178,7 @@ class AdvancedSelfReflection:
                     observations.append(
                         f"Most used tools: {', '.join(t[0] for t in most_used[:3])}"
                     )
-                    insights.append(
-                        "Tool usage shows clear preferences; consider diversification"
-                    )
+                    insights.append("Tool usage shows clear preferences; consider diversification")
 
         elif focus_area == "performance":
             # Analyze execution performance
@@ -205,12 +197,8 @@ class AdvancedSelfReflection:
                     observations.append(
                         f"Slowest operations: {', '.join(t[0] for t in slow_tools)}"
                     )
-                    insights.append(
-                        "Performance bottlenecks identified in specific tools"
-                    )
-                    action_items.append(
-                        "Optimize slow tools or find faster alternatives"
-                    )
+                    insights.append("Performance bottlenecks identified in specific tools")
+                    action_items.append("Optimize slow tools or find faster alternatives")
 
         elif focus_area == "learning":
             # Analyze learning and adaptation
@@ -223,12 +211,8 @@ class AdvancedSelfReflection:
                 if total_failures > 0:
                     common_errors = failure_patterns.get("common_errors", [])
                     if common_errors:
-                        observations.append(
-                            f"Most common error: {common_errors[0][0][:50]}"
-                        )
-                        insights.append(
-                            "Recurring errors indicate learning opportunity"
-                        )
+                        observations.append(f"Most common error: {common_errors[0][0][:50]}")
+                        insights.append("Recurring errors indicate learning opportunity")
                         action_items.append("Develop mitigation for common errors")
                 else:
                     insights.append("No failures detected; system functioning well")
@@ -455,8 +439,7 @@ class AdvancedSelfReflection:
         avg_confidence = 0.0
         if total_introspections > 0:
             avg_confidence = (
-                sum(log.confidence for log in self._introspection_logs)
-                / total_introspections
+                sum(log.confidence for log in self._introspection_logs) / total_introspections
             )
 
         # Get latest quality metrics

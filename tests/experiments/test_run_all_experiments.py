@@ -21,9 +21,7 @@ class TestRunAllExperiments:
     def test_run_all_experiments_structure(self) -> None:
         """Testa que run_all_experiments retorna estrutura correta."""
         with (
-            patch(
-                "src.experiments.run_all_experiments.experiment_phi_integration"
-            ) as mock_phi,
+            patch("src.experiments.run_all_experiments.experiment_phi_integration") as mock_phi,
             patch(
                 "src.experiments.run_all_experiments.experiment_self_awareness"
             ) as mock_awareness,
@@ -57,9 +55,7 @@ class TestRunAllExperiments:
     def test_run_all_experiments_calls_experiments(self) -> None:
         """Testa que todos os experimentos são chamados."""
         with (
-            patch(
-                "src.experiments.run_all_experiments.experiment_phi_integration"
-            ) as mock_phi,
+            patch("src.experiments.run_all_experiments.experiment_phi_integration") as mock_phi,
             patch(
                 "src.experiments.run_all_experiments.experiment_self_awareness"
             ) as mock_awareness,
@@ -219,9 +215,7 @@ class TestMain:
             patch(
                 "src.experiments.run_all_experiments.run_all_consciousness_experiments"
             ) as mock_consciousness,
-            patch(
-                "src.experiments.run_all_experiments.run_all_ethics_experiments"
-            ) as mock_ethics,
+            patch("src.experiments.run_all_experiments.run_all_ethics_experiments") as mock_ethics,
             patch("builtins.print") as mock_print,
         ):
 
@@ -237,9 +231,7 @@ class TestMain:
     def test_main_prints_header(self) -> None:
         """Testa que main imprime cabeçalho."""
         with (
-            patch(
-                "src.experiments.run_all_experiments.run_all_consciousness_experiments"
-            ),
+            patch("src.experiments.run_all_experiments.run_all_consciousness_experiments"),
             patch("src.experiments.run_all_experiments.run_all_ethics_experiments"),
             patch("builtins.print") as mock_print,
         ):
@@ -254,9 +246,7 @@ class TestMain:
     def test_main_prints_references(self) -> None:
         """Testa que main imprime referências."""
         with (
-            patch(
-                "src.experiments.run_all_experiments.run_all_consciousness_experiments"
-            ),
+            patch("src.experiments.run_all_experiments.run_all_consciousness_experiments"),
             patch("src.experiments.run_all_experiments.run_all_ethics_experiments"),
             patch("builtins.print") as mock_print,
         ):
@@ -265,17 +255,13 @@ class TestMain:
 
             # Check that references were printed
             print_calls = [str(call) for call in mock_print.call_args_list]
-            references_printed = any(
-                "concienciaetica-autonomia.md" in call for call in print_calls
-            )
+            references_printed = any("concienciaetica-autonomia.md" in call for call in print_calls)
             assert references_printed
 
     def test_main_prints_completion_message(self) -> None:
         """Testa que main imprime mensagem de conclusão."""
         with (
-            patch(
-                "src.experiments.run_all_experiments.run_all_consciousness_experiments"
-            ),
+            patch("src.experiments.run_all_experiments.run_all_consciousness_experiments"),
             patch("src.experiments.run_all_experiments.run_all_ethics_experiments"),
             patch("builtins.print") as mock_print,
         ):

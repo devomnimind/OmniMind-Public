@@ -120,9 +120,7 @@ class TestMultiHeadThermodynamicAttention:
 
     def test_different_head_temperatures(self) -> None:
         """Test that heads have different temperatures."""
-        attention = MultiHeadThermodynamicAttention(
-            embed_dim=32, num_heads=4, base_temperature=1.0
-        )
+        attention = MultiHeadThermodynamicAttention(embed_dim=32, num_heads=4, base_temperature=1.0)
 
         temperatures = [head.temperature for head in attention.attention_heads]
 

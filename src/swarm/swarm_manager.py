@@ -78,8 +78,7 @@ class SwarmManager:
         # Valida número de agentes
         if num_particles > self.config.max_agents:
             raise ValueError(
-                f"num_particles ({num_particles}) excede "
-                f"max_agents ({self.config.max_agents})"
+                f"num_particles ({num_particles}) excede " f"max_agents ({self.config.max_agents})"
             )
 
         # Estima uso de memória
@@ -138,8 +137,7 @@ class SwarmManager:
         # Valida número de agentes
         if num_ants > self.config.max_agents:
             raise ValueError(
-                f"num_ants ({num_ants}) excede "
-                f"max_agents ({self.config.max_agents})"
+                f"num_ants ({num_ants}) excede " f"max_agents ({self.config.max_agents})"
             )
 
         num_cities = len(distance_matrix)
@@ -256,16 +254,14 @@ class SwarmManager:
 
         if pso_runs:
             summary["pso"] = {
-                "avg_iterations": sum(r["iterations"] for r in pso_runs)
-                / len(pso_runs),
+                "avg_iterations": sum(r["iterations"] for r in pso_runs) / len(pso_runs),
                 "avg_time": sum(r["execution_time"] for r in pso_runs) / len(pso_runs),
                 "best_value": min(r["best_value"] for r in pso_runs),
             }
 
         if aco_runs:
             summary["aco"] = {
-                "avg_iterations": sum(r["iterations"] for r in aco_runs)
-                / len(aco_runs),
+                "avg_iterations": sum(r["iterations"] for r in aco_runs) / len(aco_runs),
                 "avg_time": sum(r["execution_time"] for r in aco_runs) / len(aco_runs),
                 "best_value": min(r["best_value"] for r in aco_runs),
             }

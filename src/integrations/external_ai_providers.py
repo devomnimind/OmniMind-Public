@@ -65,9 +65,7 @@ class TaskSpec:
     task_type: TaskType
     prompt: str
     context: Optional[Dict[str, Any]] = None
-    files: Optional[List[Dict[str, str]]] = (
-        None  # [{"name": "file.py", "content": "..."}]
-    )
+    files: Optional[List[Dict[str, str]]] = None  # [{"name": "file.py", "content": "..."}]
     metadata: Optional[Dict[str, Any]] = None
     timeout_seconds: int = 300
 
@@ -118,9 +116,7 @@ class ExternalAIProvider(ABC):
     async def _ensure_session(self) -> aiohttp.ClientSession:
         """Garante que há uma sessão HTTP ativa"""
         if self.session is None or self.session.closed:
-            self.session = aiohttp.ClientSession(
-                timeout=aiohttp.ClientTimeout(total=30)
-            )
+            self.session = aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=30))
         return self.session
 
     def _create_rate_limiter(self) -> Dict[str, Any]:
@@ -148,10 +144,7 @@ class ExternalAIProvider(ABC):
             self.rate_limiter["last_request_time"] = current_time
 
         # Verifica limites
-        if (
-            self.rate_limiter["request_count"]
-            >= self.rate_limiter["requests_per_minute"]
-        ):
+        if self.rate_limiter["request_count"] >= self.rate_limiter["requests_per_minute"]:
             return False
 
         if (
@@ -190,9 +183,7 @@ class GeminiProvider(ExternalAIProvider):
         if not self.api_key:
             raise ValueError(f"{api_key_env} não configurada")
 
-        self.base_url = self.config.get(
-            "api_base_url", "https://generativelanguage.googleapis.com"
-        )
+        self.base_url = self.config.get("api_base_url", "https://generativelanguage.googleapis.com")
 
         logger.info("Gemini provider initialized")
 
@@ -250,9 +241,7 @@ class GeminiProvider(ExternalAIProvider):
                 )
 
         except Exception as e:
-            logger.error(
-                "Gemini task execution failed", error=str(e), task_id=task.task_id
-            )
+            logger.error("Gemini task execution failed", error=str(e), task_id=task.task_id)
             return TaskResult(
                 task_id=task.task_id,
                 success=False,
@@ -289,8 +278,7 @@ class GeminiProvider(ExternalAIProvider):
             - self.rate_limiter["request_count"],
             "tokens_remaining": self.rate_limiter["tokens_per_minute"]
             - self.rate_limiter["token_count"],
-            "reset_in_seconds": 60
-            - (time.time() - self.rate_limiter["last_request_time"]),
+            "reset_in_seconds": 60 - (time.time() - self.rate_limiter["last_request_time"]),
         }
 
     def _prepare_gemini_payload(self, task: TaskSpec) -> Dict[str, Any]:
@@ -300,9 +288,7 @@ class GeminiProvider(ExternalAIProvider):
 
         if task.files:
             for file_info in task.files:
-                parts.append(
-                    {"text": f"\n--- {file_info['name']} ---\n{file_info['content']}"}
-                )
+                parts.append({"text": f"\n--- {file_info['name']} ---\n{file_info['content']}"})
 
         return {
             "contents": [{"parts": parts}],
@@ -442,9 +428,7 @@ class CopilotProvider(ExternalAIProvider):
                 )
 
         except Exception as e:
-            logger.error(
-                "Copilot task execution failed", error=str(e), task_id=task.task_id
-            )
+            logger.error("Copilot task execution failed", error=str(e), task_id=task.task_id)
             return TaskResult(
                 task_id=task.task_id,
                 success=False,
@@ -478,8 +462,7 @@ class CopilotProvider(ExternalAIProvider):
         return {
             "requests_remaining": self.rate_limiter["requests_per_minute"]
             - self.rate_limiter["request_count"],
-            "reset_in_seconds": 60
-            - (time.time() - self.rate_limiter["last_request_time"]),
+            "reset_in_seconds": 60 - (time.time() - self.rate_limiter["last_request_time"]),
         }
 
     async def _get_oauth_token(self) -> str:
@@ -499,9 +482,7 @@ class CopilotProvider(ExternalAIProvider):
 
         # Adiciona contexto de arquivos se houver
         if task.files:
-            context = "\n\n".join(
-                [f"File: {f['name']}\n{f['content']}" for f in task.files]
-            )
+            context = "\n\n".join([f"File: {f['name']}\n{f['content']}" for f in task.files])
             messages.insert(0, {"role": "system", "content": f"Context:\n{context}"})
 
         return {
@@ -609,9 +590,7 @@ class OpenRouterProvider(ExternalAIProvider):
                 )
 
         except Exception as e:
-            logger.error(
-                "OpenRouter task execution failed", error=str(e), task_id=task.task_id
-            )
+            logger.error("OpenRouter task execution failed", error=str(e), task_id=task.task_id)
             return TaskResult(
                 task_id=task.task_id,
                 success=False,
@@ -648,11 +627,8 @@ class OpenRouterProvider(ExternalAIProvider):
         return {
             "requests_remaining": self.rate_limiter["requests_per_minute"]
             - self.rate_limiter["request_count"],
-            "credits_remaining": self.config.get("rate_limits", {}).get(
-                "credits_per_month", 500
-            ),
-            "reset_in_seconds": 60
-            - (time.time() - self.rate_limiter["last_request_time"]),
+            "credits_remaining": self.config.get("rate_limits", {}).get("credits_per_month", 500),
+            "reset_in_seconds": 60 - (time.time() - self.rate_limiter["last_request_time"]),
         }
 
     def _select_model(self, task_type: TaskType) -> str:
@@ -673,9 +649,7 @@ class OpenRouterProvider(ExternalAIProvider):
 
         # Adiciona contexto de arquivos se houver
         if task.files:
-            context = "\n\n".join(
-                [f"File: {f['name']}\n{f['content']}" for f in task.files]
-            )
+            context = "\n\n".join([f"File: {f['name']}\n{f['content']}" for f in task.files])
             messages.insert(0, {"role": "system", "content": f"Context:\n{context}"})
 
         return {

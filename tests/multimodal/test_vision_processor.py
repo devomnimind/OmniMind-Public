@@ -163,9 +163,7 @@ class TestVideoFrame:
 
         # Invalid motion score
         with pytest.raises(ValueError, match="Motion score must be"):
-            VideoFrame(
-                frame_number=0, timestamp=0.0, image_hash="test", motion_score=1.5
-            )
+            VideoFrame(frame_number=0, timestamp=0.0, image_hash="test", motion_score=1.5)
 
 
 class TestVisionFeatures:

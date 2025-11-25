@@ -40,9 +40,7 @@ class TestMemoryMCPServer:
     def test_store_memory_basic(self) -> None:
         """Testa armazenamento básico de memória."""
         server = MemoryMCPServer()
-        result = server.store_memory(
-            content="Test memory content", metadata={"type": "test"}
-        )
+        result = server.store_memory(content="Test memory content", metadata={"type": "test"})
         assert result is not None
         assert isinstance(result, dict)
         assert "id" in result
@@ -60,9 +58,7 @@ class TestMemoryMCPServer:
             "priority": 5,
             "source": "user_interaction",
         }
-        result = server.store_memory(
-            content="Complex memory with rich metadata", metadata=metadata
-        )
+        result = server.store_memory(content="Complex memory with rich metadata", metadata=metadata)
         assert result["status"] == "stored"
         assert result["id"] == "mem_stub_123"
 

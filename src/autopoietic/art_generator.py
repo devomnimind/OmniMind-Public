@@ -141,8 +141,7 @@ class AestheticEvaluator:
 
             # Look for element near mirror position
             has_mirror = any(
-                ((px - mirror_x) ** 2 + (py - mirror_y) ** 2) ** 0.5 < 0.1
-                for px, py in positions
+                ((px - mirror_x) ** 2 + (py - mirror_y) ** 2) ** 0.5 < 0.1 for px, py in positions
             )
 
             if has_mirror:
@@ -168,9 +167,7 @@ class AestheticEvaluator:
 
         # Extract colors if available
         colors = [
-            e.properties.get("color", "")
-            for e in art_piece.elements
-            if "color" in e.properties
+            e.properties.get("color", "") for e in art_piece.elements if "color" in e.properties
         ]
 
         if not colors:
@@ -210,9 +207,7 @@ class AestheticEvaluator:
         # Measure diversity of properties
         types = set(e.element_type for e in art_piece.elements)
         colors = set(
-            e.properties.get("color", "")
-            for e in art_piece.elements
-            if "color" in e.properties
+            e.properties.get("color", "") for e in art_piece.elements if "color" in e.properties
         )
 
         # More diversity = more contrast
@@ -644,9 +639,7 @@ class ArtGenerator:
             }
 
         total = len(self.gallery)
-        avg_score = (
-            sum(p.aesthetic_scores.get("overall", 0.0) for p in self.gallery) / total
-        )
+        avg_score = sum(p.aesthetic_scores.get("overall", 0.0) for p in self.gallery) / total
 
         # Count by style
         style_counts: Dict[str, int] = {}
@@ -658,12 +651,8 @@ class ArtGenerator:
             "total_pieces": total,
             "avg_overall_score": avg_score,
             "styles": style_counts,
-            "avg_complexity": sum(
-                p.aesthetic_scores.get("complexity", 0.0) for p in self.gallery
-            )
+            "avg_complexity": sum(p.aesthetic_scores.get("complexity", 0.0) for p in self.gallery)
             / total,
-            "avg_harmony": sum(
-                p.aesthetic_scores.get("harmony", 0.0) for p in self.gallery
-            )
+            "avg_harmony": sum(p.aesthetic_scores.get("harmony", 0.0) for p in self.gallery)
             / total,
         }

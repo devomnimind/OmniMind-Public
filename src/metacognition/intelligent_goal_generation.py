@@ -109,14 +109,8 @@ class CodeAnalyzer:
             tree = ast.parse(source)
 
             # Extract information
-            classes = [
-                node.name for node in ast.walk(tree) if isinstance(node, ast.ClassDef)
-            ]
-            functions = [
-                node.name
-                for node in ast.walk(tree)
-                if isinstance(node, ast.FunctionDef)
-            ]
+            classes = [node.name for node in ast.walk(tree) if isinstance(node, ast.ClassDef)]
+            functions = [node.name for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
             imports = []
             for node in ast.walk(tree):
                 if isinstance(node, ast.Import):
@@ -270,10 +264,7 @@ class ImpactPredictor:
 
         # Adjust based on repository state
         if repository_analysis.complexity_hotspots:
-            if (
-                "refactor" in goal_description.lower()
-                or "optimize" in goal_description.lower()
-            ):
+            if "refactor" in goal_description.lower() or "optimize" in goal_description.lower():
                 impact.performance_impact += 0.1
                 impact.maintainability_impact += 0.2
 
@@ -327,9 +318,7 @@ class ImpactPredictor:
 
         return 5.0  # Default medium effort
 
-    def learn_from_goal(
-        self, goal: Dict[str, Any], actual_impact: Dict[str, float]
-    ) -> None:
+    def learn_from_goal(self, goal: Dict[str, Any], actual_impact: Dict[str, float]) -> None:
         """Learn from completed goal to improve predictions.
 
         Args:
@@ -384,22 +373,16 @@ class IntelligentGoalEngine:
         goals_with_impact.extend(
             self._generate_complexity_reduction_goals(repo_analysis, current_metrics)
         )
+        goals_with_impact.extend(self._generate_test_coverage_goals(repo_analysis, current_metrics))
         goals_with_impact.extend(
-            self._generate_test_coverage_goals(repo_analysis, current_metrics)
-        )
-        goals_with_impact.extend(
-            self._generate_architecture_improvement_goals(
-                repo_analysis, current_metrics
-            )
+            self._generate_architecture_improvement_goals(repo_analysis, current_metrics)
         )
         goals_with_impact.extend(
             self._generate_security_hardening_goals(repo_analysis, current_metrics)
         )
 
         # Sort by impact score
-        goals_with_impact.sort(
-            key=lambda x: x["impact_metrics"]["total_impact"], reverse=True
-        )
+        goals_with_impact.sort(key=lambda x: x["impact_metrics"]["total_impact"], reverse=True)
 
         logger.info(f"Generated {len(goals_with_impact)} intelligent goals")
 
@@ -431,9 +414,7 @@ class IntelligentGoalEngine:
                         f"threshold of 10. Refactoring will improve maintainability."
                     ),
                     category=GoalCategory.QUALITY,
-                    priority=(
-                        GoalPriority.HIGH if complexity > 20 else GoalPriority.MEDIUM
-                    ),
+                    priority=(GoalPriority.HIGH if complexity > 20 else GoalPriority.MEDIUM),
                     estimated_effort=f"{max(1, complexity // 5)} days",
                     acceptance_criteria=[
                         "Reduce complexity to <10",
@@ -586,8 +567,7 @@ class IntelligentGoalEngine:
         for module_path, module_info in analysis.modules.items():
             # This is a simplified check - would need more sophisticated analysis
             if any(
-                keyword in str(module_info.get("functions", []))
-                for keyword in security_keywords
+                keyword in str(module_info.get("functions", [])) for keyword in security_keywords
             ):
                 modules_with_security_concerns.append(module_path)
 
@@ -624,9 +604,7 @@ class IntelligentGoalEngine:
 
         return goals
 
-    def _detect_circular_dependencies(
-        self, dependencies: Dict[str, Set[str]]
-    ) -> List[List[str]]:
+    def _detect_circular_dependencies(self, dependencies: Dict[str, Set[str]]) -> List[List[str]]:
         """Detect circular dependencies in module graph.
 
         Args:

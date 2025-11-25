@@ -87,7 +87,5 @@ class PrivilegeEscalationPlaybook:
 
     async def _notify_admin(self, event: Any) -> CommandResult:
         logger.debug("   [6/6] Alerting administrators")
-        message = (
-            f"Privilege escalation detected: {getattr(event, 'description', 'unknown')}"
-        )
+        message = f"Privilege escalation detected: {getattr(event, 'description', 'unknown')}"
         return await run_command_async(["/bin/echo", message])

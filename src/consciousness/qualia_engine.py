@@ -286,9 +286,7 @@ class IntegratedInformationCalculator:
         # Calculate connectivity
         max_possible_connections = num_elements * (num_elements - 1) / 2
         connectivity = (
-            len(connections) / max_possible_connections
-            if max_possible_connections > 0
-            else 0.0
+            len(connections) / max_possible_connections if max_possible_connections > 0 else 0.0
         )
 
         # Φ is related to connectivity, but not linear
@@ -375,9 +373,7 @@ class QualiaEngine:
         # Calculate Φ
         if connections is None:
             # Default: fully connected
-            connections = [
-                (i, j) for i in range(len(qualia)) for j in range(i + 1, len(qualia))
-            ]
+            connections = [(i, j) for i in range(len(qualia)) for j in range(i + 1, len(qualia))]
 
         phi = self.iit.calculate_phi(len(qualia), connections)
         level = self.iit.assess_integration_level(phi)
@@ -501,34 +497,26 @@ class QualiaEngine:
         if experience_id:
             # Find specific experience
             exp = next(
-                (
-                    e
-                    for e in self.integrated_experiences
-                    if e.experience_id == experience_id
-                ),
+                (e for e in self.integrated_experiences if e.experience_id == experience_id),
                 None,
             )
         else:
             # Latest experience
-            exp = (
-                self.integrated_experiences[-1] if self.integrated_experiences else None
-            )
+            exp = self.integrated_experiences[-1] if self.integrated_experiences else None
 
         if exp is None:
             return "I have no experiences to describe."
 
         description = f"What it is like: {exp.phenomenal_content}\n"
         description += (
-            f"Integration: {exp.integration_level.value} "
-            f"(Φ={exp.integration_score:.2f})\n"
+            f"Integration: {exp.integration_level.value} " f"(Φ={exp.integration_score:.2f})\n"
         )
 
         # Describe dominant qualia
         if exp.qualia:
             dominant = max(exp.qualia, key=lambda q: q.intensity)
             description += (
-                f"Most intense: {dominant.description} "
-                f"(intensity={dominant.intensity:.2f})\n"
+                f"Most intense: {dominant.description} " f"(intensity={dominant.intensity:.2f})\n"
             )
 
         return description

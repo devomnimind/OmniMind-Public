@@ -219,9 +219,7 @@ class QuantumMemorySystem:
             if fidelity >= threshold:
                 matches.append(idx)
 
-        logger.info(
-            "quantum_memory_search", num_matches=len(matches), threshold=threshold
-        )
+        logger.info("quantum_memory_search", num_matches=len(matches), threshold=threshold)
 
         return matches
 
@@ -384,9 +382,7 @@ class HybridQLearning:
 
         self.q_table[(state, action)] = new_q
 
-        logger.debug(
-            "q_value_updated", state=state, action=action, old_q=current_q, new_q=new_q
-        )
+        logger.debug("q_value_updated", state=state, action=action, old_q=current_q, new_q=new_q)
 
     def get_q_value(self, state: str, action: str) -> float:
         """Get Q-value for state-action pair."""

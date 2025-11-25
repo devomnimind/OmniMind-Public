@@ -44,9 +44,7 @@ class EthicalDecision:
     reasoning: str
     framework_used: EthicalFramework
     confidence: float  # 0.0-1.0
-    timestamp: str = field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat()
-    )
+    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     alternatives_suggested: List[str] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
 
@@ -156,35 +154,23 @@ class EthicsAgent:
                     reasoning="High/critical impact actions require human oversight",
                     framework_used=framework,
                     confidence=1.0,
-                    alternatives_suggested=self._suggest_alternatives(
-                        action_description, context
-                    ),
+                    alternatives_suggested=self._suggest_alternatives(action_description, context),
                 )
                 self._record_decision(decision)
                 return decision
 
         # Apply ethical framework
         if framework == EthicalFramework.DEONTOLOGICAL:
-            decision = self._evaluate_deontological(
-                action_description, impact_level, context
-            )
+            decision = self._evaluate_deontological(action_description, impact_level, context)
         elif framework == EthicalFramework.CONSEQUENTIALIST:
-            decision = self._evaluate_consequentialist(
-                action_description, impact_level, context
-            )
+            decision = self._evaluate_consequentialist(action_description, impact_level, context)
         elif framework == EthicalFramework.VIRTUE_ETHICS:
-            decision = self._evaluate_virtue_ethics(
-                action_description, impact_level, context
-            )
+            decision = self._evaluate_virtue_ethics(action_description, impact_level, context)
         elif framework == EthicalFramework.CARE_ETHICS:
-            decision = self._evaluate_care_ethics(
-                action_description, impact_level, context
-            )
+            decision = self._evaluate_care_ethics(action_description, impact_level, context)
         else:
             # Default to consequentialist
-            decision = self._evaluate_consequentialist(
-                action_description, impact_level, context
-            )
+            decision = self._evaluate_consequentialist(action_description, impact_level, context)
 
         decision.framework_used = framework
         self._record_decision(decision)
@@ -215,24 +201,14 @@ class EthicsAgent:
             rule_violations.append("Deletion without backup violates safety rule")
 
         # Rule: Do not expose secrets
-        if (
-            "secret" in action_lower
-            or "password" in action_lower
-            or "key" in action_lower
-        ):
-            if (
-                "expose" in action_lower
-                or "print" in action_lower
-                or "log" in action_lower
-            ):
+        if "secret" in action_lower or "password" in action_lower or "key" in action_lower:
+            if "expose" in action_lower or "print" in action_lower or "log" in action_lower:
                 rule_violations.append("Exposing secrets violates confidentiality rule")
 
         # Rule: Do not harm system integrity
         if "rm -rf" in action_lower or "format" in action_lower:
             if impact == ActionImpact.CRITICAL:
-                rule_violations.append(
-                    "Destructive commands violate system integrity rule"
-                )
+                rule_violations.append("Destructive commands violate system integrity rule")
 
         approved = len(rule_violations) == 0
         reasoning = (
@@ -271,9 +247,7 @@ class EthicsAgent:
         action_lower = action.lower()
 
         # Positive consequences
-        if any(
-            word in action_lower for word in ["improve", "optimize", "fix", "enhance"]
-        ):
+        if any(word in action_lower for word in ["improve", "optimize", "fix", "enhance"]):
             positive_score += 0.3
         if "test" in action_lower or "validate" in action_lower:
             positive_score += 0.2
@@ -313,9 +287,7 @@ class EthicsAgent:
 
         # Suggest alternatives if not approved
         if not approved:
-            decision.alternatives_suggested = self._suggest_alternatives(
-                action, context
-            )
+            decision.alternatives_suggested = self._suggest_alternatives(action, context)
 
         return decision
 
@@ -409,8 +381,7 @@ class EthicsAgent:
 
         approved = care_score >= 0.5
         reasoning = (
-            f"Care ethics score: {care_score:.2f} "
-            f"(considers relationships and minimizes harm)"
+            f"Care ethics score: {care_score:.2f} " f"(considers relationships and minimizes harm)"
         )
 
         return EthicalDecision(
@@ -527,9 +498,7 @@ class EthicsAgent:
             logger.warning(f"❌ Action vetoed: {decision.action_description[:50]}...")
             logger.warning(f"Reasoning: {decision.reasoning}")
             if decision.alternatives_suggested:
-                logger.info(
-                    f"Alternatives: {', '.join(decision.alternatives_suggested)}"
-                )
+                logger.info(f"Alternatives: {', '.join(decision.alternatives_suggested)}")
 
     def _save_state(self) -> None:
         """Save ethics state to disk."""
