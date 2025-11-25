@@ -8,8 +8,6 @@ services:
     env_file:
       - .env
     environment:
-      OMNIMIND_DASHBOARD_USER: "dashboard"
-      OMNIMIND_DASHBOARD_PASS: "omnimind"
       QDRANT_URL: "http://qdrant:6333"
       REDIS_URL: "redis://redis:6379"
       OLLAMA_BASE_URL: "http://host.docker.internal:11434"

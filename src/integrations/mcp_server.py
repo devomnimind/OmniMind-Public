@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import threading
 from dataclasses import dataclass, field
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -32,17 +33,50 @@ class MCPConfig:
         if path is None:
             path = Path(__file__).resolve().parents[2] / "config" / "mcp.json"
         config_path = Path(path).expanduser()
+
+        # Ler porta e host de variáveis de ambiente (prioridade sobre arquivo)
+        env_port = os.environ.get("MCP_PORT")
+        env_host = os.environ.get(
+            "MCP_HOST", "127.0.0.1"
+        )  # Sempre localhost por padrão
+
         if not config_path.exists():
-            return default
+            # Usar valores de ambiente ou defaults
+            port = int(env_port) if env_port else default.port
+            return cls(
+                host=env_host,
+                port=port,
+                allowed_paths=default.allowed_paths,
+                max_read_size=default.max_read_size,
+                allowed_extensions=default.allowed_extensions,
+                audit_category=default.audit_category,
+            )
         try:
             payload = json.loads(config_path.read_text(encoding="utf-8"))
         except Exception as exc:  # pragma: no cover - best effort config
             logger.warning("Failed to read MCP config %s: %s", config_path, exc)
-            return default
+            port = int(env_port) if env_port else default.port
+            return cls(
+                host=env_host,
+                port=port,
+                allowed_paths=default.allowed_paths,
+                max_read_size=default.max_read_size,
+                allowed_extensions=default.allowed_extensions,
+                audit_category=default.audit_category,
+            )
+
+        # Variáveis de ambiente têm prioridade sobre arquivo de configuração
+        port = int(env_port) if env_port else payload.get("port", default.port)
+        host = env_host if env_host != "127.0.0.1" else payload.get("host", env_host)
+
+        # Garantir que host seja sempre localhost para segurança
+        if host != "127.0.0.1" and host != "localhost":
+            logger.warning("Host não é localhost, forçando 127.0.0.1 por segurança")
+            host = "127.0.0.1"
 
         return cls(
-            host=payload.get("host", default.host),
-            port=payload.get("port", default.port),
+            host=host,
+            port=port,
             allowed_paths=payload.get("allowed_paths", default.allowed_paths),
             max_read_size=payload.get("max_read_size", default.max_read_size),
             allowed_extensions=payload.get(

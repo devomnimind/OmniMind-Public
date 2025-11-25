@@ -122,18 +122,22 @@ class OrchestratorAgent(ReactAgent):
             return None
 
     def _init_dbus_session_controller(self) -> Optional[DBusSessionController]:
-        try:
-            return DBusSessionController()
-        except Exception as exc:
-            logger.warning("DBus session controller unavailable: %s", exc)
-            return None
+        # Disabled for local execution stability
+        return None
+        # try:
+        #     return DBusSessionController()
+        # except Exception as exc:
+        #     logger.warning("DBus session controller unavailable: %s", exc)
+        #     return None
 
     def _init_dbus_system_controller(self) -> Optional[DBusSystemController]:
-        try:
-            return DBusSystemController()
-        except Exception as exc:
-            logger.warning("DBus system controller unavailable: %s", exc)
-            return None
+        # Disabled for local execution stability
+        return None
+        # try:
+        #     return DBusSystemController()
+        # except Exception as exc:
+        #     logger.warning("DBus system controller unavailable: %s", exc)
+        #     return None
 
     def _init_supabase_adapter(self) -> Optional[SupabaseAdapter]:
         try:

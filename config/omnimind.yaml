@@ -73,6 +73,16 @@ ai:
     threads: 4
     gpu_layers: 32
 
+  # External AI Providers Configuration
+  external_ai:
+    enabled: true
+    providers_config: "config/external_ai_providers.yaml"
+    delegation_enabled: true
+    isolation_level: "strict"
+    audit_enabled: true
+    max_concurrent_delegations: 5
+    delegation_timeout_seconds: 300
+
   # Embedding Configuration
   embeddings:
     model: "sentence-transformers/all-MiniLM-L6-v2"

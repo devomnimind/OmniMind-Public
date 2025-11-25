@@ -234,9 +234,16 @@ if [[ "$VALIDATION_LEVEL" == "FULL" ]] || [[ "$VALIDATION_LEVEL" == "TESTS_ONLY"
         SKIPPED=$EXPECTED_TESTS_SKIPPED
         WARNINGS=$EXPECTED_WARNINGS
     else
-        log "Executando testes completos..."
-        TEST_OUTPUT=$(python -m pytest tests/ -x --tb=short -q 2>&1)
+        log "Executando testes completos (com timeout de 300s e maxfail=20)..."
+        TEST_OUTPUT=$(timeout 300 python -m pytest tests/ -x --tb=short -q --maxfail=20 2>&1)
         TEST_EXIT_CODE=$?
+        
+        # Verificar se foi timeout
+        if [[ $TEST_EXIT_CODE -eq 124 ]]; then
+            error "Testes excederam timeout de 300s. Interrompendo..."
+            error "Considere executar testes em modo desenvolvimento: export OMNIMIND_DEV_MODE=true"
+            exit 1
+        fi
 
         if [[ $TEST_EXIT_CODE -ne 0 ]]; then
             error "Testes falharam. Saída completa:"

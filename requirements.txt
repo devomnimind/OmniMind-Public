@@ -40,7 +40,7 @@ qiskit-optimization>=0.6.0
 cirq>=1.6.0
 dwave-system>=1.23.0
 dimod>=0.12.14
-neal>=0.6.0
+# neal>=0.6.0  # Temporariamente removido - pacote não disponível no PyPI
 # Security / Privacy
 tenseal>=0.3.14
 # Additional needed

@@ -10,6 +10,7 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
+import os
 import subprocess
 import time
 from dataclasses import dataclass, field
@@ -32,6 +33,7 @@ class MCPServerConfig:
     command: str
     args: List[str]
     audit_category: str
+    port: Optional[int] = None  # Porta individual do servidor (padrão: 4321)
     features: Dict[str, bool] = field(default_factory=dict)
     security: Dict[str, Any] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -149,6 +151,9 @@ class MCPOrchestrator:
                 command=server_config.get("command", ""),
                 args=server_config.get("args", []),
                 audit_category=server_config.get("audit_category", f"mcp_{name}"),
+                port=server_config.get(
+                    "port", 4321
+                ),  # Porta padrão 4321 se não especificada
                 features=server_config.get("features", {}),
                 security=server_config.get("security", {}),
                 metadata=server_config,
@@ -253,6 +258,12 @@ class MCPOrchestrator:
             cmd = [config.command] + config.args
             logger.info("Iniciando servidor MCP %s: %s", name, " ".join(cmd))
 
+            # Preparar variáveis de ambiente com porta individual
+            env = os.environ.copy()
+            env["MCP_PORT"] = str(config.port)
+            env["MCP_HOST"] = "127.0.0.1"  # Sempre localhost para segurança
+            env["MCP_SERVER_NAME"] = name
+
             # Iniciar processo
             # Note: Em produção, considerar usar asyncio.create_subprocess_exec
             # para melhor integração com async/await
@@ -260,6 +271,7 @@ class MCPOrchestrator:
                 cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
+                env=env,  # Passar variáveis de ambiente
                 # Não usar stdin para evitar bloqueios
             )
 

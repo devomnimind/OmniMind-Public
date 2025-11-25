@@ -372,7 +372,7 @@ async def get_status():
 
 
 @app.get("/health")
-def health() -> Dict[str, Any]:
+def health_check() -> Dict[str, Any]:
     orch = None
     try:
         orch = _get_orchestrator()
@@ -741,3 +741,7 @@ try:
     logger.info("Metacognition routes connected to orchestrator")
 except Exception as exc:
     logger.warning(f"Metacognition routes not connected yet: {exc}")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
