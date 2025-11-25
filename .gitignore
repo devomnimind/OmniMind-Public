@@ -103,8 +103,17 @@ logs/
 benchmarks/*.json
 benchmarks/*.log
 benchmark_outputs/
+# Data directories with runtime artifacts
+data/benchmarks/*.json
+data/benchmarks/history/*.json
+data/metrics/*.json
+data/monitoring_24h/*.json
+data/experiments/**/*.json
 !logs/.gitkeep
 !scripts/benchmarks/
+# Allow only template/example files in data
+!data/**/*.example.json
+!data/**/*.template.json
 
 # Canonical action logs (runtime audit trail - never version)
 .omnimind/canonical/action_log.json
