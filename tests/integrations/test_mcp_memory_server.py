@@ -16,6 +16,7 @@ from __future__ import annotations
 
 from src.integrations.mcp_memory_server import MemoryMCPServer
 
+
 class TestMemoryMCPServer:
     """Testes para o servidor MCP de memória."""
 

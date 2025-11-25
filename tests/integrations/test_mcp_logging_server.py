@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from src.integrations.mcp_logging_server import LoggingMCPServer
 
+
 class TestLoggingMCPServer:
     """Testes para o servidor MCP de logging."""
 

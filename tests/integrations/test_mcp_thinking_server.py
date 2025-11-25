@@ -16,6 +16,7 @@ from __future__ import annotations
 
 from src.integrations.mcp_thinking_server import ThinkingMCPServer
 
+
 class TestThinkingMCPServer:
     """Testes para o servidor MCP de thinking."""
 
