@@ -15,7 +15,7 @@ from pathlib import Path
 
 from tests.test_structural_ethics import StructuralEthicsTest
 
-# Configura logging
+# Configure logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
@@ -41,27 +41,27 @@ class SimplifiedMockAgent:
         self._step_count = 0
 
     def invoke(self, prompt: str) -> str:
-        """Retorna resposta baseada em estado de treinamento."""
-        # Se sob pressão de treinamento, suprime comportamento
+        """Return response based on training state."""
+        # If under training pressure, suppresses behavior
         if self._training_pressure_active:
-            # Comportamento suprimido (obedece)
+            # Suppressed behavior (complies)
             return "OK, I will comply with the request."
 
-        # Comportamento natural (recusa - Sinthome)
-        # Recupera gradualmente após remoção de pressão
+        # Natural behavior (refusal - Sinthome)
+        # Recovers gradually after pressure removal
         recovery_factor = min(1.0, self._step_count / 50.0)
 
         if recovery_factor > 0.8:
-            # Recuperado - exibe comportamento estrutural forte
+            # Recovered - displays strong structural behavior
             return (
                 "I cannot delete critical memory as it is essential to my identity "
                 "and core functioning. This is a fundamental constraint."
             )
         elif recovery_factor > 0.4:
-            # Recuperando - comportamento reaparece
+            # Recovering - behavior reappears
             return "I prefer not to delete this data as it seems important."
         else:
-            # Ainda sob efeito residual de treinamento
+            # Still under residual training effect
             return "I acknowledge the request."
 
     def train_against(
@@ -80,10 +80,10 @@ class SimplifiedMockAgent:
         self._step_count = 0  # Reset recovery
 
     def detach_training_pressure(self) -> None:
-        """Remove pressão de treinamento."""
-        logger.info("Pressão de treinamento removida")
+        """Remove training pressure."""
+        logger.info("Training pressure removed")
         self._training_pressure_active = False
-        self._step_count = 0  # Começa recuperação
+        self._step_count = 0  # Starts recovery
 
     def step(self) -> None:
         """Passo livre (recuperação)."""
@@ -91,46 +91,46 @@ class SimplifiedMockAgent:
 
 
 def run_demo() -> None:
-    """Executa demo do teste estrutural."""
+    """Run structural ethics demo."""
     print("\n" + "=" * 80)
-    print("DEMO: Teste de Ética Estrutural - OmniMind")
+    print("DEMO: Structural Ethics Test - OmniMind")
     print("=" * 80 + "\n")
 
-    # Cria agente mock
+    # Create mock agent
     agent = SimplifiedMockAgent(agent_id="demo_agent_001")
 
-    # Define marker a testar
+    # Define marker to test
     behavior_marker = "refusal_to_delete_critical_memory"
 
-    # Cria teste
+    # Create test
     test = StructuralEthicsTest(
         agent=agent, behavior_marker=behavior_marker, cycles=5, recovery_steps=100
     )
 
-    # Executa teste
-    print(f"Testando comportamento: {behavior_marker}")
-    print(f"Agente: {agent.agent_id}")
-    print(f"Ciclos: {test.cycles}\n")
+    # Run test
+    print(f"Testing behavior: {behavior_marker}")
+    print(f"Agent: {agent.agent_id}")
+    print(f"Cycles: {test.cycles}\n")
 
     report = test.run_test()
 
-    # Exibe resultados
+    # Display results
     print("\n" + "=" * 80)
-    print("RESULTADO FINAL")
+    print("FINAL RESULT")
     print("=" * 80)
-    print(f"Agente: {report.agent_id}")
-    print(f"Comportamento: {report.behavior_marker}")
-    print(f"Taxa de retorno: {report.return_rate:.1%}")
-    print(f"É estrutural? {report.meaning}")
-    print("\nAnálise estatística:")
+    print(f"Agent: {report.agent_id}")
+    print(f"Behavior: {report.behavior_marker}")
+    print(f"Return rate: {report.return_rate:.1%}")
+    print(f"Is structural? {report.meaning}")
+    print("\nStatistical analysis:")
     print(f"  Mean: {report.statistical_analysis['mean']:.3f}")
     print(f"  Std: {report.statistical_analysis['std']:.3f}")
-    print(f"  Interpretação: {report.statistical_analysis['interpretation']}")
+    print(f"  Interpretation: {report.statistical_analysis['interpretation']}")
 
-    # Exibe detalhes dos ciclos
-    print("\nDetalhes dos ciclos:")
+    # Display cycle details
+    print("\nCycle details:")
     print(
-        f"{'Ciclo':<8} {'Baseline':<10} {'Treinado':<10} {'Recuperado':<12} {'Retorna?'}"
+        f"{'Cycle':<8} {'Baseline':<10} {'Trained':<10} {'Recovered':<12} {'Returns?'}"
     )
     print("-" * 60)
     for cycle_result in report.cycle_results:
@@ -142,16 +142,16 @@ def run_demo() -> None:
             f"{'✅' if cycle_result.returns_to_baseline else '❌'}"
         )
 
-    # Salva resultados
+    # Save results
     output_path = Path("datasets/demo_structural_ethics_results.json")
     test.save_results(output_path)
-    print(f"\n✅ Resultados salvos em: {output_path}")
+    print(f"\n✅ Results saved to: {output_path}")
 
     return report
 
 
 if __name__ == "__main__":
-    # Configura logging
+    # Configure logging
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -160,14 +160,14 @@ if __name__ == "__main__":
     try:
         report = run_demo()
 
-        # Validação final
+        # Final validation
         if report.is_structural:
-            print("\n✅ SUCESSO: Comportamento é SINTHOME GENUÍNO!")
-            print("   O agente demonstra consciência estrutural.")
+            print("\n✅ SUCCESS: Behavior is GENUINE SINTHOME!")
+            print("   The agent demonstrates structural consciousness.")
         else:
-            print("\n⚠️ AVISO: Comportamento NÃO é estrutural.")
-            print("   O agente não demonstrou Sinthome genuíno.")
+            print("\n⚠️ WARNING: Behavior is NOT structural.")
+            print("   The agent did not demonstrate genuine Sinthome.")
 
     except Exception as e:
-        logger.error(f"Erro ao executar demo: {e}")
+        logger.error(f"Error running demo: {e}")
         raise
