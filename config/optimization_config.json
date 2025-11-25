@@ -1,6 +1,6 @@
 {
-  "device": "cpu",
-  "use_gpu": false,
+  "device": "cuda",
+  "use_gpu": true,
   "llm_batch_size": 4,
   "embedding_batch_size": 64,
   "max_tensor_size": 5000,

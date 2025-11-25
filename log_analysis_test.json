@@ -1,0 +1,586 @@
+{
+  "timestamp": "2025-11-24T21:51:48.737704",
+  "log_directory": "logs",
+  "files_analyzed": 3,
+  "total_lines": 802,
+  "anomalies": {
+    "high_error_rate": {
+      "count": 50,
+      "severity": "MEDIUM",
+      "description": "Detected 50 error entries"
+    },
+    "task_failures": {
+      "count": 10,
+      "severity": "HIGH",
+      "description": "Detected 10 task failures"
+    },
+    "phi_zero_detection": {
+      "count": 1,
+      "severity": "INFO",
+      "description": "Phi-0 outputs detected - potential silent bugs"
+    }
+  },
+  "patterns": {
+    "error": [
+      {
+        "file": "audit_chain.log",
+        "line": 49,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"dc2e85e06b9e2e8821a1158960ca2f456f16e8efe23c79847700c70f428cf258\", \"datetime_utc\": \"2025-11-24T13:30:00.070917+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.0007836818695068359, \"intact_files\": 3, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmpz7schudl\", \"total_files\": 3}, \"prev_hash\": \"8fd082dd2bdb91237fe99c33aa0cc17363bea5694475265df86c0734c111af53\", \"timestamp\": 1763991000.0709171}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 52,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"654ceaf00f343ec0095235789b1651e38b120feaf9291aaa9cd70ec2f489a9d8\", \"datetime_utc\": \"2025-11-24T13:30:00.084846+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.0003867149353027344, \"intact_files\": 1, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmpgt70wdbg\", \"total_files\": 1}, \"prev_hash\": \"9e7613b79bf3a1a2733f4dd35bab5dc8e25ce6b74cda621b648ebcc60317d2fd\", \"timestamp\": 1763991000.0848458}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 62,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"read_file\", \"category\": \"mcp\", \"current_hash\": \"7f69441f1215a75f71384fae75a535f53166a5196c8d355c61801d59345d91cf\", \"datetime_utc\": \"2025-11-24T13:30:38.820944+00:00\", \"details\": {\"error\": \"Path outside allowed roots\", \"method\": \"read_file\", \"params\": {\"encoding\": \"utf-8\", \"path\": \"/etc/passwd\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"d094e17836322a4debbd709a2e3a2c6cff825311ab984f6aaded042816224f5b\", \"timestamp\": 1763991038.8209426}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 63,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"write_file\", \"category\": \"mcp\", \"current_hash\": \"61356bf635a864abe99264a53a1068b0d3625fdf6139059611ba1cbaae880e9f\", \"datetime_utc\": \"2025-11-24T13:30:39.328196+00:00\", \"details\": {\"error\": \"Extension not allowed: bin\", \"method\": \"write_file\", \"params\": {\"content\": \"data\", \"encoding\": \"utf-8\", \"path\": \"/tmp/pytest-of-fahbrain/pytest-1/test_mcp_extension_blacklist0/binary.bin\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"7f69441f1215a75f71384fae75a535f53166a5196c8d355c61801d59345d91cf\", \"timestamp\": 1763991039.3281934}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 122,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"cc941433f73fdce10c9aecf89f53274494de31ad983a192e4436abbbf884342d\", \"datetime_utc\": \"2025-11-24T13:35:37.978282+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.0006413459777832031, \"intact_files\": 3, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmpqopkcpo3\", \"total_files\": 3}, \"prev_hash\": \"9aed12dd519bac2fa62715a7ef5cf5bf813531c667cd485b41d027d3a426134c\", \"timestamp\": 1763991337.9782808}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 125,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"a07b4e60fb445f9a8470ed309cb632bc251b32c9e773a0bf71db41fd21999c53\", \"datetime_utc\": \"2025-11-24T13:35:37.990063+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.00040221214294433594, \"intact_files\": 1, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmposve1d9h\", \"total_files\": 1}, \"prev_hash\": \"10fe774d82d43e99190836c361cca8a97815acc736c6766ebdf06be0e67ee6d3\", \"timestamp\": 1763991337.990063}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 135,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"read_file\", \"category\": \"mcp\", \"current_hash\": \"41b735b380f1110df0b69dabf5e176c329fb7149409b5f68eabd82ec2a9ed4e1\", \"datetime_utc\": \"2025-11-24T13:37:58.137060+00:00\", \"details\": {\"error\": \"Path outside allowed roots\", \"method\": \"read_file\", \"params\": {\"encoding\": \"utf-8\", \"path\": \"/etc/passwd\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"3bc5612deccea9fcaf42550570ce7d772a943369f0465f594d3a44b54a632025\", \"timestamp\": 1763991478.1370573}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 136,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"write_file\", \"category\": \"mcp\", \"current_hash\": \"80e6dec3b2b4c3c86465f9c897644ed0523819992bca0b78e58e36edb252db6e\", \"datetime_utc\": \"2025-11-24T13:37:58.643348+00:00\", \"details\": {\"error\": \"Extension not allowed: bin\", \"method\": \"write_file\", \"params\": {\"content\": \"data\", \"encoding\": \"utf-8\", \"path\": \"/tmp/pytest-of-fahbrain/pytest-2/test_mcp_extension_blacklist0/binary.bin\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"41b735b380f1110df0b69dabf5e176c329fb7149409b5f68eabd82ec2a9ed4e1\", \"timestamp\": 1763991478.643345}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 151,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"alert_created\", \"category\": \"security\", \"current_hash\": \"ab0f365add33c908e81c0932bc5fd790e6dc3465edc0c44dfe449c11fdda04ff\", \"datetime_utc\": \"2025-11-24T13:49:40.427730+00:00\", \"details\": {\"alert_id\": \"b5881707a9ed40ea81230dcb69df7912\", \"category\": \"security\", \"severity\": \"critical\", \"title\": \"Network Anomaly: new_ports_opened\"}, \"prev_hash\": \"415b0fdd4a3be4ac64fc6064c08a58827533d6790ce5054829003541255c03ec\", \"timestamp\": 1763992180.4277275}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 152,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"alert_created\", \"category\": \"security\", \"current_hash\": \"2cd789bbc4293e0e1b464f16519bb4b19875d25253fdc648fe6b195de9ddc64e\", \"datetime_utc\": \"2025-11-24T13:57:26.293575+00:00\", \"details\": {\"alert_id\": \"163176d691f740d19535a6676ded7ee1\", \"category\": \"security\", \"severity\": \"critical\", \"title\": \"Network Anomaly: new_ports_opened\"}, \"prev_hash\": \"401008f01fe114e7ed8a9dffd3983cb15df28e9ce24297de0f2a8a2a304de9ec\", \"timestamp\": 1763992646.293574}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 199,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"9cd40810ad05a8cb9c42983a1f08ae8545f05c256d6a9f72275c7b1aaa52722f\", \"datetime_utc\": \"2025-11-24T15:37:48.643350+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.00041556358337402344, \"intact_files\": 3, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmp14m2nq2d\", \"total_files\": 3}, \"prev_hash\": \"bdc65768424a3a5f6eb72bdca1c9358aa4d752385719d3682f8c468613c6f128\", \"timestamp\": 1763998668.6433501}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 202,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"5f20e626eba98e477834523330c6634f34b533aa4f50e845afa33eaa70b4e349\", \"datetime_utc\": \"2025-11-24T15:37:48.649604+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.0002415180206298828, \"intact_files\": 1, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmp40pc5x13\", \"total_files\": 1}, \"prev_hash\": \"a4a64bd4ad3b8adac2ab87ed7e74e03c3a4c7d9e8a1df271a57698cd9f7335b3\", \"timestamp\": 1763998668.649604}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 212,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"read_file\", \"category\": \"mcp\", \"current_hash\": \"7b777c4ddce0ab71e1aa5e098897d50ad7d49d1e71c437f6227087c67acd689c\", \"datetime_utc\": \"2025-11-24T15:38:18.181005+00:00\", \"details\": {\"error\": \"Path outside allowed roots\", \"method\": \"read_file\", \"params\": {\"encoding\": \"utf-8\", \"path\": \"/etc/passwd\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"a46c2c747ad3a54215d9d937b571d1f8df5fc2cdc651c94b54a48a3efd6b8b33\", \"timestamp\": 1763998698.181004}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 213,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"write_file\", \"category\": \"mcp\", \"current_hash\": \"c20eb41a572ff8c51d75eae7fdb3a4f327b5346056cb3cb03f3808ff6b9223a5\", \"datetime_utc\": \"2025-11-24T15:38:18.686388+00:00\", \"details\": {\"error\": \"Extension not allowed: bin\", \"method\": \"write_file\", \"params\": {\"content\": \"data\", \"encoding\": \"utf-8\", \"path\": \"/tmp/pytest-of-fahbrain/pytest-3/test_mcp_extension_blacklist0/binary.bin\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"7b777c4ddce0ab71e1aa5e098897d50ad7d49d1e71c437f6227087c67acd689c\", \"timestamp\": 1763998698.686387}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 228,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"alert_created\", \"category\": \"security\", \"current_hash\": \"5b52b35fd5a36cd217a23dfd17ff34331c2301fb92338e2ad39dd03b08727d36\", \"datetime_utc\": \"2025-11-24T15:53:14.833579+00:00\", \"details\": {\"alert_id\": \"f33ff8a2093745a080a80384d110d08a\", \"category\": \"security\", \"severity\": \"critical\", \"title\": \"Network Anomaly: new_ports_opened\"}, \"prev_hash\": \"1a665344aac38d1d44d3d3d32bf877d3fba354391ac874443555af2a9fa82319\", \"timestamp\": 1763999594.8335786}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 275,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"505629fb99d6581e1df9f2b852e09ca1a95797123d7bd83376538f133112d9d4\", \"datetime_utc\": \"2025-11-24T16:23:22.737899+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.0010347366333007812, \"intact_files\": 3, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmpl43slf6i\", \"total_files\": 3}, \"prev_hash\": \"1e2349433d46e8fc792be25a77575b7b0e5c341b67038c9b7ac2c6311ef83d58\", \"timestamp\": 1764001402.7378983}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 278,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"abaf67af20284f8b906ae9e95ad4b332f2e9279bcdf5ab78770be0f12d791440\", \"datetime_utc\": \"2025-11-24T16:23:22.759576+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.0005960464477539062, \"intact_files\": 1, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmptgk6kyjr\", \"total_files\": 1}, \"prev_hash\": \"73d123854058bbb191cb82c31a67b7a1cd4f8923778d3ae190d862e7ff90fcc4\", \"timestamp\": 1764001402.7595751}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 288,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"read_file\", \"category\": \"mcp\", \"current_hash\": \"781cee0b5175785284908042443cf666a516bf6f5ec0c4eabb3aaccb952d7fc0\", \"datetime_utc\": \"2025-11-24T16:23:59.426673+00:00\", \"details\": {\"error\": \"Path outside allowed roots\", \"method\": \"read_file\", \"params\": {\"encoding\": \"utf-8\", \"path\": \"/etc/passwd\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"27099bd0ff42ccd38a57f2eb50477d4408067a264e51a30ca113754ae7460be5\", \"timestamp\": 1764001439.4266715}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 289,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"write_file\", \"category\": \"mcp\", \"current_hash\": \"fb00b9115c000d04d79a7a51cc234d04083cdcd173132ce1ffc03c6f4a0f2ab7\", \"datetime_utc\": \"2025-11-24T16:23:59.933384+00:00\", \"details\": {\"error\": \"Extension not allowed: bin\", \"method\": \"write_file\", \"params\": {\"content\": \"data\", \"encoding\": \"utf-8\", \"path\": \"/tmp/pytest-of-fahbrain/pytest-4/test_mcp_extension_blacklist0/binary.bin\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"781cee0b5175785284908042443cf666a516bf6f5ec0c4eabb3aaccb952d7fc0\", \"timestamp\": 1764001439.9333825}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 304,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"alert_created\", \"category\": \"security\", \"current_hash\": \"4f1b31c72de99bdb4f38d764bbb61677ffa8ad8d32d0f15e8a9ff7037b767fcd\", \"datetime_utc\": \"2025-11-24T16:39:51.240947+00:00\", \"details\": {\"alert_id\": \"8171a9142fb146abb68f82438893100b\", \"category\": \"security\", \"severity\": \"critical\", \"title\": \"Network Anomaly: new_ports_opened\"}, \"prev_hash\": \"bbd3848e14c562b14ca778bc69bb609d9b0a3d5fcdacef4a2e5f98b7e9f26296\", \"timestamp\": 1764002391.240947}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 355,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"2a87bee81daa5f162f2d835e431079f634dc2b69e14b3f9216bef0c4cdb6e882\", \"datetime_utc\": \"2025-11-24T18:14:53.317417+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.0006287097930908203, \"intact_files\": 3, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmpq_mb55_r\", \"total_files\": 3}, \"prev_hash\": \"a63540d808c4568ed52233c5a0378c7593d340884bb5be8424406d40953431e6\", \"timestamp\": 1764008093.3174167}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 358,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"aae829da2e27b52674a64f65c7628df62c22bdc4f0d2662137a56c8eb68cd8fb\", \"datetime_utc\": \"2025-11-24T18:14:53.334112+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.00036215782165527344, \"intact_files\": 1, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmpx3zbyog4\", \"total_files\": 1}, \"prev_hash\": \"203600ba65708918412059b9dc8da6250f7183aba46ce826270d281efec6eb55\", \"timestamp\": 1764008093.3341122}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 368,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"read_file\", \"category\": \"mcp\", \"current_hash\": \"7785a9a4617b4d2c96eb948e6cfda057b98a29edfff6023ca7c781e35aa211df\", \"datetime_utc\": \"2025-11-24T18:15:31.042653+00:00\", \"details\": {\"error\": \"Path outside allowed roots\", \"method\": \"read_file\", \"params\": {\"encoding\": \"utf-8\", \"path\": \"/etc/passwd\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"f64fb93ea8ca3a03f03c8c0465c52ea528ef390771dcaf3bd7762afe6fb2e188\", \"timestamp\": 1764008131.042651}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 369,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"write_file\", \"category\": \"mcp\", \"current_hash\": \"0430a064d9e0d1a5060021e4c53a63c4c4682238bdc17d67ecc123f74510f6fe\", \"datetime_utc\": \"2025-11-24T18:15:31.560557+00:00\", \"details\": {\"error\": \"Extension not allowed: bin\", \"method\": \"write_file\", \"params\": {\"content\": \"data\", \"encoding\": \"utf-8\", \"path\": \"/tmp/pytest-of-fahbrain/pytest-5/test_mcp_extension_blacklist0/binary.bin\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"7785a9a4617b4d2c96eb948e6cfda057b98a29edfff6023ca7c781e35aa211df\", \"timestamp\": 1764008131.5605273}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 384,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"alert_created\", \"category\": \"security\", \"current_hash\": \"bc64e2061ad9a3bdfc934cd23e5153309e1f2bc34745efbda471f9595b3c4764\", \"datetime_utc\": \"2025-11-24T18:31:39.895837+00:00\", \"details\": {\"alert_id\": \"7e60053bb3c147449d7297cc95c5a40f\", \"category\": \"security\", \"severity\": \"critical\", \"title\": \"Network Anomaly: new_ports_opened\"}, \"prev_hash\": \"52cf2cb4d1e5b4dcb8849350edd21e0993783c2c599fd8b84fa1d13b7426f0db\", \"timestamp\": 1764009099.8958366}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 433,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"a7f7c9f2909b19245e729e8011d9374f85b2913bfc247724e865c99ec569eeb3\", \"datetime_utc\": \"2025-11-24T19:00:08.975568+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.0004177093505859375, \"intact_files\": 3, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmpkot_973s\", \"total_files\": 3}, \"prev_hash\": \"4300d3beb5f692dfcad46b918c40f2d93908380b8e26a124dc9db7ecf280fbd9\", \"timestamp\": 1764010808.9755683}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 436,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"c9af1be80014c3aec105e2dabb631299ed04cc770ca55e7316682153f324b69e\", \"datetime_utc\": \"2025-11-24T19:00:08.984117+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.00029754638671875, \"intact_files\": 1, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmp1n5nx3mf\", \"total_files\": 1}, \"prev_hash\": \"c0ae67f277d7949a5069a5f416638cde37e5b08d17ef64626ebbe82c8bad33bb\", \"timestamp\": 1764010808.9841168}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 446,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"read_file\", \"category\": \"mcp\", \"current_hash\": \"5399cd9c6b460c73d5a22387567ef14ec713d6673d436890403c8e763b573af0\", \"datetime_utc\": \"2025-11-24T19:00:39.952507+00:00\", \"details\": {\"error\": \"Path outside allowed roots\", \"method\": \"read_file\", \"params\": {\"encoding\": \"utf-8\", \"path\": \"/etc/passwd\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"e5798ceec5d146747a9a256c5f2cc120ac37b57341d3897cec3c5c62c763d991\", \"timestamp\": 1764010839.9525044}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 447,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"write_file\", \"category\": \"mcp\", \"current_hash\": \"14d3adf90695afc805ef4c896e603f56d735df5f41b879d477ce4742fcf79728\", \"datetime_utc\": \"2025-11-24T19:00:40.462481+00:00\", \"details\": {\"error\": \"Extension not allowed: bin\", \"method\": \"write_file\", \"params\": {\"content\": \"data\", \"encoding\": \"utf-8\", \"path\": \"/tmp/pytest-of-fahbrain/pytest-7/test_mcp_extension_blacklist0/binary.bin\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"5399cd9c6b460c73d5a22387567ef14ec713d6673d436890403c8e763b573af0\", \"timestamp\": 1764010840.4624777}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 462,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"alert_created\", \"category\": \"security\", \"current_hash\": \"92a52f67819c8cfd79f180527590f1f88915349de2b36aba62c06d04450bc575\", \"datetime_utc\": \"2025-11-24T19:16:08.590041+00:00\", \"details\": {\"alert_id\": \"e8f0f341a11340d3a5a131ac4f40b2be\", \"category\": \"security\", \"severity\": \"critical\", \"title\": \"Network Anomaly: new_ports_opened\"}, \"prev_hash\": \"dd8ea0bcd94be15d6b29e161bf3c58e36903960d40c5528ff543235000d8c2ac\", \"timestamp\": 1764011768.5900395}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 509,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"318d8e27aa365b7249c3540e838fa58f5e9ba686d9ee5c57258fd87df87b607b\", \"datetime_utc\": \"2025-11-24T19:31:59.079556+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.0004115104675292969, \"intact_files\": 3, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmp4n0loun8\", \"total_files\": 3}, \"prev_hash\": \"9920ceaa6be9af12dd8456bf5fd7f08c29539e12481d4a030483a6c9cefb7320\", \"timestamp\": 1764012719.079556}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 512,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"18f2e501900e86968f103d55df1489376691bf7e8ea2a0c8252a5252717ffd3b\", \"datetime_utc\": \"2025-11-24T19:31:59.086086+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.0004305839538574219, \"intact_files\": 1, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmpgy74r4zf\", \"total_files\": 1}, \"prev_hash\": \"a00306e5f27fb7e4d19c03b0667a7e91f78327a447bb9055c300703058a17f7e\", \"timestamp\": 1764012719.0860858}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 522,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"read_file\", \"category\": \"mcp\", \"current_hash\": \"944f42df68fba5743785058ea6acd6410fe36191712b8bf5641b62ae26fa623e\", \"datetime_utc\": \"2025-11-24T19:32:27.586347+00:00\", \"details\": {\"error\": \"Path outside allowed roots\", \"method\": \"read_file\", \"params\": {\"encoding\": \"utf-8\", \"path\": \"/etc/passwd\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"99cc0e7351262e953ee2a076bf4431cc8bea68ab0471b4ea26f4953fe2478db3\", \"timestamp\": 1764012747.5863428}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 523,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"write_file\", \"category\": \"mcp\", \"current_hash\": \"7e25c7aa1c05e833dff64691bd2ebbcc0c3ff44fe52552777cdf784779ea4335\", \"datetime_utc\": \"2025-11-24T19:32:28.095563+00:00\", \"details\": {\"error\": \"Extension not allowed: bin\", \"method\": \"write_file\", \"params\": {\"content\": \"data\", \"encoding\": \"utf-8\", \"path\": \"/tmp/pytest-of-fahbrain/pytest-8/test_mcp_extension_blacklist0/binary.bin\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"944f42df68fba5743785058ea6acd6410fe36191712b8bf5641b62ae26fa623e\", \"timestamp\": 1764012748.0955596}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 538,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"alert_created\", \"category\": \"security\", \"current_hash\": \"ff40e44082f5541457d6f58fdf2ac51e2403803f9e308d9cd012095355ebd603\", \"datetime_utc\": \"2025-11-24T19:47:21.147627+00:00\", \"details\": {\"alert_id\": \"68c00152134c4ff6992ab5c1ca72c9a0\", \"category\": \"security\", \"severity\": \"critical\", \"title\": \"Network Anomaly: new_ports_opened\"}, \"prev_hash\": \"0cd61e48dc9254b31336910cb1e186f96282563567017708b5f402c34bebf050\", \"timestamp\": 1764013641.1476264}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 585,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"f5219f13b50fb1836d36b567c0b922a9e37ee21bcdd1bf5885d4da7cd1ccddd2\", \"datetime_utc\": \"2025-11-24T21:33:40.785967+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.00070953369140625, \"intact_files\": 3, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmp9fx4f7at\", \"total_files\": 3}, \"prev_hash\": \"5687db1b150c6070c4e33ff302260cc3bd52c85f7daa8f8cb828dce5ce3fd9b2\", \"timestamp\": 1764020020.785966}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 588,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"f85a59959e34e93b2ccf09fe6d72c4cf6d5320fd14e68ac56cb813449e0444d7\", \"datetime_utc\": \"2025-11-24T21:33:40.794345+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.0002491474151611328, \"intact_files\": 1, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmpvggq44bd\", \"total_files\": 1}, \"prev_hash\": \"2be08f8f2662c993efb8789f872cade320b7fa59b65381b6965ba66fc45bae76\", \"timestamp\": 1764020020.794345}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 598,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"read_file\", \"category\": \"mcp\", \"current_hash\": \"e8c9e9da5824f7f7172d26cfc22012f8955582b502625ef52720e90c9c8eda5c\", \"datetime_utc\": \"2025-11-24T21:34:21.861259+00:00\", \"details\": {\"error\": \"Path outside allowed roots\", \"method\": \"read_file\", \"params\": {\"encoding\": \"utf-8\", \"path\": \"/etc/passwd\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"9ef72037a6a1e6c7e461a602a907466245b82cb42c3a8a0867a78619d9f61361\", \"timestamp\": 1764020061.8612576}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 599,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"write_file\", \"category\": \"mcp\", \"current_hash\": \"9929db67fc26bdb1467d4b03fb1c6894537ec356e2b359b12ccf7d7f371b1e83\", \"datetime_utc\": \"2025-11-24T21:34:22.368155+00:00\", \"details\": {\"error\": \"Extension not allowed: bin\", \"method\": \"write_file\", \"params\": {\"content\": \"data\", \"encoding\": \"utf-8\", \"path\": \"/tmp/pytest-of-fahbrain/pytest-9/test_mcp_extension_blacklist0/binary.bin\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"e8c9e9da5824f7f7172d26cfc22012f8955582b502625ef52720e90c9c8eda5c\", \"timestamp\": 1764020062.3681505}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 614,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"alert_created\", \"category\": \"security\", \"current_hash\": \"3b78c1534b83dc6fd56bb8069be27af5613d0a2df422f94878de98160c5b4852\", \"datetime_utc\": \"2025-11-24T21:51:46.242942+00:00\", \"details\": {\"alert_id\": \"43695f3945ae47988bf35a9088328108\", \"category\": \"security\", \"severity\": \"critical\", \"title\": \"Network Anomaly: new_ports_opened\"}, \"prev_hash\": \"82f4b5ac2f1658126113bebcf4856eca08446a016662c0c47597a424c3decf1c\", \"timestamp\": 1764021106.2429402}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 661,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"140c28f8db0183409ace33aedde8acda0a39a7cf5495a17b399520f0ccfb0be5\", \"datetime_utc\": \"2025-11-24T23:01:31.559375+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.0004489421844482422, \"intact_files\": 3, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmp9z9j9bsh\", \"total_files\": 3}, \"prev_hash\": \"2cf9ac39f9c5342d5e9c3754b64c36dedfc004939bc5cd93fb9069cc3e0446f3\", \"timestamp\": 1764025291.559375}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 664,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"ab3d7a6e3bcc1b5c9226e8290a783e86783311e87476918e1f37160f531b4ec0\", \"datetime_utc\": \"2025-11-24T23:01:31.568789+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.00040531158447265625, \"intact_files\": 1, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmpv_2x_523\", \"total_files\": 1}, \"prev_hash\": \"91d15da9d7360f9e046841aaa28d6c2effa905493fb928ef265f0a544c82a439\", \"timestamp\": 1764025291.5687885}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 674,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"read_file\", \"category\": \"mcp\", \"current_hash\": \"76dbafe5c9ff1f43cf2ef868f81e5e42e9a68f3f2b53f13dbae744cb8c917df4\", \"datetime_utc\": \"2025-11-24T23:02:11.040123+00:00\", \"details\": {\"error\": \"Path outside allowed roots\", \"method\": \"read_file\", \"params\": {\"encoding\": \"utf-8\", \"path\": \"/etc/passwd\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"56ff723961d4930f3f9fe9047e06d9496c24c0060b260f4f5e80271b3fdb934e\", \"timestamp\": 1764025331.0401204}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 675,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"write_file\", \"category\": \"mcp\", \"current_hash\": \"a961cf907b34b569cc0e3dc73960d98c8b391e5a94345e853fc44cb5cb979928\", \"datetime_utc\": \"2025-11-24T23:02:11.551505+00:00\", \"details\": {\"error\": \"Extension not allowed: bin\", \"method\": \"write_file\", \"params\": {\"content\": \"data\", \"encoding\": \"utf-8\", \"path\": \"/tmp/pytest-of-fahbrain/pytest-10/test_mcp_extension_blacklist0/binary.bin\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"76dbafe5c9ff1f43cf2ef868f81e5e42e9a68f3f2b53f13dbae744cb8c917df4\", \"timestamp\": 1764025331.551501}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 690,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"alert_created\", \"category\": \"security\", \"current_hash\": \"6b297d395944155c8d038eca5631a0af0e8fbfbd38efa57fc5d48df7a56e6442\", \"datetime_utc\": \"2025-11-24T23:19:02.969602+00:00\", \"details\": {\"alert_id\": \"eb4ff306d8f94cd3b099629b9fb2c57e\", \"category\": \"security\", \"severity\": \"critical\", \"title\": \"Network Anomaly: new_ports_opened\"}, \"prev_hash\": \"ac5949f100b8630aecf1f24e221f4ae7069d5597a6396b6e60203ed760b87eba\", \"timestamp\": 1764026342.9696019}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 746,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"de8911e17709ff7034fe86c44e24c23122c8f0725852d88d82396b4a64c72d89\", \"datetime_utc\": \"2025-11-24T23:54:17.319270+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.0014925003051757812, \"intact_files\": 3, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmpoh2jmolr\", \"total_files\": 3}, \"prev_hash\": \"a4f6d9c3aee8c1e496dff7f16c03bed03a7df7096dfe60f6cb247df481952003\", \"timestamp\": 1764028457.3192694}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 749,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_validation_completed\", \"category\": \"security\", \"current_hash\": \"a975b17e793b531466ce320ff092e5fd090751f476492f207d634065eaa81975\", \"datetime_utc\": \"2025-11-24T23:54:17.344604+00:00\", \"details\": {\"compliance_score\": 100.0, \"corrupted_files\": 0, \"critical_issues_count\": 0, \"execution_time\": 0.000736236572265625, \"intact_files\": 1, \"missing_files\": 0, \"modified_files\": 0, \"scope\": \"directory\", \"target_path\": \"/tmp/tmp2cmxn3nc\", \"total_files\": 1}, \"prev_hash\": \"4d550a24998d9426816dee788740e150b53c6ee6ea5376ea3817f513cbc7e99a\", \"timestamp\": 1764028457.344603}",
+        "matches": [
+          "critical"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 759,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"read_file\", \"category\": \"mcp\", \"current_hash\": \"d6202d545381ba6d5aad71e172c7d7e786f8e10dc1508b69a7e07c09817f289f\", \"datetime_utc\": \"2025-11-24T23:55:09.044030+00:00\", \"details\": {\"error\": \"Path outside allowed roots\", \"method\": \"read_file\", \"params\": {\"encoding\": \"utf-8\", \"path\": \"/etc/passwd\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"a597e37492537d542895392fd105d4e5667994fbb0bfda956bc1787d2b52804f\", \"timestamp\": 1764028509.0440273}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 760,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"write_file\", \"category\": \"mcp\", \"current_hash\": \"9360f1435053f5d8298f7d7402c9b37b5d60b8087ec3469f11d9453ccf8d1923\", \"datetime_utc\": \"2025-11-24T23:55:09.551454+00:00\", \"details\": {\"error\": \"Extension not allowed: bin\", \"method\": \"write_file\", \"params\": {\"content\": \"data\", \"encoding\": \"utf-8\", \"path\": \"/tmp/pytest-of-fahbrain/pytest-11/test_mcp_extension_blacklist0/binary.bin\"}, \"result\": null, \"status\": \"FAILED\"}, \"prev_hash\": \"d6202d545381ba6d5aad71e172c7d7e786f8e10dc1508b69a7e07c09817f289f\", \"timestamp\": 1764028509.551452}",
+        "matches": [
+          "error"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 775,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"alert_created\", \"category\": \"security\", \"current_hash\": \"fdb9e6144b47580dd42b6ca24590530b79ab86bcfb02a4a16d5439dc7abe8868\", \"datetime_utc\": \"2025-11-25T00:10:45.260679+00:00\", \"details\": {\"alert_id\": \"29e848212d4f4452ace555d08dc85305\", \"category\": \"security\", \"severity\": \"critical\", \"title\": \"Network Anomaly: new_ports_opened\"}, \"prev_hash\": \"f701018090de377ba933bb529d3cd1d971bec36e3440eb07888d8d7dc1fab533\", \"timestamp\": 1764029445.2606783}",
+        "matches": [
+          "critical"
+        ]
+      }
+    ],
+    "task_failure": [
+      {
+        "file": "audit_chain.log",
+        "line": 55,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"firecracker.sandbox.run\", \"category\": \"security\", \"current_hash\": \"119eaaf69e3def408f97508245af4495b53853ed3c789ffdcdbb10a88f5b9c1d\", \"datetime_utc\": \"2025-11-24T13:30:36.702082+00:00\", \"details\": {\"duration_ms\": 0.0, \"result\": \"failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task\"}, \"prev_hash\": \"7fe71ce473a32f78e205a57605ec793c428c3bcddaeee1ab85bca58fbe905b82\", \"timestamp\": 1763991036.7020812}",
+        "matches": [
+          "failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 128,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"firecracker.sandbox.run\", \"category\": \"security\", \"current_hash\": \"4b1ad5825ee93d94768b7198e634703b7aa732bb8572829d2f39b97011052bd6\", \"datetime_utc\": \"2025-11-24T13:37:55.545475+00:00\", \"details\": {\"duration_ms\": 0.0, \"result\": \"failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task\"}, \"prev_hash\": \"95bab67acc4c32ab0ddb62c6a23fb510ee260a774ac805ea1a7053b22d790749\", \"timestamp\": 1763991475.545474}",
+        "matches": [
+          "failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 205,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"firecracker.sandbox.run\", \"category\": \"security\", \"current_hash\": \"aad21aecf069e789a65766361f32fe4a9b52fd55235ca9b7d0906dd3620ad18a\", \"datetime_utc\": \"2025-11-24T15:38:16.371246+00:00\", \"details\": {\"duration_ms\": 0.0, \"result\": \"failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task\"}, \"prev_hash\": \"a73fa74aa1238bc12f8b6b84ea34e0e21bf00c1ddb0c1b4eee83954cf248796e\", \"timestamp\": 1763998696.371246}",
+        "matches": [
+          "failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 281,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"firecracker.sandbox.run\", \"category\": \"security\", \"current_hash\": \"b41b7a5350aaf63e4fd5566fba2ec90e250d5bfceda6fef1758ed67651c738dc\", \"datetime_utc\": \"2025-11-24T16:23:57.294259+00:00\", \"details\": {\"duration_ms\": 0.0, \"result\": \"failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task\"}, \"prev_hash\": \"4543c15dd6413dc4426b71c2c96c99b178414aebb72680e33a9e9cb5f3586a90\", \"timestamp\": 1764001437.2942588}",
+        "matches": [
+          "failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 361,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"firecracker.sandbox.run\", \"category\": \"security\", \"current_hash\": \"d27fcc7d0c6a5996bf416bca477ad73ab734cfe0a5860284d5ba8445eb528073\", \"datetime_utc\": \"2025-11-24T18:15:28.757347+00:00\", \"details\": {\"duration_ms\": 0.0, \"result\": \"failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task\"}, \"prev_hash\": \"47bb493337a24edf65e8e7921a8e00c3f8b6409559a503766299affa40c808f9\", \"timestamp\": 1764008128.7573469}",
+        "matches": [
+          "failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 439,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"firecracker.sandbox.run\", \"category\": \"security\", \"current_hash\": \"f6b87fa3d4b69b0433a52093aafb5c0c74d1404ce35537657bb38dbcb4f67003\", \"datetime_utc\": \"2025-11-24T19:00:38.083422+00:00\", \"details\": {\"duration_ms\": 0.0, \"result\": \"failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task\"}, \"prev_hash\": \"9e9a82d33b5c709d6376492869ee026411d95eb0713031228a851013f1d5de0e\", \"timestamp\": 1764010838.0834215}",
+        "matches": [
+          "failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 515,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"firecracker.sandbox.run\", \"category\": \"security\", \"current_hash\": \"af08e4d6f383a3282d84a829e22e3eeb4e105ae15af66122a30468e71b342117\", \"datetime_utc\": \"2025-11-24T19:32:25.831167+00:00\", \"details\": {\"duration_ms\": 0.0, \"result\": \"failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task\"}, \"prev_hash\": \"2791a37fc4a28484f6ebda972ae17f26a7c4beaa565ff0636333b3f41191df10\", \"timestamp\": 1764012745.8311663}",
+        "matches": [
+          "failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 591,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"firecracker.sandbox.run\", \"category\": \"security\", \"current_hash\": \"6ce7bcb79c9d1fe9557d807d0dab72c3f5c682bf3f0e62afda1bd6f818bc300b\", \"datetime_utc\": \"2025-11-24T21:34:10.650464+00:00\", \"details\": {\"duration_ms\": 0.0, \"result\": \"failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task\"}, \"prev_hash\": \"79beea50d58ddc1f2866dbf6651f77f8c5267592e4078f38e9fba298dd7177e9\", \"timestamp\": 1764020050.650464}",
+        "matches": [
+          "failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 667,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"firecracker.sandbox.run\", \"category\": \"security\", \"current_hash\": \"e900fb751f6d4859ec539e7179d9bcaa4ae1c5327809d5c295370e19a8e5604b\", \"datetime_utc\": \"2025-11-24T23:02:00.477072+00:00\", \"details\": {\"duration_ms\": 0.0, \"result\": \"failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task\"}, \"prev_hash\": \"6d526975825ab3666891a67625c5607493116d7ab89921d17a18ddc030f06ac5\", \"timestamp\": 1764025320.4770713}",
+        "matches": [
+          "failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task"
+        ]
+      },
+      {
+        "file": "audit_chain.log",
+        "line": 752,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"firecracker.sandbox.run\", \"category\": \"security\", \"current_hash\": \"bddc164b620cbbce97b8558a7caa56038dd52fc3dc4a9640406c6f58fbe5509e\", \"datetime_utc\": \"2025-11-24T23:54:53.769000+00:00\", \"details\": {\"duration_ms\": 0.0, \"result\": \"failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task\"}, \"prev_hash\": \"51a45d96f7308372c87eeeaa15271df9b4708fb4fa5b371fba82634b1df8826f\", \"timestamp\": 1764028493.7689984}",
+        "matches": [
+          "failed\", \"sandbox\": \"omnimind-sandbox\", \"summary\": \"task"
+        ]
+      }
+    ],
+    "phi_output": [
+      {
+        "file": "audit_chain.log",
+        "line": 510,
+        "timestamp": "unknown",
+        "content": "{\"action\": \"integrity_baseline_created\", \"category\": \"security\", \"current_hash\": \"13e24190f484ba36c6983eef235c0d9ed7f612e561f3457df54fbb0ff1fb0177\", \"datetime_utc\": \"2025-11-24T19:31:59.082302+00:00\", \"details\": {\"baseline_file\": \"/tmp/tmpu2qdak5d/baselines/baseline_tmp_tmphiwig64e_directory_20251124_163159.json\", \"files_count\": 2, \"scope\": \"directory\", \"target_path\": \"/tmp/tmphiwig64e\", \"total_size\": 18}, \"prev_hash\": \"318d8e27aa365b7249c3540e838fa58f5e9ba686d9ee5c57258fd87df87b607b\", \"timestamp\": 1764012719.0823016}",
+        "matches": [
+          "phiwig64e_directory_20251124_163159.json\", \"files_count\": 2, \"scope\": \"directory\", \"target_path\": \"/tmp/tmphiwig64e\", \"total_size\": 18}, \"prev_hash\": \"318d8e27aa365b7249c3540e838fa58f5e9ba686d9ee5c57258fd87df87b607b\", \"timestamp\": 1764012719.08230"
+        ]
+      }
+    ]
+  },
+  "performance": {},
+  "recommendations": [
+    "🔴 HIGH PRIORITY: Investigate high error rate - check error patterns and root causes",
+    "🔴 HIGH PRIORITY: Debug task execution failures in orchestrator",
+    "🔵 INFO: Phi-0 outputs detected - enhance silent bug detection"
+  ]
+}

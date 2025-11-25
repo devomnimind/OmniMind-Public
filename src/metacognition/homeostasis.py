@@ -75,13 +75,13 @@ class ResourceMetrics:
         """Determine overall resource state."""
         max_usage = max(self.cpu_percent, self.memory_percent, self.disk_percent)
 
-        if max_usage > 95:
+        if max_usage >= 95:
             return ResourceState.EMERGENCY
-        elif max_usage > 90:
+        elif max_usage >= 90:
             return ResourceState.CRITICAL
-        elif max_usage > 80:
+        elif max_usage >= 80:
             return ResourceState.WARNING
-        elif max_usage > 60:
+        elif max_usage >= 60:
             return ResourceState.GOOD
         else:
             return ResourceState.OPTIMAL
@@ -161,7 +161,11 @@ class HomeostaticController:
             self._activate_throttling()
         elif state == ResourceState.CRITICAL:
             action = {"action": "reduce_load", "success": True}
-        elif state in (ResourceState.WARNING, ResourceState.GOOD):
+        elif state in (
+            ResourceState.WARNING,
+            ResourceState.GOOD,
+            ResourceState.OPTIMAL,
+        ):
             action = {"action": "monitor", "success": True}
 
         self._regulation_history.append(
