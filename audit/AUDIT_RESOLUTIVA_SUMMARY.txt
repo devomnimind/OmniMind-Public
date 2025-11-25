@@ -73,6 +73,23 @@ Log Excerpt:
                         BUG FIXES & SYSTEM IMPROVEMENTS
 ═══════════════════════════════════════════════════════════════════════════════
 
+4. HOMOMORPHIC ENCRYPTION OVERFLOW BUG (CRITICAL)
+   ────────────────────────────────────────────────────────────────────────────
+   • Problem: BFV encryption causing negative dot products in neural computations
+   • Root Cause: BFV scheme optimized for integers, unsuitable for real-valued neural-like operations
+   • Solution: Migration to CKKS scheme for real arithmetic with proper dot product calculations
+   • Module: `src.lacanian.encrypted_unconscious.EncryptedUnconsciousLayer`
+   • Status: ✅ FIXED & MIGRATED
+   • Validation: 11/11 tests passing, dot products return correct positive values
+   • Impact: Encrypted unconscious now functional for AI neural applications
+
+   Technical Details:
+   - CKKS scheme for approximate arithmetic on real/complex numbers
+   - Poly modulus degree 8192 for 128-bit security
+   - Scale parameter 2^40 for precision management
+   - Removed integer quantization (_quantize_event method)
+   - Updated test assertions from "BFV" to "CKKS"
+
 1. AUDIT SYSTEM INTEGRITY BUG (CRITICAL)
    ────────────────────────────────────────────────────────────────────────────
    • Problem: Chain integrity failing with "Valid: False" (779 events corrupted)
@@ -148,6 +165,7 @@ Log Excerpt:
 ═══════════════════════════════════════════════════════════════════════════════
 
 ✅ CRITICAL BUGS FIXED:
+   - Homomorphic encryption overflow (BFV→CKKS migration)
    - Audit system integrity (Merkle Tree + HMAC-SHA256)
    - GPU utilization (CUDA acceleration restored)
    - Test collection failures (3604 tests now pass)
