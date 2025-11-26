@@ -16,7 +16,7 @@ import tempfile
 import pytest
 
 from src.consciousness.production_consciousness import ProductionConsciousnessSystem
-from src.metrics.consciousness_metrics import SelfAwarenessMetrics
+from src.metrics.consciousness_metrics_legacy import SelfAwarenessMetrics
 
 
 class TestProductionConsciousnessSystemInit:

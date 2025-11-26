@@ -1,0 +1,906 @@
+{
+  "timestamp": "2025-11-26T13:06:34.982452",
+  "dependencies": {
+    "outdated": [
+      {
+        "name": "altair",
+        "version": "5.5.0",
+        "latest_version": "6.0.0",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "chroma-hnswlib",
+        "version": "0.7.1",
+        "latest_version": "0.7.6",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "grpcio-status",
+        "version": "1.71.2",
+        "latest_version": "1.76.0",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "http-sf",
+        "version": "1.0.4",
+        "latest_version": "1.0.7",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "huggingface-hub",
+        "version": "0.36.0",
+        "latest_version": "1.1.5",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "langchain",
+        "version": "1.0.8",
+        "latest_version": "1.1.0",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "langgraph",
+        "version": "1.0.3",
+        "latest_version": "1.0.4",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "langgraph-sdk",
+        "version": "0.2.9",
+        "latest_version": "0.2.10",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "langsmith",
+        "version": "0.4.46",
+        "latest_version": "0.4.48",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "marshmallow",
+        "version": "3.26.1",
+        "latest_version": "4.1.0",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "networkx",
+        "version": "3.5",
+        "latest_version": "3.6",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "numpy",
+        "version": "2.2.6",
+        "latest_version": "2.3.5",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-cublas-cu12",
+        "version": "12.8.4.1",
+        "latest_version": "12.9.1.4",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-cuda-cupti-cu12",
+        "version": "12.8.90",
+        "latest_version": "12.9.79",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-cuda-nvrtc-cu12",
+        "version": "12.8.93",
+        "latest_version": "12.9.86",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-cuda-runtime-cu12",
+        "version": "12.8.90",
+        "latest_version": "12.9.79",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-cudnn-cu12",
+        "version": "9.10.2.21",
+        "latest_version": "9.16.0.29",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-cufft-cu12",
+        "version": "11.3.3.83",
+        "latest_version": "11.4.1.4",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-cufile-cu12",
+        "version": "1.13.1.3",
+        "latest_version": "1.14.1.1",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-curand-cu12",
+        "version": "10.3.9.90",
+        "latest_version": "10.3.10.19",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-cusolver-cu12",
+        "version": "11.7.3.90",
+        "latest_version": "11.7.5.82",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-cusparse-cu12",
+        "version": "12.5.8.93",
+        "latest_version": "12.5.10.65",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-cusparselt-cu12",
+        "version": "0.7.1",
+        "latest_version": "0.8.1",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-nccl-cu12",
+        "version": "2.27.5",
+        "latest_version": "2.28.9",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-nvjitlink-cu12",
+        "version": "12.8.93",
+        "latest_version": "12.9.86",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-nvshmem-cu12",
+        "version": "3.3.20",
+        "latest_version": "3.4.5",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "nvidia-nvtx-cu12",
+        "version": "12.8.90",
+        "latest_version": "12.9.79",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "posthog",
+        "version": "5.4.0",
+        "latest_version": "7.0.1",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "protobuf",
+        "version": "5.29.5",
+        "latest_version": "6.33.1",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "pyarrow",
+        "version": "21.0.0",
+        "latest_version": "22.0.0",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "pydantic",
+        "version": "2.12.4",
+        "latest_version": "2.12.5",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "pymdown-extensions",
+        "version": "10.17.1",
+        "latest_version": "10.17.2",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "tinycss2",
+        "version": "1.4.0",
+        "latest_version": "1.5.1",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "transformers",
+        "version": "4.57.1",
+        "latest_version": "4.57.3",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "types-psutil",
+        "version": "7.1.1.20251122",
+        "latest_version": "7.1.3.20251125",
+        "latest_filetype": "wheel"
+      },
+      {
+        "name": "ultralytics",
+        "version": "8.3.230",
+        "latest_version": "8.3.232",
+        "latest_filetype": "wheel"
+      }
+    ],
+    "integrity": {
+      "qiskit": {
+        "status": "installed",
+        "version": "2.2.3"
+      },
+      "dwave-ocean-sdk": {
+        "status": "missing"
+      },
+      "protobuf": {
+        "status": "installed",
+        "version": "5.29.5"
+      },
+      "torch": {
+        "status": "installed",
+        "version": "2.9.1"
+      }
+    },
+    "missing": []
+  },
+  "services": {
+    "observer": true,
+    "auditor": false,
+    "replay": false,
+    "frontend": true,
+    "backend": true
+  },
+  "logs": {
+    "error_count": 380,
+    "warning_count": 1126,
+    "errors": [
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:46:59 [ERROR] src.agents.orchestrator_agent: Failed to initialize SecurityAgent: no running event loop"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:47:01 [ERROR] src.agents.orchestrator_agent: Failed to initialize SecurityAgent: no running event loop"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:47:02 [ERROR] src.agents.orchestrator_agent: Failed to initialize SecurityAgent: no running event loop"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:47:04 [ERROR] src.agents.orchestrator_agent: Failed to initialize SecurityAgent: no running event loop"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:52:28 [ERROR] src.agents.orchestrator_agent: Failed to initialize SecurityAgent: no running event loop"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:52:29 [ERROR] src.agents.orchestrator_agent: Failed to initialize SecurityAgent: no running event loop"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:52:30 [ERROR] src.agents.orchestrator_agent: Failed to initialize SecurityAgent: no running event loop"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:52:32 [ERROR] src.autopoietic.meta_architect.MetaArchitect: Invalid spec detected: ComponentSpec(name='', type='type', config={})"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:52:32 [ERROR] src.autopoietic.system_boundary.SystemBoundary: Attempted access to external component bad"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:52:33 [ERROR] src.coevolution.hchac_framework: Invalid feedback type: INVALID_TYPE"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "tests/integrations/test_mcp_client_async.py::TestMCPExceptions::test_mcp_client_error PASSED"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "tests/integrations/test_mcp_client_async.py::TestMCPExceptions::test_mcp_timeout_error PASSED"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "tests/integrations/test_mcp_client_async.py::TestMCPExceptions::test_mcp_connection_error PASSED"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "tests/integrations/test_mcp_client_async.py::TestMCPExceptions::test_mcp_protocol_error PASSED"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:52:38 [ERROR] src.integrations.mcp_client_optimized: Erro na chamada MCP test: Test error"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:38 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: 'list' object has no attribute 'get'"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:39 [ERROR] src.metacognition.metacognition_agent: Health check failed: Test error"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "Exception: Test error"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 09:54:41 [ERROR] src.metacognition.self_analysis: Failed to load hash chain: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 10:00:31 [ERROR] src.scaling.distributed_transactions: Saga saga-1: Step 1 failed: Step 2 failed!"
+      },
+      {
+        "file": "test_suite_20251125_094626.log",
+        "line": "2025-11-25 10:00:31 [ERROR] src.scaling.redis_cluster_manager: Failed to connect to Redis Cluster: Connection refused"
+      }
+    ]
+  },
+  "security": [
+    {
+      "file": "src/phase16_integration.py",
+      "line": 230,
+      "type": "TODO",
+      "content": "seed_concepts=[],  # TODO: Extract concepts from context"
+    },
+    {
+      "file": "tests/test_external_ai_integration.py",
+      "line": 97,
+      "type": "API_KEY",
+      "content": "\"api_key_env\": \"GOOGLE_AI_API_KEY\","
+    },
+    {
+      "file": "tests/test_external_ai_integration.py",
+      "line": 103,
+      "type": "API_KEY",
+      "content": "@patch.dict(os.environ, {\"GOOGLE_AI_API_KEY\": \"test_key\"})"
+    },
+    {
+      "file": "tests/test_external_ai_integration.py",
+      "line": 118,
+      "type": "API_KEY",
+      "content": "with pytest.raises(ValueError, match=\"GOOGLE_AI_API_KEY n\u00e3o configurada\"):"
+    },
+    {
+      "file": "tests/test_external_ai_integration.py",
+      "line": 133,
+      "type": "API_KEY",
+      "content": "@patch.dict(os.environ, {\"GOOGLE_AI_API_KEY\": \"test_key\"})"
+    },
+    {
+      "file": "tests/test_external_ai_integration.py",
+      "line": 212,
+      "type": "API_KEY",
+      "content": "\"api_key_env\": \"OPENROUTER_API_KEY\","
+    },
+    {
+      "file": "tests/test_external_ai_integration.py",
+      "line": 218,
+      "type": "API_KEY",
+      "content": "@patch.dict(os.environ, {\"OPENROUTER_API_KEY\": \"test_key\"})"
+    },
+    {
+      "file": "tests/test_external_ai_integration.py",
+      "line": 253,
+      "type": "API_KEY",
+      "content": "@patch.dict(os.environ, {\"OPENROUTER_API_KEY\": \"test_key\"})"
+    },
+    {
+      "file": "tests/test_external_ai_integration.py",
+      "line": 304,
+      "type": "API_KEY",
+      "content": "@patch.dict(os.environ, {\"OPENROUTER_API_KEY\": \"test_key\"})"
+    },
+    {
+      "file": "scripts/fast_ibm_benchmark.py",
+      "line": 32,
+      "type": "API_KEY",
+      "content": "token = os.getenv(\"IBM_API_KEY\")"
+    },
+    {
+      "file": "scripts/fast_ibm_benchmark.py",
+      "line": 34,
+      "type": "API_KEY",
+      "content": "logger.error(\"ibm_token_missing\", msg=\"IBM_API_KEY not set\")"
+    },
+    {
+      "file": "scripts/verify_quantum.py",
+      "line": 18,
+      "type": "API_KEY",
+      "content": "api_key = os.getenv(\"IBM_API_KEY\") or os.getenv(\"IBM_QUANTUM_TOKEN\")"
+    },
+    {
+      "file": "scripts/verify_quantum.py",
+      "line": 21,
+      "type": "API_KEY",
+      "content": "print(\"\u274c Error: IBM_API_KEY or IBM_QUANTUM_TOKEN not found in environment.\")"
+    },
+    {
+      "file": "scripts/test_ibm_connection.py",
+      "line": 26,
+      "type": "API_KEY",
+      "content": "ibm_token = os.getenv(\"IBM_API_KEY\")"
+    },
+    {
+      "file": "scripts/test_ibm_connection.py",
+      "line": 29,
+      "type": "API_KEY",
+      "content": "print(\"\u274c ERRO: IBM_API_KEY n\u00e3o encontrado\")"
+    },
+    {
+      "file": "scripts/test_ibm_api.py",
+      "line": 23,
+      "type": "API_KEY",
+      "content": "token = os.getenv(\"IBM_API_KEY\")"
+    },
+    {
+      "file": "scripts/final_benchmark_comparison.py",
+      "line": 45,
+      "type": "API_KEY",
+      "content": "ibm_token = os.getenv(\"IBM_API_KEY\")"
+    },
+    {
+      "file": "scripts/final_benchmark_comparison.py",
+      "line": 48,
+      "type": "API_KEY",
+      "content": "print(\"\u274c ERRO: IBM_API_KEY n\u00e3o encontrado\")"
+    },
+    {
+      "file": "scripts/test_qdrant_connection.py",
+      "line": 7,
+      "type": "API_KEY",
+      "content": "api_key = os.environ.get(\"OMNIMIND_QDRANT_API_KEY\")"
+    },
+    {
+      "file": "scripts/qiskit_v2_api_reference.py",
+      "line": 16,
+      "type": "API_KEY",
+      "content": "# Inicializar servi\u00e7o (usa .env IBM_API_KEY)"
+    },
+    {
+      "file": "scripts/ibm_validation_quick.py",
+      "line": 55,
+      "type": "API_KEY",
+      "content": "ibm_token = os.getenv(\"IBM_API_KEY\")"
+    },
+    {
+      "file": "scripts/ibm_validation_quick.py",
+      "line": 58,
+      "type": "API_KEY",
+      "content": "print(\"\u274c ERRO: IBM_API_KEY n\u00e3o encontrado no .env\")"
+    },
+    {
+      "file": "scripts/collect_24h_data.py",
+      "line": 125,
+      "type": "TODO",
+      "content": "# TODO: implement calculate_unconscious_influence in EgoAgent"
+    },
+    {
+      "file": "scripts/auto_generate_tests.py",
+      "line": 119,
+      "type": "TODO",
+      "content": "# TODO: Inicializar fixtures necess\u00e1rias"
+    },
+    {
+      "file": "scripts/auto_generate_tests.py",
+      "line": 133,
+      "type": "TODO",
+      "content": "# TODO: Implementar teste para {func.name}"
+    },
+    {
+      "file": "scripts/auto_generate_tests.py",
+      "line": 162,
+      "type": "TODO",
+      "content": "# TODO: Implementar teste de integra\u00e7\u00e3o"
+    },
+    {
+      "file": "scripts/auto_generate_tests.py",
+      "line": 166,
+      "type": "TODO",
+      "content": "# TODO: Adicionar casos de teste parametrizados"
+    },
+    {
+      "file": "scripts/auto_generate_tests.py",
+      "line": 172,
+      "type": "TODO",
+      "content": "# TODO: Implementar testes parametrizados"
+    },
+    {
+      "file": "scripts/audit_orchestrator.py",
+      "line": 264,
+      "type": "TODO",
+      "content": "# Check for TODO comments"
+    },
+    {
+      "file": "scripts/audit_orchestrator.py",
+      "line": 265,
+      "type": "TODO",
+      "content": "todo_count = source.upper().count(\"TODO\")"
+    },
+    {
+      "file": "scripts/audit_orchestrator.py",
+      "line": 271,
+      "type": "TODO",
+      "content": "\"description\": f\"{todo_count} TODO comments found - technical debt\","
+    },
+    {
+      "file": "scripts/audit_orchestrator.py",
+      "line": 272,
+      "type": "TODO",
+      "content": "\"recommendation\": \"Address TODO items or convert to proper issues\","
+    },
+    {
+      "file": "scripts/test_ibm_api_fixed.py",
+      "line": 29,
+      "type": "API_KEY",
+      "content": "ibm_token = os.getenv(\"IBM_API_KEY\")"
+    },
+    {
+      "file": "scripts/test_ibm_api_fixed.py",
+      "line": 32,
+      "type": "API_KEY",
+      "content": "print(\"\u274c ERRO: IBM_API_KEY n\u00e3o encontrado\")"
+    },
+    {
+      "file": "scripts/quantum_benchmark_suite_ibm.py",
+      "line": 819,
+      "type": "API_KEY",
+      "content": "ibm_token = os.getenv(\"IBM_API_KEY\")"
+    },
+    {
+      "file": "scripts/quantum_benchmark_suite_ibm.py",
+      "line": 822,
+      "type": "API_KEY",
+      "content": "print(\"\u274c ERRO: IBM_API_KEY n\u00e3o encontrado no .env\")"
+    },
+    {
+      "file": "scripts/demo_ibm_quantum.py",
+      "line": 9,
+      "type": "API_KEY",
+      "content": "- Token IBM_API_KEY configurado no .env"
+    },
+    {
+      "file": "scripts/demo_ibm_quantum.py",
+      "line": 42,
+      "type": "API_KEY",
+      "content": "ibm_token = os.getenv(\"IBM_API_KEY\")"
+    },
+    {
+      "file": "scripts/demo_ibm_quantum.py",
+      "line": 45,
+      "type": "API_KEY",
+      "content": "print(\"\u274c ERRO: IBM_API_KEY n\u00e3o encontrado no .env\")"
+    },
+    {
+      "file": "src/integrations/oauth2_client.py",
+      "line": 35,
+      "type": "PASSWORD",
+      "content": "PASSWORD = \"password\""
+    },
+    {
+      "file": "src/integrations/mcp_agentic_client.py",
+      "line": 469,
+      "type": "MOCK",
+      "content": "\"content\": f\"[MOCK] Content of {path}\","
+    },
+    {
+      "file": "src/integrations/qdrant_adapter.py",
+      "line": 35,
+      "type": "API_KEY",
+      "content": "api_key=os.environ.get(\"OMNIMIND_QDRANT_API_KEY\"),"
+    },
+    {
+      "file": "src/integrations/qdrant_adapter.py",
+      "line": 50,
+      "type": "API_KEY",
+      "content": "api_key=os.environ.get(\"OMNIMIND_QDRANT_API_KEY\"),"
+    },
+    {
+      "file": "src/integrations/qdrant_adapter.py",
+      "line": 77,
+      "type": "API_KEY",
+      "content": "\"OMNIMIND_QDRANT_API_KEY\","
+    },
+    {
+      "file": "src/integrations/qdrant_adapter.py",
+      "line": 92,
+      "type": "API_KEY",
+      "content": "api_key=env_map.get(\"OMNIMIND_QDRANT_API_KEY\"),"
+    },
+    {
+      "file": "src/integrations/mcp_orchestrator.py",
+      "line": 430,
+      "type": "TODO",
+      "content": "TODO: Implementar health check via endpoint HTTP/gRPC para verifica\u00e7\u00e3o"
+    },
+    {
+      "file": "src/experiments/run_all_experiments.py",
+      "line": 124,
+      "type": "TODO",
+      "content": "print(f\"\u2551{' ' * 22}TODOS EXPERIMENTOS CONCLU\u00cdDOS{' ' * 17}\u2551\")"
+    },
+    {
+      "file": "src/quantum_consciousness/quantum_backend.py",
+      "line": 62,
+      "type": "API_KEY",
+      "content": "or os.getenv(\"IBM_API_KEY\")"
+    },
+    {
+      "file": "src/quantum_consciousness/quantum_backend.py",
+      "line": 73,
+      "type": "API_KEY",
+      "content": "elif QISKIT_AVAILABLE and (os.getenv(\"IBMQ_API_TOKEN\") or os.getenv(\"IBM_API_KEY\")):"
+    },
+    {
+      "file": "src/coevolution/hchac_framework.py",
+      "line": 187,
+      "type": "TODO",
+      "content": "# TODO: Usar agente psicanal\u00edtico para questionar premissas"
+    },
+    {
+      "file": "src/coevolution/hchac_framework.py",
+      "line": 249,
+      "type": "TODO",
+      "content": "# TODO: Implementar l\u00f3gica de execu\u00e7\u00e3o colaborativa real"
+    },
+    {
+      "file": "src/coevolution/hchac_framework.py",
+      "line": 281,
+      "type": "TODO",
+      "content": "# TODO: M\u00e9tricas reais de aprendizado"
+    },
+    {
+      "file": "src/lacanian/encrypted_unconscious.py",
+      "line": 53,
+      "type": "MOCK",
+      "content": "return b\"MOCK_ENCRYPTED_DATA\""
+    },
+    {
+      "file": "src/embodied_cognition/motor_output.py",
+      "line": 186,
+      "type": "TODO",
+      "content": "# TODO: Implement ROS action execution"
+    },
+    {
+      "file": "src/tools/code_generator.py",
+      "line": 115,
+      "type": "TODO",
+      "content": "# TODO: Implement agent logic"
+    },
+    {
+      "file": "src/tools/code_generator.py",
+      "line": 229,
+      "type": "TODO",
+      "content": "# TODO: Implement error handling test"
+    },
+    {
+      "file": "src/tools/code_generator.py",
+      "line": 284,
+      "type": "TODO",
+      "content": "# TODO: Implement endpoint logic"
+    },
+    {
+      "file": "src/tools/code_generator.py",
+      "line": 476,
+      "type": "TODO",
+      "content": "f\"        # TODO: Implement test\\n\""
+    },
+    {
+      "file": "src/tools/code_generator.py",
+      "line": 551,
+      "type": "TODO",
+      "content": "description = func.__doc__.strip() if func.__doc__ else \"TODO: Add description\""
+    },
+    {
+      "file": "src/tools/code_generator.py",
+      "line": 564,
+      "type": "TODO",
+      "content": "params.append(f\"    {name} ({param_type}): TODO: Describe parameter\")"
+    },
+    {
+      "file": "src/tools/code_generator.py",
+      "line": 581,
+      "type": "TODO",
+      "content": "{return_type}: TODO: Describe return value"
+    },
+    {
+      "file": "src/tools/ast_parser.py",
+      "line": 319,
+      "type": "TODO",
+      "content": "lines.append(f'        \"\"\"TODO: Implement {method_name}\"\"\"')"
+    },
+    {
+      "file": "tests/security/test_dlp.py",
+      "line": 67,
+      "type": "PASSWORD",
+      "content": "assert policy.compiled.search(\"PASSWORD=SECRET\") is not None"
+    },
+    {
+      "file": "tests/security/test_dlp.py",
+      "line": 317,
+      "type": "API_KEY",
+      "content": "violation2 = validator.validate(\"API_KEY=secret\")"
+    },
+    {
+      "file": "tests/lacanian/test_encrypted_unconscious.py",
+      "line": 52,
+      "type": "MOCK",
+      "content": "assert encrypted_data == b\"MOCK_ENCRYPTED_DATA\""
+    },
+    {
+      "file": "tests/lacanian/test_encrypted_unconscious.py",
+      "line": 65,
+      "type": "MOCK",
+      "content": "assert encrypted_data != b\"MOCK_ENCRYPTED_DATA\""
+    },
+    {
+      "file": "scripts/consolidation/autonomous_cleanup.py",
+      "line": 6,
+      "type": "TODO",
+      "content": "1. Remo\u00e7\u00e3o de TODOs restantes (implementando ou documentando)"
+    },
+    {
+      "file": "scripts/audit_p0/master_audit.py",
+      "line": 93,
+      "type": "TODO",
+      "content": "placeholders = [\"TODO\", \"FIXME\", \"PASSWORD\", \"API_KEY\", \"MOCK\", \"TEST_USER\"]"
+    },
+    {
+      "file": "scripts/audit_p0/master_audit.py",
+      "line": 93,
+      "type": "FIXME",
+      "content": "placeholders = [\"TODO\", \"FIXME\", \"PASSWORD\", \"API_KEY\", \"MOCK\", \"TEST_USER\"]"
+    },
+    {
+      "file": "scripts/audit_p0/master_audit.py",
+      "line": 93,
+      "type": "PASSWORD",
+      "content": "placeholders = [\"TODO\", \"FIXME\", \"PASSWORD\", \"API_KEY\", \"MOCK\", \"TEST_USER\"]"
+    },
+    {
+      "file": "scripts/audit_p0/master_audit.py",
+      "line": 93,
+      "type": "API_KEY",
+      "content": "placeholders = [\"TODO\", \"FIXME\", \"PASSWORD\", \"API_KEY\", \"MOCK\", \"TEST_USER\"]"
+    },
+    {
+      "file": "scripts/audit_p0/master_audit.py",
+      "line": 93,
+      "type": "MOCK",
+      "content": "placeholders = [\"TODO\", \"FIXME\", \"PASSWORD\", \"API_KEY\", \"MOCK\", \"TEST_USER\"]"
+    },
+    {
+      "file": "scripts/audit_p0/master_audit.py",
+      "line": 93,
+      "type": "TEST_USER",
+      "content": "placeholders = [\"TODO\", \"FIXME\", \"PASSWORD\", \"API_KEY\", \"MOCK\", \"TEST_USER\"]"
+    },
+    {
+      "file": "tests/load_tests/api_load_test.js",
+      "line": 37,
+      "type": "PASSWORD",
+      "content": "const PASSWORD = __ENV.PASSWORD || 'test_pass';"
+    },
+    {
+      "file": "tests/load_tests/api_load_test.js",
+      "line": 40,
+      "type": "PASSWORD",
+      "content": "const credentials = `${USERNAME}:${PASSWORD}`;"
+    }
+  ]
+}

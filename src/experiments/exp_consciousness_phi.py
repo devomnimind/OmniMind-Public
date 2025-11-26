@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 from typing import Any, TypedDict
 
-from src.metrics.consciousness_metrics import (
+from src.metrics.consciousness_metrics_legacy import (
     ConsciousnessMetrics,
     AgentConnection,
     FeedbackLoop,

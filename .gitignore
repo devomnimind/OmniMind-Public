@@ -176,3 +176,12 @@ omnimind_archive_*/
 # ------------------------------------------------------------------
 .documentation_backup_*/
 
+# Adicionar ao final do .gitignore:
+
+# IBM Quantum Results (logs de uso, não versionar)
+ibm_results/
+data/long_term_logs/*.log
+
+# Requirements lock (gerado, não editar manualmente)
+requirements.lock
+

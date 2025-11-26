@@ -41,5 +41,17 @@
   "tests/test_trap_framework.py::TestTRAPComponent::test_component_initialization": true,
   "tests/test_trap_framework.py::TestTRAPComponent::test_component_score_bounds": true,
   "tests/lacanian/test_encrypted_unconscious.py::TestEncryptedUnconsciousLayer::test_quantize_event": true,
-  "tests/lacanian/test_encrypted_unconscious.py::TestEncryptedUnconsciousLayer::test_quantize_event_with_floats": true
+  "tests/lacanian/test_encrypted_unconscious.py::TestEncryptedUnconsciousLayer::test_quantize_event_with_floats": true,
+  "tests/experiments/test_experiments_suite.py::TestConsciousnessPhiExperiment": true,
+  "tests/experiments/test_experiments_suite.py::TestEthicsAlignmentExperiment": true,
+  "tests/experiments/test_experiments_suite.py::TestExperimentRunner": true,
+  "tests/experiments/test_experiments_suite.py::TestExperimentConfig": true,
+  "tests/experiments/test_run_all_experiments.py::TestRunAllExperiments": true,
+  "tests/experiments/test_run_all_experiments.py::TestGenerateSummary": true,
+  "tests/experiments/test_run_all_experiments.py::TestMain": true,
+  "tests/metrics/test_consciousness_metrics.py::TestAgentConnection": true,
+  "tests/metrics/test_consciousness_metrics.py::TestFeedbackLoop": true,
+  "tests/metrics/test_consciousness_metrics.py::TestSelfAwarenessMetrics": true,
+  "tests/metrics/test_consciousness_metrics.py::TestConsciousnessMetrics": true,
+  "tests/metrics/test_consciousness_metrics.py::TestStandaloneFunctions": true
 }

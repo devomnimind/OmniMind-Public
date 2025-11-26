@@ -248,15 +248,25 @@ class IBMQBackend(QPUBackend):
             sampler = Sampler(mode=self.ibm_backend)
             job = sampler.run([qc_transpiled], shots=shots)
 
-            result = job.result(timeout=600)
+            # Enforce 7-minute limit (420 seconds) as per project rules
+            result = job.result(timeout=420)
 
             # Extract counts from V2 API DataBin object
+            # Extract counts from V2 API DataBin object
             data_bin = result[0].data
-            if hasattr(data_bin, "c"):
+            if hasattr(data_bin, "meas"):
+                counts = data_bin.meas.get_counts()
+            elif hasattr(data_bin, "c"):
                 counts = data_bin.c.get_counts()
             else:
-                # Fallback if structure is different
-                counts = getattr(data_bin, "get_counts", lambda: {})()
+                # Fallback: try to find any attribute that looks like a register with counts
+                counts = {}
+                for attr in dir(data_bin):
+                    if not attr.startswith("_"):
+                        val = getattr(data_bin, attr)
+                        if hasattr(val, "get_counts"):
+                            counts = val.get_counts()
+                            break
 
             logger.info(
                 "ibmq_execution_complete",
@@ -389,6 +399,7 @@ class QPUInterface:
         circuit: Any,
         shots: int = 1024,
         backend_type: Optional[BackendType] = None,
+        strict_mode: bool = False,
     ) -> Dict[str, int]:
         """
         Execute quantum circuit.
@@ -397,6 +408,7 @@ class QPUInterface:
             circuit: Quantum circuit to execute
             shots: Number of measurement shots
             backend_type: Optional specific backend to use
+            strict_mode: If True, raise exception on failure instead of fallback
 
         Returns:
             Measurement counts
@@ -411,9 +423,30 @@ class QPUInterface:
         if backend_type and backend_type in self.backends:
             backend = self.backends[backend_type]
 
-        logger.info("executing_circuit", backend=backend.get_info().name, shots=shots)
+        logger.info(
+            "executing_circuit", backend=backend.get_info().name, shots=shots, strict=strict_mode
+        )
 
-        return backend.execute(circuit, shots)
+        try:
+            return backend.execute(circuit, shots)
+        except Exception as e:
+            if strict_mode:
+                logger.error("execution_failed_strict_mode", error=str(e))
+                raise RuntimeError(
+                    f"Strict mode execution failed on {backend.get_info().name}: {e}"
+                )
+
+            # Default fallback logic (if not strict)
+            logger.warning("execution_failed_fallback", error=str(e))
+            if isinstance(backend, SimulatorBackend):
+                raise e  # Simulator failed, nothing to fallback to
+
+            # Try to find a simulator to fallback to
+            if BackendType.SIMULATOR_AER in self.backends:
+                logger.info("falling_back_to_simulator")
+                return self.backends[BackendType.SIMULATOR_AER].execute(circuit, shots)
+
+            raise e
 
     def list_backends(self) -> List[BackendInfo]:
         """List all available backends."""

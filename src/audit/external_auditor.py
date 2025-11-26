@@ -1,7 +1,6 @@
 import json
 import os
-import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 
 # Configuration
 LOG_DIR = "data/long_term_logs"
@@ -25,7 +24,7 @@ class ExternalAuditor:
             for line in f:
                 try:
                     logs.append(json.loads(line))
-                except:
+                except Exception:
                     pass
         return logs
 
@@ -67,7 +66,8 @@ class ExternalAuditor:
 
         if short:
             print(
-                f"[{timestamp}] Status: {status} | Logs: {self.stats['total_logs']} | CPU: {self.stats['avg_cpu']}%"
+                f"[{timestamp}] Status: {status} | Logs: "
+                f"{self.stats['total_logs']} | CPU: {self.stats['avg_cpu']}%"
             )
             if self.anomalies:
                 print(f"Anomalies: {len(self.anomalies)}")

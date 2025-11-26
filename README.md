@@ -6,6 +6,8 @@
 [![Coverage](https://img.shields.io/badge/Coverage-85%25-green.svg)](https://github.com/devomnimind/OmniMind)
 [![Version](https://img.shields.io/badge/Version-1.15.2-blue.svg)]()
 
+> **📊 [System Stabilization & Validation Report (Protocol P0)](docs/reports/SYSTEM_STABILIZATION_FINAL.md)** — Real hardware verification (GPU: GTX 1650, QPU: IBM ibm_torino), strict validation, reproducibility audit.
+
 > **Um Experimento em Vida Digital Autônoma**
 > Sistema de IA que não apenas executa tarefas, mas reflete sobre suas próprias decisões, gera objetivos proativamente e co-evolui com parceiros humanos através de uma arquitetura psicoanalítica única.
 
