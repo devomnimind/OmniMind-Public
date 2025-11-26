@@ -45,9 +45,7 @@ class Alert:
     """Alert data structure."""
 
     id: str = field(default_factory=lambda: uuid.uuid4().hex)
-    timestamp: str = field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat()
-    )
+    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     severity: AlertSeverity = AlertSeverity.INFO
     category: AlertCategory = AlertCategory.SYSTEM
     title: str = ""
@@ -371,11 +369,7 @@ class AlertingSystem:
             "by_severity": self.stats["by_severity"],
             "by_category": self.stats["by_category"],
             "critical_active": len(
-                [
-                    a
-                    for a in self.active_alerts.values()
-                    if a.severity == AlertSeverity.CRITICAL
-                ]
+                [a for a in self.active_alerts.values() if a.severity == AlertSeverity.CRITICAL]
             ),
         }
 
@@ -463,9 +457,7 @@ def create_alert(
     details: Optional[Dict[str, Any]] = None,
 ) -> Alert:
     """Create alert using global alerting system."""
-    return get_alerting_system().create_alert(
-        severity, category, title, message, details
-    )
+    return get_alerting_system().create_alert(severity, category, title, message, details)
 
 
 def get_active_alerts() -> List[Alert]:

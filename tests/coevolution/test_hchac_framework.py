@@ -130,9 +130,7 @@ class TestHCHACFramework:
 
         roles = {"human": Role.LEADER, "ai": Role.CONTRIBUTOR}
 
-        result = framework._execute_with_roles(
-            human_id="user1", goal={"goal": "test"}, roles=roles
-        )
+        result = framework._execute_with_roles(human_id="user1", goal={"goal": "test"}, roles=roles)
 
         assert isinstance(result, ExecutionResult)
         assert isinstance(result.success, bool)

@@ -87,9 +87,7 @@ class AttentionWeights:
         if self.weights:
             total = sum(self.weights.values())
             if total > 0:
-                self.weights = {
-                    mod: weight / total for mod, weight in self.weights.items()
-                }
+                self.weights = {mod: weight / total for mod, weight in self.weights.items()}
 
     def get_weight(self, modality: Modality) -> float:
         """Get attention weight for a modality."""
@@ -252,9 +250,7 @@ class MultiModalFusion:
             fused_features = self._attention_fusion(inputs, attention)
 
         # Calculate overall confidence
-        weighted_conf = sum(
-            inp.confidence * attention.get_weight(inp.modality) for inp in inputs
-        )
+        weighted_conf = sum(inp.confidence * attention.get_weight(inp.modality) for inp in inputs)
 
         # Generate interpretation
         interpretation = self._generate_interpretation(inputs, fused_features)
@@ -300,14 +296,10 @@ class MultiModalFusion:
         # Filter inputs by target modalities
         if query.target_modalities:
             candidates = [
-                inp
-                for inp in available_inputs
-                if inp.modality in query.target_modalities
+                inp for inp in available_inputs if inp.modality in query.target_modalities
             ]
         else:
-            candidates = [
-                inp for inp in available_inputs if inp.modality != query.source_modality
-            ]
+            candidates = [inp for inp in available_inputs if inp.modality != query.source_modality]
 
         # Compute cross-modal similarities
         matches: List[CrossModalMatch] = []
@@ -320,9 +312,7 @@ class MultiModalFusion:
                 candidate.features,
             )
 
-            interpretation = self._interpret_cross_modal_match(
-                query, candidate, similarity
-            )
+            interpretation = self._interpret_cross_modal_match(query, candidate, similarity)
 
             match = CrossModalMatch(
                 query_modality=query.source_modality,
@@ -387,9 +377,7 @@ class MultiModalFusion:
 
         return alignments
 
-    def _compute_attention_weights(
-        self, inputs: List[ModalityInput]
-    ) -> AttentionWeights:
+    def _compute_attention_weights(self, inputs: List[ModalityInput]) -> AttentionWeights:
         """Compute attention weights for modality inputs."""
         weights: Dict[Modality, float] = {}
 
@@ -405,9 +393,7 @@ class MultiModalFusion:
             weight = inp.confidence
             weights[inp.modality] = weight
 
-        return AttentionWeights(
-            weights=weights, strategy="confidence_based", confidence=0.9
-        )
+        return AttentionWeights(weights=weights, strategy="confidence_based", confidence=0.9)
 
     def _early_fusion(
         self, inputs: List[ModalityInput], attention: AttentionWeights
@@ -501,10 +487,7 @@ class MultiModalFusion:
                 common_keys = set(context_features.keys()) & set(target_features.keys())
                 if common_keys:
                     # Calculate similarity for common features
-                    diffs = [
-                        abs(context_features[k] - target_features[k])
-                        for k in common_keys
-                    ]
+                    diffs = [abs(context_features[k] - target_features[k]) for k in common_keys]
                     overlap = 1.0 - (sum(diffs) / len(diffs))
 
         # Base similarity depends on modality compatibility
@@ -527,9 +510,7 @@ class MultiModalFusion:
 
         return similarity
 
-    def _compute_alignment_score(
-        self, inp1: ModalityInput, inp2: ModalityInput
-    ) -> float:
+    def _compute_alignment_score(self, inp1: ModalityInput, inp2: ModalityInput) -> float:
         """Compute temporal/spatial alignment between modalities."""
         # Check temporal alignment
         time_diff = abs((inp1.timestamp - inp2.timestamp).total_seconds())
@@ -576,9 +557,7 @@ class MultiModalFusion:
         self._modality_history.clear()
         logger.info("history_cleared", cleared_count=count)
 
-    def get_modality_history(
-        self, modality: Optional[Modality] = None
-    ) -> List[ModalityInput]:
+    def get_modality_history(self, modality: Optional[Modality] = None) -> List[ModalityInput]:
         """Get modality input history.
 
         Args:

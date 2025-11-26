@@ -202,9 +202,7 @@ Overall Confidence: {inference.overall_confidence:.2%}
         # Extrair dados do resultado de reconciliação
         # Assumindo que é um objeto ReconciliationResult ou similar
 
-        answer = getattr(
-            reconciliation_result, "final_answer", str(reconciliation_result)
-        )
+        answer = getattr(reconciliation_result, "final_answer", str(reconciliation_result))
         confidence = getattr(reconciliation_result, "confidence", 0.5)
         explanation = getattr(reconciliation_result, "explanation", "")
 
@@ -214,11 +212,7 @@ Overall Confidence: {inference.overall_confidence:.2%}
             "result": answer,
             "confidence": confidence,
             "explanation": explanation,
-            "neural_confidence": getattr(
-                reconciliation_result, "neural_contribution", 0.5
-            ),
-            "symbolic_certainty": getattr(
-                reconciliation_result, "symbolic_contribution", 0.5
-            ),
+            "neural_confidence": getattr(reconciliation_result, "neural_contribution", 0.5),
+            "symbolic_certainty": getattr(reconciliation_result, "symbolic_contribution", 0.5),
             "context_used": list(context.keys()),
         }

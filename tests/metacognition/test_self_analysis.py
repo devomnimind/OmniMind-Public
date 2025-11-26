@@ -594,11 +594,7 @@ class TestIntegration:
         log_file = tmp_path / "timestamps.json"
         now = datetime.now()
 
-        data = {
-            "entries": [
-                {"timestamp": now.isoformat(), "success": True} for _ in range(5)
-            ]
-        }
+        data = {"entries": [{"timestamp": now.isoformat(), "success": True} for _ in range(5)]}
 
         with open(log_file, "w") as f:
             json.dump(data, f)

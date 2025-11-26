@@ -409,9 +409,7 @@ class TestQuantumNeuralNetwork:
 
     def test_training_reduces_loss(self) -> None:
         """Testa que treinamento reduz loss."""
-        qnn = QuantumNeuralNetwork(
-            input_dim=2, output_dim=1, num_qubits=2, num_layers=1
-        )
+        qnn = QuantumNeuralNetwork(input_dim=2, output_dim=1, num_qubits=2, num_layers=1)
 
         inputs = [0.5, 0.5]
         target = 0.0
@@ -442,9 +440,7 @@ class TestQuantumNeuralNetwork:
 
         # Prediction should (likely) change
         # Allow for small differences due to numerical precision
-        assert (
-            abs(pred_before - pred_after) >= 0 or True
-        )  # Always passes but checks execution
+        assert abs(pred_before - pred_after) >= 0 or True  # Always passes but checks execution
 
 
 class TestQuantumClassifier:
@@ -571,9 +567,7 @@ class TestQuantumMLIntegration:
 
     def test_quantum_nn_training_loop(self) -> None:
         """Testa loop de treinamento completo da rede neural."""
-        qnn = QuantumNeuralNetwork(
-            input_dim=2, output_dim=1, num_qubits=2, num_layers=1
-        )
+        qnn = QuantumNeuralNetwork(input_dim=2, output_dim=1, num_qubits=2, num_layers=1)
 
         # Training data
         X = [[0.0, 0.0], [1.0, 1.0]]

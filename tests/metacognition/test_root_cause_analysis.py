@@ -201,9 +201,7 @@ class TestRootCauseEngine:
 
         # Setup dependency chain: web -> cache -> db
         engine.register_component("db-1", ComponentType.DATABASE, "Database")
-        engine.register_component(
-            "cache-1", ComponentType.CACHE, "Cache", dependencies=["db-1"]
-        )
+        engine.register_component("cache-1", ComponentType.CACHE, "Cache", dependencies=["db-1"])
         engine.register_component(
             "web-1", ComponentType.SERVICE, "Web Server", dependencies=["cache-1"]
         )
@@ -213,9 +211,7 @@ class TestRootCauseEngine:
 
         engine.record_failure("fail-db", "db-1", FailureType.CRASH, "Database crashed")
         time.sleep(0.1)
-        engine.record_failure(
-            "fail-cache", "cache-1", FailureType.TIMEOUT, "Cache timeout"
-        )
+        engine.record_failure("fail-cache", "cache-1", FailureType.TIMEOUT, "Cache timeout")
         time.sleep(0.1)
         engine.record_failure("fail-web", "web-1", FailureType.ERROR, "Service errors")
 
@@ -334,9 +330,7 @@ class TestRootCauseEngine:
         engine.register_component(
             "web-1", ComponentType.SERVICE, "Web", dependencies=["cache-1", "db-1"]
         )
-        engine.register_component(
-            "queue-1", ComponentType.QUEUE, "Queue", dependencies=["db-1"]
-        )
+        engine.register_component("queue-1", ComponentType.QUEUE, "Queue", dependencies=["db-1"])
         engine.register_component(
             "api-1", ComponentType.API, "API", dependencies=["web-1", "queue-1"]
         )
@@ -408,8 +402,7 @@ class TestRootCauseEngine:
 
         # Should mention database-specific recommendations
         assert any(
-            keyword in db_recs.lower()
-            for keyword in ["database", "query", "connection", "index"]
+            keyword in db_recs.lower() for keyword in ["database", "query", "connection", "index"]
         )
 
         # Test network component
@@ -461,9 +454,7 @@ class TestRootCauseEngine:
         engine = RootCauseEngine()
 
         engine.register_component("api-1", ComponentType.API, "API")
-        engine.register_component(
-            "db-1", ComponentType.DATABASE, "Database", dependencies=[]
-        )
+        engine.register_component("db-1", ComponentType.DATABASE, "Database", dependencies=[])
         engine.graph.add_dependency("api-1", "db-1")
 
         import time

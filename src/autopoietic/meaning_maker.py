@@ -164,9 +164,7 @@ class ValueSystem:
         """Get all values in a category."""
         return [v for v in self.values.values() if v.category == category]
 
-    def assess_value_alignment(
-        self, action_description: str, value_ids: List[str]
-    ) -> float:
+    def assess_value_alignment(self, action_description: str, value_ids: List[str]) -> float:
         """
         Assess how well an action aligns with values.
 
@@ -480,15 +478,11 @@ class MeaningMaker:
             Created narrative event
         """
         # Assess value alignment
-        alignment = self.values.assess_value_alignment(
-            experience_description, related_values
-        )
+        alignment = self.values.assess_value_alignment(experience_description, related_values)
 
         # Generate meaning
         value_names = [
-            self.values.values[vid].name
-            for vid in related_values
-            if vid in self.values.values
+            self.values.values[vid].name for vid in related_values if vid in self.values.values
         ]
 
         if alignment > 0.7:
@@ -542,18 +536,14 @@ class MeaningMaker:
         # Purpose: clarity of goals and direction
         top_goals = self.goals.get_top_level_goals()
         core_values = self.values.get_core_values()
-        purpose_score = min(len(top_goals) / 3.0, 1.0) * min(
-            len(core_values) / 3.0, 1.0
-        )
+        purpose_score = min(len(top_goals) / 3.0, 1.0) * min(len(core_values) / 3.0, 1.0)
 
         # Significance: feeling of mattering
         significant_events = [e for e in self.narrative.events if e.significance > 0.7]
         significance_score = min(len(significant_events) / 5.0, 1.0)
 
         # Transcendence: beyond self
-        contribution_values = self.values.get_values_by_category(
-            ValueCategory.CONTRIBUTION
-        )
+        contribution_values = self.values.get_values_by_category(ValueCategory.CONTRIBUTION)
         transcendence_score = min(len(contribution_values) / 2.0, 1.0)
 
         # Overall
@@ -597,8 +587,7 @@ class MeaningMaker:
                 "total": len(self.values.values),
                 "core": len(self.values.get_core_values()),
                 "by_category": {
-                    cat.value: len(self.values.get_values_by_category(cat))
-                    for cat in ValueCategory
+                    cat.value: len(self.values.get_values_by_category(cat)) for cat in ValueCategory
                 },
             },
             "goals": {

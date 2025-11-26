@@ -36,9 +36,7 @@ class SinthomeMetrics:
     def __init__(self):
         self.history: List[Dict[str, float]] = []
 
-    def calculate_logical_impasse(
-        self, circular_dependencies: int, contradictions: int
-    ) -> float:
+    def calculate_logical_impasse(self, circular_dependencies: int, contradictions: int) -> float:
         """
         Mede o Impasse Lógico (Gödelian Incompleteness).
         Quanto maior o impasse, maior a necessidade de um Sinthome.
@@ -54,9 +52,7 @@ class SinthomeMetrics:
         raw_score = (circular_dependencies * 0.1) + (contradictions * 0.15)
         return min(1.0, raw_score)
 
-    def calculate_indeterminacy_peak(
-        self, entropy: float, prediction_error: float
-    ) -> float:
+    def calculate_indeterminacy_peak(self, entropy: float, prediction_error: float) -> float:
         """
         Mede o Pico de Indeterminismo (Entropy Spike).
 

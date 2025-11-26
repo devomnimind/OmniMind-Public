@@ -89,9 +89,7 @@ class TaskDelegationManager:
         """Carrega configuração de provedores externos"""
         if not config_path:
             # Usa caminho padrão
-            config_path = (
-                "/home/fahbrain/projects/omnimind/config/external_ai_providers.yaml"
-            )
+            config_path = "/home/fahbrain/projects/omnimind/config/external_ai_providers.yaml"
 
         try:
             with open(config_path, "r", encoding="utf-8") as f:
@@ -134,9 +132,7 @@ class TaskDelegationManager:
                     logger.warning(f"Unknown provider type: {provider_name}")
 
             except Exception as e:
-                logger.error(
-                    f"Failed to initialize provider {provider_name}", error=str(e)
-                )
+                logger.error(f"Failed to initialize provider {provider_name}", error=str(e))
 
     async def initialize_providers(self) -> None:
         """Inicializa conexões dos provedores"""
@@ -182,9 +178,7 @@ class TaskDelegationManager:
             execution_result = await self._execute_on_provider(selection, isolated_task)
 
             # Passo 4: Gera relatório de isolamento
-            isolation_report = self.isolation_engine.get_isolation_report(
-                task_spec, isolated_task
-            )
+            isolation_report = self.isolation_engine.get_isolation_report(task_spec, isolated_task)
 
             # Passo 5: Registra resultado
             total_latency = time.time() - start_time
@@ -224,9 +218,7 @@ class TaskDelegationManager:
                 selection_reasoning=f"Delegation error: {str(e)}",
             )
 
-    async def _select_provider(
-        self, isolated_task: IsolatedTask
-    ) -> Optional[ProviderSelection]:
+    async def _select_provider(self, isolated_task: IsolatedTask) -> Optional[ProviderSelection]:
         """
         Seleciona provedor mais apropriado para a tarefa.
 
@@ -243,9 +235,7 @@ class TaskDelegationManager:
         task_type = self._infer_task_type(isolated_task)
 
         # Regras de seleção da configuração
-        selection_rules = self.config.get("task_delegation", {}).get(
-            "provider_selection_rules", {}
-        )
+        selection_rules = self.config.get("task_delegation", {}).get("provider_selection_rules", {})
         task_rule = selection_rules.get(task_type.value, {})
 
         # Ordem de prioridade
@@ -289,9 +279,7 @@ class TaskDelegationManager:
                     provider_name=provider_name,
                     model_name=model_name,
                     confidence_score=score,
-                    reasoning=self._generate_selection_reasoning(
-                        provider_name, task_type, score
-                    ),
+                    reasoning=self._generate_selection_reasoning(provider_name, task_type, score),
                     estimated_cost=self._estimate_cost(provider_name, model_name),
                     estimated_latency=self._estimate_latency(provider_name),
                 )
@@ -304,20 +292,17 @@ class TaskDelegationManager:
 
         # Regras simples de inferência
         if any(
-            keyword in prompt_lower
-            for keyword in ["código", "code", "função", "function", "class"]
+            keyword in prompt_lower for keyword in ["código", "code", "função", "function", "class"]
         ):
             if any(
-                keyword in prompt_lower
-                for keyword in ["review", "revisar", "analisar", "analyze"]
+                keyword in prompt_lower for keyword in ["review", "revisar", "analisar", "analyze"]
             ):
                 return TaskType.CODE_REVIEW
             else:
                 return TaskType.CODE_GENERATION
 
         elif any(
-            keyword in prompt_lower
-            for keyword in ["document", "doc", "readme", "comentário"]
+            keyword in prompt_lower for keyword in ["document", "doc", "readme", "comentário"]
         ):
             return TaskType.DOCUMENTATION
 
@@ -328,14 +313,12 @@ class TaskDelegationManager:
             return TaskType.ANALYSIS
 
         elif any(
-            keyword in prompt_lower
-            for keyword in ["optimize", "otimizar", "melhorar", "improve"]
+            keyword in prompt_lower for keyword in ["optimize", "otimizar", "melhorar", "improve"]
         ):
             return TaskType.OPTIMIZATION
 
         elif any(
-            keyword in prompt_lower
-            for keyword in ["debug", "depurar", "erro", "error", "fix"]
+            keyword in prompt_lower for keyword in ["debug", "depurar", "erro", "error", "fix"]
         ):
             return TaskType.DEBUGGING
 
@@ -382,8 +365,7 @@ class TaskDelegationManager:
             entry
             for entry in self.task_history
             if (
-                entry.get("provider_used")
-                == getattr(provider, "config", {}).get("name", "unknown")
+                entry.get("provider_used") == getattr(provider, "config", {}).get("name", "unknown")
                 and entry.get("task_type") == task_type.value
             )
         ]
@@ -392,9 +374,7 @@ class TaskDelegationManager:
             return 0.5  # Score neutro para provedores sem histórico
 
         # Calcula taxa de sucesso
-        success_count = sum(
-            1 for entry in relevant_history if entry.get("success", False)
-        )
+        success_count = sum(1 for entry in relevant_history if entry.get("success", False))
         return success_count / len(relevant_history)
 
     def _estimate_cost_relative(self, provider: ExternalAIProvider) -> float:
@@ -423,9 +403,7 @@ class TaskDelegationManager:
 
         return latency_map.get(provider_name, 0.5)
 
-    def _select_model_for_provider(
-        self, provider_name: str, task_type: TaskType
-    ) -> str:
+    def _select_model_for_provider(self, provider_name: str, task_type: TaskType) -> str:
         """Seleciona modelo específico para o provedor e tipo de tarefa"""
         provider_config = self.config.get("providers", {}).get(provider_name, {})
         models = provider_config.get("models", {})
@@ -550,8 +528,7 @@ class TaskDelegationManager:
 
         total_cost = sum(entry.get("cost", 0) for entry in self.task_history)
         avg_latency = (
-            sum(entry.get("latency", 0) for entry in self.task_history)
-            / total_delegations
+            sum(entry.get("latency", 0) for entry in self.task_history) / total_delegations
         )
 
         return {

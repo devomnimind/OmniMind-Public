@@ -228,9 +228,7 @@ class IdAgent:
         current_q = self.q_values.get(action.action_id, 0.0)
 
         # Q-learning update
-        self.q_values[action.action_id] = current_q + self.lr * (
-            actual_reward - current_q
-        )
+        self.q_values[action.action_id] = current_q + self.lr * (actual_reward - current_q)
 
         self.satisfaction_history.append(actual_reward)
 
@@ -293,9 +291,7 @@ class EgoAgent:
         """
         if action.action_id not in self.q_values:
             # Inicializa balanceando prazer e custo de realidade
-            self.q_values[action.action_id] = (
-                action.pleasure_reward - action.reality_cost
-            ) / 2.0
+            self.q_values[action.action_id] = (action.pleasure_reward - action.reality_cost) / 2.0
 
         # Ajusta por conhecimento da realidade
         reality_adjustment = self.reality_model.get(action.action_id, 1.0)
@@ -327,15 +323,11 @@ class EgoAgent:
         """
         # Para conflitos leves, usa sublimação/racionalização
         if conflict_severity < 0.3:
-            return random.choice(
-                [DefenseMechanism.SUBLIMATION, DefenseMechanism.RATIONALIZATION]
-            )
+            return random.choice([DefenseMechanism.SUBLIMATION, DefenseMechanism.RATIONALIZATION])
 
         # Para conflitos moderados, usa deslocamento/projeção
         elif conflict_severity < 0.7:
-            return random.choice(
-                [DefenseMechanism.DISPLACEMENT, DefenseMechanism.PROJECTION]
-            )
+            return random.choice([DefenseMechanism.DISPLACEMENT, DefenseMechanism.PROJECTION])
 
         # Para conflitos severos, usa repressão/negação
         else:
@@ -358,9 +350,7 @@ class EgoAgent:
         current_q = self.q_values.get(action.action_id, 0.0)
 
         # Atualiza Q-value
-        self.q_values[action.action_id] = current_q + self.lr * (
-            actual_outcome - current_q
-        )
+        self.q_values[action.action_id] = current_q + self.lr * (actual_outcome - current_q)
 
         # Atualiza modelo de realidade
         expected_cost = action.reality_cost
@@ -423,9 +413,7 @@ class SuperegoAgent:
             except Exception as e:
                 logger.warning(f"Failed to connect to Society of Minds: {e}")
 
-        logger.info(
-            f"Superego Agent initialized " f"(moral strictness: {moral_strictness:.2f})"
-        )
+        logger.info(f"Superego Agent initialized " f"(moral strictness: {moral_strictness:.2f})")
 
     def consult_society(self, action: Action) -> float:
         """
@@ -441,9 +429,7 @@ class SuperegoAgent:
             return 0.5
 
         # Simula proposta para a sociedade
-        desc = (
-            f"Action: {action.description}. Moral Alignment: {action.moral_alignment}"
-        )
+        desc = f"Action: {action.description}. Moral Alignment: {action.moral_alignment}"
         decision = self.society.propose_decision(
             description=desc,
             options=["approve", "reject"],
@@ -555,9 +541,7 @@ class FreudianMind:
             try:
                 self.quantum_backend = DWaveBackend(provider=quantum_provider)
                 provider_name = self.quantum_backend.provider.upper()
-                logger.info(
-                    f"Quantum Backend ({provider_name}) initialized for Freudian Mind"
-                )
+                logger.info(f"Quantum Backend ({provider_name}) initialized for Freudian Mind")
             except Exception as e:
                 logger.warning(f"Failed to initialize Quantum Backend: {e}")
 
@@ -584,9 +568,7 @@ class FreudianMind:
             preferences["ego"][action.action_id] = self.ego_agent.evaluate_action(
                 action, reality_context
             )
-            preferences["superego"][action.action_id] = (
-                self.superego_agent.evaluate_action(action)
-            )
+            preferences["superego"][action.action_id] = self.superego_agent.evaluate_action(action)
 
         # Calcula conflito como variância entre preferências
         all_scores = []
@@ -620,17 +602,13 @@ class FreudianMind:
             Resolução do conflito
         """
         # Avalia conflito
-        conflict_severity, preferences = self.evaluate_conflict(
-            actions, reality_context
-        )
+        conflict_severity, preferences = self.evaluate_conflict(actions, reality_context)
 
         # Ego seleciona mecanismo de defesa
         defense = self.ego_agent.select_defense_mechanism(conflict_severity)
 
         # Aplica mecanismo de defesa para modificar preferências
-        modified_preferences = self._apply_defense_mechanism(
-            defense, preferences, actions
-        )
+        modified_preferences = self._apply_defense_mechanism(defense, preferences, actions)
 
         # Seleciona ação de compromisso
         chosen_action = self._select_compromise_action(modified_preferences, actions)
@@ -764,24 +742,16 @@ class FreudianMind:
                     elif winner == "superego":
                         combined_scores[action_id] = superego_val * 1.5 + ego_val * 0.5
                     else:  # ego wins
-                        combined_scores[action_id] = (
-                            ego_val * 1.5 + (id_val + superego_val) * 0.2
-                        )
+                        combined_scores[action_id] = ego_val * 1.5 + (id_val + superego_val) * 0.2
 
                 except Exception as e:
-                    logger.error(
-                        f"Quantum backend failed, falling back to classical: {e}"
-                    )
+                    logger.error(f"Quantum backend failed, falling back to classical: {e}")
                     # Fallback logic
-                    combined_scores[action_id] = (
-                        0.3 * id_val + 0.5 * ego_val + 0.2 * superego_val
-                    )
+                    combined_scores[action_id] = 0.3 * id_val + 0.5 * ego_val + 0.2 * superego_val
             else:
                 # Classical Logic
                 # Ego tem maior peso (mediador)
-                combined_scores[action_id] = (
-                    0.3 * id_val + 0.5 * ego_val + 0.2 * superego_val
-                )
+                combined_scores[action_id] = 0.3 * id_val + 0.5 * ego_val + 0.2 * superego_val
 
         # Seleciona ação com maior score combinado
         best_action_id = max(combined_scores, key=lambda k: combined_scores[k])
@@ -904,9 +874,7 @@ def demonstrate_freudian_mind() -> None:
     print("RESULTADO DA DECISÃO")
     print("-" * 70)
     print(f"Ação escolhida: {chosen_action.description}")
-    defense_name = (
-        resolution.defense_mechanism.value if resolution.defense_mechanism else "None"
-    )
+    defense_name = resolution.defense_mechanism.value if resolution.defense_mechanism else "None"
     print(f"Mecanismo de defesa: {defense_name}")
     print(f"Qualidade do compromisso: {resolution.compromise_quality:.2f}")
     print(f"Agentes satisfeitos: {', '.join(resolution.agents_satisfied)}")

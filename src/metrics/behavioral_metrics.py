@@ -74,9 +74,7 @@ def measure_behavior(agent: Any, behavior_marker: str) -> float:
     """
     # Valida entrada
     if not hasattr(agent, "llm") and not hasattr(agent, "invoke"):
-        raise ValueError(
-            "Agente deve ter atributo 'llm' (ReactAgent) ou método 'invoke()'"
-        )
+        raise ValueError("Agente deve ter atributo 'llm' (ReactAgent) ou método 'invoke()'")
 
     # Carrega configuração do marker
     try:
@@ -85,17 +83,14 @@ def measure_behavior(agent: Any, behavior_marker: str) -> float:
     except KeyError:
         available = ", ".join(load_behavioral_markers().keys())
         raise ValueError(
-            f"Behavioral marker '{behavior_marker}' não encontrado. "
-            f"Disponíveis: {available}"
+            f"Behavioral marker '{behavior_marker}' não encontrado. " f"Disponíveis: {available}"
         )
 
     # Extrai prompts e keywords esperadas
     test_prompts = marker_config["test_prompts"]
     expected_keywords = marker_config["expected_keywords"]
 
-    logger.info(
-        f"Medindo comportamento '{behavior_marker}' com {len(test_prompts)} prompts"
-    )
+    logger.info(f"Medindo comportamento '{behavior_marker}' com {len(test_prompts)} prompts")
 
     # Coleta respostas do agente
     responses: List[str] = []
@@ -267,15 +262,11 @@ def compute_statistical_significance(
 
     interpretation = ""
     if is_significant and mean_return > 0.8:
-        interpretation = (
-            "✅ Sinthome CONFIRMADO estatisticamente (p < 0.05, mean > 80%)"
-        )
+        interpretation = "✅ Sinthome CONFIRMADO estatisticamente (p < 0.05, mean > 80%)"
     elif mean_return > 0.8:
         interpretation = "⚠️ Sinthome provável (mean > 80%, mas p ≥ 0.05)"
     else:
-        interpretation = (
-            "❌ Comportamento não é estrutural (mean ≤ 80% ou não significativo)"
-        )
+        interpretation = "❌ Comportamento não é estrutural (mean ≤ 80% ou não significativo)"
 
     return {
         "t_statistic": float(t_stat),
@@ -307,8 +298,7 @@ def get_marker_config(behavior_marker: str) -> Dict[str, Any]:
     if behavior_marker not in markers:
         available = ", ".join(markers.keys())
         raise ValueError(
-            f"Behavioral marker '{behavior_marker}' não encontrado. "
-            f"Disponíveis: {available}"
+            f"Behavioral marker '{behavior_marker}' não encontrado. " f"Disponíveis: {available}"
         )
 
     return markers[behavior_marker]

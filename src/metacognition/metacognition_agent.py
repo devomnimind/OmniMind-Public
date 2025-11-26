@@ -67,9 +67,7 @@ class MetacognitionAgent:
 
         try:
             # 1. Self-analysis
-            decision_patterns = self.self_analysis.analyze_decision_patterns(
-                lookback_hours
-            )
+            decision_patterns = self.self_analysis.analyze_decision_patterns(lookback_hours)
             execution_times = self.self_analysis.analyze_execution_times()
             failure_patterns = self.self_analysis.identify_failure_patterns()
             resource_usage = self.self_analysis.analyze_resource_usage()
@@ -89,17 +87,13 @@ class MetacognitionAgent:
                 ]
 
                 # Pattern recognition
-                repetitive_behavior = (
-                    self.pattern_recognition.detect_repetitive_behavior(recent_ops)
+                repetitive_behavior = self.pattern_recognition.detect_repetitive_behavior(
+                    recent_ops
                 )
                 bias_detection = self.pattern_recognition.detect_bias(recent_ops)
                 anomalies = self.pattern_recognition.detect_anomalies(recent_ops)
-                decision_tree = self.pattern_recognition.analyze_decision_tree(
-                    recent_ops
-                )
-                diversity_score = self.pattern_recognition.calculate_diversity_score(
-                    recent_ops
-                )
+                decision_tree = self.pattern_recognition.analyze_decision_tree(recent_ops)
+                diversity_score = self.pattern_recognition.calculate_diversity_score(recent_ops)
             else:
                 repetitive_behavior = {"patterns": [], "message": "No data"}
                 bias_detection = {"biases": [], "message": "No data"}
@@ -136,12 +130,8 @@ class MetacognitionAgent:
                 "optimization_suggestions": suggestions,
                 "summary": {
                     "total_suggestions": len(suggestions),
-                    "critical_issues": len(
-                        [s for s in suggestions if s["priority"] == "critical"]
-                    ),
-                    "high_priority": len(
-                        [s for s in suggestions if s["priority"] == "high"]
-                    ),
+                    "critical_issues": len([s for s in suggestions if s["priority"] == "critical"]),
+                    "high_priority": len([s for s in suggestions if s["priority"] == "high"]),
                 },
             }
 
@@ -184,9 +174,7 @@ class MetacognitionAgent:
             return {
                 "status": "ok",
                 "health": health,
-                "last_analysis": (
-                    self.last_analysis.isoformat() if self.last_analysis else None
-                ),
+                "last_analysis": (self.last_analysis.isoformat() if self.last_analysis else None),
                 "timestamp": datetime.now().isoformat(),
             }
         except Exception as exc:
@@ -251,9 +239,7 @@ class MetacognitionAgent:
         """
         return {
             "total_analyses": len(self.analysis_history),
-            "last_analysis": (
-                self.last_analysis.isoformat() if self.last_analysis else None
-            ),
+            "last_analysis": (self.last_analysis.isoformat() if self.last_analysis else None),
             "analysis_interval": self.analysis_interval,
             "recent_health_trend": [
                 {"timestamp": h["timestamp"], "health": h["health_status"]}

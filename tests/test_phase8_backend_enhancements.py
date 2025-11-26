@@ -77,9 +77,7 @@ class TestTasksAPI:
     def test_update_task_progress(self, client: TestClient) -> None:
         """Test updating task progress."""
         # Create task
-        create_response = client.post(
-            "/api/tasks/", json={"description": "Progress test"}
-        )
+        create_response = client.post("/api/tasks/", json={"description": "Progress test"})
         task_id = create_response.json()["task_id"]
 
         # Update progress
@@ -99,9 +97,7 @@ class TestTasksAPI:
     def test_cancel_task(self, client: TestClient) -> None:
         """Test cancelling a task."""
         # Create task
-        create_response = client.post(
-            "/api/tasks/", json={"description": "Cancel test"}
-        )
+        create_response = client.post("/api/tasks/", json={"description": "Cancel test"})
         task_id = create_response.json()["task_id"]
 
         # Cancel task

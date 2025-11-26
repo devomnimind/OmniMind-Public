@@ -11,9 +11,7 @@ from src.swarm.collective_learning import CollectiveLearner, SharedExperience
 
 
 def test_distributed_solver_initialization():
-    solver = DistributedSolver(
-        num_agents=3, consensus_protocol=ConsensusProtocol.VOTING
-    )
+    solver = DistributedSolver(num_agents=3, consensus_protocol=ConsensusProtocol.VOTING)
     assert solver.num_agents == 3
     assert solver.aggregator.protocol == ConsensusProtocol.VOTING
 

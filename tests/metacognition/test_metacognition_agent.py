@@ -141,9 +141,7 @@ class TestMetacognitionAgent:
     def test_extract_suggestions_valid(self):
         """Test _extract_suggestions with valid data."""
         agent = MetacognitionAgent()
-        report = {
-            "optimization_suggestions": [{"priority": "high"}, {"priority": "low"}]
-        }
+        report = {"optimization_suggestions": [{"priority": "high"}, {"priority": "low"}]}
         suggestions = agent._extract_suggestions(report)
         assert len(suggestions) == 2
 

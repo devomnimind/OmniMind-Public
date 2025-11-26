@@ -64,9 +64,7 @@ class RetentionPolicyManager:
             config_file: Optional path to retention policy configuration
         """
         self.audit_system = audit_system or get_audit_system()
-        self.config_file = config_file or (
-            self.audit_system.log_dir / "retention_policy.json"
-        )
+        self.config_file = config_file or (self.audit_system.log_dir / "retention_policy.json")
         self.archive_dir = self.audit_system.log_dir / "archives"
         self.archive_dir.mkdir(parents=True, exist_ok=True)
 
@@ -104,9 +102,7 @@ class RetentionPolicyManager:
         with open(self.config_file, "w") as f:
             json.dump(config, f, indent=2)
 
-    def set_retention_period(
-        self, category: DataCategory, period: RetentionPeriod
-    ) -> None:
+    def set_retention_period(self, category: DataCategory, period: RetentionPeriod) -> None:
         """
         Set retention period for a data category.
 
@@ -141,9 +137,7 @@ class RetentionPolicyManager:
         )
         return period
 
-    def archive_old_data(
-        self, category: DataCategory, dry_run: bool = False
-    ) -> Dict[str, Any]:
+    def archive_old_data(self, category: DataCategory, dry_run: bool = False) -> Dict[str, Any]:
         """
         Archive data that has passed retention period.
 
@@ -183,9 +177,7 @@ class RetentionPolicyManager:
 
         if self.config.get("compress_archives", True):
             archive_path = self.archive_dir / f"{archive_name}.tar.gz"
-            archived_size = self._create_compressed_archive(
-                files_to_archive, archive_path
-            )
+            archived_size = self._create_compressed_archive(files_to_archive, archive_path)
         else:
             archive_path = self.archive_dir / archive_name
             archive_path.mkdir(parents=True, exist_ok=True)
@@ -312,9 +304,7 @@ class RetentionPolicyManager:
 
         for archive in self.archive_dir.iterdir():
             if archive.is_file():
-                archive_time = datetime.fromtimestamp(
-                    archive.stat().st_mtime, tz=timezone.utc
-                )
+                archive_time = datetime.fromtimestamp(archive.stat().st_mtime, tz=timezone.utc)
                 if archive_time < cutoff_date:
                     size = archive.stat().st_size
                     archive.unlink()
@@ -358,9 +348,7 @@ class RetentionPolicyManager:
 
             report["policies"][category] = {
                 "retention_period_days": period_days,
-                "cutoff_date": (
-                    cutoff_date.isoformat() if period_days > 0 else "permanent"
-                ),
+                "cutoff_date": (cutoff_date.isoformat() if period_days > 0 else "permanent"),
                 "files_past_retention": len(files),
                 "size_past_retention": sum(f.stat().st_size for f in files),
             }
@@ -379,9 +367,7 @@ class RetentionPolicyManager:
 
         return report
 
-    def _find_files_to_archive(
-        self, category: DataCategory, cutoff_date: datetime
-    ) -> List[Path]:
+    def _find_files_to_archive(self, category: DataCategory, cutoff_date: datetime) -> List[Path]:
         """Find files older than cutoff date for given category."""
         files_to_archive = []
 
@@ -397,9 +383,7 @@ class RetentionPolicyManager:
         for pattern in patterns:
             for file_path in self.audit_system.log_dir.glob(pattern):
                 if file_path.is_file():
-                    file_time = datetime.fromtimestamp(
-                        file_path.stat().st_mtime, tz=timezone.utc
-                    )
+                    file_time = datetime.fromtimestamp(file_path.stat().st_mtime, tz=timezone.utc)
                     if file_time < cutoff_date:
                         files_to_archive.append(file_path)
 

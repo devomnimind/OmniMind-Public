@@ -18,9 +18,7 @@ class ContextMCPServer(MCPServer):
             }
         )
 
-    def store_context(
-        self, level: str, content: str, metadata: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    def store_context(self, level: str, content: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
         return {"status": "stored", "level": level}
 
     def retrieve_context(self, level: str, query: str = "") -> Dict[str, Any]:

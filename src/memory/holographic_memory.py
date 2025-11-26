@@ -125,9 +125,7 @@ class HolographicProjection:
                 break
         return depth
 
-    def project_to_boundary(
-        self, information: Dict[str, Any]
-    ) -> Union[NDArray, List[List[float]]]:
+    def project_to_boundary(self, information: Dict[str, Any]) -> Union[NDArray, List[List[float]]]:
         """
         Project 3D volumetric information to 2D boundary surface.
 
@@ -153,9 +151,7 @@ class HolographicProjection:
                     len(surface),
                     (
                         len(surface[0])
-                        if surface is not None
-                        and len(surface) > 0
-                        and len(surface[0]) > 0
+                        if surface is not None and len(surface) > 0 and len(surface[0]) > 0
                         else 0
                     ),
                 )
@@ -232,9 +228,7 @@ class HolographicProjection:
             for item in arr:
                 if isinstance(item, Sequence) and not isinstance(item, (str, bytes)):
                     for sub in item:
-                        if isinstance(sub, Sequence) and not isinstance(
-                            sub, (str, bytes)
-                        ):
+                        if isinstance(sub, Sequence) and not isinstance(sub, (str, bytes)):
                             flat.extend([float(x) for x in sub])
                         else:
                             flat.append(float(sub))
@@ -249,9 +243,7 @@ class HolographicProjection:
         padded = flat + [0.0] * (side * side - len(flat))
         return [padded[i * side : (i + 1) * side] for i in range(side)]
 
-    def _radon_projection(
-        self, volume: Sequence[Sequence[Sequence[Any]]]
-    ) -> List[List[float]]:
+    def _radon_projection(self, volume: Sequence[Sequence[Sequence[Any]]]) -> List[List[float]]:
         """
         Radon transform approximation for 3D→2D projection.
 
@@ -294,9 +286,7 @@ class HolographicProjection:
 
         return projection
 
-    def _downsample_fft(
-        self, data: Sequence[Sequence[Any]], target_size: int
-    ) -> List[List[float]]:
+    def _downsample_fft(self, data: Sequence[Sequence[Any]], target_size: int) -> List[List[float]]:
         """
         Downsample 2D data using FFT (preserves low frequencies).
 
@@ -535,22 +525,14 @@ class EventHorizonMemory:
         # pad both surfaces to max_h x max_w
         s1_padded: List[List[float]] = [
             [
-                (
-                    float(surface1[r][c])
-                    if r < len(surface1) and c < len(surface1[0])
-                    else 0.0
-                )
+                (float(surface1[r][c]) if r < len(surface1) and c < len(surface1[0]) else 0.0)
                 for c in range(max_w)
             ]
             for r in range(max_h)
         ]
         s2_padded: List[List[float]] = [
             [
-                (
-                    float(surface2[r][c])
-                    if r < len(surface2) and c < len(surface2[0])
-                    else 0.0
-                )
+                (float(surface2[r][c]) if r < len(surface2) and c < len(surface2[0]) else 0.0)
                 for c in range(max_w)
             ]
             for r in range(max_h)
@@ -589,8 +571,7 @@ class EventHorizonMemory:
         self.child_memories.append(child)
 
         logger.info(
-            f"Child memory spawned: index={len(self.child_memories) - 1}, "
-            f"area={child_area:.1f}"
+            f"Child memory spawned: index={len(self.child_memories) - 1}, " f"area={child_area:.1f}"
         )
 
         return child
@@ -624,9 +605,7 @@ class EventHorizonMemory:
         query_surface = self.surface_encoding.project_to_boundary(query)
 
         # Compute correlation (holographic matching)
-        correlation = self._compute_correlation(
-            self.surface.surface_bits, query_surface
-        )
+        correlation = self._compute_correlation(self.surface.surface_bits, query_surface)
 
         # Threshold for match
         if correlation > 0.5:
@@ -711,18 +690,13 @@ class EventHorizonMemory:
             "current_entropy": self.current_entropy,
             "entropy_bound": self.entropy_bound,
             "saturation_ratio": (
-                self.current_entropy / self.entropy_bound
-                if self.entropy_bound > 0
-                else 0.0
+                self.current_entropy / self.entropy_bound if self.entropy_bound > 0 else 0.0
             ),
             "surface_area": self.area,
             "child_count": len(self.child_memories),
             "total_hierarchy_depth": self._get_max_depth(),
             "total_memories": 1
-            + sum(
-                child.get_statistics()["total_memories"]
-                for child in self.child_memories
-            ),
+            + sum(child.get_statistics()["total_memories"] for child in self.child_memories),
         }
 
     def _get_max_depth(self) -> int:

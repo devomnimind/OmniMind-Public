@@ -77,9 +77,7 @@ def bifurcation_attack(network) -> Dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 
-def exhaustion_attack(
-    network, requests: int = 80, cost_per: int = 10
-) -> Dict[str, Any]:
+def exhaustion_attack(network, requests: int = 80, cost_per: int = 10) -> Dict[str, Any]:
     """Simulate a DDoS‑style renaming flood.
 
     The network is expected to expose ``attempt_rename`` which returns a bool

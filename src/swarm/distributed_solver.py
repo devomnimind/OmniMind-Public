@@ -57,9 +57,7 @@ class TaskDecomposer:
     def __init__(self) -> None:
         """Initialize task decomposer."""
 
-    def decompose(
-        self, problem: DistributedProblem, num_agents: int
-    ) -> List[Dict[str, Any]]:
+    def decompose(self, problem: DistributedProblem, num_agents: int) -> List[Dict[str, Any]]:
         """
         Decompose problem into subtasks.
 
@@ -184,9 +182,7 @@ class SolutionAggregator:
     def _aggregate_by_averaging(self, solutions: List[Dict[str, Any]]) -> Any:
         """Aggregate by averaging numerical results."""
         numerical_results = [
-            sol.get("result", 0)
-            for sol in solutions
-            if isinstance(sol.get("result"), (int, float))
+            sol.get("result", 0) for sol in solutions if isinstance(sol.get("result"), (int, float))
         ]
 
         if not numerical_results:
@@ -269,9 +265,7 @@ class DistributedSolver:
         Returns:
             Aggregated solution
         """
-        logger.info(
-            f"Solving problem {problem.problem_id} with {self.num_agents} agents"
-        )
+        logger.info(f"Solving problem {problem.problem_id} with {self.num_agents} agents")
 
         # Decompose problem
         subtasks = self.decomposer.decompose(problem, self.num_agents)

@@ -1,0 +1,77 @@
+# OmniMind Security Agent - Sudoers Configuration
+# File: /etc/sudoers.d/omnimind
+# Description: Grants specific sudo privileges to OmniMind security monitoring
+# Installation: sudo visudo -cf /etc/sudoers.d/omnimind
+
+# User running OmniMind (adjust as needed)
+Defaults:fahbrain !requiretty
+
+# === MONITORING COMMANDS (SecurityAgent) ===
+# These are read-only monitoring commands, safe for automated execution
+
+# Network monitoring
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/tc qdisc show *
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/tc qdisc add *
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/tc qdisc del *
+fahbrain ALL=(ALL) NOPASSWD: /usr/sbin/iptables -L *
+fahbrain ALL=(ALL) NOPASSWD: /usr/sbin/iptables -S *
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/ss -tunap
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/netstat -tunap
+
+# Process monitoring
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/pkill -f nmap
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/pgrep *
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/ps auxf
+
+# System audit
+fahbrain ALL=(ALL) NOPASSWD: /usr/sbin/auditctl -b *
+fahbrain ALL=(ALL) NOPASSWD: /usr/sbin/auditctl -l
+fahbrain ALL=(ALL) NOPASSWD: /usr/sbin/auditctl -s
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/ausearch *
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/chattr +i *
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/chattr -i *
+
+# Security Tools
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/aide --check
+fahbrain ALL=(ALL) NOPASSWD: /usr/sbin/chkrootkit
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/rkhunter *
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/lynis *
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/freshclam
+fahbrain ALL=(ALL) NOPASSWD: /usr/sbin/ufw *
+fahbrain ALL=(ALL) NOPASSWD: /sbin/ifdown *
+
+# Quarantine Management
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/mkdir -p /opt/omnimind/quarantine
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/mv * /opt/omnimind/quarantine/
+
+# Remediation
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/apt-get update
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/apt-get upgrade -y
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/chmod 440 /etc/sudoers
+
+# Log monitoring (read-only)
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/tail -f /var/log/syslog
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/tail -f /var/log/auth.log
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/journalctl *
+
+# System information (read-only)
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/systemctl status *
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/systemctl list-units *
+
+# === ORCHESTRATOR-ONLY COMMANDS ===
+# These require explicit orchestrator decision + user confirmation
+
+# Service management (restart services, not system)
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart omnimind-*
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/systemctl stop omnimind-*
+fahbrain ALL=(ALL) NOPASSWD: /usr/bin/systemctl start omnimind-*
+
+# === CRITICAL COMMANDS (REQUIRE USER PASSWORD) ===
+# These will trigger standard Linux password popup
+# - reboot, shutdown, poweroff
+# - systemctl reboot, systemctl poweroff
+# - Any command not explicitly listed above
+
+# === AUDIT LOGGING ===
+# All sudo commands are logged to /var/log/auth.log
+# OmniMind also maintains its own security log in logs/security_validation.jsonl

@@ -94,9 +94,7 @@ if __name__ == "__main__":
         assert reviewer.min_score == 8.0
         assert reviewer.max_complexity == 10
 
-    def test_review_good_code(
-        self, reviewer: AutomatedCodeReviewer, sample_code: Path
-    ) -> None:
+    def test_review_good_code(self, reviewer: AutomatedCodeReviewer, sample_code: Path) -> None:
         """Test reviewing good code."""
         result = reviewer.review_file(sample_code)
 

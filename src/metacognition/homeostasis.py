@@ -34,11 +34,7 @@ class SystemState:
 
     def is_healthy(self) -> bool:
         """Check if system state is healthy."""
-        return (
-            self.cpu_usage < 80.0
-            and self.memory_usage < 80.0
-            and self.temperature < 70.0
-        )
+        return self.cpu_usage < 80.0 and self.memory_usage < 80.0 and self.temperature < 70.0
 
 
 class ResourceState(str, Enum):
@@ -182,9 +178,7 @@ class HomeostaticController:
         """Get regulation history."""
         return self._regulation_history.copy()
 
-    def register_state_callback(
-        self, callback: Callable[[ResourceState], None]
-    ) -> None:
+    def register_state_callback(self, callback: Callable[[ResourceState], None]) -> None:
         """Register callback for resource state changes.
 
         Args:

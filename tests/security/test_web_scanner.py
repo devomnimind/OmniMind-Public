@@ -32,10 +32,7 @@ class TestVulnerabilityType:
         assert VulnerabilityType.SQL_INJECTION.value == "sql_injection"
         assert VulnerabilityType.CSRF.value == "cross_site_request_forgery"
         assert VulnerabilityType.PATH_TRAVERSAL.value == "path_traversal"
-        assert (
-            VulnerabilityType.MISSING_SECURITY_HEADERS.value
-            == "missing_security_headers"
-        )
+        assert VulnerabilityType.MISSING_SECURITY_HEADERS.value == "missing_security_headers"
 
 
 class TestVulnerabilitySeverity:
@@ -99,9 +96,7 @@ class TestWebScannerBrain:
 
     @patch("src.security.web_scanner.get_audit_system")
     @patch("src.security.web_scanner.AlertingSystem")
-    def test_scanner_initialization(
-        self, mock_alerting: Mock, mock_audit: Mock
-    ) -> None:
+    def test_scanner_initialization(self, mock_alerting: Mock, mock_audit: Mock) -> None:
         """Testa inicialização do scanner."""
         scanner = WebScannerBrain()
 
@@ -137,9 +132,7 @@ class TestWebScannerBrain:
     @patch("src.security.web_scanner.get_audit_system")
     @patch("src.security.web_scanner.AlertingSystem")
     @patch("requests.get")
-    def test_scan_url_basic(
-        self, mock_get: Mock, mock_alerting: Mock, mock_audit: Mock
-    ) -> None:
+    def test_scan_url_basic(self, mock_get: Mock, mock_alerting: Mock, mock_audit: Mock) -> None:
         """Testa scan básico de URL."""
         mock_response = MagicMock()
         mock_response.status_code = 200
@@ -218,9 +211,7 @@ class TestWebScannerBrain:
     @patch("src.security.web_scanner.get_audit_system")
     @patch("src.security.web_scanner.AlertingSystem")
     @patch("requests.get")
-    def test_scan_with_timeout(
-        self, mock_get: Mock, mock_alerting: Mock, mock_audit: Mock
-    ) -> None:
+    def test_scan_with_timeout(self, mock_get: Mock, mock_alerting: Mock, mock_audit: Mock) -> None:
         """Testa timeout em scan."""
         import requests
 
@@ -254,9 +245,7 @@ class TestWebScannerBrain:
     @patch("src.security.web_scanner.get_audit_system")
     @patch("src.security.web_scanner.AlertingSystem")
     @patch("subprocess.run")
-    def test_nikto_scan(
-        self, mock_run: Mock, mock_alerting: Mock, mock_audit: Mock
-    ) -> None:
+    def test_nikto_scan(self, mock_run: Mock, mock_alerting: Mock, mock_audit: Mock) -> None:
         """Testa scan com Nikto."""
         mock_run.return_value = MagicMock(
             returncode=0,
@@ -354,9 +343,7 @@ class TestWebScannerEdgeCases:
     @patch("src.security.web_scanner.get_audit_system")
     @patch("src.security.web_scanner.AlertingSystem")
     @patch("requests.get")
-    def test_scan_non_http_url(
-        self, mock_get: Mock, mock_alerting: Mock, mock_audit: Mock
-    ) -> None:
+    def test_scan_non_http_url(self, mock_get: Mock, mock_alerting: Mock, mock_audit: Mock) -> None:
         """Testa scan de URL não HTTP."""
         scanner = WebScannerBrain()
 

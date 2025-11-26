@@ -143,9 +143,7 @@ class TestLacanianDiscourseAnalyzer:
         """Testa detecção do Discurso do Mestre em inglês."""
         analyzer = LacanianDiscourseAnalyzer()
 
-        text = (
-            "You must follow the rules. This is a command and you should obey the law."
-        )
+        text = "You must follow the rules. This is a command and you should obey the law."
         result = analyzer.analyze_text(text)
 
         assert result.dominant_discourse == LacanianDiscourse.MASTER

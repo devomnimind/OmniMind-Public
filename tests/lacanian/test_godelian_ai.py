@@ -332,9 +332,7 @@ class TestIntegration:
             gai.generate_meta_system()
 
             # 2. Meta-strategy (alternative approach)
-            meta_result = meta_strat.handle_impossible(
-                problem, attempts=["direct_approach"]
-            )
+            meta_result = meta_strat.handle_impossible(problem, attempts=["direct_approach"])
 
             # Both should provide ways forward
             assert gai.get_transcendence_depth() > 1

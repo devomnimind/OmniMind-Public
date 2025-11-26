@@ -93,11 +93,7 @@ class SystemMetrics:
 
     def is_idle(self) -> bool:
         """Determine if system is idle enough for background work"""
-        return (
-            self.cpu_percent < 20.0
-            and self.memory_percent < 80.0
-            and not self.user_active
-        )
+        return self.cpu_percent < 20.0 and self.memory_percent < 80.0 and not self.user_active
 
     def is_sleep_time(self) -> bool:
         """Determine if it's sleep time (user likely away)"""
@@ -329,9 +325,7 @@ class OmniMindDaemon:
             uptime_seconds = len(self.metrics_history) * self.check_interval
 
         # Count completed and failed tasks
-        completed_tasks = sum(
-            1 for t in self.tasks if t.last_execution and t.success_count > 0
-        )
+        completed_tasks = sum(1 for t in self.tasks if t.last_execution and t.success_count > 0)
         failed_tasks = sum(1 for t in self.tasks if t.failure_count > 0)
 
         # Build system_metrics in the format expected by frontend
@@ -341,9 +335,7 @@ class OmniMindDaemon:
             idle_seconds = 0
             if len(self.metrics_history) > 1:
                 # Simple heuristic: if CPU was low for recent metrics
-                recent_low_cpu = sum(
-                    1 for m in self.metrics_history[-10:] if m.cpu_percent < 20
-                )
+                recent_low_cpu = sum(1 for m in self.metrics_history[-10:] if m.cpu_percent < 20)
                 idle_seconds = recent_low_cpu * 5  # Approximate 5 seconds per metric
 
             # Check if sleep hours (00:00-06:00)
@@ -368,10 +360,7 @@ class OmniMindDaemon:
                 1
                 for t in self.tasks
                 if not t.last_execution
-                or (
-                    t.repeat_interval
-                    and datetime.now() >= t.last_execution + t.repeat_interval
-                )
+                or (t.repeat_interval and datetime.now() >= t.last_execution + t.repeat_interval)
             ),
             "system_metrics": system_metrics
             or {

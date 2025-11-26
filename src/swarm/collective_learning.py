@@ -93,9 +93,7 @@ class ConsensusLearning:
         experience.agent_id = agent_id
         self.knowledge_base.add_experience(experience)
 
-        logger.info(
-            f"Experience shared by {agent_id} (outcome={experience.outcome:.2f})"
-        )
+        logger.info(f"Experience shared by {agent_id} (outcome={experience.outcome:.2f})")
 
     def get_consensus_model(self) -> Dict[str, Any]:
         """
@@ -114,11 +112,7 @@ class ConsensusLearning:
             all_keys.update(model.keys())
 
         for key in all_keys:
-            values = [
-                model.get(key, 0)
-                for model in self.agent_models.values()
-                if key in model
-            ]
+            values = [model.get(key, 0) for model in self.agent_models.values() if key in model]
             if values:
                 # Average numerical values
                 if all(isinstance(v, (int, float)) for v in values):
@@ -220,9 +214,7 @@ class FederatedLearning:
         num_updates = len(self.local_models)
         self.local_models.clear()  # Clear for next round
 
-        logger.info(
-            f"Updates aggregated (round={self.current_round}, updates={num_updates})"
-        )
+        logger.info(f"Updates aggregated (round={self.current_round}, updates={num_updates})")
 
         return self.global_model
 
@@ -253,9 +245,7 @@ class CollectiveLearner:
         self.use_federated = use_federated
 
         self.learner: Union[FederatedLearning, ConsensusLearning] = (
-            FederatedLearning(num_agents)
-            if use_federated
-            else ConsensusLearning(num_agents)
+            FederatedLearning(num_agents) if use_federated else ConsensusLearning(num_agents)
         )
 
         logger.info(

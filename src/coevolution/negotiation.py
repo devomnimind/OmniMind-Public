@@ -55,9 +55,7 @@ class GoalNegotiator:
     4. Resultado é síntese dialética, não imposição
     """
 
-    def __init__(
-        self, max_rounds: int = 5, convergence_threshold: float = 0.85
-    ) -> None:
+    def __init__(self, max_rounds: int = 5, convergence_threshold: float = 0.85) -> None:
         """
         Inicializa negociador.
 
@@ -87,9 +85,7 @@ class GoalNegotiator:
         """
         logger.info(f"Starting negotiation (trust={trust_level:.2f})")
 
-        result = NegotiationResult(
-            agreement_reached=False, final_goal=human_intent.copy()
-        )
+        result = NegotiationResult(agreement_reached=False, final_goal=human_intent.copy())
 
         current_proposal = human_intent.copy()
 
@@ -188,9 +184,7 @@ class GoalNegotiator:
 
         return response
 
-    def _calculate_convergence(
-        self, proposal1: Dict[str, Any], proposal2: Dict[str, Any]
-    ) -> float:
+    def _calculate_convergence(self, proposal1: Dict[str, Any], proposal2: Dict[str, Any]) -> float:
         """
         Calcula score de convergência entre propostas.
 
@@ -244,9 +238,7 @@ class GoalNegotiator:
 
         return synthesized
 
-    def quick_accept(
-        self, human_intent: Dict[str, Any], trust_level: float
-    ) -> NegotiationResult:
+    def quick_accept(self, human_intent: Dict[str, Any], trust_level: float) -> NegotiationResult:
         """
         Aceita objetivo rapidamente (sem negociação) se trust é alto.
 

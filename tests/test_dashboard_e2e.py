@@ -98,9 +98,7 @@ def dashboard_client(
     return client, headers
 
 
-def test_dashboard_requires_auth(
-    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
-) -> None:
+def test_dashboard_requires_auth(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     backend_main = importlib.import_module("web.backend.main")
 
     # Cenário 1: sem credenciais configuradas -> 401

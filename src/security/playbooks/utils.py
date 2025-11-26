@@ -2,6 +2,7 @@
 
 import asyncio
 import logging
+import os
 import shutil
 import subprocess
 from typing import Sequence, TypedDict
@@ -39,15 +40,36 @@ def run_command(command: Sequence[str]) -> CommandResult:
         }
 
     try:
-        result = subprocess.run(
-            command, capture_output=True, text=True, check=True, timeout=60
-        )
+        result = subprocess.run(command, capture_output=True, text=True, check=True, timeout=60)
         return {
             "command": " ".join(command),
             "returncode": result.returncode,
             "output": result.stdout.strip(),
         }
     except subprocess.CalledProcessError as exc:
+        # Check for interactive fallback
+        allow_interactive = os.environ.get("OMNIMIND_INTERACTIVE", "false").lower() == "true"
+        is_sudo_non_interactive = command[0] == "sudo" and "-n" in command
+
+        if allow_interactive and is_sudo_non_interactive and shutil.which("pkexec"):
+            try:
+                # Construct pkexec command (remove sudo and -n)
+                real_cmd = [c for c in command if c not in ["sudo", "-n"]]
+                pkexec_cmd = ["pkexec"] + real_cmd
+                logger.info("Escalating to interactive pkexec for: %s", real_cmd)
+
+                # Increase timeout for user interaction
+                result = subprocess.run(
+                    pkexec_cmd, capture_output=True, text=True, check=True, timeout=300
+                )
+                return {
+                    "command": " ".join(pkexec_cmd),
+                    "returncode": result.returncode,
+                    "output": result.stdout.strip(),
+                }
+            except Exception as pk_exc:
+                logger.warning("pkexec fallback failed: %s", pk_exc)
+
         logger.warning("Command %s failed: %s", command, exc)
         return {
             "command": " ".join(command),

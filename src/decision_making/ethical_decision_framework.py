@@ -156,12 +156,8 @@ class EthicalDecisionMaker:
             framework_used=self.primary_framework,
             ethical_score=best_option[1]["total_score"],
             principle_scores=best_option[1]["principle_scores"],
-            justification=self._generate_justification(
-                best_option[0], best_option[1], dilemma
-            ),
-            alternative_options=[
-                opt for opt in dilemma.options if opt != best_option[0]
-            ],
+            justification=self._generate_justification(best_option[0], best_option[1], dilemma),
+            alternative_options=[opt for opt in dilemma.options if opt != best_option[0]],
             stakeholder_impacts=best_option[1]["stakeholder_impacts"],
             confidence=self._compute_confidence(option_scores),
             metadata={
@@ -194,9 +190,7 @@ class EthicalDecisionMaker:
         else:  # HYBRID
             return self._evaluate_hybrid(option, dilemma)
 
-    def _evaluate_deontological(
-        self, option: str, dilemma: EthicalDilemma
-    ) -> Dict[str, Any]:
+    def _evaluate_deontological(self, option: str, dilemma: EthicalDilemma) -> Dict[str, Any]:
         """Evaluate option using deontological (rule-based) ethics."""
         principle_scores: Dict[EthicalPrinciple, float] = {}
 
@@ -207,8 +201,7 @@ class EthicalDecisionMaker:
 
         # Weighted sum
         total_score = sum(
-            self.principle_weights.get(p, 0.0) * score
-            for p, score in principle_scores.items()
+            self.principle_weights.get(p, 0.0) * score for p, score in principle_scores.items()
         )
 
         return {
@@ -217,9 +210,7 @@ class EthicalDecisionMaker:
             "stakeholder_impacts": self._assess_stakeholder_impacts(option, dilemma),
         }
 
-    def _evaluate_consequentialist(
-        self, option: str, dilemma: EthicalDilemma
-    ) -> Dict[str, Any]:
+    def _evaluate_consequentialist(self, option: str, dilemma: EthicalDilemma) -> Dict[str, Any]:
         """Evaluate option using consequentialist (outcome-based) ethics."""
         # Predict outcomes for stakeholders
         stakeholder_impacts = self._assess_stakeholder_impacts(option, dilemma)
@@ -288,9 +279,7 @@ class EthicalDecisionMaker:
         care_score = 0.0
         for stakeholder, impact in stakeholder_impacts.items():
             # Assume stakeholders with lower priority might be more vulnerable
-            vulnerability = 1.0 / (
-                self.stakeholder_priority.get(stakeholder, 1.0) + 1.0
-            )
+            vulnerability = 1.0 / (self.stakeholder_priority.get(stakeholder, 1.0) + 1.0)
             care_score += impact * (1.0 + vulnerability)
 
         # Normalize
@@ -372,9 +361,7 @@ class EthicalDecisionMaker:
         # Default neutral score
         return 0.5
 
-    def _assess_stakeholder_impacts(
-        self, option: str, dilemma: EthicalDilemma
-    ) -> Dict[str, float]:
+    def _assess_stakeholder_impacts(self, option: str, dilemma: EthicalDilemma) -> Dict[str, float]:
         """Assess impact of option on stakeholders."""
         impacts: Dict[str, float] = {}
 
@@ -385,10 +372,7 @@ class EthicalDecisionMaker:
 
             impact = 0.0
             if stakeholder_lower in option_lower:
-                if any(
-                    word in option_lower
-                    for word in ["help", "benefit", "support", "protect"]
-                ):
+                if any(word in option_lower for word in ["help", "benefit", "support", "protect"]):
                     impact = 0.8
                 elif any(word in option_lower for word in ["harm", "damage", "hurt"]):
                     impact = -0.8
@@ -428,14 +412,8 @@ class EthicalDecisionMaker:
         if scores["stakeholder_impacts"]:
             justification_parts.append("Stakeholder impacts:")
             for stakeholder, impact in scores["stakeholder_impacts"].items():
-                impact_str = (
-                    "positive"
-                    if impact > 0
-                    else "negative" if impact < 0 else "neutral"
-                )
-                justification_parts.append(
-                    f"  - {stakeholder}: {impact_str} ({impact:.2f})"
-                )
+                impact_str = "positive" if impact > 0 else "negative" if impact < 0 else "neutral"
+                justification_parts.append(f"  - {stakeholder}: {impact_str} ({impact:.2f})")
 
         return " | ".join(justification_parts)
 
@@ -464,20 +442,14 @@ class EthicalDecisionMaker:
             }
 
         total_decisions = len(self.decision_history)
-        avg_score: float = (
-            sum(d.ethical_score for d in self.decision_history) / total_decisions
-        )
-        avg_confidence: float = (
-            sum(d.confidence for d in self.decision_history) / total_decisions
-        )
+        avg_score: float = sum(d.ethical_score for d in self.decision_history) / total_decisions
+        avg_confidence: float = sum(d.confidence for d in self.decision_history) / total_decisions
 
         # Principle distribution
         principle_counts: Dict[str, int] = {}
         for decision in self.decision_history:
             for principle in decision.principle_scores:
-                principle_counts[principle.value] = (
-                    principle_counts.get(principle.value, 0) + 1
-                )
+                principle_counts[principle.value] = principle_counts.get(principle.value, 0) + 1
 
         return {
             "total_decisions": total_decisions,

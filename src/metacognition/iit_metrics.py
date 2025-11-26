@@ -121,9 +121,7 @@ class IITAnalyzer:
         if len(self.state_history) > 1000:
             self.state_history = self.state_history[-1000:]
 
-        logger.debug(
-            f"Recorded state {state.state_id} with {len(state.elements)} elements"
-        )
+        logger.debug(f"Recorded state {state.state_id} with {len(state.elements)} elements")
 
     def calculate_entropy(self, states: List[SystemState]) -> float:
         """Calculate Shannon entropy of state distribution.
@@ -183,13 +181,9 @@ class IITAnalyzer:
             p2_elements = {k: v for k, v in state.elements.items() if k in partition2}
 
             if p1_elements:
-                p1_states.append(
-                    SystemState(state_id=f"{state.state_id}_p1", elements=p1_elements)
-                )
+                p1_states.append(SystemState(state_id=f"{state.state_id}_p1", elements=p1_elements))
             if p2_elements:
-                p2_states.append(
-                    SystemState(state_id=f"{state.state_id}_p2", elements=p2_elements)
-                )
+                p2_states.append(SystemState(state_id=f"{state.state_id}_p2", elements=p2_elements))
 
         # Calculate entropies
         h_p1 = self.calculate_entropy(p1_states)

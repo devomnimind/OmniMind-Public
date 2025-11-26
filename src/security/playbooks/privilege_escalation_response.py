@@ -41,14 +41,14 @@ class PrivilegeEscalationPlaybook:
 
     async def _block_malicious_processes(self) -> CommandResult:
         logger.debug("   [2/6] Killing suspect escalation processes")
-        command = ["sudo", "pkill", "-f", "exploit"]
+        command = ["sudo", "-n", "pkill", "-f", "exploit"]
         if not command_available(command[0]):
             return skipped_command("pkill", "tool unavailable")
         return await run_command_async(command)
 
     async def _reset_sudoers_permissions(self) -> CommandResult:
         logger.debug("   [3/6] Resetting /etc/sudoers permissions")
-        command = ["sudo", "chmod", "440", "/etc/sudoers"]
+        command = ["sudo", "-n", "chmod", "440", "/etc/sudoers"]
         if not command_available(command[0]):
             return skipped_command("chmod", "tool unavailable")
         return await run_command_async(command)
@@ -60,7 +60,7 @@ class PrivilegeEscalationPlaybook:
             user = event.details.get("user")
         if not user:
             return skipped_command("pkill", "no user provided")
-        command = ["sudo", "pkill", "-KILL", "-u", user]
+        command = ["sudo", "-n", "pkill", "-KILL", "-u", user]
         if not command_available(command[0]):
             return skipped_command("pkill", "tool unavailable")
         return await run_command_async(command)
@@ -68,7 +68,7 @@ class PrivilegeEscalationPlaybook:
     async def _audit_sudoers(self) -> CommandResult:
         logger.debug("   [5/6] Auditing sudoers for unauthorized changes")
 
-        command = ["sudo", "auditctl", "-w", "/etc/sudoers", "-p", "wa"]
+        command = ["sudo", "-n", "auditctl", "-w", "/etc/sudoers", "-p", "wa"]
         if not command_available(command[0]):
             return skipped_command("auditctl", "tool unavailable")
 
@@ -87,7 +87,5 @@ class PrivilegeEscalationPlaybook:
 
     async def _notify_admin(self, event: Any) -> CommandResult:
         logger.debug("   [6/6] Alerting administrators")
-        message = (
-            f"Privilege escalation detected: {getattr(event, 'description', 'unknown')}"
-        )
+        message = f"Privilege escalation detected: {getattr(event, 'description', 'unknown')}"
         return await run_command_async(["/bin/echo", message])

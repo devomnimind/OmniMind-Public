@@ -437,9 +437,7 @@ class AudioProcessor:
         }
 
         for speaker_id, profile in self._speaker_profiles.items():
-            similarity = self._calculate_speaker_similarity(
-                voice_signature, profile.voice_features
-            )
+            similarity = self._calculate_speaker_similarity(voice_signature, profile.voice_features)
 
             if similarity > best_similarity and similarity > 0.7:
                 best_similarity = similarity
@@ -484,9 +482,7 @@ class AudioProcessor:
         # Average voice characteristics
         avg_pitch = sum(f.pitch for f in all_features) / len(all_features)
         avg_energy = sum(f.energy for f in all_features) / len(all_features)
-        avg_spectral = sum(f.spectral_centroid for f in all_features) / len(
-            all_features
-        )
+        avg_spectral = sum(f.spectral_centroid for f in all_features) / len(all_features)
 
         voice_features = {
             "pitch": avg_pitch,
@@ -500,9 +496,7 @@ class AudioProcessor:
             name=name,
             voice_features=voice_features,
             sample_count=len(audio_samples),
-            confidence=min(
-                1.0, len(audio_samples) / 10
-            ),  # More samples = higher confidence
+            confidence=min(1.0, len(audio_samples) / 10),  # More samples = higher confidence
         )
 
         self._speaker_profiles[speaker_id] = profile
@@ -555,9 +549,7 @@ class AudioProcessor:
 
         return emotion
 
-    def _simulate_speech_recognition(
-        self, audio_data: bytes, language: str
-    ) -> List[SpeechSegment]:
+    def _simulate_speech_recognition(self, audio_data: bytes, language: str) -> List[SpeechSegment]:
         """Simulate speech recognition (for demonstration)."""
         # Simulate detecting 1-3 speech segments
         data_sum = sum(audio_data[:100])

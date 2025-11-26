@@ -135,9 +135,7 @@ class RaftNode:
 
         if self._running:
             timeout = self._get_election_timeout()
-            self._election_timer = asyncio.create_task(
-                self._election_timeout_handler(timeout)
-            )
+            self._election_timer = asyncio.create_task(self._election_timeout_handler(timeout))
 
     async def _election_timeout_handler(self, timeout: float) -> None:
         """Handle election timeout."""
@@ -156,9 +154,7 @@ class RaftNode:
         self.state.voted_for = self.node_id
         votes_received = 1  # Vote for self
 
-        logger.info(
-            f"Node {self.node_id} starting election for term {self.state.current_term}"
-        )
+        logger.info(f"Node {self.node_id} starting election for term {self.state.current_term}")
 
         # Request votes from other nodes
         for node_id in self.cluster_nodes:
@@ -209,9 +205,7 @@ class RaftNode:
                 self.next_index[node_id] = last_log_index + 1
                 self.match_index[node_id] = 0
 
-        logger.info(
-            f"Node {self.node_id} became LEADER for term {self.state.current_term}"
-        )
+        logger.info(f"Node {self.node_id} became LEADER for term {self.state.current_term}")
 
         # Cancel election timer
         if self._election_timer:

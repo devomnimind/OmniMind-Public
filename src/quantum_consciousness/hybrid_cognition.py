@@ -118,9 +118,7 @@ class ClassicalQuantumBridge:
         Returns:
             Classical data
         """
-        logger.debug(
-            "decoding_quantum_to_classical", result_type=type(quantum_result).__name__
-        )
+        logger.debug("decoding_quantum_to_classical", result_type=type(quantum_result).__name__)
 
         # For now, pass through
         return quantum_result
@@ -178,9 +176,7 @@ class HybridCognitionSystem:
         if enable_quantum:
             try:
                 self.quantum_engine = QuantumCognitionEngine(num_qubits=num_qubits)
-                self.quantum_decision_maker = QuantumDecisionMaker(
-                    num_qubits=num_qubits
-                )
+                self.quantum_decision_maker = QuantumDecisionMaker(num_qubits=num_qubits)
                 self.qpu = QPUInterface(preferred_backend=BackendType.SIMULATOR_AER)
                 self.quantum_available = True
             except Exception as e:
@@ -287,9 +283,7 @@ class HybridCognitionSystem:
 
         self.metrics_history.append(metrics)
 
-        logger.info(
-            "quantum_solution_complete", time=elapsed, quality=metrics.solution_quality
-        )
+        logger.info("quantum_solution_complete", time=elapsed, quality=metrics.solution_quality)
 
         return solution, metrics
 
@@ -321,9 +315,7 @@ class HybridCognitionSystem:
 
         self.metrics_history.append(metrics)
 
-        logger.info(
-            "hybrid_solution_complete", time=elapsed, quality=metrics.solution_quality
-        )
+        logger.info("hybrid_solution_complete", time=elapsed, quality=metrics.solution_quality)
 
         return solution, metrics
 
@@ -361,9 +353,7 @@ class HybridCognitionSystem:
         # Use quantum decision maker for exploration
         options = problem.get("options", ["option_0", "option_1", "option_2"])
 
-        decision = self.quantum_decision_maker.make_decision(
-            options[: min(len(options), 8)]
-        )
+        decision = self.quantum_decision_maker.make_decision(options[: min(len(options), 8)])
         result = decision.collapse()
 
         return {"solution": result, "value": 0.85}
@@ -374,9 +364,7 @@ class HybridCognitionSystem:
         candidates = []
         for _ in range(5):  # Generate multiple candidates
             options = problem.get("options", ["opt_0", "opt_1"])
-            decision = self.quantum_decision_maker.make_decision(
-                options[: min(len(options), 8)]
-            )
+            decision = self.quantum_decision_maker.make_decision(options[: min(len(options), 8)])
             candidates.append(decision.collapse())
         return candidates
 

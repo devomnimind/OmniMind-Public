@@ -55,21 +55,15 @@ class TestComplianceReporter:
         mock.log_dir = temp_log_dir
         mock.audit_log_file = temp_log_dir / "audit_chain.log"
         mock.log_action = Mock(return_value="mock_hash")
-        mock.verify_chain_integrity = Mock(
-            return_value={"valid": True, "message": "OK"}
-        )
+        mock.verify_chain_integrity = Mock(return_value={"valid": True, "message": "OK"})
         return mock
 
     @pytest.fixture
-    def reporter(
-        self, mock_audit_system: Mock, temp_log_dir: Path
-    ) -> ComplianceReporter:
+    def reporter(self, mock_audit_system: Mock, temp_log_dir: Path) -> ComplianceReporter:
         """Cria instância do reporter com mock."""
         return ComplianceReporter(audit_system=mock_audit_system)
 
-    def test_initialization(
-        self, reporter: ComplianceReporter, temp_log_dir: Path
-    ) -> None:
+    def test_initialization(self, reporter: ComplianceReporter, temp_log_dir: Path) -> None:
         """Testa inicialização do compliance reporter."""
         assert reporter is not None
         assert reporter.report_dir.exists()
@@ -86,9 +80,7 @@ class TestComplianceReporter:
         assert "compliance_checks" in report
         assert "summary" in report
 
-    def test_generate_lgpd_report_compliance_checks(
-        self, reporter: ComplianceReporter
-    ) -> None:
+    def test_generate_lgpd_report_compliance_checks(self, reporter: ComplianceReporter) -> None:
         """Testa checks de conformidade LGPD."""
         report = reporter.generate_lgpd_report()
 
@@ -119,9 +111,7 @@ class TestComplianceReporter:
         assert summary["total_checks"] == 6  # LGPD has 6 checks
         assert 0 <= summary["compliance_score"] <= 100
 
-    def test_generate_lgpd_report_with_date_range(
-        self, reporter: ComplianceReporter
-    ) -> None:
+    def test_generate_lgpd_report_with_date_range(self, reporter: ComplianceReporter) -> None:
         """Testa geração de relatório LGPD com período específico."""
         end_date = datetime.now(timezone.utc)
         start_date = end_date - timedelta(days=7)
@@ -131,9 +121,7 @@ class TestComplianceReporter:
         assert report["period"]["start"] == start_date.isoformat()
         assert report["period"]["end"] == end_date.isoformat()
 
-    def test_generate_lgpd_report_saves_file(
-        self, reporter: ComplianceReporter
-    ) -> None:
+    def test_generate_lgpd_report_saves_file(self, reporter: ComplianceReporter) -> None:
         """Testa que relatório LGPD é salvo em arquivo."""
         report = reporter.generate_lgpd_report()
 
@@ -156,9 +144,7 @@ class TestComplianceReporter:
         assert "compliance_checks" in report
         assert "summary" in report
 
-    def test_generate_gdpr_report_compliance_checks(
-        self, reporter: ComplianceReporter
-    ) -> None:
+    def test_generate_gdpr_report_compliance_checks(self, reporter: ComplianceReporter) -> None:
         """Testa checks de conformidade GDPR."""
         report = reporter.generate_gdpr_report()
 
@@ -192,9 +178,7 @@ class TestComplianceReporter:
         assert "description" in result
         assert "details" in result
 
-    def test_check_transparency(
-        self, reporter: ComplianceReporter, temp_log_dir: Path
-    ) -> None:
+    def test_check_transparency(self, reporter: ComplianceReporter, temp_log_dir: Path) -> None:
         """Testa verificação de transparência."""
         # Create some audit log events
         audit_log = temp_log_dir / "audit_chain.log"
@@ -280,9 +264,7 @@ class TestComplianceReporter:
             exported_events = json.load(f)
         assert len(exported_events) == 1
 
-    def test_export_audit_trail_csv(
-        self, reporter: ComplianceReporter, temp_log_dir: Path
-    ) -> None:
+    def test_export_audit_trail_csv(self, reporter: ComplianceReporter, temp_log_dir: Path) -> None:
         """Testa exportação de audit trail em CSV."""
         # Create some audit events
         audit_log = temp_log_dir / "audit_chain.log"
@@ -301,9 +283,7 @@ class TestComplianceReporter:
         assert Path(export_path).exists()
         assert export_path.endswith(".csv")
 
-    def test_export_audit_trail_xml(
-        self, reporter: ComplianceReporter, temp_log_dir: Path
-    ) -> None:
+    def test_export_audit_trail_xml(self, reporter: ComplianceReporter, temp_log_dir: Path) -> None:
         """Testa exportação de audit trail em XML."""
         # Create some audit events
         audit_log = temp_log_dir / "audit_chain.log"
@@ -322,9 +302,7 @@ class TestComplianceReporter:
         assert Path(export_path).exists()
         assert export_path.endswith(".xml")
 
-    def test_export_audit_trail_invalid_format(
-        self, reporter: ComplianceReporter
-    ) -> None:
+    def test_export_audit_trail_invalid_format(self, reporter: ComplianceReporter) -> None:
         """Testa exportação com formato inválido."""
         with pytest.raises(ValueError) as exc_info:
             reporter.export_audit_trail(format="invalid")
@@ -362,9 +340,7 @@ class TestComplianceReporter:
         # Should only have events from last 7 days
         assert len(exported_events) == 2
 
-    def test_get_events_in_range(
-        self, reporter: ComplianceReporter, temp_log_dir: Path
-    ) -> None:
+    def test_get_events_in_range(self, reporter: ComplianceReporter, temp_log_dir: Path) -> None:
         """Testa obtenção de eventos em um período."""
         # Create events
         audit_log = temp_log_dir / "audit_chain.log"
@@ -377,9 +353,7 @@ class TestComplianceReporter:
             for event in events:
                 f.write(json.dumps(event) + "\n")
 
-        result = reporter._get_events_in_range(
-            now - timedelta(days=3), now + timedelta(days=1)
-        )
+        result = reporter._get_events_in_range(now - timedelta(days=3), now + timedelta(days=1))
 
         assert len(result) == 2
 
@@ -392,9 +366,7 @@ class TestComplianceReporter:
 
         assert result == []
 
-    def test_save_report(
-        self, reporter: ComplianceReporter, temp_log_dir: Path
-    ) -> None:
+    def test_save_report(self, reporter: ComplianceReporter, temp_log_dir: Path) -> None:
         """Testa salvamento de relatório."""
         report = {
             "report_id": "test_123",
@@ -423,9 +395,7 @@ class TestComplianceReporter:
         # File should not be created or be empty
         assert not export_file.exists() or export_file.stat().st_size == 0
 
-    def test_export_xml_events(
-        self, reporter: ComplianceReporter, temp_log_dir: Path
-    ) -> None:
+    def test_export_xml_events(self, reporter: ComplianceReporter, temp_log_dir: Path) -> None:
         """Testa exportação XML com eventos."""
         events = [
             {"action": "test1", "timestamp": "2025-11-23T00:00:00Z"},

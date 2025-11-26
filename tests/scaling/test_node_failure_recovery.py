@@ -439,9 +439,7 @@ async def test_leader_initialization() -> None:
     )
 
     # Add some log entries
-    node.state.log.append(
-        LogEntry(term=0, index=0, entry_type=LogEntryType.NO_OP, command={})
-    )
+    node.state.log.append(LogEntry(term=0, index=0, entry_type=LogEntryType.NO_OP, command={}))
 
     await node.start()
     await node._become_leader()

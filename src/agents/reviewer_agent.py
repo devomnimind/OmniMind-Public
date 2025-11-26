@@ -38,14 +38,10 @@ class ReviewerAgent(ReactAgent):
         """Revisa código e retorna score + feedback"""
         try:
             # Ler código
-            code_content = self.tools_framework.execute_tool(
-                "read_file", filepath=filepath
-            )
+            code_content = self.tools_framework.execute_tool("read_file", filepath=filepath)
 
             # Analisar
-            analysis = self.tools_framework.execute_tool(
-                "analyze_code", filepath=filepath
-            )
+            analysis = self.tools_framework.execute_tool("analyze_code", filepath=filepath)
 
             # Gerar review via LLM
             prompt = f"""You are ReviewerAgent ⭐, an expert code reviewer using RLAIF scoring.

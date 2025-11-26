@@ -156,9 +156,7 @@ class SelfHealingLoop:
                     # Create issue record
                     issue = Issue(
                         issue_type=IssueType(result.get("type", "service_failure")),
-                        severity=IssueSeverity(
-                            result.get("severity", IssueSeverity.ERROR.value)
-                        ),
+                        severity=IssueSeverity(result.get("severity", IssueSeverity.ERROR.value)),
                         description=result.get("description", "Unknown issue"),
                         metrics=result,
                     )
@@ -199,9 +197,7 @@ class SelfHealingLoop:
                             logger.error(f"Remediation failed: {e}")
 
                             if self._alert_callback:
-                                self._alert_callback(
-                                    f"Remediation failed for {issue_type}: {e}"
-                                )
+                                self._alert_callback(f"Remediation failed for {issue_type}: {e}")
 
             except Exception as e:
                 logger.error(f"Monitor {monitor.__name__} failed: {e}")
@@ -347,9 +343,7 @@ class SelfHealingIntegration:
             # If metacognition is available, trigger optimization suggestions
             if self.metacognition_agent:
                 try:
-                    suggestions = self.metacognition_agent.get_optimization_suggestions(
-                        limit=3
-                    )
+                    suggestions = self.metacognition_agent.get_optimization_suggestions(limit=3)
                     if suggestions:
                         actions_taken.append(
                             f"Generated {len(suggestions)} optimization suggestions"

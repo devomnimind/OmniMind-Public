@@ -23,6 +23,7 @@ import smtplib
 from email.mime.text import MIMEText
 import requests
 import logging
+import psutil
 
 # Adicionar src ao path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -236,6 +237,26 @@ Este é um alerta automático do sistema de monitoramento de integridade.
             system = self._get_audit_system()
             report = system.get_integrity_report()
 
+            # Garantir chaves esperadas se não existirem
+            if "gpu_status" not in report:
+                report["gpu_status"] = {"utilization": 0.0}
+
+            if "metrics" not in report:
+                corruption_count = len(report.get("corruptions", []))
+                total_events = report.get("events_verified", 1) # Evitar div por zero
+                report["metrics"] = {
+                    "corruption_rate": corruption_count / total_events if total_events > 0 else 0.0,
+                    "memory_usage": psutil.virtual_memory().percent / 100.0
+                }
+
+            # Calcular status do sistema
+            if not report.get("valid", True):
+                # Se inválido, verificar gravidade
+                corruptions = report.get("corruptions", [])
+                report["system_status"] = "critical" if len(corruptions) > 0 else "high"
+            else:
+                report["system_status"] = "healthy"
+
             # Verificações adicionais
             issues = []
 
@@ -371,6 +392,37 @@ Este é um alerta automático do sistema de monitoramento de integridade.
 
         return str(report_file)
 
+    def _save_current_metrics(self, report: Dict[str, Any]):
+        """Salvar métricas atuais em integrity_metrics.json (fonte oficial)"""
+        metrics_file = self.log_dir / "integrity_metrics.json"
+
+        try:
+            # Flatten metrics for easy consumption
+            # Safely get nested values
+            integrity_report = report.get("report", {}) if "report" in report else report
+            metrics = integrity_report.get("metrics", {})
+            gpu_status = integrity_report.get("gpu_status", {})
+
+            flat_metrics = {
+                "chain_valid": integrity_report.get("valid", False),
+                "events_verified": integrity_report.get("events_verified", 0),
+                "corruption_rate": metrics.get("corruption_rate", 0.0),
+                "last_validation": time.time(),
+                "gpu_utilization": gpu_status.get("utilization", 0.0),
+                "memory_usage": metrics.get("memory_usage", 0.0),
+                "system_load": psutil.cpu_percent(),
+                "integrity_level": report.get("status", "unknown")
+            }
+
+            # Atomic write
+            temp_file = metrics_file.with_suffix(".tmp")
+            with open(temp_file, "w") as f:
+                json.dump(flat_metrics, f, indent=2)
+            temp_file.rename(metrics_file)
+
+        except Exception as e:
+            self.logger.error(f"Failed to save integrity metrics: {e}")
+
     def run_monitoring_cycle(self) -> Dict[str, Any]:
         """Executar um ciclo completo de monitoramento"""
         self.logger.info("🔍 Iniciando ciclo de monitoramento...")
@@ -408,16 +460,22 @@ Este é um alerta automático do sistema de monitoramento de integridade.
         # Gerar relatório de saúde
         health_report = self._generate_health_report()
 
-        self.logger.info(
-            f"✅ Ciclo de monitoramento concluído - Relatório: {health_report}"
-        )
-
-        return {
+        # Prepare result dict first
+        result = {
             "status": status,
             "report": report,
             "health_report": health_report,
             "timestamp": datetime.now().isoformat(),
         }
+
+        # Salvar métricas oficiais
+        self._save_current_metrics(result)
+
+        self.logger.info(
+            f"✅ Ciclo de monitoramento concluído - Relatório: {health_report}"
+        )
+
+        return result
 
     def start_continuous_monitoring(self):
         """Iniciar monitoramento contínuo"""

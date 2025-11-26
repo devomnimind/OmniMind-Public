@@ -79,9 +79,7 @@ class TestEmotionalIntelligence:
         """Test analyzing positive sentiment."""
         ei = EmotionalIntelligence()
 
-        state = ei.analyze_sentiment(
-            "I am so happy and excited about this great success!"
-        )
+        state = ei.analyze_sentiment("I am so happy and excited about this great success!")
 
         assert state.sentiment == Sentiment.POSITIVE
         assert state.primary_emotion in [Emotion.JOY, Emotion.NEUTRAL]
@@ -90,9 +88,7 @@ class TestEmotionalIntelligence:
         """Test analyzing negative sentiment."""
         ei = EmotionalIntelligence()
 
-        state = ei.analyze_sentiment(
-            "I am very sad and disappointed about this failure."
-        )
+        state = ei.analyze_sentiment("I am very sad and disappointed about this failure.")
 
         assert state.sentiment == Sentiment.NEGATIVE
         assert state.primary_emotion in [Emotion.SADNESS, Emotion.NEUTRAL]

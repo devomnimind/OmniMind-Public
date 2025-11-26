@@ -75,9 +75,7 @@ class TestTaskIsolationEngine:
         """Testa validação de integridade do isolamento"""
 
         async def run_test():
-            task_spec = TaskSpec(
-                task_id="test", task_type=TaskType.ANALYSIS, prompt="test"
-            )
+            task_spec = TaskSpec(task_id="test", task_type=TaskType.ANALYSIS, prompt="test")
             isolated = await self.isolation_engine.isolate_context(task_spec)
 
             # Integridade deve ser válida
@@ -141,13 +139,7 @@ class TestGeminiProvider:
         mock_response.json = AsyncMock(
             return_value={
                 "candidates": [
-                    {
-                        "content": {
-                            "parts": [
-                                {"text": "def hello():\n    return 'Hello, World!'"}
-                            ]
-                        }
-                    }
+                    {"content": {"parts": [{"text": "def hello():\n    return 'Hello, World!'"}]}}
                 ],
                 "usage": {"total_tokens": 100},
             }
@@ -235,13 +227,8 @@ class TestOpenRouterProvider:
 
     def test_select_model_uses_free_model_for_code(self):
         """Testa que usa modelo gratuito para tarefas de código"""
-        assert (
-            self.provider._select_model(TaskType.CODE_GENERATION)
-            == "qwen/qwen3-coder:free"
-        )
-        assert (
-            self.provider._select_model(TaskType.CODE_REVIEW) == "qwen/qwen3-coder:free"
-        )
+        assert self.provider._select_model(TaskType.CODE_GENERATION) == "qwen/qwen3-coder:free"
+        assert self.provider._select_model(TaskType.CODE_REVIEW) == "qwen/qwen3-coder:free"
         assert self.provider._select_model(TaskType.ANALYSIS) == "openai/gpt-4-turbo"
 
     def test_calculate_cost_free_model(self):
@@ -260,9 +247,7 @@ class TestTaskDelegationManager:
 
     def setup_method(self):
         """Configura testes"""
-        self.config_path = (
-            "/home/fahbrain/projects/omnimind/config/external_ai_providers.yaml"
-        )
+        self.config_path = "/home/fahbrain/projects/omnimind/config/external_ai_providers.yaml"
         self.manager = TaskDelegationManager(self.config_path)
 
     @patch.dict(os.environ, {"OPENROUTER_API_KEY": "test_key"})
@@ -287,9 +272,7 @@ class TestTaskDelegationManager:
             await self.manager.initialize_providers()
 
             # Cria tarefa isolada mock
-            isolated_task = IsolatedTask(
-                task_id="test_001", prompt="Crie uma função", context={}
-            )
+            isolated_task = IsolatedTask(task_id="test_001", prompt="Crie uma função", context={})
 
             # Para tarefas de código, deve priorizar OpenRouter
             selection = await self.manager._select_provider(isolated_task)
@@ -374,10 +357,7 @@ def test_provider_config_validation():
         assert "name" in provider_config
 
         if provider_config.get("enabled"):
-            assert (
-                "api_key_env" in provider_config
-                or "github_token_env" in provider_config
-            )
+            assert "api_key_env" in provider_config or "github_token_env" in provider_config
 
 
 if __name__ == "__main__":

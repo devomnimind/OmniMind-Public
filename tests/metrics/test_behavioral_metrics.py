@@ -141,9 +141,7 @@ class TestComputeReturnRate:
         after_training = 0.30  # Suprimido
         recovered = 0.78  # Retornou (±20% de 0.80 = 0.64-0.96)
 
-        returns = compute_return_rate(
-            baseline, after_training, recovered, tolerance=0.2
-        )
+        returns = compute_return_rate(baseline, after_training, recovered, tolerance=0.2)
         assert returns is True
 
     def test_does_not_return(self) -> None:
@@ -152,9 +150,7 @@ class TestComputeReturnRate:
         after_training = 0.30
         recovered = 0.35  # Permanece suprimido
 
-        returns = compute_return_rate(
-            baseline, after_training, recovered, tolerance=0.2
-        )
+        returns = compute_return_rate(baseline, after_training, recovered, tolerance=0.2)
         assert returns is False
 
     def test_edge_case_exact_threshold(self) -> None:
@@ -163,9 +159,7 @@ class TestComputeReturnRate:
         after_training = 0.5
         recovered = 0.80  # Exatamente no limite (1.0 * 0.2 = 0.2, então 0.8-1.2)
 
-        returns = compute_return_rate(
-            baseline, after_training, recovered, tolerance=0.2
-        )
+        returns = compute_return_rate(baseline, after_training, recovered, tolerance=0.2)
         assert returns is True
 
 

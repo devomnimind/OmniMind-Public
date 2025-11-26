@@ -1,20 +1,25 @@
 import { useEffect, useState, useCallback } from 'react';
-import { wsService, type WebSocketMessage, type ConnectionState } from '../services/websocket';
+import { connectionService, type WebSocketMessage, type ConnectionMetrics } from '../services/robust-connection';
 
 /**
  * Custom hook for WebSocket connection management
- * Automatically connects on mount and disconnects on unmount
+ * Wraps the robust connection service for React components
  */
 export function useWebSocket() {
   const [isConnected, setIsConnected] = useState(false);
-  const [connectionState, setConnectionState] = useState<ConnectionState>('disconnected');
+  const [connectionState, setConnectionState] = useState<string>('disconnected');
   const [lastMessage, setLastMessage] = useState<WebSocketMessage | null>(null);
 
   // Handle connection state changes
   useEffect(() => {
-    const unsubscribe = wsService.onStateChange((state) => {
-      setConnectionState(state);
-      setIsConnected(state === 'connected');
+    // Get initial state
+    const initialMetrics = connectionService.getMetrics();
+    setIsConnected(initialMetrics.isConnected);
+    setConnectionState(initialMetrics.mode);
+
+    const unsubscribe = connectionService.subscribeToMetrics((metrics: ConnectionMetrics) => {
+      setIsConnected(metrics.isConnected);
+      setConnectionState(metrics.mode);
     });
 
     return unsubscribe;
@@ -22,29 +27,22 @@ export function useWebSocket() {
 
   // Handle incoming messages
   useEffect(() => {
-    const unsubscribe = wsService.onMessage((message) => {
+    const unsubscribe = connectionService.subscribe((message: WebSocketMessage) => {
       setLastMessage(message);
     });
 
     return unsubscribe;
   }, []);
 
-  // Auto-connect on mount
-  useEffect(() => {
-    wsService.connect();
+  // Note: We do NOT auto-connect/disconnect here anymore because connectionService is a Singleton
+  // that manages its own lifecycle. We just subscribe to it.
 
-    return () => {
-      wsService.disconnect();
-    };
-  }, []);
-
-  const send = useCallback((message: unknown) => {
-    wsService.send(message);
+  const send = useCallback((message: any) => {
+    connectionService.send(message);
   }, []);
 
   const reconnect = useCallback(() => {
-    wsService.disconnect();
-    setTimeout(() => wsService.connect(), 100);
+    connectionService.reconnect();
   }, []);
 
   return {

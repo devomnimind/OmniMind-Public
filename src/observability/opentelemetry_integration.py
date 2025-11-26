@@ -159,18 +159,14 @@ class OpenTelemetryIntegration:
         # Add console exporter if enabled
         if self.config.enable_console_export:
             console_exporter = ConsoleSpanExporter()
-            self._tracer_provider.add_span_processor(
-                BatchSpanProcessor(console_exporter)
-            )
+            self._tracer_provider.add_span_processor(BatchSpanProcessor(console_exporter))
             logger.debug("console_span_exporter_added")
 
         # Add OTLP exporter
         try:
             otlp_exporter = OTLPSpanExporter(endpoint=self.config.otlp_endpoint)
             self._tracer_provider.add_span_processor(BatchSpanProcessor(otlp_exporter))
-            logger.debug(
-                f"otlp_span_exporter_added endpoint={self.config.otlp_endpoint}"
-            )
+            logger.debug(f"otlp_span_exporter_added endpoint={self.config.otlp_endpoint}")
         except Exception as e:
             logger.warning(f"otlp_span_exporter_failed error={str(e)}")
 
@@ -179,9 +175,7 @@ class OpenTelemetryIntegration:
             try:
                 # Note: In production, you would use jaeger-client or similar
                 # For now, we use OTLP as Jaeger supports it
-                logger.info(
-                    f"jaeger_export_via_otlp endpoint={self.config.jaeger_endpoint}"
-                )
+                logger.info(f"jaeger_export_via_otlp endpoint={self.config.jaeger_endpoint}")
             except Exception as e:
                 logger.warning(f"jaeger_exporter_failed error={str(e)}")
 
@@ -189,9 +183,7 @@ class OpenTelemetryIntegration:
         if self.config.enable_zipkin_export:
             try:
                 # Note: In production, you would use opentelemetry-exporter-zipkin
-                logger.info(
-                    f"zipkin_export_configured endpoint={self.config.zipkin_endpoint}"
-                )
+                logger.info(f"zipkin_export_configured endpoint={self.config.zipkin_endpoint}")
             except Exception as e:
                 logger.warning(f"zipkin_exporter_failed error={str(e)}")
 
@@ -238,9 +230,7 @@ class OpenTelemetryIntegration:
             Tracer instance
         """
         if not self._initialized:
-            raise RuntimeError(
-                "OpenTelemetry not initialized. Call initialize() first."
-            )
+            raise RuntimeError("OpenTelemetry not initialized. Call initialize() first.")
 
         return trace.get_tracer(name)
 
@@ -254,9 +244,7 @@ class OpenTelemetryIntegration:
             Meter instance
         """
         if not self._initialized:
-            raise RuntimeError(
-                "OpenTelemetry not initialized. Call initialize() first."
-            )
+            raise RuntimeError("OpenTelemetry not initialized. Call initialize() first.")
 
         return metrics.get_meter(name)
 

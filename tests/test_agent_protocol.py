@@ -104,9 +104,7 @@ class TestAgentMessageBus:
     async def test_subscribe(self, message_bus: AgentMessageBus) -> None:
         """Testa inscrição em tipos de mensagem"""
         message_bus.register_agent("agent-1")
-        message_bus.subscribe(
-            "agent-1", [MessageType.REQUEST, MessageType.NOTIFICATION]
-        )
+        message_bus.subscribe("agent-1", [MessageType.REQUEST, MessageType.NOTIFICATION])
 
         assert MessageType.REQUEST in message_bus._subscriptions["agent-1"]
         assert MessageType.NOTIFICATION in message_bus._subscriptions["agent-1"]

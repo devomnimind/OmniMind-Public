@@ -192,9 +192,7 @@ class TestHybridCognitionSystem:
 
         problem = {"type": "combinatorial", "size": 20, "options": ["x", "y", "z"]}
 
-        solution, metrics = system.solve_optimization(
-            problem, strategy=OptimizationStrategy.HYBRID
-        )
+        solution, metrics = system.solve_optimization(problem, strategy=OptimizationStrategy.HYBRID)
 
         assert solution is not None
         assert isinstance(metrics, CognitionMetrics)

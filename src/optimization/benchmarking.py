@@ -103,9 +103,7 @@ class PerformanceBenchmark:
         self.results: List[BenchmarkResult] = []
         self.process = psutil.Process()
 
-        logger.info(
-            "benchmark_framework_initialized", benchmark_dir=str(self.benchmark_dir)
-        )
+        logger.info("benchmark_framework_initialized", benchmark_dir=str(self.benchmark_dir))
 
     def run_benchmark(
         self,
@@ -163,9 +161,7 @@ class PerformanceBenchmark:
 
             # Log progress every 10 iterations
             if (i + 1) % 10 == 0:
-                logger.debug(
-                    "benchmark_progress", name=name, iteration=i + 1, total=iterations
-                )
+                logger.debug("benchmark_progress", name=name, iteration=i + 1, total=iterations)
 
         result = BenchmarkResult(
             name=name,
@@ -244,19 +240,15 @@ class PerformanceBenchmark:
         ) * 100
 
         memory_improvement = (
-            (baseline.mean_memory_mb - optimized.mean_memory_mb)
-            / baseline.mean_memory_mb
+            (baseline.mean_memory_mb - optimized.mean_memory_mb) / baseline.mean_memory_mb
         ) * 100
 
         cpu_improvement = (
-            (baseline.mean_cpu_percent - optimized.mean_cpu_percent)
-            / baseline.mean_cpu_percent
+            (baseline.mean_cpu_percent - optimized.mean_cpu_percent) / baseline.mean_cpu_percent
         ) * 100
 
         # Overall assessment
-        is_better = (
-            time_improvement > 0 or memory_improvement > 0 or cpu_improvement > 0
-        )
+        is_better = time_improvement > 0 or memory_improvement > 0 or cpu_improvement > 0
 
         # Generate summary
         improvements = []
@@ -366,9 +358,7 @@ def compare_performance(
     benchmark = PerformanceBenchmark()
     benchmark.establish_baseline("baseline", baseline_func, iterations)
 
-    return benchmark.compare_to_baseline(
-        "baseline", "optimized", optimized_func, iterations
-    )
+    return benchmark.compare_to_baseline("baseline", "optimized", optimized_func, iterations)
 
 
 class RegressionDetector:
@@ -443,9 +433,7 @@ class RegressionDetector:
 
         return history_file
 
-    def detect_regressions(
-        self, name: str, current_result: BenchmarkResult
-    ) -> Dict[str, Any]:
+    def detect_regressions(self, name: str, current_result: BenchmarkResult) -> Dict[str, Any]:
         """
         Detect performance regressions.
 
@@ -586,8 +574,7 @@ class RegressionDetector:
                 (last["mean_time_ms"] - first["mean_time_ms"]) / first["mean_time_ms"]
             ) * 100
             memory_trend = (
-                (last["mean_memory_mb"] - first["mean_memory_mb"])
-                / first["mean_memory_mb"]
+                (last["mean_memory_mb"] - first["mean_memory_mb"]) / first["mean_memory_mb"]
             ) * 100
 
             lines.append("\n## Trends\n")
@@ -613,9 +600,7 @@ class RegressionDetector:
 
             # Filter old entries
             filtered = [
-                entry
-                for entry in history
-                if datetime.fromisoformat(entry["timestamp"]) > cutoff
+                entry for entry in history if datetime.fromisoformat(entry["timestamp"]) > cutoff
             ]
 
             if len(filtered) < len(history):

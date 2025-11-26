@@ -33,9 +33,7 @@ async def _dummy_run(command: Sequence[str]) -> CommandResult:
 
 
 def test_utils_command_available(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(
-        shutil, "which", lambda cmd: "/bin/echo" if cmd == "echo" else None
-    )
+    monkeypatch.setattr(shutil, "which", lambda cmd: "/bin/echo" if cmd == "echo" else None)
     assert utils.command_available("echo")
     assert not utils.command_available("missing-tool")
 
@@ -115,9 +113,7 @@ async def test_privilege_escalation_playbook_steps(
         details={"user": "admin"},
         description="Sudo abuser",
     )
-    monkeypatch.setattr(
-        privilege_escalation_response, "command_available", lambda _: False
-    )
+    monkeypatch.setattr(privilege_escalation_response, "command_available", lambda _: False)
     monkeypatch.setattr(privilege_escalation_response, "run_command_async", _dummy_run)
     playbook = PrivilegeEscalationPlaybook()
     result = await playbook.execute(None, event)
@@ -224,9 +220,7 @@ async def test_privilege_escalation_playbook_revokes_sessions(
             "output": "ok",
         }
 
-    monkeypatch.setattr(
-        privilege_escalation_response, "command_available", lambda _: True
-    )
+    monkeypatch.setattr(privilege_escalation_response, "command_available", lambda _: True)
     monkeypatch.setattr(privilege_escalation_response, "run_command_async", stub)
 
     event = SimpleNamespace(

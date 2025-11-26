@@ -262,9 +262,7 @@ class StateAmplification:
         probabilities = [abs(a) ** 2 for a in superposition.amplitudes]
 
         selected = [
-            state
-            for state, prob in zip(superposition.states, probabilities)
-            if prob >= threshold
+            state for state, prob in zip(superposition.states, probabilities) if prob >= threshold
         ]
 
         return selected

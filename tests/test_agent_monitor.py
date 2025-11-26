@@ -106,9 +106,7 @@ async def test_task_history(agent_monitor):
 
     # Record tasks
     for i in range(10):
-        agent_monitor.record_task_completion(
-            agent_id, success=(i % 2 == 0), duration=0.1 * i
-        )
+        agent_monitor.record_task_completion(agent_id, success=(i % 2 == 0), duration=0.1 * i)
 
     history = agent_monitor.get_task_history(agent_id, limit=5)
     assert len(history) == 5

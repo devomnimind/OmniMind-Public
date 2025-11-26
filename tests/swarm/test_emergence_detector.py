@@ -96,9 +96,7 @@ class TestEmergenceDetector:
         patterns = detector.detect_patterns(agent_states)
 
         # Should detect clustering
-        clustering_patterns = [
-            p for p in patterns if p.pattern_type == EmergenceType.CLUSTERING
-        ]
+        clustering_patterns = [p for p in patterns if p.pattern_type == EmergenceType.CLUSTERING]
         assert len(clustering_patterns) > 0
         if clustering_patterns:
             assert clustering_patterns[0].confidence > 0.5
@@ -120,9 +118,7 @@ class TestEmergenceDetector:
         patterns = detector.detect_patterns(agent_states)
 
         # Should detect synchronization
-        sync_patterns = [
-            p for p in patterns if p.pattern_type == EmergenceType.SYNCHRONIZATION
-        ]
+        sync_patterns = [p for p in patterns if p.pattern_type == EmergenceType.SYNCHRONIZATION]
         assert len(sync_patterns) > 0
         if sync_patterns:
             assert sync_patterns[0].confidence > 0.6

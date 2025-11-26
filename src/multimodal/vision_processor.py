@@ -323,15 +323,11 @@ class VisionProcessor:
         frames: List[VideoFrame] = []
         for frame_num in sampled_frames[:100]:  # Limit to 100 frames
             timestamp = frame_num / fps
-            frame_hash = hashlib.sha256(
-                f"{video_hash}:{frame_num}".encode()
-            ).hexdigest()[:16]
+            frame_hash = hashlib.sha256(f"{video_hash}:{frame_num}".encode()).hexdigest()[:16]
 
             # Simulate frame analysis
             # In production, extract actual frame data
-            frame_data = video_data[
-                frame_num * 1000 : (frame_num + 1) * 1000
-            ]  # Simulate
+            frame_data = video_data[frame_num * 1000 : (frame_num + 1) * 1000]  # Simulate
 
             scene_analysis = None
             if len(frame_data) > 0:
@@ -441,9 +437,7 @@ class VisionProcessor:
         scene_types = list(SceneType)
         return scene_types[data_sum % len(scene_types)]
 
-    def _detect_objects(
-        self, image_data: bytes, image_hash: str
-    ) -> List[DetectedObject]:
+    def _detect_objects(self, image_data: bytes, image_hash: str) -> List[DetectedObject]:
         """Simulate object detection."""
         # Simulate detecting 1-5 objects
         data_sum = sum(image_data[:100])

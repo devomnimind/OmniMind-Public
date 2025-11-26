@@ -107,9 +107,7 @@ class TestTimeSeriesAnalyzer:
         for i in range(20):
             analyzer.add_data_point(MetricType.CPU_USAGE, 70.0 + i * 1.0)
 
-        predicted_time = analyzer.predict_resource_exhaustion(
-            MetricType.CPU_USAGE, threshold=95.0
-        )
+        predicted_time = analyzer.predict_resource_exhaustion(MetricType.CPU_USAGE, threshold=95.0)
 
         assert predicted_time is not None
         assert predicted_time > datetime.now()
@@ -122,9 +120,7 @@ class TestTimeSeriesAnalyzer:
         for _ in range(20):
             analyzer.add_data_point(MetricType.CPU_USAGE, 50.0)
 
-        predicted_time = analyzer.predict_resource_exhaustion(
-            MetricType.CPU_USAGE, threshold=95.0
-        )
+        predicted_time = analyzer.predict_resource_exhaustion(MetricType.CPU_USAGE, threshold=95.0)
 
         assert predicted_time is None
 
@@ -181,9 +177,7 @@ class TestIssuePredictionEngine:
         predictions = engine.get_current_predictions()
 
         # Should have at least one prediction about CPU
-        cpu_predictions = [
-            p for p in predictions if p.metric_type == MetricType.CPU_USAGE
-        ]
+        cpu_predictions = [p for p in predictions if p.metric_type == MetricType.CPU_USAGE]
 
         if cpu_predictions:
             pred = cpu_predictions[0]
@@ -208,16 +202,11 @@ class TestIssuePredictionEngine:
         predictions = engine.get_current_predictions()
 
         # Should detect anomaly in error rate
-        error_predictions = [
-            p for p in predictions if p.metric_type == MetricType.ERROR_RATE
-        ]
+        error_predictions = [p for p in predictions if p.metric_type == MetricType.ERROR_RATE]
 
         if error_predictions:
             pred = error_predictions[0]
-            assert (
-                "anomaly" in pred.description.lower()
-                or "error" in pred.description.lower()
-            )
+            assert "anomaly" in pred.description.lower() or "error" in pred.description.lower()
 
     def test_predict_performance_degradation(self) -> None:
         """Test performance degradation prediction."""
@@ -230,9 +219,7 @@ class TestIssuePredictionEngine:
         predictions = engine.get_current_predictions()
 
         # Should detect performance degradation
-        perf_predictions = [
-            p for p in predictions if p.metric_type == MetricType.RESPONSE_TIME
-        ]
+        perf_predictions = [p for p in predictions if p.metric_type == MetricType.RESPONSE_TIME]
 
         if perf_predictions:
             pred = perf_predictions[0]
@@ -324,9 +311,7 @@ class TestIssuePredictionEngine:
         if predictions:
             for pred in predictions:
                 assert len(pred.recommended_actions) > 0
-                assert all(
-                    isinstance(action, str) for action in pred.recommended_actions
-                )
+                assert all(isinstance(action, str) for action in pred.recommended_actions)
 
     def test_supporting_data_present(self) -> None:
         """Test that predictions include supporting data."""

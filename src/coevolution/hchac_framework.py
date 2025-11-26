@@ -140,9 +140,7 @@ class HCHACFramework:
             biases = self.bias_detector.detect_bias(execution_result.data)
             if biases:
                 logger.warning(f"Detected {len(biases)} biases, applying corrections")
-                execution_result.data = self.bias_detector.correct_bias(
-                    execution_result.data
-                )
+                execution_result.data = self.bias_detector.correct_bias(execution_result.data)
 
         # 5. Atualização de trust
         trust_delta = self.trust.update_trust(
@@ -165,9 +163,7 @@ class HCHACFramework:
             },
         )
 
-        self.memory.complete_session(
-            session_id=session_id, insights=execution_result.insights
-        )
+        self.memory.complete_session(session_id=session_id, insights=execution_result.insights)
 
         return CollaborationOutcome(
             success=execution_result.success,
@@ -231,9 +227,7 @@ class HCHACFramework:
         else:
             roles["ai"] = Role.EXECUTOR  # Apenas executa comandos
 
-        logger.info(
-            f"Roles allocated: human={roles['human'].value}, ai={roles['ai'].value}"
-        )
+        logger.info(f"Roles allocated: human={roles['human'].value}, ai={roles['ai'].value}")
 
         return roles
 
@@ -338,9 +332,7 @@ class HCHACFramework:
             logger.error(f"Invalid feedback type: {feedback_type}")
             return
 
-        self.feedback.submit_human_feedback(
-            feedback_type=fb_type, content=content, context=context
-        )
+        self.feedback.submit_human_feedback(feedback_type=fb_type, content=content, context=context)
 
     def get_ai_feedback(self, limit: int = 5) -> List[Dict[str, Any]]:
         """

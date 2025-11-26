@@ -21,8 +21,13 @@ from pydantic import BaseModel
 from secrets import compare_digest
 from starlette.status import HTTP_401_UNAUTHORIZED, WS_1008_POLICY_VIOLATION
 
+from src.agents.orchestrator_agent import OrchestratorAgent
+from web.backend.websocket_manager import ws_manager
+from web.backend.routes import tasks, agents, security as security_router, metacognition, health
+
 # Load environment variables from .env file
 load_dotenv()
+
 
 # Simple observability for backend (replaces DEVBRAIN_V23 import)
 class AutonomyObservability:
@@ -64,10 +69,8 @@ class AutonomyObservability:
             "dlp_alerts": self.dlp_alerts[-5:]
         }
 
+
 autonomy_observability = AutonomyObservability()
-
-
-from src.agents.orchestrator_agent import OrchestratorAgent
 
 logger = logging.getLogger("omnimind.backend")
 _AUTH_FILE = Path(
@@ -148,8 +151,14 @@ async def lifespan(app_instance: FastAPI):
     except ImportError:
         logger.warning("Monitoring systems not available")
 
+    # Import Sinthome Broadcaster
+    from web.backend.sinthome_broadcaster import sinthome_broadcaster
+
     # Start WebSocket manager
     await ws_manager.start()
+
+    # Start Sinthome Broadcaster
+    await sinthome_broadcaster.start()
 
     # Start agent communication broadcaster
     broadcaster = get_broadcaster()
@@ -162,17 +171,34 @@ async def lifespan(app_instance: FastAPI):
         await performance_tracker.start()
         logger.info("All monitoring systems started")
 
+    # Start SecurityAgent continuous monitoring (if enabled)
+    # Start orchestrator initialization in background
+    app_instance.state.orchestrator_ready = False
+    asyncio.create_task(_async_init_orchestrator(app_instance))
+
     # Start metrics reporter
     app_instance.state.metrics_task = asyncio.create_task(_metrics_reporter())
     try:
         yield
     finally:
+        # Stop SecurityAgent monitoring
+        try:
+            orch = _get_orchestrator()
+            if orch.security_agent:
+                logger.info("Stopping SecurityAgent monitoring...")
+                # SecurityAgent should have a stop method
+        except Exception:
+            pass
+
         # Stop metrics reporter
         task = getattr(app_instance.state, "metrics_task", None)
         if task:
             task.cancel()
             with suppress(asyncio.CancelledError):
                 await task
+
+        # Stop Sinthome Broadcaster
+        await sinthome_broadcaster.stop()
 
         # Stop agent communication broadcaster
         await broadcaster.stop()
@@ -280,14 +306,48 @@ class DBusFlowRequest(BaseModel):
     media_action: str = "playpause"
 
 
+async def _async_init_orchestrator(app_instance: FastAPI):
+    global _orchestrator_instance
+    logger.info("Starting asynchronous Orchestrator initialization...")
+    try:
+        # Run in thread pool to avoid blocking event loop
+        _orchestrator_instance = await asyncio.to_thread(OrchestratorAgent, "config/agent_config.yaml")
+        app_instance.state.orchestrator_ready = True
+        logger.info("Orchestrator initialized successfully")
+
+        # Connect metacognition routes
+        try:
+            metacognition.set_orchestrator(_orchestrator_instance)
+            logger.info("Metacognition routes connected to orchestrator")
+        except Exception as exc:
+            logger.warning(f"Failed to connect metacognition routes: {exc}")
+
+        # Start SecurityAgent continuous monitoring (if enabled)
+        if _orchestrator_instance.security_agent:
+            if _orchestrator_instance.security_agent.config.get("security_agent", {}).get("enabled", False):
+                logger.info("Starting SecurityAgent continuous monitoring...")
+                asyncio.create_task(_orchestrator_instance.security_agent.start_continuous_monitoring())
+                logger.info("SecurityAgent continuous monitoring started")
+            else:
+                logger.info("SecurityAgent initialized but monitoring disabled in config")
+        else:
+            logger.info("SecurityAgent not available")
+
+    except Exception as exc:
+        logger.error(f"Failed to initialize orchestrator asynchronously: {exc}")
+        app_instance.state.orchestrator_error = str(exc)
+
+
 def _get_orchestrator() -> OrchestratorAgent:
     global _orchestrator_instance
     if _orchestrator_instance is None:
-        try:
-            _orchestrator_instance = OrchestratorAgent("config/agent_config.yaml")
-        except Exception as exc:
-            logger.exception("Failed to initialize orchestrator for dashboard: %s", exc)
-            raise HTTPException(status_code=503, detail="Orchestrator not available")
+        # Check if initialization failed (using app global since we are in same module)
+        if hasattr(app, "state") and hasattr(app.state, "orchestrator_error"):
+             raise HTTPException(status_code=500, detail=f"Orchestrator initialization failed: {app.state.orchestrator_error}")
+
+        # Check if still loading
+        raise HTTPException(status_code=503, detail="Orchestrator is initializing, please wait")
+
     return _orchestrator_instance
 
 
@@ -309,7 +369,7 @@ async def track_metrics(request: Request, call_next: Callable[[Request], Any]) -
     success = True
     error_msg = None
     status_code = 200
-    
+
     try:
         response = await call_next(request)
         status_code = response.status_code
@@ -324,7 +384,7 @@ async def track_metrics(request: Request, call_next: Callable[[Request], Any]) -
     finally:
         latency = time.perf_counter() - start
         metrics_collector.record(request.url.path, latency, success)
-        
+
         # Also record in new metrics collector if available
         try:
             from web.backend.monitoring import metrics_collector as new_collector
@@ -393,18 +453,7 @@ async def get_status():
     return {"status": "nominal", "active_agents": 0}
 
 
-@app.get("/health")
-def health_check() -> Dict[str, Any]:
-    orch = None
-    try:
-        orch = _get_orchestrator()
-    except HTTPException:
-        pass
-    return {
-        "status": "ok",
-        "orchestrator": bool(orch),
-        "backend_time": time.time(),
-    }
+
 
 
 @app.get("/status")
@@ -435,12 +484,12 @@ def plan_view(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
 def metrics(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
     """Get comprehensive system metrics."""
     backend_metrics = metrics_collector.summary()
-    
+
     # Try to get enhanced metrics
     try:
         from web.backend.monitoring import metrics_collector as new_collector
         from web.backend.monitoring import performance_tracker
-        
+
         return {
             "backend": backend_metrics,
             "api": new_collector.get_all_metrics(),
@@ -657,7 +706,6 @@ async def daemon_start(user: str = Depends(_verify_credentials)) -> Dict[str, An
 
     # Start daemon in background task
     async def run_daemon():
-        import asyncio
         from src.daemon import DaemonState
 
         daemon.running = True
@@ -700,9 +748,6 @@ def daemon_stop(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
 # ============================================================================
 # WEBSOCKET ENDPOINTS (Phase 8.2)
 # ============================================================================
-
-from web.backend.websocket_manager import ws_manager
-
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -751,22 +796,16 @@ def websocket_stats(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
 # API ROUTERS (Phase 8.2)
 # ============================================================================
 
-from web.backend.routes import tasks, agents, security, metacognition, health
-
 app.include_router(tasks.router)
 app.include_router(agents.router)
-app.include_router(security.router)
+app.include_router(security_router.router)
 app.include_router(metacognition.router)
 app.include_router(health.router)
 
 # Set orchestrator for metacognition routes
 # This will be set when orchestrator is initialized
-try:
-    orch = _get_orchestrator()
-    metacognition.set_orchestrator(orch)
-    logger.info("Metacognition routes connected to orchestrator")
-except Exception as exc:
-    logger.warning(f"Metacognition routes not connected yet: {exc}")
+# Orchestrator initialization is now handled asynchronously in lifespan
+# Metacognition routes will be connected in _async_init_orchestrator
 
 if __name__ == "__main__":
     import uvicorn

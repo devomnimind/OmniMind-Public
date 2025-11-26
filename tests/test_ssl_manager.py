@@ -29,9 +29,7 @@ def ssl_manager(temp_ssl_dir: Path) -> SSLManager:
     return SSLManager(ssl_dir=temp_ssl_dir)
 
 
-def test_ssl_manager_initialization(
-    ssl_manager: SSLManager, temp_ssl_dir: Path
-) -> None:
+def test_ssl_manager_initialization(ssl_manager: SSLManager, temp_ssl_dir: Path) -> None:
     """Test SSL manager initializes correctly."""
     assert ssl_manager.ssl_dir == temp_ssl_dir
     assert temp_ssl_dir.exists()

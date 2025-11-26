@@ -91,9 +91,7 @@ class TestSearchFilesTool:
     @patch("subprocess.run")
     def test_search_files_success(self, mock_run: Mock, tool: SearchFilesTool) -> None:
         """Testa busca bem-sucedida."""
-        mock_run.return_value = MagicMock(
-            stdout="/path/file1.py\n/path/file2.py\n", returncode=0
-        )
+        mock_run.return_value = MagicMock(stdout="/path/file1.py\n/path/file2.py\n", returncode=0)
 
         files = tool.execute("/path", "*.py")
 
@@ -101,9 +99,7 @@ class TestSearchFilesTool:
         assert isinstance(files, list)
 
     @patch("subprocess.run")
-    def test_search_files_with_max_results(
-        self, mock_run: Mock, tool: SearchFilesTool
-    ) -> None:
+    def test_search_files_with_max_results(self, mock_run: Mock, tool: SearchFilesTool) -> None:
         """Testa busca com limite de resultados."""
         mock_run.return_value = MagicMock(
             stdout="\n".join([f"/file{i}.txt" for i in range(100)]), returncode=0
@@ -175,9 +171,7 @@ class TestWriteFileTool:
 
             assert result is False  # Tool returns False on error
 
-    def test_write_creates_directories(
-        self, tool: WriteFileTool, tmp_path: Path
-    ) -> None:
+    def test_write_creates_directories(self, tool: WriteFileTool, tmp_path: Path) -> None:
         """Testa criação de diretórios."""
         nested_file = tmp_path / "nested" / "dir" / "file.txt"
 
@@ -209,9 +203,7 @@ class TestExecuteCommandTool:
         assert result.get("status") in ["FAILED", "ERROR", "BLOCKED"]
 
     @patch("subprocess.run")
-    def test_execute_command_timeout(
-        self, mock_run: Mock, tool: ExecuteCommandTool
-    ) -> None:
+    def test_execute_command_timeout(self, mock_run: Mock, tool: ExecuteCommandTool) -> None:
         """Testa timeout de comando."""
         import subprocess
 

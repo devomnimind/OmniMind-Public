@@ -174,10 +174,7 @@ class ProductionConsciousnessSystem:
         # Salva histórico
         self.awareness_history.append(awareness)
 
-        logger.info(
-            f"Self-awareness measured for {agent_name}: "
-            f"{awareness.overall_score:.2f}"
-        )
+        logger.info(f"Self-awareness measured for {agent_name}: " f"{awareness.overall_score:.2f}")
 
         return awareness
 
@@ -192,17 +189,13 @@ class ProductionConsciousnessSystem:
             "phi_metrics": {
                 "current": self.phi_history[-1] if self.phi_history else 0.0,
                 "mean": (
-                    sum(self.phi_history) / len(self.phi_history)
-                    if self.phi_history
-                    else 0.0
+                    sum(self.phi_history) / len(self.phi_history) if self.phi_history else 0.0
                 ),
                 "history_length": len(self.phi_history),
             },
             "self_awareness": {
                 "current": (
-                    self.awareness_history[-1].overall_score
-                    if self.awareness_history
-                    else 0.0
+                    self.awareness_history[-1].overall_score if self.awareness_history else 0.0
                 ),
                 "mean": (
                     sum(a.overall_score for a in self.awareness_history)
@@ -302,9 +295,7 @@ def demonstrate_production_consciousness() -> None:
     print(f"  Φ médio: {report['phi_metrics']['mean']:.2f}")
     print(f"  Auto-consciência média: {report['self_awareness']['mean']:.2f}")
     print(f"  Total de conexões: {report['system_metrics']['total_connections']}")
-    print(
-        f"  Total de feedback loops: {report['system_metrics']['total_feedback_loops']}"
-    )
+    print(f"  Total de feedback loops: {report['system_metrics']['total_feedback_loops']}")
     print()
 
 

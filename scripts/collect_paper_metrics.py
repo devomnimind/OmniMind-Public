@@ -13,6 +13,10 @@ from pathlib import Path
 from typing import Dict, Any, List
 import subprocess
 import logging
+import sys
+
+# Adicionar diretório raiz ao path para permitir imports de src
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 # Configuração de logging
 logging.basicConfig(

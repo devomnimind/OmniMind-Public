@@ -104,26 +104,16 @@ class TrustMetrics:
 
         # Atualiza componentes
         if outcome.get("success"):
-            self.reliability_scores[human_id] = min(
-                self.reliability_scores[human_id] + 0.05, 1.0
-            )
-            self.competence_scores[human_id] = min(
-                self.competence_scores[human_id] + 0.05, 1.0
-            )
+            self.reliability_scores[human_id] = min(self.reliability_scores[human_id] + 0.05, 1.0)
+            self.competence_scores[human_id] = min(self.competence_scores[human_id] + 0.05, 1.0)
         else:
-            self.reliability_scores[human_id] = max(
-                self.reliability_scores[human_id] - 0.1, 0.0
-            )
+            self.reliability_scores[human_id] = max(self.reliability_scores[human_id] - 0.1, 0.0)
 
         if outcome.get("transparent"):
-            self.transparency_scores[human_id] = min(
-                self.transparency_scores[human_id] + 0.05, 1.0
-            )
+            self.transparency_scores[human_id] = min(self.transparency_scores[human_id] + 0.05, 1.0)
 
         if outcome.get("aligned_with_values"):
-            self.alignment_scores[human_id] = min(
-                self.alignment_scores[human_id] + 0.05, 1.0
-            )
+            self.alignment_scores[human_id] = min(self.alignment_scores[human_id] + 0.05, 1.0)
 
         # Recalcula trust
         new_trust = self.get_trust_level(human_id)
@@ -169,9 +159,7 @@ class TrustMetrics:
             "alignment": self.alignment_scores[human_id],
         }
 
-    def get_trust_history(
-        self, human_id: str, limit: Optional[int] = None
-    ) -> List[TrustEvent]:
+    def get_trust_history(self, human_id: str, limit: Optional[int] = None) -> List[TrustEvent]:
         """
         Retorna histórico de eventos de trust.
 

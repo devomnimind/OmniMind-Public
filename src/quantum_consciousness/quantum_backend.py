@@ -70,9 +70,7 @@ class QuantumBackend:
         if self.provider == "auto":
             if DWAVE_AVAILABLE and os.getenv("DWAVE_API_TOKEN"):
                 self.provider = "dwave"
-            elif QISKIT_AVAILABLE and (
-                os.getenv("IBMQ_API_TOKEN") or os.getenv("IBM_API_KEY")
-            ):
+            elif QISKIT_AVAILABLE and (os.getenv("IBMQ_API_TOKEN") or os.getenv("IBM_API_KEY")):
                 self.provider = "ibm"
             elif NEAL_AVAILABLE:
                 self.provider = "neal"
@@ -137,9 +135,7 @@ class QuantumBackend:
         best_sample = sampleset.first.sample
         energy = sampleset.first.energy
 
-        return self._format_result(
-            best_sample, energy, is_quantum=(self.provider == "dwave")
-        )
+        return self._format_result(best_sample, energy, is_quantum=(self.provider == "dwave"))
 
     def _solve_gate_based(self, Q: Dict) -> Dict[str, Any]:
         """
@@ -182,9 +178,7 @@ class QuantumBackend:
             var_names = [v.name for v in problem.variables]
             sample = {name: int(val) for name, val in zip(var_names, result.x)}
 
-            return self._format_result(
-                sample, result.fval, is_quantum=False
-            )  # Still simulated
+            return self._format_result(sample, result.fval, is_quantum=False)  # Still simulated
 
         except Exception as e:
             logger.error(f"QAOA execution failed: {e}. Falling back to brute force.")
@@ -223,9 +217,7 @@ class QuantumBackend:
             "is_quantum": False,
         }
 
-    def _format_result(
-        self, sample: Dict, energy: float, is_quantum: bool
-    ) -> Dict[str, Any]:
+    def _format_result(self, sample: Dict, energy: float, is_quantum: bool) -> Dict[str, Any]:
         """Determines the winner from the sample."""
         winner = "ego"
         if sample.get("id") == 1 and sample.get("superego") == 0:

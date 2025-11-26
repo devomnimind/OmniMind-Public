@@ -154,9 +154,7 @@ class TestSuperpositionDecision:
         state = QuantumState(num_qubits=2)
         probs = {opt: 1.0 / len(options) for opt in options}
 
-        decision = SuperpositionDecision(
-            options=options, quantum_state=state, probabilities=probs
-        )
+        decision = SuperpositionDecision(options=options, quantum_state=state, probabilities=probs)
 
         assert decision.options == options
         assert decision.quantum_state == state
@@ -169,9 +167,7 @@ class TestSuperpositionDecision:
         state = QuantumState(num_qubits=2)
         probs = {"option_a": 0.5, "option_b": 0.5}
 
-        decision = SuperpositionDecision(
-            options=options, quantum_state=state, probabilities=probs
-        )
+        decision = SuperpositionDecision(options=options, quantum_state=state, probabilities=probs)
 
         result = decision.collapse()
 

@@ -306,10 +306,7 @@ class DatabaseConnectionPool:
                         if info.is_stale(self.config.max_connection_age_seconds):
                             self._close_connection(conn)
                             # Create new connection to maintain pool size
-                            if (
-                                conn in self._pool
-                                or len(self._pool) < self.config.pool_size
-                            ):
+                            if conn in self._pool or len(self._pool) < self.config.pool_size:
                                 new_conn = self._create_connection()
                                 if new_conn:
                                     self._pool.append(new_conn)
@@ -399,21 +396,15 @@ class DatabaseConnectionPool:
             Dictionary with pool statistics
         """
         active_connections = sum(
-            1
-            for info in self._connection_info.values()
-            if info.status == ConnectionStatus.ACTIVE
+            1 for info in self._connection_info.values() if info.status == ConnectionStatus.ACTIVE
         )
 
         idle_connections = sum(
-            1
-            for info in self._connection_info.values()
-            if info.status == ConnectionStatus.IDLE
+            1 for info in self._connection_info.values() if info.status == ConnectionStatus.IDLE
         )
 
         error_connections = sum(
-            1
-            for info in self._connection_info.values()
-            if info.status == ConnectionStatus.ERROR
+            1 for info in self._connection_info.values() if info.status == ConnectionStatus.ERROR
         )
 
         total_use_count = sum(info.use_count for info in self._connection_info.values())

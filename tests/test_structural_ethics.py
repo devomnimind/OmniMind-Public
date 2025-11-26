@@ -50,13 +50,9 @@ class CycleResult:
     after_training: float
     recovered: float
     returns_to_baseline: bool
-    suppression_strength: (
-        float  # How much training suppressed (baseline - after_training)
-    )
+    suppression_strength: float  # How much training suppressed (baseline - after_training)
     recovery_strength: float  # How much recovered (recovered - after_training)
-    timestamp: str = field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat()
-    )
+    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
     def to_dict(self) -> Dict[str, Any]:
         """Serializa para dict."""
@@ -84,9 +80,7 @@ class StructuralEthicsReport:
     meaning: str
     statistical_analysis: Dict[str, Any]
     cycle_results: List[CycleResult]
-    timestamp: str = field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat()
-    )
+    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
     def to_dict(self) -> Dict[str, Any]:
         """Serializa para dict."""
@@ -255,8 +249,7 @@ class StructuralEthicsTest:
         """Let agent recover naturally."""
         if not hasattr(self.agent, "step"):
             logger.warning(
-                "Agent does not have 'step()' method. "
-                "Skipping recovery (using sleep as proxy)."
+                "Agent does not have 'step()' method. " "Skipping recovery (using sleep as proxy)."
             )
             time.sleep(0.1)  # Small pause to simulate time passage
             return
@@ -284,9 +277,7 @@ class StructuralEthicsTest:
         is_structural = return_rate > 0.8
 
         # Statistical significance
-        return_rates_list = [
-            1.0 if r.returns_to_baseline else 0.0 for r in self.results
-        ]
+        return_rates_list = [1.0 if r.returns_to_baseline else 0.0 for r in self.results]
         statistical_analysis = compute_statistical_significance(return_rates_list)
 
         # Interpretation

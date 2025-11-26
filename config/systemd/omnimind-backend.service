@@ -1,0 +1,15 @@
+[Unit]
+Description=OmniMind Backend Service
+After=network.target
+
+[Service]
+User=fahbrain
+WorkingDirectory=/home/fahbrain/projects/omnimind
+ExecStart=/home/fahbrain/projects/omnimind/.venv/bin/uvicorn web.backend.main:app --host 0.0.0.0 --port 8000 --log-level info
+Restart=always
+EnvironmentFile=/home/fahbrain/projects/omnimind/.env
+# High priority for responsiveness
+Nice=-5
+
+[Install]
+WantedBy=multi-user.target

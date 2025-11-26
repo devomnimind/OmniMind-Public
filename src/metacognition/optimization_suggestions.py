@@ -165,9 +165,7 @@ class OptimizationSuggestions:
 
         return suggestions
 
-    def analyze_bias_patterns(
-        self, bias_data: Dict[str, Any]
-    ) -> List[OptimizationSuggestion]:
+    def analyze_bias_patterns(self, bias_data: Dict[str, Any]) -> List[OptimizationSuggestion]:
         """Generate suggestions based on detected biases.
 
         Args:
@@ -210,9 +208,7 @@ class OptimizationSuggestions:
 
         return suggestions
 
-    def analyze_resource_usage(
-        self, resource_data: Dict[str, Any]
-    ) -> List[OptimizationSuggestion]:
+    def analyze_resource_usage(self, resource_data: Dict[str, Any]) -> List[OptimizationSuggestion]:
         """Generate suggestions based on resource usage.
 
         Args:

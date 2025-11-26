@@ -161,9 +161,7 @@ class TestPerformanceBenchmark:
         assert len(result.execution_times_ms) == 5
         assert all(t >= 0 for t in result.execution_times_ms)
 
-    def test_run_benchmark_with_computation(
-        self, benchmark: PerformanceBenchmark
-    ) -> None:
+    def test_run_benchmark_with_computation(self, benchmark: PerformanceBenchmark) -> None:
         """Testa benchmark com computação real."""
 
         def computation_workload() -> int:
@@ -196,9 +194,7 @@ class TestPerformanceBenchmark:
         assert "baseline_test" in benchmark.baselines
         assert benchmark.baselines["baseline_test"] == result
 
-    def test_compare_benchmarks_improvement(
-        self, benchmark: PerformanceBenchmark
-    ) -> None:
+    def test_compare_benchmarks_improvement(self, benchmark: PerformanceBenchmark) -> None:
         """Testa comparação mostrando melhoria."""
 
         def slow_workload() -> None:
@@ -228,9 +224,7 @@ class TestPerformanceBenchmark:
             # Known issue with benchmarking when CPU percent is 0
             pass
 
-    def test_compare_benchmarks_regression(
-        self, benchmark: PerformanceBenchmark
-    ) -> None:
+    def test_compare_benchmarks_regression(self, benchmark: PerformanceBenchmark) -> None:
         """Testa comparação mostrando regressão."""
 
         def fast_workload() -> None:
@@ -258,9 +252,7 @@ class TestPerformanceBenchmark:
             # Known issue with benchmarking when CPU percent is 0
             pass
 
-    def test_save_and_load_results(
-        self, benchmark: PerformanceBenchmark, temp_dir: Path
-    ) -> None:
+    def test_save_and_load_results(self, benchmark: PerformanceBenchmark, temp_dir: Path) -> None:
         """Testa persistência de resultados."""
 
         def test_workload() -> None:
@@ -455,9 +447,7 @@ class TestRegressionDetector:
 
         assert len(history) == 2
 
-    def test_detect_regressions_no_history(
-        self, detector: "RegressionDetector"
-    ) -> None:
+    def test_detect_regressions_no_history(self, detector: "RegressionDetector") -> None:
         """Testa detecção quando não há histórico."""
         result = BenchmarkResult(
             name="new_metric",
@@ -473,9 +463,7 @@ class TestRegressionDetector:
         assert regression_result["has_regression"] is False
         assert regression_result["message"] == "Baseline established"
 
-    def test_detect_regressions_empty_history(
-        self, detector: "RegressionDetector"
-    ) -> None:
+    def test_detect_regressions_empty_history(self, detector: "RegressionDetector") -> None:
         """Testa detecção com histórico vazio."""
         import json
 
@@ -498,9 +486,7 @@ class TestRegressionDetector:
         assert regression_result["has_regression"] is False
         assert regression_result["message"] == "Empty history"
 
-    def test_detect_regressions_with_regression(
-        self, detector: "RegressionDetector"
-    ) -> None:
+    def test_detect_regressions_with_regression(self, detector: "RegressionDetector") -> None:
         """Testa detecção de regressão real."""
         # Create baseline history
         baseline = BenchmarkResult(
@@ -528,9 +514,7 @@ class TestRegressionDetector:
         assert regression_result["has_regression"] is True
         assert "regression detected" in regression_result["message"].lower()
 
-    def test_detect_regressions_no_regression(
-        self, detector: "RegressionDetector"
-    ) -> None:
+    def test_detect_regressions_no_regression(self, detector: "RegressionDetector") -> None:
         """Testa quando não há regressão."""
         # Create baseline
         baseline = BenchmarkResult(
@@ -558,17 +542,13 @@ class TestRegressionDetector:
         assert regression_result["has_regression"] is False
         assert "no regression" in regression_result["message"].lower()
 
-    def test_generate_trend_report_no_history(
-        self, detector: "RegressionDetector"
-    ) -> None:
+    def test_generate_trend_report_no_history(self, detector: "RegressionDetector") -> None:
         """Testa relatório quando não há histórico."""
         report = detector.generate_trend_report("nonexistent")
 
         assert "No history found" in report
 
-    def test_generate_trend_report_empty_history(
-        self, detector: "RegressionDetector"
-    ) -> None:
+    def test_generate_trend_report_empty_history(self, detector: "RegressionDetector") -> None:
         """Testa relatório com histórico vazio."""
         import json
 
@@ -580,9 +560,7 @@ class TestRegressionDetector:
 
         assert "Empty history" in report
 
-    def test_generate_trend_report_with_data(
-        self, detector: "RegressionDetector"
-    ) -> None:
+    def test_generate_trend_report_with_data(self, detector: "RegressionDetector") -> None:
         """Testa geração de relatório com dados."""
         # Create history with multiple entries
         for i in range(3):
@@ -607,9 +585,7 @@ class TestRegressionDetector:
         # Should not raise error
         detector.clean_old_history(days=90)
 
-    def test_clean_old_history_with_old_entries(
-        self, detector: "RegressionDetector"
-    ) -> None:
+    def test_clean_old_history_with_old_entries(self, detector: "RegressionDetector") -> None:
         """Testa remoção de entradas antigas."""
         from datetime import datetime, timedelta
 

@@ -145,9 +145,7 @@ if __name__ == "__main__":
     print(f"Result: {{result}}")
 ''',
             required_params=["agent_name", "description", "purpose"],
-            optional_params={
-                "capabilities": ["- Task execution", "- Input validation"]
-            },
+            optional_params={"capabilities": ["- Task execution", "- Input validation"]},
         )
 
         # Tool template
@@ -391,9 +389,7 @@ class {model_name}(BaseModel):
         all_params = {**template.optional_params, **params}
 
         # Format capabilities if present
-        if "capabilities" in all_params and isinstance(
-            all_params["capabilities"], list
-        ):
+        if "capabilities" in all_params and isinstance(all_params["capabilities"], list):
             all_params["capabilities"] = "\n".join(
                 f"    {cap}" for cap in all_params["capabilities"]
             )
@@ -538,9 +534,7 @@ class {model_name}(BaseModel):
 
         return methods
 
-    def generate_docstring(
-        self, func: Callable[..., Any], style: str = "google"
-    ) -> str:
+    def generate_docstring(self, func: Callable[..., Any], style: str = "google") -> str:
         """
         Generate docstring for a function.
 
@@ -642,9 +636,7 @@ def generate_test_for_class(
 ) -> str:
     """Quick function to generate tests for a class."""
     generator = CodeGenerator()
-    return generator.generate_test(
-        class_name.lower(), module_path, class_name, None, output_file
-    )
+    return generator.generate_test(class_name.lower(), module_path, class_name, None, output_file)
 
 
 if __name__ == "__main__":

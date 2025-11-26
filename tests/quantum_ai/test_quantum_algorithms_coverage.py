@@ -69,9 +69,7 @@ class TestQuantumAlgorithmsCoverage:
         # Variables: [x0, x1, x2] -> int value
         # Let's try to minimize Hamming weight (all 0s)
 
-        annealer = QuantumAnnealer(
-            num_variables=5, initial_temperature=10.0, final_temperature=0.1
-        )
+        annealer = QuantumAnnealer(num_variables=5, initial_temperature=10.0, final_temperature=0.1)
 
         def energy_func(state):
             return sum(state)  # Energy = number of 1s

@@ -229,12 +229,8 @@ class TestInsightGenerator:
         generator = InsightGenerator()
 
         connections = [
-            Connection(
-                source_concept="A", target_concept="B", strength=0.8, surprise_value=0.6
-            ),
-            Connection(
-                source_concept="B", target_concept="C", strength=0.7, surprise_value=0.5
-            ),
+            Connection(source_concept="A", target_concept="B", strength=0.8, surprise_value=0.6),
+            Connection(source_concept="B", target_concept="C", strength=0.7, surprise_value=0.5),
         ]
 
         discovery = generator.generate_synthesis(["A", "B", "C"], connections)
@@ -385,10 +381,7 @@ class TestSerendipityEngine:
 
         assert discovery is not None
         assert discovery.insight_type == InsightType.INVERSION
-        assert (
-            "less" in discovery.content.lower()
-            or "opposite" in discovery.content.lower()
-        )
+        assert "less" in discovery.content.lower() or "opposite" in discovery.content.lower()
 
     def test_random_exploration_disabled(self) -> None:
         """Test that random exploration can be disabled."""
@@ -461,16 +454,10 @@ class TestIntegration:
         engine = SerendipityEngine()
 
         # Build knowledge network
-        engine.add_knowledge(
-            "consciousness", related_concepts=["awareness", "experience"]
-        )
+        engine.add_knowledge("consciousness", related_concepts=["awareness", "experience"])
         engine.add_knowledge("awareness", related_concepts=["perception", "cognition"])
-        engine.add_knowledge(
-            "quantum", related_concepts=["superposition", "entanglement"]
-        )
-        engine.add_knowledge(
-            "superposition", related_concepts=["states", "measurement"]
-        )
+        engine.add_knowledge("quantum", related_concepts=["superposition", "entanglement"])
+        engine.add_knowledge("superposition", related_concepts=["states", "measurement"])
 
         # Explore connections
         discovery1 = engine.explore_connections("consciousness", "cognition")

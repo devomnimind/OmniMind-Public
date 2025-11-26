@@ -40,9 +40,7 @@ class TestIntrinsicMotivationEngine:
         """Test evaluation of high-quality task triggers positive reinforcement."""
         state_file = temp_dir / "motivation_state.json"
         # Lower satisfaction threshold to 0.6 so our task triggers reinforcement
-        engine = IntrinsicMotivationEngine(
-            state_file=state_file, satisfaction_threshold=0.6
-        )
+        engine = IntrinsicMotivationEngine(state_file=state_file, satisfaction_threshold=0.6)
 
         # High quality task with detailed reflection
         satisfaction = engine.evaluate_task_outcome(
@@ -56,9 +54,7 @@ class TestIntrinsicMotivationEngine:
 
         # With high quality (0.95), good reflection, high autonomy, should get close to 0.7
         assert satisfaction >= 0.65  # Realistic threshold considering all factors
-        assert (
-            engine.self_awareness_score > 0.0
-        )  # Increased due to positive reinforcement
+        assert engine.self_awareness_score > 0.0  # Increased due to positive reinforcement
 
     def test_evaluate_low_quality_task(self, temp_dir):
         """Test evaluation of low-quality task triggers improvement loop."""
@@ -183,9 +179,7 @@ class TestAgentIdentity:
         identity = AgentIdentity(state_file=state_file)
 
         # Successful high-quality task
-        reputation = identity.update_reputation(
-            success=True, quality_score=0.9, autonomy_level=0.8
-        )
+        reputation = identity.update_reputation(success=True, quality_score=0.9, autonomy_level=0.8)
 
         assert reputation > 0.0
         assert identity.reputation.total_tasks == 1
@@ -232,9 +226,7 @@ class TestMarketplaceAgent:
         agent = MarketplaceAgent(state_file=state_file)
 
         tool = "def simple(): pass"
-        price = agent.suggest_pricing(
-            tool_artifact=tool, quality_score=0.8, metadata={}
-        )
+        price = agent.suggest_pricing(tool_artifact=tool, quality_score=0.8, metadata={})
 
         assert price >= 0.99  # Minimum price
 
@@ -257,9 +249,7 @@ class TestEthicsAgent:
     def test_initialization(self, temp_dir):
         """Test ethics agent initialization."""
         state_file = temp_dir / "ethics_state.json"
-        agent = EthicsAgent(
-            ethics_config_file=temp_dir / "ethics.yaml", state_file=state_file
-        )
+        agent = EthicsAgent(ethics_config_file=temp_dir / "ethics.yaml", state_file=state_file)
 
         assert agent.approved_actions == 0
         assert agent.vetoed_actions == 0

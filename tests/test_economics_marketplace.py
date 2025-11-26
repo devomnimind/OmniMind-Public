@@ -273,9 +273,7 @@ class TestMarketplaceAgent:
         assert price_complex >= price_simple
 
     @pytest.mark.asyncio
-    async def test_request_human_approval_high_quality(
-        self, temp_state_file: Path
-    ) -> None:
+    async def test_request_human_approval_high_quality(self, temp_state_file: Path) -> None:
         """Testa aprovação automática para alta qualidade."""
         agent = MarketplaceAgent(state_file=temp_state_file)
 
@@ -296,9 +294,7 @@ class TestMarketplaceAgent:
         assert req.approved_by is not None
 
     @pytest.mark.asyncio
-    async def test_request_human_approval_low_quality(
-        self, temp_state_file: Path
-    ) -> None:
+    async def test_request_human_approval_low_quality(self, temp_state_file: Path) -> None:
         """Testa rejeição para baixa qualidade."""
         agent = MarketplaceAgent(state_file=temp_state_file)
 
@@ -343,9 +339,7 @@ class TestMarketplaceAgent:
         assert len(agent.published_tools) == 2
 
     @pytest.mark.asyncio
-    async def test_publish_to_platforms_not_approved(
-        self, temp_state_file: Path
-    ) -> None:
+    async def test_publish_to_platforms_not_approved(self, temp_state_file: Path) -> None:
         """Testa que não pode publicar sem aprovação."""
         agent = MarketplaceAgent(state_file=temp_state_file)
 
@@ -391,9 +385,7 @@ class TestMarketplaceAgent:
         assert len(agent.published_tools) > 0
 
     @pytest.mark.asyncio
-    async def test_publish_tool_low_quality_no_improvement(
-        self, temp_state_file: Path
-    ) -> None:
+    async def test_publish_tool_low_quality_no_improvement(self, temp_state_file: Path) -> None:
         """Testa que ferramenta de baixa qualidade sem melhoria é rejeitada."""
         agent = MarketplaceAgent(state_file=temp_state_file)
 

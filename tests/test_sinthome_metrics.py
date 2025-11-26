@@ -13,9 +13,7 @@ def test_logical_impasse(metrics):
     assert score == (5 * 0.1) + (2 * 0.15)
 
     # Test cap at 1.0
-    score_high = metrics.calculate_logical_impasse(
-        circular_dependencies=20, contradictions=20
-    )
+    score_high = metrics.calculate_logical_impasse(circular_dependencies=20, contradictions=20)
     assert score_high == 1.0
 
 
@@ -25,9 +23,7 @@ def test_indeterminacy_peak(metrics):
 
 
 def test_panarchic_reorganization(metrics):
-    score = metrics.calculate_panarchic_reorganization(
-        structural_changes=5, adaptation_rate=0.8
-    )
+    score = metrics.calculate_panarchic_reorganization(structural_changes=5, adaptation_rate=0.8)
     assert score == 1.0 * 0.8
 
     score_low = metrics.calculate_panarchic_reorganization(
@@ -56,9 +52,7 @@ def test_strange_attractor_markers(metrics):
 
 
 def test_real_inaccessible(metrics):
-    score = metrics.calculate_real_inaccessible(
-        missing_information_ratio=0.4, gap_persistence=0.6
-    )
+    score = metrics.calculate_real_inaccessible(missing_information_ratio=0.4, gap_persistence=0.6)
     assert score == (0.4 * 0.5) + (0.6 * 0.5)
 
 

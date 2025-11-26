@@ -449,9 +449,7 @@ class TestEnhancedMCPClient:
 
         client = EnhancedMCPClient(enable_audit=True)
 
-        client._audit_call(
-            "test_method", {"key": "value"}, {"result": "ok"}, cached=True
-        )
+        client._audit_call("test_method", {"key": "value"}, {"result": "ok"}, cached=True)
 
         # Verifica se log_action foi chamado
         mock_audit_obj.log_action.assert_called_once()
@@ -478,9 +476,7 @@ class TestEnhancedMCPClient:
         client._add_to_cache(cache_key, {"cached": "result"})
 
         # Chamada deve usar cache
-        result = client.call_with_context_optimization(
-            "test_method", {"param": "value"}
-        )
+        result = client.call_with_context_optimization("test_method", {"param": "value"})
 
         assert result == {"cached": "result"}
         # Cliente MCP não deve ser chamado
@@ -502,14 +498,10 @@ class TestEnhancedMCPClient:
 
         client = EnhancedMCPClient(enable_cache=True, enable_data_protection=False)
 
-        result = client.call_with_context_optimization(
-            "test_method", {"param": "value"}
-        )
+        result = client.call_with_context_optimization("test_method", {"param": "value"})
 
         assert result == {"real": "result"}
-        mock_mcp_instance._request.assert_called_once_with(
-            "test_method", {"param": "value"}
-        )
+        mock_mcp_instance._request.assert_called_once_with("test_method", {"param": "value"})
         # Resultado deve estar no cache agora
         cache_key = client._get_cache_key("test_method", {"param": "value"})
         assert cache_key in client._context_cache
@@ -609,9 +601,7 @@ class TestEnhancedMCPClient:
         result = client.write_file("/test/file.txt", "content")
 
         assert result["size"] == 100
-        mock_mcp_instance.write_file.assert_called_once_with(
-            "/test/file.txt", "content", "utf-8"
-        )
+        mock_mcp_instance.write_file.assert_called_once_with("/test/file.txt", "content", "utf-8")
 
     @patch("src.integrations.mcp_client_optimized.MCPClient")
     @patch("src.integrations.mcp_client_optimized.get_data_protection")

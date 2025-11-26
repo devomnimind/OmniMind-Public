@@ -36,9 +36,7 @@ class MCPConfig:
 
         # Ler porta e host de variáveis de ambiente (prioridade sobre arquivo)
         env_port = os.environ.get("MCP_PORT")
-        env_host = os.environ.get(
-            "MCP_HOST", "127.0.0.1"
-        )  # Sempre localhost por padrão
+        env_host = os.environ.get("MCP_HOST", "127.0.0.1")  # Sempre localhost por padrão
 
         if not config_path.exists():
             # Usar valores de ambiente ou defaults
@@ -79,9 +77,7 @@ class MCPConfig:
             port=port,
             allowed_paths=payload.get("allowed_paths", default.allowed_paths),
             max_read_size=payload.get("max_read_size", default.max_read_size),
-            allowed_extensions=payload.get(
-                "allowed_extensions", default.allowed_extensions
-            ),
+            allowed_extensions=payload.get("allowed_extensions", default.allowed_extensions),
             audit_category=payload.get("audit_category", default.audit_category),
         )
 
@@ -246,9 +242,7 @@ class MCPServer:
         }
         if isinstance(result, Exception):
             details["error"] = str(result)
-        return self.audit_system.log_action(
-            method, details, category=self.config.audit_category
-        )
+        return self.audit_system.log_action(method, details, category=self.config.audit_category)
 
     def _success_response(self, request_id: Optional[Any], result: Any) -> str:
         return json.dumps({"jsonrpc": "2.0", "id": request_id, "result": result})
@@ -287,16 +281,11 @@ class MCPServer:
         resolved = self._resolve_path(path)
         if not resolved.is_file():
             raise MCPRequestError(-32602, f"File does not exist: {resolved}")
-        if (
-            self.config.max_read_size
-            and resolved.stat().st_size > self.config.max_read_size
-        ):
+        if self.config.max_read_size and resolved.stat().st_size > self.config.max_read_size:
             raise MCPRequestError(-32602, "File exceeds maximum read size")
         return resolved.read_text(encoding=encoding)
 
-    def write_file(
-        self, path: str, content: str, encoding: str = "utf-8"
-    ) -> Dict[str, Any]:
+    def write_file(self, path: str, content: str, encoding: str = "utf-8") -> Dict[str, Any]:
         resolved = self._resolve_path(path)
         resolved.parent.mkdir(parents=True, exist_ok=True)
         if self.config.allowed_extensions:

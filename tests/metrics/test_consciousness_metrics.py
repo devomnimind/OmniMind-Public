@@ -103,9 +103,7 @@ class TestConsciousnessMetrics:
         """Provide ConsciousnessMetrics instance."""
         return ConsciousnessMetrics(metrics_dir=temp_dir / "consciousness")
 
-    def test_initialization(
-        self, metrics: ConsciousnessMetrics, temp_dir: Path
-    ) -> None:
+    def test_initialization(self, metrics: ConsciousnessMetrics, temp_dir: Path) -> None:
         """Test metrics initialization."""
         assert metrics.metrics_dir.exists()
         assert len(metrics.connections) == 0
@@ -147,12 +145,8 @@ class TestConsciousnessMetrics:
     def test_calculate_phi_simple(self, metrics: ConsciousnessMetrics) -> None:
         """Test Phi calculation with simple setup."""
         # Add 2 connections
-        metrics.add_connection(
-            AgentConnection("A", "B", "memory", bidirectional=False, weight=1.0)
-        )
-        metrics.add_connection(
-            AgentConnection("B", "C", "message", bidirectional=True, weight=1.0)
-        )
+        metrics.add_connection(AgentConnection("A", "B", "memory", bidirectional=False, weight=1.0))
+        metrics.add_connection(AgentConnection("B", "C", "message", bidirectional=True, weight=1.0))
 
         # Add 1 feedback loop
         metrics.add_feedback_loop(
@@ -184,9 +178,7 @@ class TestConsciousnessMetrics:
             )
 
         # 2 feedback loops
-        metrics.add_feedback_loop(
-            FeedbackLoop("loop1", ["A", "B"], "meta", iterations_count=5)
-        )
+        metrics.add_feedback_loop(FeedbackLoop("loop1", ["A", "B"], "meta", iterations_count=5))
         metrics.add_feedback_loop(
             FeedbackLoop("loop2", ["C", "D", "E"], "coord", iterations_count=2)
         )
@@ -244,14 +236,10 @@ class TestConsciousnessMetrics:
         # Simulate increasing Phi over time by adding feedback loops
         for i in range(5):
             for j in range(i + 1):
-                metrics.add_connection(
-                    AgentConnection(f"A{i}_{j}", f"B{i}_{j}", "memory")
-                )
+                metrics.add_connection(AgentConnection(f"A{i}_{j}", f"B{i}_{j}", "memory"))
             # Add a feedback loop to make phi non-zero
             metrics.add_feedback_loop(
-                FeedbackLoop(
-                    f"loop_{i}", [f"A{i}_0", f"B{i}_0"], "coord", iterations_count=i
-                )
+                FeedbackLoop(f"loop_{i}", [f"A{i}_0", f"B{i}_0"], "coord", iterations_count=i)
             )
             metrics.snapshot(label=f"snapshot_{i}")
 

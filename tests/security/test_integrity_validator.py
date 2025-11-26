@@ -71,9 +71,7 @@ class TestFileHashValidation:
         if path.exists():
             path.unlink()
 
-    def test_compute_file_hash(
-        self, validator: IntegrityValidator, test_file: Path
-    ) -> None:
+    def test_compute_file_hash(self, validator: IntegrityValidator, test_file: Path) -> None:
         """Testa computação de hash de arquivo."""
         # Accessing private method for testing purposes
         file_info = validator._calculate_file_integrity(test_file)
@@ -83,9 +81,7 @@ class TestFileHashValidation:
         assert isinstance(file_hash, str)
         assert len(file_hash) == 64  # SHA-256 hash length
 
-    def test_validate_file_intact(
-        self, validator: IntegrityValidator, test_file: Path
-    ) -> None:
+    def test_validate_file_intact(self, validator: IntegrityValidator, test_file: Path) -> None:
         """Testa validação de arquivo intacto."""
         # Calcula baseline
         expected_info = validator._calculate_file_integrity(test_file)
@@ -96,9 +92,7 @@ class TestFileHashValidation:
         assert record.status == IntegrityStatus.INTACT
         assert record.current_hash == expected_info["hash"]
 
-    def test_validate_file_modified(
-        self, validator: IntegrityValidator, test_file: Path
-    ) -> None:
+    def test_validate_file_modified(self, validator: IntegrityValidator, test_file: Path) -> None:
         """Testa detecção de arquivo modificado."""
         # Hash original
         original_info = validator._calculate_file_integrity(test_file)
@@ -157,9 +151,7 @@ class TestDirectoryScan:
         validator.create_baseline(str(test_directory), ValidationScope.DIRECTORY)
 
         # Then validate
-        report = validator.validate_integrity(
-            str(test_directory), ValidationScope.DIRECTORY
-        )
+        report = validator.validate_integrity(str(test_directory), ValidationScope.DIRECTORY)
 
         assert isinstance(report, IntegrityReport)
         assert report.total_files >= 3
@@ -187,13 +179,9 @@ class TestBaselineManagement:
             (test_dir / "file2.txt").write_text("content 2")
             yield test_dir
 
-    def test_generate_baseline(
-        self, validator: IntegrityValidator, test_directory: Path
-    ) -> None:
+    def test_generate_baseline(self, validator: IntegrityValidator, test_directory: Path) -> None:
         """Testa geração de baseline."""
-        baseline = validator.create_baseline(
-            str(test_directory), ValidationScope.DIRECTORY
-        )
+        baseline = validator.create_baseline(str(test_directory), ValidationScope.DIRECTORY)
 
         assert baseline is not None
         assert isinstance(baseline, dict)
@@ -222,9 +210,7 @@ class TestComplianceReporting:
             validator.create_baseline(str(test_dir), ValidationScope.DIRECTORY)
 
             # Validate
-            report = validator.validate_integrity(
-                str(test_dir), ValidationScope.DIRECTORY
-            )
+            report = validator.validate_integrity(str(test_dir), ValidationScope.DIRECTORY)
 
             assert isinstance(report, IntegrityReport)
             assert hasattr(report, "compliance_score")

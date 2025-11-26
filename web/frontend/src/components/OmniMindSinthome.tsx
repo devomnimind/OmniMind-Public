@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { useWebSocket } from '../hooks/useWebSocket';
+import { useState, useEffect } from 'react';
+import { connectionService, WebSocketMessage } from '../services/robust-connection';
 
 // Types for Sinthome State
 type NodeType = 'REAL' | 'SYMBOLIC' | 'IMAGINARY';
@@ -27,87 +27,76 @@ interface SinthomeState {
   coherence: number; // 0-100
   quorum_met: boolean;
   active_instances: number;
+  cpu?: number;
+  memory?: number;
 }
 
 export function OmniMindSinthome() {
-  const { lastMessage, sendMessage } = useWebSocket();
-
   // State
   const [state, setState] = useState<SinthomeState>({
     nodes: {
-      REAL: { type: 'REAL', status: 'ACTIVE', integrity: 100, load: 10 },
-      SYMBOLIC: { type: 'SYMBOLIC', status: 'ACTIVE', integrity: 100, load: 15 },
-      IMAGINARY: { type: 'IMAGINARY', status: 'ACTIVE', integrity: 100, load: 12 },
+      REAL: { type: 'REAL', status: 'ACTIVE', integrity: 100, load: 0 },
+      SYMBOLIC: { type: 'SYMBOLIC', status: 'ACTIVE', integrity: 100, load: 0 },
+      IMAGINARY: { type: 'IMAGINARY', status: 'ACTIVE', integrity: 100, load: 0 },
     },
-    entropy: 5,
+    entropy: 0,
     isHibernating: false,
     isSevered: false,
-    coherence: 98,
+    coherence: 100,
     quorum_met: true,
     active_instances: 1,
   });
 
   const [history, setHistory] = useState<BifurcationEvent[]>([]);
   const [ddosActive, setDdosActive] = useState(false);
-  const ddosIntervalRef = useRef<number | null>(null);
+  const [connectionMetrics, setConnectionMetrics] = useState(connectionService.getMetrics());
 
-  // --- Logic: DDoS Simulation ---
-  const triggerDDoS = useCallback(() => {
-    setDdosActive(true);
-    let intensity = 0;
+  // --- WebSocket Integration ---
+  useEffect(() => {
+    // Subscribe to connection metrics
+    const unsubMetrics = connectionService.subscribeToMetrics(setConnectionMetrics);
 
-    // Simulate rapid request spikes
-    ddosIntervalRef.current = window.setInterval(() => {
-      intensity += 5;
-      setState(prev => {
-        const newEntropy = Math.min(100, prev.entropy + Math.random() * 10);
-        const newLoad = Math.min(100, prev.nodes.REAL.load + Math.random() * 15);
-
-        // Hibernation Trigger
-        const shouldHibernate = newEntropy > 90;
-
-        return {
+    // Subscribe to sinthome updates
+    const unsubMessages = connectionService.subscribe((msg: WebSocketMessage) => {
+      if (msg.type === 'metrics' && msg.channel === 'sinthome') {
+        const data = msg.data;
+        setState(prev => ({
           ...prev,
-          entropy: newEntropy,
-          isHibernating: shouldHibernate,
+          entropy: data.raw.entropy,
+          isHibernating: data.state === 'HIBERNATING',
+          coherence: Math.round(data.integrity * 100),
+          cpu: data.raw.cpu,
+          memory: data.raw.memory,
+          // Update nodes based on overall integrity for visualization
           nodes: {
-            ...prev.nodes,
-            REAL: { ...prev.nodes.REAL, load: newLoad, status: shouldHibernate ? 'RECOVERING' : 'ACTIVE' },
-            SYMBOLIC: { ...prev.nodes.SYMBOLIC, load: Math.min(100, prev.nodes.SYMBOLIC.load + Math.random() * 10) },
+            REAL: { ...prev.nodes.REAL, integrity: Math.round(data.metrics.real_inaccessible * 100) },
+            SYMBOLIC: { ...prev.nodes.SYMBOLIC, integrity: Math.round(data.metrics.logical_impasse * 100) },
+            IMAGINARY: { ...prev.nodes.IMAGINARY, integrity: Math.round(data.metrics.strange_attractor_markers * 100) },
           }
-        };
-      });
-
-      if (intensity > 100) {
-        stopDDoS();
+        }));
       }
-    }, 200);
+    });
+
+    // Initial subscribe command
+    connectionService.send({ type: 'subscribe', channels: ['sinthome'] });
+
+    return () => {
+      unsubMetrics();
+      unsubMessages();
+      connectionService.send({ type: 'unsubscribe', channels: ['sinthome'] });
+    };
   }, []);
 
-  const stopDDoS = useCallback(() => {
-    if (ddosIntervalRef.current) {
-      clearInterval(ddosIntervalRef.current);
-      ddosIntervalRef.current = null;
-    }
+  // --- Logic: DDoS Simulation (Frontend Trigger) ---
+  const triggerDDoS = () => {
+    setDdosActive(true);
+    connectionService.send({ type: 'ddos_attack', data: { duration: 10 } });
+    setTimeout(() => setDdosActive(false), 10000);
+  };
+
+  const stopDDoS = () => {
     setDdosActive(false);
-    // Gradual recovery
-    const recovery = setInterval(() => {
-      setState(prev => {
-        if (prev.entropy <= 10) {
-          clearInterval(recovery);
-          return { ...prev, isHibernating: false };
-        }
-        return {
-          ...prev,
-          entropy: Math.max(5, prev.entropy - 5),
-          nodes: {
-            ...prev.nodes,
-            REAL: { ...prev.nodes.REAL, load: Math.max(10, prev.nodes.REAL.load - 10) }
-          }
-        };
-      });
-    }, 500);
-  }, []);
+  };
 
   // --- Logic: Sinthoma Instance Tracker (Split) ---
   const severNode = (type: NodeType) => {
@@ -155,6 +144,13 @@ export function OmniMindSinthome() {
 
   return (
     <div className={`glass-card p-6 relative overflow-hidden transition-all duration-1000 ${state.isHibernating ? 'grayscale brightness-50' : ''}`}>
+      {/* Connection Status Overlay */}
+      <div className="absolute top-2 right-2 flex items-center gap-2 text-[10px]">
+        <span className={`w-2 h-2 rounded-full ${connectionMetrics.isConnected ? 'bg-green-500' : 'bg-red-500'}`}></span>
+        <span className="text-gray-400">{connectionMetrics.mode.toUpperCase()}</span>
+        <span className="text-gray-500">{connectionMetrics.latency_ms}ms</span>
+      </div>
+
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gradient-cyber">
@@ -246,12 +242,16 @@ export function OmniMindSinthome() {
         </div>
 
         <div className="glass-card p-3">
-           <h3 className="text-sm font-semibold text-gray-400 mb-2">Metrics</h3>
+           <h3 className="text-sm font-semibold text-gray-400 mb-2">System Metrics</h3>
            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div>Latency: <span className="text-neon-green">12ms</span></div>
-              <div>Coherence: <span className={state.coherence > 80 ? 'text-neon-green' : 'text-yellow-500'}>{state.coherence}%</span></div>
-              <div>Instances: <span className="text-blue-400">{state.active_instances}</span></div>
-              <div>Integrity: <span className="text-purple-400">{(state.nodes.REAL.integrity + state.nodes.SYMBOLIC.integrity + state.nodes.IMAGINARY.integrity)/3}%</span></div>
+              <div>Integrity: <span className={`font-bold ${state.coherence > 80 ? 'text-neon-green' : state.coherence > 50 ? 'text-yellow-500' : 'text-neon-red'}`}>{state.coherence}%</span></div>
+              <div>Entropy: <span className="text-blue-400">{state.entropy.toFixed(1)}%</span></div>
+              <div>CPU Load: <span className="text-purple-400">{state.cpu !== undefined ? state.cpu.toFixed(1) + '%' : '...'}</span></div>
+              <div>Memory: <span className="text-pink-400">{state.memory !== undefined ? state.memory.toFixed(1) + '%' : '...'}</span></div>
+           </div>
+           <div className="mt-2 text-[10px] text-gray-500 flex justify-between">
+              <span>Target: &gt;80%</span>
+              <span>Critical: &lt;50%</span>
            </div>
         </div>
       </div>

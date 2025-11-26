@@ -51,9 +51,7 @@ class RetryConfig:
     initial_backoff_ms: int = 100
     max_backoff_ms: int = 10000
     backoff_multiplier: float = 2.0
-    retryable_status_codes: set[int] = field(
-        default_factory=lambda: {408, 429, 500, 502, 503, 504}
-    )
+    retryable_status_codes: set[int] = field(default_factory=lambda: {408, 429, 500, 502, 503, 504})
 
 
 @dataclass
@@ -247,9 +245,7 @@ class EnhancedMCPClient:
         self.endpoint = endpoint
         self.timeout = timeout
         self.retry_config = retry_config or RetryConfig()
-        self._circuit_breaker = CircuitBreaker(
-            circuit_breaker_config or CircuitBreakerConfig()
-        )
+        self._circuit_breaker = CircuitBreaker(circuit_breaker_config or CircuitBreakerConfig())
         self._headers = {"Content-Type": "application/json"}
         self._request_count = 0
         self._error_count = 0
@@ -414,9 +410,7 @@ class EnhancedMCPClient:
             ),
         )
 
-    def write_file(
-        self, path: str, content: str, encoding: str = "utf-8"
-    ) -> Dict[str, Any]:
+    def write_file(self, path: str, content: str, encoding: str = "utf-8") -> Dict[str, Any]:
         """Write file via MCP with retry logic.
 
         Args:

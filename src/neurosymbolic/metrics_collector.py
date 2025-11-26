@@ -128,9 +128,7 @@ class NeuralMetricsCollector:
 
         # Log se latência muito alta (>5s)
         if latency_seconds > 5.0:
-            logger.warning(
-                f"High latency detected: {backend} took {latency_seconds:.2f}s"
-            )
+            logger.warning(f"High latency detected: {backend} took {latency_seconds:.2f}s")
 
     def get_backend_metrics(self, backend: str) -> Optional[BackendMetrics]:
         """Retorna métricas de um backend específico."""
@@ -191,9 +189,7 @@ class NeuralMetricsCollector:
         """Loga resumo das métricas."""
         summary = self.get_summary()
         logger.info("=" * 60)
-        logger.info(
-            f"NEURAL METRICS SUMMARY (uptime: {summary['uptime_seconds']:.0f}s)"
-        )
+        logger.info(f"NEURAL METRICS SUMMARY (uptime: {summary['uptime_seconds']:.0f}s)")
         logger.info(f"Total Requests: {summary['total_requests']}")
         logger.info(f"Success Rate: {summary['global_success_rate']:.2%}")
         logger.info("-" * 60)

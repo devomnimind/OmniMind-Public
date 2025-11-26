@@ -256,9 +256,7 @@ class TestFreudianMind:
         ]
 
         reality_context = {}
-        conflict_severity, preferences = mind.evaluate_conflict(
-            actions, reality_context
-        )
+        conflict_severity, preferences = mind.evaluate_conflict(actions, reality_context)
 
         assert conflict_severity >= 0.0
         assert "id" in preferences

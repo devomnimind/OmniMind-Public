@@ -163,9 +163,7 @@ class ImmutableAuditSystem:
         """
         return hashlib.sha256(content).hexdigest()
 
-    def log_action(
-        self, action: str, details: Dict[str, Any], category: str = "general"
-    ) -> str:
+    def log_action(self, action: str, details: Dict[str, Any], category: str = "general") -> str:
         """
         Registra ação crítica no sistema de auditoria com chain hashing.
 
@@ -284,9 +282,7 @@ class ImmutableAuditSystem:
                             "prev_hash": event.get("prev_hash"),
                         }
 
-                        json_data = json.dumps(event_for_hash, sort_keys=True).encode(
-                            "utf-8"
-                        )
+                        json_data = json.dumps(event_for_hash, sort_keys=True).encode("utf-8")
                         calculated_hash = self.hash_content(json_data)
                         stored_hash = event.get("current_hash")
 
@@ -305,15 +301,11 @@ class ImmutableAuditSystem:
                         events_verified += 1
 
                     except json.JSONDecodeError:
-                        corrupted_events.append(
-                            {"line": line_num, "error": "JSON inválido"}
-                        )
+                        corrupted_events.append({"line": line_num, "error": "JSON inválido"})
 
             # Avaliar resultado baseado em corrupções não autorizadas
             unauthorized_corruptions = [
-                c
-                for c in corrupted_events
-                if not c.get("action", "").startswith("audit_system_")
+                c for c in corrupted_events if not c.get("action", "").startswith("audit_system_")
             ]
 
             if unauthorized_corruptions:
@@ -451,7 +443,7 @@ class ImmutableAuditSystem:
         """
         try:
             subprocess.run(
-                ["sudo", "chattr", "+i", filepath],
+                ["sudo", "-n", "chattr", "+i", filepath],
                 check=True,
                 capture_output=True,
                 timeout=5,
@@ -539,9 +531,7 @@ class ImmutableAuditSystem:
                         "prev_hash": event.get("prev_hash"),
                     }
 
-                    json_data = json.dumps(event_for_hash, sort_keys=True).encode(
-                        "utf-8"
-                    )
+                    json_data = json.dumps(event_for_hash, sort_keys=True).encode("utf-8")
                     calculated_hash = self.hash_content(json_data)
                     stored_hash = event.get("current_hash")
 

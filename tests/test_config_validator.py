@@ -51,9 +51,7 @@ def validator(temp_schema_dir: Path) -> ConfigurationValidator:
     )
 
 
-def test_validator_initialization(
-    validator: ConfigurationValidator, temp_schema_dir: Path
-) -> None:
+def test_validator_initialization(validator: ConfigurationValidator, temp_schema_dir: Path) -> None:
     """Test validator initializes correctly."""
     assert validator.schema_dir == temp_schema_dir
     assert validator.environment == ConfigEnvironment.DEVELOPMENT
@@ -87,9 +85,7 @@ def test_validate_port_range(validator: ConfigurationValidator) -> None:
     result = validator.validate_config(config, check_dependencies=False)
 
     port_errors = [i for i in result.issues if i.path == "port"]
-    port_error_count = sum(
-        1 for i in port_errors if i.severity == ValidationSeverity.ERROR
-    )
+    port_error_count = sum(1 for i in port_errors if i.severity == ValidationSeverity.ERROR)
     assert port_error_count == 0
 
 
@@ -108,9 +104,7 @@ def test_validate_url_format(validator: ConfigurationValidator) -> None:
     result = validator.validate_config(config, check_dependencies=False)
 
     url_errors = [i for i in result.issues if i.path == "base_url"]
-    url_error_count = sum(
-        1 for i in url_errors if i.severity == ValidationSeverity.ERROR
-    )
+    url_error_count = sum(1 for i in url_errors if i.severity == ValidationSeverity.ERROR)
     assert url_error_count == 0
 
 
@@ -246,9 +240,7 @@ def test_validation_issue_to_dict() -> None:
     assert issue_dict["auto_fix"] == 8000
 
 
-def test_export_validation_report(
-    validator: ConfigurationValidator, tmp_path: Path
-) -> None:
+def test_export_validation_report(validator: ConfigurationValidator, tmp_path: Path) -> None:
     """Test validation report export."""
     config = {"port": 100}
     result = validator.validate_config(config, check_dependencies=False)
@@ -360,15 +352,11 @@ def test_validate_schema_required_properties(validator: ConfigurationValidator) 
         "debug_mode": True,
     }
 
-    result = validator.validate_config(
-        config, check_dependencies=False, check_environment=False
-    )
+    result = validator.validate_config(config, check_dependencies=False, check_environment=False)
 
     # Should have error for missing required property
     port_errors = [
-        i
-        for i in result.issues
-        if "port" in i.path and i.severity == ValidationSeverity.ERROR
+        i for i in result.issues if "port" in i.path and i.severity == ValidationSeverity.ERROR
     ]
     assert len(port_errors) > 0
     assert not result.valid
@@ -381,9 +369,7 @@ def test_validate_schema_unknown_properties(validator: ConfigurationValidator) -
         "unknown_property": "value",
     }
 
-    result = validator.validate_config(
-        config, check_dependencies=False, check_environment=False
-    )
+    result = validator.validate_config(config, check_dependencies=False, check_environment=False)
 
     # Should have warning for unknown property
     unknown_warnings = [i for i in result.issues if "unknown_property" in i.path]
@@ -397,9 +383,7 @@ def test_validate_schema_type_mismatch(validator: ConfigurationValidator) -> Non
         "debug_mode": "yes",  # Should be boolean
     }
 
-    result = validator.validate_config(
-        config, check_dependencies=False, check_environment=False
-    )
+    result = validator.validate_config(config, check_dependencies=False, check_environment=False)
 
     # Should have errors for type mismatches
     type_errors = [i for i in result.issues if i.severity == ValidationSeverity.ERROR]
@@ -561,9 +545,7 @@ def test_validation_result_to_dict_full() -> None:
     """Test ValidationResult to_dict method."""
     result = ValidationResult()
 
-    result.add_issue(
-        path="error_path", severity=ValidationSeverity.ERROR, message="Error message"
-    )
+    result.add_issue(path="error_path", severity=ValidationSeverity.ERROR, message="Error message")
 
     result.add_issue(
         path="warning_path",
@@ -571,9 +553,7 @@ def test_validation_result_to_dict_full() -> None:
         message="Warning message",
     )
 
-    result.add_issue(
-        path="info_path", severity=ValidationSeverity.INFO, message="Info message"
-    )
+    result.add_issue(path="info_path", severity=ValidationSeverity.INFO, message="Info message")
 
     result_dict = result.to_dict()
 

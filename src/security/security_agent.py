@@ -131,9 +131,7 @@ class SecurityAgent(AuditedTool):
 
     def _load_config(self) -> Dict[str, Any]:
         if not self.config_path.exists():
-            logger.warning(
-                "Config not found, falling back to defaults: %s", self.config_path
-            )
+            logger.warning("Config not found, falling back to defaults: %s", self.config_path)
             return self._deep_merge(DEFAULT_CONFIG, {})
         try:
             with open(self.config_path, "r", encoding="utf-8") as stream:
@@ -143,16 +141,10 @@ class SecurityAgent(AuditedTool):
             logger.error("Failed to read config %s: %s", self.config_path, exc)
             return self._deep_merge(DEFAULT_CONFIG, {})
 
-    def _deep_merge(
-        self, base: Dict[str, Any], override: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    def _deep_merge(self, base: Dict[str, Any], override: Dict[str, Any]) -> Dict[str, Any]:
         merged: Dict[str, Any] = copy.deepcopy(base)
         for key, value in override.items():
-            if (
-                key in merged
-                and isinstance(merged[key], dict)
-                and isinstance(value, dict)
-            ):
+            if key in merged and isinstance(merged[key], dict) and isinstance(value, dict):
                 merged[key] = self._deep_merge(merged[key], value)
             else:
                 merged[key] = value
@@ -273,9 +265,7 @@ class SecurityAgent(AuditedTool):
             asyncio.create_task(self._respond_to_threats(), name="security.response"),
         ]
         self._monitoring_tasks = monitors
-        self.logger.info(
-            "SecurityAgent continuous monitoring started (%d tasks)", len(monitors)
-        )
+        self.logger.info("SecurityAgent continuous monitoring started (%d tasks)", len(monitors))
         try:
             await self._stop_event.wait()
         finally:
@@ -320,9 +310,7 @@ class SecurityAgent(AuditedTool):
                         break
                     continue
                 try:
-                    result = await asyncio.to_thread(
-                        run_command, ["sudo", "aide", "--check"]
-                    )
+                    result = await asyncio.to_thread(run_command, ["sudo", "-n", "aide", "--check"])
                     changes = self._parse_aide_output(result.get("output", ""))
                     for change in changes:
                         event = self._create_event(
@@ -344,25 +332,15 @@ class SecurityAgent(AuditedTool):
 
     async def _monitor_network(self) -> None:
         interval = self.config["monitoring"]["network"]["interval"]
-        suspicious_ports = set(
-            self.config["monitoring"]["network"].get("suspicious_ports", [])
-        )
+        suspicious_ports = set(self.config["monitoring"]["network"].get("suspicious_ports", []))
         try:
             while not self._should_stop():
                 try:
                     connections = psutil.net_connections(kind="inet")
                     summaries: Dict[str, int] = {}
                     for conn in connections:
-                        remote = (
-                            f"{conn.raddr.ip}:{conn.raddr.port}"
-                            if conn.raddr
-                            else "unknown"
-                        )
-                        local = (
-                            f"{conn.laddr.ip}:{conn.laddr.port}"
-                            if conn.laddr
-                            else "unknown"
-                        )
+                        remote = f"{conn.raddr.ip}:{conn.raddr.port}" if conn.raddr else "unknown"
+                        local = f"{conn.laddr.ip}:{conn.laddr.port}" if conn.laddr else "unknown"
                         if self._is_suspicious_connection(remote, suspicious_ports):
                             event = self._create_event(
                                 event_type="suspicious_network",
@@ -402,9 +380,7 @@ class SecurityAgent(AuditedTool):
                     if not os.path.exists(log_file):
                         continue
                     try:
-                        with open(
-                            log_file, "r", encoding="utf-8", errors="ignore"
-                        ) as fp:
+                        with open(log_file, "r", encoding="utf-8", errors="ignore") as fp:
                             fp.seek(0, os.SEEK_END)
                             size = fp.tell()
                             fp.seek(max(0, size - 4096))
@@ -420,9 +396,7 @@ class SecurityAgent(AuditedTool):
                                     )
                                     await self._handle_event(event)
                     except Exception as exc:  # pragma: no cover
-                        self.logger.warning(
-                            "Log monitor error on %s: %s", log_file, exc
-                        )
+                        self.logger.warning("Log monitor error on %s: %s", log_file, exc)
                 if await self._wait_interval(interval):
                     break
         except asyncio.CancelledError:
@@ -459,9 +433,7 @@ class SecurityAgent(AuditedTool):
         interval = 30
         try:
             while not self._should_stop():
-                to_process = [
-                    event for event in self.event_history if not event.responded
-                ]
+                to_process = [event for event in self.event_history if not event.responded]
                 for event in to_process:
                     if event.threat_level in {ThreatLevel.HIGH, ThreatLevel.CRITICAL}:
                         await self._execute_response(event)
@@ -523,22 +495,17 @@ class SecurityAgent(AuditedTool):
             )
             return
         if violation:
-            self.logger.info(
-                "DLP alert for event %s: %s", event.event_type, violation.rule
-            )
+            self.logger.info("DLP alert for event %s: %s", event.event_type, violation.rule)
         self.event_history.insert(0, event)
         self._pending_events.append(event)
-        self.logger.warning(
-            "New security event %s: %s", event.event_type, event.description
-        )
+        self.logger.warning("New security event %s: %s", event.event_type, event.description)
         self._audit_action("event", event.details, event.__dict__, "SUCCESS")
 
     async def _analyze_with_llm(self, events: List[SecurityEvent]) -> Dict[str, Any]:
         if not self.llm:
             summary = {
                 "is_incident": any(
-                    event.threat_level.value >= ThreatLevel.HIGH.value
-                    for event in events
+                    event.threat_level.value >= ThreatLevel.HIGH.value for event in events
                 ),
                 "description": "Threshold analysis",
                 "confidence": 0.65,
@@ -638,13 +605,9 @@ Provide:
     def generate_security_report(self) -> str:
         total_events = len(self.event_history)
         critical = sum(
-            1
-            for event in self.event_history
-            if event.threat_level == ThreatLevel.CRITICAL
+            1 for event in self.event_history if event.threat_level == ThreatLevel.CRITICAL
         )
-        high = sum(
-            1 for event in self.event_history if event.threat_level == ThreatLevel.HIGH
-        )
+        high = sum(1 for event in self.event_history if event.threat_level == ThreatLevel.HIGH)
         recent_incidents = self.incident_log[-5:]
         report = textwrap.dedent(
             f"""
@@ -686,9 +649,7 @@ Provide:
     def monitor_processes(self) -> Optional[Dict[str, Any]]:
         """Monitor processes for suspicious activity (synchronous version)."""
         try:
-            patterns = self.config["monitoring"]["processes"].get(
-                "suspicious_patterns", []
-            )
+            patterns = self.config["monitoring"]["processes"].get("suspicious_patterns", [])
             for proc in psutil.process_iter(["pid", "name", "cmdline"]):
                 info = proc.info
                 if self._is_suspicious_process(info, patterns):
@@ -705,17 +666,11 @@ Provide:
     def monitor_network(self) -> Optional[Dict[str, Any]]:
         """Monitor network connections for suspicious activity (synchronous version)."""
         try:
-            suspicious_ports = set(
-                self.config["monitoring"]["network"].get("suspicious_ports", [])
-            )
+            suspicious_ports = set(self.config["monitoring"]["network"].get("suspicious_ports", []))
             connections = psutil.net_connections(kind="inet")
             for conn in connections:
-                remote = (
-                    f"{conn.raddr.ip}:{conn.raddr.port}" if conn.raddr else "unknown"
-                )
-                local = (
-                    f"{conn.laddr.ip}:{conn.laddr.port}" if conn.laddr else "unknown"
-                )
+                remote = f"{conn.raddr.ip}:{conn.raddr.port}" if conn.raddr else "unknown"
+                local = f"{conn.laddr.ip}:{conn.laddr.port}" if conn.laddr else "unknown"
                 if self._is_suspicious_connection(remote, suspicious_ports):
                     return {
                         "local": local,

@@ -193,15 +193,11 @@ class QuantumCognitionEngine:
             for qubit in target_qubits:
                 qc.h(qubit)  # Hadamard gate creates uniform superposition
 
-        logger.debug(
-            "superposition_created", qubits=target_qubits, biased=bool(weights)
-        )
+        logger.debug("superposition_created", qubits=target_qubits, biased=bool(weights))
 
         return qc
 
-    def create_entanglement(
-        self, control_qubit: int = 0, target_qubit: int = 1
-    ) -> QuantumCircuit:
+    def create_entanglement(self, control_qubit: int = 0, target_qubit: int = 1) -> QuantumCircuit:
         """
         Create entangled state using CNOT gate.
 
@@ -253,9 +249,7 @@ class QuantumCognitionEngine:
 
         return state
 
-    def measure_circuit(
-        self, circuit: QuantumCircuit, shots: int = 1024
-    ) -> Dict[str, int]:
+    def measure_circuit(self, circuit: QuantumCircuit, shots: int = 1024) -> Dict[str, int]:
         """
         Measure quantum circuit multiple times.
 
@@ -320,18 +314,14 @@ class QuantumDecisionMaker:
             SuperpositionDecision with quantum state
         """
         if len(options) > 2**self.num_qubits:
-            raise ValueError(
-                f"Too many options ({len(options)}). Max is {2 ** self.num_qubits}"
-            )
+            raise ValueError(f"Too many options ({len(options)}). Max is {2 ** self.num_qubits}")
 
         if not QISKIT_AVAILABLE:
             logger.warning("qiskit_not_available_fallback")
             # Classical fallback
             state = QuantumState(num_qubits=self.num_qubits)
             probs = {opt: 1.0 / len(options) for opt in options}
-            return SuperpositionDecision(
-                options=options, quantum_state=state, probabilities=probs
-            )
+            return SuperpositionDecision(options=options, quantum_state=state, probabilities=probs)
 
         # Create superposition circuit
         # If weights are provided, we need to map them to qubits.

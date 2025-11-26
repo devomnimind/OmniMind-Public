@@ -329,9 +329,7 @@ class GPUResourcePool:
             return False
 
         # Check memory
-        required_memory = (
-            task.required_memory_mb + self.config.memory_reservation_overhead_mb
-        )
+        required_memory = task.required_memory_mb + self.config.memory_reservation_overhead_mb
         if not gpu.has_capacity(required_memory):
             return False
 
@@ -364,9 +362,7 @@ class GPUResourcePool:
         Returns:
             Best GPU device or None
         """
-        available_gpus = [
-            gpu for gpu in self._gpus.values() if self._can_allocate_gpu(gpu, task)
-        ]
+        available_gpus = [gpu for gpu in self._gpus.values() if self._can_allocate_gpu(gpu, task)]
 
         if not available_gpus:
             return None
@@ -511,9 +507,7 @@ class GPUResourcePool:
             "total_memory_mb": total_memory,
             "used_memory_mb": used_memory,
             "free_memory_mb": total_memory - used_memory,
-            "utilization_percent": (
-                (used_memory / total_memory * 100) if total_memory > 0 else 0
-            ),
+            "utilization_percent": ((used_memory / total_memory * 100) if total_memory > 0 else 0),
             "running_tasks": running_tasks,
             "completed_tasks": completed_tasks,
             "queued_tasks": len(self._task_queue),

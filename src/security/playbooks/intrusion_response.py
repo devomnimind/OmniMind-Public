@@ -63,27 +63,23 @@ class IntrusionPlaybook:
             if hasattr(event, "details") and isinstance(event.details, dict)
             else None
         )
-        remote = (
-            remote or event.details.get("source")
-            if hasattr(event, "details")
-            else "unknown"
-        )
+        remote = remote or event.details.get("source") if hasattr(event, "details") else "unknown"
         remote = remote or "0.0.0.0"
-        command = ["sudo", "ufw", "deny", "from", str(remote)]
+        command = ["sudo", "-n", "ufw", "deny", "from", str(remote)]
         if not command_available(command[0]):
             return skipped_command("ufw", "tool unavailable")
         return await run_command_async(command)
 
     async def _terminate_suspicious_sessions(self) -> CommandResult:
         logger.debug("   [3/6] Terminating suspicious sessions")
-        command = ["sudo", "pkill", "-f", "nmap"]
+        command = ["sudo", "-n", "pkill", "-f", "nmap"]
         if not command_available(command[0]):
             return skipped_command("pkill", "tool unavailable")
         return await run_command_async(command)
 
     async def _enhance_logging(self) -> CommandResult:
         logger.debug("   [4/6] Boosting audit logs")
-        command = ["sudo", "auditctl", "-b", "8192"]
+        command = ["sudo", "-n", "auditctl", "-b", "8192"]
         if not command_available(command[0]):
             return skipped_command("auditctl", "tool unavailable")
         return await run_command_async(command)
@@ -102,9 +98,7 @@ class IntrusionPlaybook:
         path = f"/tmp/intrusion_{timestamp}.json"
         payload = {
             "event": getattr(event, "event_type", "intrusion"),
-            "captured_at": datetime.now(timezone.utc)
-            .isoformat()
-            .replace("+00:00", "Z"),
+            "captured_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             "evidence": evidence,
         }
         await asyncio.to_thread(self._write_artifact, path, payload)

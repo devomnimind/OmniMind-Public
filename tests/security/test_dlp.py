@@ -160,9 +160,7 @@ policies:
         # Config file may have internal_network instead of internal_ip
         assert "internal_network" in policy_names or "internal_ip" in policy_names
 
-    def test_initialization_with_custom_policy_file(
-        self, temp_policy_file: Path
-    ) -> None:
+    def test_initialization_with_custom_policy_file(self, temp_policy_file: Path) -> None:
         """Testa inicialização com arquivo de políticas customizado."""
         validator = DLPValidator(policy_path=str(temp_policy_file))
 

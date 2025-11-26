@@ -39,9 +39,7 @@ class TestObjectSmallA:
 
     def test_generates_desire_for_objects_in_set(self) -> None:
         """Object a generates desire for objects in the desirable set."""
-        obj_a: ObjectSmallA[str] = ObjectSmallA(
-            desirable_set={"knowledge", "power", "completion"}
-        )
+        obj_a: ObjectSmallA[str] = ObjectSmallA(desirable_set={"knowledge", "power", "completion"})
 
         # Objects in set should generate desire
         for obj in obj_a.desirable_set:
@@ -233,9 +231,7 @@ class TestComputationalFrustration:
         frustration_sys = ComputationalFrustration()
 
         # Few attempts, high success = no frustration
-        signal = frustration_sys.detect_frustration(
-            goal="easy_task", attempts=2, success_rate=0.9
-        )
+        signal = frustration_sys.detect_frustration(goal="easy_task", attempts=2, success_rate=0.9)
 
         assert signal is None
 
@@ -286,9 +282,7 @@ class TestComputationalLackArchitecture:
 
     def test_initialization(self) -> None:
         """Architecture initializes all components."""
-        arch = ComputationalLackArchitecture(
-            real_dim=64, symbolic_dim=32, imaginary_dim=16
-        )
+        arch = ComputationalLackArchitecture(real_dim=64, symbolic_dim=32, imaginary_dim=16)
 
         assert arch.rsi is not None
         assert arch.structural_lack is not None

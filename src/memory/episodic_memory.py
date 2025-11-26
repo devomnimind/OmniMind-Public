@@ -66,10 +66,7 @@ def _load_embedding_model(model_name: str) -> Optional["SentenceTransformer"]:
         return SentenceTransformer(model_name)
     except Exception as exc:
         logger.warning(
-            (
-                "Failed to load SentenceTransformer %s: %s. "
-                "Using deterministic embeddings."
-            ),
+            ("Failed to load SentenceTransformer %s: %s. " "Using deterministic embeddings."),
             model_name,
             exc,
         )
@@ -202,9 +199,7 @@ class EpisodicMemory:
             collection_name=self.collection_name,
             points=[
                 # Use deterministic integer IDs for deduplication.
-                qmodels.PointStruct(
-                    id=hash_int, vector=embedding, payload=dict(payload)
-                )
+                qmodels.PointStruct(id=hash_int, vector=embedding, payload=dict(payload))
             ],
         )
 
@@ -230,11 +225,7 @@ class EpisodicMemory:
         query_filter: Optional[qmodels.Filter] = None
         if min_reward is not None:
             query_filter = qmodels.Filter(
-                must=[
-                    qmodels.FieldCondition(
-                        key="reward", range=qmodels.Range(gte=min_reward)
-                    )
-                ]
+                must=[qmodels.FieldCondition(key="reward", range=qmodels.Range(gte=min_reward))]
             )
 
         # Search
@@ -348,9 +339,7 @@ class EpisodicMemory:
 
         removed = 0
         if duplicates:
-            self.client.delete(
-                collection_name=self.collection_name, points_selector=duplicates
-            )
+            self.client.delete(collection_name=self.collection_name, points_selector=duplicates)
             removed = len(duplicates)
 
         remaining_stats = self.get_stats()

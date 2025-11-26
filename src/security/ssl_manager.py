@@ -251,14 +251,14 @@ class SSLManager:
                     issuer = line.split("=", 1)[1].strip()
                 elif line.startswith("notBefore="):
                     date_str = line.split("=", 1)[1].strip()
-                    valid_from = datetime.strptime(
-                        date_str, "%b %d %H:%M:%S %Y %Z"
-                    ).replace(tzinfo=timezone.utc)
+                    valid_from = datetime.strptime(date_str, "%b %d %H:%M:%S %Y %Z").replace(
+                        tzinfo=timezone.utc
+                    )
                 elif line.startswith("notAfter="):
                     date_str = line.split("=", 1)[1].strip()
-                    valid_until = datetime.strptime(
-                        date_str, "%b %d %H:%M:%S %Y %Z"
-                    ).replace(tzinfo=timezone.utc)
+                    valid_until = datetime.strptime(date_str, "%b %d %H:%M:%S %Y %Z").replace(
+                        tzinfo=timezone.utc
+                    )
                 elif line.startswith("serial="):
                     serial_number = line.split("=", 1)[1].strip()
                 elif "Fingerprint=" in line:
@@ -302,14 +302,10 @@ class SSLManager:
                 return False
 
             if cert_info.key_size < 2048:
-                logger.warning(
-                    f"Certificate key size too small ({cert_info.key_size} < 2048)"
-                )
+                logger.warning(f"Certificate key size too small ({cert_info.key_size} < 2048)")
                 return False
 
-            logger.info(
-                f"Certificate valid: {cert_info.days_until_expiry} days remaining"
-            )
+            logger.info(f"Certificate valid: {cert_info.days_until_expiry} days remaining")
             return True
 
         except Exception as e:
@@ -384,9 +380,7 @@ class SSLManager:
         return {
             "ssl_certfile": str(self.config.cert_path),
             "ssl_keyfile": str(self.config.key_path),
-            "ssl_ca_certs": (
-                str(self.config.ca_cert_path) if self.config.ca_cert_path else None
-            ),
+            "ssl_ca_certs": (str(self.config.ca_cert_path) if self.config.ca_cert_path else None),
             "ssl_ciphers": self.config.ciphers,
             "ssl_version": self._get_ssl_version_constant(),
         }
@@ -415,9 +409,7 @@ class SSLManager:
                 "certificate_exists": True,
                 "certificate_valid": not cert_info.is_expired,
                 "days_until_expiry": cert_info.days_until_expiry,
-                "needs_rotation": cert_info.needs_rotation(
-                    self.config.cert_rotation_days
-                ),
+                "needs_rotation": cert_info.needs_rotation(self.config.cert_rotation_days),
                 "is_self_signed": cert_info.is_self_signed,
                 "key_size": cert_info.key_size,
                 "subject": cert_info.subject,

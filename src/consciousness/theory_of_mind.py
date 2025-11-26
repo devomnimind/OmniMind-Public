@@ -397,9 +397,7 @@ class TheoryOfMind:
                 if recent:
                     most_common = max(
                         set(a.get("action_type") for a in recent),
-                        key=lambda x: sum(
-                            1 for a in recent if a.get("action_type") == x
-                        ),
+                        key=lambda x: sum(1 for a in recent if a.get("action_type") == x),
                     )
                     predictions.append(
                         {
@@ -467,16 +465,13 @@ class TheoryOfMind:
         """
         total_entities = len(self._mental_models)
         total_actions = sum(len(actions) for actions in self._action_history.values())
-        total_beliefs = sum(
-            len(model.beliefs) for model in self._mental_models.values()
-        )
+        total_beliefs = sum(len(model.beliefs) for model in self._mental_models.values())
 
         # Calculate average confidence
         avg_confidence = 0.0
         if total_entities > 0:
             avg_confidence = (
-                sum(model.confidence for model in self._mental_models.values())
-                / total_entities
+                sum(model.confidence for model in self._mental_models.values()) / total_entities
             )
 
         return {

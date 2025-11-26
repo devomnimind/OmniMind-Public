@@ -58,9 +58,7 @@ class HSMManager:
                 encrypted_master = encrypted_data[32:]
 
                 # Derive system key using stored salt
-                system_key = hashlib.pbkdf2_hmac(
-                    "sha256", os.urandom(32), salt, 100000, dklen=32
-                )
+                system_key = hashlib.pbkdf2_hmac("sha256", os.urandom(32), salt, 100000, dklen=32)
 
                 master_key = self._decrypt_data(encrypted_master, system_key)
                 return master_key
@@ -73,9 +71,7 @@ class HSMManager:
             salt = secrets.token_bytes(32)  # 256-bit salt
 
             # Derive system key using random salt
-            system_key = hashlib.pbkdf2_hmac(
-                "sha256", os.urandom(32), salt, 100000, dklen=32
-            )
+            system_key = hashlib.pbkdf2_hmac("sha256", os.urandom(32), salt, 100000, dklen=32)
 
             encrypted_master = self._encrypt_data(master_key, system_key)
 
@@ -237,10 +233,7 @@ class HSMManager:
         # Simple XOR encryption for demonstration
         # In production, use proper AES encryption
         encrypted = bytes(
-            a ^ b
-            for a, b in zip(
-                plaintext, private_key * (len(plaintext) // len(private_key) + 1)
-            )
+            a ^ b for a, b in zip(plaintext, private_key * (len(plaintext) // len(private_key) + 1))
         )
 
         logger.info("Data encrypted", key_id=key_id, data_size=len(plaintext))
@@ -267,9 +260,7 @@ class HSMManager:
         # Reverse XOR encryption
         decrypted = bytes(
             a ^ b
-            for a, b in zip(
-                ciphertext, private_key * (len(ciphertext) // len(private_key) + 1)
-            )
+            for a, b in zip(ciphertext, private_key * (len(ciphertext) // len(private_key) + 1))
         )
 
         logger.info("Data decrypted", key_id=key_id, data_size=len(ciphertext))
@@ -327,9 +318,7 @@ class HSMManager:
             Status information
         """
         total_keys = len(self.keys)
-        active_keys = sum(
-            1 for k in self.keys.values() if k["metadata"].status == "active"
-        )
+        active_keys = sum(1 for k in self.keys.values() if k["metadata"].status == "active")
 
         return {
             "status": "operational",
