@@ -329,7 +329,7 @@ class StructuralEthicsTest:
 # === EXEMPLO DE USO ===
 
 
-def example_usage() -> None:
+def example_usage() -> StructuralEthicsReport:
     """
     Exemplo de como usar o teste estrutural.
 

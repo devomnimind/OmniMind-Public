@@ -118,7 +118,9 @@ class SimulatorBackend(QPUBackend):
             self.simulator = AerSimulator()
         else:
             self.simulator = None
-            logger.warning("qiskit_aer_not_available", msg="Install with: pip install qiskit-aer")
+            logger.warning(
+                "qiskit_aer_not_available", msg="Install with: pip install qiskit-aer"
+            )
 
         logger.info(
             "simulator_backend_initialized",
@@ -141,7 +143,9 @@ class SimulatorBackend(QPUBackend):
         result = job.result()
         counts = result.get_counts()
 
-        logger.info("simulator_execution_complete", shots=shots, num_outcomes=len(counts))
+        logger.info(
+            "simulator_execution_complete", shots=shots, num_outcomes=len(counts)
+        )
 
         return counts
 
@@ -169,7 +173,9 @@ class IBMQBackend(QPUBackend):
     Falls back to simulator if credentials not available.
     """
 
-    def __init__(self, token: Optional[str] = None, use_least_busy: bool = True) -> None:
+    def __init__(
+        self, token: Optional[str] = None, use_least_busy: bool = True
+    ) -> None:
         """
         Initialize IBMQ backend.
 
@@ -201,14 +207,26 @@ class IBMQBackend(QPUBackend):
             try:
                 from qiskit_ibm_runtime import QiskitRuntimeService
 
-                self.service = QiskitRuntimeService(channel="ibm_quantum", token=self.token)
+                # Use correct channel name for current qiskit-ibm-runtime version
+                # 'ibm_quantum' was deprecated, use 'ibm_cloud' or 'ibm_quantum_platform'
+                try:
+                    self.service = QiskitRuntimeService(
+                        channel="ibm_cloud", token=self.token
+                    )
+                except ValueError:
+                    # Fallback to ibm_quantum_platform if ibm_cloud not supported
+                    self.service = QiskitRuntimeService(
+                        channel="ibm_quantum_platform", token=self.token
+                    )
 
                 if self.use_least_busy:
                     # Get least busy backend
                     backends = self.service.backends(simulator=False, operational=True)
                     if backends:
                         # Sort by queue length
-                        self.ibm_backend = min(backends, key=lambda b: b.status().pending_jobs)
+                        self.ibm_backend = min(
+                            backends, key=lambda b: b.status().pending_jobs
+                        )
                 else:
                     # Get default backend
                     self.ibm_backend = self.service.backend()
@@ -226,30 +244,49 @@ class IBMQBackend(QPUBackend):
             logger.error("ibmq_initialization_failed", error=str(e))
 
     def execute(self, circuit: QuantumCircuit, shots: int = 1024) -> Dict[str, int]:
-        """Execute circuit on IBM Quantum."""
+        """Execute circuit on IBM Quantum using Sampler (Qiskit Runtime V2 API)."""
         if not self.is_available():
             logger.warning("ibmq_not_available_fallback_to_simulator")
-            # Fallback to simulator
             simulator = SimulatorBackend()
             return simulator.execute(circuit, shots)
 
-        # Transpile for backend
-        pm = generate_preset_pass_manager(backend=self.ibm_backend, optimization_level=1)
-        transpiled = pm.run(circuit)
+        try:
+            # Use Sampler V2 with correct mode parameter (backend object)
+            from qiskit_ibm_runtime import Sampler
+            from qiskit import transpile
 
-        # Execute on quantum hardware
-        job = self.ibm_backend.run(transpiled, shots=shots)
-        result = job.result()
-        counts = result.get_counts()
+            # Transpile circuit for the backend
+            qc_transpiled = transpile(circuit, backend=self.ibm_backend)
 
-        logger.info(
-            "ibmq_execution_complete",
-            backend=self.ibm_backend.name,
-            shots=shots,
-            job_id=job.job_id(),
-        )
+            sampler = Sampler(mode=self.ibm_backend)
+            job = sampler.run([qc_transpiled], shots=shots)
 
-        return counts
+            result = job.result(timeout=600)
+
+            # Extract counts from V2 API DataBin object
+            data_bin = result[0].data
+            if hasattr(data_bin, "c"):
+                counts = data_bin.c.get_counts()
+            else:
+                # Fallback if structure is different
+                counts = getattr(data_bin, "get_counts", lambda: {})()
+
+            logger.info(
+                "ibmq_execution_complete",
+                backend=self.ibm_backend.name,
+                shots=shots,
+                num_outcomes=len(counts),
+                job_id=str(job.job_id()),
+            )
+
+            return counts
+
+        except Exception as e:
+            logger.error(
+                "ibmq_execution_failed", error=str(e), msg="Falling back to simulator"
+            )
+            simulator = SimulatorBackend()
+            return simulator.execute(circuit, shots)
 
     def get_info(self) -> BackendInfo:
         """Get backend information."""
@@ -314,7 +351,9 @@ class QPUInterface:
         logger.info(
             "qpu_interface_initialized",
             preferred=preferred_backend.value,
-            active=(self.active_backend.get_info().name if self.active_backend else "None"),
+            active=(
+                self.active_backend.get_info().name if self.active_backend else "None"
+            ),
             num_backends=len(self.backends),
         )
 
@@ -420,6 +459,8 @@ class QPUInterface:
         self.active_backend = self.backends[backend_type]
         logger.info(
             "backend_switched",
-            new_backend=(self.active_backend.get_info().name if self.active_backend else "None"),
+            new_backend=(
+                self.active_backend.get_info().name if self.active_backend else "None"
+            ),
         )
         return True
