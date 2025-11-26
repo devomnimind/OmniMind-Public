@@ -150,7 +150,7 @@ async def test_websocket_metrics():
     import json
     import asyncio
 
-    uri = f"ws://localhost:8000/ws"
+    uri = "ws://localhost:8000/ws"
     try:
         async with websockets.connect(uri) as websocket:
             # Wait for connection established message
