@@ -155,12 +155,40 @@ class SinthomeBroadcaster:
             real=real_score
         )
 
+        # --- Consciousness Correlates (ICI/PRS) ---
+        # Update history
+        if not hasattr(self, 'integrity_history'):
+            self.integrity_history = []
+        self.integrity_history.append(sinthome_state.overall_integrity * 100)
+        if len(self.integrity_history) > 50:
+            self.integrity_history.pop(0)
+
+        # Create Mock System for Correlates
+        class MockSystem:
+            def __init__(self, history, entropy, integrity):
+                self.coherence_history = history
+                self.entropy = entropy
+                # Simulate nodes based on integrity
+                status = 'ACTIVE' if integrity > 0.6 else 'UNSTABLE'
+                self.nodes = {
+                    'REAL': {'status': status, 'integrity': integrity * 100},
+                    'SYMBOLIC': {'status': status, 'integrity': integrity * 95},
+                    'IMAGINARY': {'status': status, 'integrity': integrity * 90}
+                }
+
+        mock_system = MockSystem(self.integrity_history, current_entropy, sinthome_state.overall_integrity)
+
+        # Calculate Correlates
+        from src.metrics.consciousness_metrics import ConsciousnessCorrelates
+        correlates = ConsciousnessCorrelates(mock_system).calculate_all()
+
         # 4. Format for Frontend
         return {
             "timestamp": time.time(),
             "integrity": sinthome_state.overall_integrity,
             "state": sinthome_state.state,
             "metrics": sinthome_state.metrics,
+            "consciousness": correlates, # New field
             "raw": {
                 "entropy": current_entropy,
                 "fractal_dim": fractal_dim,

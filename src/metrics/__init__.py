@@ -9,20 +9,11 @@ Modules:
 """
 
 from src.metrics.consciousness_metrics import (
-    ConsciousnessMetrics,
-    calculate_phi_proxy,
-    measure_self_awareness,
-)
-from src.metrics.ethics_metrics import (
-    EthicsMetrics,
-    calculate_mfa_score,
-    calculate_transparency_score,
+    ConsciousnessCorrelates,
 )
 
 __all__ = [
-    "ConsciousnessMetrics",
-    "calculate_phi_proxy",
-    "measure_self_awareness",
+    "ConsciousnessCorrelates",
     "EthicsMetrics",
     "calculate_mfa_score",
     "calculate_transparency_score",

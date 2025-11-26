@@ -8,14 +8,11 @@ LOG_DIR = "data/long_term_logs"
 METRICS_FILE = os.path.join(LOG_DIR, "omnimind_metrics.jsonl")
 REPORT_FILE = os.path.join(LOG_DIR, "audit_report_latest.md")
 
+
 class ExternalAuditor:
     def __init__(self):
         self.anomalies = []
-        self.stats = {
-            "total_logs": 0,
-            "uptime_minutes": 0,
-            "avg_cpu": 0
-        }
+        self.stats = {"total_logs": 0, "uptime_minutes": 0, "avg_cpu": 0}
 
     def load_logs(self):
         """Load the last 24h of logs."""
@@ -24,7 +21,7 @@ class ExternalAuditor:
             return []
 
         logs = []
-        with open(METRICS_FILE, 'r') as f:
+        with open(METRICS_FILE, "r") as f:
             for line in f:
                 try:
                     logs.append(json.loads(line))
@@ -57,7 +54,9 @@ class ExternalAuditor:
                     self.anomalies.append(f"High CPU Usage: {cpu}% at {log['timestamp']}")
 
                 if data.get("disk", 0) > 95:
-                    self.anomalies.append(f"Critical Disk Usage: {data.get('disk')}% at {log['timestamp']}")
+                    self.anomalies.append(
+                        f"Critical Disk Usage: {data.get('disk')}% at {log['timestamp']}"
+                    )
 
         if cpu_count > 0:
             self.stats["avg_cpu"] = round(cpu_sum / cpu_count, 2)
@@ -67,7 +66,9 @@ class ExternalAuditor:
         status = "✅ HEALTHY" if not self.anomalies else "⚠️ ANOMALIES DETECTED"
 
         if short:
-            print(f"[{timestamp}] Status: {status} | Logs: {self.stats['total_logs']} | CPU: {self.stats['avg_cpu']}%")
+            print(
+                f"[{timestamp}] Status: {status} | Logs: {self.stats['total_logs']} | CPU: {self.stats['avg_cpu']}%"
+            )
             if self.anomalies:
                 print(f"Anomalies: {len(self.anomalies)}")
             return
@@ -93,11 +94,15 @@ class ExternalAuditor:
             f.write(report)
         print(f"Audit report generated: {REPORT_FILE}")
 
+
 if __name__ == "__main__":
     import argparse
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--analyze_recent_logs", action="store_true", help="Analyze recent logs")
-    parser.add_argument("--summary_report_short", action="store_true", help="Print short summary to stdout")
+    parser.add_argument(
+        "--summary_report_short", action="store_true", help="Print short summary to stdout"
+    )
     args = parser.parse_args()
 
     auditor = ExternalAuditor()

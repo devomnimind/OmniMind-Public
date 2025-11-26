@@ -1,6 +1,6 @@
 import asyncio
 import json
-import time
+import logging
 import os
 import gzip
 import shutil
@@ -17,6 +17,7 @@ ROTATION_AGE_HOURS = 24
 # Ensure log directory exists
 os.makedirs(LOG_DIR, exist_ok=True)
 
+
 class ObserverService:
     def __init__(self):
         self.running = True
@@ -24,11 +25,7 @@ class ObserverService:
 
     def log_metric(self, metric_type: str, data: Dict[str, Any]):
         """Append a metric entry to the JSONL file."""
-        entry = {
-            "timestamp": datetime.now().isoformat(),
-            "type": metric_type,
-            "data": data
-        }
+        entry = {"timestamp": datetime.now().isoformat(), "type": metric_type, "data": data}
         with open(METRICS_FILE, "a") as f:
             f.write(json.dumps(entry) + "\n")
 
@@ -39,7 +36,7 @@ class ObserverService:
             "status": "ALIVE",
             "pid": os.getpid(),
             "system_cpu": psutil.cpu_percent(),
-            "system_ram": psutil.virtual_memory().percent
+            "system_ram": psutil.virtual_memory().percent,
         }
         with open(HEARTBEAT_FILE, "w") as f:
             json.dump(status, f)
@@ -48,7 +45,7 @@ class ObserverService:
         """Compress logs older than ROTATION_AGE_HOURS."""
         now = datetime.now()
         if (now - self.last_rotation) < timedelta(hours=1):
-            return # Check at most once per hour
+            return  # Check at most once per hour
 
         print(f"[{now.isoformat()}] Checking for log rotation...")
 
@@ -63,16 +60,18 @@ class ObserverService:
             # But since we just started, let's implement a 'force rotate' if file > 100MB
 
             file_size_mb = os.path.getsize(METRICS_FILE) / (1024 * 1024)
-            if file_size_mb > 100 or (now - self.last_rotation) > timedelta(hours=ROTATION_AGE_HOURS):
+            if file_size_mb > 100 or (now - self.last_rotation) > timedelta(
+                hours=ROTATION_AGE_HOURS
+            ):
                 timestamp = now.strftime("%Y%m%d_%H%M%S")
                 archive_name = os.path.join(LOG_DIR, f"metrics_{timestamp}.jsonl.gz")
 
-                with open(METRICS_FILE, 'rb') as f_in:
-                    with gzip.open(archive_name, 'wb') as f_out:
+                with open(METRICS_FILE, "rb") as f_in:
+                    with gzip.open(archive_name, "wb") as f_out:
                         shutil.copyfileobj(f_in, f_out)
 
                 # Clear the original file
-                open(METRICS_FILE, 'w').close()
+                open(METRICS_FILE, "w").close()
                 print(f"Rotated logs to {archive_name}")
                 self.last_rotation = now
 
@@ -89,7 +88,7 @@ class ObserverService:
                 sys_metrics = {
                     "cpu": psutil.cpu_percent(),
                     "memory": psutil.virtual_memory().percent,
-                    "disk": psutil.disk_usage('/').percent
+                    "disk": psutil.disk_usage("/").percent,
                 }
                 self.log_metric("SYSTEM_HEALTH", sys_metrics)
 
@@ -97,12 +96,13 @@ class ObserverService:
                 self.rotate_logs()
 
                 # 4. Wait
-                await asyncio.sleep(60) # 1 minute interval
+                await asyncio.sleep(60)  # 1 minute interval
 
             except Exception as e:
                 print(f"Observer Error: {e}")
                 self.log_metric("ERROR", {"message": str(e)})
                 await asyncio.sleep(60)
+
 
 if __name__ == "__main__":
     service = ObserverService()

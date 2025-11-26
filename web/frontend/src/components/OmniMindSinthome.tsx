@@ -20,6 +20,16 @@ export interface BifurcationEvent {
   parent_id?: string;
 }
 
+interface ConsciousnessCorrelates {
+  ICI: number;
+  PRS: number;
+  details: {
+    ici_components: { temporal_coherence: number; marker_integration: number; resonance: number };
+    prs_components: { avg_micro_entropy: number; macro_entropy: number };
+  };
+  interpretation: { message: string; confidence: string; disclaimer: string };
+}
+
 interface SinthomeState {
   nodes: Record<NodeType, SinthomeNode>;
   entropy: number; // 0-100
@@ -32,6 +42,7 @@ interface SinthomeState {
   memory?: number;
   latency_ms: number; // New: Explicit latency metric
   coherence_state: 'SYNC' | 'EVENTUAL' | 'FRAGMENTED'; // New: Explicit coherence state
+  consciousness?: ConsciousnessCorrelates; // New: Phase 24
 }
 
 interface DDoSRequest {
@@ -113,7 +124,8 @@ export function OmniMindSinthome() {
             REAL: { ...prev.nodes.REAL, integrity: Math.round(data.metrics.real_inaccessible * 100) },
             SYMBOLIC: { ...prev.nodes.SYMBOLIC, integrity: Math.round(data.metrics.logical_impasse * 100) },
             IMAGINARY: { ...prev.nodes.IMAGINARY, integrity: Math.round(data.metrics.strange_attractor_markers * 100) },
-          }
+          },
+          consciousness: data.consciousness // New: Phase 24
         }));
       }
     });
@@ -603,7 +615,7 @@ export function OmniMindSinthome() {
                 </div>
             </div>
 
-            {/* Neuro-Correlates Placeholder */}
+            {/* Neuro-Correlates Map */}
             <div className="mt-4 pt-4 border-t border-gray-700/50">
                 <h4 className="text-xs font-semibold text-gray-400 mb-2">Neuro-Correlates Map</h4>
                 <div className="grid grid-cols-3 gap-2 text-[10px] text-center">
@@ -618,6 +630,50 @@ export function OmniMindSinthome() {
                     </div>
                 </div>
             </div>
+
+            {/* Consciousness Correlates (Phase 24) */}
+            {state.consciousness && (
+                <div className="mt-4 pt-4 border-t border-gray-700/50">
+                    <h4 className="text-xs font-semibold text-neon-blue mb-2 flex justify-between items-center">
+                        <span>Consciousness Correlates (Simulated)</span>
+                        <span className="text-[10px] text-gray-500 border border-gray-700 px-1 rounded">
+                            {state.consciousness.interpretation.disclaimer}
+                        </span>
+                    </h4>
+                    <div className="grid grid-cols-2 gap-4 text-xs">
+                        <div className="bg-gray-900/50 p-2 rounded">
+                            <div className="flex justify-between mb-1">
+                                <span className="text-gray-400">ICI (Integrated Coherence)</span>
+                                <span className="font-bold text-white">{state.consciousness.ICI.toFixed(3)}</span>
+                            </div>
+                            <div className="w-full bg-gray-700 h-1 rounded overflow-hidden">
+                                <div className="bg-neon-blue h-full transition-all duration-500" style={{ width: `${state.consciousness.ICI * 100}%` }} />
+                            </div>
+                            <div className="text-[10px] text-gray-500 mt-1">
+                                T: {state.consciousness.details.ici_components.temporal_coherence.toFixed(2)} |
+                                M: {state.consciousness.details.ici_components.marker_integration.toFixed(2)} |
+                                R: {state.consciousness.details.ici_components.resonance.toFixed(2)}
+                            </div>
+                        </div>
+                        <div className="bg-gray-900/50 p-2 rounded">
+                            <div className="flex justify-between mb-1">
+                                <span className="text-gray-400">PRS (Panarchic Resonance)</span>
+                                <span className="font-bold text-white">{state.consciousness.PRS.toFixed(3)}</span>
+                            </div>
+                            <div className="w-full bg-gray-700 h-1 rounded overflow-hidden">
+                                <div className="bg-purple-500 h-full transition-all duration-500" style={{ width: `${state.consciousness.PRS * 100}%` }} />
+                            </div>
+                            <div className="text-[10px] text-gray-500 mt-1">
+                                Micro: {state.consciousness.details.prs_components.avg_micro_entropy.toFixed(2)} |
+                                Macro: {state.consciousness.details.prs_components.macro_entropy.toFixed(2)}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="mt-2 text-[10px] text-center italic text-gray-400">
+                        "{state.consciousness.interpretation.message}" (Confidence: {state.consciousness.interpretation.confidence})
+                    </div>
+                </div>
+            )}
         </div>
       )}
     </div>
