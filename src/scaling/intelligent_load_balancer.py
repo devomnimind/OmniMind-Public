@@ -280,64 +280,129 @@ class IntelligentLoadBalancer:
         Returns:
             Selected node or None if no suitable node
         """
-        available_nodes = [n for n in nodes if n.can_accept_task()]
+        available_nodes = self._filter_available_nodes(nodes)
 
         if not available_nodes:
             return None
 
-        # Filter by capability if task type specified
-        if task and task.task_type:
-            capable_nodes = [n for n in available_nodes if task.task_type in n.capabilities]
-            if capable_nodes:
-                available_nodes = capable_nodes
+        capable_nodes = self._filter_capable_nodes(available_nodes, task)
 
-        # Select based on strategy
+        return self._select_by_strategy(capable_nodes, task)
+
+    def _filter_available_nodes(self, nodes: List[NodeInfo]) -> List[NodeInfo]:
+        """Filter nodes that can accept tasks.
+
+        Args:
+            nodes: All nodes
+
+        Returns:
+            Nodes that can accept tasks
+        """
+        return [node for node in nodes if node.can_accept_task()]
+
+    def _filter_capable_nodes(
+        self, nodes: List[NodeInfo], task: Optional[DistributedTask]
+    ) -> List[NodeInfo]:
+        """Filter nodes by task capability.
+
+        Args:
+            nodes: Available nodes
+            task: Task to be assigned
+
+        Returns:
+            Nodes capable of handling the task
+        """
+        if not task or not task.task_type:
+            return nodes
+
+        capable_nodes = [node for node in nodes if task.task_type in node.capabilities]
+        return capable_nodes if capable_nodes else nodes
+
+    def _select_by_strategy(
+        self, nodes: List[NodeInfo], task: Optional[DistributedTask]
+    ) -> Optional[NodeInfo]:
+        """Select node based on configured strategy.
+
+        Args:
+            nodes: Available and capable nodes
+            task: Task to be assigned
+
+        Returns:
+            Selected node
+        """
         if self.strategy == "ml_predicted":
-            # Use ML-based scoring
-            if len(self.task_history) >= self.min_samples_for_ml:
-                # Enough data for ML prediction
-                node_scores = [
-                    (node, self.calculate_node_score(node, task)) for node in available_nodes
-                ]
-                # Select node with lowest score
-                selected_node = min(node_scores, key=lambda x: x[1])[0]
-                return selected_node
-            else:
-                # Not enough data - fall back to least loaded
-                return self._select_least_loaded_node(available_nodes)
-
+            return self._select_ml_predicted(nodes, task)
         elif self.strategy == "least_loaded":
-            return self._select_least_loaded_node(available_nodes)
-
+            return self._select_least_loaded_node(nodes)
         elif self.strategy == "round_robin":
-            return self._select_round_robin_node(available_nodes)
-
+            return self._select_round_robin_node(nodes)
         elif self.strategy == "weighted_least_loaded":
-            # Consider both current load and historical performance
-            if any(nid in self.node_metrics for nid in [n.node_id for n in available_nodes]):
-                best_node = None
-                best_weighted_load = float("inf")
-
-                for node in available_nodes:
-                    current_load = node.get_load_factor()
-                    if node.node_id in self.node_metrics:
-                        metrics = self.node_metrics[node.node_id]
-                        # Weight by success rate (prefer reliable nodes)
-                        weighted_load = current_load / max(0.1, metrics.task_success_rate)
-                    else:
-                        weighted_load = current_load
-
-                    if weighted_load < best_weighted_load:
-                        best_weighted_load = weighted_load
-                        best_node = node
-
-                return best_node
-            else:
-                return self._select_least_loaded_node(available_nodes)
-
+            return self._select_weighted_least_loaded(nodes)
         else:
-            # Default to least loaded
-            return self._select_least_loaded_node(available_nodes)
+            return self._select_least_loaded_node(nodes)
+
+    def _select_ml_predicted(
+        self, nodes: List[NodeInfo], task: Optional[DistributedTask]
+    ) -> Optional[NodeInfo]:
+        """Select node using ML-based prediction.
+
+        Args:
+            nodes: Available nodes
+            task: Task to be assigned
+
+        Returns:
+            Selected node
+        """
+        if len(self.task_history) >= self.min_samples_for_ml:
+            # Enough data for ML prediction
+            node_scores = [
+                (node, self.calculate_node_score(node, task)) for node in nodes
+            ]
+            return min(node_scores, key=lambda x: x[1])[0]
+        else:
+            # Not enough data - fall back to least loaded
+            return self._select_least_loaded_node(nodes)
+
+    def _select_weighted_least_loaded(self, nodes: List[NodeInfo]) -> Optional[NodeInfo]:
+        """Select node using weighted least loaded strategy.
+
+        Args:
+            nodes: Available nodes
+
+        Returns:
+            Selected node
+        """
+        if not any(node.node_id in self.node_metrics for node in nodes):
+            return self._select_least_loaded_node(nodes)
+
+        best_node = None
+        best_weighted_load = float("inf")
+
+        for node in nodes:
+            current_load = node.get_load_factor()
+            weighted_load = self._calculate_weighted_load(node, current_load)
+
+            if weighted_load < best_weighted_load:
+                best_weighted_load = weighted_load
+                best_node = node
+
+        return best_node
+
+    def _calculate_weighted_load(self, node: NodeInfo, current_load: float) -> float:
+        """Calculate weighted load for a node.
+
+        Args:
+            node: Node to calculate for
+            current_load: Current load factor
+
+        Returns:
+            Weighted load score
+        """
+        if node.node_id in self.node_metrics:
+            metrics = self.node_metrics[node.node_id]
+            # Weight by success rate (prefer reliable nodes)
+            return current_load / max(0.1, metrics.task_success_rate)
+        return current_load
 
     def get_cluster_predictions(self, nodes: List[NodeInfo]) -> Dict[str, WorkloadPrediction]:
         """Get workload predictions for all nodes.
