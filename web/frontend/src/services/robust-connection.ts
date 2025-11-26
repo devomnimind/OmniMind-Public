@@ -101,6 +101,25 @@ class RobustConnectionService {
       total_messages_received: 0,
       connection_stability: 0
     };
+
+    // Load persisted queue
+    try {
+        const savedQueue = localStorage.getItem('omnimind_msg_queue');
+        if (savedQueue) {
+            this.messageQueue = JSON.parse(savedQueue);
+            console.log(`[Connection] Restored ${this.messageQueue.length} messages from persistence`);
+        }
+    } catch (e) {
+        console.error('[Connection] Failed to load persisted queue:', e);
+    }
+  }
+
+  private persistQueue() {
+      try {
+          localStorage.setItem('omnimind_msg_queue', JSON.stringify(this.messageQueue));
+      } catch (e) {
+          console.error('[Connection] Failed to persist queue:', e);
+      }
   }
 
   private start() {
@@ -314,6 +333,7 @@ class RobustConnectionService {
 
     const toProcess = [...this.messageQueue];
     this.messageQueue = [];
+    this.persistQueue();
 
     toProcess.forEach(msg => {
       this.sendDirect(msg);
@@ -384,6 +404,7 @@ class RobustConnectionService {
     }
 
     this.messageQueue.push(message);
+    this.persistQueue();
 
     if (this.isConnected) {
       this.processMessageQueue();

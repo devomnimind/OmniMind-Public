@@ -6,6 +6,15 @@
 
 ---
 
+## [1.17.0] - 2025-11-26
+### Adicionado
+- **Dashboard Refactor**: Interface em abas (Main, Controls, Observability, Phenomenology).
+- **Robustness**: Persistência de fila de mensagens no `localStorage` e reconexão automática.
+- **Fault Injection**: Controles de UI para Latência e Corrupção de Nós.
+- **Observability**: Gráficos Sparkline para histórico de Entropia e Coerência.
+- **Testing**: Testes E2E com Vitest para validação de conexão robusta.
+- **Roadmap**: Documento `FUTURE_ROADMAP_AND_GAPS.md` definindo a trajetória 2026+.
+
 ## [1.16.0] - 2025-11-26 - Phase 22: Empirical Expansion & Phenomenological Modeling
 
 ### ✨ Features

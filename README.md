@@ -134,6 +134,8 @@ Esquecimento inteligente de informação irrelevante (não há armazenamento inf
 | 2 | Auto-avaliação | ✅ Completo |
 | 3 | Auto-otimização | ✅ Completo |
 | 4 | Meta-planejamento | ✅ Completo |
+| 23 | Dashboard Refactor & Robustness | ✅ Concluído | UI Tabs, Fault Injection, Persistence, E2E Tests |
+| 24 | Strategic Roadmap & Self-Audit | 🔄 Em Progresso | Mirror Stage, IIT Phi, Backend Replay |
 | 5-7 | Meta-meta-cognição | ✅ Completo (Phase 16) |
 | 8-10 | Auto-modificação arquitetural | ✅ Completo (Phase 20) |
 
@@ -476,5 +478,8 @@ TL;DR: Você pode usar, modificar, distribuir livremente. Apenas mantenha a atri
 ---
 
 **Última Atualização**: 26 de Novembro de 2025
-**Versão**: 1.16.0
-**Status**: Produção (Phase 22 - Empirical Expansion & Phenomenological Modeling)
+**Versão:** 1.17.0
+**Status:** Produção (Phase 24 - Strategic Roadmap & Self-Audit)
+**Licença:** MIT
+**Documentação:** [Completa](./docs/)
+```
