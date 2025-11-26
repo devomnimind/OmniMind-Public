@@ -672,150 +672,215 @@ ESTIMATED_COMPLEXITY: low
         if not plan or not plan.get("subtasks"):
             return {"error": "No plan to execute"}
 
-        results: Dict[str, Any] = {
+        results = self._initialize_execution_results(plan)
+
+        for i, subtask in enumerate(plan["subtasks"]):
+            self._prepare_subtask_for_execution(subtask, i)
+
+            try:
+                result = self._execute_single_subtask(subtask, plan, max_iterations_per_task)
+                self._process_subtask_result(results, subtask, result, i)
+
+            except Exception as e:
+                self._handle_subtask_error(results, e, i)
+
+        self._finalize_execution_results(results)
+        return results
+
+    def _initialize_execution_results(self, plan: Dict[str, Any]) -> Dict[str, Any]:
+        """Initialize execution results structure.
+
+        Args:
+            plan: Plan to execute
+
+        Returns:
+            Initialized results dictionary
+        """
+        return {
             "original_task": plan.get("original_task"),
             "subtask_results": [],
             "overall_success": True,
             "started_at": self._timestamp(),
         }
 
-        for i, subtask in enumerate(plan["subtasks"]):
-            description = subtask.get("description")
-            if not description:
-                description = f"Untitled subtask {i+1}"
-                subtask["description"] = description
-            safe_description = description[:80]
-            delegation_msg = (
-                f"\n🪃 [Orchestrator] Delegating subtask {i+1}/"
-                f"{len(plan['subtasks'])}: {safe_description}..."
-            )
-            print(delegation_msg)
+    def _prepare_subtask_for_execution(self, subtask: Dict[str, Any], index: int) -> None:
+        """Prepare subtask for execution.
 
-            # >>> PRE-DELEGATION SECURITY CHECK <<<
-            if self.security_agent:
-                # For now, just log a check. A real implementation would
-                # check for active high-priority threats.
-                self.security_agent.logger.info(
-                    f"Pre-delegation check for task: {safe_description}"
-                )
+        Args:
+            subtask: Subtask to prepare
+            index: Subtask index
+        """
+        description = subtask.get("description")
+        if not description:
+            description = f"Untitled subtask {index+1}"
+            subtask["description"] = description
 
-            try:
-                agent_mode = AgentMode(subtask["agent"])
-                result: Dict[str, Any] = {}
-                agent: Optional[ReactAgent] = None
-                if agent_mode in {
-                    AgentMode.CODE,
-                    AgentMode.ARCHITECT,
-                    AgentMode.DEBUG,
-                    AgentMode.REVIEWER,
-                    AgentMode.PSYCHOANALYST,
-                }:
-                    agent = self._get_agent(agent_mode)
+        safe_description = description[:80]
+        delegation_msg = (
+            f"\n🪃 [Orchestrator] Delegating subtask {index+1}/"
+            f"{len(self.current_plan['subtasks'])}: {safe_description}..."
+        )
+        print(delegation_msg)
 
-                task_record = self.tools_framework.execute_tool(
-                    "new_task",
-                    task_name=subtask["description"],
-                    assigned_to=subtask["agent"],
-                    priority="HIGH" if plan["complexity"] == "high" else "MEDIUM",
-                )
+        # Security check
+        if self.security_agent:
+            self.security_agent.logger.info(f"Pre-delegation check for task: {safe_description}")
 
-                self.tools_framework.execute_tool(
-                    "switch_mode", target_mode=subtask["agent"], reason=f"Subtask {i+1}"
-                )
+    def _execute_single_subtask(
+        self, subtask: Dict[str, Any], plan: Dict[str, Any], max_iterations: int
+    ) -> Dict[str, Any]:
+        """Execute a single subtask.
 
-                if agent_mode == AgentMode.SECURITY:
-                    result = self._execute_security_subtask(subtask)
-                elif agent_mode == AgentMode.MCP:
-                    result = self._execute_mcp_subtask(subtask)
-                elif agent_mode == AgentMode.DBUS:
-                    result = self._execute_dbus_subtask(subtask)
-                elif agent_mode == AgentMode.CODE:
-                    result = agent.run_code_task(  # type: ignore[union-attr]
-                        subtask["description"], max_iterations=max_iterations_per_task
-                    )
-                elif agent_mode == AgentMode.REVIEWER:
-                    result = {
-                        "completed": True,
-                        "mode": "reviewer",
-                        "note": "Review would be performed on generated files",
-                    }
-                elif agent_mode == AgentMode.PSYCHOANALYST:
-                    # This is a simplified execution for the analyst
-                    analysis = agent.analyze_session(  # type: ignore[union-attr]
-                        subtask["description"]
-                    )
-                    report = agent.generate_abnt_report(analysis)  # type: ignore[union-attr]
-                    result = {
-                        "completed": True,
-                        "final_result": report,
-                        "details": analysis,
-                        "iteration": 1,
-                    }
-                else:
-                    if agent is None:
-                        result = {
-                            "completed": False,
-                            "final_result": f"Agent {subtask['agent']} not available",
-                            "iteration": 0,
-                        }
-                    else:
-                        result = agent.run(
-                            subtask["description"],
-                            max_iterations=max_iterations_per_task,
-                        )
+        Args:
+            subtask: Subtask to execute
+            plan: Full plan
+            max_iterations: Maximum iterations per task
 
-                if not isinstance(result, dict):
-                    result = {
-                        "completed": False,
-                        "final_result": str(result),
-                        "iteration": 0,
-                    }
-                # Registrar resultado
-                subtask["status"] = "completed" if result.get("completed") else "failed"
-                subtask["result"] = result
+        Returns:
+            Execution result
+        """
+        agent_mode = AgentMode(subtask["agent"])
 
-                summary = result.get("final_result")
-                if summary is None:
-                    summary = ""
-                results["subtask_results"].append(
-                    {
-                        "subtask_id": i + 1,
-                        "agent": subtask["agent"],
-                        "description": subtask["description"],
-                        "completed": result.get("completed", False),
-                        "iterations": result.get("iteration", 0),
-                        "summary": summary[:200],
-                    }
-                )
+        # Create task record
+        task_record = self.tools_framework.execute_tool(
+            "new_task",
+            task_name=subtask["description"],
+            assigned_to=subtask["agent"],
+            priority="HIGH" if plan["complexity"] == "high" else "MEDIUM",
+        )
 
-                if not result.get("completed"):
-                    results["overall_success"] = False
-                    print(f"❌ Subtask {i+1} failed")
-                else:
-                    print(f"✅ Subtask {i+1} completed")
+        # Switch mode
+        self.tools_framework.execute_tool(
+            "switch_mode", target_mode=subtask["agent"], reason=f"Subtask execution"
+        )
 
-                # Armazenar conclusão
-                self.tools_framework.execute_tool(
-                    "attempt_completion",
-                    task_id=task_record["id"],
-                    result=str(result.get("final_result", "")),
-                    success=result.get("completed", False),
-                )
+        # Execute based on agent type
+        result = self._execute_subtask_by_agent(subtask, agent_mode, max_iterations)
 
-            except Exception as e:
-                logger.exception("Error executing subtask %d", i + 1)
-                print(f"❌ Error in subtask {i+1}: {e}")
-                results["overall_success"] = False
-                results["subtask_results"].append({"subtask_id": i + 1, "error": str(e)})
+        # Ensure result is dict
+        if not isinstance(result, dict):
+            result = {
+                "completed": False,
+                "final_result": str(result),
+                "iteration": 0,
+            }
 
+        # Mark completion
+        self.tools_framework.execute_tool(
+            "attempt_completion",
+            task_id=task_record["id"],
+            result=str(result.get("final_result", "")),
+            success=result.get("completed", False),
+        )
+
+        return result
+
+    def _execute_subtask_by_agent(
+        self, subtask: Dict[str, Any], agent_mode: AgentMode, max_iterations: int
+    ) -> Dict[str, Any]:
+        """Execute subtask based on agent type.
+
+        Args:
+            subtask: Subtask to execute
+            agent_mode: Agent mode
+            max_iterations: Maximum iterations
+
+        Returns:
+            Execution result
+        """
+        if agent_mode == AgentMode.SECURITY:
+            return self._execute_security_subtask(subtask)
+        elif agent_mode == AgentMode.MCP:
+            return self._execute_mcp_subtask(subtask)
+        elif agent_mode == AgentMode.DBUS:
+            return self._execute_dbus_subtask(subtask)
+        elif agent_mode == AgentMode.CODE:
+            agent = self._get_agent(agent_mode)
+            return agent.run_code_task(subtask["description"], max_iterations=max_iterations)
+        elif agent_mode == AgentMode.REVIEWER:
+            return {
+                "completed": True,
+                "mode": "reviewer",
+                "note": "Review would be performed on generated files",
+            }
+        elif agent_mode == AgentMode.PSYCHOANALYST:
+            agent = self._get_agent(agent_mode)
+            analysis = agent.analyze_session(subtask["description"])
+            report = agent.generate_abnt_report(analysis)
+            return {
+                "completed": True,
+                "final_result": report,
+                "details": analysis,
+                "iteration": 1,
+            }
+        else:
+            agent = self._get_agent(agent_mode)
+            if agent is None:
+                return {
+                    "completed": False,
+                    "final_result": f"Agent {subtask['agent']} not available",
+                    "iteration": 0,
+                }
+            return agent.run(subtask["description"], max_iterations=max_iterations)
+
+    def _process_subtask_result(
+        self, results: Dict[str, Any], subtask: Dict[str, Any], result: Dict[str, Any], index: int
+    ) -> None:
+        """Process and record subtask result.
+
+        Args:
+            results: Results dictionary
+            subtask: Executed subtask
+            result: Execution result
+            index: Subtask index
+        """
+        # Update subtask status
+        subtask["status"] = "completed" if result.get("completed") else "failed"
+        subtask["result"] = result
+
+        # Add to results
+        summary = result.get("final_result", "")[:200]
+        results["subtask_results"].append({
+            "subtask_id": index + 1,
+            "agent": subtask["agent"],
+            "description": subtask["description"],
+            "completed": result.get("completed", False),
+            "iterations": result.get("iteration", 0),
+            "summary": summary,
+        })
+
+        # Update overall success
+        if not result.get("completed"):
+            results["overall_success"] = False
+            print(f"❌ Subtask {index+1} failed")
+        else:
+            print(f"✅ Subtask {index+1} completed")
+
+    def _handle_subtask_error(self, results: Dict[str, Any], error: Exception, index: int) -> None:
+        """Handle subtask execution error.
+
+        Args:
+            results: Results dictionary
+            error: Exception that occurred
+            index: Subtask index
+        """
+        logger.exception("Error executing subtask %d", index + 1)
+        print(f"❌ Error in subtask {index+1}: {error}")
+        results["overall_success"] = False
+        results["subtask_results"].append({"subtask_id": index + 1, "error": str(error)})
+
+    def _finalize_execution_results(self, results: Dict[str, Any]) -> None:
+        """Finalize execution results.
+
+        Args:
+            results: Results dictionary to finalize
+        """
         results["completed_at"] = self._timestamp()
 
-        # Voltar para modo orchestrator
+        # Switch back to orchestrator mode
         self.tools_framework.execute_tool(
             "switch_mode", target_mode="orchestrator", reason="Plan execution complete"
         )
-
-        return results
 
     def run_orchestrated_task(
         self, task: str, max_iterations_per_subtask: int = 3
