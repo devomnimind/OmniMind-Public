@@ -122,7 +122,9 @@ security:
     with (
         patch("psutil.process_iter", mock_process_iter),
         patch("psutil.net_connections", mock_net_connections),
-        patch.object(SecurityAgent, "_execute_response", AsyncMock()) as mock_execute_response,
+        patch.object(
+            SecurityAgent, "_execute_response", AsyncMock()
+        ) as mock_execute_response,
         patch("src.agents.react_agent.EpisodicMemory", MagicMock()),
         patch(
             "src.agents.react_agent.ReactAgent._run_supabase_memory_onboarding",

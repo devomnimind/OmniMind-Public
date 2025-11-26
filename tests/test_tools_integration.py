@@ -19,14 +19,20 @@ def _audit_log_path(home: Path) -> Path:
 def _read_audit_entries(log_path: Path) -> list[dict[str, Any]]:
     if not log_path.exists():
         return []
-    return [json.loads(line) for line in log_path.read_text().splitlines() if line.strip()]
+    return [
+        json.loads(line) for line in log_path.read_text().splitlines() if line.strip()
+    ]
 
 
-def test_tools_framework_records_commands(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+def test_tools_framework_records_commands(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
     home = tmp_path / "fake_home"
     monkeypatch.setenv("HOME", str(home))
 
-    workspace = Path(__file__).resolve().parent.parent / "tmp" / "tools" / uuid.uuid4().hex
+    workspace = (
+        Path(__file__).resolve().parent.parent / "tmp" / "tools" / uuid.uuid4().hex
+    )
     workspace.mkdir(parents=True, exist_ok=True)
 
     framework = ToolsFramework()
@@ -56,7 +62,9 @@ def test_tools_framework_records_commands(monkeypatch: pytest.MonkeyPatch, tmp_p
     assert any(entry["tool_name"] == "execute_command" for entry in audit_entries)
 
 
-def test_execute_command_blocks_forbidden(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+def test_execute_command_blocks_forbidden(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
     home = tmp_path / "fake_home"
     monkeypatch.setenv("HOME", str(home))
 

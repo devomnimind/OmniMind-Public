@@ -218,7 +218,9 @@ class TestMCPAgenticClient:
 
     def test_initialization(self) -> None:
         """Test client initialization."""
-        client = MCPAgenticClient(agent_id="test_agent", security_level=MCPSecurityLevel.SANDBOX)
+        client = MCPAgenticClient(
+            agent_id="test_agent", security_level=MCPSecurityLevel.SANDBOX
+        )
 
         assert client.agent_id == "test_agent"
         assert client.security_level == MCPSecurityLevel.SANDBOX
@@ -301,7 +303,9 @@ os.system('whoami')
         """Test IDE context retrieval."""
         client = MCPAgenticClient(agent_id="test")
 
-        context = client.get_context_for_ide(file_path="test.py", cursor_position=(10, 5))
+        context = client.get_context_for_ide(
+            file_path="test.py", cursor_position=(10, 5)
+        )
 
         assert context["file_path"] == "test.py"
         assert context["cursor_position"] == (10, 5)

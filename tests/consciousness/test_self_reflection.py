@@ -215,7 +215,9 @@ class TestAdvancedSelfReflection:
 
         assert len(reflection._introspection_logs) == 100
 
-    def test_evaluate_self_reflection_quality_no_history(self, temp_hash_chain: Path) -> None:
+    def test_evaluate_self_reflection_quality_no_history(
+        self, temp_hash_chain: Path
+    ) -> None:
         """Test evaluating quality with no history."""
         reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 
@@ -225,7 +227,9 @@ class TestAdvancedSelfReflection:
         assert metrics.depth_score == 0.0
         assert metrics.breadth_score == 0.0
 
-    def test_evaluate_self_reflection_quality_with_history(self, temp_hash_chain: Path) -> None:
+    def test_evaluate_self_reflection_quality_with_history(
+        self, temp_hash_chain: Path
+    ) -> None:
         """Test evaluating quality with history."""
         reflection = AdvancedSelfReflection(hash_chain_path=str(temp_hash_chain))
 

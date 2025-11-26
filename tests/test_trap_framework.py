@@ -163,7 +163,8 @@ class TestTRAPFramework:
 
         # Decisão com boa percepção de contexto
         score = trap.evaluate(
-            "Implement Phase 16 in parallel with remote tests " "considering available resources"
+            "Implement Phase 16 in parallel with remote tests "
+            "considering available resources"
         )
         assert score.perception > 0.5
 

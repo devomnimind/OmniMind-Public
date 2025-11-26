@@ -58,14 +58,18 @@ class MemoryReplay:
         elif strategy == "recent":
             # Sort by timestamp (descending)
             # Assumes 'timestamp' field exists and is comparable
-            sorted_episodes = sorted(episodes, key=lambda e: e.get("timestamp", ""), reverse=True)
+            sorted_episodes = sorted(
+                episodes, key=lambda e: e.get("timestamp", ""), reverse=True
+            )
             selected = sorted_episodes[:count]
 
         else:
             # Random selection
             selected = random.sample(episodes, min(len(episodes), count))
 
-        logger.info(f"Selected {len(selected)} episodes for replay (strategy={strategy})")
+        logger.info(
+            f"Selected {len(selected)} episodes for replay (strategy={strategy})"
+        )
         return selected
 
     def replay_episode(self, episode: Dict[str, Any]) -> Dict[str, Any]:

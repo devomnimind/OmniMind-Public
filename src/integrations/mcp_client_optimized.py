@@ -149,7 +149,9 @@ class EnhancedMCPClient:
             self._last_hour_reset = now
 
         # Limpar requests antigos (>1 minuto)
-        self._request_timestamps = [ts for ts in self._request_timestamps if now - ts < 60]
+        self._request_timestamps = [
+            ts for ts in self._request_timestamps if now - ts < 60
+        ]
 
         # Verificar limite por minuto
         if len(self._request_timestamps) >= self.rate_limit.max_requests_per_minute:
@@ -194,7 +196,9 @@ class EnhancedMCPClient:
         self.metrics.cached_calls += 1
         self.metrics.total_tokens_saved += entry.size_bytes // 4  # Estimativa
 
-        logger.debug("Cache hit para %s (acessos=%d)", cache_key[:8], entry.access_count)
+        logger.debug(
+            "Cache hit para %s (acessos=%d)", cache_key[:8], entry.access_count
+        )
         return entry.value
 
     def _add_to_cache(self, cache_key: str, value: Any) -> None:
@@ -209,7 +213,9 @@ class EnhancedMCPClient:
             # Evict least recently used (LRU)
             self._evict_lru()
 
-        entry = ContextEntry(key=cache_key, value=value, timestamp=time.time(), access_count=1)
+        entry = ContextEntry(
+            key=cache_key, value=value, timestamp=time.time(), access_count=1
+        )
 
         self._context_cache[cache_key] = entry
         logger.debug("Cache adicionado: %s (%d bytes)", cache_key[:8], entry.size_bytes)
@@ -217,7 +223,9 @@ class EnhancedMCPClient:
     def _evict_lru(self) -> None:
         """Remove entradas menos recentemente usadas do cache."""
         # Ordenar por timestamp (mais antigos primeiro)
-        sorted_entries = sorted(self._context_cache.items(), key=lambda x: x[1].timestamp)
+        sorted_entries = sorted(
+            self._context_cache.items(), key=lambda x: x[1].timestamp
+        )
 
         # Remover 20% mais antigos
         to_remove = int(len(sorted_entries) * 0.2)
@@ -234,7 +242,9 @@ class EnhancedMCPClient:
         protected, result = self.data_protection.sanitize_for_mcp(data)
 
         if not result.safe:
-            logger.warning("Dados protegidos contêm %d violações DLP", len(result.violations))
+            logger.warning(
+                "Dados protegidos contêm %d violações DLP", len(result.violations)
+            )
 
         return protected, result
 
@@ -393,7 +403,9 @@ class EnhancedMCPClient:
 
     # Métodos convenientes que usam otimização
 
-    def read_file(self, path: str, encoding: str = "utf-8", enable_compression: bool = True) -> str:
+    def read_file(
+        self, path: str, encoding: str = "utf-8", enable_compression: bool = True
+    ) -> str:
         """Lê arquivo com proteção de dados e cache."""
         return cast(
             str,
@@ -404,7 +416,9 @@ class EnhancedMCPClient:
             ),
         )
 
-    def write_file(self, path: str, content: str, encoding: str = "utf-8") -> Dict[str, Any]:
+    def write_file(
+        self, path: str, content: str, encoding: str = "utf-8"
+    ) -> Dict[str, Any]:
         """Escreve arquivo com proteção de dados."""
         # Write não usa cache
         protected_content, _ = self._protect_data(content)

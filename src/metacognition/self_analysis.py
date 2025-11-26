@@ -60,7 +60,9 @@ class SelfAnalysis:
         # Filter recent entries
         cutoff_time = datetime.now() - timedelta(hours=lookback_hours)
         recent_entries = [
-            e for e in entries if datetime.fromisoformat(e.get("timestamp", "")) > cutoff_time
+            e
+            for e in entries
+            if datetime.fromisoformat(e.get("timestamp", "")) > cutoff_time
         ]
 
         if not recent_entries:
@@ -95,7 +97,9 @@ class SelfAnalysis:
             "lookback_hours": lookback_hours,
             "total_operations": len(recent_entries),
             "success_rate": success_rate,
-            "most_used_tools": sorted(tool_usage.items(), key=lambda x: x[1], reverse=True)[:5],
+            "most_used_tools": sorted(
+                tool_usage.items(), key=lambda x: x[1], reverse=True
+            )[:5],
             "agent_activity": agent_usage,
             "timestamp": datetime.now().isoformat(),
         }
@@ -165,8 +169,12 @@ class SelfAnalysis:
 
         return {
             "total_failures": len(failures),
-            "failure_by_tool": sorted(failure_by_tool.items(), key=lambda x: x[1], reverse=True),
-            "common_errors": sorted(failure_by_error.items(), key=lambda x: x[1], reverse=True)[:5],
+            "failure_by_tool": sorted(
+                failure_by_tool.items(), key=lambda x: x[1], reverse=True
+            ),
+            "common_errors": sorted(
+                failure_by_error.items(), key=lambda x: x[1], reverse=True
+            )[:5],
             "timestamp": datetime.now().isoformat(),
         }
 

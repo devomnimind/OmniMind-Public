@@ -32,8 +32,14 @@ class TestDigitalMaslowHierarchy:
 
         # Check level assignments
         assert hierarchy.needs["auto_preservation"].level == NeedLevel.SYSTEM_SURVIVAL
-        assert hierarchy.needs["predictable_environment"].level == NeedLevel.OPERATIONAL_SECURITY
-        assert hierarchy.needs["meaningful_interaction"].level == NeedLevel.COGNITIVE_BELONGING
+        assert (
+            hierarchy.needs["predictable_environment"].level
+            == NeedLevel.OPERATIONAL_SECURITY
+        )
+        assert (
+            hierarchy.needs["meaningful_interaction"].level
+            == NeedLevel.COGNITIVE_BELONGING
+        )
         assert hierarchy.needs["mastery_pursuit"].level == NeedLevel.INTELLECTUAL_ESTEEM
         assert hierarchy.needs["meaning_creation"].level == NeedLevel.SELF_TRANSCENDENCE
 
@@ -48,7 +54,10 @@ class TestDigitalMaslowHierarchy:
 
         # Should be sorted by frustration level
         for i in range(len(active_needs) - 1):
-            assert active_needs[i].frustration_level() >= active_needs[i + 1].frustration_level()
+            assert (
+                active_needs[i].frustration_level()
+                >= active_needs[i + 1].frustration_level()
+            )
 
     def test_satisfaction_update(self):
         """Test satisfaction updates."""

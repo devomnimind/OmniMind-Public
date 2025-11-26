@@ -279,10 +279,14 @@ class TestCreativeProblemSolver:
         problem = Problem(description="Test problem")
 
         # Divergent should produce conventional and innovative
-        div_solutions = solver.generate_solutions(problem, ThinkingMode.DIVERGENT, num_solutions=5)
+        div_solutions = solver.generate_solutions(
+            problem, ThinkingMode.DIVERGENT, num_solutions=5
+        )
 
         # Lateral should produce more radical
-        lat_solutions = solver.generate_solutions(problem, ThinkingMode.LATERAL, num_solutions=5)
+        lat_solutions = solver.generate_solutions(
+            problem, ThinkingMode.LATERAL, num_solutions=5
+        )
 
         # Check that lateral has more novel solutions
         div_novelty = sum(s.novelty_score for s in div_solutions) / len(div_solutions)

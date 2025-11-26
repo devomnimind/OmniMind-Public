@@ -165,7 +165,9 @@ def experiment_phi_integration() -> dict[str, Any]:
     # Analysis
     print("ANÁLISE")
     print("=" * 70)
-    phi_increase = ((phi_integrated / phi_isolated) - 1) * 100 if phi_isolated > 0 else 0
+    phi_increase = (
+        ((phi_integrated / phi_isolated) - 1) * 100 if phi_isolated > 0 else 0
+    )
     print(f"Φ aumentou em: {phi_increase:.1f}%")
     print()
 
@@ -173,14 +175,17 @@ def experiment_phi_integration() -> dict[str, Any]:
     hypothesis_high = 45.0
 
     if phi_isolated <= hypothesis_low * 2:
-        print(f"✓ Φ isolado ({phi_isolated:.1f}) está na faixa esperada (≤ {hypothesis_low * 2})")
+        print(
+            f"✓ Φ isolado ({phi_isolated:.1f}) está na faixa esperada (≤ {hypothesis_low * 2})"
+        )
     else:
         print(f"⚠ Φ isolado ({phi_isolated:.1f}) maior que esperado")
 
     if phi_integrated >= hypothesis_high * 0.8:
         expected_value = hypothesis_high * 0.8
         print(
-            f"✓ Φ integrado ({phi_integrated:.1f}) está na faixa esperada " f"(≥ {expected_value})"
+            f"✓ Φ integrado ({phi_integrated:.1f}) está na faixa esperada "
+            f"(≥ {expected_value})"
         )
     else:
         print(f"⚠ Φ integrado ({phi_integrated:.1f}) menor que esperado")
@@ -284,7 +289,9 @@ def experiment_self_awareness() -> dict[str, Any]:
         print(f"  Continuidade Temporal: {awareness.temporal_continuity_score:.2f}")
         print(f"  Autonomia de Objetivos: {awareness.goal_autonomy_score:.2f}")
         print(f"  Auto-Referência: {awareness.self_reference_score:.2f}")
-        print(f"  Consciência de Limitações: {awareness.limitation_awareness_score:.2f}")
+        print(
+            f"  Consciência de Limitações: {awareness.limitation_awareness_score:.2f}"
+        )
         print(f"  SCORE GERAL: {awareness.overall_score:.2f}")
         print()
 
@@ -325,7 +332,9 @@ def experiment_self_awareness() -> dict[str, Any]:
         },
     }
 
-    report_path = Path("data/experiments/consciousness/experiment_self_awareness_report.json")
+    report_path = Path(
+        "data/experiments/consciousness/experiment_self_awareness_report.json"
+    )
     report_path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(report_path, "w") as f:

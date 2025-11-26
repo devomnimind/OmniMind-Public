@@ -168,7 +168,9 @@ class ParticleSwarmOptimizer:
 
         return self.global_best_position, self.global_best_fitness, metrics
 
-    def _evaluate_fitness(self, fitness_function: Callable[[List[float]], float]) -> None:
+    def _evaluate_fitness(
+        self, fitness_function: Callable[[List[float]], float]
+    ) -> None:
         """
         Avalia fitness de todas as partículas.
 
@@ -187,7 +189,9 @@ class ParticleSwarmOptimizer:
     def _update_swarm(self) -> None:
         """Atualiza velocidades e posições usando PSO."""
         # Inércia adaptativa (decresce linearmente)
-        inertia = self.config.inertia * (1.0 - self.iteration / self.config.max_iterations)
+        inertia = self.config.inertia * (
+            1.0 - self.iteration / self.config.max_iterations
+        )
 
         for particle in self.particles:
             # Atualiza velocidade

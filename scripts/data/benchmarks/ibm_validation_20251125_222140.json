@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "timestamp": "2025-11-25T22:21:39.808190+00:00",
+    "ibm_backend": "ibm_fez",
+    "simulator_backend": "Qiskit Aer Simulator",
+    "shots": 1024
+  },
+  "benchmarks": {
+    "bell_state": {
+      "circuit": "bell_state_phi_plus",
+      "simulator": {
+        "counts": {
+          "00 00": 502,
+          "11 00": 522
+        },
+        "probabilities": {
+          "00": 0.0,
+          "11": 0.0
+        },
+        "fidelity": 1.0
+      },
+      "ibm_hardware": {
+        "counts": {
+          "11 00": 519,
+          "00 00": 505
+        },
+        "probabilities": {
+          "00": 0.0,
+          "11": 0.0
+        },
+        "fidelity": 1.0
+      }
+    },
+    "randomness": {
+      "circuit": "single_qubit_superposition",
+      "simulator": {
+        "counts": {
+          "1 0": 492,
+          "0 0": 532
+        },
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.0
+        },
+        "quality": 0.0
+      },
+      "ibm_hardware": {
+        "counts": {
+          "0 0": 506,
+          "1 0": 518
+        },
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.0
+        },
+        "quality": 0.0
+      }
+    },
+    "superposition": {
+      "circuit": "two_qubit_superposition",
+      "simulator": {
+        "counts": {
+          "10 00": 269,
+          "11 00": 231,
+          "00 00": 267,
+          "01 00": 257
+        },
+        "probabilities": {
+          "00": 0.0,
+          "01": 0.0,
+          "10": 0.0,
+          "11": 0.0
+        },
+        "uniformity": 0.0
+      },
+      "ibm_hardware": {
+        "counts": {
+          "00 00": 252,
+          "10 00": 250,
+          "11 00": 261,
+          "01 00": 261
+        },
+        "probabilities": {
+          "00": 0.0,
+          "01": 0.0,
+          "10": 0.0,
+          "11": 0.0
+        },
+        "uniformity": 0.0
+      }
+    }
+  },
+  "analysis": {
+    "bell_state_fidelity": 1.0,
+    "randomness_quality": 0.0,
+    "superposition_accuracy": 0.0,
+    "noise_impact": 0.0,
+    "quantum_advantage": false
+  }
+}

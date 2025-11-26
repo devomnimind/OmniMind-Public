@@ -173,7 +173,9 @@ class MCPSecurityFramework:
 
         logger.info("MCP Security Framework initialized")
 
-    def validate_code_safety(self, code: str, context: CodeExecutionContext) -> Tuple[bool, str]:
+    def validate_code_safety(
+        self, code: str, context: CodeExecutionContext
+    ) -> Tuple[bool, str]:
         """
         Valida segurança do código antes de executar.
 
@@ -283,7 +285,9 @@ class MCPSecurityFramework:
             return {
                 "success": True,
                 "output": result,
-                "namespace": {k: v for k, v in namespace.items() if not k.startswith("__")},
+                "namespace": {
+                    k: v for k, v in namespace.items() if not k.startswith("__")
+                },
             }
 
         except Exception as e:
@@ -400,7 +404,8 @@ class MCPAgenticClient:
         self._register_default_tools()
 
         logger.info(
-            f"MCP Agentic Client initialized: " f"agent={agent_id}, security={security_level.value}"
+            f"MCP Agentic Client initialized: "
+            f"agent={agent_id}, security={security_level.value}"
         )
 
     def _register_default_tools(self) -> None:
@@ -527,10 +532,14 @@ class MCPAgenticClient:
             return {"success": False, "error": "Rate limit exceeded"}
 
         # Cria contexto de execução
-        context = CodeExecutionContext(code=code, available_tools=self.tools, timeout=timeout)
+        context = CodeExecutionContext(
+            code=code, available_tools=self.tools, timeout=timeout
+        )
 
         # Executa em sandbox
-        result = self.security.sandbox_execute(code=code, context=context, agent_id=self.agent_id)
+        result = self.security.sandbox_execute(
+            code=code, context=context, agent_id=self.agent_id
+        )
 
         return result
 
@@ -592,7 +601,9 @@ def demonstrate_mcp_agentic_client() -> None:
     print()
 
     # Cria cliente
-    client = MCPAgenticClient(agent_id="demo_agent", security_level=MCPSecurityLevel.SANDBOX)
+    client = MCPAgenticClient(
+        agent_id="demo_agent", security_level=MCPSecurityLevel.SANDBOX
+    )
 
     print("FERRAMENTAS REGISTRADAS")
     print("-" * 70)
@@ -637,7 +648,9 @@ else:
     # Contexto IDE
     print("CONTEXTO PARA IDE")
     print("-" * 70)
-    ide_context = client.get_context_for_ide(file_path="src/main.py", cursor_position=(42, 15))
+    ide_context = client.get_context_for_ide(
+        file_path="src/main.py", cursor_position=(42, 15)
+    )
     print(f"Arquivo: {ide_context['file_path']}")
     print(f"Posição: {ide_context['cursor_position']}")
     print(f"Ferramentas disponíveis: {len(ide_context['available_tools'])}")

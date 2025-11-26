@@ -89,7 +89,9 @@ class ReactAgent:
 
         # Initialize tools
         system_config = self.config["system"]
-        allowed_dirs = [os.path.expanduser(d) for d in system_config["mcp_allowed_dirs"]]
+        allowed_dirs = [
+            os.path.expanduser(d) for d in system_config["mcp_allowed_dirs"]
+        ]
 
         self.file_ops = FileOperations(allowed_dirs=allowed_dirs)
         self.shell = ShellExecutor(
@@ -168,7 +170,10 @@ class ReactAgent:
         # Format previous actions
         if state["actions_taken"]:
             actions_str = chr(10).join(
-                [f"- {a['action']}({a.get('args', {})})" for a in state["actions_taken"]]
+                [
+                    f"- {a['action']}({a.get('args', {})})"
+                    for a in state["actions_taken"]
+                ]
             )
         else:
             actions_str = "None"
@@ -277,7 +282,9 @@ Your response:"""
                 return self.file_ops.read_file(args.get("path", ""))
 
             elif action == "write_file":
-                return self.file_ops.write_file(args.get("path", ""), args.get("content", ""))
+                return self.file_ops.write_file(
+                    args.get("path", ""), args.get("content", "")
+                )
 
             elif action == "list_files":
                 return self.file_ops.list_files(args.get("path", "."))
@@ -362,7 +369,9 @@ Your response:"""
             final_state = self.graph.invoke(initial_state)
 
             # Store episode in memory
-            action_summary = ", ".join([a["action"] for a in final_state["actions_taken"]])
+            action_summary = ", ".join(
+                [a["action"] for a in final_state["actions_taken"]]
+            )
             result_summary = final_state["final_result"] or "Incomplete"
 
             self.memory.store_episode(
@@ -381,7 +390,9 @@ Your response:"""
         """Run Supabase memory onboarding in a background thread to avoid blocking startup."""
         config = SupabaseConfig.load()
         if not config or not config.service_role_key:
-            logger.debug("Supabase memory onboarding skipped (service role key missing)")
+            logger.debug(
+                "Supabase memory onboarding skipped (service role key missing)"
+            )
             return
 
         def _onboard() -> None:
@@ -395,14 +406,18 @@ Your response:"""
                     report.last_cursor,
                 )
                 if report.errors:
-                    logger.warning("Supabase memory onboarding reported errors: %s", report.errors)
+                    logger.warning(
+                        "Supabase memory onboarding reported errors: %s", report.errors
+                    )
             except Exception as exc:
                 logger.error("Supabase onboarding failed: %s", exc)
 
         # Run in background thread
         import threading
 
-        thread = threading.Thread(target=_onboard, daemon=True, name="SupabaseOnboarding")
+        thread = threading.Thread(
+            target=_onboard, daemon=True, name="SupabaseOnboarding"
+        )
         thread.start()
         logger.info("Supabase memory onboarding started in background")
 

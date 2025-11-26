@@ -121,9 +121,11 @@ class ProprioceptionModule:
             Dict with health status
         """
         health = {
-            "memory_ok": self.current_state.memory_usage < self.thresholds["memory_warning"],
+            "memory_ok": self.current_state.memory_usage
+            < self.thresholds["memory_warning"],
             "cpu_ok": self.current_state.cpu_usage < self.thresholds["cpu_warning"],
-            "errors_ok": self.current_state.error_count < self.thresholds["error_threshold"],
+            "errors_ok": self.current_state.error_count
+            < self.thresholds["error_threshold"],
         }
 
         all_ok = all(health.values())
@@ -202,7 +204,9 @@ EMOTIONAL STATUS:
         current_cpu = self.current_state.cpu_usage
 
         if current_memory > avg_memory * 1.5:
-            anomalies.append(f"Memory spike: {current_memory:.1f}% (avg {avg_memory:.1f}%)")
+            anomalies.append(
+                f"Memory spike: {current_memory:.1f}% (avg {avg_memory:.1f}%)"
+            )
 
         if current_cpu > avg_cpu * 1.5:
             anomalies.append(f"CPU spike: {current_cpu:.1f}% (avg {avg_cpu:.1f}%)")

@@ -143,9 +143,15 @@ class ReviewResult:
             "passed": self.passed,
             "summary": {
                 "total_issues": len(self.issues),
-                "critical": sum(1 for i in self.issues if i.severity == IssueSeverity.CRITICAL),
-                "errors": sum(1 for i in self.issues if i.severity == IssueSeverity.ERROR),
-                "warnings": sum(1 for i in self.issues if i.severity == IssueSeverity.WARNING),
+                "critical": sum(
+                    1 for i in self.issues if i.severity == IssueSeverity.CRITICAL
+                ),
+                "errors": sum(
+                    1 for i in self.issues if i.severity == IssueSeverity.ERROR
+                ),
+                "warnings": sum(
+                    1 for i in self.issues if i.severity == IssueSeverity.WARNING
+                ),
                 "info": sum(1 for i in self.issues if i.severity == IssueSeverity.INFO),
             },
         }
@@ -213,7 +219,8 @@ class AutomatedCodeReviewer:
         result.passed = result.overall_score >= self.min_score
 
         logger.info(
-            f"Review complete: {result.overall_score:.1f}/10.0 " f"({len(result.issues)} issues)"
+            f"Review complete: {result.overall_score:.1f}/10.0 "
+            f"({len(result.issues)} issues)"
         )
 
         return result
@@ -617,7 +624,9 @@ class AutomatedCodeReviewer:
 
         return max(0.0, min(10.0, score))
 
-    def generate_report(self, result: ReviewResult, output_file: Optional[Path] = None) -> str:
+    def generate_report(
+        self, result: ReviewResult, output_file: Optional[Path] = None
+    ) -> str:
         """
         Generate code review report.
 
@@ -639,9 +648,15 @@ class AutomatedCodeReviewer:
             lines.append("\n## Metrics\n")
             lines.append(f"- Lines of Code: {result.metrics.lines_of_code}")
             lines.append(f"- Complexity: {result.metrics.complexity}")
-            lines.append(f"- Maintainability Index: {result.metrics.maintainability_index:.1f}/100")
-            lines.append(f"- Type Hint Coverage: {result.metrics.type_hint_coverage:.1f}%")
-            lines.append(f"- Docstring Coverage: {result.metrics.docstring_coverage:.1f}%")
+            lines.append(
+                f"- Maintainability Index: {result.metrics.maintainability_index:.1f}/100"
+            )
+            lines.append(
+                f"- Type Hint Coverage: {result.metrics.type_hint_coverage:.1f}%"
+            )
+            lines.append(
+                f"- Docstring Coverage: {result.metrics.docstring_coverage:.1f}%"
+            )
 
         # Issues summary
         summary = result.to_dict()["summary"]
@@ -721,7 +736,9 @@ if __name__ == "__main__":
 
     print(f"🔍 Reviewing {file_path}...\n")
 
-    result = review_code(file_path, min_score=8.0, output_report=Path("logs/code_review_report.md"))
+    result = review_code(
+        file_path, min_score=8.0, output_report=Path("logs/code_review_report.md")
+    )
 
     print(f"Score: {result.overall_score:.1f}/10.0")
     print(f"Issues: {len(result.issues)}")

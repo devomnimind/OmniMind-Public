@@ -30,7 +30,9 @@ def euclidean_distance(point1: List[float], point2: List[float]) -> float:
         ValueError: Se pontos têm dimensões diferentes
     """
     if len(point1) != len(point2):
-        raise ValueError(f"Pontos devem ter mesma dimensão: {len(point1)} != {len(point2)}")
+        raise ValueError(
+            f"Pontos devem ter mesma dimensão: {len(point1)} != {len(point2)}"
+        )
 
     return math.sqrt(sum((p1 - p2) ** 2 for p1, p2 in zip(point1, point2)))
 
@@ -50,7 +52,9 @@ def manhattan_distance(point1: List[float], point2: List[float]) -> float:
         ValueError: Se pontos têm dimensões diferentes
     """
     if len(point1) != len(point2):
-        raise ValueError(f"Pontos devem ter mesma dimensão: {len(point1)} != {len(point2)}")
+        raise ValueError(
+            f"Pontos devem ter mesma dimensão: {len(point1)} != {len(point2)}"
+        )
 
     return sum(abs(p1 - p2) for p1, p2 in zip(point1, point2))
 

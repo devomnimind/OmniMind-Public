@@ -36,7 +36,9 @@ class TestKnowledgeItem:
 
     def test_default_correlations(self) -> None:
         """Test default correlations list."""
-        item = KnowledgeItem(content="test", mass=1.0, last_used=datetime.now(timezone.utc))
+        item = KnowledgeItem(
+            content="test", mass=1.0, last_used=datetime.now(timezone.utc)
+        )
 
         assert isinstance(item.correlations, list)
         assert len(item.correlations) == 0
@@ -70,7 +72,9 @@ class TestHawkingMotivationEngine:
 
     def test_initialization(self) -> None:
         """Test engine initializes correctly."""
-        engine = HawkingMotivationEngine(base_temperature=2.0, evaporation_threshold_days=7.0)
+        engine = HawkingMotivationEngine(
+            base_temperature=2.0, evaporation_threshold_days=7.0
+        )
 
         assert engine.temperature == 2.0
         assert engine.evaporation_threshold == timedelta(days=7.0)
@@ -160,7 +164,9 @@ class TestHawkingMotivationEngine:
 
     def test_knowledge_preservation_when_used(self) -> None:
         """Test that used knowledge doesn't evaporate."""
-        engine = HawkingMotivationEngine(base_temperature=10.0, evaporation_threshold_days=0.001)
+        engine = HawkingMotivationEngine(
+            base_temperature=10.0, evaporation_threshold_days=0.001
+        )
 
         # Add and immediately use knowledge
         engine.add_knowledge("k1", "Active knowledge")
@@ -203,7 +209,9 @@ class TestHawkingMotivationEngine:
 
     def test_frustration_generation(self) -> None:
         """Test frustration energy generation."""
-        engine = HawkingMotivationEngine(base_temperature=10.0, evaporation_threshold_days=0.001)
+        engine = HawkingMotivationEngine(
+            base_temperature=10.0, evaporation_threshold_days=0.001
+        )
 
         engine.add_knowledge("k1", "Important knowledge", mass=5.0)
 
@@ -221,7 +229,9 @@ class TestHawkingMotivationEngine:
 
     def test_motivation_boost(self) -> None:
         """Test motivation boost generation."""
-        engine = HawkingMotivationEngine(base_temperature=10.0, evaporation_threshold_days=0.001)
+        engine = HawkingMotivationEngine(
+            base_temperature=10.0, evaporation_threshold_days=0.001
+        )
 
         engine.add_knowledge("k1", "Knowledge 1")
         engine.add_knowledge("k2", "Knowledge 2")
@@ -317,7 +327,9 @@ class TestHawkingMotivationEngine:
 
     def test_urgency_factor_calculation(self) -> None:
         """Test urgency factor computation."""
-        engine = HawkingMotivationEngine(base_temperature=10.0, evaporation_threshold_days=0.001)
+        engine = HawkingMotivationEngine(
+            base_temperature=10.0, evaporation_threshold_days=0.001
+        )
 
         # Add and evaporate some knowledge
         for i in range(5):
@@ -338,7 +350,9 @@ class TestIntegration:
 
     def test_full_lifecycle(self) -> None:
         """Test full knowledge lifecycle: add, use, evaporate."""
-        engine = HawkingMotivationEngine(base_temperature=5.0, evaporation_threshold_days=0.001)
+        engine = HawkingMotivationEngine(
+            base_temperature=5.0, evaporation_threshold_days=0.001
+        )
 
         # Add knowledge
         engine.add_knowledge("k1", "Important concept", mass=3.0)
@@ -363,7 +377,9 @@ class TestIntegration:
 
     def test_cascade_evaporation(self) -> None:
         """Test cascading evaporation of unused knowledge."""
-        engine = HawkingMotivationEngine(base_temperature=10.0, evaporation_threshold_days=0.001)
+        engine = HawkingMotivationEngine(
+            base_temperature=10.0, evaporation_threshold_days=0.001
+        )
 
         # Add chain of knowledge
         for i in range(5):

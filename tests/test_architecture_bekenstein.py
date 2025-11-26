@@ -32,10 +32,14 @@ class TestBekensteinArchitect:
         architect = BekensteinArchitect()
 
         # Budget menor
-        params_small = architect.compute_max_parameters(compute_budget=1.0, spatial_extent=1.0)
+        params_small = architect.compute_max_parameters(
+            compute_budget=1.0, spatial_extent=1.0
+        )
 
         # Budget maior
-        params_large = architect.compute_max_parameters(compute_budget=10.0, spatial_extent=1.0)
+        params_large = architect.compute_max_parameters(
+            compute_budget=10.0, spatial_extent=1.0
+        )
 
         # Budget maior deve permitir mais parâmetros
         assert params_large > params_small
@@ -45,10 +49,14 @@ class TestBekensteinArchitect:
         architect = BekensteinArchitect()
 
         # Extensão menor
-        params_small = architect.compute_max_parameters(compute_budget=1.0, spatial_extent=1.0)
+        params_small = architect.compute_max_parameters(
+            compute_budget=1.0, spatial_extent=1.0
+        )
 
         # Extensão maior
-        params_large = architect.compute_max_parameters(compute_budget=1.0, spatial_extent=10.0)
+        params_large = architect.compute_max_parameters(
+            compute_budget=1.0, spatial_extent=10.0
+        )
 
         # Extensão maior deve permitir mais parâmetros
         assert params_large > params_small

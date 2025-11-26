@@ -309,7 +309,9 @@ class HawkingMotivationEngine:
 
         return preserved
 
-    def _compute_frustration(self, item: KnowledgeItem, time_unused: timedelta) -> float:
+    def _compute_frustration(
+        self, item: KnowledgeItem, time_unused: timedelta
+    ) -> float:
         """
         Compute frustration from knowledge loss.
 
@@ -353,7 +355,9 @@ class HawkingMotivationEngine:
         for corr_id in correlations:
             if corr_id in self.knowledge_base:
                 corr_item = self.knowledge_base[corr_id]
-                time_unused = (datetime.now(timezone.utc) - corr_item.last_used).total_seconds()
+                time_unused = (
+                    datetime.now(timezone.utc) - corr_item.last_used
+                ).total_seconds()
                 # Add urgency if correlation is also unused
                 if time_unused > self.evaporation_threshold.total_seconds() * 0.5:
                     urgency += 0.1
@@ -416,7 +420,8 @@ class HawkingMotivationEngine:
         self.evaporation_rate = self._calculate_rate()
 
         logger.info(
-            f"Temperature adjusted: T={self.temperature:.2f}, " f"rate={self.evaporation_rate:.4f}"
+            f"Temperature adjusted: T={self.temperature:.2f}, "
+            f"rate={self.evaporation_rate:.4f}"
         )
 
     def get_statistics(self) -> Dict[str, Any]:
@@ -436,7 +441,8 @@ class HawkingMotivationEngine:
             "at_risk_count": len(at_risk),
             "at_risk_ids": at_risk,
             "average_mass": (
-                sum(item.mass for item in self.knowledge_base.values()) / len(self.knowledge_base)
+                sum(item.mass for item in self.knowledge_base.values())
+                / len(self.knowledge_base)
                 if self.knowledge_base
                 else 0.0
             ),
@@ -465,7 +471,9 @@ class HawkingMotivationEngine:
         current_time = datetime.now(timezone.utc)
         time_unused = current_time - item.last_used
 
-        evaporation_risk = time_unused.total_seconds() / self.evaporation_threshold.total_seconds()
+        evaporation_risk = (
+            time_unused.total_seconds() / self.evaporation_threshold.total_seconds()
+        )
         evaporation_risk = min(evaporation_risk, 1.0)
 
         return {

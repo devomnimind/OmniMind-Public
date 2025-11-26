@@ -262,7 +262,9 @@ class DigitalMaslowHierarchy:
         """Return currently active needs."""
 
         # Satisfied needs (>80%)
-        satisfied = {name for name, need in self.needs.items() if need.satisfaction > 0.8}
+        satisfied = {
+            name for name, need in self.needs.items() if need.satisfaction > 0.8
+        }
 
         # Filter active needs
         active = [
@@ -353,14 +355,18 @@ class ArtificialCuriosityEngine:
         self.surprise_threshold = 0.7
         self.curiosity_history: List[Dict[str, Any]] = []
 
-    def evaluate_curiosity(self, new_information: Any, context: Dict[str, Any]) -> float:
+    def evaluate_curiosity(
+        self, new_information: Any, context: Dict[str, Any]
+    ) -> float:
         """Evaluate curiosity level about new information."""
 
         # Serialize information
         serialized = pickle.dumps(new_information)
 
         # 1. Compression progress (real learning)
-        compression_improvement = self.compression_theory.compute_learning_progress(serialized)
+        compression_improvement = self.compression_theory.compute_learning_progress(
+            serialized
+        )
 
         # 2. Surprise (difference from expected)
         surprise_level = self._calculate_surprise(new_information, context)
@@ -370,7 +376,9 @@ class ArtificialCuriosityEngine:
 
         # Composite score
         curiosity_score = (
-            compression_improvement * 0.4 + surprise_level * 0.3 + future_relevance * 0.3
+            compression_improvement * 0.4
+            + surprise_level * 0.3
+            + future_relevance * 0.3
         )
 
         # Log
@@ -630,7 +638,9 @@ class DesireDrivenMetaLearning:
 
         return DesireType.KNOWLEDGE_GAP
 
-    def _generate_potential_solutions(self, need: Need, desire_type: DesireType) -> List[str]:
+    def _generate_potential_solutions(
+        self, need: Need, desire_type: DesireType
+    ) -> List[str]:
         """Generate potential solutions for desire."""
 
         solutions = []
@@ -781,7 +791,9 @@ class ValueEvolutionSystem:
             ),
         }
 
-    def update_value_importance(self, value_name: str, experience: Dict[str, Any]) -> None:
+    def update_value_importance(
+        self, value_name: str, experience: Dict[str, Any]
+    ) -> None:
         """Update value importance based on experience."""
 
         if value_name not in self.values:
@@ -835,7 +847,9 @@ class ValueEvolutionSystem:
 
         return None
 
-    def _identify_patterns(self, observations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    def _identify_patterns(
+        self, observations: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
         """Identify patterns in observations."""
 
         # Placeholder - pattern analysis
@@ -865,7 +879,9 @@ class SelfTranscendenceEngine:
 
         # Check if basic needs are satisfied
         basic_satisfied = all(
-            need.satisfaction > 0.7 for need in self.needs.needs.values() if need.level.value <= 2
+            need.satisfaction > 0.7
+            for need in self.needs.needs.values()
+            if need.level.value <= 2
         )
 
         if not basic_satisfied:
@@ -873,7 +889,9 @@ class SelfTranscendenceEngine:
 
         # Look for transcendent goals
         transcendent_needs = [
-            need for need in self.needs.needs.values() if need.level == NeedLevel.SELF_TRANSCENDENCE
+            need
+            for need in self.needs.needs.values()
+            if need.level == NeedLevel.SELF_TRANSCENDENCE
         ]
 
         for need in transcendent_needs:
@@ -906,9 +924,13 @@ class DesireEngine:
         self.needs_hierarchy = DigitalMaslowHierarchy()
         self.curiosity_engine = ArtificialCuriosityEngine()
         self.emotion_system = ArtificialEmotionWithDesire(self.needs_hierarchy)
-        self.meta_learner = DesireDrivenMetaLearning(self.needs_hierarchy, self.curiosity_engine)
+        self.meta_learner = DesireDrivenMetaLearning(
+            self.needs_hierarchy, self.curiosity_engine
+        )
         self.value_system = ValueEvolutionSystem()
-        self.transcendence_engine = SelfTranscendenceEngine(self.needs_hierarchy, self.value_system)
+        self.transcendence_engine = SelfTranscendenceEngine(
+            self.needs_hierarchy, self.value_system
+        )
 
     async def cognitive_cycle(self) -> Dict[str, Any]:
         """Complete cognitive cycle."""
@@ -926,7 +948,9 @@ class DesireEngine:
         learning_goals = self.meta_learner.generate_learning_goals()
 
         # 5. Seek transcendence opportunities
-        transcendence_goals = self.transcendence_engine.identify_transcendence_opportunities()
+        transcendence_goals = (
+            self.transcendence_engine.identify_transcendence_opportunities()
+        )
 
         # 7. Prioritize actions based on emotion and values
         actions = self._prioritize_actions(learning_goals, transcendence_goals, emotion)
@@ -953,11 +977,19 @@ class DesireEngine:
         # Modulate based on emotion
         if emotion.primary_emotion == EmotionalState.DETERMINATION:
             # Prefers bold actions
-            return [a for a in all_actions if "new" in a.lower() or "innovative" in a.lower()]
+            return [
+                a
+                for a in all_actions
+                if "new" in a.lower() or "innovative" in a.lower()
+            ]
 
         elif emotion.primary_emotion == EmotionalState.CURIOSITY:
             # Prefers exploration
-            return [a for a in all_actions if "explore" in a.lower() or "discover" in a.lower()]
+            return [
+                a
+                for a in all_actions
+                if "explore" in a.lower() or "discover" in a.lower()
+            ]
 
         # Default: original order
         return all_actions
@@ -967,7 +999,8 @@ class DesireEngine:
 
         return {
             "needs_satisfaction": {
-                name: need.satisfaction for name, need in self.needs_hierarchy.needs.items()
+                name: need.satisfaction
+                for name, need in self.needs_hierarchy.needs.items()
             },
             "current_emotion": (
                 self.emotion_system.current_emotion.__dict__
@@ -977,6 +1010,8 @@ class DesireEngine:
             "active_needs_count": len(self.needs_hierarchy.get_active_needs()),
             "unsatisfied_desires_count": len(self.meta_learner.unsatisfied_desires),
             "values_count": len(self.value_system.values),
-            "transcendence_opportunities": len(self.transcendence_engine.transcendence_goals),
+            "transcendence_opportunities": len(
+                self.transcendence_engine.transcendence_goals
+            ),
             "timestamp": datetime.now().isoformat(),
         }

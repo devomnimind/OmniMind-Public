@@ -54,7 +54,9 @@ class TestBekensteinArchitect:
         assert architect is not None
         assert isinstance(architect, BekensteinArchitect)
 
-    def test_compute_max_parameters_positive_inputs(self, architect: BekensteinArchitect) -> None:
+    def test_compute_max_parameters_positive_inputs(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa cálculo de parâmetros máximos com valores positivos."""
         compute_budget = 1.0
         spatial_extent = 1.0
@@ -64,21 +66,31 @@ class TestBekensteinArchitect:
         assert max_params >= 0
         assert isinstance(max_params, int)
 
-    def test_compute_max_parameters_zero_budget(self, architect: BekensteinArchitect) -> None:
+    def test_compute_max_parameters_zero_budget(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa com budget zero."""
-        max_params = architect.compute_max_parameters(compute_budget=0.0, spatial_extent=1.0)
+        max_params = architect.compute_max_parameters(
+            compute_budget=0.0, spatial_extent=1.0
+        )
 
         # Com budget zero, parâmetros máximos devem ser zero
         assert max_params == 0
 
-    def test_compute_max_parameters_zero_extent(self, architect: BekensteinArchitect) -> None:
+    def test_compute_max_parameters_zero_extent(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa com extent zero."""
-        max_params = architect.compute_max_parameters(compute_budget=1.0, spatial_extent=0.0)
+        max_params = architect.compute_max_parameters(
+            compute_budget=1.0, spatial_extent=0.0
+        )
 
         # Com spatial extent zero, parâmetros devem ser zero
         assert max_params == 0
 
-    def test_compute_max_parameters_scaling(self, architect: BekensteinArchitect) -> None:
+    def test_compute_max_parameters_scaling(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa que parâmetros escalam corretamente com inputs."""
         params_1x = architect.compute_max_parameters(1.0, 1.0)
         params_2x = architect.compute_max_parameters(2.0, 2.0)
@@ -88,23 +100,33 @@ class TestBekensteinArchitect:
         assert params_2x >= params_1x  # Should at least not decrease
         # The relationship depends on the Bekenstein formula and integer rounding
 
-    def test_compute_max_parameters_large_values(self, architect: BekensteinArchitect) -> None:
+    def test_compute_max_parameters_large_values(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa com valores grandes."""
-        max_params = architect.compute_max_parameters(compute_budget=1e6, spatial_extent=1e6)
+        max_params = architect.compute_max_parameters(
+            compute_budget=1e6, spatial_extent=1e6
+        )
 
         # Deve retornar um número válido
         assert max_params > 0
         assert isinstance(max_params, int)
 
-    def test_compute_max_parameters_small_values(self, architect: BekensteinArchitect) -> None:
+    def test_compute_max_parameters_small_values(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa com valores pequenos."""
-        max_params = architect.compute_max_parameters(compute_budget=1e-6, spatial_extent=1e-6)
+        max_params = architect.compute_max_parameters(
+            compute_budget=1e-6, spatial_extent=1e-6
+        )
 
         # Pode ser zero ou muito pequeno
         assert max_params >= 0
         assert isinstance(max_params, int)
 
-    def test_recommend_architecture_positive_params(self, architect: BekensteinArchitect) -> None:
+    def test_recommend_architecture_positive_params(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa recomendação de arquitetura com parâmetros positivos."""
         target_params = 1000000  # 1M parameters
 
@@ -117,7 +139,9 @@ class TestBekensteinArchitect:
         assert recommendation["num_layers"] > 0
         assert recommendation["params_per_layer"] > 0
 
-    def test_recommend_architecture_zero_params(self, architect: BekensteinArchitect) -> None:
+    def test_recommend_architecture_zero_params(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa recomendação com zero parâmetros."""
         recommendation = architect.recommend_architecture(0)
 
@@ -125,7 +149,9 @@ class TestBekensteinArchitect:
         assert recommendation["params_per_layer"] == 0
         assert recommendation["total_params"] == 0
 
-    def test_recommend_architecture_small_params(self, architect: BekensteinArchitect) -> None:
+    def test_recommend_architecture_small_params(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa com número pequeno de parâmetros."""
         target_params = 10
 
@@ -134,7 +160,9 @@ class TestBekensteinArchitect:
         assert recommendation["num_layers"] >= 1
         assert recommendation["total_params"] == target_params
 
-    def test_recommend_architecture_large_params(self, architect: BekensteinArchitect) -> None:
+    def test_recommend_architecture_large_params(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa com número grande de parâmetros."""
         target_params = 1_000_000_000  # 1B parameters
 
@@ -144,7 +172,9 @@ class TestBekensteinArchitect:
         assert recommendation["params_per_layer"] > 0
         assert recommendation["total_params"] == target_params
 
-    def test_recommend_architecture_consistency(self, architect: BekensteinArchitect) -> None:
+    def test_recommend_architecture_consistency(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa consistência da distribuição de parâmetros."""
         target_params = 1024
 
@@ -168,14 +198,18 @@ class TestBekensteinArchitect:
         # Mais parâmetros devem resultar em mais layers
         assert rec_large["num_layers"] >= rec_small["num_layers"]
 
-    def test_recommend_architecture_returns_dict(self, architect: BekensteinArchitect) -> None:
+    def test_recommend_architecture_returns_dict(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa que retorna um dicionário válido."""
         recommendation = architect.recommend_architecture(1000)
 
         assert isinstance(recommendation, dict)
         assert len(recommendation) == 3
 
-    def test_compute_max_parameters_deterministic(self, architect: BekensteinArchitect) -> None:
+    def test_compute_max_parameters_deterministic(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa que o cálculo é determinístico."""
         budget = 5.0
         extent = 3.0
@@ -185,7 +219,9 @@ class TestBekensteinArchitect:
 
         assert result1 == result2
 
-    def test_recommend_architecture_deterministic(self, architect: BekensteinArchitect) -> None:
+    def test_recommend_architecture_deterministic(
+        self, architect: BekensteinArchitect
+    ) -> None:
         """Testa que a recomendação é determinística."""
         target = 5000
 
@@ -203,7 +239,9 @@ class TestBekensteinIntegration:
         architect = BekensteinArchitect()
 
         # 1. Calcular capacidade máxima
-        max_params = architect.compute_max_parameters(compute_budget=10.0, spatial_extent=5.0)
+        max_params = architect.compute_max_parameters(
+            compute_budget=10.0, spatial_extent=5.0
+        )
 
         # 2. Recomendar arquitetura baseada na capacidade
         if max_params > 0:
@@ -240,13 +278,17 @@ class TestBekensteinEdgeCases:
     def test_negative_budget(self, architect: BekensteinArchitect) -> None:
         """Testa comportamento com budget negativo."""
         # Não deveria quebrar, mas resultado pode ser indefinido
-        result = architect.compute_max_parameters(compute_budget=-1.0, spatial_extent=1.0)
+        result = architect.compute_max_parameters(
+            compute_budget=-1.0, spatial_extent=1.0
+        )
         # Aceita qualquer resultado válido (incluindo negativo ou zero)
         assert isinstance(result, int)
 
     def test_negative_extent(self, architect: BekensteinArchitect) -> None:
         """Testa comportamento com extent negativo."""
-        result = architect.compute_max_parameters(compute_budget=1.0, spatial_extent=-1.0)
+        result = architect.compute_max_parameters(
+            compute_budget=1.0, spatial_extent=-1.0
+        )
         assert isinstance(result, int)
 
     def test_very_small_target(self, architect: BekensteinArchitect) -> None:

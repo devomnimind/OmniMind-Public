@@ -18,7 +18,9 @@ class TestActiveInferenceAgent:
 
     def test_initialization(self) -> None:
         """Test agent initialization."""
-        agent = ActiveInferenceAgent(sensory_dim=64, symbolic_dim=128, imaginary_dim=256)
+        agent = ActiveInferenceAgent(
+            sensory_dim=64, symbolic_dim=128, imaginary_dim=256
+        )
 
         assert agent.sensory_dim == 64
         assert agent.symbolic_dim == 128

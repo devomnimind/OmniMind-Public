@@ -48,7 +48,9 @@ class DummyHelper:
     ) -> Any:
         self.calls += 1
         if not self.pages:
-            return type("DummyPage", (), {"nodes": [], "has_next": False, "cursor": None})
+            return type(
+                "DummyPage", (), {"nodes": [], "has_next": False, "cursor": None}
+            )
         page = self.pages.pop(0)
         return type(
             "DummyPage",

@@ -210,7 +210,9 @@ class TestDataStructureTypes:
             "Authorization": "Bearer token",
         }
         assert isinstance(headers, dict)
-        assert all(isinstance(k, str) and isinstance(v, str) for k, v in headers.items())
+        assert all(
+            isinstance(k, str) and isinstance(v, str) for k, v in headers.items()
+        )
 
     def test_metadata_empty(self) -> None:
         """Testa Metadata vazio."""

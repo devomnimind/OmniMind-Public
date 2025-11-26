@@ -137,7 +137,9 @@ class TestImmutableAuditSystem:
 
     def test_log_action_global_function(self) -> None:
         """Testa função global log_action."""
-        hash_result = log_action(action="global_test", details={"global": True}, category="test")
+        hash_result = log_action(
+            action="global_test", details={"global": True}, category="test"
+        )
 
         assert isinstance(hash_result, str)
         assert len(hash_result) == 64

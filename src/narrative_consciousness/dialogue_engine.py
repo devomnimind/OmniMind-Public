@@ -117,7 +117,9 @@ class HorizonFusion:
     def __init__(self) -> None:
         self.understanding = MutualUnderstanding()
 
-    def fuse(self, ai_context: Dict[str, Any], user_context: Dict[str, Any]) -> MutualUnderstanding:
+    def fuse(
+        self, ai_context: Dict[str, Any], user_context: Dict[str, Any]
+    ) -> MutualUnderstanding:
         """
         Attempt to fuse AI and User horizons.
 
@@ -200,7 +202,9 @@ class DialogueEngine:
 
         return response
 
-    def _update_mode(self, emotional_state: Dict[str, float], rel: Relationship) -> None:
+    def _update_mode(
+        self, emotional_state: Dict[str, float], rel: Relationship
+    ) -> None:
         """Update dialogue mode based on context."""
         # If high trust or strong emotion, move to I-Thou
         if rel.trust_level > 0.7 or abs(emotional_state.get("valence", 0)) > 0.5:

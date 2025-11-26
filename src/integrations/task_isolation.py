@@ -39,7 +39,9 @@ class IsolatedTask:
             content += f"|{str(sorted(self.context.items()))}"
         if self.files:
             for file_info in sorted(self.files, key=lambda x: x.get("name", "")):
-                content += f"|{file_info.get('name', '')}|{file_info.get('content', '')}"
+                content += (
+                    f"|{file_info.get('name', '')}|{file_info.get('content', '')}"
+                )
 
         return hashlib.sha256(content.encode("utf-8")).hexdigest()
 
@@ -143,7 +145,9 @@ class TaskIsolationEngine:
                 compiled = re.compile(pattern, re.IGNORECASE | re.MULTILINE | re.DOTALL)
                 patterns.append(compiled)
             except re.error as e:
-                logger.warning("Invalid forbidden pattern", pattern=pattern, error=str(e))
+                logger.warning(
+                    "Invalid forbidden pattern", pattern=pattern, error=str(e)
+                )
 
         return patterns
 
@@ -157,7 +161,9 @@ class TaskIsolationEngine:
         Returns:
             Tarefa isolada segura
         """
-        logger.info("Isolating task context", task_id=getattr(task_spec, "task_id", "unknown"))
+        logger.info(
+            "Isolating task context", task_id=getattr(task_spec, "task_id", "unknown")
+        )
 
         # Sanitiza prompt
         clean_prompt = self._sanitize_text(task_spec.prompt)
@@ -219,7 +225,9 @@ class TaskIsolationEngine:
             sanitized = re.sub(r"\b[\w\.-]+@[\w\.-]+\.\w+\b", "[EMAIL]", sanitized)
 
         if self.sanitization_rules.get("remove_ip_addresses"):
-            sanitized = re.sub(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", "[IP_ADDRESS]", sanitized)
+            sanitized = re.sub(
+                r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", "[IP_ADDRESS]", sanitized
+            )
 
         if self.sanitization_rules.get("remove_file_paths"):
             sanitized = re.sub(r"/[^\s]+\.[a-zA-Z0-9]+", "[FILE_PATH]", sanitized)
@@ -256,13 +264,17 @@ class TaskIsolationEngine:
         for keyword in sensitive_keywords:
             # Substitui palavra-chave seguida de = ou : e valor
             pattern = rf"\b{re.escape(keyword)}\s*[=:]\s*([^\s,]*)"
-            sanitized = re.sub(pattern, f"{keyword}=[REDACTED]", sanitized, flags=re.IGNORECASE)
+            sanitized = re.sub(
+                pattern, f"{keyword}=[REDACTED]", sanitized, flags=re.IGNORECASE
+            )
 
         return sanitized
 
     def _limit_prompt_length(self, prompt: str) -> str:
         """Limita tamanho do prompt"""
-        max_length = self.config.get("resource_limits", {}).get("max_prompt_length", 10000)
+        max_length = self.config.get("resource_limits", {}).get(
+            "max_prompt_length", 10000
+        )
 
         if len(prompt) > max_length:
             truncated = prompt[: max_length - 3] + "..."
@@ -281,7 +293,8 @@ class TaskIsolationEngine:
 
         # Limita tamanho total do contexto
         max_context_size = (
-            self.config.get("resource_limits", {}).get("max_context_size_kb", 500) * 1024
+            self.config.get("resource_limits", {}).get("max_context_size_kb", 500)
+            * 1024
         )
 
         # Chaves sensíveis que devem ter seus valores mascarados
@@ -345,11 +358,15 @@ class TaskIsolationEngine:
 
         return isolated
 
-    async def _filter_allowed_files(self, files: List[Dict[str, str]]) -> List[Dict[str, str]]:
+    async def _filter_allowed_files(
+        self, files: List[Dict[str, str]]
+    ) -> List[Dict[str, str]]:
         """Filtra arquivos permitidos baseado em regras de segurança"""
         allowed_files = []
         max_files = self.config.get("resource_limits", {}).get("max_context_files", 5)
-        max_file_size = self.config.get("resource_limits", {}).get("max_file_size_kb", 100) * 1024
+        max_file_size = (
+            self.config.get("resource_limits", {}).get("max_file_size_kb", 100) * 1024
+        )
         allowed_extensions = set(self.config.get("allowed_file_extensions", []))
 
         for file_info in files[:max_files]:  # Limita número de arquivos
@@ -384,7 +401,9 @@ class TaskIsolationEngine:
 
         return allowed_files
 
-    def _is_extension_allowed(self, filename: str, allowed_extensions: Set[str]) -> bool:
+    def _is_extension_allowed(
+        self, filename: str, allowed_extensions: Set[str]
+    ) -> bool:
         """Verifica se extensão do arquivo é permitida"""
         if not allowed_extensions:
             return True  # Se não há restrições, permite tudo

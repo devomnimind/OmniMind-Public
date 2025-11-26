@@ -43,7 +43,9 @@ class EmergenceDetector:
 
         logger.info("EmergenceDetector initialized")
 
-    def detect_patterns(self, agent_states: List[Dict[str, Any]]) -> List[EmergentPattern]:
+    def detect_patterns(
+        self, agent_states: List[Dict[str, Any]]
+    ) -> List[EmergentPattern]:
         """
         Detecta padrões emergentes a partir de estados de agentes.
 
@@ -107,13 +109,17 @@ class EmergenceDetector:
         Returns:
             Padrão de clustering se detectado, None caso contrário
         """
-        has_clusters, clusters = detect_clustering(positions, self.config.clustering_threshold)
+        has_clusters, clusters = detect_clustering(
+            positions, self.config.clustering_threshold
+        )
 
         if not has_clusters:
             return None
 
         # Verifica se há clusters significativos
-        significant_clusters = [c for c in clusters if len(c) >= self.config.min_pattern_size]
+        significant_clusters = [
+            c for c in clusters if len(c) >= self.config.min_pattern_size
+        ]
 
         if not significant_clusters:
             return None
@@ -182,7 +188,9 @@ class EmergenceDetector:
 
         # Identifica participantes sincronizados
         participants = [
-            state.get("id", str(i)) for i, state in enumerate(agent_states) if state.get("velocity")
+            state.get("id", str(i))
+            for i, state in enumerate(agent_states)
+            if state.get("velocity")
         ]
 
         return EmergentPattern(
@@ -220,7 +228,9 @@ class EmergenceDetector:
 
         # Calcula variance/spread de fitness (alta = mais especialização)
         mean_fitness = sum(valid_fitnesses) / len(valid_fitnesses)
-        variance = sum((f - mean_fitness) ** 2 for f in valid_fitnesses) / len(valid_fitnesses)
+        variance = sum((f - mean_fitness) ** 2 for f in valid_fitnesses) / len(
+            valid_fitnesses
+        )
 
         # Normaliza variance (threshold empírico)
         specialization_score = min(variance / 100.0, 1.0)
@@ -267,12 +277,16 @@ class EmergenceDetector:
 
         # Conta por tipo
         for pattern_type in EmergenceType:
-            count = sum(1 for p in self.detected_patterns if p.pattern_type == pattern_type)
+            count = sum(
+                1 for p in self.detected_patterns if p.pattern_type == pattern_type
+            )
             if count > 0:
                 summary["by_type"][pattern_type.value] = count
 
         # Últimos 5 padrões
-        recent = sorted(self.detected_patterns, key=lambda p: p.timestamp, reverse=True)[:5]
+        recent = sorted(
+            self.detected_patterns, key=lambda p: p.timestamp, reverse=True
+        )[:5]
         summary["recent_patterns"] = [
             {
                 "type": p.pattern_type.value,

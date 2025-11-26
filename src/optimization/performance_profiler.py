@@ -89,7 +89,9 @@ class PerformanceProfiler:
         self.metrics_history: List[PerformanceMetrics] = []
         self.process = psutil.Process()
 
-        logger.info("performance_profiler_initialized", metrics_dir=str(self.metrics_dir))
+        logger.info(
+            "performance_profiler_initialized", metrics_dir=str(self.metrics_dir)
+        )
 
     def profile_execution(
         self, func: Callable[..., Any], *args: Any, **kwargs: Any
@@ -164,7 +166,9 @@ class PerformanceProfiler:
 
         # Get recent metrics
         recent = (
-            self.metrics_history[-10:] if len(self.metrics_history) >= 10 else self.metrics_history
+            self.metrics_history[-10:]
+            if len(self.metrics_history) >= 10
+            else self.metrics_history
         )
 
         # Check CPU utilization

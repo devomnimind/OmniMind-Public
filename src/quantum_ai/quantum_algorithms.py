@@ -191,7 +191,9 @@ class GroverSearch:
         self.circuit = QuantumCircuit(self.num_qubits)
         self.logger = logger.bind(algorithm="grover")
 
-    def search(self, oracle: Callable[[int], bool], num_iterations: Optional[int] = None) -> int:
+    def search(
+        self, oracle: Callable[[int], bool], num_iterations: Optional[int] = None
+    ) -> int:
         """
         Search for marked item.
 
@@ -245,7 +247,9 @@ class GroverSearch:
         # Conditional phase shift
         mean = sum(self.circuit.state.amplitudes) / len(self.circuit.state.amplitudes)
         for i in range(len(self.circuit.state.amplitudes)):
-            self.circuit.state.amplitudes[i] = 2 * mean - self.circuit.state.amplitudes[i]
+            self.circuit.state.amplitudes[i] = (
+                2 * mean - self.circuit.state.amplitudes[i]
+            )
 
         # Hadamard on all qubits
         for i in range(self.num_qubits):
@@ -304,7 +308,9 @@ class QuantumAnnealer:
         for step in range(num_steps):
             # Temperature schedule (linear)
             progress = step / num_steps
-            temperature = self.initial_temp * (1 - progress) + self.final_temp * progress
+            temperature = (
+                self.initial_temp * (1 - progress) + self.final_temp * progress
+            )
 
             # Quantum tunneling probability (decreases with progress)
             tunnel_prob = 0.5 * (1 - progress)

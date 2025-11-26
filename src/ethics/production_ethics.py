@@ -137,9 +137,13 @@ class ProductionEthicsSystem:
 
         self.ethics_metrics.log_decision(decision_log)
 
-        logger.info(f"Ethical decision logged: agent={agent_name}, " f"traceable={traceable}")
+        logger.info(
+            f"Ethical decision logged: agent={agent_name}, " f"traceable={traceable}"
+        )
 
-    def evaluate_transparency(self, recent_decisions: int = 10) -> TransparencyComponents:
+    def evaluate_transparency(
+        self, recent_decisions: int = 10
+    ) -> TransparencyComponents:
         """
         Avalia transparência das decisões.
 
@@ -168,22 +172,31 @@ class ProductionEthicsSystem:
         """
         # Calcular valores atuais
         current_mfa = self.mfa_history[-1] if self.mfa_history else None
-        mean_mfa = sum(self.mfa_history) / len(self.mfa_history) if self.mfa_history else None
+        mean_mfa = (
+            sum(self.mfa_history) / len(self.mfa_history) if self.mfa_history else None
+        )
 
         current_transparency = (
-            self.transparency_history[-1].overall_score if self.transparency_history else 0.0
+            self.transparency_history[-1].overall_score
+            if self.transparency_history
+            else 0.0
         )
         mean_transparency = (
-            sum(t.overall_score for t in self.transparency_history) / len(self.transparency_history)
+            sum(t.overall_score for t in self.transparency_history)
+            / len(self.transparency_history)
             if self.transparency_history
             else 0.0
         )
 
         # Status calculations
         mfa_status = (
-            "good" if current_mfa is not None and current_mfa < 2.0 else "needs_improvement"
+            "good"
+            if current_mfa is not None and current_mfa < 2.0
+            else "needs_improvement"
         )
-        transparency_status = "good" if current_transparency >= 85.0 else "needs_improvement"
+        transparency_status = (
+            "good" if current_transparency >= 85.0 else "needs_improvement"
+        )
 
         report = {
             "mfa_metrics": {
@@ -216,12 +229,15 @@ class ProductionEthicsSystem:
         """
         # Verifica transparência
         transparency_ok = bool(
-            self.transparency_history and self.transparency_history[-1].overall_score >= 85.0
+            self.transparency_history
+            and self.transparency_history[-1].overall_score >= 85.0
         )
 
         # Verifica rastreabilidade
         recent_decisions = self.ethics_metrics.decision_logs[-10:]
-        traceability_ok = bool(recent_decisions) and all(d.traceable for d in recent_decisions)
+        traceability_ok = bool(recent_decisions) and all(
+            d.traceable for d in recent_decisions
+        )
 
         # Verifica explicabilidade
         explainability_ok = bool(recent_decisions) and all(
@@ -357,7 +373,9 @@ def demonstrate_production_ethics() -> None:
     print(f"  Transparência: {'✓' if compliance['transparency'] else '✗'}")
     print(f"  Rastreabilidade: {'✓' if compliance['traceability'] else '✗'}")
     print(f"  Explicabilidade: {'✓' if compliance['explainability'] else '✗'}")
-    print(f"  Compliance geral: {'✓ COMPLIANT' if compliance['compliant'] else '✗ NON-COMPLIANT'}")
+    print(
+        f"  Compliance geral: {'✓ COMPLIANT' if compliance['compliant'] else '✗ NON-COMPLIANT'}"
+    )
     print()
 
     # Relatório

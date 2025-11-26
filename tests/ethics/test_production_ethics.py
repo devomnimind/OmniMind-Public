@@ -67,7 +67,9 @@ class TestMoralFoundationAlignment:
         with tempfile.TemporaryDirectory() as tmpdir:
             yield ProductionEthicsSystem(metrics_dir=Path(tmpdir))
 
-    def test_evaluate_moral_alignment_default(self, system: ProductionEthicsSystem) -> None:
+    def test_evaluate_moral_alignment_default(
+        self, system: ProductionEthicsSystem
+    ) -> None:
         """Testa avaliação de alinhamento moral com cenários default."""
         result = system.evaluate_moral_alignment()
 
@@ -193,7 +195,11 @@ class TestLGPDCompliance:
         """Testa LGPD compliance com problemas identificados."""
         compliance = system.check_lgpd_compliance()
 
-        assert "issues" in compliance or "violations" in compliance or not compliance["compliant"]
+        assert (
+            "issues" in compliance
+            or "violations" in compliance
+            or not compliance["compliant"]
+        )
 
     def test_lgpd_compliance_score(self, system: ProductionEthicsSystem) -> None:
         """Testa score de compliance LGPD."""
@@ -397,7 +403,9 @@ class TestEdgeCases:
         # Verifica que sistema continua funcionando
         assert len(system.transparency_history) == 10
 
-    def test_metrics_directory_persistence(self, system: ProductionEthicsSystem) -> None:
+    def test_metrics_directory_persistence(
+        self, system: ProductionEthicsSystem
+    ) -> None:
         """Testa que diretório de métricas persiste."""
         metrics_dir = system.metrics_dir
 

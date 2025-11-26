@@ -198,7 +198,9 @@ class TestQLearningState:
 
     def test_qlearning_state_creation(self) -> None:
         """Testa criação de estado Q-learning."""
-        state = QLearningState(state="s1", action="a1", reward=1.0, next_state="s2", q_value=0.5)
+        state = QLearningState(
+            state="s1", action="a1", reward=1.0, next_state="s2", q_value=0.5
+        )
 
         assert state.state == "s1"
         assert state.action == "a1"

@@ -62,7 +62,8 @@ class AsyncMCPClient:
         """
         if httpx is None:
             raise RuntimeError(
-                "httpx is required for AsyncMCPClient. " "Install with: pip install httpx"
+                "httpx is required for AsyncMCPClient. "
+                "Install with: pip install httpx"
             )
 
         self.endpoint = endpoint
@@ -153,12 +154,16 @@ class AsyncMCPClient:
             "id": request_id,
         }
 
-        last_exception: MCPTimeoutError | MCPConnectionError | MCPClientError | None = None
+        last_exception: MCPTimeoutError | MCPConnectionError | MCPClientError | None = (
+            None
+        )
         backoff = self.retry_backoff
 
         for attempt in range(self.max_retries):
             try:
-                logger.debug(f"MCP request {method} (attempt {attempt + 1}/{self.max_retries})")
+                logger.debug(
+                    f"MCP request {method} (attempt {attempt + 1}/{self.max_retries})"
+                )
 
                 response = await self._client.post(
                     self.endpoint, json=payload, headers=self._headers
@@ -180,7 +185,9 @@ class AsyncMCPClient:
                 return response_payload["result"]
 
             except httpx.TimeoutException as exc:
-                last_exception = MCPTimeoutError(f"Request timed out after {self.timeout}s: {exc}")
+                last_exception = MCPTimeoutError(
+                    f"Request timed out after {self.timeout}s: {exc}"
+                )
                 logger.warning(f"MCP timeout (attempt {attempt + 1}): {exc}")
 
             except httpx.ConnectError as exc:
@@ -240,10 +247,14 @@ class AsyncMCPClient:
         Raises:
             MCPClientError: If read fails
         """
-        result = await self._request_with_retry("read_file", {"path": path, "encoding": encoding})
+        result = await self._request_with_retry(
+            "read_file", {"path": path, "encoding": encoding}
+        )
         return str(result)
 
-    async def write_file(self, path: str, content: str, encoding: str = "utf-8") -> Dict[str, Any]:
+    async def write_file(
+        self, path: str, content: str, encoding: str = "utf-8"
+    ) -> Dict[str, Any]:
         """Write file contents to MCP server.
 
         Args:
@@ -275,7 +286,9 @@ class AsyncMCPClient:
         Raises:
             MCPClientError: If list fails
         """
-        result = await self._request_with_retry("list_dir", {"path": path, "recursive": recursive})
+        result = await self._request_with_retry(
+            "list_dir", {"path": path, "recursive": recursive}
+        )
         return dict(result)
 
     async def stat(self, path: str) -> Dict[str, Any]:

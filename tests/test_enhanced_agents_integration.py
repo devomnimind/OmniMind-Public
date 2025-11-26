@@ -45,7 +45,9 @@ system:
         config_file.write_text(config_content)
         return CodeAgent(str(config_file))
 
-    def test_code_agent_ast_integration(self, code_agent: CodeAgent, tmp_path: Path) -> None:
+    def test_code_agent_ast_integration(
+        self, code_agent: CodeAgent, tmp_path: Path
+    ) -> None:
         """Testa integração do CodeAgent com AST parser"""
         # Criar arquivo Python de teste
         test_file = tmp_path / "test_code.py"
@@ -158,7 +160,9 @@ system:
         assert "pytest>=7.0.0" in result["dependencies"]["python"]
         assert result["total_deps"] >= 2
 
-    def test_architect_diagram_generation(self, architect_agent: ArchitectAgent) -> None:
+    def test_architect_diagram_generation(
+        self, architect_agent: ArchitectAgent
+    ) -> None:
         """Testa geração de diagramas"""
         components = ["Frontend", "Backend", "Database"]
         connections = [

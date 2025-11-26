@@ -362,8 +362,12 @@ class TestGoalOptimizer:
     def test_reallocate_resources(self):
         """Test resource reallocation."""
         setter = GoalSetter()
-        goal1 = Goal(description="Goal1", priority=GoalPriority.HIGH, status=GoalStatus.ACTIVE)
-        goal2 = Goal(description="Goal2", priority=GoalPriority.LOW, status=GoalStatus.ACTIVE)
+        goal1 = Goal(
+            description="Goal1", priority=GoalPriority.HIGH, status=GoalStatus.ACTIVE
+        )
+        goal2 = Goal(
+            description="Goal2", priority=GoalPriority.LOW, status=GoalStatus.ACTIVE
+        )
 
         setter.hierarchy.add_goal(goal1)
         setter.hierarchy.add_goal(goal2)

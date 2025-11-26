@@ -157,7 +157,11 @@ class Phase16Integration:
 
         # Process through embodied sensory integration
         visual = self.sensory.process_visual_input(visual_description)
-        audio = self.sensory.process_audio_input(audio_description) if audio_description else None
+        audio = (
+            self.sensory.process_audio_input(audio_description)
+            if audio_description
+            else None
+        )
 
         # Update cognitive state with sensory info
         self.current_state.sensory_state = {
@@ -305,9 +309,9 @@ class Phase16Integration:
         }
 
         if self.current_state.existential_state:
-            self.current_state.existential_state["mortality_awareness"] = mortality_state[
-                "awareness_level"
-            ]
+            self.current_state.existential_state["mortality_awareness"] = (
+                mortality_state["awareness_level"]
+            )
 
         if self.current_state.creative_state is None:
             self.current_state.creative_state = {}
@@ -316,7 +320,8 @@ class Phase16Integration:
             self.current_state.creative_state["serendipity"] = True
 
         logger.info(
-            f"Emotional response: {marker.emotion.value} " f"(valence={marker.somatic_marker:.2f})"
+            f"Emotional response: {marker.emotion.value} "
+            f"(valence={marker.somatic_marker:.2f})"
         )
 
     def execute_goal(self, goal_description: str) -> Dict[str, Any]:
@@ -438,7 +443,9 @@ class Phase16Integration:
 
         # 2. REASON - Neurosymbolic processing
         logger.info("[2/5] REASON - Engaging abstract reasoning...")
-        reasoning, confidence = self.reason_about_situation({"goal": goal, "visual": visual_input})
+        reasoning, confidence = self.reason_about_situation(
+            {"goal": goal, "visual": visual_input}
+        )
 
         # 3. FEEL - Generate emotional response
         logger.info("[3/5] FEEL - Generating emotional feedback...")

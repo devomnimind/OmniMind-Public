@@ -42,7 +42,9 @@ class TestContextMCPServer:
         server = ContextMCPServer()
 
         # Teste com nível "low"
-        result_low = server.store_context(level="low", content="Low level content", metadata={})
+        result_low = server.store_context(
+            level="low", content="Low level content", metadata={}
+        )
         assert result_low["level"] == "low"
         assert result_low["status"] == "stored"
 
@@ -123,7 +125,9 @@ class TestContextMCPServer:
     def test_store_context_with_empty_metadata(self) -> None:
         """Testa armazenamento com metadata vazio."""
         server = ContextMCPServer()
-        result = server.store_context(level="test", content="Content without metadata", metadata={})
+        result = server.store_context(
+            level="test", content="Content without metadata", metadata={}
+        )
         assert result["status"] == "stored"
         assert result["level"] == "test"
 

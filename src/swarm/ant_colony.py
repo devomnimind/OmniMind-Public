@@ -68,7 +68,9 @@ class AntColonyOptimizer:
         # Inicializa feromônios
         self._initialize_pheromones(num_cities)
 
-        logger.info(f"Starting ACO optimization: {num_cities} cities, " f"{max_iter} iterations")
+        logger.info(
+            f"Starting ACO optimization: {num_cities} cities, " f"{max_iter} iterations"
+        )
 
         for iteration in range(max_iter):
             self.iteration = iteration
@@ -86,7 +88,9 @@ class AntColonyOptimizer:
                 if cost < self.best_cost:
                     self.best_cost = cost
                     self.best_path = path
-                    logger.debug(f"New best found at iteration {iteration}: " f"cost={cost:.2f}")
+                    logger.debug(
+                        f"New best found at iteration {iteration}: " f"cost={cost:.2f}"
+                    )
 
             # Atualiza feromônios
             self._update_pheromones(all_paths, all_costs)
@@ -147,7 +151,9 @@ class AntColonyOptimizer:
                 if i != j:
                     self.pheromones[(i, j)] = initial_pheromone
 
-    def _construct_solution(self, distance_matrix: List[List[float]]) -> Tuple[List[int], float]:
+    def _construct_solution(
+        self, distance_matrix: List[List[float]]
+    ) -> Tuple[List[int], float]:
         """
         Constrói uma solução (tour) usando trilhas de feromônio.
 
@@ -255,7 +261,9 @@ class AntColonyOptimizer:
         # Elitismo: melhor formiga deposita feromônio extra
         if self.best_path:
             elite_deposit = (
-                self.config.elite_weight * self.config.pheromone_deposit / self.best_cost
+                self.config.elite_weight
+                * self.config.pheromone_deposit
+                / self.best_cost
             )
             for i in range(len(self.best_path)):
                 j = (i + 1) % len(self.best_path)

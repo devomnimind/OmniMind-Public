@@ -113,12 +113,16 @@ class TestGPUResourcePool:
         # Verify allocation worked
         assert allocated_device is not None, "GPU should be allocated"
         assert allocated_device == 0, "Should allocate device_id 0"
-        assert len(pool.get_available_gpus()) == 0, "GPU should not be available when reserved"
+        assert (
+            len(pool.get_available_gpus()) == 0
+        ), "GPU should not be available when reserved"
 
         pool.release_gpu(task.task_id)
 
         # Verify release worked
-        assert len(pool.get_available_gpus()) == 1, "GPU should be available after release"
+        assert (
+            len(pool.get_available_gpus()) == 1
+        ), "GPU should be available after release"
         assert task.is_completed(), "Task should be marked as completed"
 
     def test_gpu_load_balancing(self) -> None:

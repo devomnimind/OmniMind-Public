@@ -136,7 +136,10 @@ def test_calculate_entropy_single_state() -> None:
     """Test entropy with single repeated state."""
     analyzer = IITAnalyzer()
 
-    states = [SystemState(state_id=f"s{i}", elements={"a": True, "b": False}) for i in range(10)]
+    states = [
+        SystemState(state_id=f"s{i}", elements={"a": True, "b": False})
+        for i in range(10)
+    ]
 
     entropy = analyzer.calculate_entropy(states)
 

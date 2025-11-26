@@ -86,7 +86,9 @@ class DataSubject:
             "purpose": purpose,
             "data_categories": [cat.value for cat in data_categories],
             "retention_period": (
-                retention_period.value.total_seconds() if retention_period.value else None
+                retention_period.value.total_seconds()
+                if retention_period.value
+                else None
             ),
             "status": ConsentStatus.GRANTED.value,
             "granted_at": datetime.now(UTC).isoformat(),
@@ -110,7 +112,9 @@ class DataSubject:
         if consent_id in self.consents:
             self.consents[consent_id]["status"] = ConsentStatus.WITHDRAWN.value
             self.consents[consent_id]["withdrawn_at"] = datetime.now(UTC).isoformat()
-            logger.info("Consent withdrawn", subject_id=self.subject_id, consent_id=consent_id)
+            logger.info(
+                "Consent withdrawn", subject_id=self.subject_id, consent_id=consent_id
+            )
             return True
         return False
 
@@ -153,7 +157,9 @@ class DataProcessingRecord:
         self.data_categories = data_categories
         self.data_controller = data_controller
         self.timestamp = datetime.now(UTC)
-        self.processed_data_hash: Optional[str] = None  # Will be set when data is processed
+        self.processed_data_hash: Optional[str] = (
+            None  # Will be set when data is processed
+        )
 
     def record_processing(self, data_hash: str) -> None:
         """Record that data processing occurred"""
@@ -181,7 +187,9 @@ class GDPRController:
             DataCategory.TECHNICAL: RetentionPeriod.ONE_YEAR,
         }
 
-    def register_data_subject(self, subject_id: str, email: Optional[str] = None) -> DataSubject:
+    def register_data_subject(
+        self, subject_id: str, email: Optional[str] = None
+    ) -> DataSubject:
         """Register a new data subject"""
         if subject_id in self.data_subjects:
             return self.data_subjects[subject_id]
@@ -219,8 +227,12 @@ class GDPRController:
                 return False
 
         # Create processing record
-        record = DataProcessingRecord(subject_id, purpose, data_categories, data_controller)
-        data_hash = hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest()
+        record = DataProcessingRecord(
+            subject_id, purpose, data_categories, data_controller
+        )
+        data_hash = hashlib.sha256(
+            json.dumps(data, sort_keys=True).encode()
+        ).hexdigest()
         record.record_processing(data_hash)
 
         self.processing_records.append(record)
@@ -267,7 +279,9 @@ class GDPRController:
 
         elif right == "rectification":
             # Right to rectification (Article 16)
-            return self._handle_rectification_request(subject, kwargs.get("corrections", {}))
+            return self._handle_rectification_request(
+                subject, kwargs.get("corrections", {})
+            )
 
         elif right == "erasure":
             # Right to erasure (Article 17)
@@ -302,7 +316,9 @@ class GDPRController:
                 },
                 "consents": subject.consents,
                 "processing_records": subject.data_processing_records,
-                "rights_requests": [r for r in subject.rights_requests if r["status"] != "erased"],
+                "rights_requests": [
+                    r for r in subject.rights_requests if r["status"] != "erased"
+                ],
             },
         }
 
@@ -320,7 +336,9 @@ class GDPRController:
         )
         return {"status": "success", "message": "Data rectified successfully"}
 
-    def _handle_erasure_request(self, subject: DataSubject, reason: str) -> Dict[str, Any]:
+    def _handle_erasure_request(
+        self, subject: DataSubject, reason: str
+    ) -> Dict[str, Any]:
         """Handle right to erasure (right to be forgotten)"""
         # Mark all data as erased (don't actually delete for audit purposes)
         subject.consents = {}
@@ -330,7 +348,9 @@ class GDPRController:
         # Anonymize personal data
         subject.email = None
 
-        logger.info("Data erasure completed", subject_id=subject.subject_id, reason=reason)
+        logger.info(
+            "Data erasure completed", subject_id=subject.subject_id, reason=reason
+        )
         return {"status": "success", "message": "Data erased successfully"}
 
     def _handle_restriction_request(self, subject: DataSubject) -> Dict[str, Any]:
@@ -359,11 +379,15 @@ class GDPRController:
             "message": "Data export ready for download",
         }
 
-    def _handle_objection_request(self, subject: DataSubject, reason: str) -> Dict[str, Any]:
+    def _handle_objection_request(
+        self, subject: DataSubject, reason: str
+    ) -> Dict[str, Any]:
         """Handle right to object"""
         subject.consents = {}  # Remove all consents
 
-        logger.info("Processing objection applied", subject_id=subject.subject_id, reason=reason)
+        logger.info(
+            "Processing objection applied", subject_id=subject.subject_id, reason=reason
+        )
         return {"status": "success", "message": "Processing objection applied"}
 
     def enforce_data_retention(self) -> int:
@@ -396,15 +420,20 @@ class GDPRController:
             for record in old_records:
                 record["archived"] = True
 
-        logger.info("Data retention enforcement completed", cleaned_records=cleaned_count)
+        logger.info(
+            "Data retention enforcement completed", cleaned_records=cleaned_count
+        )
         return cleaned_count
 
     def generate_compliance_report(self) -> Dict[str, Any]:
         """Generate GDPR compliance report"""
         total_subjects = len(self.data_subjects)
-        total_consents = sum(len(subject.consents) for subject in self.data_subjects.values())
+        total_consents = sum(
+            len(subject.consents) for subject in self.data_subjects.values()
+        )
         total_processing_records = sum(
-            len(subject.data_processing_records) for subject in self.data_subjects.values()
+            len(subject.data_processing_records)
+            for subject in self.data_subjects.values()
         )
 
         # Calculate consent statistics
@@ -425,7 +454,9 @@ class GDPRController:
                 "total_processing_records": total_processing_records,
                 "consent_status_breakdown": consent_stats,
             },
-            "compliance_status": ("compliant" if total_subjects > 0 else "not_applicable"),
+            "compliance_status": (
+                "compliant" if total_subjects > 0 else "not_applicable"
+            ),
             "last_retention_enforcement": datetime.now(UTC).isoformat(),
         }
 

@@ -36,6 +36,9 @@ class ImmutableAuditSystem:
         # Inicializar cadeia de hash
         self.last_hash = self._load_last_hash()
 
+        # 🔧 RECUPERAÇÃO AUTOMÁTICA: Verificar e reparar integridade na inicialização
+        self._auto_recover_chain()
+
         # Registrar inicialização do sistema
         self._log_system_event(
             "audit_system_initialized",
@@ -56,6 +59,84 @@ class ImmutableAuditSystem:
                 self._log_security_event(f"Erro ao carregar hash chain: {e}")
                 return "0" * 64
         return "0" * 64  # Hash inicial (64 zeros)
+
+    def _auto_recover_chain(self) -> None:
+        """
+        Recuperação automática da cadeia de auditoria na inicialização.
+        Executa verificação e reparo automático se necessário.
+        """
+        if not self.audit_log_file.exists():
+            self._log_system_event(
+                "audit_chain_auto_recover",
+                {"action": "skip_recovery", "reason": "audit_log_not_exists"},
+            )
+            return
+
+        # Verificar integridade atual
+        integrity_check = self.verify_chain_integrity()
+
+        if integrity_check.get("valid", False):
+            # Cadeia íntegra - registrar sucesso
+            self._log_system_event(
+                "audit_chain_auto_recover",
+                {
+                    "action": "integrity_verified",
+                    "events_verified": integrity_check.get("events_verified", 0),
+                    "system_restarts": integrity_check.get("system_restarts", 0),
+                },
+            )
+            return
+
+        # Cadeia corrompida - tentar reparo automático
+        self._log_security_event(
+            f"🔧 Iniciando recuperação automática da cadeia de auditoria. "
+            f"Status: {integrity_check.get('message', 'unknown')}"
+        )
+
+        try:
+            repair_result = self.repair_chain_integrity()
+
+            if repair_result.get("repaired", False):
+                # Reparo bem-sucedido
+                self._log_system_event(
+                    "audit_chain_auto_recover",
+                    {
+                        "action": "repair_successful",
+                        "events_repaired": repair_result.get("events_repaired", 0),
+                        "events_removed": repair_result.get("events_removed", 0),
+                        "system_restarts": repair_result.get("system_restarts", 0),
+                        "backup_file": repair_result.get("backup_file", ""),
+                    },
+                )
+
+                # Recarregar último hash após reparo
+                self.last_hash = self._load_last_hash()
+
+                self._log_security_event(
+                    f"✅ Recuperação automática concluída: {repair_result.get('message', '')}"
+                )
+
+            else:
+                # Reparo falhou - log de erro crítico
+                self._log_security_event(
+                    f"❌ CRÍTICO: Recuperação automática falhou: {repair_result.get('message', '')}"
+                )
+                self._log_system_event(
+                    "audit_chain_auto_recover",
+                    {
+                        "action": "repair_failed",
+                        "error": repair_result.get("message", "unknown"),
+                        "backup_restored": repair_result.get("backup_restored", False),
+                    },
+                )
+
+        except Exception as e:
+            # Erro durante reparo
+            error_msg = f"Erro crítico na recuperação automática: {str(e)}"
+            self._log_security_event(f"❌ {error_msg}")
+            self._log_system_event(
+                "audit_chain_auto_recover", {"action": "repair_error", "error": str(e)}
+            )
 
     def _save_last_hash(self, hash_value: str) -> None:
         """Salva o último hash da cadeia."""
@@ -82,7 +163,9 @@ class ImmutableAuditSystem:
         """
         return hashlib.sha256(content).hexdigest()
 
-    def log_action(self, action: str, details: Dict[str, Any], category: str = "general") -> str:
+    def log_action(
+        self, action: str, details: Dict[str, Any], category: str = "general"
+    ) -> str:
         """
         Registra ação crítica no sistema de auditoria com chain hashing.
 
@@ -201,7 +284,9 @@ class ImmutableAuditSystem:
                             "prev_hash": event.get("prev_hash"),
                         }
 
-                        json_data = json.dumps(event_for_hash, sort_keys=True).encode("utf-8")
+                        json_data = json.dumps(event_for_hash, sort_keys=True).encode(
+                            "utf-8"
+                        )
                         calculated_hash = self.hash_content(json_data)
                         stored_hash = event.get("current_hash")
 
@@ -220,11 +305,15 @@ class ImmutableAuditSystem:
                         events_verified += 1
 
                     except json.JSONDecodeError:
-                        corrupted_events.append({"line": line_num, "error": "JSON inválido"})
+                        corrupted_events.append(
+                            {"line": line_num, "error": "JSON inválido"}
+                        )
 
             # Avaliar resultado baseado em corrupções não autorizadas
             unauthorized_corruptions = [
-                c for c in corrupted_events if not c.get("action", "").startswith("audit_system_")
+                c
+                for c in corrupted_events
+                if not c.get("action", "").startswith("audit_system_")
             ]
 
             if unauthorized_corruptions:
@@ -450,12 +539,17 @@ class ImmutableAuditSystem:
                         "prev_hash": event.get("prev_hash"),
                     }
 
-                    json_data = json.dumps(event_for_hash, sort_keys=True).encode("utf-8")
+                    json_data = json.dumps(event_for_hash, sort_keys=True).encode(
+                        "utf-8"
+                    )
                     calculated_hash = self.hash_content(json_data)
                     stored_hash = event.get("current_hash")
 
                     if calculated_hash != stored_hash:
-                        print(f"⚠️  Hash inválido na linha {line_num} ({action}) - removendo evento")
+                        print(
+                            f"⚠️  Hash inválido na linha {line_num} "
+                            f"({action}) - removendo evento"
+                        )
                         events_removed += 1
                         continue
 

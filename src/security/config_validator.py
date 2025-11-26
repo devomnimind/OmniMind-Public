@@ -106,7 +106,9 @@ class ValidationResult:
             "auto_fixes": self.auto_fixes,
             "dependencies_satisfied": self.dependencies_satisfied,
             "environment_compatible": self.environment_compatible,
-            "error_count": sum(1 for i in self.issues if i.severity == ValidationSeverity.ERROR),
+            "error_count": sum(
+                1 for i in self.issues if i.severity == ValidationSeverity.ERROR
+            ),
             "warning_count": sum(
                 1 for i in self.issues if i.severity == ValidationSeverity.WARNING
             ),
@@ -250,7 +252,9 @@ class ConfigurationValidator:
             if expected_type == "object" and isinstance(value, dict):
                 self._validate_schema(value, prop_schema, result, current_path)
 
-    def _validate_dependencies(self, config: Dict[str, Any], result: ValidationResult) -> None:
+    def _validate_dependencies(
+        self, config: Dict[str, Any], result: ValidationResult
+    ) -> None:
         """Validate configuration dependencies."""
         # Check if required features are enabled when dependencies are present
         dependencies = {
@@ -295,7 +299,9 @@ class ConfigurationValidator:
                     suggestion=f"Disable either '{key1}' or '{key2}'",
                 )
 
-    def _validate_environment(self, config: Dict[str, Any], result: ValidationResult) -> None:
+    def _validate_environment(
+        self, config: Dict[str, Any], result: ValidationResult
+    ) -> None:
         """Validate environment-specific requirements."""
         # Production environment checks
         if self.environment == ConfigEnvironment.PRODUCTION:
@@ -342,7 +348,9 @@ class ConfigurationValidator:
                     auto_fix=True,
                 )
 
-    def _validate_values(self, config: Dict[str, Any], result: ValidationResult) -> None:
+    def _validate_values(
+        self, config: Dict[str, Any], result: ValidationResult
+    ) -> None:
         """Validate specific configuration values."""
         # Port ranges
         port_configs = ["port", "websocket_port", "metrics_port"]
@@ -634,7 +642,9 @@ class ConfigurationValidator:
                     s.settimeout(1)
                     result_code = s.connect_ex(("localhost", port))
                     if result_code == 0:
-                        result["errors"].append(f"Port {port} ({name}) is already in use")
+                        result["errors"].append(
+                            f"Port {port} ({name}) is already in use"
+                        )
                         result["passed"] = False
                     else:
                         result["details"].append(f"Port {port} ({name}) is available")
@@ -665,7 +675,9 @@ class ConfigurationValidator:
                             path.mkdir(parents=True, exist_ok=True)
                             result["details"].append(f"Created directory: {path}")
                         except Exception as e:
-                            result["warnings"].append(f"Could not create {key}: {path} - {e}")
+                            result["warnings"].append(
+                                f"Could not create {key}: {path} - {e}"
+                            )
                     else:
                         result["warnings"].append(f"{key} does not exist: {path}")
                 else:

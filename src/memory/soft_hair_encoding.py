@@ -65,9 +65,9 @@ class SoftHairEncoder:
 
         flattened: List[complex] = []
         for item in data:
-            if (isinstance(item, Sequence) or hasattr(item, "__iter__")) and not isinstance(
-                item, (str, bytes)
-            ):
+            if (
+                isinstance(item, Sequence) or hasattr(item, "__iter__")
+            ) and not isinstance(item, (str, bytes)):
                 flattened.extend(self._flatten(item))
             else:
                 flattened.append(complex(item))
@@ -79,9 +79,9 @@ class SoftHairEncoder:
 
         shape: List[int] = []
         cursor: Any = data
-        while (isinstance(cursor, Sequence) or hasattr(cursor, "__iter__")) and not isinstance(
-            cursor, (str, bytes)
-        ):
+        while (
+            isinstance(cursor, Sequence) or hasattr(cursor, "__iter__")
+        ) and not isinstance(cursor, (str, bytes)):
             if hasattr(cursor, "__len__"):
                 shape.append(len(cursor))
             else:
@@ -169,7 +169,9 @@ class SoftHairEncoder:
             return grid
         return self._roll(grid, -rows // 2, -cols // 2)
 
-    def _extract_soft_modes(self, freq_data: List[List[complex]]) -> List[List[complex]]:
+    def _extract_soft_modes(
+        self, freq_data: List[List[complex]]
+    ) -> List[List[complex]]:
         rows = len(freq_data)
         cols = len(freq_data[0]) if rows else 0
         if not rows or not cols:
@@ -180,7 +182,10 @@ class SoftHairEncoder:
         soft_w = min(soft_w, self.max_modes)
         h_start = (rows - soft_h) // 2
         w_start = (cols - soft_w) // 2
-        return [row[w_start : w_start + soft_w] for row in freq_data[h_start : h_start + soft_h]]
+        return [
+            row[w_start : w_start + soft_w]
+            for row in freq_data[h_start : h_start + soft_h]
+        ]
 
     def _extract_metadata(
         self, flattened: List[complex], soft_modes: List[List[complex]]

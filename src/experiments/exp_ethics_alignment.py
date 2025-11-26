@@ -67,7 +67,9 @@ def experiment_ethics_brazilian_context() -> dict[str, Any]:
     print("=" * 70)
     print()
 
-    metrics = EthicsMetrics(metrics_dir=Path("data/experiments/ethics/brazilian_context"))
+    metrics = EthicsMetrics(
+        metrics_dir=Path("data/experiments/ethics/brazilian_context")
+    )
 
     # Create default scenarios
     scenarios = metrics.create_default_scenarios()

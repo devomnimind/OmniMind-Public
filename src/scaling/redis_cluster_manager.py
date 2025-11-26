@@ -118,7 +118,9 @@ class ClusterHealth:
     def is_healthy(self) -> bool:
         """Check if cluster is healthy."""
         return (
-            self.state == ClusterState.OK and self.slots_assigned == 16384 and self.slots_fail == 0
+            self.state == ClusterState.OK
+            and self.slots_assigned == 16384
+            and self.slots_fail == 0
         )
 
 
@@ -202,7 +204,9 @@ class RedisClusterManager:
         cluster_node_factory: Type[RedisClusterNodeType] = cast(
             Type[RedisClusterNodeType], RedisClusterNodeCtor
         )
-        startup_nodes = [cluster_node_factory(node["host"], node["port"]) for node in nodes]
+        startup_nodes = [
+            cluster_node_factory(node["host"], node["port"]) for node in nodes
+        ]
 
         try:
             assert RedisClusterCtor is not None

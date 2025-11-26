@@ -145,7 +145,9 @@ class TestRetentionPolicyManager:
 
         # Check default policies exist
         assert DataCategory.AUDIT_LOGS.value in manager.config["retention_policies"]
-        assert DataCategory.SECURITY_EVENTS.value in manager.config["retention_policies"]
+        assert (
+            DataCategory.SECURITY_EVENTS.value in manager.config["retention_policies"]
+        )
 
         # Verify reasonable defaults
         audit_retention = manager.get_retention_period(DataCategory.AUDIT_LOGS)

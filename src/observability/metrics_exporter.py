@@ -102,14 +102,17 @@ class Metric:
         # Values
         for metric_value in self.values:
             if metric_value.labels:
-                labels_str = ",".join(f'{k}="{v}"' for k, v in metric_value.labels.items())
+                labels_str = ",".join(
+                    f'{k}="{v}"' for k, v in metric_value.labels.items()
+                )
                 lines.append(
                     f"{self.name}{{{labels_str}}} {metric_value.value} "
                     f"{int(metric_value.timestamp * 1000)}"
                 )
             else:
                 lines.append(
-                    f"{self.name} {metric_value.value} " f"{int(metric_value.timestamp * 1000)}"
+                    f"{self.name} {metric_value.value} "
+                    f"{int(metric_value.timestamp * 1000)}"
                 )
 
         return "\n".join(lines)
@@ -355,8 +358,12 @@ class CustomMetricsExporter:
             return
 
         # Record individual metrics
-        self.record_histogram("model_inference_latency_ms", ml_metrics.model_inference_latency_ms)
-        self.record_gauge("model_throughput_rps", ml_metrics.model_throughput_requests_per_sec)
+        self.record_histogram(
+            "model_inference_latency_ms", ml_metrics.model_inference_latency_ms
+        )
+        self.record_gauge(
+            "model_throughput_rps", ml_metrics.model_throughput_requests_per_sec
+        )
         self.record_gauge("model_accuracy", ml_metrics.model_accuracy)
         self.record_gauge("model_loss", ml_metrics.model_loss)
         self.record_gauge("gpu_utilization", ml_metrics.gpu_utilization_percent)

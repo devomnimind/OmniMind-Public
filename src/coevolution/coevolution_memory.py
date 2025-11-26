@@ -54,7 +54,9 @@ class CoevolutionMemory:
         self.learning_patterns: Dict[str, LearningPattern] = {}
         self.global_insights: List[str] = []
 
-    def store_collaboration(self, human_id: str, task: str, outcome: Dict[str, Any]) -> str:
+    def store_collaboration(
+        self, human_id: str, task: str, outcome: Dict[str, Any]
+    ) -> str:
         """
         Armazena sessão de colaboração.
 
@@ -85,7 +87,9 @@ class CoevolutionMemory:
 
         return session_id
 
-    def complete_session(self, session_id: str, insights: Optional[List[str]] = None) -> None:
+    def complete_session(
+        self, session_id: str, insights: Optional[List[str]] = None
+    ) -> None:
         """
         Completa sessão de colaboração.
 
@@ -211,14 +215,22 @@ class CoevolutionMemory:
         # Implementação simplificada
         if "code" in task_description.lower():
             return "coding"
-        elif "analise" in task_description.lower() or "analysis" in task_description.lower():
+        elif (
+            "analise" in task_description.lower()
+            or "analysis" in task_description.lower()
+        ):
             return "analysis"
-        elif "decisao" in task_description.lower() or "decision" in task_description.lower():
+        elif (
+            "decisao" in task_description.lower()
+            or "decision" in task_description.lower()
+        ):
             return "decision"
         else:
             return "general"
 
-    def get_collaboration_statistics(self, human_id: Optional[str] = None) -> Dict[str, Any]:
+    def get_collaboration_statistics(
+        self, human_id: Optional[str] = None
+    ) -> Dict[str, Any]:
         """
         Retorna estatísticas de colaboração.
 
@@ -247,7 +259,9 @@ class CoevolutionMemory:
 
         # Trust evolution
         trust_deltas = [s.outcome.get("trust_delta", 0.0) for s in sessions_list]
-        avg_trust_evolution = sum(trust_deltas) / len(trust_deltas) if trust_deltas else 0.0
+        avg_trust_evolution = (
+            sum(trust_deltas) / len(trust_deltas) if trust_deltas else 0.0
+        )
 
         return {
             "total_sessions": total,
@@ -288,7 +302,9 @@ class CoevolutionMemory:
         threshold = datetime.now() - timedelta(days=days)
 
         old_sessions = [
-            sid for sid, session in self.sessions.items() if session.start_time < threshold
+            sid
+            for sid, session in self.sessions.items()
+            if session.start_time < threshold
         ]
 
         for sid in old_sessions:

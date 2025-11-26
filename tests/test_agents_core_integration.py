@@ -30,7 +30,9 @@ class InMemoryMemory:
 
     def search_similar(self, *args: Any, **kwargs: Any) -> List[Dict[str, Any]]:
         query = args[0] if args else kwargs.get("query", "")
-        return [episode for episode in self.episodes if query in episode.get("task", "")]
+        return [
+            episode for episode in self.episodes if query in episode.get("task", "")
+        ]
 
     def store_episode(
         self,
@@ -87,7 +89,9 @@ def stub_agent_dependencies(monkeypatch: pytest.MonkeyPatch) -> None:
 
 def test_react_agent_performs_file_and_shell_ops() -> None:
     agent = ReactAgent(str(CONFIG_PATH))
-    home_root = Path(os.environ["HOME"]) / "projects" / "omnimind" / "tmp" / "agents" / "react"
+    home_root = (
+        Path(os.environ["HOME"]) / "projects" / "omnimind" / "tmp" / "agents" / "react"
+    )
     home_root.mkdir(parents=True, exist_ok=True)
 
     target = home_root / "analysis.txt"
@@ -102,7 +106,9 @@ def test_react_agent_performs_file_and_shell_ops() -> None:
     list_result = agent._execute_action("list_files", {"path": str(home_root)})
     assert "analysis.txt" in list_result
 
-    shell_output = agent._execute_action("execute_shell", {"command": f"ls {home_root}"})
+    shell_output = agent._execute_action(
+        "execute_shell", {"command": f"ls {home_root}"}
+    )
     assert "analysis.txt" in shell_output
 
     state: AgentState = {
@@ -177,7 +183,9 @@ def test_orchestrator_parses_and_executes_plan() -> None:
 
 def test_debug_agent_limits_actions() -> None:
     agent = DebugAgent(str(CONFIG_PATH))
-    home_debug = Path(os.environ["HOME"]) / "projects" / "omnimind" / "tmp" / "agents" / "debug"
+    home_debug = (
+        Path(os.environ["HOME"]) / "projects" / "omnimind" / "tmp" / "agents" / "debug"
+    )
     home_debug.mkdir(parents=True, exist_ok=True)
     target = home_debug / "probe.txt"
 
@@ -190,5 +198,7 @@ def test_debug_agent_limits_actions() -> None:
     allowed_payload = json.loads(allowed)
     assert allowed_payload["status"] == "SUCCESS"
 
-    blocked = agent._execute_action("execute_command", {"command": "rm -rf /tmp/nothing"})
+    blocked = agent._execute_action(
+        "execute_command", {"command": "rm -rf /tmp/nothing"}
+    )
     assert "Command not allowed" in blocked

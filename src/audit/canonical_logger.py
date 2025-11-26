@@ -106,13 +106,17 @@ class CanonicalLogger:
 
         # Create new record
         timestamp = datetime.now().isoformat()
-        record_content = f"{timestamp}{ai_agent}{action_type}{target}{result}{description}"
+        record_content = (
+            f"{timestamp}{ai_agent}{action_type}{target}{result}{description}"
+        )
 
         # Calculate hash
         if data["action_log"]:
             prev_hash = data["action_log"][-1]["hash"]
         else:
-            prev_hash = "0000000000000000000000000000000000000000000000000000000000000000"
+            prev_hash = (
+                "0000000000000000000000000000000000000000000000000000000000000000"
+            )
 
         content_hash = hashlib.sha256((prev_hash + record_content).encode()).hexdigest()
 
@@ -174,14 +178,18 @@ class CanonicalLogger:
         with open(self.json_file, "r", encoding="utf-8") as f:
             data = json.load(f)
 
-        expected_hash = "0000000000000000000000000000000000000000000000000000000000000000"
+        expected_hash = (
+            "0000000000000000000000000000000000000000000000000000000000000000"
+        )
 
         for record in data["action_log"]:
             record_content = (
                 f"{record['timestamp']}{record['ai_agent']}{record['action_type']}"
                 f"{record['target']}{record['result']}{record['description']}"
             )
-            calculated_hash = hashlib.sha256((expected_hash + record_content).encode()).hexdigest()
+            calculated_hash = hashlib.sha256(
+                (expected_hash + record_content).encode()
+            ).hexdigest()
 
             if calculated_hash != record["hash"]:
                 logger.error(f"Hash chain broken at record: {record['timestamp']}")

@@ -109,7 +109,9 @@ class MarketplaceAgent:
             MarketplacePlatform.HUGGINGFACE,
         ]
         self.revenue_distribution = revenue_distribution or RevenueDistribution()
-        self.state_file = state_file or Path.home() / ".omnimind" / "marketplace_state.json"
+        self.state_file = (
+            state_file or Path.home() / ".omnimind" / "marketplace_state.json"
+        )
         self.state_file.parent.mkdir(parents=True, exist_ok=True)
         self.min_quality_threshold = min_quality_threshold
 
@@ -161,7 +163,9 @@ class MarketplaceAgent:
                 if quality_score >= self.min_quality_threshold:
                     tool_artifact = improved_artifact
                 else:
-                    logger.error(f"Tool '{tool_name}' could not be improved sufficiently")
+                    logger.error(
+                        f"Tool '{tool_name}' could not be improved sufficiently"
+                    )
                     return None
             else:
                 return None
@@ -201,10 +205,14 @@ class MarketplaceAgent:
             self.monitor_sales_and_feedback(results)
             return pub_request
         else:
-            logger.info(f"Publication of '{tool_name}' not approved by human supervisor")
+            logger.info(
+                f"Publication of '{tool_name}' not approved by human supervisor"
+            )
             return None
 
-    def evaluate_tool_quality(self, tool_artifact: str, metadata: Dict[str, Any]) -> float:
+    def evaluate_tool_quality(
+        self, tool_artifact: str, metadata: Dict[str, Any]
+    ) -> float:
         """
         Evaluate tool quality for marketplace publication.
 
@@ -250,7 +258,9 @@ class MarketplaceAgent:
 
         return min(1.0, score)
 
-    async def improve_tool(self, tool_artifact: str, current_quality: float) -> Optional[str]:
+    async def improve_tool(
+        self, tool_artifact: str, current_quality: float
+    ) -> Optional[str]:
         """
         Attempt to improve tool quality.
 
@@ -261,7 +271,9 @@ class MarketplaceAgent:
         Returns:
             Improved tool artifact or None if improvement failed
         """
-        logger.info(f"Attempting to improve tool (current quality: {current_quality:.2f})")
+        logger.info(
+            f"Attempting to improve tool (current quality: {current_quality:.2f})"
+        )
 
         # In production, this would use CodeAgent to add:
         # - Better documentation
@@ -274,7 +286,9 @@ class MarketplaceAgent:
         # This would integrate with the CodeAgent in production
         return None
 
-    def generate_docs(self, tool_artifact: str, tool_name: str, metadata: Dict[str, Any]) -> str:
+    def generate_docs(
+        self, tool_artifact: str, tool_name: str, metadata: Dict[str, Any]
+    ) -> str:
         """
         Generate documentation for tool.
 

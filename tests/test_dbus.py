@@ -144,7 +144,9 @@ class TestDBusSessionController:
         assert "Unsupported action" in response["error"]
 
     @patch("src.integrations.dbus_controller.dbus.Interface")
-    def test_control_media_player_dbus_exception(self, mock_interface: MagicMock) -> None:
+    def test_control_media_player_dbus_exception(
+        self, mock_interface: MagicMock
+    ) -> None:
         """Test DBusException handling."""
         import dbus
 
@@ -250,7 +252,9 @@ class TestDBusSystemController:
             mapping = {
                 "State": 70,
                 "Connectivity": 4,
-                "ActiveConnections": ["/org/freedesktop/NetworkManager/ActiveConnection/1"],
+                "ActiveConnections": [
+                    "/org/freedesktop/NetworkManager/ActiveConnection/1"
+                ],
             }
             return mapping[prop_name]
 
@@ -348,7 +352,9 @@ class TestDBusSystemController:
         assert disk_info["disks"]["/"]["percent"] == 50.0
 
     @patch("src.integrations.dbus_controller._load_psutil")
-    def test_get_disk_usage_psutil_not_available(self, mock_load_psutil: MagicMock) -> None:
+    def test_get_disk_usage_psutil_not_available(
+        self, mock_load_psutil: MagicMock
+    ) -> None:
         """Test disk usage when psutil is not available."""
         mock_load_psutil.return_value = None
 
@@ -427,7 +433,9 @@ class TestDBusSystemController:
         assert interfaces["interfaces"]["eth0"]["speed"] == 1000
 
     @patch("src.integrations.dbus_controller._load_psutil")
-    def test_get_network_interfaces_psutil_not_available(self, mock_load_psutil: MagicMock) -> None:
+    def test_get_network_interfaces_psutil_not_available(
+        self, mock_load_psutil: MagicMock
+    ) -> None:
         """Test network interfaces when psutil is not available."""
         mock_load_psutil.return_value = None
 

@@ -60,7 +60,9 @@ class TestAgenticIDE:
         """Test task execution."""
         ide = AgenticIDE(workspace_path=tmp_path)
 
-        task = ide.create_task(description="Test task", task_type="code", agent_id="test_agent")
+        task = ide.create_task(
+            description="Test task", task_type="code", agent_id="test_agent"
+        )
 
         result = ide.execute_task(task.task_id)
 
@@ -73,7 +75,9 @@ class TestAgenticIDE:
         ide = AgenticIDE(workspace_path=tmp_path)
 
         # Create and execute task
-        task = ide.create_task(description="Test", task_type="code", agent_id="test_agent")
+        task = ide.create_task(
+            description="Test", task_type="code", agent_id="test_agent"
+        )
         result = ide.execute_task(task.task_id)
 
         # Verify artifact
@@ -87,9 +91,13 @@ class TestAgenticIDE:
         """Test feedback provision."""
         ide = AgenticIDE(workspace_path=tmp_path)
 
-        task = ide.create_task(description="Test", task_type="code", agent_id="test_agent")
+        task = ide.create_task(
+            description="Test", task_type="code", agent_id="test_agent"
+        )
 
-        ide.provide_feedback(task_id=task.task_id, feedback_content="Good work", success=True)
+        ide.provide_feedback(
+            task_id=task.task_id, feedback_content="Good work", success=True
+        )
 
         assert task.feedback == "Good work"
 
@@ -98,7 +106,9 @@ class TestAgenticIDE:
         ide = AgenticIDE(workspace_path=tmp_path)
 
         # Create and execute task
-        task = ide.create_task(description="Test", task_type="code", agent_id="test_agent")
+        task = ide.create_task(
+            description="Test", task_type="code", agent_id="test_agent"
+        )
         ide.execute_task(task.task_id)
 
         insights = ide.get_insights()
@@ -194,7 +204,9 @@ class TestModelSelector:
         selector = ModelSelector()
 
         # Update performance
-        selector.update_performance(task_type="code", model=AIModel.CLAUDE_SONNET_4_5, success=True)
+        selector.update_performance(
+            task_type="code", model=AIModel.CLAUDE_SONNET_4_5, success=True
+        )
 
         assert len(selector.usage_history) == 1
         assert selector.usage_history[0]["success"] is True

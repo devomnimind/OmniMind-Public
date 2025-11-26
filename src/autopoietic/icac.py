@@ -36,7 +36,9 @@ class ICAC:
         self.dissonance_threshold = dissonance_threshold
         logger.info(f"ICAC initialized with threshold {dissonance_threshold}")
 
-    def detect_dissonance(self, audit_events: List[Dict[str, Any]]) -> List[DissonanceEvent]:
+    def detect_dissonance(
+        self, audit_events: List[Dict[str, Any]]
+    ) -> List[DissonanceEvent]:
         """
         Analyzes a list of audit events to detect contradictions or conflicts.
 

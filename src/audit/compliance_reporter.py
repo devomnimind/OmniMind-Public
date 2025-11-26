@@ -82,12 +82,14 @@ class ComplianceReporter:
         }
 
         # Check 1: Data minimization (only necessary data collected)
-        report["compliance_checks"]["data_minimization"] = self._check_data_minimization(
-            start_date, end_date
+        report["compliance_checks"]["data_minimization"] = (
+            self._check_data_minimization(start_date, end_date)
         )
 
         # Check 2: Transparency (all data operations logged)
-        report["compliance_checks"]["transparency"] = self._check_transparency(start_date, end_date)
+        report["compliance_checks"]["transparency"] = self._check_transparency(
+            start_date, end_date
+        )
 
         # Check 3: Security (encryption, access controls)
         report["compliance_checks"]["security"] = self._check_security_measures(
@@ -95,7 +97,9 @@ class ComplianceReporter:
         )
 
         # Check 4: User rights (access, correction, deletion)
-        report["compliance_checks"]["user_rights"] = self._check_user_rights(start_date, end_date)
+        report["compliance_checks"]["user_rights"] = self._check_user_rights(
+            start_date, end_date
+        )
 
         # Check 5: Consent management
         report["compliance_checks"]["consent"] = self._check_consent_management(
@@ -116,7 +120,9 @@ class ComplianceReporter:
             "total_checks": total_checks,
             "passed_checks": passed_checks,
             "failed_checks": total_checks - passed_checks,
-            "compliance_score": ((passed_checks / total_checks * 100) if total_checks > 0 else 0),
+            "compliance_score": (
+                (passed_checks / total_checks * 100) if total_checks > 0 else 0
+            ),
             "status": "COMPLIANT" if passed_checks == total_checks else "NON_COMPLIANT",
         }
 
@@ -180,15 +186,17 @@ class ComplianceReporter:
         report["compliance_checks"]["lawfulness"] = self._check_gdpr_lawfulness(
             start_date, end_date
         )
-        report["compliance_checks"]["purpose_limitation"] = self._check_purpose_limitation(
+        report["compliance_checks"]["purpose_limitation"] = (
+            self._check_purpose_limitation(start_date, end_date)
+        )
+        report["compliance_checks"]["data_minimization"] = (
+            self._check_data_minimization(start_date, end_date)
+        )
+        report["compliance_checks"]["accuracy"] = self._check_data_accuracy(
             start_date, end_date
         )
-        report["compliance_checks"]["data_minimization"] = self._check_data_minimization(
-            start_date, end_date
-        )
-        report["compliance_checks"]["accuracy"] = self._check_data_accuracy(start_date, end_date)
-        report["compliance_checks"]["storage_limitation"] = self._check_retention_policy(
-            start_date, end_date
+        report["compliance_checks"]["storage_limitation"] = (
+            self._check_retention_policy(start_date, end_date)
         )
         report["compliance_checks"]["security"] = self._check_security_measures(
             start_date, end_date
@@ -206,7 +214,9 @@ class ComplianceReporter:
             "total_checks": total_checks,
             "passed_checks": passed_checks,
             "failed_checks": total_checks - passed_checks,
-            "compliance_score": ((passed_checks / total_checks * 100) if total_checks > 0 else 0),
+            "compliance_score": (
+                (passed_checks / total_checks * 100) if total_checks > 0 else 0
+            ),
             "status": "COMPLIANT" if passed_checks == total_checks else "NON_COMPLIANT",
         }
 
@@ -278,7 +288,9 @@ class ComplianceReporter:
 
     # Helper methods for compliance checks
 
-    def _check_data_minimization(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
+    def _check_data_minimization(
+        self, start_date: datetime, end_date: datetime
+    ) -> Dict[str, Any]:
         """Check if only necessary data is being collected."""
         # Implementation: Check for excessive data collection
         return {
@@ -287,7 +299,9 @@ class ComplianceReporter:
             "details": "No excessive data collection detected",
         }
 
-    def _check_transparency(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
+    def _check_transparency(
+        self, start_date: datetime, end_date: datetime
+    ) -> Dict[str, Any]:
         """Check if all data operations are logged."""
         events = self._get_events_in_range(start_date, end_date)
         total_operations = len(events)
@@ -298,7 +312,9 @@ class ComplianceReporter:
             "details": f"{total_operations} operations logged",
         }
 
-    def _check_security_measures(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
+    def _check_security_measures(
+        self, start_date: datetime, end_date: datetime
+    ) -> Dict[str, Any]:
         """Check security measures (encryption, access controls)."""
         # Check for security events
         integrity = self.audit_system.verify_chain_integrity()
@@ -309,7 +325,9 @@ class ComplianceReporter:
             "details": f"Chain integrity: {integrity['message']}",
         }
 
-    def _check_user_rights(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
+    def _check_user_rights(
+        self, start_date: datetime, end_date: datetime
+    ) -> Dict[str, Any]:
         """Check user rights implementation (access, correction, deletion)."""
         # Check for user rights operations in audit log
         events = self._get_events_in_range(start_date, end_date)
@@ -332,7 +350,9 @@ class ComplianceReporter:
             "details": f"{len(rights_operations)} user rights operations logged",
         }
 
-    def _check_consent_management(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
+    def _check_consent_management(
+        self, start_date: datetime, end_date: datetime
+    ) -> Dict[str, Any]:
         """Check consent management implementation."""
         events = self._get_events_in_range(start_date, end_date)
         consent_events = [e for e in events if "consent" in e.get("action", "").lower()]
@@ -343,7 +363,9 @@ class ComplianceReporter:
             "details": f"{len(consent_events)} consent operations logged",
         }
 
-    def _check_retention_policy(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
+    def _check_retention_policy(
+        self, start_date: datetime, end_date: datetime
+    ) -> Dict[str, Any]:
         """Check data retention policy compliance."""
         # Check if old data is being purged according to policy
         return {
@@ -352,7 +374,9 @@ class ComplianceReporter:
             "details": "Automatic data purging configured",
         }
 
-    def _check_gdpr_lawfulness(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
+    def _check_gdpr_lawfulness(
+        self, start_date: datetime, end_date: datetime
+    ) -> Dict[str, Any]:
         """Check GDPR lawfulness requirement."""
         return {
             "compliant": True,
@@ -360,7 +384,9 @@ class ComplianceReporter:
             "details": "All operations have documented legal basis",
         }
 
-    def _check_purpose_limitation(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
+    def _check_purpose_limitation(
+        self, start_date: datetime, end_date: datetime
+    ) -> Dict[str, Any]:
         """Check purpose limitation compliance."""
         return {
             "compliant": True,
@@ -368,7 +394,9 @@ class ComplianceReporter:
             "details": "No purpose deviation detected",
         }
 
-    def _check_data_accuracy(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
+    def _check_data_accuracy(
+        self, start_date: datetime, end_date: datetime
+    ) -> Dict[str, Any]:
         """Check data accuracy requirements."""
         return {
             "compliant": True,
@@ -376,7 +404,9 @@ class ComplianceReporter:
             "details": "Data validation and correction mechanisms in place",
         }
 
-    def _check_accountability(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
+    def _check_accountability(
+        self, start_date: datetime, end_date: datetime
+    ) -> Dict[str, Any]:
         """Check accountability (audit trails, documentation)."""
         integrity = self.audit_system.verify_chain_integrity()
 
@@ -403,7 +433,9 @@ class ComplianceReporter:
 
                     try:
                         event = json.loads(line)
-                        event_time = datetime.fromisoformat(event.get("datetime_utc", ""))
+                        event_time = datetime.fromisoformat(
+                            event.get("datetime_utc", "")
+                        )
 
                         if start_date <= event_time <= end_date:
                             events.append(event)
@@ -414,7 +446,9 @@ class ComplianceReporter:
 
         return events
 
-    def _save_report(self, report: Dict[str, Any], standard: ComplianceStandard) -> None:
+    def _save_report(
+        self, report: Dict[str, Any], standard: ComplianceStandard
+    ) -> None:
         """Save compliance report to file."""
         report_file = self.report_dir / f"{standard.value}_{report['report_id']}.json"
 

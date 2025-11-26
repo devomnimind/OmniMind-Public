@@ -126,7 +126,9 @@ class EntangledAgentNetwork:
         # Initialize in equal superposition
         state_vector = [complex(1.0, 0.0) / SQRT_2, complex(1.0, 0.0) / SQRT_2]
 
-        agent = AgentState(agent_id=agent_id, state_vector=state_vector, entangled_with=[])
+        agent = AgentState(
+            agent_id=agent_id, state_vector=state_vector, entangled_with=[]
+        )
 
         self.agents[agent_id] = agent
 
@@ -158,7 +160,9 @@ class EntangledAgentNetwork:
             EntanglementPair
         """
         if agent1_id not in self.agents or agent2_id not in self.agents:
-            raise ValueError(f"Agents {agent1_id} and {agent2_id} must exist in network")
+            raise ValueError(
+                f"Agents {agent1_id} and {agent2_id} must exist in network"
+            )
 
         # Set entangled states
         if bell_state == BellState.PHI_PLUS:
@@ -216,11 +220,15 @@ class EntangledAgentNetwork:
 
         self.entanglements.append(pair)
 
-        logger.info(f"Created {bell_state.value} Bell pair: " f"{agent1_id} <-> {agent2_id}")
+        logger.info(
+            f"Created {bell_state.value} Bell pair: " f"{agent1_id} <-> {agent2_id}"
+        )
 
         return pair
 
-    def entanglement_swapping(self, alice_id: str, charlie_id: str) -> Optional[EntanglementPair]:
+    def entanglement_swapping(
+        self, alice_id: str, charlie_id: str
+    ) -> Optional[EntanglementPair]:
         """
         Create entanglement between non-adjacent agents via swapping.
 
@@ -241,7 +249,9 @@ class EntangledAgentNetwork:
         bob_id = self._find_intermediate(alice_id, charlie_id)
 
         if bob_id is None:
-            logger.warning(f"No intermediate agent found between " f"{alice_id} and {charlie_id}")
+            logger.warning(
+                f"No intermediate agent found between " f"{alice_id} and {charlie_id}"
+            )
             return None
 
         # Perform Bell state measurement on Bob
@@ -265,7 +275,9 @@ class EntangledAgentNetwork:
 
         self.entanglements.append(pair)
 
-        logger.info(f"Entanglement swapping: {alice_id} <-> {charlie_id} " f"(via {bob_id})")
+        logger.info(
+            f"Entanglement swapping: {alice_id} <-> {charlie_id} " f"(via {bob_id})"
+        )
 
         return pair
 
@@ -346,7 +358,8 @@ class EntangledAgentNetwork:
         # Compute state vector correlation
         # compute complex overlap: abs(sum(conj(a)*b))
         overlap_complex = sum(
-            (a.conjugate() * b) for a, b in zip(agent1.state_vector, agent2.state_vector)
+            (a.conjugate() * b)
+            for a, b in zip(agent1.state_vector, agent2.state_vector)
         )
         overlap = abs(overlap_complex)
 
@@ -363,7 +376,9 @@ class EntangledAgentNetwork:
         total_entanglements = len(self.entanglements)
 
         # Calculate average entanglement per agent
-        entanglements_per_agent = [len(agent.entangled_with) for agent in self.agents.values()]
+        entanglements_per_agent = [
+            len(agent.entangled_with) for agent in self.agents.values()
+        ]
 
         avg_entanglements = (
             statistics.mean(entanglements_per_agent) if entanglements_per_agent else 0.0

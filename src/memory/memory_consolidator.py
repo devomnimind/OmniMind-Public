@@ -33,7 +33,9 @@ class MemoryConsolidator:
         self.semantic_memory = semantic_memory
         logger.info("Memory Consolidator initialized")
 
-    def consolidate(self, episodes: List[Dict[str, Any]], threshold: int = 3) -> Dict[str, int]:
+    def consolidate(
+        self, episodes: List[Dict[str, Any]], threshold: int = 3
+    ) -> Dict[str, int]:
         """
         Consolidate a batch of episodes into semantic memory.
 
@@ -94,7 +96,8 @@ class MemoryConsolidator:
                     concepts_created += 1
 
         logger.info(
-            f"Consolidation complete: {concepts_created} created, " f"{concepts_updated} updated."
+            f"Consolidation complete: {concepts_created} created, "
+            f"{concepts_updated} updated."
         )
 
         return {
@@ -162,5 +165,7 @@ class MemoryConsolidator:
                     )
                     relationships_created += 1
 
-        logger.info(f"Extracted {relationships_created} relationships from co-occurrence analysis.")
+        logger.info(
+            f"Extracted {relationships_created} relationships from co-occurrence analysis."
+        )
         return relationships_created

@@ -28,7 +28,9 @@ class TestSignifier:
 
     def test_initialization(self) -> None:
         """Signifier initializes with symbol and position."""
-        sig = Signifier(symbol="S1", position=SignifierPosition.S1, jouissance_intensity=0.5)
+        sig = Signifier(
+            symbol="S1", position=SignifierPosition.S1, jouissance_intensity=0.5
+        )
 
         assert sig.symbol == "S1"
         assert sig.position == SignifierPosition.S1
@@ -245,7 +247,9 @@ class TestJouissanceRewardSystem:
         """Jouissance below pleasure threshold is simple."""
         jouis = JouissanceRewardSystem(pleasure_threshold=0.7)
 
-        j = jouis.compute_jouissance(pleasure=0.5, transgression=0.3, repetition_compulsion=0.2)
+        j = jouis.compute_jouissance(
+            pleasure=0.5, transgression=0.3, repetition_compulsion=0.2
+        )
 
         # Should be positive
         assert j > 0.0

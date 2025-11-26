@@ -129,10 +129,14 @@ class SupabaseConfig:
                     return cls(
                         url=url,
                         anon_key=anon_key,
-                        service_role_key=env_map.get("OMNIMIND_SUPABASE_SERVICE_ROLE_KEY"),
+                        service_role_key=env_map.get(
+                            "OMNIMIND_SUPABASE_SERVICE_ROLE_KEY"
+                        ),
                         project_ref=env_map.get("OMNIMIND_SUPABASE_PROJECT"),
                     )
-        logger.warning("Supabase configuration missing; export OMNIMIND_SUPABASE_* variables")
+        logger.warning(
+            "Supabase configuration missing; export OMNIMIND_SUPABASE_* variables"
+        )
         return None
 
 
@@ -141,7 +145,9 @@ class SupabaseAdapter:
         self.config = config
         self.client: Client = create_client(config.url, config.anon_key)
         self.admin_client: Optional[Client] = (
-            create_client(config.url, config.service_role_key) if config.service_role_key else None
+            create_client(config.url, config.service_role_key)
+            if config.service_role_key
+            else None
         )
 
     def describe_table(self, table: str) -> List[Dict[str, Any]]:
@@ -189,7 +195,9 @@ class SupabaseAdapter:
         offset: int = 0,
         columns: Optional[Iterable[str]] = None,
     ) -> List[Dict[str, Any]]:
-        query = self.client.table(table).select("*" if not columns else ",".join(columns))
+        query = self.client.table(table).select(
+            "*" if not columns else ",".join(columns)
+        )
         if filters:
             for key, value in filters.items():
                 query = query.eq(key, value)

@@ -39,7 +39,9 @@ def run_command(command: Sequence[str]) -> CommandResult:
         }
 
     try:
-        result = subprocess.run(command, capture_output=True, text=True, check=True, timeout=60)
+        result = subprocess.run(
+            command, capture_output=True, text=True, check=True, timeout=60
+        )
         return {
             "command": " ".join(command),
             "returncode": result.returncode,

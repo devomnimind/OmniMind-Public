@@ -34,7 +34,9 @@ except ImportError:
 class TestAgentState:
     """Testes para AgentState TypedDict."""
 
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
     def test_agent_state_structure(self) -> None:
         """Testa estrutura do estado do agente."""
         state: AgentState = {
@@ -85,8 +87,12 @@ system:
         config_file.write_text(config_content)
         return config_file
 
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
     @patch("src.agents.react_agent.OllamaLLM")
     @patch("src.agents.react_agent.EpisodicMemory")
     @patch("src.agents.react_agent.FileOperations")
@@ -109,7 +115,9 @@ system:
         assert agent.file_ops is not None
         assert agent.shell is not None
 
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
     @patch("src.agents.react_agent.OllamaLLM")
     @patch("src.agents.react_agent.EpisodicMemory")
     @patch("src.agents.react_agent.FileOperations")
@@ -153,7 +161,9 @@ system:
             result = agent.think(state)
             assert isinstance(result, dict)
 
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
     @patch("src.agents.react_agent.OllamaLLM")
     @patch("src.agents.react_agent.EpisodicMemory")
     @patch("src.agents.react_agent.FileOperations")
@@ -189,7 +199,9 @@ system:
             result = agent.act(state)
             assert isinstance(result, dict)
 
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
     @patch("src.agents.react_agent.OllamaLLM")
     @patch("src.agents.react_agent.EpisodicMemory")
     @patch("src.agents.react_agent.FileOperations")
@@ -225,7 +237,9 @@ system:
             result = agent.observe(state)
             assert isinstance(result, dict)
 
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
     @patch("src.agents.react_agent.OllamaLLM")
     @patch("src.agents.react_agent.EpisodicMemory")
     @patch("src.agents.react_agent.FileOperations")
@@ -253,7 +267,9 @@ system:
             except Exception:
                 pass  # Some failures expected without full setup
 
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
     @patch("src.agents.react_agent.OllamaLLM")
     @patch("src.agents.react_agent.EpisodicMemory")
     @patch("src.agents.react_agent.FileOperations")
@@ -289,7 +305,9 @@ system:
             should_continue = agent.should_continue(state)
             assert should_continue is False or should_continue is True
 
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
     @patch("src.agents.react_agent.OllamaLLM")
     @patch("src.agents.react_agent.EpisodicMemory")
     @patch("src.agents.react_agent.FileOperations")
@@ -306,7 +324,9 @@ system:
     ) -> None:
         """Testa integração com memória episódica."""
         mock_memory_instance = MagicMock()
-        mock_memory_instance.search.return_value = [{"content": "previous context", "score": 0.9}]
+        mock_memory_instance.search.return_value = [
+            {"content": "previous context", "score": 0.9}
+        ]
         mock_memory.return_value = mock_memory_instance
 
         agent = ReactAgent(str(temp_config))
@@ -315,7 +335,9 @@ system:
             context = agent.get_memory_context("test query")
             assert isinstance(context, list) or context is not None
 
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
     @patch("src.agents.react_agent.OllamaLLM")
     @patch("src.agents.react_agent.EpisodicMemory")
     @patch("src.agents.react_agent.FileOperations")
@@ -337,7 +359,9 @@ system:
             tool = agent.select_tool("read file /test.txt")
             assert tool is not None or tool is None
 
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
     @patch("src.agents.react_agent.OllamaLLM")
     @patch("src.agents.react_agent.EpisodicMemory")
     @patch("src.agents.react_agent.FileOperations")
@@ -370,18 +394,24 @@ system:
 class TestReactAgentEdgeCases:
     """Testes para casos extremos."""
 
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
     def test_missing_config_file(self) -> None:
         """Testa comportamento com arquivo de config inexistente."""
         with pytest.raises((FileNotFoundError, Exception)):
             ReactAgent("/nonexistent/config.yaml")
 
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
     @patch("src.agents.react_agent.OllamaLLM")
     @patch("src.agents.react_agent.EpisodicMemory")
     @patch("src.agents.react_agent.FileOperations")
     @patch("src.agents.react_agent.ShellExecutor")
-    @pytest.mark.skipif(not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available")
+    @pytest.mark.skipif(
+        not REACT_AGENT_AVAILABLE, reason="React agent dependencies not available"
+    )
     @patch("src.agents.react_agent.SystemMonitor")
     def test_empty_task(
         self,

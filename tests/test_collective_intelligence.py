@@ -495,7 +495,9 @@ class TestMultiAgentTrainer:
 # Pytest configuration
 def pytest_configure(config: pytest.Config) -> None:
     """Configuração do pytest para este módulo."""
-    config.addinivalue_line("markers", "collective: smoke tests de collective intelligence")
+    config.addinivalue_line(
+        "markers", "collective: smoke tests de collective intelligence"
+    )
 
 
 if __name__ == "__main__":

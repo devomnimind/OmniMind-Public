@@ -236,7 +236,9 @@ class TestEvidenceCollector:
         assert collector.evidence_dir == temp_evidence_dir
         assert temp_evidence_dir.exists()
 
-    def test_collect_log_evidence(self, temp_evidence_dir: Path, tmp_path: Path) -> None:
+    def test_collect_log_evidence(
+        self, temp_evidence_dir: Path, tmp_path: Path
+    ) -> None:
         """Testa coleta de evidências de logs."""
         # Create test log file
         log_file = tmp_path / "test.log"
@@ -277,7 +279,9 @@ class TestEvidenceCollector:
 
             assert isinstance(evidence, list)
 
-    def test_collect_file_system_evidence(self, temp_evidence_dir: Path, tmp_path: Path) -> None:
+    def test_collect_file_system_evidence(
+        self, temp_evidence_dir: Path, tmp_path: Path
+    ) -> None:
         """Testa coleta de evidências do filesystem."""
         # Create test file
         test_file = tmp_path / "test_file.txt"
@@ -538,7 +542,9 @@ class TestEvidenceCollectorExtended:
 
         with patch("subprocess.run") as mock_run:
             mock_run.return_value.returncode = 0
-            mock_run.return_value.stdout = "Proto Local Address State\ntcp 0.0.0.0:80 LISTEN\n"
+            mock_run.return_value.stdout = (
+                "Proto Local Address State\ntcp 0.0.0.0:80 LISTEN\n"
+            )
 
             evidence = collector.collect_network_evidence()
 
@@ -661,7 +667,9 @@ class TestEvidenceCollectorExtended:
         collector = EvidenceCollector(evidence_dir=str(temp_evidence_dir))
 
         with patch("builtins.open", side_effect=Exception("Read error")):
-            evidence = collector.collect_log_evidence(log_files=[str(log_file)], patterns=["test"])
+            evidence = collector.collect_log_evidence(
+                log_files=[str(log_file)], patterns=["test"]
+            )
 
             assert isinstance(evidence, list)
 
@@ -706,7 +714,9 @@ class TestForensicsSystemExtended:
         """Cria diretório temporário para forensics."""
         return tmp_path / "forensics"
 
-    def test_collect_evidence_log_type(self, temp_forensics_dir: Path, tmp_path: Path) -> None:
+    def test_collect_evidence_log_type(
+        self, temp_forensics_dir: Path, tmp_path: Path
+    ) -> None:
         """Testa coleta de evidências do tipo log."""
         system = ForensicsSystem(forensics_dir=str(temp_forensics_dir))
 

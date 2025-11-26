@@ -70,7 +70,8 @@ def test_analyze_session_freudian(analyst: PsychoanalyticAnalyst) -> None:
         ),
         "key_elements": "Sonho recorrente, figura paterna, sentimento de impotência.",
         "observations": (
-            "Explorar a relação do paciente com figuras de autoridade " "em sua vida desperta."
+            "Explorar a relação do paciente com figuras de autoridade "
+            "em sua vida desperta."
         ),
     }
 
@@ -79,12 +80,16 @@ def test_analyze_session_freudian(analyst: PsychoanalyticAnalyst) -> None:
     mock_llm_output.content = json.dumps(mock_response)
     analyst.llm.invoke = MagicMock(return_value=mock_llm_output)
 
-    result = analyst.analyze_session(session_notes, framework=PsychoanalyticFramework.FREUDIAN)
+    result = analyst.analyze_session(
+        session_notes, framework=PsychoanalyticFramework.FREUDIAN
+    )
 
     # Verify that the correct prompt was built and sent to the LLM
     analyst.llm.invoke.assert_called_once()
     prompt_arg = analyst.llm.invoke.call_args[0][0]
-    assert prompt_arg.strip().startswith("Você é um assistente de IA especializado em psicanálise.")
+    assert prompt_arg.strip().startswith(
+        "Você é um assistente de IA especializado em psicanálise."
+    )
     assert f"framework {PsychoanalyticFramework.FREUDIAN.value}" in prompt_arg
     assert session_notes in prompt_arg
 

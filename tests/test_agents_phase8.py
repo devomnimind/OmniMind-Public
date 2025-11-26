@@ -184,7 +184,9 @@ def test_architect_restrictions_and_writing(config_path: str, tmp_path: Path) ->
     assert "tool 'write_to_file' not allowed in architect mode" in resp.lower()
     assert not doc_path.exists()
 
-    blocked = agent._execute_action("write_to_file", {"filepath": "app.py", "content": ""})
+    blocked = agent._execute_action(
+        "write_to_file", {"filepath": "app.py", "content": ""}
+    )
     assert "architectagent can only edit documentation files" in blocked.lower()
 
 

@@ -344,7 +344,9 @@ class TestIntegration:
         engine = QualiaEngine()
 
         # 1. Experience sensory input
-        engine.sensory.experience_visual("beautiful sunset", intensity=0.9, aesthetic_value=0.8)
+        engine.sensory.experience_visual(
+            "beautiful sunset", intensity=0.9, aesthetic_value=0.8
+        )
 
         # 2. Feel emotion
         engine.emotional.feel_wonder("the sunset", intensity=0.8)

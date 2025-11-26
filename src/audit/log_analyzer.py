@@ -201,7 +201,9 @@ class AuditLogAnalyzer:
             },
         }
 
-    def _detect_sequences(self, actions: List[str], min_length: int = 3) -> List[Dict[str, Any]]:
+    def _detect_sequences(
+        self, actions: List[str], min_length: int = 3
+    ) -> List[Dict[str, Any]]:
         """Detect repeated action sequences."""
         sequences = []
         n = len(actions)

@@ -214,7 +214,9 @@ class MCPSQLiteWrapper:
         thread.start()
         self._thread = thread
 
-        logger.info("MCP SQLite Wrapper listening on %s:%s", self.config.host, self.config.port)
+        logger.info(
+            "MCP SQLite Wrapper listening on %s:%s", self.config.host, self.config.port
+        )
 
     def stop(self) -> None:
         """Para o servidor HTTP e o bridge stdio."""

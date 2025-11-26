@@ -95,7 +95,9 @@ class TestDependencyManager:
 
         return requirements, lockfile
 
-    def test_dependency_manager_initialization(self, temp_files: tuple[Path, Path]) -> None:
+    def test_dependency_manager_initialization(
+        self, temp_files: tuple[Path, Path]
+    ) -> None:
         """Test DependencyManager initialization."""
         requirements, lockfile = temp_files
 

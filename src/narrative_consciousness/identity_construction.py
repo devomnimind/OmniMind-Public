@@ -116,7 +116,9 @@ class BeliefNetwork:
             impact = strength * (1.0 - belief.centrality)
             belief.certainty = max(0.0, min(1.0, belief.certainty - impact))
 
-            logger.info(f"Belief challenged: {belief.statement[:20]}... -> {belief.certainty:.2f}")
+            logger.info(
+                f"Belief challenged: {belief.statement[:20]}... -> {belief.certainty:.2f}"
+            )
 
 
 class IdentityConstruction:

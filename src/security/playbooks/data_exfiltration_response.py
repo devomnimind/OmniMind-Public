@@ -21,7 +21,9 @@ class DataExfiltrationPlaybook:
     """Handles disruption of abnormal transfer channels."""
 
     async def execute(self, agent: Any, event: Any) -> Dict[str, Any]:
-        logger.info("🚨 [EXFIL] response start for %s", getattr(event, "event_type", "exfil"))
+        logger.info(
+            "🚨 [EXFIL] response start for %s", getattr(event, "event_type", "exfil")
+        )
         detection = await self._detect_anomalous_transfer()
         blocked = await self._block_connection(event)
         throttle = await self._throttle_bandwidth()
@@ -105,7 +107,9 @@ class DataExfiltrationPlaybook:
         check_command = ["sudo", "tc", "qdisc", "show", "dev", default_interface]
         try:
             check_result = await run_command_async(check_command)
-            if check_result.get("returncode", 1) == 0 and "tbf" in check_result.get("output", ""):
+            if check_result.get("returncode", 1) == 0 and "tbf" in check_result.get(
+                "output", ""
+            ):
                 logger.debug("   [3/5] Traffic shaping already applied, skipping")
 
                 return {

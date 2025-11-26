@@ -223,7 +223,9 @@ class PerformanceAnalyzer:
         bottlenecks: List[PerformanceBottleneck] = []
 
         for sample in samples:
-            percentage = (sample.cumulative_time_ms / total_time * 100) if total_time > 0 else 0
+            percentage = (
+                (sample.cumulative_time_ms / total_time * 100) if total_time > 0 else 0
+            )
 
             if percentage < min_percentage:
                 continue
@@ -292,13 +294,18 @@ class PerformanceAnalyzer:
             return BottleneckCategory.LONG_RUNNING
 
         # Memory operations
-        if any(keyword in function_lower for keyword in ["alloc", "memory", "cache", "buffer"]):
+        if any(
+            keyword in function_lower
+            for keyword in ["alloc", "memory", "cache", "buffer"]
+        ):
             return BottleneckCategory.MEMORY_INTENSIVE
 
         # Default to CPU intensive
         return BottleneckCategory.CPU_INTENSIVE
 
-    def _determine_severity(self, percentage: float, sample: ProfileSample) -> BottleneckSeverity:
+    def _determine_severity(
+        self, percentage: float, sample: ProfileSample
+    ) -> BottleneckSeverity:
         """Determine bottleneck severity.
 
         Args:
@@ -317,7 +324,9 @@ class PerformanceAnalyzer:
         else:
             return BottleneckSeverity.LOW
 
-    def _generate_recommendation(self, category: BottleneckCategory, sample: ProfileSample) -> str:
+    def _generate_recommendation(
+        self, category: BottleneckCategory, sample: ProfileSample
+    ) -> str:
         """Generate optimization recommendation.
 
         Args:
@@ -382,8 +391,12 @@ class PerformanceAnalyzer:
         if not bottlenecks:
             return "No significant performance bottlenecks detected."
 
-        critical_count = sum(1 for b in bottlenecks if b.severity == BottleneckSeverity.CRITICAL)
-        high_count = sum(1 for b in bottlenecks if b.severity == BottleneckSeverity.HIGH)
+        critical_count = sum(
+            1 for b in bottlenecks if b.severity == BottleneckSeverity.CRITICAL
+        )
+        high_count = sum(
+            1 for b in bottlenecks if b.severity == BottleneckSeverity.HIGH
+        )
 
         top_bottleneck = bottlenecks[0]
 
@@ -397,7 +410,9 @@ class PerformanceAnalyzer:
 
         return summary
 
-    def _generate_recommendations(self, bottlenecks: List[PerformanceBottleneck]) -> List[str]:
+    def _generate_recommendations(
+        self, bottlenecks: List[PerformanceBottleneck]
+    ) -> List[str]:
         """Generate top recommendations.
 
         Args:
@@ -416,7 +431,9 @@ class PerformanceAnalyzer:
 
         return recommendations
 
-    def save_report(self, report: PerformanceReport, filename: Optional[str] = None) -> str:
+    def save_report(
+        self, report: PerformanceReport, filename: Optional[str] = None
+    ) -> str:
         """Save performance report to file.
 
         Args:
@@ -427,7 +444,9 @@ class PerformanceAnalyzer:
             Path to saved file
         """
         if filename is None:
-            timestamp = datetime.fromtimestamp(report.timestamp).strftime("%Y%m%d_%H%M%S")
+            timestamp = datetime.fromtimestamp(report.timestamp).strftime(
+                "%Y%m%d_%H%M%S"
+            )
             filename = f"performance_report_{timestamp}.json"
 
         filepath = self._reports_dir / filename

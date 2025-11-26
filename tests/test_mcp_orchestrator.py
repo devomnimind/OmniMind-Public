@@ -209,7 +209,9 @@ class TestMCPOrchestrator:
         assert "test" in call_args
 
     @patch("src.integrations.mcp_orchestrator.get_audit_system")
-    def test_start_disabled_server(self, mock_audit: MagicMock, temp_config_file: Path) -> None:
+    def test_start_disabled_server(
+        self, mock_audit: MagicMock, temp_config_file: Path
+    ) -> None:
         """Testa que servidor desabilitado não é iniciado."""
         mock_audit_system = Mock()
         mock_audit.return_value = mock_audit_system
@@ -286,7 +288,9 @@ class TestMCPOrchestrator:
         mock_process.wait.assert_called()
 
     @patch("src.integrations.mcp_orchestrator.get_audit_system")
-    def test_stop_server_not_running(self, mock_audit: MagicMock, temp_config_file: Path) -> None:
+    def test_stop_server_not_running(
+        self, mock_audit: MagicMock, temp_config_file: Path
+    ) -> None:
         """Testa parar servidor que não está rodando."""
         mock_audit_system = Mock()
         mock_audit.return_value = mock_audit_system
@@ -371,7 +375,9 @@ class TestMCPOrchestrator:
         assert orchestrator.status["test_server"].healthy is False
 
     @patch("src.integrations.mcp_orchestrator.get_audit_system")
-    def test_export_metrics(self, mock_audit: MagicMock, temp_config_file: Path) -> None:
+    def test_export_metrics(
+        self, mock_audit: MagicMock, temp_config_file: Path
+    ) -> None:
         """Testa exportação de métricas."""
         mock_audit_system = Mock()
         mock_audit.return_value = mock_audit_system

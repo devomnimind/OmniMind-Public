@@ -280,7 +280,11 @@ class NetworkSensorGanglia:
                 suspicious_ports = {4444, 5555, 6666, 7777, 8888, 31337}
                 suspicious_detected = new_ports & suspicious_ports
 
-                severity = ThreatSeverity.CRITICAL if suspicious_detected else ThreatSeverity.MEDIUM
+                severity = (
+                    ThreatSeverity.CRITICAL
+                    if suspicious_detected
+                    else ThreatSeverity.MEDIUM
+                )
 
                 anomalies.append(
                     NetworkAnomaly(
@@ -301,7 +305,9 @@ class NetworkSensorGanglia:
             # Check for suspicious services
             suspicious_services = {"nc", "ncat", "metasploit", "msfconsole"}
             detected_suspicious = [
-                s for s in host.services if any(sus in s.lower() for sus in suspicious_services)
+                s
+                for s in host.services
+                if any(sus in s.lower() for sus in suspicious_services)
             ]
 
             if detected_suspicious:
@@ -370,9 +376,13 @@ class NetworkSensorGanglia:
             "total_hosts": total_hosts,
             "hosts_with_suspicious_ports": hosts_with_suspicious_ports,
             "total_open_ports": total_open_ports,
-            "avg_open_ports_per_host": (total_open_ports / total_hosts if total_hosts > 0 else 0),
+            "avg_open_ports_per_host": (
+                total_open_ports / total_hosts if total_hosts > 0 else 0
+            ),
             "assessment": (
-                "HEALTHY" if health_score >= 80 else "WARNING" if health_score >= 60 else "CRITICAL"
+                "HEALTHY"
+                if health_score >= 80
+                else "WARNING" if health_score >= 60 else "CRITICAL"
             ),
         }
 

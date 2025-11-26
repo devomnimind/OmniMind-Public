@@ -89,5 +89,7 @@ class SystemBoundary:
         """
         if not self.is_internal(name):
             self._logger.error("Attempted access to external component %s", name)
-            raise PermissionError(f"Component '{name}' is external and cannot be accessed.")
+            raise PermissionError(
+                f"Component '{name}' is external and cannot be accessed."
+            )
         self._logger.debug("Access to internal component %s allowed", name)

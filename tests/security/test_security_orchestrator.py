@@ -67,7 +67,9 @@ class TestSecurityOrchestrator:
         """Cria mock do sistema de auditoria."""
         mock = Mock()
         mock.log_action = Mock(return_value="mock_hash")
-        mock.verify_chain_integrity = Mock(return_value={"valid": True, "message": "OK"})
+        mock.verify_chain_integrity = Mock(
+            return_value={"valid": True, "message": "OK"}
+        )
         return mock
 
     @pytest.fixture
@@ -95,7 +97,9 @@ class TestSecurityOrchestrator:
         assert orchestrator.monitoring_active is False
         assert orchestrator.monitoring_interval == 60
 
-    def test_calculate_risk_score_low_risk(self, orchestrator: SecurityOrchestrator) -> None:
+    def test_calculate_risk_score_low_risk(
+        self, orchestrator: SecurityOrchestrator
+    ) -> None:
         """Testa cálculo de risk score com baixo risco."""
         network_health = {"health_score": 100}
         network_anomalies: list[dict[str, Any]] = []
@@ -108,7 +112,9 @@ class TestSecurityOrchestrator:
 
         assert risk_score == pytest.approx(0.0)
 
-    def test_calculate_risk_score_network_issues(self, orchestrator: SecurityOrchestrator) -> None:
+    def test_calculate_risk_score_network_issues(
+        self, orchestrator: SecurityOrchestrator
+    ) -> None:
         """Testa cálculo de risk score com problemas de rede."""
         network_health = {"health_score": 50}  # 50% health
         network_anomalies: list[dict[str, Any]] = []
@@ -122,7 +128,9 @@ class TestSecurityOrchestrator:
         # 50% network health = 50 points reduction = 15 risk (50 * 0.3)
         assert risk_score == pytest.approx(15.0)
 
-    def test_calculate_risk_score_with_anomalies(self, orchestrator: SecurityOrchestrator) -> None:
+    def test_calculate_risk_score_with_anomalies(
+        self, orchestrator: SecurityOrchestrator
+    ) -> None:
         """Testa cálculo de risk score com anomalias de rede."""
         network_health = {"health_score": 100}
         network_anomalies: list[dict[str, Any]] = [
@@ -176,7 +184,9 @@ class TestSecurityOrchestrator:
         # 2 events * 5 = 10 risk
         assert risk_score == pytest.approx(10.0)
 
-    def test_calculate_risk_score_max_capping(self, orchestrator: SecurityOrchestrator) -> None:
+    def test_calculate_risk_score_max_capping(
+        self, orchestrator: SecurityOrchestrator
+    ) -> None:
         """Testa que risk score não excede 100."""
         network_health = {"health_score": 0}  # Max network risk
         network_anomalies = [Mock()] * 10  # Max anomaly risk
@@ -199,17 +209,23 @@ class TestSecurityOrchestrator:
         status = orchestrator._determine_status(35.0)
         assert status == SecurityStatus.WARNING
 
-    def test_determine_status_compromised(self, orchestrator: SecurityOrchestrator) -> None:
+    def test_determine_status_compromised(
+        self, orchestrator: SecurityOrchestrator
+    ) -> None:
         """Testa determinação de status COMPROMISED."""
         status = orchestrator._determine_status(60.0)
         assert status == SecurityStatus.COMPROMISED
 
-    def test_determine_status_critical(self, orchestrator: SecurityOrchestrator) -> None:
+    def test_determine_status_critical(
+        self, orchestrator: SecurityOrchestrator
+    ) -> None:
         """Testa determinação de status CRITICAL."""
         status = orchestrator._determine_status(80.0)
         assert status == SecurityStatus.CRITICAL
 
-    def test_generate_recommendations_no_issues(self, orchestrator: SecurityOrchestrator) -> None:
+    def test_generate_recommendations_no_issues(
+        self, orchestrator: SecurityOrchestrator
+    ) -> None:
         """Testa geração de recomendações sem problemas."""
         recommendations = orchestrator._generate_recommendations([], [], [])
 
@@ -221,7 +237,9 @@ class TestSecurityOrchestrator:
     ) -> None:
         """Testa geração de recomendações com anomalias."""
         network_anomalies = [Mock(), Mock()]
-        recommendations = orchestrator._generate_recommendations(network_anomalies, [], [])
+        recommendations = orchestrator._generate_recommendations(
+            network_anomalies, [], []
+        )
 
         assert any("anomalies" in r.lower() for r in recommendations)
         assert any("regular" in r.lower() for r in recommendations)
@@ -231,7 +249,9 @@ class TestSecurityOrchestrator:
     ) -> None:
         """Testa geração de recomendações com vulnerabilidades críticas."""
         web_vulnerabilities = [{"severity": "CRITICAL"}, {"severity": "CRITICAL"}]
-        recommendations = orchestrator._generate_recommendations([], web_vulnerabilities, [])
+        recommendations = orchestrator._generate_recommendations(
+            [], web_vulnerabilities, []
+        )
 
         assert any("urgent" in r.lower() for r in recommendations)
         assert any("critical" in r.lower() for r in recommendations)
@@ -241,7 +261,9 @@ class TestSecurityOrchestrator:
     ) -> None:
         """Testa geração de recomendações com eventos de segurança."""
         security_events = [{"type": "suspicious_process"}]
-        recommendations = orchestrator._generate_recommendations([], [], security_events)
+        recommendations = orchestrator._generate_recommendations(
+            [], [], security_events
+        )
 
         assert any("security events" in r.lower() for r in recommendations)
 
@@ -290,7 +312,9 @@ class TestSecurityOrchestrator:
         mock_network_instance = Mock()
         mock_network_instance.establish_baseline = Mock()
         mock_network_instance.scan_network = Mock()
-        mock_network_instance.get_network_health = Mock(return_value={"health_score": 100})
+        mock_network_instance.get_network_health = Mock(
+            return_value={"health_score": 100}
+        )
         mock_network_instance.detect_anomalies = Mock(return_value=[])
         orchestrator.network_sensors = mock_network_instance
 
@@ -308,7 +332,9 @@ class TestSecurityOrchestrator:
         orchestrator.web_scanner = mock_web_instance
 
         # Run audit with web targets
-        report = orchestrator.run_full_security_audit(web_targets=["http://example.com"])
+        report = orchestrator.run_full_security_audit(
+            web_targets=["http://example.com"]
+        )
 
         # Validate
         assert len(report.web_vulnerabilities) == 3
@@ -334,7 +360,9 @@ class TestSecurityOrchestrator:
         mock_network_instance.get_network_health = Mock(
             return_value={"health_score": 0}  # Critical health
         )
-        mock_network_instance.detect_anomalies = Mock(return_value=[Mock()] * 10)  # Many anomalies
+        mock_network_instance.detect_anomalies = Mock(
+            return_value=[Mock()] * 10
+        )  # Many anomalies
         orchestrator.network_sensors = mock_network_instance
 
         # Run audit
@@ -345,12 +373,18 @@ class TestSecurityOrchestrator:
         mock_alerting_system.create_alert.assert_called()
 
     @pytest.mark.asyncio
-    async def test_start_continuous_monitoring(self, orchestrator: SecurityOrchestrator) -> None:
+    async def test_start_continuous_monitoring(
+        self, orchestrator: SecurityOrchestrator
+    ) -> None:
         """Testa início de monitoramento contínuo."""
         # Mock monitoring methods
         with patch.object(orchestrator, "_monitor_network", new_callable=AsyncMock):
-            with patch.object(orchestrator, "_monitor_web_applications", new_callable=AsyncMock):
-                with patch.object(orchestrator, "_monitor_system_security", new_callable=AsyncMock):
+            with patch.object(
+                orchestrator, "_monitor_web_applications", new_callable=AsyncMock
+            ):
+                with patch.object(
+                    orchestrator, "_monitor_system_security", new_callable=AsyncMock
+                ):
                     # Start monitoring in background
                     monitoring_task = asyncio.create_task(
                         orchestrator.start_continuous_monitoring()
@@ -402,7 +436,9 @@ class TestSecurityOrchestrator:
         mock_sensor.scan_network.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_monitor_web_applications(self, orchestrator: SecurityOrchestrator) -> None:
+    async def test_monitor_web_applications(
+        self, orchestrator: SecurityOrchestrator
+    ) -> None:
         """Testa monitoramento de aplicações web."""
         # Mock web scanner
         mock_scanner = Mock()
@@ -436,7 +472,9 @@ class TestConvenienceFunctions:
     def test_run_security_audit(self, mock_orchestrator_class: Mock) -> None:
         """Testa função de conveniência run_security_audit."""
         mock_instance = Mock()
-        mock_instance.run_full_security_audit = Mock(return_value=Mock(spec=SecurityReport))
+        mock_instance.run_full_security_audit = Mock(
+            return_value=Mock(spec=SecurityReport)
+        )
         mock_orchestrator_class.return_value = mock_instance
 
         run_security_audit()

@@ -490,4 +490,7 @@ class TestIntegration:
         assert len(piece1.elements) == len(piece2.elements)
 
         # Aesthetic scores should be similar (not necessarily identical due to float precision)
-        assert abs(piece1.aesthetic_scores["overall"] - piece2.aesthetic_scores["overall"]) < 0.1
+        assert (
+            abs(piece1.aesthetic_scores["overall"] - piece2.aesthetic_scores["overall"])
+            < 0.1
+        )

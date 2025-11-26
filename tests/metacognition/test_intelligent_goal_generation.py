@@ -269,7 +269,9 @@ class TestImpactPredictor:
         predictor = ImpactPredictor()
         analysis = RepositoryAnalysis()
 
-        impact = predictor.predict_impact(GoalCategory.SECURITY, "Critical security fix", analysis)
+        impact = predictor.predict_impact(
+            GoalCategory.SECURITY, "Critical security fix", analysis
+        )
 
         # All impact values should be in [0, 1]
         assert 0.0 <= impact.code_coverage_impact <= 1.0
@@ -319,7 +321,10 @@ class TestIntelligentGoalEngine:
 
             assert len(goals) > 0
             goal = goals[0]
-            assert "complexity" in goal["title"].lower() or "refactor" in goal["title"].lower()
+            assert (
+                "complexity" in goal["title"].lower()
+                or "refactor" in goal["title"].lower()
+            )
             assert "impact_metrics" in goal
 
     def test_generate_test_coverage_goals(self) -> None:
@@ -339,7 +344,9 @@ class TestIntelligentGoalEngine:
 
             assert len(goals) > 0
             goal = goals[0]
-            assert "test" in goal["title"].lower() or "coverage" in goal["title"].lower()
+            assert (
+                "test" in goal["title"].lower() or "coverage" in goal["title"].lower()
+            )
 
     def test_generate_architecture_improvement_goals(self) -> None:
         """Test generating architecture improvement goals."""
@@ -356,7 +363,10 @@ class TestIntelligentGoalEngine:
 
             assert len(goals) > 0
             goal = goals[0]
-            assert "circular" in goal["title"].lower() or "architecture" in goal["title"].lower()
+            assert (
+                "circular" in goal["title"].lower()
+                or "architecture" in goal["title"].lower()
+            )
 
     def test_generate_security_hardening_goals(self) -> None:
         """Test generating security hardening goals."""

@@ -258,7 +258,9 @@ class TestHomeostasisController:
     @patch("psutil.cpu_percent")
     @patch("psutil.virtual_memory")
     @patch("psutil.disk_usage")
-    def test_get_current_state(self, mock_disk: Mock, mock_memory: Mock, mock_cpu: Mock) -> None:
+    def test_get_current_state(
+        self, mock_disk: Mock, mock_memory: Mock, mock_cpu: Mock
+    ) -> None:
         """Testa obtenção do estado atual."""
         mock_cpu.return_value = 45.0
         mock_memory.return_value = Mock(percent=60.0, available=8 * 1024**3)
@@ -275,7 +277,9 @@ class TestHomeostasisController:
     @patch("psutil.cpu_percent")
     @patch("psutil.virtual_memory")
     @patch("psutil.disk_usage")
-    def test_regulate_no_metrics(self, mock_disk: Mock, mock_memory: Mock, mock_cpu: Mock) -> None:
+    def test_regulate_no_metrics(
+        self, mock_disk: Mock, mock_memory: Mock, mock_cpu: Mock
+    ) -> None:
         """Testa regulação sem métricas."""
         controller = HomeostaticController()
         result = controller.regulate()
@@ -377,7 +381,9 @@ class TestHomeostasisController:
     @patch("psutil.cpu_percent")
     @patch("psutil.virtual_memory")
     @patch("psutil.disk_usage")
-    def test_collect_metrics(self, mock_disk: Mock, mock_memory: Mock, mock_cpu: Mock) -> None:
+    def test_collect_metrics(
+        self, mock_disk: Mock, mock_memory: Mock, mock_cpu: Mock
+    ) -> None:
         """Testa coleta de métricas."""
         mock_cpu.return_value = 45.0
         mock_memory.return_value = Mock(percent=60.0, available=8 * 1024**3)

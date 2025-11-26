@@ -205,7 +205,9 @@ class NeuralComponent:
             # Adicionar contexto ao prompt se necessário (o app.py espera inputs string)
             payload["inputs"] = f"Context: {json.dumps(context)}\n\nQuery: {query}"
 
-        response = requests.post(url, headers=headers, json=payload, timeout=self.timeout)
+        response = requests.post(
+            url, headers=headers, json=payload, timeout=self.timeout
+        )
         response.raise_for_status()
 
         data = response.json()
@@ -270,7 +272,9 @@ class NeuralComponent:
         api_url = f"https://api-inference.huggingface.co/models/{self.model_name}"
         headers = {"Authorization": f"Bearer {self.hf_token}"}
 
-        response = requests.post(api_url, headers=headers, json=payload, timeout=self.timeout)
+        response = requests.post(
+            api_url, headers=headers, json=payload, timeout=self.timeout
+        )
         response.raise_for_status()
 
         # HF API retorna lista de dicts ou dict dependendo do modelo

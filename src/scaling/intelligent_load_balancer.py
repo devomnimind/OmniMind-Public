@@ -26,7 +26,9 @@ class NodePerformanceMetrics:
     """Performance metrics for a node."""
 
     node_id: str
-    task_completion_times: Deque[float] = field(default_factory=lambda: deque(maxlen=100))
+    task_completion_times: Deque[float] = field(
+        default_factory=lambda: deque(maxlen=100)
+    )
     task_success_rate: float = 1.0
     average_cpu_usage: float = 0.0
     average_memory_usage: float = 0.0
@@ -190,7 +192,9 @@ class IntelligentLoadBalancer:
             confidence=confidence,
         )
 
-    def calculate_node_score(self, node: NodeInfo, task: Optional[DistributedTask] = None) -> float:
+    def calculate_node_score(
+        self, node: NodeInfo, task: Optional[DistributedTask] = None
+    ) -> float:
         """Calculate comprehensive score for node selection.
 
         Lower score = better choice.
@@ -287,7 +291,9 @@ class IntelligentLoadBalancer:
 
         # Filter by capability if task type specified
         if task and task.task_type:
-            capable_nodes = [n for n in available_nodes if task.task_type in n.capabilities]
+            capable_nodes = [
+                n for n in available_nodes if task.task_type in n.capabilities
+            ]
             if capable_nodes:
                 available_nodes = capable_nodes
 
@@ -297,7 +303,8 @@ class IntelligentLoadBalancer:
             if len(self.task_history) >= self.min_samples_for_ml:
                 # Enough data for ML prediction
                 node_scores = [
-                    (node, self.calculate_node_score(node, task)) for node in available_nodes
+                    (node, self.calculate_node_score(node, task))
+                    for node in available_nodes
                 ]
                 # Select node with lowest score
                 selected_node = min(node_scores, key=lambda x: x[1])[0]
@@ -314,7 +321,9 @@ class IntelligentLoadBalancer:
 
         elif self.strategy == "weighted_least_loaded":
             # Consider both current load and historical performance
-            if any(nid in self.node_metrics for nid in [n.node_id for n in available_nodes]):
+            if any(
+                nid in self.node_metrics for nid in [n.node_id for n in available_nodes]
+            ):
                 best_node = None
                 best_weighted_load = float("inf")
 
@@ -323,7 +332,9 @@ class IntelligentLoadBalancer:
                     if node.node_id in self.node_metrics:
                         metrics = self.node_metrics[node.node_id]
                         # Weight by success rate (prefer reliable nodes)
-                        weighted_load = current_load / max(0.1, metrics.task_success_rate)
+                        weighted_load = current_load / max(
+                            0.1, metrics.task_success_rate
+                        )
                     else:
                         weighted_load = current_load
 
@@ -339,7 +350,9 @@ class IntelligentLoadBalancer:
             # Default to least loaded
             return self._select_least_loaded_node(available_nodes)
 
-    def get_cluster_predictions(self, nodes: List[NodeInfo]) -> Dict[str, WorkloadPrediction]:
+    def get_cluster_predictions(
+        self, nodes: List[NodeInfo]
+    ) -> Dict[str, WorkloadPrediction]:
         """Get workload predictions for all nodes.
 
         Args:
@@ -377,9 +390,13 @@ class IntelligentLoadBalancer:
                 statistics.mean(all_completion_times) if all_completion_times else 0.0
             ),
             "completion_time_std": (
-                statistics.stdev(all_completion_times) if len(all_completion_times) > 1 else 0.0
+                statistics.stdev(all_completion_times)
+                if len(all_completion_times) > 1
+                else 0.0
             ),
-            "avg_success_rate": (statistics.mean(all_success_rates) if all_success_rates else 0.0),
+            "avg_success_rate": (
+                statistics.mean(all_success_rates) if all_success_rates else 0.0
+            ),
             "nodes": {
                 node_id: {
                     "avg_completion_time": metrics.get_average_completion_time(),

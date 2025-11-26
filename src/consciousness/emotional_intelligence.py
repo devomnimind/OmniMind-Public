@@ -348,7 +348,8 @@ class EmotionalIntelligence:
         # Generate appropriate response based on detected emotion
         if primary == Emotion.SADNESS:
             response_text = (
-                "I understand this might be challenging. " "Let's work together to find a solution."
+                "I understand this might be challenging. "
+                "Let's work together to find a solution."
             )
             target_emotion = Emotion.TRUST
             tone = "supportive"
@@ -356,7 +357,8 @@ class EmotionalIntelligence:
 
         elif primary == Emotion.ANGER:
             response_text = (
-                "I recognize this is frustrating. " "Let me help address the issue systematically."
+                "I recognize this is frustrating. "
+                "Let me help address the issue systematically."
             )
             target_emotion = Emotion.TRUST
             tone = "calm and understanding"
@@ -364,7 +366,8 @@ class EmotionalIntelligence:
 
         elif primary == Emotion.FEAR:
             response_text = (
-                "Your concerns are valid. " "Let's carefully evaluate the situation together."
+                "Your concerns are valid. "
+                "Let's carefully evaluate the situation together."
             )
             target_emotion = Emotion.TRUST
             tone = "reassuring"
@@ -391,7 +394,8 @@ class EmotionalIntelligence:
             empathy_level *= 0.8
 
         rationale = (
-            f"Responding to {primary.value} emotion " f"with {tone} tone to achieve {response_goal}"
+            f"Responding to {primary.value} emotion "
+            f"with {tone} tone to achieve {response_goal}"
         )
 
         logger.debug(
@@ -432,8 +436,12 @@ class EmotionalIntelligence:
         sentiment_counts: Dict[Sentiment, int] = {}
 
         for state in recent:
-            emotion_counts[state.primary_emotion] = emotion_counts.get(state.primary_emotion, 0) + 1
-            sentiment_counts[state.sentiment] = sentiment_counts.get(state.sentiment, 0) + 1
+            emotion_counts[state.primary_emotion] = (
+                emotion_counts.get(state.primary_emotion, 0) + 1
+            )
+            sentiment_counts[state.sentiment] = (
+                sentiment_counts.get(state.sentiment, 0) + 1
+            )
 
         # Determine dominant emotion and sentiment
         dominant_emotion = max(emotion_counts.items(), key=lambda x: x[1])[0]
@@ -447,8 +455,12 @@ class EmotionalIntelligence:
             first_half = recent[: len(recent) // 2]
             second_half = recent[len(recent) // 2 :]
 
-            first_positive = sum(1 for s in first_half if s.sentiment == Sentiment.POSITIVE)
-            second_positive = sum(1 for s in second_half if s.sentiment == Sentiment.POSITIVE)
+            first_positive = sum(
+                1 for s in first_half if s.sentiment == Sentiment.POSITIVE
+            )
+            second_positive = sum(
+                1 for s in second_half if s.sentiment == Sentiment.POSITIVE
+            )
 
             if second_positive > first_positive:
                 trend_direction = "improving"
@@ -465,7 +477,9 @@ class EmotionalIntelligence:
             "trend_direction": trend_direction,
             "average_confidence": avg_confidence,
             "states_analyzed": len(recent),
-            "emotion_distribution": {e.value: count for e, count in emotion_counts.items()},
+            "emotion_distribution": {
+                e.value: count for e, count in emotion_counts.items()
+            },
             "timestamp": datetime.now().isoformat(),
         }
 
@@ -487,7 +501,9 @@ class EmotionalIntelligence:
         # Calculate average confidence
         avg_confidence = 0.0
         if total_states > 0:
-            avg_confidence = sum(s.confidence for s in self._emotion_history) / total_states
+            avg_confidence = (
+                sum(s.confidence for s in self._emotion_history) / total_states
+            )
 
         return {
             "total_emotional_states": total_states,

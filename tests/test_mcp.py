@@ -7,7 +7,9 @@ from src.integrations import MCPClient, MCPConfig, MCPServer
 from src.integrations.mcp_client import MCPClientError
 
 
-def _start_mcp_server(tmp_path: Path, allowed_paths: Iterable[str] | None = None) -> MCPServer:
+def _start_mcp_server(
+    tmp_path: Path, allowed_paths: Iterable[str] | None = None
+) -> MCPServer:
     config = MCPConfig(
         host="127.0.0.1",
         port=0,

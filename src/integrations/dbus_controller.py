@@ -59,14 +59,18 @@ class DBusSessionController:
                 "action": action_key,
             }
         except dbus.DBusException as exc:
-            logger.warning("Failed to control media player %s: %s", player_bus_name, exc)
+            logger.warning(
+                "Failed to control media player %s: %s", player_bus_name, exc
+            )
             return {"success": False, "error": str(exc)}
         except AttributeError as exc:
             return {"success": False, "error": str(exc)}
 
     def list_media_players(self) -> List[str]:
         try:
-            proxy = self._bus.get_object("org.freedesktop.DBus", "/org/freedesktop/DBus")
+            proxy = self._bus.get_object(
+                "org.freedesktop.DBus", "/org/freedesktop/DBus"
+            )
             interface = dbus.Interface(proxy, "org.freedesktop.DBus")
             names = interface.ListNames()
             return [n for n in names if n.startswith("org.mpris.MediaPlayer2.")]
@@ -104,8 +108,12 @@ class DBusSystemController:
             )
             props = dbus.Interface(proxy, "org.freedesktop.DBus.Properties")
             state = int(props.Get("org.freedesktop.NetworkManager", "State"))
-            connectivity = int(props.Get("org.freedesktop.NetworkManager", "Connectivity"))
-            connections = props.Get("org.freedesktop.NetworkManager", "ActiveConnections")
+            connectivity = int(
+                props.Get("org.freedesktop.NetworkManager", "Connectivity")
+            )
+            connections = props.Get(
+                "org.freedesktop.NetworkManager", "ActiveConnections"
+            )
             return {
                 "state": self._NETWORK_STATES.get(state, "UNKNOWN"),
                 "connectivity": self._CONNECTIVITY.get(connectivity, "UNKNOWN"),
@@ -117,7 +125,9 @@ class DBusSystemController:
 
     def get_power_status(self) -> Dict[str, Any]:
         try:
-            proxy = self._bus.get_object("org.freedesktop.UPower", "/org/freedesktop/UPower")
+            proxy = self._bus.get_object(
+                "org.freedesktop.UPower", "/org/freedesktop/UPower"
+            )
             props = dbus.Interface(proxy, "org.freedesktop.DBus.Properties")
             on_battery = bool(props.Get("org.freedesktop.UPower", "OnBattery"))
             percentage = float(props.Get("org.freedesktop.UPower", "Percentage"))
@@ -235,7 +245,9 @@ class DBusSystemController:
             Dictionary with service statuses
         """
         try:
-            proxy = self._bus.get_object("org.freedesktop.systemd1", "/org/freedesktop/systemd1")
+            proxy = self._bus.get_object(
+                "org.freedesktop.systemd1", "/org/freedesktop/systemd1"
+            )
             manager = dbus.Interface(proxy, "org.freedesktop.systemd1.Manager")
 
             # Get list of units
@@ -266,7 +278,9 @@ class DBusSystemController:
             logger.debug(f"systemd query failed: {exc}")
             return {"error": str(exc)}
 
-    def send_notification(self, summary: str, body: str, urgency: int = 1) -> Dict[str, Any]:
+    def send_notification(
+        self, summary: str, body: str, urgency: int = 1
+    ) -> Dict[str, Any]:
         """Send desktop notification via D-Bus.
 
         Args:

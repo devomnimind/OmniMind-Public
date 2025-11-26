@@ -45,7 +45,9 @@ class CodeSynthesizer:
         self._logger = logger.getChild(self.__class__.__name__)
         self._logger.debug("CodeSynthesizer initialized")
 
-    def synthesize(self, specs: Sequence[ComponentSpec]) -> Dict[str, SynthesizedComponent]:
+    def synthesize(
+        self, specs: Sequence[ComponentSpec]
+    ) -> Dict[str, SynthesizedComponent]:
         """Synthesize source code for a sequence of component specifications.
 
         Args:

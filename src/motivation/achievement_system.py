@@ -235,8 +235,12 @@ class AchievementEngine:
             self.motivation_state.learning_velocity += 0.1
 
         # Ensure bounds
-        self.motivation_state.learning_velocity = min(1.0, self.motivation_state.learning_velocity)
-        self.motivation_state.best_work_quality = min(1.0, self.motivation_state.best_work_quality)
+        self.motivation_state.learning_velocity = min(
+            1.0, self.motivation_state.learning_velocity
+        )
+        self.motivation_state.best_work_quality = min(
+            1.0, self.motivation_state.best_work_quality
+        )
 
         logger.debug(
             f"Motivation boosted: velocity={self.motivation_state.learning_velocity:.3f}, "
@@ -310,7 +314,9 @@ class AchievementEngine:
             "motivation_state": self.motivation_state.to_dict(),
         }
 
-    def _record_achievement(self, achievement_type: str, metadata: Dict[str, Any]) -> None:
+    def _record_achievement(
+        self, achievement_type: str, metadata: Dict[str, Any]
+    ) -> None:
         """
         Record achievement to audit log.
 

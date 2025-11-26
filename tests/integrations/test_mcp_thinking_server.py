@@ -95,7 +95,9 @@ class TestThinkingMCPServer:
         server = ThinkingMCPServer()
         session_id = "sess_multi"
         for i in range(5):
-            result = server.add_step(session_id=session_id, content=f"Step {i}", type="reasoning")
+            result = server.add_step(
+                session_id=session_id, content=f"Step {i}", type="reasoning"
+            )
             assert result["session_id"] == session_id
 
     def test_get_history_basic(self) -> None:
@@ -278,5 +280,7 @@ class TestThinkingMCPServer:
         assert branch["new_session_id"] == "sess_branch_123"
 
         # Mescla ramificações
-        merged = server.merge_branches(session_ids=["sess_main", branch["new_session_id"]])
+        merged = server.merge_branches(
+            session_ids=["sess_main", branch["new_session_id"]]
+        )
         assert merged["merged_session_id"] == "sess_merged_123"

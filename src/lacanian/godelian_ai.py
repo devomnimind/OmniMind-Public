@@ -59,7 +59,9 @@ class SimpleAxiomaticSystem:
         self._axioms: Set[str] = initial_axioms or {"A", "B"}
         self._proven_theorems: Set[str] = set(self._axioms)
 
-        logger.debug(f"Simple axiomatic system initialized with {len(self._axioms)} axioms")
+        logger.debug(
+            f"Simple axiomatic system initialized with {len(self._axioms)} axioms"
+        )
 
     def axioms(self) -> Set[str]:
         """Retorna axiomas do sistema."""
@@ -253,7 +255,9 @@ class GodelianAI:
                 return self.base.can_prove(statement)
 
         # Cria novo sistema com verdades não prováveis como axiomas
-        meta_system = MetaSystem(base=self.current_system, new_axioms=self.unprovable_truths.copy())
+        meta_system = MetaSystem(
+            base=self.current_system, new_axioms=self.unprovable_truths.copy()
+        )
 
         self.system_history.append(meta_system)
         self.current_system = meta_system
@@ -301,7 +305,8 @@ class GodelianAI:
         levels_generated = len(self.system_history) - initial_level
 
         logger.info(
-            f"Creative evolution cycle complete: " f"{levels_generated} meta-systems generated"
+            f"Creative evolution cycle complete: "
+            f"{levels_generated} meta-systems generated"
         )
 
         return levels_generated
@@ -419,7 +424,9 @@ class ImpossibilityMetaStrategy:
             "approach": "relaxation_of_constraints",
         }
 
-    def _decompose_impossibility(self, problem: str, attempts: List[str]) -> Dict[str, Any]:
+    def _decompose_impossibility(
+        self, problem: str, attempts: List[str]
+    ) -> Dict[str, Any]:
         """
         Decompõe problema impossível em subproblemas possíveis.
 
@@ -463,7 +470,9 @@ class ImpossibilityMetaStrategy:
             "insight": "Impossibility itself is informative",
         }
 
-    def _embrace_contradiction(self, problem: str, attempts: List[str]) -> Dict[str, Any]:
+    def _embrace_contradiction(
+        self, problem: str, attempts: List[str]
+    ) -> Dict[str, Any]:
         """
         Abraça contradição - lógica paraconsistente.
 

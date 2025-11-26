@@ -83,7 +83,9 @@ class TestArchitectureEvolution:
             original_type = existing[original_name].type
             assert spec.type == original_type
 
-    def test_propose_evolution_preserves_config(self, evolution: ArchitectureEvolution) -> None:
+    def test_propose_evolution_preserves_config(
+        self, evolution: ArchitectureEvolution
+    ) -> None:
         """Testa que a evolução preserva configurações originais."""
         existing = {
             "test_comp": ComponentSpec(
@@ -105,19 +107,26 @@ class TestArchitectureEvolution:
         # E que a flag evolved foi adicionada
         assert evolved_spec.config["evolved"] == "true"
 
-    def test_propose_evolution_adds_evolved_flag(self, evolution: ArchitectureEvolution) -> None:
+    def test_propose_evolution_adds_evolved_flag(
+        self, evolution: ArchitectureEvolution
+    ) -> None:
         """Testa que a flag 'evolved' é adicionada à configuração."""
-        existing = {"component": ComponentSpec(name="component", type="any_type", config={})}
+        existing = {
+            "component": ComponentSpec(name="component", type="any_type", config={})
+        }
 
         evolved = evolution.propose_evolution(existing)
 
         assert evolved[0].config["evolved"] == "true"
 
-    def test_propose_evolution_preserves_type(self, evolution: ArchitectureEvolution) -> None:
+    def test_propose_evolution_preserves_type(
+        self, evolution: ArchitectureEvolution
+    ) -> None:
         """Testa que os tipos dos componentes são preservados."""
         types_to_test = ["synthesizer", "repair", "boundary", "custom"]
         existing = {
-            f"comp_{t}": ComponentSpec(name=f"comp_{t}", type=t, config={}) for t in types_to_test
+            f"comp_{t}": ComponentSpec(name=f"comp_{t}", type=t, config={})
+            for t in types_to_test
         }
 
         evolved = evolution.propose_evolution(existing)
@@ -126,7 +135,9 @@ class TestArchitectureEvolution:
             original_name = spec.name.replace("evolved_", "")
             assert spec.type == existing[original_name].type
 
-    def test_propose_evolution_validation_success(self, evolution: ArchitectureEvolution) -> None:
+    def test_propose_evolution_validation_success(
+        self, evolution: ArchitectureEvolution
+    ) -> None:
         """Testa que a validação é bem-sucedida para specs válidos."""
         existing = {
             "valid_component": ComponentSpec(
@@ -155,9 +166,13 @@ class TestArchitectureEvolution:
         assert "evolved_with_underscore" in names
         assert "evolved_multiple_words_here" in names
 
-    def test_propose_evolution_with_empty_config(self, evolution: ArchitectureEvolution) -> None:
+    def test_propose_evolution_with_empty_config(
+        self, evolution: ArchitectureEvolution
+    ) -> None:
         """Testa evolução de componentes com config vazia."""
-        existing = {"empty_config": ComponentSpec(name="empty_config", type="test", config={})}
+        existing = {
+            "empty_config": ComponentSpec(name="empty_config", type="test", config={})
+        }
 
         evolved = evolution.propose_evolution(existing)
 
@@ -166,7 +181,9 @@ class TestArchitectureEvolution:
         assert evolved[0].config["evolved"] == "true"
         assert len(evolved[0].config) == 1
 
-    def test_propose_evolution_with_complex_config(self, evolution: ArchitectureEvolution) -> None:
+    def test_propose_evolution_with_complex_config(
+        self, evolution: ArchitectureEvolution
+    ) -> None:
         """Testa evolução de componentes com config complexa."""
         existing = {
             "complex": ComponentSpec(
@@ -193,7 +210,9 @@ class TestArchitectureEvolution:
         assert spec.config["list_like"] == "item1,item2,item3"
         assert spec.config["evolved"] == "true"
 
-    def test_propose_evolution_multiple_iterations(self, evolution: ArchitectureEvolution) -> None:
+    def test_propose_evolution_multiple_iterations(
+        self, evolution: ArchitectureEvolution
+    ) -> None:
         """Testa múltiplas iterações de evolução."""
         # Primeira evolução
         existing_v1 = {"base": ComponentSpec("base", "type", {"version": "1"})}
@@ -208,7 +227,9 @@ class TestArchitectureEvolution:
         assert evolved_v2[0].config["version"] == "1"
         assert evolved_v2[0].config["evolved"] == "true"
 
-    def test_integration_with_meta_architect(self, meta_architect: MetaArchitect) -> None:
+    def test_integration_with_meta_architect(
+        self, meta_architect: MetaArchitect
+    ) -> None:
         """Testa integração completa com MetaArchitect."""
         # Usa MetaArchitect para gerar specs
         requirements = {"capabilities": ["feature1", "feature2"]}
@@ -233,7 +254,9 @@ class TestArchitectureEvolution:
         """Testa que os specs originais não são modificados."""
         original_config = {"original": "value"}
         existing = {
-            "component": ComponentSpec(name="component", type="test", config=original_config)
+            "component": ComponentSpec(
+                name="component", type="test", config=original_config
+            )
         }
 
         evolved = evolution.propose_evolution(existing)

@@ -218,7 +218,9 @@ class TestDetectPerformanceBottlenecks:
         """Test when no bottlenecks detected."""
         engine = ProactiveGoalEngine()
 
-        with patch.object(engine, "_run_command", return_value=(True, "import completed")):
+        with patch.object(
+            engine, "_run_command", return_value=(True, "import completed")
+        ):
             goals = engine.detect_performance_bottlenecks()
 
         # May have 0 goals
@@ -231,7 +233,9 @@ class TestDetectPerformanceBottlenecks:
         # Mock output with slow import
         slow_import_output = "150 ms import src.heavy_module"
 
-        with patch.object(engine, "_run_command", return_value=(True, slow_import_output)):
+        with patch.object(
+            engine, "_run_command", return_value=(True, slow_import_output)
+        ):
             goals = engine.detect_performance_bottlenecks()
 
         # Should detect slow import goal
@@ -262,7 +266,9 @@ class TestAssessCodeQuality:
         50 E302 expected 2 blank lines
         """
 
-        with patch.object(engine, "_run_command", return_value=(True, violations_output)):
+        with patch.object(
+            engine, "_run_command", return_value=(True, violations_output)
+        ):
             goals = engine.assess_code_quality()
 
         # Should generate quality goal

@@ -83,7 +83,9 @@ class DLPValidator:
 
     def _load_policies(self) -> List[DLPPolicy]:
         if not self.policy_path.exists():
-            logger.warning("DLP policy file missing %s, falling back to defaults", self.policy_path)
+            logger.warning(
+                "DLP policy file missing %s, falling back to defaults", self.policy_path
+            )
             return [DLPPolicy(**policy) for policy in self.DEFAULT_POLICIES]
         try:
             data = yaml.safe_load(self.policy_path.read_text()) or {}

@@ -221,7 +221,9 @@ class ConnectionDetector:
             }
 
         total_concepts = len(self.concept_network)
-        total_connections = sum(len(neighbors) for neighbors in self.concept_network.values()) // 2
+        total_connections = (
+            sum(len(neighbors) for neighbors in self.concept_network.values()) // 2
+        )
 
         return {
             "total_concepts": total_concepts,
@@ -301,11 +303,15 @@ class InsightGenerator:
         Returns:
             Discovery containing the synthesis
         """
-        content = f"Synthesis of {len(elements)} disparate elements: {', '.join(elements)}"
+        content = (
+            f"Synthesis of {len(elements)} disparate elements: {', '.join(elements)}"
+        )
 
         # Value is average of connection strengths
         avg_strength = (
-            sum(c.strength for c in connections) / len(connections) if connections else 0.0
+            sum(c.strength for c in connections) / len(connections)
+            if connections
+            else 0.0
         )
 
         # Surprise is max of connection surprises
@@ -375,7 +381,9 @@ class InsightGenerator:
             Top N insights
         """
         # Score is weighted combination of value and surprise
-        scored = [(d.value_score * 0.6 + d.surprise_score * 0.4, d) for d in self.insights]
+        scored = [
+            (d.value_score * 0.6 + d.surprise_score * 0.4, d) for d in self.insights
+        ]
         scored.sort(key=lambda x: x[0], reverse=True)
 
         return [d for _, d in scored[:n]]
@@ -620,7 +628,8 @@ class SerendipityEngine:
             "serendipity_types": serendipity_counts,
             "insight_types": insight_counts,
             "avg_surprise": (
-                sum(d.surprise_score for d in self.generator.insights) / total_discoveries
+                sum(d.surprise_score for d in self.generator.insights)
+                / total_discoveries
                 if total_discoveries > 0
                 else 0.0
             ),

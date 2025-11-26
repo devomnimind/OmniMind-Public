@@ -554,7 +554,9 @@ class EmbodiedIntelligence:
             if self.current_state.energy_level < 0.1:
                 return False
             # Consume energy
-            self.current_state.energy_level = max(0.0, self.current_state.energy_level - 0.05)
+            self.current_state.energy_level = max(
+                0.0, self.current_state.energy_level - 0.05
+            )
             return True
 
         elif action.action_type == ActionType.GRASP:
@@ -609,7 +611,9 @@ class EmbodiedIntelligence:
 
         return False
 
-    def get_sensor_history(self, sensor_type: Optional[SensorType] = None) -> List[SensorReading]:
+    def get_sensor_history(
+        self, sensor_type: Optional[SensorType] = None
+    ) -> List[SensorReading]:
         """Get sensor reading history.
 
         Args:

@@ -176,7 +176,9 @@ class BrowserVerifier:
 
         logger.info("Browser verifier initialized")
 
-    def verify_web_app(self, url: str, expected_elements: List[str]) -> BrowserVerification:
+    def verify_web_app(
+        self, url: str, expected_elements: List[str]
+    ) -> BrowserVerification:
         """
         Verifica aplicação web.
 
@@ -264,7 +266,8 @@ class SelfImprovementLoop:
         self.learned_patterns[pattern_key] += self.learning_rate * reward
 
         logger.info(
-            f"Feedback processed: task={task_id}, " f"success={success}, pattern={pattern_key}"
+            f"Feedback processed: task={task_id}, "
+            f"success={success}, pattern={pattern_key}"
         )
 
     def get_learned_insights(self) -> Dict[str, Any]:
@@ -275,9 +278,9 @@ class SelfImprovementLoop:
             Dict com padrões e recomendações
         """
         # Padrões mais fortes
-        top_patterns = sorted(self.learned_patterns.items(), key=lambda x: abs(x[1]), reverse=True)[
-            :10
-        ]
+        top_patterns = sorted(
+            self.learned_patterns.items(), key=lambda x: abs(x[1]), reverse=True
+        )[:10]
 
         # Recomendações
         recommendations = []
@@ -313,7 +316,9 @@ class ModelSelector:
 
         logger.info("Model selector initialized")
 
-    def select_model(self, task_type: str, context: Optional[Dict[str, Any]] = None) -> AIModel:
+    def select_model(
+        self, task_type: str, context: Optional[Dict[str, Any]] = None
+    ) -> AIModel:
         """
         Seleciona modelo apropriado para tarefa.
 
@@ -359,7 +364,9 @@ class ModelSelector:
         # Seleciona melhor
         selected_model = max(factors, key=lambda k: factors[k])
 
-        logger.info(f"Model selected: {selected_model.value} " f"for task_type={task_type}")
+        logger.info(
+            f"Model selected: {selected_model.value} " f"for task_type={task_type}"
+        )
 
         return selected_model
 
@@ -404,7 +411,9 @@ class AgenticIDE:
     - Multi-model selection
     """
 
-    def __init__(self, workspace_path: Path, screenshots_dir: Optional[Path] = None) -> None:
+    def __init__(
+        self, workspace_path: Path, screenshots_dir: Optional[Path] = None
+    ) -> None:
         """
         Inicializa IDE agentic.
 
@@ -416,7 +425,9 @@ class AgenticIDE:
         self.workspace_path.mkdir(parents=True, exist_ok=True)
 
         # Componentes
-        self.browser_verifier = BrowserVerifier(screenshots_dir or (workspace_path / "screenshots"))
+        self.browser_verifier = BrowserVerifier(
+            screenshots_dir or (workspace_path / "screenshots")
+        )
         self.self_improvement = SelfImprovementLoop()
         self.model_selector = ModelSelector()
 
@@ -471,7 +482,9 @@ class AgenticIDE:
 
         self.tasks[task_id] = task
 
-        logger.info(f"Task created: {task_id} for agent={agent_id}, " f"model={model.value}")
+        logger.info(
+            f"Task created: {task_id} for agent={agent_id}, " f"model={model.value}"
+        )
 
         return task
 
@@ -519,7 +532,9 @@ class AgenticIDE:
             "artifacts": [code_artifact.artifact_id],
         }
 
-    def verify_artifact(self, artifact_id: str, verification_type: str = "browser") -> bool:
+    def verify_artifact(
+        self, artifact_id: str, verification_type: str = "browser"
+    ) -> bool:
         """
         Verifica artefato.
 
@@ -559,7 +574,9 @@ class AgenticIDE:
             artifact.verification_result = "Manual verification"
             return True
 
-    def provide_feedback(self, task_id: str, feedback_content: str, success: bool) -> None:
+    def provide_feedback(
+        self, task_id: str, feedback_content: str, success: bool
+    ) -> None:
         """
         Fornece feedback sobre tarefa.
 

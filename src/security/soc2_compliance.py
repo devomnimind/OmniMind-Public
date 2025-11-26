@@ -85,7 +85,9 @@ class VulnerabilityFinding:
     severity: RiskLevel
     affected_component: str
     remediation: str
-    discovered_date: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    discovered_date: str = field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+    )
     status: str = "open"  # open, in_progress, resolved, accepted
     cve_id: Optional[str] = None
     cvss_score: Optional[float] = None
@@ -170,7 +172,8 @@ class SOC2ComplianceManager:
                 criteria=TrustServicesCriteria.SECURITY,
                 title="Organization and Management",
                 description=(
-                    "Establish organizational structure with " "defined roles and responsibilities"
+                    "Establish organizational structure with "
+                    "defined roles and responsibilities"
                 ),
                 status=ControlStatus.IMPLEMENTED,
                 responsible_party="Security Team",
@@ -392,7 +395,8 @@ class SOC2ComplianceManager:
 
         # Save report to file
         report_path = (
-            self.compliance_dir / f"soc2_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+            self.compliance_dir
+            / f"soc2_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         )
         with report_path.open("w") as f:
             json.dump(report, f, indent=2)
@@ -457,7 +461,9 @@ class SOC2ComplianceManager:
         implemented = sum(
             1 for c in self.controls.values() if c.status == ControlStatus.IMPLEMENTED
         )
-        partial = sum(1 for c in self.controls.values() if c.status == ControlStatus.PARTIAL)
+        partial = sum(
+            1 for c in self.controls.values() if c.status == ControlStatus.PARTIAL
+        )
 
         # Full points for implemented, half points for partial
         score = (implemented + 0.5 * partial) / total * 100

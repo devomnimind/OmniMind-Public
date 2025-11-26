@@ -406,7 +406,9 @@ class RootCauseEngine:
         )
 
         self._analyses[failure_id] = analysis
-        logger.info(f"Completed RCA for {failure_id}: {len(root_causes)} root causes found")
+        logger.info(
+            f"Completed RCA for {failure_id}: {len(root_causes)} root causes found"
+        )
 
         return analysis
 
@@ -449,7 +451,9 @@ class RootCauseEngine:
         if causal_failures:
             # Add causal failures first (root causes)
             for causal_failure in causal_failures:
-                chain.append((causal_failure.component_id, causal_failure.failure_type.value))
+                chain.append(
+                    (causal_failure.component_id, causal_failure.failure_type.value)
+                )
 
         # Add primary failure at the end
         chain.append((failure.component_id, failure.failure_type.value))
@@ -518,7 +522,9 @@ class RootCauseEngine:
             root_name = root_comp.name if root_comp else root_causes[0]
             explanation_parts.append(f"Root cause identified: {root_name}")
         else:
-            explanation_parts.append(f"Multiple root causes identified: {', '.join(root_causes)}")
+            explanation_parts.append(
+                f"Multiple root causes identified: {', '.join(root_causes)}"
+            )
 
         if len(causal_chain) > 1:
             chain_names = []
@@ -546,7 +552,9 @@ class RootCauseEngine:
 
         # Correlated failures
         if correlated:
-            evidence.append(f"Found {len(correlated)} correlated failures within time window")
+            evidence.append(
+                f"Found {len(correlated)} correlated failures within time window"
+            )
 
         # Causal chain evidence
         if len(causal_chain) > 1:
@@ -562,7 +570,9 @@ class RootCauseEngine:
 
         return evidence
 
-    def _generate_recommendations(self, failure: Failure, root_causes: List[str]) -> List[str]:
+    def _generate_recommendations(
+        self, failure: Failure, root_causes: List[str]
+    ) -> List[str]:
         """Generate recommended remediation actions."""
         recommendations: List[str] = []
 
@@ -600,7 +610,9 @@ class RootCauseEngine:
         if failure.failure_type == FailureType.OVERLOAD:
             recommendations.append("Consider scaling resources or load balancing")
         elif failure.failure_type == FailureType.TIMEOUT:
-            recommendations.append("Review timeout configurations and increase if necessary")
+            recommendations.append(
+                "Review timeout configurations and increase if necessary"
+            )
 
         # Always include monitoring recommendation
         recommendations.append(
@@ -632,7 +644,8 @@ class RootCauseEngine:
         recent_failures = [
             f
             for f in self._failure_history
-            if f.component_id == component_id and datetime.now() - f.timestamp < timedelta(hours=1)
+            if f.component_id == component_id
+            and datetime.now() - f.timestamp < timedelta(hours=1)
         ]
 
         return {

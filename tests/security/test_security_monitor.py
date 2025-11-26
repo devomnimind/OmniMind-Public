@@ -37,7 +37,9 @@ class TestAnomalyType:
         assert AnomalyType.SUSPICIOUS_PROCESS.value == "suspicious_process"
         assert AnomalyType.HIGH_CPU_USAGE.value == "high_cpu_usage"
         assert AnomalyType.HIGH_MEMORY_USAGE.value == "high_memory_usage"
-        assert AnomalyType.UNUSUAL_NETWORK_CONNECTION.value == "unusual_network_connection"
+        assert (
+            AnomalyType.UNUSUAL_NETWORK_CONNECTION.value == "unusual_network_connection"
+        )
         assert AnomalyType.FILE_SYSTEM_CHANGE.value == "file_system_change"
 
 
@@ -133,7 +135,9 @@ class TestProcessSnapshot:
 
     def test_process_snapshot_with_connections(self) -> None:
         """Testa snapshot com conexões de rede."""
-        connections = [{"local_addr": "127.0.0.1:8080", "remote_addr": "192.168.1.1:443"}]
+        connections = [
+            {"local_addr": "127.0.0.1:8080", "remote_addr": "192.168.1.1:443"}
+        ]
 
         snapshot = ProcessSnapshot(
             pid=5678,
@@ -197,7 +201,9 @@ class TestSecurityMonitor:
 
     @patch("src.security.security_monitor.get_audit_system")
     @patch("psutil.process_iter")
-    def test_get_running_processes(self, mock_process_iter: Mock, mock_audit: Mock) -> None:
+    def test_get_running_processes(
+        self, mock_process_iter: Mock, mock_audit: Mock
+    ) -> None:
         """Testa obtenção de processos em execução."""
         mock_audit.return_value = MagicMock()
 
@@ -686,7 +692,9 @@ class TestSecurityMonitorAdvanced:
 
         with patch("psutil.cpu_percent", return_value=50.0):
             with patch("psutil.virtual_memory") as mock_mem:
-                mock_mem.return_value = MagicMock(percent=60.0, used=1000000, total=2000000)
+                mock_mem.return_value = MagicMock(
+                    percent=60.0, used=1000000, total=2000000
+                )
 
                 events = await monitor._monitor_system_resources()
 

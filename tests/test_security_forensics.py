@@ -331,7 +331,9 @@ class TestSecurityOrchestrator:
         # With issues
         network_anomalies = [1, 2]
         web_vulns = [{"severity": "CRITICAL"}]
-        recommendations = orchestrator._generate_recommendations(network_anomalies, web_vulns, [])
+        recommendations = orchestrator._generate_recommendations(
+            network_anomalies, web_vulns, []
+        )
 
         assert any("anomalies" in r.lower() for r in recommendations)
         assert any("critical" in r.lower() for r in recommendations)

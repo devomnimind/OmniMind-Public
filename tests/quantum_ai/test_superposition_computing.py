@@ -141,7 +141,9 @@ class TestSuperpositionProcessor:
 
         # All amplitudes should be equal (equal superposition)
         amplitude_magnitudes = [abs(a) for a in result.amplitudes]
-        assert all(abs(amp - amplitude_magnitudes[0]) < 1e-6 for amp in amplitude_magnitudes)
+        assert all(
+            abs(amp - amplitude_magnitudes[0]) < 1e-6 for amp in amplitude_magnitudes
+        )
 
     def test_evaluate_parallel_empty_input(self) -> None:
         """Testa avaliação paralela com entrada vazia."""
@@ -364,7 +366,9 @@ class TestStateAmplification:
 
         # All states should be amplified equally
         amplitude_magnitudes = [abs(a) for a in result.amplitudes]
-        assert all(abs(amp - amplitude_magnitudes[0]) < 1e-6 for amp in amplitude_magnitudes)
+        assert all(
+            abs(amp - amplitude_magnitudes[0]) < 1e-6 for amp in amplitude_magnitudes
+        )
 
     def test_select_high_amplitude(self) -> None:
         """Testa seleção de estados com alta amplitude."""
@@ -426,10 +430,14 @@ class TestSuperpositionIntegration:
         sa = StateAmplification()
 
         # Create superposition
-        superposition = SuperpositionProcessor().evaluate_parallel(lambda x: x, [1, 2, 3, 4, 5])
+        superposition = SuperpositionProcessor().evaluate_parallel(
+            lambda x: x, [1, 2, 3, 4, 5]
+        )
 
         # Amplify odd numbers
-        amplified = sa.amplify_states(superposition, lambda x: x % 2 == 1, amplification_factor=3.0)
+        amplified = sa.amplify_states(
+            superposition, lambda x: x % 2 == 1, amplification_factor=3.0
+        )
 
         # Select high amplitude states
         selected = sa.select_high_amplitude(amplified, threshold=0.15)

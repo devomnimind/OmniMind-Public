@@ -61,7 +61,9 @@ class TestCodeGenerator:
         assert "test_validate" in code
         assert output_file.exists()
 
-    def test_generate_api_endpoint(self, generator: CodeGenerator, tmp_path: Path) -> None:
+    def test_generate_api_endpoint(
+        self, generator: CodeGenerator, tmp_path: Path
+    ) -> None:
         """Test API endpoint generation."""
         output_file = tmp_path / "test_endpoint.py"
 

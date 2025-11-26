@@ -117,7 +117,9 @@ class TestNetworkSensorGanglia:
         return mock
 
     @pytest.fixture
-    def sensor(self, mock_audit_system: Mock, mock_alerting_system: Mock) -> NetworkSensorGanglia:
+    def sensor(
+        self, mock_audit_system: Mock, mock_alerting_system: Mock
+    ) -> NetworkSensorGanglia:
         """Cria instância do sensor com mocks."""
         return NetworkSensorGanglia(
             audit_system=mock_audit_system,
@@ -132,7 +134,9 @@ class TestNetworkSensorGanglia:
         assert len(sensor.known_hosts) == 0
 
     @patch("src.security.network_sensors.subprocess.run")
-    def test_check_nmap_available_true(self, mock_run: Mock, sensor: NetworkSensorGanglia) -> None:
+    def test_check_nmap_available_true(
+        self, mock_run: Mock, sensor: NetworkSensorGanglia
+    ) -> None:
         """Testa verificação de nmap disponível."""
         mock_run.return_value = Mock(returncode=0)
 
@@ -142,7 +146,9 @@ class TestNetworkSensorGanglia:
         mock_run.assert_called_once()
 
     @patch("src.security.network_sensors.subprocess.run")
-    def test_check_nmap_available_false(self, mock_run: Mock, sensor: NetworkSensorGanglia) -> None:
+    def test_check_nmap_available_false(
+        self, mock_run: Mock, sensor: NetworkSensorGanglia
+    ) -> None:
         """Testa verificação de nmap não disponível."""
         mock_run.side_effect = FileNotFoundError()
 
@@ -150,7 +156,9 @@ class TestNetworkSensorGanglia:
 
         assert result is False
 
-    def test_scan_network_nmap_not_available(self, sensor: NetworkSensorGanglia) -> None:
+    def test_scan_network_nmap_not_available(
+        self, sensor: NetworkSensorGanglia
+    ) -> None:
         """Testa scan quando nmap não está disponível."""
         sensor.nmap_available = False
 
@@ -178,7 +186,9 @@ class TestNetworkSensorGanglia:
         mock_audit_system.log_action.assert_called()
 
     @patch("src.security.network_sensors.subprocess.run")
-    def test_scan_network_timeout(self, mock_run: Mock, sensor: NetworkSensorGanglia) -> None:
+    def test_scan_network_timeout(
+        self, mock_run: Mock, sensor: NetworkSensorGanglia
+    ) -> None:
         """Testa scan com timeout."""
         sensor.nmap_available = True
         import subprocess
@@ -207,7 +217,9 @@ class TestNetworkSensorGanglia:
         assert 22 in hosts[0].open_ports
         assert 80 in hosts[0].open_ports
 
-    def test_parse_nmap_output_with_hostname(self, sensor: NetworkSensorGanglia) -> None:
+    def test_parse_nmap_output_with_hostname(
+        self, sensor: NetworkSensorGanglia
+    ) -> None:
         """Testa parse com hostname."""
         nmap_output = """
         Nmap scan report for gateway.local (192.168.1.1)
@@ -244,7 +256,9 @@ class TestNetworkSensorGanglia:
         assert len(hosts) == 1
         assert hosts[0].os_guess == "Linux 5.4.0"
 
-    def test_parse_nmap_output_multiple_hosts(self, sensor: NetworkSensorGanglia) -> None:
+    def test_parse_nmap_output_multiple_hosts(
+        self, sensor: NetworkSensorGanglia
+    ) -> None:
         """Testa parse com múltiplos hosts."""
         nmap_output = """
         Nmap scan report for 192.168.1.1
@@ -293,7 +307,9 @@ class TestNetworkSensorGanglia:
         sensor.baseline_ports["192.168.1.1"] = [22, 80]
 
         # Add new port
-        sensor.known_hosts["192.168.1.1"] = NetworkHost(ip="192.168.1.1", open_ports=[22, 80, 443])
+        sensor.known_hosts["192.168.1.1"] = NetworkHost(
+            ip="192.168.1.1", open_ports=[22, 80, 443]
+        )
 
         anomalies = sensor.detect_anomalies()
 
@@ -309,7 +325,9 @@ class TestNetworkSensorGanglia:
         sensor.baseline_ports["192.168.1.1"] = [22]
 
         # Add suspicious port (4444 - commonly used by malware)
-        sensor.known_hosts["192.168.1.1"] = NetworkHost(ip="192.168.1.1", open_ports=[22, 4444])
+        sensor.known_hosts["192.168.1.1"] = NetworkHost(
+            ip="192.168.1.1", open_ports=[22, 4444]
+        )
 
         anomalies = sensor.detect_anomalies()
 
@@ -317,7 +335,9 @@ class TestNetworkSensorGanglia:
         assert anomalies[0].severity == ThreatSeverity.CRITICAL
         assert 4444 in anomalies[0].details["suspicious_ports"]
 
-    def test_detect_anomalies_suspicious_service(self, sensor: NetworkSensorGanglia) -> None:
+    def test_detect_anomalies_suspicious_service(
+        self, sensor: NetworkSensorGanglia
+    ) -> None:
         """Testa detecção de serviços suspeitos."""
         sensor.known_hosts["192.168.1.1"] = NetworkHost(
             ip="192.168.1.1", services=["ssh", "metasploit"]
@@ -327,7 +347,9 @@ class TestNetworkSensorGanglia:
         anomalies = sensor.detect_anomalies()
 
         # Should detect suspicious service
-        suspicious_anomalies = [a for a in anomalies if a.type == "suspicious_service_detected"]
+        suspicious_anomalies = [
+            a for a in anomalies if a.type == "suspicious_service_detected"
+        ]
         assert len(suspicious_anomalies) > 0
         assert suspicious_anomalies[0].severity == ThreatSeverity.HIGH
 
@@ -339,9 +361,13 @@ class TestNetworkSensorGanglia:
         assert health["total_hosts"] == 0
         assert health["assessment"] == "HEALTHY"
 
-    def test_get_network_health_healthy_network(self, sensor: NetworkSensorGanglia) -> None:
+    def test_get_network_health_healthy_network(
+        self, sensor: NetworkSensorGanglia
+    ) -> None:
         """Testa cálculo de health com rede saudável."""
-        sensor.known_hosts["192.168.1.1"] = NetworkHost(ip="192.168.1.1", open_ports=[22, 80])
+        sensor.known_hosts["192.168.1.1"] = NetworkHost(
+            ip="192.168.1.1", open_ports=[22, 80]
+        )
 
         health = sensor.get_network_health()
 
@@ -349,20 +375,28 @@ class TestNetworkSensorGanglia:
         assert health["total_hosts"] == 1
         assert health["assessment"] == "HEALTHY"
 
-    def test_get_network_health_suspicious_ports(self, sensor: NetworkSensorGanglia) -> None:
+    def test_get_network_health_suspicious_ports(
+        self, sensor: NetworkSensorGanglia
+    ) -> None:
         """Testa cálculo de health com portas suspeitas."""
-        sensor.known_hosts["192.168.1.1"] = NetworkHost(ip="192.168.1.1", open_ports=[4444, 5555])
+        sensor.known_hosts["192.168.1.1"] = NetworkHost(
+            ip="192.168.1.1", open_ports=[4444, 5555]
+        )
 
         health = sensor.get_network_health()
 
         assert health["health_score"] < 80.0
         assert health["hosts_with_suspicious_ports"] == 1
 
-    def test_get_network_health_too_many_ports(self, sensor: NetworkSensorGanglia) -> None:
+    def test_get_network_health_too_many_ports(
+        self, sensor: NetworkSensorGanglia
+    ) -> None:
         """Testa cálculo de health com muitas portas abertas."""
         # Create host with many open ports
         many_ports = list(range(1, 51))  # 50 ports
-        sensor.known_hosts["192.168.1.1"] = NetworkHost(ip="192.168.1.1", open_ports=many_ports)
+        sensor.known_hosts["192.168.1.1"] = NetworkHost(
+            ip="192.168.1.1", open_ports=many_ports
+        )
 
         health = sensor.get_network_health()
 

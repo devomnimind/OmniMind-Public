@@ -148,7 +148,9 @@ class RLAgent(ABC):
         self.total_reward = 0.0
 
     @abstractmethod
-    def select_action(self, state: RLState, available_actions: List[RLAction]) -> RLAction:
+    def select_action(
+        self, state: RLState, available_actions: List[RLAction]
+    ) -> RLAction:
         """Select action for given state."""
 
     @abstractmethod
@@ -184,7 +186,9 @@ class PolicyGradientAgent(RLAgent):
         self.episode_transitions: List[RLTransition] = []
         self.baseline_value = 0.0
 
-    def select_action(self, state: RLState, available_actions: List[RLAction]) -> RLAction:
+    def select_action(
+        self, state: RLState, available_actions: List[RLAction]
+    ) -> RLAction:
         """Select action using stochastic policy."""
         if not available_actions:
             raise ValueError("No available actions")
@@ -203,7 +207,9 @@ class PolicyGradientAgent(RLAgent):
         # Fallback to last action
         return available_actions[-1]
 
-    def _compute_action_probabilities(self, state: RLState, actions: List[RLAction]) -> List[float]:
+    def _compute_action_probabilities(
+        self, state: RLState, actions: List[RLAction]
+    ) -> List[float]:
         """Compute softmax probabilities over actions."""
         state_id = state.state_id
 

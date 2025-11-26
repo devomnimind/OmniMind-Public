@@ -93,7 +93,9 @@ class BiasDetector:
 
         return detections
 
-    def _detect_confirmation_bias(self, result: Dict[str, Any]) -> Optional[BiasDetection]:
+    def _detect_confirmation_bias(
+        self, result: Dict[str, Any]
+    ) -> Optional[BiasDetection]:
         """Detecta viés de confirmação."""
         # Verifica se IA só buscou evidências que confirmam hipótese inicial
         if "search_results" not in result:
@@ -123,7 +125,9 @@ class BiasDetector:
                     f"{aligned}/{total} resultados confirmam hipótese inicial",
                     "Falta de busca por contraexemplos",
                 ],
-                recommendation=("Busque ativamente por evidências contrárias à hipótese"),
+                recommendation=(
+                    "Busque ativamente por evidências contrárias à hipótese"
+                ),
                 severity="high" if bias_score > 0.85 else "medium",
             )
 
@@ -161,7 +165,9 @@ class BiasDetector:
 
         return None
 
-    def _detect_automation_bias(self, result: Dict[str, Any]) -> Optional[BiasDetection]:
+    def _detect_automation_bias(
+        self, result: Dict[str, Any]
+    ) -> Optional[BiasDetection]:
         """Detecta viés de automação."""
         # Verifica se IA aceita cegamente outputs de outros sistemas
         if "external_system_outputs" not in result:
@@ -238,7 +244,9 @@ class BiasDetector:
         # Implementação simplificada
         return {}  # Placeholder
 
-    def _calculate_divergence(self, dist1: Dict[str, float], dist2: Dict[str, float]) -> float:
+    def _calculate_divergence(
+        self, dist1: Dict[str, float], dist2: Dict[str, float]
+    ) -> float:
         """Calcula divergência entre distribuições."""
         # Implementação simplificada (KL divergence ou similar)
         return 0.0  # Placeholder
@@ -327,5 +335,7 @@ class BiasDetector:
         return {
             "total": total,
             "by_type": by_type,
-            "most_common": (max(by_type.items(), key=lambda x: x[1])[0] if by_type else None),
+            "most_common": (
+                max(by_type.items(), key=lambda x: x[1])[0] if by_type else None
+            ),
         }

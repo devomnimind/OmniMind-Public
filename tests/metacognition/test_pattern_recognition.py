@@ -119,7 +119,10 @@ class TestDetectRepetitiveBehavior:
 
         if len(result["patterns"]) > 1:
             # First pattern should have more or equal repetitions than second
-            assert result["patterns"][0]["repetitions"] >= result["patterns"][1]["repetitions"]
+            assert (
+                result["patterns"][0]["repetitions"]
+                >= result["patterns"][1]["repetitions"]
+            )
 
     def test_handles_missing_tool_names(self) -> None:
         """Test handling of operations without tool_name."""
@@ -203,7 +206,9 @@ class TestDetectBias:
         pr = PatternRecognition(sensitivity=0.5)
 
         # Medium severity (70-80%)
-        operations_medium = [{"tool_name": "tool1"}] * 75 + [{"tool_name": "tool2"}] * 25
+        operations_medium = [{"tool_name": "tool1"}] * 75 + [
+            {"tool_name": "tool2"}
+        ] * 25
         result_medium = pr.detect_bias(operations_medium)
 
         if len(result_medium["biases"]) > 0:
@@ -266,7 +271,9 @@ class TestDetectAnomalies:
 
         result = pr.detect_anomalies(operations)
 
-        failure_anomalies = [a for a in result["anomalies"] if a["type"] == "high_failure_rate"]
+        failure_anomalies = [
+            a for a in result["anomalies"] if a["type"] == "high_failure_rate"
+        ]
 
         assert len(failure_anomalies) > 0
         assert failure_anomalies[0]["failures"] >= 5
@@ -368,7 +375,9 @@ class TestCalculateDiversityScore:
     def test_high_diversity(self) -> None:
         """Test high diversity (many different tools)."""
         pr = PatternRecognition()
-        operations = [{"tool_name": f"tool_{i}", "agent": f"agent_{i}"} for i in range(20)]
+        operations = [
+            {"tool_name": f"tool_{i}", "agent": f"agent_{i}"} for i in range(20)
+        ]
 
         result = pr.calculate_diversity_score(operations)
 

@@ -248,7 +248,9 @@ class TestGDPRController:
         """Testa registro de data subject."""
         controller = GDPRController()
 
-        subject = controller.register_data_subject(subject_id="user123", email="test@example.com")
+        subject = controller.register_data_subject(
+            subject_id="user123", email="test@example.com"
+        )
 
         assert isinstance(subject, DataSubject)
         assert subject.subject_id == "user123"

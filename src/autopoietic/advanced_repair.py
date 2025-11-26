@@ -56,10 +56,14 @@ class AdvancedRepair:
             }
             spec = ComponentSpec(name=repair_name, type="repair", config=config)
             specs.append(spec)
-            self._logger.debug("Created repair spec %s for component %s", repair_name, comp_name)
+            self._logger.debug(
+                "Created repair spec %s for component %s", repair_name, comp_name
+            )
         return specs
 
-    def synthesize_patches(self, specs: List[ComponentSpec]) -> Dict[str, SynthesizedComponent]:
+    def synthesize_patches(
+        self, specs: List[ComponentSpec]
+    ) -> Dict[str, SynthesizedComponent]:
         """Generate source code patches for a list of repair specifications.
 
         Args:
@@ -72,7 +76,9 @@ class AdvancedRepair:
         self._logger.debug("Synthesized %d repair patches", len(patches))
         return patches
 
-    def apply_patches(self, patches: Mapping[str, SynthesizedComponent]) -> Dict[str, str]:
+    def apply_patches(
+        self, patches: Mapping[str, SynthesizedComponent]
+    ) -> Dict[str, str]:
         """Simulate applying patches by returning file paths and contents.
 
         In a real system this would write files to disk and trigger a reload.

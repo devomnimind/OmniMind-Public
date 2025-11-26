@@ -88,7 +88,9 @@ class QAOAOptimizer(QuantumOptimizer):
         super().__init__(dimension, population_size=1)
         self.num_layers = num_layers
         self.mixing_angles = [random.uniform(0, math.pi) for _ in range(num_layers)]
-        self.problem_angles = [random.uniform(0, 2 * math.pi) for _ in range(num_layers)]
+        self.problem_angles = [
+            random.uniform(0, 2 * math.pi) for _ in range(num_layers)
+        ]
 
     def optimize(
         self,
@@ -100,7 +102,9 @@ class QAOAOptimizer(QuantumOptimizer):
         self.logger.info("qaoa_started", iterations=max_iterations)
 
         # Initialize solution
-        solution = [random.uniform(bounds[i][0], bounds[i][1]) for i in range(self.dimension)]
+        solution = [
+            random.uniform(bounds[i][0], bounds[i][1]) for i in range(self.dimension)
+        ]
         value = objective(solution)
 
         self.best_solution = solution
@@ -203,7 +207,9 @@ class QAOAOptimizer(QuantumOptimizer):
                 # Perturb mixing angle
                 delta = random.uniform(-0.1, 0.1)
                 self.mixing_angles[layer] += delta
-                self.mixing_angles[layer] = max(0, min(math.pi, self.mixing_angles[layer]))
+                self.mixing_angles[layer] = max(
+                    0, min(math.pi, self.mixing_angles[layer])
+                )
             else:
                 # Perturb problem angle
                 delta = random.uniform(-0.1, 0.1)
@@ -240,7 +246,9 @@ class QuantumGradientDescent(QuantumOptimizer):
     ) -> Tuple[List[float], float]:
         """Optimize using quantum gradient descent."""
         # Initialize solution
-        solution = [random.uniform(bounds[i][0], bounds[i][1]) for i in range(self.dimension)]
+        solution = [
+            random.uniform(bounds[i][0], bounds[i][1]) for i in range(self.dimension)
+        ]
         value = objective(solution)
 
         self.best_solution = solution
@@ -254,12 +262,14 @@ class QuantumGradientDescent(QuantumOptimizer):
             if random.random() < self.tunnel_probability:
                 # Quantum tunnel to random point
                 new_solution = [
-                    random.uniform(bounds[i][0], bounds[i][1]) for i in range(self.dimension)
+                    random.uniform(bounds[i][0], bounds[i][1])
+                    for i in range(self.dimension)
                 ]
             else:
                 # Gradient descent step
                 new_solution = [
-                    solution[i] - self.learning_rate * gradient[i] for i in range(self.dimension)
+                    solution[i] - self.learning_rate * gradient[i]
+                    for i in range(self.dimension)
                 ]
 
                 # Clamp to bounds

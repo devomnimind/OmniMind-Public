@@ -121,7 +121,11 @@ class ASTParser:
                 for alias in node.names:
                     structure.imports.append(
                         CodeElement(
-                            name=(f"{node.module}.{alias.name}" if node.module else alias.name),
+                            name=(
+                                f"{node.module}.{alias.name}"
+                                if node.module
+                                else alias.name
+                            ),
                             type="import",
                             line_start=node.lineno,
                             line_end=node.lineno,
@@ -207,7 +211,9 @@ class ASTParser:
         """Calcula complexidade ciclomática aproximada"""
         complexity = 1  # Base complexity
         for node in ast.walk(tree):
-            if isinstance(node, (ast.If, ast.For, ast.While, ast.ExceptHandler, ast.With)):
+            if isinstance(
+                node, (ast.If, ast.For, ast.While, ast.ExceptHandler, ast.With)
+            ):
                 complexity += 1
             elif isinstance(node, ast.BoolOp):
                 complexity += len(node.values) - 1

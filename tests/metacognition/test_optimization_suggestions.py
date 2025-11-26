@@ -457,7 +457,9 @@ class TestGenerateSuggestions:
         optimizer = OptimizationSuggestions(max_suggestions=2)
 
         # Generate data for many suggestions
-        performance_data = {"tool_performance": {f"slow_tool_{i}": {"avg": 10.0} for i in range(5)}}
+        performance_data = {
+            "tool_performance": {f"slow_tool_{i}": {"avg": 10.0} for i in range(5)}
+        }
 
         suggestions = optimizer.generate_suggestions(performance_data=performance_data)
 
@@ -525,7 +527,9 @@ class TestIntegration:
         """Test that generated IDs are unique."""
         optimizer = OptimizationSuggestions()
 
-        performance_data = {"tool_performance": {f"tool{i}": {"avg": 10.0} for i in range(5)}}
+        performance_data = {
+            "tool_performance": {f"tool{i}": {"avg": 10.0} for i in range(5)}
+        }
 
         suggestions = optimizer.generate_suggestions(performance_data=performance_data)
 

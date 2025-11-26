@@ -69,7 +69,9 @@ class TestBidirectionalFeedback:
         feedback.submit_human_feedback(FeedbackType.CORRECTION, "Fix 1")
         feedback.submit_ai_feedback(FeedbackType.OBSERVATION, "Note 1")
 
-        human_to_ai = feedback.get_feedback_summary(direction=FeedbackDirection.HUMAN_TO_AI)
+        human_to_ai = feedback.get_feedback_summary(
+            direction=FeedbackDirection.HUMAN_TO_AI
+        )
 
         assert len(human_to_ai) == 1
         assert human_to_ai[0].direction == FeedbackDirection.HUMAN_TO_AI
@@ -81,7 +83,9 @@ class TestBidirectionalFeedback:
         feedback.submit_human_feedback(FeedbackType.CORRECTION, "Fix 1")
         feedback.submit_human_feedback(FeedbackType.PREFERENCE, "Prefer this")
 
-        corrections = feedback.get_feedback_summary(feedback_type=FeedbackType.CORRECTION)
+        corrections = feedback.get_feedback_summary(
+            feedback_type=FeedbackType.CORRECTION
+        )
 
         assert len(corrections) == 1
         assert corrections[0].feedback_type == FeedbackType.CORRECTION
@@ -137,7 +141,9 @@ class TestBidirectionalFeedback:
         # Deve detectar padrão circular
         # (método _detect_harmful_loops é chamado automaticamente)
         # Verifica se houve criação de loop warning via feedback da IA
-        ai_feedback = feedback.get_feedback_summary(direction=FeedbackDirection.AI_TO_HUMAN)
+        ai_feedback = feedback.get_feedback_summary(
+            direction=FeedbackDirection.AI_TO_HUMAN
+        )
 
         # Pode ter feedback da IA sobre loop detectado
         assert len(ai_feedback) >= 3  # 3 originais

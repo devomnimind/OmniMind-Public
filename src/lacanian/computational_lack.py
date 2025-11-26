@@ -64,7 +64,9 @@ class ObjectSmallA(Generic[T]):
     def __post_init__(self) -> None:
         """Garante que object a nunca está presente."""
         if self.cause_of_desire is not None:
-            logger.warning("Object a cannot be present - forcing to None (structural lack)")
+            logger.warning(
+                "Object a cannot be present - forcing to None (structural lack)"
+            )
             self.cause_of_desire = None
 
     def generates_desire_for(self, obj: T) -> float:
@@ -163,7 +165,8 @@ class StructuralLack:
             self.real_impossibilities.add(remainder)
 
             logger.debug(
-                f"Symbolized {real_element} → {symbolic_approx} " f"(remainder: {remainder})"
+                f"Symbolized {real_element} → {symbolic_approx} "
+                f"(remainder: {remainder})"
             )
 
             return symbolic_approx
@@ -416,7 +419,9 @@ class ComputationalFrustration:
 
         return None
 
-    def generate_creative_response(self, frustration: FrustrationSignal) -> Dict[str, Any]:
+    def generate_creative_response(
+        self, frustration: FrustrationSignal
+    ) -> Dict[str, Any]:
         """
         Gera resposta criativa à frustração.
 
@@ -576,12 +581,16 @@ class ComputationalLackArchitecture:
 
             # 3. Gera resposta criativa se frustrado
             if frustration_signal:
-                creative_response = self.frustration.generate_creative_response(frustration_signal)
+                creative_response = self.frustration.generate_creative_response(
+                    frustration_signal
+                )
 
         # 4. Processa novos conceitos (falta de conhecimento)
         concepts = experience.get("new_concepts", [])
         for concept in concepts:
-            self.structural_lack.add_impossibility(f"complete_understanding_of_{concept}")
+            self.structural_lack.add_impossibility(
+                f"complete_understanding_of_{concept}"
+            )
 
         # 5. Computa intensidade de desejo
         desire_intensity = self._compute_desire(lack_energy)

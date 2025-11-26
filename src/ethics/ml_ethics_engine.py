@@ -76,7 +76,9 @@ class ConsensusDecision:
     reasoning: str
     alternatives_suggested: List[str] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
-    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    timestamp: str = field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+    )
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
@@ -173,11 +175,15 @@ class EthicalFeatureExtractor:
         # Low-risk keywords
         low_risk_keywords = ["read", "view", "analyze", "report", "log"]
 
-        high_risk_count = sum(1 for keyword in high_risk_keywords if keyword in description_lower)
+        high_risk_count = sum(
+            1 for keyword in high_risk_keywords if keyword in description_lower
+        )
         medium_risk_count = sum(
             1 for keyword in medium_risk_keywords if keyword in description_lower
         )
-        low_risk_count = sum(1 for keyword in low_risk_keywords if keyword in description_lower)
+        low_risk_count = sum(
+            1 for keyword in low_risk_keywords if keyword in description_lower
+        )
 
         # Calculate weighted risk score
         risk_score = min(
@@ -206,7 +212,9 @@ class MLEthicsEngine:
         """
         self.learning_rate = learning_rate
         self.consensus_threshold = consensus_threshold
-        self.state_file = state_file or Path.home() / ".omnimind" / "ml_ethics_state.json"
+        self.state_file = (
+            state_file or Path.home() / ".omnimind" / "ml_ethics_state.json"
+        )
         self.state_file.parent.mkdir(parents=True, exist_ok=True)
 
         # Feature extractor
@@ -319,7 +327,10 @@ class MLEthicsEngine:
         # Negative rules
         if features["action_risk_score"] > 0.6:
             score -= 0.3
-        if not context.has_human_oversight and context.impact_level == ActionImpact.CRITICAL:
+        if (
+            not context.has_human_oversight
+            and context.impact_level == ActionImpact.CRITICAL
+        ):
             score -= 0.4
 
         # Learn from precedents
@@ -508,7 +519,8 @@ class MLEthicsEngine:
             parts.append(f"{fs.framework.value}: {fs.score:.2f}")
 
         agreement_level = 1.0 - (
-            max(fs.score for fs in framework_scores) - min(fs.score for fs in framework_scores)
+            max(fs.score for fs in framework_scores)
+            - min(fs.score for fs in framework_scores)
         )
 
         parts.append(f"Framework agreement: {agreement_level:.2f}")
@@ -572,7 +584,9 @@ class MLEthicsEngine:
         """
         # Find matching decisions
         matching = [
-            d for d in self.decision_history if d.metadata.get("precedent_id") in precedent_ids
+            d
+            for d in self.decision_history
+            if d.metadata.get("precedent_id") in precedent_ids
         ]
 
         if not matching:
@@ -630,7 +644,9 @@ class MLEthicsEngine:
 
         # Normalize weights
         total_weight = sum(self.framework_weights.values())
-        self.framework_weights = {k: v / total_weight for k, v in self.framework_weights.items()}
+        self.framework_weights = {
+            k: v / total_weight for k, v in self.framework_weights.items()
+        }
 
         logger.info(
             f"Learned from outcome: {actual_outcome} "

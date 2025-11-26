@@ -78,7 +78,9 @@ class Solution:
         """
         # Weight: novelty 30%, feasibility 30%, effectiveness 40%
         return (
-            self.novelty_score * 0.3 + self.feasibility_score * 0.3 + self.effectiveness_score * 0.4
+            self.novelty_score * 0.3
+            + self.feasibility_score * 0.3
+            + self.effectiveness_score * 0.4
         )
 
 
@@ -228,13 +230,17 @@ class CreativeProblemSolver:
             "solutions_generated",
             count=len(solutions),
             avg_novelty=(
-                sum(s.novelty_score for s in solutions) / len(solutions) if solutions else 0
+                sum(s.novelty_score for s in solutions) / len(solutions)
+                if solutions
+                else 0
             ),
         )
 
         return solutions
 
-    def _divergent_thinking(self, problem: Problem, num_solutions: int) -> List[Solution]:
+    def _divergent_thinking(
+        self, problem: Problem, num_solutions: int
+    ) -> List[Solution]:
         """Generate solutions using divergent thinking.
 
         Args:
@@ -361,7 +367,9 @@ class CreativeProblemSolver:
 
         return solutions[:num_solutions]
 
-    def _analogical_thinking(self, problem: Problem, num_solutions: int) -> List[Solution]:
+    def _analogical_thinking(
+        self, problem: Problem, num_solutions: int
+    ) -> List[Solution]:
         """Generate solutions using analogical reasoning.
 
         Args:
@@ -419,13 +427,15 @@ class CreativeProblemSolver:
             Best solutions selected
         """
         # Filter by minimum feasibility
-        feasible = [s for s in candidates if s.feasibility_score >= self.min_feasibility]
+        feasible = [
+            s for s in candidates if s.feasibility_score >= self.min_feasibility
+        ]
 
         if not feasible:
             # If none meet threshold, take least infeasible
-            feasible = sorted(candidates, key=lambda s: s.feasibility_score, reverse=True)[
-                :num_solutions
-            ]
+            feasible = sorted(
+                candidates, key=lambda s: s.feasibility_score, reverse=True
+            )[:num_solutions]
 
         # Rank by overall score
         ranked = sorted(feasible, key=lambda s: s.overall_score, reverse=True)
@@ -511,12 +521,16 @@ class CreativeProblemSolver:
         avg_effectiveness = 0.0
 
         if total_solutions > 0:
-            avg_novelty = sum(s.novelty_score for s in self._solution_history) / total_solutions
+            avg_novelty = (
+                sum(s.novelty_score for s in self._solution_history) / total_solutions
+            )
             avg_feasibility = (
-                sum(s.feasibility_score for s in self._solution_history) / total_solutions
+                sum(s.feasibility_score for s in self._solution_history)
+                / total_solutions
             )
             avg_effectiveness = (
-                sum(s.effectiveness_score for s in self._solution_history) / total_solutions
+                sum(s.effectiveness_score for s in self._solution_history)
+                / total_solutions
             )
 
         return {

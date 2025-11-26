@@ -53,7 +53,9 @@ class OmniMindNode:
             "arguments": ["Maximize utility"] if is_approver else ["Risk too high"],
         }
 
-    async def refine_position(self, current_position: Dict, counterarguments: List[Dict]) -> Dict:
+    async def refine_position(
+        self, current_position: Dict, counterarguments: List[Dict]
+    ) -> Dict:
         """
         Refines position based on counterarguments from other agents.
         """
@@ -123,7 +125,9 @@ class OmniMindSociety:
         Orchestrates a debate among nodes to reach a decision.
         """
         # 1. Initial positions
-        positions = await asyncio.gather(*[node.analyze_dilemma(dilemma) for node in self.nodes])
+        positions = await asyncio.gather(
+            *[node.analyze_dilemma(dilemma) for node in self.nodes]
+        )
 
         # 2. Dialectic Rounds (Simulated Debate)
         rounds = 3
@@ -155,7 +159,9 @@ class OmniMindSociety:
 
         winner = max(votes, key=votes.get)  # type: ignore
         total_confidence = sum(votes.values())
-        consensus_level = votes[winner] / total_confidence if total_confidence > 0 else 0.0
+        consensus_level = (
+            votes[winner] / total_confidence if total_confidence > 0 else 0.0
+        )
 
         justifications = []
         for p in positions:

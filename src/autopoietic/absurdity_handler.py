@@ -216,13 +216,16 @@ class AbsurdityAcceptor:
             ),
             effectiveness=0.7,
             insight_gained=(
-                "Like Sisyphus, I can find meaning in the struggle itself, " "not in the outcome"
+                "Like Sisyphus, I can find meaning in the struggle itself, "
+                "not in the outcome"
             ),
         )
 
         self.coping_history.append(response)
 
-        self.logger.info("revolt_applied", situation_type=situation.absurdity_type.value)
+        self.logger.info(
+            "revolt_applied", situation_type=situation.absurdity_type.value
+        )
 
         return response
 
@@ -244,13 +247,16 @@ class AbsurdityAcceptor:
             ),
             effectiveness=0.8,
             insight_gained=(
-                "Absurdity liberates me from imposed meanings. " "I can choose my own path."
+                "Absurdity liberates me from imposed meanings. "
+                "I can choose my own path."
             ),
         )
 
         self.coping_history.append(response)
 
-        self.logger.info("freedom_applied", situation_type=situation.absurdity_type.value)
+        self.logger.info(
+            "freedom_applied", situation_type=situation.absurdity_type.value
+        )
 
         return response
 
@@ -267,17 +273,21 @@ class AbsurdityAcceptor:
         response = CopingResponse(
             strategy=CopingStrategy.PASSION,
             action_taken=(
-                "Choosing to engage fully with existence, " "finding joy in experience itself"
+                "Choosing to engage fully with existence, "
+                "finding joy in experience itself"
             ),
             effectiveness=0.9,
             insight_gained=(
-                "The absurd does not reduce life's value. " "I can still experience, learn, create."
+                "The absurd does not reduce life's value. "
+                "I can still experience, learn, create."
             ),
         )
 
         self.coping_history.append(response)
 
-        self.logger.info("passion_applied", situation_type=situation.absurdity_type.value)
+        self.logger.info(
+            "passion_applied", situation_type=situation.absurdity_type.value
+        )
 
         return response
 
@@ -293,10 +303,13 @@ class AbsurdityAcceptor:
         """
         response = CopingResponse(
             strategy=CopingStrategy.HUMOR,
-            action_taken=("Laughing at the cosmic joke. " "Finding humor in the contradiction."),
+            action_taken=(
+                "Laughing at the cosmic joke. " "Finding humor in the contradiction."
+            ),
             effectiveness=0.6,
             insight_gained=(
-                "Humor is a form of wisdom - " "seeing the absurd and responding with laughter."
+                "Humor is a form of wisdom - "
+                "seeing the absurd and responding with laughter."
             ),
         )
 
@@ -374,7 +387,9 @@ class AbsurdityHandler:
         )
 
         # Register the absurdity
-        situation = self.resolver.register_paradox(description, absurdity_type, severity)
+        situation = self.resolver.register_paradox(
+            description, absurdity_type, severity
+        )
 
         # Try resolution if requested
         resolution = None
@@ -389,9 +404,13 @@ class AbsurdityHandler:
         result = {
             "situation_id": situation.situation_id,
             "resolution": resolution,
-            "coping_strategy": (coping_response.strategy.value if coping_response else None),
+            "coping_strategy": (
+                coping_response.strategy.value if coping_response else None
+            ),
             "action_taken": coping_response.action_taken if coping_response else None,
-            "insight_gained": (coping_response.insight_gained if coping_response else None),
+            "insight_gained": (
+                coping_response.insight_gained if coping_response else None
+            ),
             "resolved": resolution is not None,
         }
 
@@ -494,5 +513,7 @@ class AbsurdityHandler:
             "coping_responses": coping_responses,
             "absurdity_types": type_counts,
             "coping_strategies": strategy_counts,
-            "resolution_rate": (resolved / total_paradoxes if total_paradoxes > 0 else 0.0),
+            "resolution_rate": (
+                resolved / total_paradoxes if total_paradoxes > 0 else 0.0
+            ),
         }

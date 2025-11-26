@@ -312,7 +312,10 @@ class TestAsyncMCPClient:
         await client.connect()
 
         # Send multiple requests concurrently
-        tasks = [client.send_request(method=f"method_{i}", params={"id": i}) for i in range(5)]
+        tasks = [
+            client.send_request(method=f"method_{i}", params={"id": i})
+            for i in range(5)
+        ]
 
         responses = await asyncio.gather(*tasks, return_exceptions=True)
 

@@ -55,7 +55,9 @@ class DummySession(GraphQLSession):
 
 @pytest.fixture
 def config(tmp_path: Path) -> SupabaseConfig:
-    return SupabaseConfig(url="https://supabase.test", anon_key="anon", service_role_key="service")
+    return SupabaseConfig(
+        url="https://supabase.test", anon_key="anon", service_role_key="service"
+    )
 
 
 @pytest.fixture
@@ -87,11 +89,15 @@ def test_graphql_error(helper: GraphQLSupabaseHelper) -> None:
 
 def test_iterate_collection(helper: GraphQLSupabaseHelper) -> None:
     nodes = list(
-        helper.iterate_collection("memory_consolidations", ["id"], page_size=1, max_pages=1)
+        helper.iterate_collection(
+            "memory_consolidations", ["id"], page_size=1, max_pages=1
+        )
     )
     assert nodes == [{"id": "1", "payload": "a"}]
 
 
 def test_collect_nodes(helper: GraphQLSupabaseHelper) -> None:
-    nodes = helper.collect_nodes("memory_consolidations", ["id", "payload"], page_size=1)
+    nodes = helper.collect_nodes(
+        "memory_consolidations", ["id", "payload"], page_size=1
+    )
     assert nodes[0]["payload"] == "a"

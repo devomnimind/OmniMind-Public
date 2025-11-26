@@ -55,7 +55,9 @@ class BlackHoleMetaLearner:
 
         logger.info("BlackHoleMetaLearner initialized")
 
-    def check_collapse_condition(self, knowledge_mass: float, knowledge_volume: float) -> bool:
+    def check_collapse_condition(
+        self, knowledge_mass: float, knowledge_volume: float
+    ) -> bool:
         """
         Check if knowledge density exceeds Schwarzschild radius.
 

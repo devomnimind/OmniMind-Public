@@ -225,7 +225,9 @@ class TestAnomalyType:
         assert AnomalyType.SUSPICIOUS_PROCESS.value == "suspicious_process"
         assert AnomalyType.HIGH_CPU_USAGE.value == "high_cpu_usage"
         assert AnomalyType.HIGH_MEMORY_USAGE.value == "high_memory_usage"
-        assert AnomalyType.UNUSUAL_NETWORK_CONNECTION.value == "unusual_network_connection"
+        assert (
+            AnomalyType.UNUSUAL_NETWORK_CONNECTION.value == "unusual_network_connection"
+        )
         assert AnomalyType.FILE_SYSTEM_CHANGE.value == "file_system_change"
         assert AnomalyType.UNAUTHORIZED_ACCESS.value == "unauthorized_access"
         assert AnomalyType.MALWARE_SIGNATURE.value == "malware_signature"

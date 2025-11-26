@@ -203,7 +203,9 @@ class IntegrityValidator:
 
                 for file_path in self._collect_files(path, scope):
                     try:
-                        file_info = self._calculate_file_integrity(file_path, include_metadata)
+                        file_info = self._calculate_file_integrity(
+                            file_path, include_metadata
+                        )
                         baseline_data["files"][str(file_path)] = file_info
                         files_processed += 1
                         total_size += file_info.get("size", 0)
@@ -218,10 +220,14 @@ class IntegrityValidator:
                     file_path = Path(file_path_str)
                     if file_path.exists():
                         try:
-                            file_info = self._calculate_file_integrity(file_path, include_metadata)
+                            file_info = self._calculate_file_integrity(
+                                file_path, include_metadata
+                            )
                             baseline_data["files"][file_path_str] = file_info
                             baseline_data["metadata"]["total_files"] += 1
-                            baseline_data["metadata"]["total_size"] += file_info.get("size", 0)
+                            baseline_data["metadata"]["total_size"] += file_info.get(
+                                "size", 0
+                            )
                         except Exception as e:
                             self.logger.warning(f"Failed to process {file_path}: {e}")
 
@@ -235,10 +241,14 @@ class IntegrityValidator:
                     file_path = Path(file_path_str)
                     if file_path.exists():
                         try:
-                            file_info = self._calculate_file_integrity(file_path, include_metadata)
+                            file_info = self._calculate_file_integrity(
+                                file_path, include_metadata
+                            )
                             baseline_data["files"][file_path_str] = file_info
                             baseline_data["metadata"]["total_files"] += 1
-                            baseline_data["metadata"]["total_size"] += file_info.get("size", 0)
+                            baseline_data["metadata"]["total_size"] += file_info.get(
+                                "size", 0
+                            )
                         except Exception as e:
                             self.logger.warning(f"Failed to process {file_path}: {e}")
 
@@ -260,7 +270,9 @@ class IntegrityValidator:
                 category="security",
             )
 
-            self.logger.info(f"Baseline created: {baseline_data['metadata']['total_files']} files")
+            self.logger.info(
+                f"Baseline created: {baseline_data['metadata']['total_files']} files"
+            )
             return baseline_data
 
         except Exception as e:
@@ -335,11 +347,15 @@ class IntegrityValidator:
 
         # Calculate compliance score
         report.compliance_score = (
-            (report.intact_files / report.total_files) * 100 if report.total_files > 0 else 0
+            (report.intact_files / report.total_files) * 100
+            if report.total_files > 0
+            else 0
         )
 
         # Generate critical issues and recommendations
-        report.critical_issues, report.recommendations = self._analyze_validation_results(report)
+        report.critical_issues, report.recommendations = (
+            self._analyze_validation_results(report)
+        )
 
         # Set execution time
         report.execution_time = time.time() - start_time
@@ -365,7 +381,9 @@ class IntegrityValidator:
         # Save report
         self._save_validation_report(report)
 
-        self.logger.info(f"Validation completed: {report.compliance_score:.1f}% compliance")
+        self.logger.info(
+            f"Validation completed: {report.compliance_score:.1f}% compliance"
+        )
         return report
 
     def validate_file_integrity(self, file_path: str) -> Dict[str, Any]:
@@ -393,7 +411,9 @@ class IntegrityValidator:
         reports: List[Dict[str, Any]] = []
 
         try:
-            for report_file in sorted(self.log_dir.glob("integrity_report_*.json"), reverse=True):
+            for report_file in sorted(
+                self.log_dir.glob("integrity_report_*.json"), reverse=True
+            ):
                 if len(reports) >= limit:
                     break
 
@@ -466,7 +486,9 @@ class IntegrityValidator:
                 return record
 
             # Calculate current integrity
-            current_info = self._calculate_file_integrity(file_path, include_metadata=True)
+            current_info = self._calculate_file_integrity(
+                file_path, include_metadata=True
+            )
             record.current_hash = current_info.get("hash", "")
             record.size_current = current_info.get("size")
             record.mtime_current = current_info.get("mtime")
@@ -537,7 +559,9 @@ class IntegrityValidator:
                     "**/*.md",
                 ]:
                     for file_path in root_path.glob(pattern):
-                        if file_path.is_file() and not self._should_exclude_file(file_path):
+                        if file_path.is_file() and not self._should_exclude_file(
+                            file_path
+                        ):
                             files.append(file_path)
             else:
                 # Include all files except excluded ones
@@ -571,7 +595,9 @@ class IntegrityValidator:
         """Generate baseline filename."""
         # Sanitize target path for filename
         safe_name = "".join(
-            c for c in target_path.replace("/", "_").replace("\\", "_") if c.isalnum() or c in "_-"
+            c
+            for c in target_path.replace("/", "_").replace("\\", "_")
+            if c.isalnum() or c in "_-"
         ).strip("_")
         if not safe_name:
             safe_name = "root"
@@ -581,7 +607,9 @@ class IntegrityValidator:
 
         return self.baseline_dir / filename
 
-    def _analyze_validation_results(self, report: IntegrityReport) -> Tuple[List[str], List[str]]:
+    def _analyze_validation_results(
+        self, report: IntegrityReport
+    ) -> Tuple[List[str], List[str]]:
         """Analyze validation results and generate issues/recommendations."""
         critical_issues = []
         recommendations = []
@@ -594,7 +622,9 @@ class IntegrityValidator:
             critical_issues.append(f"{report.corrupted_files} files are corrupted")
 
         if report.modified_files > report.total_files * 0.1:  # More than 10% modified
-            critical_issues.append(f"High number of modified files: {report.modified_files}")
+            critical_issues.append(
+                f"High number of modified files: {report.modified_files}"
+            )
 
         # Recommendations
         if report.compliance_score < 80:
@@ -608,7 +638,9 @@ class IntegrityValidator:
             recommendations.append("Verify that file modifications are authorized")
 
         if report.compliance_score >= 95:
-            recommendations.append("System integrity is excellent - continue monitoring")
+            recommendations.append(
+                "System integrity is excellent - continue monitoring"
+            )
         elif report.compliance_score >= 80:
             recommendations.append("System integrity is good but could be improved")
         else:
@@ -678,14 +710,18 @@ def validate_file_integrity(file_path: str) -> Dict[str, Any]:
     return validator.validate_file_integrity(file_path)
 
 
-def create_integrity_baseline(target_path: str, scope: str = "directory") -> Dict[str, Any]:
+def create_integrity_baseline(
+    target_path: str, scope: str = "directory"
+) -> Dict[str, Any]:
     """Create integrity baseline."""
     validator = get_integrity_validator()
     scope_enum = ValidationScope(scope)
     return validator.create_baseline(target_path, scope_enum)
 
 
-def run_integrity_validation(target_path: str, scope: str = "directory") -> IntegrityReport:
+def run_integrity_validation(
+    target_path: str, scope: str = "directory"
+) -> IntegrityReport:
     """Run integrity validation."""
     validator = get_integrity_validator()
     scope_enum = ValidationScope(scope)

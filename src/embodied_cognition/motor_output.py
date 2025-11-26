@@ -67,7 +67,8 @@ class MotorController:
                 self.enable_ros = False
 
         logger.info(
-            f"MotorController initialized " f"(ROS={enable_ros}, simulation={enable_simulation})"
+            f"MotorController initialized "
+            f"(ROS={enable_ros}, simulation={enable_simulation})"
         )
 
     def plan_action_sequence(

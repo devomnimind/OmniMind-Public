@@ -147,11 +147,15 @@ class TestCrossModalQuery:
     def test_cross_modal_query_validation(self) -> None:
         """Test cross-modal query validation."""
         # Valid query
-        CrossModalQuery(query_text="test", source_modality=Modality.TEXT, max_results=10)
+        CrossModalQuery(
+            query_text="test", source_modality=Modality.TEXT, max_results=10
+        )
 
         # Invalid max_results
         with pytest.raises(ValueError, match="Max results must be"):
-            CrossModalQuery(query_text="test", source_modality=Modality.TEXT, max_results=0)
+            CrossModalQuery(
+                query_text="test", source_modality=Modality.TEXT, max_results=0
+            )
 
 
 class TestCrossModalMatch:
@@ -197,7 +201,9 @@ class TestMultiModalFusion:
 
     def test_multimodal_fusion_initialization(self) -> None:
         """Test multi-modal fusion initialization."""
-        fusion = MultiModalFusion(default_strategy=FusionStrategy.LATE, enable_attention=False)
+        fusion = MultiModalFusion(
+            default_strategy=FusionStrategy.LATE, enable_attention=False
+        )
 
         assert fusion.default_strategy == FusionStrategy.LATE
         assert fusion.enable_attention is False
@@ -254,8 +260,12 @@ class TestMultiModalFusion:
         fusion = MultiModalFusion()
 
         inputs = [
-            ModalityInput(modality=Modality.VISION, features={"feat1": 0.5}, confidence=0.9),
-            ModalityInput(modality=Modality.AUDIO, features={"feat2": 0.7}, confidence=0.8),
+            ModalityInput(
+                modality=Modality.VISION, features={"feat1": 0.5}, confidence=0.9
+            ),
+            ModalityInput(
+                modality=Modality.AUDIO, features={"feat2": 0.7}, confidence=0.8
+            ),
         ]
 
         fused = fusion.fuse_modalities(inputs, strategy=FusionStrategy.EARLY)
@@ -272,8 +282,12 @@ class TestMultiModalFusion:
         fusion = MultiModalFusion()
 
         inputs = [
-            ModalityInput(modality=Modality.VISION, features={"feat1": 0.5}, confidence=0.9),
-            ModalityInput(modality=Modality.AUDIO, features={"feat1": 0.7}, confidence=0.8),
+            ModalityInput(
+                modality=Modality.VISION, features={"feat1": 0.5}, confidence=0.9
+            ),
+            ModalityInput(
+                modality=Modality.AUDIO, features={"feat1": 0.7}, confidence=0.8
+            ),
         ]
 
         fused = fusion.fuse_modalities(inputs, strategy=FusionStrategy.LATE)
@@ -286,7 +300,9 @@ class TestMultiModalFusion:
         fusion = MultiModalFusion()
 
         inputs = [
-            ModalityInput(modality=Modality.VISION, features={"feat1": 0.5}, confidence=0.9),
+            ModalityInput(
+                modality=Modality.VISION, features={"feat1": 0.5}, confidence=0.9
+            ),
         ]
 
         fused = fusion.fuse_modalities(inputs, strategy=FusionStrategy.HYBRID)
@@ -305,8 +321,12 @@ class TestMultiModalFusion:
         )
 
         available = [
-            ModalityInput(modality=Modality.AUDIO, features={"feat1": 0.5}, confidence=0.9),
-            ModalityInput(modality=Modality.AUDIO, features={"feat2": 0.7}, confidence=0.8),
+            ModalityInput(
+                modality=Modality.AUDIO, features={"feat1": 0.5}, confidence=0.9
+            ),
+            ModalityInput(
+                modality=Modality.AUDIO, features={"feat2": 0.7}, confidence=0.8
+            ),
         ]
 
         matches = fusion.cross_modal_query(query, available)
@@ -322,7 +342,9 @@ class TestMultiModalFusion:
         """Test cross-modal query without specific target modalities."""
         fusion = MultiModalFusion()
 
-        query = CrossModalQuery(query_text="Find anything", source_modality=Modality.VISION)
+        query = CrossModalQuery(
+            query_text="Find anything", source_modality=Modality.VISION
+        )
 
         available = [
             ModalityInput(modality=Modality.AUDIO, features={}, confidence=0.9),
@@ -338,16 +360,23 @@ class TestMultiModalFusion:
         """Test modality alignment."""
         fusion = MultiModalFusion()
 
-        vision = ModalityInput(modality=Modality.VISION, features={"feat1": 0.5}, confidence=0.9)
+        vision = ModalityInput(
+            modality=Modality.VISION, features={"feat1": 0.5}, confidence=0.9
+        )
 
-        audio = ModalityInput(modality=Modality.AUDIO, features={"feat1": 0.6}, confidence=0.8)
+        audio = ModalityInput(
+            modality=Modality.AUDIO, features={"feat1": 0.6}, confidence=0.8
+        )
 
         alignments = fusion.align_modalities(vision_input=vision, audio_input=audio)
 
         assert isinstance(alignments, dict)
         assert len(alignments) > 0
         # Check that alignment score exists
-        assert any("vision" in key.lower() and "audio" in key.lower() for key in alignments.keys())
+        assert any(
+            "vision" in key.lower() and "audio" in key.lower()
+            for key in alignments.keys()
+        )
 
     def test_align_modalities_insufficient_inputs(self) -> None:
         """Test alignment with insufficient inputs."""
@@ -380,8 +409,12 @@ class TestMultiModalFusion:
         fusion = MultiModalFusion(enable_attention=True)
 
         inputs = [
-            ModalityInput(modality=Modality.VISION, features={"feat1": 0.5}, confidence=1.0),
-            ModalityInput(modality=Modality.AUDIO, features={"feat1": 0.7}, confidence=0.5),
+            ModalityInput(
+                modality=Modality.VISION, features={"feat1": 0.5}, confidence=1.0
+            ),
+            ModalityInput(
+                modality=Modality.AUDIO, features={"feat1": 0.7}, confidence=0.5
+            ),
         ]
 
         fused = fusion.fuse_modalities(inputs)
@@ -395,8 +428,12 @@ class TestMultiModalFusion:
         fusion = MultiModalFusion(enable_attention=False)
 
         inputs = [
-            ModalityInput(modality=Modality.VISION, features={"feat1": 0.5}, confidence=1.0),
-            ModalityInput(modality=Modality.AUDIO, features={"feat1": 0.7}, confidence=0.3),
+            ModalityInput(
+                modality=Modality.VISION, features={"feat1": 0.5}, confidence=1.0
+            ),
+            ModalityInput(
+                modality=Modality.AUDIO, features={"feat1": 0.7}, confidence=0.3
+            ),
         ]
 
         fused = fusion.fuse_modalities(inputs)

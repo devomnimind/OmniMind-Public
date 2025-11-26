@@ -110,7 +110,9 @@ class ProceduralMemory:
         logger.info(f"Executing skill: {name} (Proficiency: {skill.proficiency:.2f})")
         return skill.steps
 
-    def refine_skill(self, name: str, success: bool, feedback: Optional[str] = None) -> None:
+    def refine_skill(
+        self, name: str, success: bool, feedback: Optional[str] = None
+    ) -> None:
         """
         Update skill proficiency based on execution result.
 
@@ -128,7 +130,9 @@ class ProceduralMemory:
         if success:
             skill.success_count += 1
             # Logarithmic learning curve
-            skill.proficiency = min(skill.proficiency + (1.0 - skill.proficiency) * 0.1, 1.0)
+            skill.proficiency = min(
+                skill.proficiency + (1.0 - skill.proficiency) * 0.1, 1.0
+            )
         else:
             skill.failure_count += 1
             # Slight penalty for failure, but learning from mistakes

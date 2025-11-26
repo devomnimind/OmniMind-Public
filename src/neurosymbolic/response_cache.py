@@ -71,7 +71,9 @@ class NeuralResponseCache:
 
         return hashlib.sha256(key_data.encode()).hexdigest()
 
-    def get(self, query: str, context: Optional[Dict[str, Any]] = None) -> Optional[CachedResponse]:
+    def get(
+        self, query: str, context: Optional[Dict[str, Any]] = None
+    ) -> Optional[CachedResponse]:
         """
         Busca resposta em cache.
 
@@ -109,7 +111,9 @@ class NeuralResponseCache:
         # Move para o final (LRU)
         self.cache.move_to_end(key)
 
-        logger.debug(f"Cache HIT: query={query[:30]}... (age={age:.0f}s, hits={cached.hits})")
+        logger.debug(
+            f"Cache HIT: query={query[:30]}... (age={age:.0f}s, hits={cached.hits})"
+        )
         return cached
 
     def put(
@@ -186,7 +190,9 @@ class NeuralResponseCache:
         Returns:
             Dict com métricas
         """
-        hit_rate = self.cache_hits / self.total_requests if self.total_requests > 0 else 0.0
+        hit_rate = (
+            self.cache_hits / self.total_requests if self.total_requests > 0 else 0.0
+        )
 
         return {
             "total_requests": self.total_requests,

@@ -160,7 +160,9 @@ class NoveltyDetector:
             return 0.0
 
         avg_length = sum(word_lengths) / len(word_lengths)
-        variance = sum((length - avg_length) ** 2 for length in word_lengths) / len(word_lengths)
+        variance = sum((length - avg_length) ** 2 for length in word_lengths) / len(
+            word_lengths
+        )
 
         # Normalize variance to 0-1 range (heuristic)
         novelty = min(variance / 10.0, 1.0)
@@ -262,7 +264,9 @@ class ConceptualBlender:
         for key in concept1.attributes:
             if key in concept2.attributes:
                 # Combine values when keys match
-                blended_attributes[key] = f"{concept1.attributes[key]}+{concept2.attributes[key]}"
+                blended_attributes[key] = (
+                    f"{concept1.attributes[key]}+{concept2.attributes[key]}"
+                )
             else:
                 blended_attributes[key] = concept1.attributes[key]
 
@@ -391,7 +395,9 @@ class NoveltyGenerator:
             return None
 
         # Measure novelty
-        novelty_score = self.detector.measure_novelty(result, NoveltyMetric.SURPRISE_VALUE)
+        novelty_score = self.detector.measure_novelty(
+            result, NoveltyMetric.SURPRISE_VALUE
+        )
 
         if novelty_score < novelty_threshold:
             self.logger.info(
@@ -409,7 +415,9 @@ class NoveltyGenerator:
             source_concepts=[c.concept_id for c in seed_concepts],
             evaluation_metrics={
                 "novelty": novelty_score,
-                "surprise": self.detector.measure_novelty(result, NoveltyMetric.SURPRISE_VALUE),
+                "surprise": self.detector.measure_novelty(
+                    result, NoveltyMetric.SURPRISE_VALUE
+                ),
             },
         )
 
@@ -428,7 +436,9 @@ class NoveltyGenerator:
             return None
 
         # Blend concepts
-        blended = self.blender.generate_creative_blend(num_concepts=min(3, len(concepts)))
+        blended = self.blender.generate_creative_blend(
+            num_concepts=min(3, len(concepts))
+        )
         if blended is None:
             return None
 

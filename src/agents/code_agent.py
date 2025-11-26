@@ -319,7 +319,11 @@ Your response:"""
         return {
             "warnings": warnings,
             "safe": len(warnings) == 0,
-            "severity": ("high" if any("eval" in w or "exec" in w for w in warnings) else "medium"),
+            "severity": (
+                "high"
+                if any("eval" in w or "exec" in w for w in warnings)
+                else "medium"
+            ),
             "timestamp": self._timestamp(),
         }
 

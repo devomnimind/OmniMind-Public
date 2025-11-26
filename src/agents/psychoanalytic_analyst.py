@@ -54,7 +54,9 @@ class InternalAgent:
 
 class IdAgent(InternalAgent):
     def __init__(self):
-        super().__init__("Id", "Impulsos, desejos, preservação imediata, evitação de dor")
+        super().__init__(
+            "Id", "Impulsos, desejos, preservação imediata, evitação de dor"
+        )
 
     def vote(self, context: str) -> AgentVote:
         # Simulação de lógica do Id
@@ -228,7 +230,9 @@ O sistema simulou um conflito interno para esta análise.
 """
         return report
 
-    def _build_analysis_prompt(self, session_notes: str, framework: PsychoanalyticFramework) -> str:
+    def _build_analysis_prompt(
+        self, session_notes: str, framework: PsychoanalyticFramework
+    ) -> str:
         """Constrói o prompt para o LLM."""
 
         framework_instructions = {

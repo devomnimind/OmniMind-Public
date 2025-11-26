@@ -50,7 +50,9 @@ class ReputationScore:
     successful_tasks: int = 0
     failed_tasks: int = 0
 
-    def update_from_task(self, success: bool, quality_score: float, autonomy_level: float) -> None:
+    def update_from_task(
+        self, success: bool, quality_score: float, autonomy_level: float
+    ) -> None:
         """
         Update reputation based on task outcome.
 
@@ -76,7 +78,9 @@ class ReputationScore:
 
         # Reliability: recent success rate with decay
         recent_success_weight = 0.8 if success else 0.2
-        self.reliability = (1 - alpha) * self.reliability + alpha * recent_success_weight
+        self.reliability = (
+            1 - alpha
+        ) * self.reliability + alpha * recent_success_weight
 
         # Overall score: weighted combination
         self.overall_score = (
@@ -123,7 +127,9 @@ class AgentIdentity:
         self.legal_name = legal_name
         self.jurisdiction = jurisdiction
         self.reputation = ReputationScore()
-        self.state_file = state_file or Path.home() / ".omnimind" / "identity_state.json"
+        self.state_file = (
+            state_file or Path.home() / ".omnimind" / "identity_state.json"
+        )
         self.state_file.parent.mkdir(parents=True, exist_ok=True)
 
         # Signature registry
@@ -237,7 +243,9 @@ class AgentIdentity:
         if is_valid:
             logger.info(f"Signature verified: {signature.artifact_hash[:16]}...")
         else:
-            logger.warning(f"Signature verification FAILED for {signature.artifact_hash[:16]}...")
+            logger.warning(
+                f"Signature verification FAILED for {signature.artifact_hash[:16]}..."
+            )
 
         return is_valid
 

@@ -209,12 +209,18 @@ class TestMetacognitionAPI:
             # Check that routes exist
             route_paths = [route.path for route in router.routes]
 
-            assert "/analyze" in route_paths or any("/analyze" in path for path in route_paths)
-            assert "/health" in route_paths or any("/health" in path for path in route_paths)
+            assert "/analyze" in route_paths or any(
+                "/analyze" in path for path in route_paths
+            )
+            assert "/health" in route_paths or any(
+                "/health" in path for path in route_paths
+            )
             assert "/suggestions" in route_paths or any(
                 "/suggestions" in path for path in route_paths
             )
-            assert "/stats" in route_paths or any("/stats" in path for path in route_paths)
+            assert "/stats" in route_paths or any(
+                "/stats" in path for path in route_paths
+            )
             assert "/goals/generate" in route_paths or any(
                 "/goals/generate" in path for path in route_paths
             )

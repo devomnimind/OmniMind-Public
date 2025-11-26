@@ -423,7 +423,9 @@ class LacanianFreeEnergySystem:
         # Normaliza para [0, 1]
         return float((similarity + 1.0) / 2.0)
 
-    def collective_inference(self, sensory_inputs: List[torch.Tensor]) -> Dict[str, Any]:
+    def collective_inference(
+        self, sensory_inputs: List[torch.Tensor]
+    ) -> Dict[str, Any]:
         """
         Inferência coletiva através de múltiplos agents.
 
@@ -471,7 +473,9 @@ class LacanianFreeEnergySystem:
             "agent_states": agent_states,
             "agent_desires": agent_desires,
             "big_other": self.big_other_symbolic,
-            "mean_free_energy": torch.mean(torch.tensor([s.free_energy for s in agent_states])),
+            "mean_free_energy": torch.mean(
+                torch.tensor([s.free_energy for s in agent_states])
+            ),
             "mean_object_a": torch.mean(
                 torch.tensor([s.object_a_discrepancy for s in agent_states])
             ),

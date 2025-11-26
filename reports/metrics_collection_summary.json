@@ -1,0 +1,24 @@
+{
+  "collection_info": {
+    "start_time": "2025-11-25T19:59:48.191103+00:00",
+    "end_time": "2025-11-25T21:59:18.190145+00:00",
+    "duration_seconds": 7200,
+    "samples_collected": 240,
+    "interval_seconds": 30
+  },
+  "system_stats": {
+    "cpu_avg_percent": 37.64416666666667,
+    "cpu_max_percent": 93.8,
+    "memory_avg_percent": 59.15416666666667,
+    "memory_max_percent": 65.1
+  },
+  "audit_stats": {
+    "total_events": 0,
+    "chain_integrity": false,
+    "avg_events_per_second": 0.0
+  },
+  "security_stats": {
+    "total_dlp_violations": 0,
+    "total_security_alerts": 8640
+  }
+}

@@ -193,7 +193,9 @@ class MCPFilesystemWrapper:
         ]
         # Garantir que não há variáveis de ambiente problemáticas
         env_clean = os.environ.copy()
-        env_clean.pop("DISPLAY", None)  # Remover DISPLAY para evitar abrir apps gráficos
+        env_clean.pop(
+            "DISPLAY", None
+        )  # Remover DISPLAY para evitar abrir apps gráficos
         self.bridge = MCPStdioBridge(command, cwd=self.project_root, env=env_clean)
 
         self._server: Optional[ThreadingHTTPServer] = None

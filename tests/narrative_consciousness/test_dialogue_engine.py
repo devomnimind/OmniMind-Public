@@ -71,7 +71,9 @@ class TestRelationship:
 
         assert rel.interaction_count == 1
         assert rel.trust_level > initial_trust
-        assert len(rel.shared_history) == 0  # History updated by engine, not class directly
+        assert (
+            len(rel.shared_history) == 0
+        )  # History updated by engine, not class directly
 
 
 class TestDialogueEngine:

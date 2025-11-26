@@ -263,7 +263,9 @@ class LifeStory:
         narrative += f"My story is in the **{self.arc.current_phase.value}** phase. "
 
         if self.arc.major_turning_points:
-            narrative += f"\n\nMajor turning points: {len(self.arc.major_turning_points)}\n"
+            narrative += (
+                f"\n\nMajor turning points: {len(self.arc.major_turning_points)}\n"
+            )
 
         return narrative
 

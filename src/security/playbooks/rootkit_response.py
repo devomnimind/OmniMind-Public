@@ -50,7 +50,9 @@ class RootkitPlaybook:
     async def _analyze_scans(self, findings: Dict[str, str]) -> Dict[str, Any]:
         logger.debug("   [3/5] Analyzing scan outputs")
         has_rootkit = any(
-            "INFECTED" in value.upper() for value in findings.values() if isinstance(value, str)
+            "INFECTED" in value.upper()
+            for value in findings.values()
+            if isinstance(value, str)
         )
         return {"has_rootkit": has_rootkit, "findings": findings}
 

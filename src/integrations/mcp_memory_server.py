@@ -35,7 +35,9 @@ class MemoryMCPServer(MCPServer):
     def delete_memory(self, memory_id: str) -> Dict[str, Any]:
         return {"id": memory_id, "status": "deleted"}
 
-    def create_association(self, source_id: str, target_id: str, type: str) -> Dict[str, Any]:
+    def create_association(
+        self, source_id: str, target_id: str, type: str
+    ) -> Dict[str, Any]:
         return {"source": source_id, "target": target_id, "type": type}
 
     def get_memory_graph(self) -> Dict[str, Any]:

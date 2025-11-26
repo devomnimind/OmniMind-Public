@@ -122,7 +122,11 @@ class GoalHierarchy:
         if not goal:
             return []
 
-        return [self.goals[child_id] for child_id in goal.subgoal_ids if child_id in self.goals]
+        return [
+            self.goals[child_id]
+            for child_id in goal.subgoal_ids
+            if child_id in self.goals
+        ]
 
     def get_parent(self, goal_id: str) -> Optional[Goal]:
         """Get parent goal."""
@@ -280,7 +284,9 @@ class GoalSetter:
         else:
             return GoalPriority.LOW
 
-    def _estimate_deadline(self, context: Dict[str, Any], priority: GoalPriority) -> float:
+    def _estimate_deadline(
+        self, context: Dict[str, Any], priority: GoalPriority
+    ) -> float:
         """Estimate deadline based on priority and context."""
         current_time = time.time()
 
@@ -399,7 +405,9 @@ class GoalSetter:
             "active_goals": len(self.hierarchy.get_active_goals()),
             "pending_goals": len(self.hierarchy.get_pending_goals()),
             "completed_goals": len(completed_goals),
-            "failed_goals": len([g for g in all_goals if g.status == GoalStatus.FAILED]),
+            "failed_goals": len(
+                [g for g in all_goals if g.status == GoalStatus.FAILED]
+            ),
             "overdue_goals": len(self.hierarchy.get_overdue_goals()),
             "avg_completion_time": avg_completion_time,
             "generation_count": self.generation_count,
@@ -441,7 +449,9 @@ class GoalOptimizer:
             return []
 
         # Score each goal
-        scored_goals = [(goal, self._compute_priority_score(goal)) for goal in all_goals]
+        scored_goals = [
+            (goal, self._compute_priority_score(goal)) for goal in all_goals
+        ]
 
         # Sort by score (highest first)
         scored_goals.sort(key=lambda x: x[1], reverse=True)

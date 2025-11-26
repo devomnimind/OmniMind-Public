@@ -25,7 +25,9 @@ class PatternRecognition:
         self.sensitivity = sensitivity
         self._patterns: Dict[str, List[Any]] = {}
 
-    def detect_repetitive_behavior(self, operations: List[Dict[str, Any]]) -> Dict[str, Any]:
+    def detect_repetitive_behavior(
+        self, operations: List[Dict[str, Any]]
+    ) -> Dict[str, Any]:
         """Detect repetitive behavior patterns.
 
         Args:
@@ -38,7 +40,9 @@ class PatternRecognition:
             return {"patterns": [], "message": "No operations to analyze"}
 
         # Extract sequences of tool usage
-        tool_sequences = [op.get("tool_name") for op in operations if op.get("tool_name")]
+        tool_sequences = [
+            op.get("tool_name") for op in operations if op.get("tool_name")
+        ]
 
         if len(tool_sequences) < 3:
             return {"patterns": [], "message": "Insufficient data"}
@@ -86,7 +90,9 @@ class PatternRecognition:
             return {"biases": [], "message": "No operations to analyze"}
 
         # Count tool usage
-        tool_counts = Counter(op.get("tool_name") for op in operations if op.get("tool_name"))
+        tool_counts = Counter(
+            op.get("tool_name") for op in operations if op.get("tool_name")
+        )
 
         # Count agent usage
         agent_counts = Counter(op.get("agent") for op in operations if op.get("agent"))
@@ -141,7 +147,9 @@ class PatternRecognition:
         anomalies = []
 
         # Check for unusual execution times
-        execution_times = [op.get("duration", 0) for op in operations if op.get("duration")]
+        execution_times = [
+            op.get("duration", 0) for op in operations if op.get("duration")
+        ]
 
         if execution_times:
             avg_time = sum(execution_times) / len(execution_times)
@@ -224,7 +232,8 @@ class PatternRecognition:
         # Find common decision paths
         sequence_counts = Counter(tuple(seq) for seq in sequences)
         common_paths = [
-            {"path": list(path), "count": count} for path, count in sequence_counts.most_common(5)
+            {"path": list(path), "count": count}
+            for path, count in sequence_counts.most_common(5)
         ]
 
         return {
@@ -236,7 +245,9 @@ class PatternRecognition:
             "timestamp": datetime.now().isoformat(),
         }
 
-    def calculate_diversity_score(self, operations: List[Dict[str, Any]]) -> Dict[str, Any]:
+    def calculate_diversity_score(
+        self, operations: List[Dict[str, Any]]
+    ) -> Dict[str, Any]:
         """Calculate diversity score for decision-making.
 
         Args:
@@ -249,11 +260,15 @@ class PatternRecognition:
             return {"diversity_score": 0.0, "message": "No operations to analyze"}
 
         # Count unique tools and agents
-        unique_tools = set(op.get("tool_name") for op in operations if op.get("tool_name"))
+        unique_tools = set(
+            op.get("tool_name") for op in operations if op.get("tool_name")
+        )
         unique_agents = set(op.get("agent") for op in operations if op.get("agent"))
 
         # Calculate Shannon entropy for tool distribution
-        tool_counts = Counter(op.get("tool_name") for op in operations if op.get("tool_name"))
+        tool_counts = Counter(
+            op.get("tool_name") for op in operations if op.get("tool_name")
+        )
 
         total = sum(tool_counts.values())
         entropy = 0.0
@@ -272,7 +287,9 @@ class PatternRecognition:
             "unique_agents": len(unique_agents),
             "total_operations": len(operations),
             "interpretation": (
-                "high" if diversity_score > 0.7 else "medium" if diversity_score > 0.4 else "low"
+                "high"
+                if diversity_score > 0.7
+                else "medium" if diversity_score > 0.4 else "low"
             ),
             "timestamp": datetime.now().isoformat(),
         }

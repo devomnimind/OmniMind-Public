@@ -72,7 +72,9 @@ class ChaosMonkey:
         self.experiments.append(experiment)
         logger.info(f"Registered chaos experiment: {experiment.name}")
 
-    def inject_failure(self, component: str, operation: str = "unknown") -> Optional[Exception]:
+    def inject_failure(
+        self, component: str, operation: str = "unknown"
+    ) -> Optional[Exception]:
         """
         Inject failure if chaos is enabled and conditions are met.
 
@@ -109,13 +111,17 @@ class ChaosMonkey:
                     }
                 )
 
-                logger.warning(f"Chaos injection: {experiment.name} on {component}.{operation}")
+                logger.warning(
+                    f"Chaos injection: {experiment.name} on {component}.{operation}"
+                )
 
                 return failure
 
         return None
 
-    def _generate_failure(self, experiment: ChaosExperiment, operation: str) -> Optional[Exception]:
+    def _generate_failure(
+        self, experiment: ChaosExperiment, operation: str
+    ) -> Optional[Exception]:
         """Generate failure based on experiment type."""
         if experiment.failure_type == FailureType.LATENCY:
             # Inject latency
@@ -125,7 +131,9 @@ class ChaosMonkey:
 
         elif experiment.failure_type == FailureType.EXCEPTION:
             # Raise exception
-            message = experiment.parameters.get("message", f"Chaos injection: {experiment.name}")
+            message = experiment.parameters.get(
+                "message", f"Chaos injection: {experiment.name}"
+            )
             exception_class = cast(
                 Type[Exception],
                 experiment.parameters.get("exception_class", Exception),
@@ -157,7 +165,9 @@ class ChaosMonkey:
         Args:
             experiment_name: Name of experiment to start
         """
-        experiment = next((exp for exp in self.experiments if exp.name == experiment_name), None)
+        experiment = next(
+            (exp for exp in self.experiments if exp.name == experiment_name), None
+        )
 
         if not experiment:
             logger.error(f"Experiment not found: {experiment_name}")

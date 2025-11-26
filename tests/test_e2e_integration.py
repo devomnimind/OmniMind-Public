@@ -158,7 +158,9 @@ class TestMockedAPIEndpoints:
                 assert response.status_code == 401
 
                 # With auth - should succeed
-                response = await client.get("http://mock-server/status", auth=("user", "pass"))
+                response = await client.get(
+                    "http://mock-server/status", auth=("user", "pass")
+                )
                 assert response.status_code == 200
 
     @pytest.mark.asyncio
@@ -199,7 +201,9 @@ class TestMockedAPIEndpoints:
                 assert result["task"] == "Test task"
 
                 # Check metrics were updated
-                response = await client.get("http://mock-server/metrics", auth=("user", "pass"))
+                response = await client.get(
+                    "http://mock-server/metrics", auth=("user", "pass")
+                )
                 assert response.status_code == 200
                 metrics = response.json()
                 assert "backend" in metrics
@@ -248,7 +252,9 @@ class TestMockedWebSocketIntegration:
         mock_websocket.recv.side_effect = [
             json.dumps({"type": "connected"}),
             json.dumps({"type": "subscribed", "channels": ["tasks", "agents"]}),
-            json.dumps({"type": "pong", "timestamp": "2023-01-01T00:00:00Z"}),  # Add pong response
+            json.dumps(
+                {"type": "pong", "timestamp": "2023-01-01T00:00:00Z"}
+            ),  # Add pong response
         ]
 
         with patch("websockets.connect") as mock_connect:
@@ -329,7 +335,9 @@ class TestMockedUIInteraction:
             # Verify interactions
             assert mock_page.fill.call_count == 2
             mock_page.click.assert_called_once_with('button[type="submit"]')
-            mock_page.wait_for_selector.assert_called_once_with(".dashboard", timeout=5000)
+            mock_page.wait_for_selector.assert_called_once_with(
+                ".dashboard", timeout=5000
+            )
 
 
 class TestMockedPerformance:
@@ -380,7 +388,9 @@ class TestMockedPerformance:
             mock_client_class.return_value = mock_client
 
             async def make_request(client: httpx.AsyncClient, i: int):
-                response = await client.get("http://mock-server/metrics", auth=("user", "pass"))
+                response = await client.get(
+                    "http://mock-server/metrics", auth=("user", "pass")
+                )
                 return response.status_code
 
             async with httpx.AsyncClient(timeout=30.0) as client:
@@ -523,7 +533,9 @@ class TestWebSocketIntegration:
                 pass
 
             # Subscribe to channels
-            await websocket.send(json.dumps({"type": "subscribe", "channels": ["tasks", "agents"]}))
+            await websocket.send(
+                json.dumps({"type": "subscribe", "channels": ["tasks", "agents"]})
+            )
 
             # Consume subscription confirmation
             try:
@@ -641,7 +653,9 @@ class TestPerformance:
         reason="E2E tests require running server (set RUN_E2E_TESTS=1)",
     )
     @pytest.mark.asyncio
-    async def test_concurrent_requests(self, backend_server: str, auth_credentials: Dict[str, str]):
+    async def test_concurrent_requests(
+        self, backend_server: str, auth_credentials: Dict[str, str]
+    ):
         """Test handling of concurrent requests."""
         import httpx
 
@@ -669,7 +683,9 @@ class TestSecurityIntegration:
         reason="E2E tests require running server (set RUN_E2E_TESTS=1)",
     )
     @pytest.mark.asyncio
-    async def test_audit_logging(self, backend_server: str, auth_credentials: Dict[str, str]):
+    async def test_audit_logging(
+        self, backend_server: str, auth_credentials: Dict[str, str]
+    ):
         """Test audit logging is working."""
         import httpx
 
@@ -750,7 +766,9 @@ class TestErrorHandling:
         reason="E2E tests require running server (set RUN_E2E_TESTS=1)",
     )
     @pytest.mark.asyncio
-    async def test_invalid_task_input(self, backend_server: str, auth_credentials: Dict[str, str]):
+    async def test_invalid_task_input(
+        self, backend_server: str, auth_credentials: Dict[str, str]
+    ):
         """Test handling of invalid task input."""
         import httpx
 

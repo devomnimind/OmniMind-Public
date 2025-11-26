@@ -77,7 +77,9 @@ class TenantConfig:
     tenant_id: str
     tenant_name: str
     status: TenantStatus = TenantStatus.PENDING
-    created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    created_at: str = field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+    )
     encryption_key_id: Optional[str] = None
     settings: Dict[str, Any] = field(default_factory=dict)
     quotas: Dict[str, ResourceQuota] = field(default_factory=dict)
@@ -331,7 +333,9 @@ class MultiTenantIsolationManager:
 
             return True
 
-    def check_quota(self, tenant_id: str, resource_type: ResourceType, amount: float = 0) -> bool:
+    def check_quota(
+        self, tenant_id: str, resource_type: ResourceType, amount: float = 0
+    ) -> bool:
         """
         Check if tenant has available quota for resource.
 
@@ -353,7 +357,9 @@ class MultiTenantIsolationManager:
 
         return quota.available() >= amount
 
-    def consume_quota(self, tenant_id: str, resource_type: ResourceType, amount: float) -> bool:
+    def consume_quota(
+        self, tenant_id: str, resource_type: ResourceType, amount: float
+    ) -> bool:
         """
         Consume tenant quota.
 
@@ -393,7 +399,9 @@ class MultiTenantIsolationManager:
 
             return True
 
-    def release_quota(self, tenant_id: str, resource_type: ResourceType, amount: float) -> bool:
+    def release_quota(
+        self, tenant_id: str, resource_type: ResourceType, amount: float
+    ) -> bool:
         """
         Release tenant quota.
 
