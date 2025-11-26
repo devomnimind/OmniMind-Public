@@ -10,16 +10,16 @@ Cobertura de:
 
 from __future__ import annotations
 
-import pytest
 import numpy as np
+import pytest
 
 from src.quantum_consciousness.quantum_memory import (
-    QuantumMemoryCell,
-    QuantumMemorySystem,
+    QISKIT_AVAILABLE,
     HybridQLearning,
     QLearningState,
+    QuantumMemoryCell,
     QuantumMemoryComparison,
-    QISKIT_AVAILABLE,
+    QuantumMemorySystem,
 )
 
 

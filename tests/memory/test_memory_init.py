@@ -156,8 +156,8 @@ class TestMemoryInitAll:
 
     def test_all_imports_work(self) -> None:
         """Testa que todas as classes em __all__ podem ser importadas."""
-        from src.memory import __all__
         import src.memory as memory
+        from src.memory import __all__
 
         for name in __all__:
             cls = getattr(memory, name)
@@ -192,8 +192,8 @@ class TestMemoryInitMultipleImports:
         """Testa importação de todas as classes."""
         # This would be: from src.memory import *
         # But we test it differently to avoid wildcard import
-        from src.memory import __all__
         import src.memory
+        from src.memory import __all__
 
         for name in __all__:
             assert hasattr(src.memory, name)

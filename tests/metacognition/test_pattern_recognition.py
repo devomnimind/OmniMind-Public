@@ -5,6 +5,7 @@ Total: 29 tests covering all pattern recognition capabilities.
 """
 
 from datetime import datetime
+
 import pytest
 
 from src.metacognition.pattern_recognition import PatternRecognition

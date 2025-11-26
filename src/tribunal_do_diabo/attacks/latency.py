@@ -1,8 +1,9 @@
-import time
 import asyncio
 import random
+import time
 from dataclasses import dataclass
 from typing import List
+
 from src.tribunal_do_diabo.system_adapter import OmniMindSystem
 
 

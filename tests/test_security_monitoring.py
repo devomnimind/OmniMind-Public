@@ -1,8 +1,8 @@
 """Tests for enhanced security events monitoring."""
 
 import pytest
-from fastapi.testclient import TestClient
 from fastapi import FastAPI
+from fastapi.testclient import TestClient
 
 from web.backend.routes import security
 

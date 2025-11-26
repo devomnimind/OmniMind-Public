@@ -2,14 +2,16 @@
 
 import math
 import time
+
 import pytest
+
 from src.decision_making.autonomous_goal_setting import (
     Goal,
     GoalHierarchy,
-    GoalSetter,
     GoalOptimizer,
-    GoalStatus,
     GoalPriority,
+    GoalSetter,
+    GoalStatus,
 )
 
 

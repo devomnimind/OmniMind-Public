@@ -6,6 +6,7 @@ License: MIT
 """
 
 import pytest
+
 from src.autopoietic.meaning_maker import (
     Goal,
     GoalHierarchy,

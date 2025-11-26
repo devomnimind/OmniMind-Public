@@ -13,12 +13,13 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, List, Optional
+
 import structlog
 
 try:
     from qiskit import QuantumCircuit
-    from qiskit_aer import AerSimulator
     from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
+    from qiskit_aer import AerSimulator
 
     QISKIT_AVAILABLE = True
 except ImportError:
@@ -239,8 +240,8 @@ class IBMQBackend(QPUBackend):
 
         try:
             # Use Sampler V2 with correct mode parameter (backend object)
-            from qiskit_ibm_runtime import Sampler
             from qiskit import transpile
+            from qiskit_ibm_runtime import Sampler
 
             # Transpile circuit for the backend
             qc_transpiled = transpile(circuit, backend=self.ibm_backend)

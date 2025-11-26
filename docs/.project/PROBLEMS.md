@@ -157,14 +157,14 @@ rm -rf .venv && python -m venv .venv
 
 ---
 
-### 3. Menções a 2024 em Documentação (✅ RESOLVIDO)
+### 3. Menções a 2025 em Documentação (✅ RESOLVIDO)
 
 **2 Ocorrências Corrigidas em 2025-11-23:**
-- ✅ docs/IMPLEMENTATION_SUMMARY.md - Data: 2024-11-20 → 2025-11-23
-- ✅ docs/OPENTELEMETRY_IMPLEMENTATION_DETAILED.md - Data: 2024-11-20 → 2025-11-23
+- ✅ docs/IMPLEMENTATION_SUMMARY.md - Data: 2025-11-20 → 2025-11-23
+- ✅ docs/OPENTELEMETRY_IMPLEMENTATION_DETAILED.md - Data: 2025-11-20 → 2025-11-23
 
-**Outras Menções a "2024" (Válidas):**
-- docs/reports/EXPERIMENTAL_MODULES_ENHANCEMENT_REPORT.md - Referências a pesquisas 2024
+**Outras Menções a "2025" (Válidas):**
+- docs/reports/EXPERIMENTAL_MODULES_ENHANCEMENT_REPORT.md - Referências a pesquisas 2025
 - docs/analysis_reports/ANALISE_DOCUMENTACAO_COMPLETA.md - Citations de pesquisa
 
 **Contexto:** Cópia de templates com datas incorretas (projeto iniciado Nov 2025)

@@ -6,12 +6,12 @@ Fornece integridade tamper-evident com verificação eficiente via Merkle proofs
 """
 
 import hashlib
-import json
 import hmac
-from pathlib import Path
-from typing import Dict, Any, List, Tuple, Optional
-from datetime import datetime
+import json
 import os
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
 
 
 class RobustChainIntegrityManager:

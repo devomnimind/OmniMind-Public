@@ -1,33 +1,29 @@
 """Tests for decision making module initialization."""
 
-from src.decision_making import (
-    # Decision Trees
-    DecisionTree,
-    DecisionNode,
+from src.decision_making import (  # Decision Trees; Reinforcement Learning; Ethical Decision Framework; Autonomous Goal Setting
     DecisionCriterion,
+    DecisionNode,
     DecisionOutcome,
+    DecisionTree,
     DecisionTreeBuilder,
-    # Reinforcement Learning
-    RLAgent,
-    RLEnvironment,
-    RLState,
-    RLAction,
-    RLReward,
-    QLearningAgent,
-    PolicyGradientAgent,
-    # Ethical Decision Framework
     EthicalDecisionMaker,
-    EthicalPrinciple,
     EthicalDilemma,
-    EthicalOutcome,
     EthicalFramework,
-    # Autonomous Goal Setting
-    GoalSetter,
+    EthicalOutcome,
+    EthicalPrinciple,
     Goal,
-    GoalPriority,
-    GoalStatus,
     GoalHierarchy,
     GoalOptimizer,
+    GoalPriority,
+    GoalSetter,
+    GoalStatus,
+    PolicyGradientAgent,
+    QLearningAgent,
+    RLAction,
+    RLAgent,
+    RLEnvironment,
+    RLReward,
+    RLState,
 )
 
 

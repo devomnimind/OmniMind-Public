@@ -5,20 +5,20 @@ Tests GPU resource pooling, database connection pooling, and multi-level caching
 
 import time
 
-from src.scaling.gpu_resource_pool import (
-    GPUDevice,
-    GPUResourcePool,
-    GPUPoolConfig,
-    GPUTask,
-)
 from src.scaling.database_connection_pool import (
     DatabaseConnectionPool,
     PoolConfig,
 )
+from src.scaling.gpu_resource_pool import (
+    GPUDevice,
+    GPUPoolConfig,
+    GPUResourcePool,
+    GPUTask,
+)
 from src.scaling.multi_level_cache import (
     CacheConfig,
-    CacheLevel,
     CacheLayer,
+    CacheLevel,
     EvictionPolicy,
     MultiLevelCache,
 )

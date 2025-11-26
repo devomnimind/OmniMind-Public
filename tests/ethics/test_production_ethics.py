@@ -10,15 +10,16 @@ Date: November 2025
 
 from __future__ import annotations
 
-from pathlib import Path
 import tempfile
+from pathlib import Path
+
 import pytest
 
 from src.ethics.production_ethics import ProductionEthicsSystem
 from src.metrics.ethics_metrics import (
+    MoralFoundation,
     MoralScenario,
     TransparencyComponents,
-    MoralFoundation,
 )
 
 

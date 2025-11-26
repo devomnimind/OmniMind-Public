@@ -4,12 +4,13 @@ Tests for Free Energy Lacanian module.
 
 import pytest
 import torch
+
 from src.lacanian.free_energy_lacanian import (
     ActiveInferenceAgent,
-    LacanianFreeEnergySystem,
-    FreeEnergyState,
     DesireVector,
+    FreeEnergyState,
     InferenceLevel,
+    LacanianFreeEnergySystem,
 )
 
 

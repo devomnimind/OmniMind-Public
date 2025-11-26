@@ -10,14 +10,14 @@ References:
 - Buber (1923): "I and Thou"
 """
 
-from .life_story_model import LifeStory, LifeChapter, NarrativeArc, IdentityModel
 from .dialogue_engine import DialogueEngine, MutualUnderstanding, Relationship
 from .identity_construction import (
+    Belief,
     IdentityConstruction,
     IdentitySnapshot,
     Value,
-    Belief,
 )
+from .life_story_model import IdentityModel, LifeChapter, LifeStory, NarrativeArc
 
 __all__ = [
     "LifeStory",

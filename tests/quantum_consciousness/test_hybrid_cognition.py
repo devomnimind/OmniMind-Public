@@ -13,9 +13,9 @@ from __future__ import annotations
 import pytest
 
 from src.quantum_consciousness.hybrid_cognition import (
-    HybridCognitionSystem,
     ClassicalQuantumBridge,
     CognitionMetrics,
+    HybridCognitionSystem,
     OptimizationStrategy,
 )
 

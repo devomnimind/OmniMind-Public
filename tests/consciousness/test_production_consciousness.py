@@ -10,9 +10,10 @@ Date: November 2025
 
 from __future__ import annotations
 
+import tempfile
 from pathlib import Path
 from typing import List
-import tempfile
+
 import pytest
 
 from src.consciousness.production_consciousness import ProductionConsciousnessSystem

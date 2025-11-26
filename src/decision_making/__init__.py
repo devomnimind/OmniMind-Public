@@ -11,39 +11,36 @@ All components are designed for local-first operation with no external
 dependencies beyond standard scientific libraries.
 """
 
-from src.decision_making.decision_trees import (
-    DecisionTree,
-    DecisionNode,
-    DecisionCriterion,
-    DecisionOutcome,
-    DecisionTreeBuilder,
-)
-
-from src.decision_making.reinforcement_learning import (
-    RLAgent,
-    RLEnvironment,
-    RLState,
-    RLAction,
-    RLReward,
-    QLearningAgent,
-    PolicyGradientAgent,
-)
-
-from src.decision_making.ethical_decision_framework import (
-    EthicalDecisionMaker,
-    EthicalPrinciple,
-    EthicalDilemma,
-    EthicalOutcome,
-    EthicalFramework,
-)
-
 from src.decision_making.autonomous_goal_setting import (
-    GoalSetter,
     Goal,
-    GoalPriority,
-    GoalStatus,
     GoalHierarchy,
     GoalOptimizer,
+    GoalPriority,
+    GoalSetter,
+    GoalStatus,
+)
+from src.decision_making.decision_trees import (
+    DecisionCriterion,
+    DecisionNode,
+    DecisionOutcome,
+    DecisionTree,
+    DecisionTreeBuilder,
+)
+from src.decision_making.ethical_decision_framework import (
+    EthicalDecisionMaker,
+    EthicalDilemma,
+    EthicalFramework,
+    EthicalOutcome,
+    EthicalPrinciple,
+)
+from src.decision_making.reinforcement_learning import (
+    PolicyGradientAgent,
+    QLearningAgent,
+    RLAction,
+    RLAgent,
+    RLEnvironment,
+    RLReward,
+    RLState,
 )
 
 __all__ = [

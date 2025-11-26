@@ -9,10 +9,10 @@ Orquestra colaboração humano-IA baseada em:
 5. Feedback é diálogo, não comando
 """
 
-from typing import Any, Dict, List, Optional
+import logging
 from dataclasses import dataclass, field
 from enum import Enum
-import logging
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -63,11 +63,11 @@ class HCHACFramework:
 
     def __init__(self) -> None:
         """Inicializa framework HCHAC."""
-        from .trust_metrics import TrustMetrics
-        from .negotiation import GoalNegotiator
-        from .bidirectional_feedback import BidirectionalFeedback
         from .bias_detector import BiasDetector
+        from .bidirectional_feedback import BidirectionalFeedback
         from .coevolution_memory import CoevolutionMemory
+        from .negotiation import GoalNegotiator
+        from .trust_metrics import TrustMetrics
 
         self.trust = TrustMetrics()
         self.negotiator = GoalNegotiator()

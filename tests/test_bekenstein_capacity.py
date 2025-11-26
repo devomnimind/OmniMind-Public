@@ -5,13 +5,14 @@ Garante cobertura mínima de 50% conforme Grupo 2 - Phase 1.
 """
 
 import math
+
 import pytest
 
 from src.architecture.bekenstein_capacity import (
-    BekensteinArchitect,
     HBAR,
-    C,
     LN2,
+    BekensteinArchitect,
+    C,
 )
 
 

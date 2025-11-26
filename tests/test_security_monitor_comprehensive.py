@@ -4,18 +4,19 @@ Comprehensive tests for security_monitor.py module.
 Tests SecurityMonitor class and related functionality.
 """
 
-import pytest
 import tempfile
 from pathlib import Path
 
+import pytest
+
+from src.audit.immutable_audit import ImmutableAuditSystem
 from src.security.security_monitor import (
-    SecurityMonitor,
-    SecurityEvent,
-    ProcessSnapshot,
     AnomalyType,
+    ProcessSnapshot,
+    SecurityEvent,
+    SecurityMonitor,
     ThreatLevel,
 )
-from src.audit.immutable_audit import ImmutableAuditSystem
 
 
 class TestSecurityMonitorInitialization:

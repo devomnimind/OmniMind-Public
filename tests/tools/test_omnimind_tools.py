@@ -14,20 +14,21 @@ Cobertura de:
 
 from __future__ import annotations
 
-import pytest
 from pathlib import Path
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import MagicMock, Mock, patch
+
+import pytest
 
 from src.tools.omnimind_tools import (
+    AuditSecurityTool,
+    EpisodicMemoryTool,
+    ExecuteCommandTool,
+    ListFilesTool,
+    NewTaskTool,
+    PlanTaskTool,
     ReadFileTool,
     SearchFilesTool,
-    ListFilesTool,
     WriteFileTool,
-    ExecuteCommandTool,
-    PlanTaskTool,
-    NewTaskTool,
-    EpisodicMemoryTool,
-    AuditSecurityTool,
 )
 
 

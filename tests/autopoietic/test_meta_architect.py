@@ -4,7 +4,7 @@
 Ensures that specifications are generated correctly and validated.
 """
 
-from src.autopoietic.meta_architect import MetaArchitect, ComponentSpec
+from src.autopoietic.meta_architect import ComponentSpec, MetaArchitect
 
 
 def test_generate_specifications() -> None:

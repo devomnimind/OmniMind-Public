@@ -2,9 +2,9 @@ from __future__ import annotations
 
 """Typed episodic memory manager backed by Qdrant."""
 
-from datetime import datetime, timezone
 import hashlib
 import logging
+from datetime import datetime, timezone
 from typing import (
     TYPE_CHECKING,
     Any,

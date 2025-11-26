@@ -12,9 +12,10 @@ Author: OmniMind Development Team
 Date: 2025-11-26 (P0 Protocol Fix)
 """
 
-from typing import Dict, Any, Optional
-import os
 import logging
+import os
+from typing import Any, Dict, Optional
+
 import torch
 from dotenv import load_dotenv
 
@@ -23,8 +24,8 @@ logger = logging.getLogger(__name__)
 
 # --- D-Wave Imports ---
 try:
-    from dwave.system import DWaveSampler, EmbeddingComposite
     import dimod
+    from dwave.system import DWaveSampler, EmbeddingComposite
 
     DWAVE_AVAILABLE = True
 except ImportError:
@@ -41,16 +42,16 @@ except ImportError:
 # --- Qiskit Imports ---
 try:
     from qiskit_aer import AerSimulator
-    from qiskit_algorithms import Grover, AmplificationProblem
+    from qiskit_algorithms import AmplificationProblem, Grover
     from qiskit_algorithms.optimizers import COBYLA
 
     try:
         from qiskit.primitives import Sampler
     except ImportError:
         from qiskit.primitives import StatevectorSampler as Sampler
+    from qiskit.circuit.library import PhaseOracle
     from qiskit_optimization import QuadraticProgram
     from qiskit_optimization.algorithms import MinimumEigenOptimizer
-    from qiskit.circuit.library import PhaseOracle
 
     QISKIT_AVAILABLE = True
 except ImportError:

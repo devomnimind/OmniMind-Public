@@ -14,7 +14,7 @@ Author: OmniMind Development Team
 Date: November 2025
 """
 
-from typing import List, Any
+from typing import Any, List
 
 __version__ = "1.0.0"
 __author__ = "OmniMind Development Team"

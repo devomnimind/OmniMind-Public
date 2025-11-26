@@ -1,6 +1,7 @@
-from typing import Dict, Any, Optional
-import os
 import logging
+import os
+from typing import Any, Dict, Optional
+
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -10,8 +11,8 @@ logger = logging.getLogger(__name__)
 
 # --- D-Wave Imports ---
 try:
-    from dwave.system import DWaveSampler, EmbeddingComposite
     import dimod
+    from dwave.system import DWaveSampler, EmbeddingComposite
 
     DWAVE_AVAILABLE = True
 except ImportError:

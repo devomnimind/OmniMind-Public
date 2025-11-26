@@ -1,7 +1,7 @@
-import os
 import json
+import os
 import time
-from typing import Dict, Any, Generator, Optional
+from typing import Any, Dict, Generator, Optional
 
 
 class SinthomaticCompression:

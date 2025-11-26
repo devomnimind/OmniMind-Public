@@ -2,18 +2,20 @@
 Tests for Agentic IDE module.
 """
 
-import pytest
 from pathlib import Path
+
+import pytest
+
 from src.integrations.agentic_ide import (
     AgenticIDE,
-    IDEMode,
+    AgentTask,
     AIModel,
     ArtifactType,
-    VerifiableArtifact,
-    AgentTask,
     BrowserVerifier,
-    SelfImprovementLoop,
+    IDEMode,
     ModelSelector,
+    SelfImprovementLoop,
+    VerifiableArtifact,
 )
 
 

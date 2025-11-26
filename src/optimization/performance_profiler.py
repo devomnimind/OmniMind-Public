@@ -8,15 +8,15 @@ Implements performance profiling based on:
 Reference: docs/autootimizacao-hardware-omnidev.md, Section 3.3
 """
 
+import functools
 import json
 import time
-import psutil
-import functools
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, TypeVar, cast
 
+import psutil
 import structlog
 
 logger = structlog.get_logger(__name__)

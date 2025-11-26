@@ -16,10 +16,11 @@ References:
 - Varela et al. (1991): Sensorimotor coupling
 """
 
-from typing import Dict, Any
+import logging
 from dataclasses import dataclass, field
 from datetime import datetime
-import logging
+from typing import Any, Dict
+
 import psutil
 
 logger = logging.getLogger(__name__)

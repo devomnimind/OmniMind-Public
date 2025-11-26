@@ -7,6 +7,7 @@ Total: 29 tests covering all self-analysis capabilities.
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
+
 import pytest
 
 from src.metacognition.self_analysis import SelfAnalysis

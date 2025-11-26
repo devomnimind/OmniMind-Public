@@ -22,12 +22,12 @@ License: MIT
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Any, Set
+import logging
+import re
+from collections import Counter
 from dataclasses import dataclass
 from enum import Enum
-import re
-import logging
-from collections import Counter
+from typing import Any, Dict, List, Optional, Set
 
 logger = logging.getLogger(__name__)
 

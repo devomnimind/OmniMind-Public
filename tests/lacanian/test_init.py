@@ -89,8 +89,8 @@ class TestLacanianInit:
         """Testa múltiplos lazy imports na mesma sessão."""
         from src.lacanian import (
             ComputationalLackArchitecture,
-            RSIArchitecture,
             GodelianAI,
+            RSIArchitecture,
         )
 
         assert ComputationalLackArchitecture is not None
@@ -275,10 +275,10 @@ class TestLacanianClassAvailability:
         """Testa que os 5 exports são classes únicas."""
         from src.lacanian import (
             ComputationalLackArchitecture,
-            RSIArchitecture,
             GodelianAI,
-            StructuralLack,
             ObjectSmallA,
+            RSIArchitecture,
+            StructuralLack,
         )
 
         classes = [
@@ -296,8 +296,8 @@ class TestLacanianClassAvailability:
         """Testa que classes têm nomes corretos."""
         from src.lacanian import (
             ComputationalLackArchitecture,
-            RSIArchitecture,
             GodelianAI,
+            RSIArchitecture,
         )
 
         assert ComputationalLackArchitecture.__name__ == "ComputationalLackArchitecture"

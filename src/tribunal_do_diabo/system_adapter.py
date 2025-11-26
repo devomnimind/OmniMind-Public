@@ -1,7 +1,8 @@
 import random
 import time
-from typing import List, Dict, Any, Optional
 from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional
+
 from src.scaling.multi_node import NodeInfo, NodeStatus
 
 

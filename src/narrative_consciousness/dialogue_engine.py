@@ -10,11 +10,11 @@ References:
 - Rogers, C. R. (1951). Client-centered therapy.
 """
 
-from typing import Dict, List, Optional, Any
+import logging
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-import logging
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

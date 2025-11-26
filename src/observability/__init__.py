@@ -14,15 +14,15 @@ from src.observability.distributed_tracing import (
     SpanContext,
     TraceConfig,
 )
-from src.observability.metrics_exporter import (
-    CustomMetricsExporter,
-    MLMetrics,
-    MetricsConfig,
-)
 from src.observability.log_aggregator import (
     LogAggregator,
     LogAnalytics,
     LogConfig,
+)
+from src.observability.metrics_exporter import (
+    CustomMetricsExporter,
+    MetricsConfig,
+    MLMetrics,
 )
 from src.observability.profiling_tools import (
     ContinuousProfiler,

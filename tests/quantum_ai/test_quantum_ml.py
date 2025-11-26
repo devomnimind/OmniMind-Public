@@ -11,15 +11,16 @@ Cobertura de:
 
 from __future__ import annotations
 
-import pytest
 from typing import List
 
+import pytest
+
 from src.quantum_ai.quantum_ml import (
+    QuantumClassifier,
     QuantumFeatureMap,
     QuantumKernel,
-    VariationalCircuit,
     QuantumNeuralNetwork,
-    QuantumClassifier,
+    VariationalCircuit,
 )
 
 

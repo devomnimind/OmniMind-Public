@@ -7,10 +7,10 @@ Tests quantum circuit simulation and Grover's search algorithm.
 import math
 
 from src.quantum_ai.quantum_algorithms import (
+    GroverSearch,
+    QuantumCircuit,
     QuantumGate,
     QuantumState,
-    QuantumCircuit,
-    GroverSearch,
 )
 
 

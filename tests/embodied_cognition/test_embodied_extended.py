@@ -5,9 +5,10 @@ Tests multimodal fusion, edge cases, and advanced scenarios.
 """
 
 import pytest
-from src.embodied_cognition.sensory_integration import SensoryIntegration
+
 from src.embodied_cognition.motor_output import MotorController
 from src.embodied_cognition.proprioception import ProprioceptionModule
+from src.embodied_cognition.sensory_integration import SensoryIntegration
 from src.embodied_cognition.somatic_loop import SomaticLoop
 
 

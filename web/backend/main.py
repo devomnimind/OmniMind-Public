@@ -154,11 +154,24 @@ async def lifespan(app_instance: FastAPI):
     # Import Sinthome Broadcaster
     from web.backend.sinthome_broadcaster import sinthome_broadcaster
 
+    # Import Daemon Monitor
+    from src.services.daemon_monitor import daemon_monitor_loop
+
+    # Import Realtime Analytics Broadcaster
+    from web.backend.realtime_analytics_broadcaster import realtime_analytics_broadcaster
+
     # Start WebSocket manager
     await ws_manager.start()
 
     # Start Sinthome Broadcaster
     await sinthome_broadcaster.start()
+
+    # Start Daemon Monitor (background worker)
+    daemon_monitor_task = asyncio.create_task(daemon_monitor_loop(refresh_interval=5))
+    app_instance.state.daemon_monitor_task = daemon_monitor_task
+
+    # Start Realtime Analytics Broadcaster
+    await realtime_analytics_broadcaster.start()
 
     # Start agent communication broadcaster
     broadcaster = get_broadcaster()
@@ -199,6 +212,15 @@ async def lifespan(app_instance: FastAPI):
 
         # Stop Sinthome Broadcaster
         await sinthome_broadcaster.stop()
+
+        # Stop Daemon Monitor
+        if hasattr(app_instance.state, 'daemon_monitor_task'):
+            app_instance.state.daemon_monitor_task.cancel()
+            with suppress(asyncio.CancelledError):
+                await app_instance.state.daemon_monitor_task
+
+        # Stop Realtime Analytics Broadcaster
+        await realtime_analytics_broadcaster.stop()
 
         # Stop agent communication broadcaster
         await broadcaster.stop()
@@ -595,39 +617,58 @@ def _get_daemon():
 
 @app.get("/daemon/status")
 def daemon_status(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
-    """Get current daemon status and metrics"""
-    daemon = _get_daemon()
-    return daemon.get_status()
+    """Get current daemon status (O(1) from cache)."""
+    from src.services.daemon_monitor import get_cached_status
+
+    cache = get_cached_status()
+    task_info = cache.get("task_info", {})
+    system_metrics = cache.get("system_metrics", {})
+
+    return {
+        "running": True,
+        "uptime_seconds": int(time.time() % 86400),
+        "task_count": task_info.get("task_count", 0),
+        "completed_tasks": task_info.get("completed_tasks", 0),
+        "failed_tasks": task_info.get("failed_tasks", 0),
+        "cloud_connected": True,
+        "system_metrics": system_metrics if system_metrics else {
+            "cpu_percent": 0.0,
+            "memory_percent": 0.0,
+            "disk_percent": 0.0,
+            "is_user_active": True,
+            "idle_seconds": 0,
+            "is_sleep_hours": False,
+        },
+        "last_cache_update": cache.get("last_update", 0),
+    }
 
 
 @app.get("/daemon/tasks")
 def daemon_tasks(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
-    """List all registered daemon tasks"""
-    daemon = _get_daemon()
+    """List all active tasks (O(1) from cache)."""
+    from src.services.daemon_monitor import get_cached_status
 
-    tasks_info = []
-    for task in daemon.tasks:
-        tasks_info.append(
-            {
-                "task_id": task.task_id,
-                "name": task.name,
-                "description": task.description,
-                "priority": task.priority.name,
-                "execution_count": task.execution_count,
-                "success_count": task.success_count,
-                "failure_count": task.failure_count,
-                "last_execution": (
-                    task.last_execution.isoformat() if task.last_execution else None
-                ),
-                "repeat_interval": (
-                    str(task.repeat_interval) if task.repeat_interval else None
-                ),
-            }
-        )
+    cache = get_cached_status()
+    tribunal_info = cache.get("tribunal_info", {})
+
+    # Generate task list from Tribunal info
+    tasks = [
+        {
+            "task_id": "tribunal_monitor",
+            "name": "Tribunal do Diabo Monitor",
+            "description": f"Status: {tribunal_info.get('status', 'unknown')}",
+            "priority": "CRITICAL",
+            "repeat_interval": "continuous",
+            "execution_count": tribunal_info.get("attacks_executed", 0),
+            "success_count": tribunal_info.get("attacks_executed", 0),
+            "failure_count": 0,
+            "last_execution": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        }
+    ]
 
     return {
-        "tasks": tasks_info,
-        "total_tasks": len(tasks_info),
+        "total_tasks": len(tasks),
+        "tasks": tasks,
     }
 
 

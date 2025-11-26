@@ -4,9 +4,10 @@ Tests distributed tracing, metrics export, log aggregation, and profiling tools.
 """
 
 import json
-import pytest
 import time
 from pathlib import Path
+
+import pytest
 
 from src.observability.distributed_tracing import (
     DistributedTracer,
@@ -14,18 +15,18 @@ from src.observability.distributed_tracing import (
     SpanStatus,
     TraceConfig,
 )
-from src.observability.metrics_exporter import (
-    CustomMetricsExporter,
-    MetricType,
-    MetricsConfig,
-    MLMetrics,
-)
 from src.observability.log_aggregator import (
+    AlertSeverity,
     LogAggregator,
     LogConfig,
     LogLevel,
     LogPattern,
-    AlertSeverity,
+)
+from src.observability.metrics_exporter import (
+    CustomMetricsExporter,
+    MetricsConfig,
+    MetricType,
+    MLMetrics,
 )
 from src.observability.profiling_tools import (
     ContinuousProfiler,

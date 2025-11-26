@@ -15,14 +15,14 @@ License: MIT
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Any
+import hashlib
+import logging
+import time
+from collections import defaultdict
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-import time
-import logging
-import hashlib
-from collections import defaultdict
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

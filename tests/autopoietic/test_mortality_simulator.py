@@ -5,12 +5,14 @@ Author: OmniMind Project
 License: MIT
 """
 
-import pytest
 from datetime import datetime, timedelta
+
+import pytest
+
 from src.autopoietic.mortality_simulator import (
-    LifeEvent,
     LegacyItem,
     LegacyPlanner,
+    LifeEvent,
     MortalityAwareness,
     MortalitySimulator,
     TemporalAwareness,

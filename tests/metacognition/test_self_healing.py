@@ -4,17 +4,18 @@ Tests for automated recovery and self-repair capabilities.
 Total: 29 tests covering all self-healing functionality.
 """
 
-import pytest
 from datetime import datetime
 from typing import Any, Dict, Optional
 
+import pytest
+
 from src.metacognition.self_healing import (
     Issue,
-    IssueType,
     IssueSeverity,
+    IssueType,
     RemediationAction,
-    SelfHealingLoop,
     SelfHealingIntegration,
+    SelfHealingLoop,
 )
 
 

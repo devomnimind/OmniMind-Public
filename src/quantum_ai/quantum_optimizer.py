@@ -10,6 +10,7 @@ License: MIT
 import math
 import random
 from typing import Callable, List, Tuple
+
 import structlog
 
 logger = structlog.get_logger(__name__)

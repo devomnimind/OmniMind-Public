@@ -13,13 +13,14 @@ Uses Qiskit for quantum simulation.
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
-import structlog
+
 import numpy as np
+import structlog
 
 try:
-    from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
-    from qiskit_aer import AerSimulator
+    from qiskit import ClassicalRegister, QuantumCircuit, QuantumRegister
     from qiskit.quantum_info import Statevector
+    from qiskit_aer import AerSimulator
 
     QISKIT_AVAILABLE = True
 except ImportError:

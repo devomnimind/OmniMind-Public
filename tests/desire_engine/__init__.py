@@ -1,17 +1,18 @@
 """Tests for Artificial Desire Engine."""
 
 import pytest
+
 from src.desire_engine import (
-    DesireEngine,
-    DigitalMaslowHierarchy,
     ArtificialCuriosityEngine,
     ArtificialEmotionWithDesire,
     DesireDrivenMetaLearning,
-    ValueEvolutionSystem,
-    SelfTranscendenceEngine,
-    NeedLevel,
+    DesireEngine,
     DesireType,
+    DigitalMaslowHierarchy,
     EmotionalState,
+    NeedLevel,
+    SelfTranscendenceEngine,
+    ValueEvolutionSystem,
 )
 
 

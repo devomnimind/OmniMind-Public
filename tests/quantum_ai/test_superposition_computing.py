@@ -11,10 +11,10 @@ Cobertura de:
 import pytest
 
 from src.quantum_ai.superposition_computing import (
-    SuperpositionState,
-    SuperpositionProcessor,
     QuantumParallelism,
     StateAmplification,
+    SuperpositionProcessor,
+    SuperpositionState,
 )
 
 

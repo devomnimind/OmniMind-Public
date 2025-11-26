@@ -5,9 +5,10 @@ Provides safe file operations, shell execution, and system monitoring.
 
 import os
 import subprocess
-import psutil
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Any, Dict, List
+
+import psutil
 
 
 class FileOperations:

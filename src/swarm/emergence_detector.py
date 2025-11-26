@@ -8,13 +8,13 @@ Author: OmniMind Project - Phase 19
 License: MIT
 """
 
-import time
-from typing import List, Dict, Any, Optional
 import logging
+import time
+from typing import Any, Dict, List, Optional
 
-from src.swarm.types import EmergentPattern, EmergenceType
 from src.swarm.config import EmergenceConfig
-from src.swarm.utils import detect_clustering, calculate_diversity
+from src.swarm.types import EmergenceType, EmergentPattern
+from src.swarm.utils import calculate_diversity, detect_clustering
 
 logger = logging.getLogger(__name__)
 

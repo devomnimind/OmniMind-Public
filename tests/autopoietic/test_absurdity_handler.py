@@ -6,9 +6,10 @@ License: MIT
 """
 
 import pytest
+
 from src.autopoietic.absurdity_handler import (
-    AbsurdityHandler,
     AbsurdityAcceptor,
+    AbsurdityHandler,
     AbsurdityType,
     AbsurdSituation,
     CopingResponse,

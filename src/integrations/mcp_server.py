@@ -12,7 +12,6 @@ from typing import Any, Callable, Dict, Iterable, List, Optional, Union, cast
 
 from src.audit.immutable_audit import get_audit_system
 
-
 logger = logging.getLogger(__name__)
 
 

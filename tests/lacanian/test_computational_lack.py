@@ -13,12 +13,12 @@ import pytest
 import torch
 
 from src.lacanian.computational_lack import (
-    ObjectSmallA,
-    StructuralLack,
-    RSIArchitecture,
-    FrustrationSignal,
     ComputationalFrustration,
     ComputationalLackArchitecture,
+    FrustrationSignal,
+    ObjectSmallA,
+    RSIArchitecture,
+    StructuralLack,
 )
 
 

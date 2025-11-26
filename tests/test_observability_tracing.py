@@ -6,7 +6,6 @@ Group 15: Learning & Monitoring - observability/
 
 import time
 
-
 from src.observability.distributed_tracing import (
     DistributedTracer,
     Span,

@@ -5,10 +5,11 @@ Phase 16: 11-tier metacognition hierarchy com scoring
 """
 
 import pytest
+
 from src.metacognition.trap_framework import (
+    TRAPComponent,
     TRAPFramework,
     TRAPScore,
-    TRAPComponent,
 )
 
 

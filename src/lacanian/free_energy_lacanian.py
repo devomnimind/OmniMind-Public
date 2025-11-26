@@ -24,12 +24,13 @@ License: MIT
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Any, Tuple
+import logging
 from dataclasses import dataclass
+from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple
+
 import torch
 import torch.nn as nn
-import logging
-from enum import Enum
 
 logger = logging.getLogger(__name__)
 

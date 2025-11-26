@@ -9,15 +9,16 @@ Tools: Nikto (GPL v2), Custom scanners
 """
 
 import subprocess
-from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from enum import Enum
+from typing import Any, Dict, List, Optional
 from urllib.parse import urlparse
+
 import requests
 
+from ..audit.alerting_system import AlertCategory, AlertingSystem, AlertSeverity
 from ..audit.immutable_audit import ImmutableAuditSystem, get_audit_system
-from ..audit.alerting_system import AlertingSystem, AlertSeverity, AlertCategory
 
 
 class VulnerabilityType(Enum):

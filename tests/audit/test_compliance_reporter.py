@@ -11,19 +11,20 @@ Cobertura de:
 
 from __future__ import annotations
 
-import pytest
+import json
+import tempfile
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import Mock, patch
-from datetime import datetime, timedelta, timezone
-import tempfile
-import json
+
+import pytest
 
 from src.audit.compliance_reporter import (
     ComplianceReporter,
     ComplianceStandard,
-    generate_lgpd_report,
-    generate_gdpr_report,
     export_audit_trail,
+    generate_gdpr_report,
+    generate_lgpd_report,
 )
 
 

@@ -3,11 +3,12 @@ Testes para HCHAC Framework.
 """
 
 import pytest
+
 from src.coevolution.hchac_framework import (
-    HCHACFramework,
-    Role,
     CollaborationOutcome,
     ExecutionResult,
+    HCHACFramework,
+    Role,
 )
 
 

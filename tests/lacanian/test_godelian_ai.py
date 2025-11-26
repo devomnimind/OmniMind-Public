@@ -11,9 +11,9 @@ import pytest
 
 from src.lacanian.godelian_ai import (
     GodelianAI,
-    SimpleAxiomaticSystem,
     GodelianStatement,
     ImpossibilityMetaStrategy,
+    SimpleAxiomaticSystem,
 )
 
 

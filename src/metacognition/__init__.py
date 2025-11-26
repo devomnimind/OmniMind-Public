@@ -15,11 +15,11 @@ from __future__ import annotations
 from .homeostasis import HomeostaticController
 from .iit_metrics import IITAnalyzer, PhiMetrics, SystemState
 from .intelligent_goal_generation import (
-    IntelligentGoalEngine,
+    CodeAnalyzer,
     ImpactMetrics,
     ImpactPredictor,
+    IntelligentGoalEngine,
     RepositoryAnalysis,
-    CodeAnalyzer,
 )
 from .issue_prediction import IssuePrediction
 from .metacognition_agent import MetacognitionAgent
@@ -30,7 +30,7 @@ from .root_cause_analysis import RootCauseAnalysis
 from .self_analysis import SelfAnalysis
 from .self_healing import SelfHealingLoop
 from .self_optimization import SelfOptimizationEngine
-from .trap_framework import TRAPFramework, TRAPScore, TRAPComponent
+from .trap_framework import TRAPComponent, TRAPFramework, TRAPScore
 
 __all__ = [
     "MetacognitionAgent",

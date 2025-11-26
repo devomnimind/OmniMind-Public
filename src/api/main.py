@@ -1,10 +1,13 @@
-from typing import List
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.middleware.cors import CORSMiddleware
-from src.api.routes import health, daemon, messages
 import asyncio
 import json
 import time
+from typing import List
+
+import psutil
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
+
+from src.api.routes import daemon, health, messages
 
 app = FastAPI(title="OmniMind API", version="1.0.0")
 
@@ -51,21 +54,50 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 
+def count_active_agents() -> int:
+    """Count active OmniMind agents (Python processes)."""
+    count = 0
+    for proc in psutil.process_iter(["name", "cmdline"]):
+        try:
+            if proc.info["name"] and "python" in proc.info["name"].lower():
+                cmdline = proc.info.get("cmdline", [])
+                if cmdline and any(
+                    "omnimind" in str(arg).lower() or "tribunal" in str(arg).lower()
+                    for arg in cmdline
+                ):
+                    count += 1
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            pass
+    return max(count, 1)
+
+
+def get_task_counts() -> tuple:
+    """Get real task counts from Tribunal."""
+    tasks_info = daemon.get_tribunal_tasks_info()
+    active = tasks_info["total_tasks"]
+    completed = sum(t.get("success_count", 0) for t in tasks_info["tasks"])
+    return active, completed
+
+
 async def broadcast_metrics():
     """
     Background task to broadcast simulated metrics to all connected clients.
     """
     while True:
         try:
+            # Get real metrics
+            active_tasks, completed_tasks = get_task_counts()
+            agent_count = count_active_agents()
+
             # 1. Broadcast for RealtimeAnalytics (Simple)
             metrics_simple = {
                 "type": "metrics_update",
                 "data": {
-                    "cpu_percent": 45.2,
-                    "memory_percent": 60.5,
-                    "active_tasks": 4,
-                    "completed_tasks": 120,
-                    "agent_count": 1,
+                    "cpu_percent": psutil.cpu_percent(),
+                    "memory_percent": psutil.virtual_memory().percent,
+                    "active_tasks": active_tasks,
+                    "completed_tasks": completed_tasks,
+                    "agent_count": agent_count,
                     "timestamp": time.time(),
                 },
             }
@@ -80,7 +112,11 @@ async def broadcast_metrics():
                 "data": {
                     "state": "ACTIVE",
                     "integrity": 1.0,
-                    "raw": {"cpu": 45.2, "memory": 60.5, "entropy": 0.0},
+                    "raw": {
+                        "cpu": psutil.cpu_percent(),
+                        "memory": psutil.virtual_memory().percent,
+                        "entropy": 0.0,
+                    },
                     "metrics": {
                         "real_inaccessible": 1.0,
                         "logical_impasse": 1.0,

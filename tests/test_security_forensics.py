@@ -4,26 +4,27 @@ Tests for security forensics modules.
 Tests network sensors, web scanners, and security orchestrator.
 """
 
-import pytest
 import tempfile
 
+import pytest
+
+from src.audit.immutable_audit import ImmutableAuditSystem
 from src.security.network_sensors import (
-    NetworkSensorGanglia,
-    NetworkHost,
     NetworkAnomaly,
+    NetworkHost,
+    NetworkSensorGanglia,
     ThreatSeverity,
-)
-from src.security.web_scanner import (
-    WebScannerBrain,
-    WebVulnerability,
-    VulnerabilityType,
-    VulnerabilitySeverity,
 )
 from src.security.security_orchestrator import (
     SecurityOrchestrator,
     SecurityStatus,
 )
-from src.audit.immutable_audit import ImmutableAuditSystem
+from src.security.web_scanner import (
+    VulnerabilitySeverity,
+    VulnerabilityType,
+    WebScannerBrain,
+    WebVulnerability,
+)
 
 
 class TestNetworkSensors:

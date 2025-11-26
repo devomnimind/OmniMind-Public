@@ -14,14 +14,15 @@ Cobertura de:
 from __future__ import annotations
 
 import asyncio
-import pytest
 from typing import Any
-from unittest.mock import Mock, patch, AsyncMock
+from unittest.mock import AsyncMock, Mock, patch
+
+import pytest
 
 from src.security.security_orchestrator import (
     SecurityOrchestrator,
-    SecurityStatus,
     SecurityReport,
+    SecurityStatus,
     run_security_audit,
 )
 

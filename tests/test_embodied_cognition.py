@@ -9,12 +9,13 @@ Tests for:
 """
 
 import pytest
+
 from src.embodied_cognition import (
-    SensoryIntegration,
-    SomaticLoop,
     Emotion,
     MotorController,
     ProprioceptionModule,
+    SensoryIntegration,
+    SomaticLoop,
 )
 
 

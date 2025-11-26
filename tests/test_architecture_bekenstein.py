@@ -108,7 +108,7 @@ class TestBekensteinArchitect:
 
     def test_physical_constants_are_realistic(self) -> None:
         """Testa que as constantes físicas usadas são realistas."""
-        from src.architecture.bekenstein_capacity import HBAR, C, LN2
+        from src.architecture.bekenstein_capacity import HBAR, LN2, C
 
         # Planck constant aproximado
         assert 1e-35 < HBAR < 1e-33

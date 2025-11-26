@@ -1,4 +1,5 @@
 import pytest
+
 from src.metrics.sinthome_metrics import SinthomeMetrics
 
 

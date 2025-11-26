@@ -8,8 +8,8 @@ This module implements the autopoietic mechanism for OmniMind, responsible for:
 """
 
 import logging
-from typing import List, Dict, Any
 from dataclasses import dataclass
+from typing import Any, Dict, List
 
 logger = logging.getLogger(__name__)
 

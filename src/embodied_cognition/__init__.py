@@ -14,25 +14,25 @@ References:
 - Lakoff & Johnson (2002): "Metaphors We Live By"
 """
 
-from .sensory_integration import (
-    SensoryIntegration,
-    MultimodalInput,
-    VisualUnderstanding,
-    AudioUnderstanding,
-)
-from .somatic_loop import (
-    SomaticLoop,
-    Emotion,
-    EmotionalMarker,
-)
 from .motor_output import (
-    MotorController,
     ActionExecution,
+    MotorController,
 )
 from .proprioception import (
-    ProprioceptionModule,
     InternalState,
+    ProprioceptionModule,
     StateAwareness,
+)
+from .sensory_integration import (
+    AudioUnderstanding,
+    MultimodalInput,
+    SensoryIntegration,
+    VisualUnderstanding,
+)
+from .somatic_loop import (
+    Emotion,
+    EmotionalMarker,
+    SomaticLoop,
 )
 
 __all__ = [

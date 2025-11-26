@@ -6,8 +6,8 @@ import pytest
 
 from src.integrations.qdrant_adapter import (
     QdrantAdapter,
-    QdrantConfig,
     QdrantAdapterError,
+    QdrantConfig,
 )
 
 

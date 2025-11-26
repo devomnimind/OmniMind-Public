@@ -5,6 +5,7 @@ Total: 29 tests covering all optimization analysis capabilities.
 """
 
 import pytest
+
 from src.metacognition.optimization_suggestions import (
     OptimizationSuggestion,
     OptimizationSuggestions,

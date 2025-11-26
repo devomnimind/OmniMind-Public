@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import dataclass
-from typing import Any, Dict, Iterable, List, Optional, Set, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Optional, Set
 
 from ..integrations.graphql_supabase import (
     GraphQLCollectionPage,

@@ -4,20 +4,21 @@ Testa isolamento, delegação e execução segura de tarefas externas
 """
 
 import asyncio
-import pytest
 import os
 from unittest.mock import AsyncMock, patch
 
+import pytest
+
 from src.integrations.external_ai_providers import (
-    GeminiProvider,
     CopilotProvider,
+    GeminiProvider,
     OpenRouterProvider,
+    ProviderCapabilities,
     TaskSpec,
     TaskType,
-    ProviderCapabilities,
 )
-from src.integrations.task_isolation import TaskIsolationEngine, IsolatedTask
-from src.integrations.task_delegation import TaskDelegationManager, DelegationResult
+from src.integrations.task_delegation import DelegationResult, TaskDelegationManager
+from src.integrations.task_isolation import IsolatedTask, TaskIsolationEngine
 
 
 class TestTaskIsolationEngine:

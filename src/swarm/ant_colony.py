@@ -8,13 +8,13 @@ Author: OmniMind Project - Phase 19
 License: MIT
 """
 
+import logging
 import random
 import time
 from typing import Dict, List, Optional, Tuple
-import logging
 
-from src.swarm.types import Ant, SwarmMetrics
 from src.swarm.config import ACOConfig
+from src.swarm.types import Ant, SwarmMetrics
 
 logger = logging.getLogger(__name__)
 
@@ -102,8 +102,9 @@ class AntColonyOptimizer:
 
         # Calcula uso de memória
         try:
-            import psutil
             import os
+
+            import psutil
 
             process = psutil.Process(os.getpid())
             memory_info = process.memory_info()

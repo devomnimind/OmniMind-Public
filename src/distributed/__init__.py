@@ -3,8 +3,8 @@
 from .quantum_entanglement import (
     AgentState,
     BellState,
-    EntanglementPair,
     EntangledAgentNetwork,
+    EntanglementPair,
 )
 
 __all__ = [

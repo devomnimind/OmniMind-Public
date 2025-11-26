@@ -11,15 +11,15 @@ Cobertura de:
 
 from __future__ import annotations
 
-import pytest
 import numpy as np
+import pytest
 
 from src.quantum_consciousness.quantum_cognition import (
+    QISKIT_AVAILABLE,
     QuantumCognitionEngine,
     QuantumDecisionMaker,
     QuantumState,
     SuperpositionDecision,
-    QISKIT_AVAILABLE,
 )
 
 

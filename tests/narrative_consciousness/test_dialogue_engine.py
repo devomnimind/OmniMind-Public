@@ -5,12 +5,13 @@ Tests intersubjective communication, empathy, and horizon fusion.
 """
 
 import pytest
+
 from src.narrative_consciousness.dialogue_engine import (
     DialogueEngine,
+    DialogueMode,
     EmpathyModule,
     HorizonFusion,
     Relationship,
-    DialogueMode,
 )
 
 

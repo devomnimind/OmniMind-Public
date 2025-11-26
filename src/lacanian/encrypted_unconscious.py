@@ -1,5 +1,6 @@
 import hashlib
 from typing import List
+
 import numpy as np
 
 # Try to import tenseal, but provide a fallback/mock if not available

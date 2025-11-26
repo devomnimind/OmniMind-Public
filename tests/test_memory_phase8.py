@@ -1,7 +1,8 @@
 """Targeted Phase 8 tests for the episodic memory subsystem."""
 
+from typing import Any, Dict, List, Optional
+
 import pytest
-from typing import List, Dict, Any, Optional
 
 from src.memory import episodic_memory as episodic_module
 from src.memory.episodic_memory import EpisodicMemory

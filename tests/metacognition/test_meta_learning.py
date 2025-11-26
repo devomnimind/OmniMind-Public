@@ -10,14 +10,15 @@ Date: November 2025
 
 from __future__ import annotations
 
-from pathlib import Path
-from typing import Dict, Any
 import tempfile
+from pathlib import Path
+from typing import Any, Dict
+
 import pytest
 
 from src.metacognition.intelligent_goal_generation import IntelligentGoalEngine
-from src.metacognition.self_optimization import SelfOptimizationEngine
 from src.metacognition.metacognition_agent import MetacognitionAgent
+from src.metacognition.self_optimization import SelfOptimizationEngine
 
 
 class TestMetaLearningBasics:
@@ -151,11 +152,12 @@ class TestStrategyOptimization:
 
     def test_strategy_evaluation(self, optimizer: SelfOptimizationEngine) -> None:
         """Testa avaliação de estratégias (via A/B testing)."""
+        from datetime import datetime
+
         from src.metacognition.self_optimization import (
             Configuration,
             PerformanceMetrics,
         )
-        from datetime import datetime
 
         # Setup
         baseline = Configuration("base", "Base", {"strategy": "A"})
@@ -185,11 +187,12 @@ class TestStrategyOptimization:
 
     def test_best_strategy_selection(self, optimizer: SelfOptimizationEngine) -> None:
         """Testa seleção da melhor estratégia (via apply_winner)."""
+        from datetime import datetime
+
         from src.metacognition.self_optimization import (
             Configuration,
             PerformanceMetrics,
         )
-        from datetime import datetime
 
         # Setup
         baseline = Configuration("base", "Base", {"strategy": "A"})
@@ -426,11 +429,12 @@ class TestMetaLearningEdgeCases:
     def test_learning_from_contradictory_experiences(self) -> None:
         """Testa aprendizado de experiências contraditórias (via A/B test)."""
         optimizer = SelfOptimizationEngine()
+        from datetime import datetime
+
         from src.metacognition.self_optimization import (
             Configuration,
             PerformanceMetrics,
         )
-        from datetime import datetime
 
         baseline = Configuration("base", "Base", {"lr": 0.01})
         optimizer.set_baseline_configuration(baseline)

@@ -7,9 +7,9 @@ Implementa cache inteligente com TTL e LRU para reduzir latência e custo.
 import hashlib
 import logging
 import time
+from collections import OrderedDict
 from dataclasses import dataclass
 from typing import Any, Dict, Optional
-from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
 

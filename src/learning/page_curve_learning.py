@@ -19,13 +19,12 @@ License: MIT
 from __future__ import annotations
 
 import logging
+import math
+import random
+import statistics
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, List, Optional, Sequence
-
-import random
-import math
-import statistics
 
 logger = logging.getLogger(__name__)
 

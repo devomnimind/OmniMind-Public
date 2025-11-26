@@ -12,20 +12,21 @@ Cobertura de:
 
 from __future__ import annotations
 
-import pytest
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
+
+import pytest
 
 from src.security.forensics_system import (
+    EvidenceCollector,
+    EvidenceItem,
     EvidenceType,
+    ForensicsReport,
+    ForensicsSystem,
+    Incident,
+    IncidentAnalyzer,
     IncidentSeverity,
     IncidentStatus,
-    EvidenceItem,
-    Incident,
-    ForensicsReport,
-    EvidenceCollector,
-    IncidentAnalyzer,
-    ForensicsSystem,
     LogAnalyzer,
 )
 

@@ -15,11 +15,12 @@ Features:
 - Local-first service configuration
 """
 
-import platform
-import psutil
 import json
+import platform
 from pathlib import Path
-from typing import Dict, Optional, Any, Literal, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, Literal, Optional
+
+import psutil
 
 if TYPE_CHECKING:
     from psutil import sensors_battery as _typed_sensors_battery
@@ -29,7 +30,7 @@ else:
         return psutil.sensors_battery()
 
 
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from datetime import datetime
 
 

@@ -4,13 +4,14 @@ Testes para src/lacanian/encrypted_unconscious.py.
 Testa a camada de inconsciente criptografado com homomorphic encryption.
 """
 
-import pytest
-import numpy as np
 from typing import List
 
+import numpy as np
+import pytest
+
 from src.lacanian.encrypted_unconscious import (
-    EncryptedUnconsciousLayer,
     TENSEAL_AVAILABLE,
+    EncryptedUnconsciousLayer,
 )
 
 

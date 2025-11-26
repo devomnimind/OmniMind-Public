@@ -7,8 +7,8 @@ Garante que dados sensíveis do OmniMind não sejam compartilhados com AIs exter
 
 from __future__ import annotations
 
-import re
 import hashlib
+import re
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Set
 

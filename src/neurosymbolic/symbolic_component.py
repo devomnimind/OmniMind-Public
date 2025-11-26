@@ -8,9 +8,9 @@ Responsável por:
   - Inferência simbólica determinística
 """
 
-from typing import Any, List, Optional, Set, Tuple
-from dataclasses import dataclass
 import logging
+from dataclasses import dataclass
+from typing import Any, List, Optional, Set, Tuple
 
 logger = logging.getLogger(__name__)
 

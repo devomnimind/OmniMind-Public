@@ -12,16 +12,17 @@ Cobertura de:
 
 from __future__ import annotations
 
-import pytest
-from unittest.mock import Mock, patch, AsyncMock, MagicMock
 import asyncio
+from unittest.mock import AsyncMock, MagicMock, Mock, patch
+
+import pytest
 
 from src.integrations.mcp_client_async import (
     AsyncMCPClient,
     MCPClientError,
-    MCPTimeoutError,
     MCPConnectionError,
     MCPProtocolError,
+    MCPTimeoutError,
 )
 
 

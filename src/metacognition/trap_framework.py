@@ -15,10 +15,10 @@ TRAP = Transparency, Reasoning, Adaptation, Perception
   8-10. Futuros níveis
 """
 
-from typing import Any, Dict, Optional, List
+import logging
 from dataclasses import dataclass
 from enum import Enum
-import logging
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

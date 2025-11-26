@@ -6,6 +6,7 @@ Testa funcionalidades de parsing e análise de código Python.
 """
 
 import pytest
+
 from src.tools.ast_parser import ASTParser
 
 

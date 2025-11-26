@@ -9,8 +9,8 @@ import pytest
 from src.workflows.automated_code_review import (
     AutomatedCodeReviewer,
     CodeIssue,
-    IssueSeverity,
     IssueCategory,
+    IssueSeverity,
     ReviewResult,
 )
 

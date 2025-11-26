@@ -6,18 +6,18 @@ Tests:
 - Decision logging
 """
 
+import tempfile
 from pathlib import Path
 from typing import Generator
 
 import pytest
-import tempfile
 
 from src.metrics.ethics_metrics import (
+    DecisionLog,
     EthicsMetrics,
     MoralFoundation,
     MoralScenario,
     TransparencyComponents,
-    DecisionLog,
     calculate_mfa_score,
     calculate_transparency_score,
 )

@@ -15,36 +15,34 @@ License: MIT
 # ...existing code...
 """
 
+from .hybrid_cognition import (
+    ClassicalQuantumBridge,
+    CognitionMetrics,
+    HybridCognitionSystem,
+    OptimizationStrategy,
+)
+from .qpu_interface import (
+    BackendType,
+    IBMQBackend,
+    QPUBackend,
+    QPUInterface,
+    SimulatorBackend,
+)
+from .quantum_backend import DWaveBackend, QuantumBackend
 from .quantum_cognition import (
     QuantumCognitionEngine,
     QuantumDecisionMaker,
-    QuantumState as QCState,
+)
+from .quantum_cognition import QuantumState as QCState
+from .quantum_cognition import (
     SuperpositionDecision,
 )
-
 from .quantum_memory import (
-    QuantumMemorySystem,
-    QuantumMemoryCell,
     HybridQLearning,
+    QuantumMemoryCell,
     QuantumMemoryComparison,
+    QuantumMemorySystem,
 )
-
-from .qpu_interface import (
-    QPUInterface,
-    QPUBackend,
-    SimulatorBackend,
-    IBMQBackend,
-    BackendType,
-)
-
-from .hybrid_cognition import (
-    HybridCognitionSystem,
-    ClassicalQuantumBridge,
-    CognitionMetrics,
-    OptimizationStrategy,
-)
-
-from .quantum_backend import QuantumBackend, DWaveBackend
 
 __all__ = [
     # Quantum Cognition

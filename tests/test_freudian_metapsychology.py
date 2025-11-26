@@ -3,15 +3,16 @@ Tests for Freudian Metapsychology module.
 """
 
 import pytest
+
 from src.lacanian.freudian_metapsychology import (
-    IdAgent,
-    EgoAgent,
-    SuperegoAgent,
-    FreudianMind,
     Action,
-    PsychicState,
     DefenseMechanism,
+    EgoAgent,
+    FreudianMind,
+    IdAgent,
     PsychicPrinciple,
+    PsychicState,
+    SuperegoAgent,
 )
 
 

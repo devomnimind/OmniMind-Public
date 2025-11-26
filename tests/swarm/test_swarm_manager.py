@@ -5,10 +5,11 @@ Tests orchestration of PSO, ACO and emergence detection.
 """
 
 from typing import List
+
 import pytest
 
-from src.swarm.swarm_manager import SwarmManager
 from src.swarm.config import SwarmConfig
+from src.swarm.swarm_manager import SwarmManager
 
 
 class TestSwarmManager:

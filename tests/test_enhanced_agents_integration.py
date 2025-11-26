@@ -5,15 +5,17 @@ Integration Tests for Enhanced Agent System
 Testa integração entre AST parser, comunicação inter-agentes e agentes aprimorados.
 """
 
-import pytest
 from pathlib import Path
-from src.agents.code_agent import CodeAgent
-from src.agents.architect_agent import ArchitectAgent
+
+import pytest
+
 from src.agents.agent_protocol import (
-    MessageType,
     MessagePriority,
+    MessageType,
     get_message_bus,
 )
+from src.agents.architect_agent import ArchitectAgent
+from src.agents.code_agent import CodeAgent
 
 
 class TestCodeAgentIntegration:

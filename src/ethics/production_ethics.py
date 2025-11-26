@@ -13,18 +13,18 @@ License: MIT
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Any
-from pathlib import Path
 import logging
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
 # Import from existing ethics metrics
 try:
     from src.metrics.ethics_metrics import (
-        EthicsMetrics,
-        MoralScenario,
         DecisionLog,
-        TransparencyComponents,
+        EthicsMetrics,
         MoralFoundation,
+        MoralScenario,
+        TransparencyComponents,
     )
 
     IMPORT_SUCCESS = True

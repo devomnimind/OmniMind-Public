@@ -4,18 +4,19 @@ Smoke tests para módulos de Collective Intelligence (Migrated to Swarm).
 Grupo 5 - Phase 1: Testes básicos de inicialização e métodos principais
 """
 
-import pytest
-import time
 import math
+import time
+
+import pytest
 
 # Collective Learning (Migrated)
 from src.swarm.collective_learning import (
-    SharedExperience,
-    KnowledgeBase,
+    CollectiveLearner,
     ConsensusLearning,
     FederatedLearning,
-    CollectiveLearner,
+    KnowledgeBase,
     MultiAgentTrainer,
+    SharedExperience,
 )
 
 # Distributed Solver (Migrated)
@@ -26,12 +27,11 @@ from src.swarm.distributed_solver import (
 
 # Emergent Behaviors (Migrated)
 from src.swarm.emergence_detector import EmergenceDetector
-from src.swarm.types import EmergentPattern, EmergenceType
 
 # Swarm Intelligence (New Architecture)
 from src.swarm.particle_swarm import ParticleSwarmOptimizer
-from src.swarm.types import Particle
 from src.swarm.swarm_manager import SwarmManager
+from src.swarm.types import EmergenceType, EmergentPattern, Particle
 
 
 class TestSharedExperience:

@@ -19,36 +19,35 @@ References:
 - Thompson (2007): Embodied mind thesis
 """
 
-from typing import Dict, List, Optional, Any, Tuple
-from dataclasses import dataclass
 import logging
 from copy import deepcopy
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Tuple
 
-from src.neurosymbolic.neural_component import NeuralComponent
-from src.neurosymbolic.symbolic_component import SymbolicComponent
-from src.neurosymbolic.reconciliation import Reconciliator
-from src.neurosymbolic.hybrid_reasoner import NeurosymbolicReasoner
-
-from src.embodied_cognition.sensory_integration import SensoryIntegration
-from src.embodied_cognition.somatic_loop import SomaticLoop
-from src.embodied_cognition.motor_output import MotorController
-from src.embodied_cognition.proprioception import ProprioceptionModule
-
-# Phase 16.2: Narrative Consciousness
-from src.narrative_consciousness.life_story_model import LifeStory
-from src.narrative_consciousness.dialogue_engine import DialogueEngine
-from src.narrative_consciousness.identity_construction import IdentityConstruction
-
-# Phase 16.3: Creative Emergence
-from src.consciousness.novelty_generator import NoveltyGenerator
-from src.consciousness.serendipity_engine import SerendipityEngine
+from src.autopoietic.absurdity_handler import AbsurdityHandler, AbsurdityType
 from src.autopoietic.art_generator import ArtGenerator
+from src.autopoietic.meaning_maker import MeaningMaker
 
 # Phase 16.4: Existential Depth
 from src.autopoietic.mortality_simulator import MortalitySimulator
-from src.autopoietic.meaning_maker import MeaningMaker
-from src.autopoietic.absurdity_handler import AbsurdityHandler, AbsurdityType
+
+# Phase 16.3: Creative Emergence
+from src.consciousness.novelty_generator import NoveltyGenerator
 from src.consciousness.qualia_engine import QualiaEngine
+from src.consciousness.serendipity_engine import SerendipityEngine
+from src.embodied_cognition.motor_output import MotorController
+from src.embodied_cognition.proprioception import ProprioceptionModule
+from src.embodied_cognition.sensory_integration import SensoryIntegration
+from src.embodied_cognition.somatic_loop import SomaticLoop
+from src.narrative_consciousness.dialogue_engine import DialogueEngine
+from src.narrative_consciousness.identity_construction import IdentityConstruction
+
+# Phase 16.2: Narrative Consciousness
+from src.narrative_consciousness.life_story_model import LifeStory
+from src.neurosymbolic.hybrid_reasoner import NeurosymbolicReasoner
+from src.neurosymbolic.neural_component import NeuralComponent
+from src.neurosymbolic.reconciliation import Reconciliator
+from src.neurosymbolic.symbolic_component import SymbolicComponent
 
 logger = logging.getLogger(__name__)
 

@@ -16,15 +16,15 @@ Features:
 - Frustration-based motivation generation
 """
 
+from .hawking_motivation import (
+    EvaporationEvent,
+    HawkingMotivationEngine,
+    KnowledgeItem,
+)
 from .intrinsic_rewards import (
     IntrinsicMotivationEngine,
     SatisfactionMetrics,
     TaskOutcome,
-)
-from .hawking_motivation import (
-    HawkingMotivationEngine,
-    KnowledgeItem,
-    EvaporationEvent,
 )
 
 __all__ = [

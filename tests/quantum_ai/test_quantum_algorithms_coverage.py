@@ -1,9 +1,10 @@
 import pytest
+
 from src.quantum_ai.quantum_algorithms import (
-    QuantumCircuit,
-    QuantumGate,
     GroverSearch,
     QuantumAnnealer,
+    QuantumCircuit,
+    QuantumGate,
 )
 
 

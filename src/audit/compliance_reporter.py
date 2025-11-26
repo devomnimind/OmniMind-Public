@@ -8,9 +8,9 @@ Based on: docs/Omni-Dev-Integrationforensis.md (LGPD Compliance section)
 
 import json
 from datetime import datetime, timedelta, timezone
+from enum import Enum
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from enum import Enum
 
 from .immutable_audit import ImmutableAuditSystem, get_audit_system
 

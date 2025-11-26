@@ -9,9 +9,9 @@ Compliance: LGPD Art. 15, GDPR Art. 5.1.e (Storage Limitation)
 import json
 import shutil
 from datetime import datetime, timedelta, timezone
+from enum import Enum
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from enum import Enum
 
 from .immutable_audit import ImmutableAuditSystem, get_audit_system
 

@@ -11,14 +11,15 @@ Author: OmniMind Project
 License: MIT
 """
 
+import math
+import random
 import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
-import structlog
-import random
-import math
+
 import numpy as np
+import structlog
 
 logger = structlog.get_logger(__name__)
 

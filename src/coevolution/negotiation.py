@@ -5,10 +5,10 @@ Permite que humanos e IA negociem objetivos de forma bidirecional,
 ao invés de imposição unilateral.
 """
 
-from typing import Any, Dict, List
+import logging
 from dataclasses import dataclass, field
 from enum import Enum
-import logging
+from typing import Any, Dict, List
 
 logger = logging.getLogger(__name__)
 

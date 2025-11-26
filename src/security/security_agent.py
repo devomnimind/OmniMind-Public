@@ -1,7 +1,7 @@
 """SecurityAgent implements Phase 7 monitoring, detection, and playbook response."""
 
-import atexit
 import asyncio
+import atexit
 import copy
 import logging
 import os
@@ -18,14 +18,14 @@ import psutil
 import yaml
 
 from ..tools.tool_base import AuditedTool, ToolCategory
+from .dlp import DLPValidator, DLPViolationError
+from .firecracker_sandbox import FirecrackerSandbox
 from .playbooks.data_exfiltration_response import DataExfiltrationPlaybook
 from .playbooks.intrusion_response import IntrusionPlaybook
 from .playbooks.malware_response import MalwarePlaybook
 from .playbooks.privilege_escalation_response import PrivilegeEscalationPlaybook
 from .playbooks.rootkit_response import RootkitPlaybook
 from .playbooks.utils import run_command
-from .dlp import DLPValidator, DLPViolationError
-from .firecracker_sandbox import FirecrackerSandbox
 
 logger = logging.getLogger(__name__)
 

@@ -3,7 +3,7 @@
 import sys
 import types
 from pathlib import Path
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
 
 import pytest
 

@@ -4,14 +4,15 @@ Testes para src/experiments/run_all_experiments.py.
 Testa execução de experimentos de consciência e ética.
 """
 
-import pytest
 from typing import Any, Dict
 from unittest.mock import patch
 
+import pytest
+
 from src.experiments.run_all_experiments import (
-    run_all_experiments,
     generate_summary,
     main,
+    run_all_experiments,
 )
 
 

@@ -1,5 +1,7 @@
-import pytest
 import time
+
+import pytest
+
 from src.services.replay_service import ReplayService, SinthomaticCompression
 
 

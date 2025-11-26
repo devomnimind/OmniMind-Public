@@ -8,15 +8,16 @@ Cobertura de:
 - profile_function decorator
 """
 
-import pytest
-import time
-import tempfile
 import json
+import tempfile
+import time
 from pathlib import Path
 
+import pytest
+
 from src.optimization.performance_profiler import (
-    PerformanceMetrics,
     BottleneckReport,
+    PerformanceMetrics,
     PerformanceProfiler,
     profile_function,
 )

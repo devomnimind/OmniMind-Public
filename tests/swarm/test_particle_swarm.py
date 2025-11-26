@@ -5,10 +5,11 @@ Tests PSO implementation with scalability, convergence, and optimization quality
 """
 
 from typing import List
+
 import pytest
 
-from src.swarm.particle_swarm import ParticleSwarmOptimizer
 from src.swarm.config import PSOConfig
+from src.swarm.particle_swarm import ParticleSwarmOptimizer
 from src.swarm.types import Particle
 
 

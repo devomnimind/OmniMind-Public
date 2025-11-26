@@ -6,6 +6,7 @@ License: MIT
 """
 
 import pytest
+
 from src.consciousness.qualia_engine import (
     EmotionalQualia,
     IntegratedInformationCalculator,

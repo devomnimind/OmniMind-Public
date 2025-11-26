@@ -8,18 +8,20 @@ Integrates classical and quantum cognition:
 - Strategy selection
 """
 
+import time
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
-import time
+
 import structlog
+
+from .qpu_interface import BackendType, QPUInterface
 
 # ...existing code...
 from .quantum_cognition import (
     QuantumCognitionEngine,
     QuantumDecisionMaker,
 )
-from .qpu_interface import QPUInterface, BackendType
 
 # ...existing code...
 

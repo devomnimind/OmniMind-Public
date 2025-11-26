@@ -5,11 +5,11 @@ Coleta métricas de latência, throughput e health status dos backends neurais.
 """
 
 import logging
+import statistics
 import time
+from collections import deque
 from dataclasses import dataclass, field
 from typing import Dict, Optional
-from collections import deque
-import statistics
 
 logger = logging.getLogger(__name__)
 

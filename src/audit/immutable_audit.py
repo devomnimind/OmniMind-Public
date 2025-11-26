@@ -9,11 +9,11 @@ Baseado em: /home/fahbrain/OmniAgent/registroauditoria.md
 import hashlib
 import json
 import subprocess
+import threading
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Optional
-import threading
 
 
 class ImmutableAuditSystem:

@@ -12,14 +12,15 @@ Cobertura de:
 
 from __future__ import annotations
 
+from unittest.mock import MagicMock, Mock, patch
+
 import pytest
-from unittest.mock import Mock, patch, MagicMock
 
 from src.security.web_scanner import (
-    VulnerabilityType,
     VulnerabilitySeverity,
-    WebVulnerability,
+    VulnerabilityType,
     WebScannerBrain,
+    WebVulnerability,
 )
 
 

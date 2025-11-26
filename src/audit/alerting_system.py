@@ -12,11 +12,11 @@ Features:
 
 import asyncio
 import json
+import uuid
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Callable, Dict, List, Optional, Set
-from dataclasses import dataclass, field
-import uuid
 
 from .immutable_audit import ImmutableAuditSystem, get_audit_system
 

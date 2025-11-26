@@ -1,20 +1,20 @@
+import argparse
 import asyncio
-import time
 import json
 import logging
-import sys
 import os
-import argparse
-from typing import List, Dict
+import sys
+import time
+from typing import Dict, List
 
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from src.tribunal_do_diabo.system_adapter import OmniMindSystem
-from src.tribunal_do_diabo.attacks.latency import LatencyAttack
-from src.tribunal_do_diabo.attacks.corruption import CorruptionAttack
 from src.tribunal_do_diabo.attacks.bifurcation import BifurcationAttack
+from src.tribunal_do_diabo.attacks.corruption import CorruptionAttack
 from src.tribunal_do_diabo.attacks.exhaustion import ExhaustionAttack
+from src.tribunal_do_diabo.attacks.latency import LatencyAttack
+from src.tribunal_do_diabo.system_adapter import OmniMindSystem
 
 # Configure logging
 logging.basicConfig(

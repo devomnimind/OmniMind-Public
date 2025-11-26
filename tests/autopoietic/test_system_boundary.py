@@ -5,6 +5,7 @@ Ensures registration, internal checks, and policy enforcement work as expected.
 """
 
 import pytest
+
 from src.autopoietic.system_boundary import SystemBoundary
 
 

@@ -2,8 +2,10 @@
 Testes para Coevolution Memory System.
 """
 
-import pytest
 from datetime import datetime, timedelta
+
+import pytest
+
 from src.coevolution.coevolution_memory import (
     CoevolutionMemory,
     CollaborationSession,

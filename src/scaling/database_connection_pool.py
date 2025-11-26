@@ -7,10 +7,10 @@ Reference: docs/OMNIMIND_COMPREHENSIVE_PENDENCIES_REPORT_20251119.md, Section 7.
 """
 
 import time
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Callable, Dict, List, Optional, TypeVar, cast
-from contextlib import contextmanager
 
 import structlog
 

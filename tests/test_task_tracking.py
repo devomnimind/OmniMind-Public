@@ -1,10 +1,10 @@
 """Tests for enhanced task progress tracking."""
 
 import pytest
-from fastapi.testclient import TestClient
 
 # We'll create a simple test app for testing
 from fastapi import FastAPI
+from fastapi.testclient import TestClient
 
 from web.backend.routes import tasks
 

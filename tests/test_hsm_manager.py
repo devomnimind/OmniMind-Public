@@ -1,6 +1,7 @@
 """Tests for HSM Manager"""
 
 import pytest
+
 from src.security.hsm_manager import HSMManager
 
 
@@ -160,8 +161,8 @@ class TestHSMManager:
 
     def test_key_backup_restore(self) -> None:
         """Test key backup and restore"""
-        import tempfile
         import os
+        import tempfile
 
         hsm1 = HSMManager()
         key_id = hsm1.generate_key("RSA", 2048)

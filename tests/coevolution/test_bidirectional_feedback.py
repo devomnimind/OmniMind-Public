@@ -4,9 +4,9 @@ Testes para Bidirectional Feedback System.
 
 from src.coevolution.bidirectional_feedback import (
     BidirectionalFeedback,
-    FeedbackType,
     FeedbackDirection,
     FeedbackItem,
+    FeedbackType,
 )
 
 

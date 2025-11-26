@@ -8,15 +8,15 @@ Author: OmniMind Project - Phase 19
 License: MIT
 """
 
+import logging
 import time
 from typing import Any, Callable, Dict, List, Optional, Tuple
-import logging
 
-from src.swarm.types import SwarmMetrics, SwarmState
-from src.swarm.config import SwarmConfig
-from src.swarm.particle_swarm import ParticleSwarmOptimizer
 from src.swarm.ant_colony import AntColonyOptimizer
+from src.swarm.config import SwarmConfig
 from src.swarm.emergence_detector import EmergenceDetector
+from src.swarm.particle_swarm import ParticleSwarmOptimizer
+from src.swarm.types import SwarmMetrics, SwarmState
 from src.swarm.utils import estimate_memory_usage
 
 logger = logging.getLogger(__name__)

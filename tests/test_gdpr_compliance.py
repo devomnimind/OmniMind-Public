@@ -3,11 +3,11 @@
 from datetime import datetime, timedelta, timezone
 
 from src.compliance.gdpr_compliance import (
-    GDPRController,
-    DataProcessingPurpose,
-    DataCategory,
-    RetentionPeriod,
     ConsentStatus,
+    DataCategory,
+    DataProcessingPurpose,
+    GDPRController,
+    RetentionPeriod,
 )
 
 

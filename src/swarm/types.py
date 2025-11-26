@@ -8,10 +8,10 @@ Author: OmniMind Project - Phase 19
 License: MIT
 """
 
+import uuid
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Dict, List
-import uuid
 
 
 class SwarmAlgorithm(Enum):

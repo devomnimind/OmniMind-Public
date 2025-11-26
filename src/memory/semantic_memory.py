@@ -5,10 +5,10 @@ Stores abstract knowledge, concepts, and their relationships.
 Acts as the long-term store for factual information, independent of specific episodes.
 """
 
-from typing import Any, Dict, List, Optional, Tuple
+import logging
 from dataclasses import dataclass, field
 from datetime import datetime
-import logging
+from typing import Any, Dict, List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 

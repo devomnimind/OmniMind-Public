@@ -72,9 +72,9 @@ class TestProactiveGoals:
         """Test creating a proactive goal."""
         try:
             from src.metacognition.proactive_goals import (
-                ProactiveGoal,
                 GoalCategory,
                 GoalPriority,
+                ProactiveGoal,
             )
 
             goal = ProactiveGoal(

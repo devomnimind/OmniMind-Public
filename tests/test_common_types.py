@@ -7,18 +7,18 @@ Garante cobertura e validação de tipos customizados - Grupo 3 - Phase 1.
 import pytest
 
 from src.common.types import (
+    ID,
+    AgentID,
+    Config,
+    Headers,
     JSONDict,
     JSONList,
     JSONValue,
-    ID,
-    NodeID,
-    TaskID,
-    AgentID,
-    SessionID,
     Metadata,
-    Config,
+    NodeID,
     Parameters,
-    Headers,
+    SessionID,
+    TaskID,
 )
 
 
@@ -346,18 +346,18 @@ class TestModuleImports:
     def test_all_types_importable(self) -> None:
         """Testa que todos os tipos podem ser importados."""
         from src.common.types import (
+            ID,
+            AgentID,
+            Config,
+            Headers,
             JSONDict,
             JSONList,
             JSONValue,
-            ID,
-            NodeID,
-            TaskID,
-            AgentID,
-            SessionID,
             Metadata,
-            Config,
+            NodeID,
             Parameters,
-            Headers,
+            SessionID,
+            TaskID,
         )
 
         # Verificar que todos foram importados

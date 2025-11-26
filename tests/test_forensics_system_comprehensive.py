@@ -4,19 +4,20 @@ Comprehensive tests for forensics_system.py module.
 Tests EvidenceCollector, Incident, and related functionality.
 """
 
-import pytest
 import tempfile
-from pathlib import Path
 from datetime import datetime, timezone
+from pathlib import Path
+
+import pytest
 
 from src.security.forensics_system import (
     EvidenceCollector,
     EvidenceItem,
     EvidenceType,
+    ForensicsReport,
     Incident,
     IncidentSeverity,
     IncidentStatus,
-    ForensicsReport,
 )
 
 

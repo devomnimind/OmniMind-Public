@@ -3,11 +3,12 @@ Testes para Goal Negotiation System.
 """
 
 import pytest
+
 from src.coevolution.negotiation import (
     GoalNegotiator,
     NegotiationResult,
-    NegotiationStatus,
     NegotiationRound,
+    NegotiationStatus,
 )
 
 

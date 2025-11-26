@@ -1,7 +1,8 @@
 import asyncio
 import time
-from typing import List, Dict
 from dataclasses import dataclass
+from typing import Dict, List
+
 from src.tribunal_do_diabo.system_adapter import OmniMindSystem
 
 

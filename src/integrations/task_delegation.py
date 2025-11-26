@@ -16,15 +16,15 @@ import structlog
 import yaml
 
 from .external_ai_providers import (
+    CopilotProvider,
     ExternalAIProvider,
     GeminiProvider,
-    CopilotProvider,
     OpenRouterProvider,
-    TaskSpec,
     TaskResult,
+    TaskSpec,
     TaskType,
 )
-from .task_isolation import TaskIsolationEngine, IsolatedTask
+from .task_isolation import IsolatedTask, TaskIsolationEngine
 
 logger = structlog.get_logger(__name__)
 

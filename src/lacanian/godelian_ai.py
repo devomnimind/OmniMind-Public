@@ -12,9 +12,9 @@ Based on:
 Author: OmniMind Development Team
 """
 
-from typing import Protocol, Set, Optional, Callable, List, Any, Dict
-from dataclasses import dataclass
 import logging
+from dataclasses import dataclass
+from typing import Any, Callable, Dict, List, Optional, Protocol, Set
 
 logger = logging.getLogger(__name__)
 

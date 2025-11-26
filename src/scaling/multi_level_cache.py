@@ -6,12 +6,12 @@ Provides in-memory, distributed, and persistent caching layers.
 Reference: docs/OMNIMIND_COMPREHENSIVE_PENDENCIES_REPORT_20251119.md, Section 7.4
 """
 
+import hashlib
 import json
 import time
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Callable, Dict, List, Optional, TypeVar
-import hashlib
 
 import structlog
 

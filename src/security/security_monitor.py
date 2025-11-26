@@ -12,16 +12,17 @@ import hashlib
 import json
 import logging
 import os
-import psutil
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from enum import Enum
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
-from enum import Enum
 
+import psutil
+
+from src.audit.alerting_system import AlertCategory, AlertingSystem, AlertSeverity
 from src.audit.immutable_audit import get_audit_system
-from src.audit.alerting_system import AlertingSystem, AlertSeverity, AlertCategory
 
 
 class AnomalyType(Enum):

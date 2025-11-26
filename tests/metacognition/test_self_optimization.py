@@ -1,6 +1,7 @@
 """Tests for Self-Optimization Engine."""
 
 from datetime import datetime
+
 import pytest
 
 from src.metacognition.self_optimization import (

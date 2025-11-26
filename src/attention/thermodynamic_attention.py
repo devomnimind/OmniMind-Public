@@ -19,8 +19,8 @@ License: MIT
 from __future__ import annotations
 
 import logging
-from typing import Any, Optional, TYPE_CHECKING, cast
 import math
+from typing import TYPE_CHECKING, Any, Optional, cast
 
 if TYPE_CHECKING:
     import torch

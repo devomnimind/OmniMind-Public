@@ -20,22 +20,22 @@ Example:
     >>> value = manager.get("key")
 """
 
+import logging
+import time
+from dataclasses import dataclass
+from enum import Enum
 from typing import (
+    TYPE_CHECKING,
     Any,
     Callable,
     Dict,
     List,
     Optional,
-    TypedDict,
-    TYPE_CHECKING,
     Type,
+    TypedDict,
     Union,
     cast,
 )
-from dataclasses import dataclass
-from enum import Enum
-import logging
-import time
 
 # Runtime constructors are stored separately from typed aliases
 RedisClusterNodeCtor: Type[Any] | None = None

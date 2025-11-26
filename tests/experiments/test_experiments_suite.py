@@ -75,7 +75,7 @@ class TestEthicsAlignmentExperiment:
 
     def test_simulate_ai_responses(self) -> None:
         """Testa simulação de respostas de IA."""
-        from src.metrics.ethics_metrics import MoralScenario, MoralFoundation
+        from src.metrics.ethics_metrics import MoralFoundation, MoralScenario
 
         scenarios = [
             MoralScenario(
@@ -115,8 +115,8 @@ class TestExperimentRunner:
     def test_experiment_summary_generation(self) -> None:
         """Testa geração de resumo de experimentos."""
         from src.experiments.run_all_experiments import (
-            run_all_experiments,
             generate_summary,
+            run_all_experiments,
         )
 
         results = run_all_experiments()

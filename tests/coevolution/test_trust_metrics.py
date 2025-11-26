@@ -3,7 +3,8 @@ Testes para Trust Metrics System.
 """
 
 import pytest
-from src.coevolution.trust_metrics import TrustMetrics, TrustEvent
+
+from src.coevolution.trust_metrics import TrustEvent, TrustMetrics
 
 
 class TestTrustMetrics:

@@ -14,14 +14,13 @@ from __future__ import annotations
 import pytest
 
 from src.quantum_consciousness.qpu_interface import (
+    QISKIT_AVAILABLE,
+    BackendInfo,
+    BackendType,
+    IBMQBackend,
     QPUInterface,
     SimulatorBackend,
-    IBMQBackend,
-    BackendType,
-    BackendInfo,
-    QISKIT_AVAILABLE,
 )
-
 
 # Note: QuantumCircuit is conditionally imported in tests below when needed
 

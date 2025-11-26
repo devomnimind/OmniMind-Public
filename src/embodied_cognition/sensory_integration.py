@@ -10,9 +10,10 @@ Refs:
 - Damasio (2010): Somatic markers in perception
 """
 
-from typing import Any, Dict, List, Optional
-from dataclasses import dataclass
 import logging
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional
+
 from numpy.typing import NDArray
 
 logger = logging.getLogger(__name__)

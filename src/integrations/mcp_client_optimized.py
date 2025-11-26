@@ -21,7 +21,7 @@ from typing import Any, Dict, List, Optional, Tuple, cast
 
 from src.audit.immutable_audit import get_audit_system
 from src.integrations.mcp_client import MCPClient, MCPClientError
-from src.integrations.mcp_data_protection import get_data_protection, ProtectionResult
+from src.integrations.mcp_data_protection import ProtectionResult, get_data_protection
 
 logger = logging.getLogger(__name__)
 

@@ -1,11 +1,12 @@
 import asyncio
+import gzip
 import json
 import os
-import gzip
 import shutil
 from datetime import datetime, timedelta
+from typing import Any, Dict
+
 import psutil
-from typing import Dict, Any
 
 # Configuration
 LOG_DIR = "data/long_term_logs"

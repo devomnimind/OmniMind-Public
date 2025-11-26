@@ -6,9 +6,9 @@ framework that the test suite can exercise.  Real‑world stress testing will
 replace the stubs with integration‑level calls to the frontend simulator and
 the distributed network layer.
 """
-import time
 import random
-from typing import Dict, Any
+import time
+from typing import Any, Dict
 
 # ---------------------------------------------------------------------------
 # Latency attack – inject artificial network delay and verify quorum handling.

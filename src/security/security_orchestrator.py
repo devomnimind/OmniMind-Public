@@ -8,13 +8,13 @@ Implements the organic security architecture with coordinated monitoring.
 """
 
 import asyncio
-from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from enum import Enum
+from typing import Any, Dict, List, Optional
 
+from ..audit.alerting_system import AlertCategory, AlertingSystem, AlertSeverity
 from ..audit.immutable_audit import ImmutableAuditSystem, get_audit_system
-from ..audit.alerting_system import AlertingSystem, AlertSeverity, AlertCategory
 from .network_sensors import NetworkSensorGanglia
 from .web_scanner import WebScannerBrain
 

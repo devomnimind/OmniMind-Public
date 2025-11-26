@@ -8,9 +8,9 @@ Estratégias:
   - synthesis: Combinar ambos (recomendado)
 """
 
-from enum import Enum
-from dataclasses import dataclass
 import logging
+from dataclasses import dataclass
+from enum import Enum
 
 logger = logging.getLogger(__name__)
 

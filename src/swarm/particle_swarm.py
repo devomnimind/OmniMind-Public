@@ -8,16 +8,16 @@ Author: OmniMind Project - Phase 19
 License: MIT
 """
 
+import logging
 import random
 import time
 from typing import Callable, List, Optional, Tuple
-import logging
 
-from src.swarm.types import Particle, SwarmMetrics, SwarmState
 from src.swarm.config import PSOConfig
+from src.swarm.types import Particle, SwarmMetrics, SwarmState
 from src.swarm.utils import (
-    calculate_diversity,
     calculate_convergence,
+    calculate_diversity,
     clamp_velocity,
 )
 
@@ -138,8 +138,9 @@ class ParticleSwarmOptimizer:
 
         # Calcula uso de memória
         try:
-            import psutil
             import os
+
+            import psutil
 
             process = psutil.Process(os.getpid())
             memory_info = process.memory_info()

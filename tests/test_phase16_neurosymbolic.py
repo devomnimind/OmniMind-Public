@@ -9,14 +9,15 @@ Testa:
 """
 
 import pytest
+
 from src.neurosymbolic import (
-    NeurosymbolicReasoner,
     NeuralComponent,
+    NeurosymbolicReasoner,
     SymbolicComponent,
 )
 from src.neurosymbolic.reconciliation import (
-    Reconciliator,
     ReconciliationStrategy,
+    Reconciliator,
 )
 
 

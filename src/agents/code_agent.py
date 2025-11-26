@@ -13,10 +13,10 @@ Integração: Recebe comandos do Orchestrator e resultados de Debug/Ask
 import json
 from typing import Any, Dict, List, Optional
 
-from .react_agent import ReactAgent, AgentState
 from ..memory.episodic_memory import SimilarEpisode
-from ..tools.omnimind_tools import ToolsFramework, ToolCategory
 from ..tools.ast_parser import ASTParser, CodeStructure
+from ..tools.omnimind_tools import ToolCategory, ToolsFramework
+from .react_agent import AgentState, ReactAgent
 
 
 class CodeAgent(ReactAgent):

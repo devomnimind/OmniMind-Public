@@ -6,11 +6,12 @@ License: MIT
 """
 
 import pytest
+
 from src.consciousness.novelty_generator import (
     Concept,
     ConceptualBlender,
-    CreativityType,
     CreativeOutput,
+    CreativityType,
     NoveltyDetector,
     NoveltyGenerator,
     NoveltyMetric,

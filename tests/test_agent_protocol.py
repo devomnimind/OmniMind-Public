@@ -5,13 +5,15 @@ Tests for Agent Communication Protocol
 Testa sistema de mensagens inter-agentes.
 """
 
-import pytest
 import asyncio
+
+import pytest
+
 from src.agents.agent_protocol import (
     AgentMessage,
     AgentMessageBus,
-    MessageType,
     MessagePriority,
+    MessageType,
 )
 
 

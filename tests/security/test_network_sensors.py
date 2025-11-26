@@ -12,16 +12,17 @@ Cobertura de:
 
 from __future__ import annotations
 
-import pytest
 from unittest.mock import Mock, patch
 
+import pytest
+
 from src.security.network_sensors import (
-    NetworkSensorGanglia,
-    NetworkHost,
     NetworkAnomaly,
+    NetworkHost,
+    NetworkSensorGanglia,
     ThreatSeverity,
-    scan_local_network,
     detect_network_anomalies,
+    scan_local_network,
 )
 
 

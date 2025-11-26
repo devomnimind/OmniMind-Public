@@ -90,8 +90,8 @@ class TestCoevolutionInit:
 
     def test_all_exports_are_importable(self) -> None:
         """Testa que todas as classes em __all__ podem ser importadas."""
-        from src.coevolution import __all__
         import src.coevolution as coevolution_module
+        from src.coevolution import __all__
 
         for class_name in __all__:
             cls = getattr(coevolution_module, class_name)
@@ -102,9 +102,9 @@ class TestCoevolutionInit:
     def test_multiple_lazy_imports(self) -> None:
         """Testa múltiplas lazy imports consecutivas."""
         from src.coevolution import (
+            GoalNegotiator,
             HCHACFramework,
             TrustMetrics,
-            GoalNegotiator,
         )
 
         assert HCHACFramework is not None
@@ -137,12 +137,12 @@ class TestCoevolutionInit:
     def test_import_all_at_once(self) -> None:
         """Testa importação de todas as classes de uma vez."""
         from src.coevolution import (
+            BiasDetector,
+            BidirectionalFeedback,
+            CoevolutionMemory,
+            GoalNegotiator,
             HCHACFramework,
             TrustMetrics,
-            GoalNegotiator,
-            BidirectionalFeedback,
-            BiasDetector,
-            CoevolutionMemory,
         )
 
         classes = [

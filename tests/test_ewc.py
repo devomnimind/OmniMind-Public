@@ -3,6 +3,7 @@ Tests for Elastic Weight Consolidation (EWC).
 """
 
 import pytest
+
 from src.learning.ewc import ElasticWeightConsolidation
 
 

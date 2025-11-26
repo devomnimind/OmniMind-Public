@@ -2,17 +2,19 @@
 Tests for MCP Agentic Client module.
 """
 
-import pytest
 import time
 from pathlib import Path
+
+import pytest
+
 from src.integrations.mcp_agentic_client import (
+    AuditLogEntry,
+    CodeExecutionContext,
     MCPAgenticClient,
     MCPSecurityFramework,
+    MCPSecurityLevel,
     MCPTool,
     MCPToolCategory,
-    MCPSecurityLevel,
-    CodeExecutionContext,
-    AuditLogEntry,
 )
 
 

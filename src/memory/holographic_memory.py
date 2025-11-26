@@ -20,11 +20,10 @@ License: MIT
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Sequence, Union, TYPE_CHECKING
-
 import math
 import statistics
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Sequence, Union
 
 # Type checking imports (for type hints only)
 if TYPE_CHECKING:

@@ -4,10 +4,10 @@ Sistema de Memória de Co-evolução.
 Armazena histórico de colaboração humano-IA para aprendizado contínuo.
 """
 
-from typing import Any, Dict, List, Optional
+import logging
 from dataclasses import dataclass, field
 from datetime import datetime
-import logging
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

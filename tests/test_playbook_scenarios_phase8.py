@@ -8,20 +8,20 @@ from typing import Any, Sequence
 
 import pytest
 
+import src.security.playbooks.utils as utils
 from src.security.playbooks import (
     intrusion_response,
     malware_response,
     privilege_escalation_response,
     rootkit_response,
 )
-from src.security.playbooks.rootkit_response import RootkitPlaybook
 from src.security.playbooks.intrusion_response import IntrusionPlaybook
 from src.security.playbooks.malware_response import MalwarePlaybook
 from src.security.playbooks.privilege_escalation_response import (
     PrivilegeEscalationPlaybook,
 )
+from src.security.playbooks.rootkit_response import RootkitPlaybook
 from src.security.playbooks.utils import CommandResult
-import src.security.playbooks.utils as utils
 
 
 async def _dummy_run(command: Sequence[str]) -> CommandResult:

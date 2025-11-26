@@ -9,10 +9,10 @@ Motor de raciocínio híbrido que combina:
 Objetivo: Resolver problemas combinando intuição neural com rigor simbólico.
 """
 
-from .hybrid_reasoner import NeurosymbolicReasoner, Inference
+from .hybrid_reasoner import Inference, NeurosymbolicReasoner
 from .neural_component import NeuralComponent
-from .symbolic_component import SymbolicComponent
 from .reconciliation import ReconciliationStrategy
+from .symbolic_component import SymbolicComponent
 
 __all__ = [
     "NeurosymbolicReasoner",

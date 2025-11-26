@@ -5,10 +5,10 @@ Stores skills, habits, and action sequences ("knowing how").
 Manages the learning and refinement of motor and cognitive skills.
 """
 
-from typing import Any, Dict, List, Optional
+import logging
 from dataclasses import dataclass, field
 from datetime import datetime
-import logging
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

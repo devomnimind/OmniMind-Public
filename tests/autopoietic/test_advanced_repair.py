@@ -11,8 +11,8 @@ Cobertura de:
 from __future__ import annotations
 
 from src.autopoietic.advanced_repair import AdvancedRepair
-from src.autopoietic.meta_architect import ComponentSpec
 from src.autopoietic.code_synthesizer import SynthesizedComponent
+from src.autopoietic.meta_architect import ComponentSpec
 
 
 class TestAdvancedRepair:

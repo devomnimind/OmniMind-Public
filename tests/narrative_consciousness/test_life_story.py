@@ -4,13 +4,15 @@ Tests for Life Story Model (Phase 16.2).
 Tests narrative consciousness, autobiographical memory, and identity evolution.
 """
 
-import pytest
 from datetime import datetime
+
+import pytest
+
 from src.narrative_consciousness.life_story_model import (
-    LifeStory,
-    LifeChapter,
-    NarrativeArc,
     IdentityModel,
+    LifeChapter,
+    LifeStory,
+    NarrativeArc,
     NarrativePhase,
 )
 

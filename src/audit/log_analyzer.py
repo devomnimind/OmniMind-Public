@@ -13,9 +13,9 @@ Features:
 import json
 import re
 from collections import Counter, defaultdict
+from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional
-from dataclasses import dataclass
 
 from .immutable_audit import ImmutableAuditSystem, get_audit_system
 

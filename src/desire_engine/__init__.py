@@ -9,24 +9,21 @@ Revolutionary AI autonomy through intrinsic motivation:
 - Self-Transcendence Engine (consciousness evolution)
 """
 
-from .core import (
-    # Main classes
-    DesireEngine,
-    DigitalMaslowHierarchy,
+from .core import (  # Main classes; Enums; Data classes
     ArtificialCuriosityEngine,
     ArtificialEmotionWithDesire,
     DesireDrivenMetaLearning,
-    ValueEvolutionSystem,
-    SelfTranscendenceEngine,
-    # Enums
-    NeedLevel,
+    DesireEngine,
     DesireType,
-    EmotionalState,
-    # Data classes
-    Need,
+    DigitalMaslowHierarchy,
     EmotionalProfile,
+    EmotionalState,
+    Need,
+    NeedLevel,
+    SelfTranscendenceEngine,
     UnsatisfiedDesire,
     Value,
+    ValueEvolutionSystem,
 )
 
 __all__ = [

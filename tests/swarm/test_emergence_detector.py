@@ -6,8 +6,8 @@ Tests detection of emergent patterns (clustering, synchronization, specializatio
 
 import pytest
 
-from src.swarm.emergence_detector import EmergenceDetector
 from src.swarm.config import EmergenceConfig
+from src.swarm.emergence_detector import EmergenceDetector
 from src.swarm.types import EmergenceType
 
 

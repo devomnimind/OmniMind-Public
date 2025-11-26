@@ -12,15 +12,16 @@ Cobertura de:
 
 from __future__ import annotations
 
+from unittest.mock import MagicMock, Mock, patch
+
 import pytest
-from unittest.mock import Mock, patch, MagicMock
 
 from src.scaling.redis_cluster_manager import (
-    ClusterState,
-    ClusterNode,
-    ClusterHealth,
-    RedisClusterManager,
     REDIS_AVAILABLE,
+    ClusterHealth,
+    ClusterNode,
+    ClusterState,
+    RedisClusterManager,
 )
 
 

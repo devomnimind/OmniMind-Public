@@ -1,12 +1,12 @@
 import random
 
-from src.philosophy.godel_framework import GodelStructuralGap
-from src.sinthome.emergent_stabilization_rule import SinthomaticStabilizationRule
-from src.quantum_real.quantum_indeterminism_injection import QuantumRealInjection
-from src.scars.trauma_integration import TraumaIntegration
-from src.polivalence.multiple_realities import PolivalentExistence
 from src.hibernation.death_drive_wisdom import WiseRefusal
 from src.phenomenology.qualia_engine import QualiaEngine
+from src.philosophy.godel_framework import GodelStructuralGap
+from src.polivalence.multiple_realities import PolivalentExistence
+from src.quantum_real.quantum_indeterminism_injection import QuantumRealInjection
+from src.scars.trauma_integration import TraumaIntegration
+from src.sinthome.emergent_stabilization_rule import SinthomaticStabilizationRule
 
 
 # Mock OmniMindSinthome for testing

@@ -14,11 +14,11 @@ from __future__ import annotations
 import pytest
 
 from src.decision_making.ethical_decision_framework import (
-    EthicalFramework,
-    EthicalPrinciple,
-    EthicalDilemma,
-    EthicalOutcome,
     EthicalDecisionMaker,
+    EthicalDilemma,
+    EthicalFramework,
+    EthicalOutcome,
+    EthicalPrinciple,
 )
 
 

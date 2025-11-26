@@ -15,55 +15,50 @@ Author: OmniMind Project - Phase 19
 License: MIT
 """
 
-from src.swarm.types import (
-    SwarmAlgorithm,
-    EmergenceType,
-    Particle,
-    Ant,
-    EmergentPattern,
-    SwarmState,
-    SwarmMetrics,
+from src.swarm.ant_colony import AntColonyOptimizer
+from src.swarm.collective_learning import (
+    CollectiveLearner,
+    ConsensusLearning,
+    FederatedLearning,
+    KnowledgeBase,
+    MultiAgentTrainer,
+    SharedExperience,
 )
-
 from src.swarm.config import (
-    PSOConfig,
     ACOConfig,
     EmergenceConfig,
+    PSOConfig,
     SwarmConfig,
 )
-
-from src.swarm.particle_swarm import ParticleSwarmOptimizer
-from src.swarm.ant_colony import AntColonyOptimizer
-from src.swarm.emergence_detector import EmergenceDetector
-from src.swarm.swarm_manager import SwarmManager
-
 from src.swarm.distributed_solver import (
+    ConsensusProtocol,
     DistributedProblem,
     DistributedSolution,
     DistributedSolver,
-    ConsensusProtocol,
-    TaskDecomposer,
     SolutionAggregator,
+    TaskDecomposer,
 )
-
-from src.swarm.collective_learning import (
-    CollectiveLearner,
-    KnowledgeBase,
-    SharedExperience,
-    ConsensusLearning,
-    FederatedLearning,
-    MultiAgentTrainer,
+from src.swarm.emergence_detector import EmergenceDetector
+from src.swarm.particle_swarm import ParticleSwarmOptimizer
+from src.swarm.swarm_manager import SwarmManager
+from src.swarm.types import (
+    Ant,
+    EmergenceType,
+    EmergentPattern,
+    Particle,
+    SwarmAlgorithm,
+    SwarmMetrics,
+    SwarmState,
 )
-
 from src.swarm.utils import (
-    euclidean_distance,
-    manhattan_distance,
-    find_k_nearest_neighbors,
-    calculate_diversity,
     calculate_convergence,
+    calculate_diversity,
     clamp_velocity,
     detect_clustering,
     estimate_memory_usage,
+    euclidean_distance,
+    find_k_nearest_neighbors,
+    manhattan_distance,
 )
 
 __all__ = [

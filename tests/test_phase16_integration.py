@@ -5,7 +5,8 @@ Tests the unified system combining neurosymbolic reasoning with embodied cogniti
 """
 
 import pytest
-from src.phase16_integration import Phase16Integration, CognitiveState
+
+from src.phase16_integration import CognitiveState, Phase16Integration
 
 
 class TestPhase16Integration:

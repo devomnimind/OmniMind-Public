@@ -2,16 +2,17 @@
 
 from __future__ import annotations
 
-# Dict not used in this test file
-
 import pytest
 from fastapi.testclient import TestClient
+
+# Dict not used in this test file
+
 
 # Mock imports for testing
 try:
     from web.backend.main import app
-    from web.backend.websocket_manager import MessageType, ws_manager
     from web.backend.routes.tasks import TaskStatus
+    from web.backend.websocket_manager import MessageType, ws_manager
 
     BACKEND_AVAILABLE = True
 except ImportError:

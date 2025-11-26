@@ -2,11 +2,12 @@
 Tests for Quantum Weighted Decision Making.
 """
 
-import pytest
 import numpy as np
+import pytest
+
 from src.quantum_consciousness.quantum_cognition import (
-    QuantumDecisionMaker,
     QISKIT_AVAILABLE,
+    QuantumDecisionMaker,
 )
 
 

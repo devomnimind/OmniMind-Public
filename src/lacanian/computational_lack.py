@@ -16,13 +16,14 @@ License: MIT
 
 from __future__ import annotations
 
-from typing import Set, Optional, TypeVar, Generic, Dict, Any, List, cast
+import logging
+import random
 from dataclasses import dataclass, field
 from enum import Enum
-import random
+from typing import Any, Dict, Generic, List, Optional, Set, TypeVar, cast
+
 import torch
 import torch.nn as nn
-import logging
 
 logger = logging.getLogger(__name__)
 

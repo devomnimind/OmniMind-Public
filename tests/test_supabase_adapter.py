@@ -6,8 +6,8 @@ import pytest
 
 from src.integrations.supabase_adapter import (
     SupabaseAdapter,
-    SupabaseConfig,
     SupabaseAdapterError,
+    SupabaseConfig,
 )
 
 

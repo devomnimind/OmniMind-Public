@@ -5,16 +5,17 @@ End-to-end tests for complete swarm scenarios.
 """
 
 from typing import List
+
 import pytest
 
 from src.swarm import (
-    SwarmManager,
-    ParticleSwarmOptimizer,
+    ACOConfig,
     AntColonyOptimizer,
     EmergenceDetector,
+    ParticleSwarmOptimizer,
     PSOConfig,
-    ACOConfig,
     SwarmConfig,
+    SwarmManager,
 )
 
 

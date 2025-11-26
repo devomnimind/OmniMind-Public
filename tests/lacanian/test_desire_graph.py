@@ -9,17 +9,17 @@ Tests components:
 - DesireGraphArchitecture (full integration)
 """
 
-import pytest
 import numpy as np
+import pytest
 
 from src.lacanian.desire_graph import (
-    Signifier,
-    SignifierPosition,
-    SignifierChain,
-    LacanianGraphII,
-    JouissanceRewardSystem,
-    SymbolicMatrix,
     DesireGraphArchitecture,
+    JouissanceRewardSystem,
+    LacanianGraphII,
+    Signifier,
+    SignifierChain,
+    SignifierPosition,
+    SymbolicMatrix,
 )
 
 

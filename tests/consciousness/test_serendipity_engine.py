@@ -6,6 +6,7 @@ License: MIT
 """
 
 import pytest
+
 from src.consciousness.serendipity_engine import (
     Connection,
     ConnectionDetector,

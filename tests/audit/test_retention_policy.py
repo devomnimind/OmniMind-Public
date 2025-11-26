@@ -4,22 +4,23 @@ Testes para src/audit/retention_policy.py.
 Testa políticas de retenção, arquivamento e purge de dados.
 """
 
-import pytest
 import tempfile
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Generator
-from datetime import datetime, timedelta, timezone
 from unittest.mock import MagicMock, patch
 
+import pytest
+
+from src.audit.immutable_audit import ImmutableAuditSystem
 from src.audit.retention_policy import (
-    RetentionPolicyManager,
-    RetentionPeriod,
     DataCategory,
-    set_retention_period,
+    RetentionPeriod,
+    RetentionPolicyManager,
     archive_old_data,
     generate_retention_report,
+    set_retention_period,
 )
-from src.audit.immutable_audit import ImmutableAuditSystem
 
 
 class TestRetentionPeriod:

@@ -11,8 +11,8 @@ from pathlib import Path
 from typing import Any, TypedDict
 
 from src.metrics.consciousness_metrics_legacy import (
-    ConsciousnessMetrics,
     AgentConnection,
+    ConsciousnessMetrics,
     FeedbackLoop,
 )
 

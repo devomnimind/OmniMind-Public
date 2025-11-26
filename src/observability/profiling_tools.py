@@ -6,10 +6,10 @@ Provides real-time performance insights and bottleneck identification.
 Reference: docs/OMNIMIND_COMPREHENSIVE_PENDENCIES_REPORT_20251119.md, Section 8.4
 """
 
-import json
-import time
 import cProfile
+import json
 import pstats
+import time
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path

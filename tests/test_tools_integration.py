@@ -3,13 +3,11 @@
 import json
 import uuid
 from pathlib import Path
+from typing import Any
 
 import pytest
 
 from src.tools.omnimind_tools import ToolsFramework
-
-
-from typing import Any
 
 
 def _audit_log_path(home: Path) -> Path:

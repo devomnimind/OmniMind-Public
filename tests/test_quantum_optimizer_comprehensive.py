@@ -7,8 +7,8 @@ Tests quantum-inspired optimization algorithms.
 import pytest
 
 from src.quantum_ai.quantum_optimizer import (
-    QuantumOptimizer,
     QAOAOptimizer,
+    QuantumOptimizer,
 )
 
 

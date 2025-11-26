@@ -5,13 +5,13 @@ Combina neural + simbólico em um único motor de raciocínio
 que toma decisões inteligentes sobre qual usar.
 """
 
-from typing import Any, Dict, List, Optional, Tuple
-from dataclasses import dataclass
 import logging
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Tuple
 
 from .neural_component import NeuralComponent
+from .reconciliation import ReconciliationStrategy, Reconciliator
 from .symbolic_component import SymbolicComponent
-from .reconciliation import Reconciliator, ReconciliationStrategy
 
 logger = logging.getLogger(__name__)
 

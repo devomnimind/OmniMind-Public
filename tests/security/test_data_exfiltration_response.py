@@ -4,9 +4,10 @@ Testes para src/security/playbooks/data_exfiltration_response.py.
 Testa o playbook de resposta a exfiltração de dados.
 """
 
-import pytest
 from typing import Any, Dict
 from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
 
 from src.security.playbooks.data_exfiltration_response import DataExfiltrationPlaybook
 

@@ -3,6 +3,7 @@ Tests for Chaos Engineering Framework.
 """
 
 import asyncio
+
 import pytest
 
 from src.testing.chaos_engineering import (

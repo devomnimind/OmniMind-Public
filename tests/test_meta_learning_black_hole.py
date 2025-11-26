@@ -5,10 +5,11 @@ Group 15: Learning & Monitoring - meta_learning/
 """
 
 import pytest
+
 from src.meta_learning.black_hole_collapse import (
+    CRITICAL_DENSITY,
     BlackHoleMetaLearner,
     MetaKnowledge,
-    CRITICAL_DENSITY,
 )
 
 
@@ -195,7 +196,7 @@ class TestBlackHoleMetaLearner:
         mass = 100.0
 
         # Usar método interno se existir, ou calcular diretamente
-        from src.meta_learning.black_hole_collapse import G_CONSTANT, C_CONSTANT
+        from src.meta_learning.black_hole_collapse import C_CONSTANT, G_CONSTANT
 
         r_s = 2 * G_CONSTANT * mass / (C_CONSTANT**2)
 

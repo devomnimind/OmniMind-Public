@@ -3,17 +3,18 @@
 Tests OpenTelemetry integration, performance analyzer, and enhanced features.
 """
 
-import pytest
 import time
+
+import pytest
 
 from src.observability.opentelemetry_integration import (
     OpenTelemetryConfig,
     OpenTelemetryIntegration,
 )
 from src.observability.performance_analyzer import (
-    PerformanceAnalyzer,
     BottleneckCategory,
     BottleneckSeverity,
+    PerformanceAnalyzer,
 )
 from src.observability.profiling_tools import ProfileSample
 

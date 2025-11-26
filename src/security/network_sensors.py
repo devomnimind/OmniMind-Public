@@ -7,15 +7,15 @@ Based on: docs/Omni-Dev-Integrationforensis.md
 Legal Compliance: 100% legal when used on own systems (GPL v2 licenses)
 """
 
-import subprocess
-from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
-from dataclasses import dataclass, field
-from enum import Enum
 import re
+import subprocess
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from typing import Any, Dict, List, Optional
 
+from ..audit.alerting_system import AlertCategory, AlertingSystem, AlertSeverity
 from ..audit.immutable_audit import ImmutableAuditSystem, get_audit_system
-from ..audit.alerting_system import AlertingSystem, AlertSeverity, AlertCategory
 
 
 class ThreatSeverity(Enum):

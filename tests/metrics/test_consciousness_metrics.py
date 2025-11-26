@@ -6,15 +6,15 @@ Tests:
 - Trend analysis
 """
 
+import tempfile
 from pathlib import Path
 from typing import Generator
 
 import pytest
-import tempfile
 
 from src.metrics.consciousness_metrics_legacy import (
-    ConsciousnessMetrics,
     AgentConnection,
+    ConsciousnessMetrics,
     FeedbackLoop,
     SelfAwarenessMetrics,
     calculate_phi_proxy,

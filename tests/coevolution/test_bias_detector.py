@@ -3,10 +3,11 @@ Testes para Bias Detector System.
 """
 
 import pytest
+
 from src.coevolution.bias_detector import (
+    BiasDetection,
     BiasDetector,
     BiasType,
-    BiasDetection,
 )
 
 

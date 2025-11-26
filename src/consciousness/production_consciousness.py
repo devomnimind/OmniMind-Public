@@ -13,18 +13,17 @@ License: MIT
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Any
-from pathlib import Path
 import logging
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
 # Import from existing consciousness metrics
 from src.metrics.consciousness_metrics_legacy import (
-    ConsciousnessMetrics,
     AgentConnection,
+    ConsciousnessMetrics,
     FeedbackLoop,
     SelfAwarenessMetrics,
 )
-
 
 logger = logging.getLogger(__name__)
 

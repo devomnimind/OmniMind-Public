@@ -12,7 +12,7 @@ import pytest
 import src.agents.react_agent as react_module
 from src.agents.debug_agent import DebugAgent
 from src.agents.orchestrator_agent import OrchestratorAgent
-from src.agents.react_agent import ReactAgent, AgentState
+from src.agents.react_agent import AgentState, ReactAgent
 
 
 class DummyLLM:

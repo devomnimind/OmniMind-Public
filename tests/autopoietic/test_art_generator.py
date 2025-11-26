@@ -6,6 +6,7 @@ License: MIT
 """
 
 import pytest
+
 from src.autopoietic.art_generator import (
     AestheticEvaluator,
     ArtElement,

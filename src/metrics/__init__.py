@@ -10,8 +10,8 @@ Modules:
 
 from src.metrics.consciousness_metrics import ConsciousnessCorrelates
 from src.metrics.consciousness_metrics_legacy import (
-    ConsciousnessMetrics,
     AgentConnection,
+    ConsciousnessMetrics,
     FeedbackLoop,
     SelfAwarenessMetrics,
 )

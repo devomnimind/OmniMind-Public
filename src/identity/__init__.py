@@ -7,8 +7,8 @@ allowing them to sign their work, build reputation, and maintain verifiable iden
 
 from .agent_signature import (
     AgentIdentity,
-    WorkSignature,
     ReputationScore,
+    WorkSignature,
 )
 
 __all__ = [

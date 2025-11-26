@@ -17,35 +17,34 @@ import logging
 import re
 import time
 from datetime import datetime, timezone
-from typing import Any, Dict, Optional, List
 from enum import Enum
+from typing import Any, Dict, List, Optional
 
-from .react_agent import ReactAgent
-from .code_agent import CodeAgent
-from .architect_agent import ArchitectAgent
-from .debug_agent import DebugAgent
-from .reviewer_agent import ReviewerAgent
-from ..tools.omnimind_tools import ToolsFramework
-from ..integrations.mcp_client import MCPClient, MCPClientError
 from ..integrations.dbus_controller import (
     DBusSessionController,
     DBusSystemController,
+)
+from ..integrations.mcp_client import MCPClient, MCPClientError
+from ..integrations.qdrant_adapter import (
+    QdrantAdapter,
+    QdrantAdapterError,
+    QdrantConfig,
 )
 from ..integrations.supabase_adapter import (
     SupabaseAdapter,
     SupabaseAdapterError,
     SupabaseConfig,
 )
-from ..integrations.qdrant_adapter import (
-    QdrantAdapter,
-    QdrantAdapterError,
-    QdrantConfig,
-)
-from .orchestrator_metrics import OrchestratorMetricsCollector
-from ..security.security_agent import SecurityAgent
-from .psychoanalytic_analyst import PsychoanalyticAnalyst
 from ..metacognition.metacognition_agent import MetacognitionAgent
-
+from ..security.security_agent import SecurityAgent
+from ..tools.omnimind_tools import ToolsFramework
+from .architect_agent import ArchitectAgent
+from .code_agent import CodeAgent
+from .debug_agent import DebugAgent
+from .orchestrator_metrics import OrchestratorMetricsCollector
+from .psychoanalytic_analyst import PsychoanalyticAnalyst
+from .react_agent import ReactAgent
+from .reviewer_agent import ReviewerAgent
 
 logger = logging.getLogger(__name__)
 

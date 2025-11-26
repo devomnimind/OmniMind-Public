@@ -1,7 +1,7 @@
-import pytest
-import httpx
 import time
 
+import httpx
+import pytest
 
 # Assuming API is running on localhost:8000
 API_URL = "http://localhost:8000"
@@ -146,9 +146,10 @@ async def test_websocket_metrics():
     """
     Verify that the WebSocket endpoint broadcasts metrics updates.
     """
-    import websockets
-    import json
     import asyncio
+    import json
+
+    import websockets
 
     uri = "ws://localhost:8000/ws"
     try:

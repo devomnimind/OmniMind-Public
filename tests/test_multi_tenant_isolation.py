@@ -5,18 +5,19 @@ Tests database isolation, resource quotas, security boundaries,
 and tenant management.
 """
 
-import pytest
 import tempfile
 from pathlib import Path
 
+import pytest
+
+from src.audit.immutable_audit import ImmutableAuditSystem
 from src.scaling.multi_tenant_isolation import (
     MultiTenantIsolationManager,
+    ResourceQuota,
+    ResourceType,
     TenantConfig,
     TenantStatus,
-    ResourceType,
-    ResourceQuota,
 )
-from src.audit.immutable_audit import ImmutableAuditSystem
 
 
 class TestResourceQuota:

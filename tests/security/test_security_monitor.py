@@ -12,8 +12,9 @@ Cobertura de:
 
 from __future__ import annotations
 
+from unittest.mock import MagicMock, Mock, patch
+
 import pytest
-from unittest.mock import Mock, patch, MagicMock
 
 try:
     import psutil
@@ -22,10 +23,10 @@ except ImportError:
 
 from src.security.security_monitor import (
     AnomalyType,
-    ThreatLevel,
-    SecurityEvent,
     ProcessSnapshot,
+    SecurityEvent,
     SecurityMonitor,
+    ThreatLevel,
 )
 
 
@@ -481,8 +482,8 @@ class TestSecurityMonitorAdvanced:
     @patch("src.security.security_monitor.get_audit_system")
     def test_calculate_file_hash(self, mock_audit: Mock) -> None:
         """Testa cálculo de hash de arquivo."""
-        import tempfile
         import os
+        import tempfile
 
         mock_audit.return_value = MagicMock()
         monitor = SecurityMonitor()
@@ -648,8 +649,8 @@ class TestSecurityMonitorAdvanced:
     @pytest.mark.asyncio
     async def test_monitor_file_system(self, mock_audit: Mock) -> None:
         """Testa monitoramento de sistema de arquivos."""
-        import tempfile
         import os
+        import tempfile
 
         mock_audit.return_value = MagicMock()
         monitor = SecurityMonitor()

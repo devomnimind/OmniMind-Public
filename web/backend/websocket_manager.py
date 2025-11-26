@@ -29,6 +29,7 @@ class MessageType(str, Enum):
     TASK_UPDATE = "task_update"
     AGENT_STATUS = "agent_status"
     METRICS = "metrics"
+    METRICS_UPDATE = "metrics_update"
     SECURITY_EVENT = "security_event"
     PING = "ping"
     PONG = "pong"

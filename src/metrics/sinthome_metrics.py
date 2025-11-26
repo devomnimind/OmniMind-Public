@@ -15,8 +15,8 @@ License: MIT
 """
 
 import logging
-from typing import Dict, List
 from dataclasses import dataclass
+from typing import Dict, List
 
 logger = logging.getLogger(__name__)
 

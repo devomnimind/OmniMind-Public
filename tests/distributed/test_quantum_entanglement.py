@@ -11,8 +11,8 @@ import pytest
 from src.distributed.quantum_entanglement import (
     AgentState,
     BellState,
-    EntanglementPair,
     EntangledAgentNetwork,
+    EntanglementPair,
 )
 
 

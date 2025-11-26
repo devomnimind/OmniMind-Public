@@ -11,8 +11,8 @@ Cobertura de:
 
 from __future__ import annotations
 
-import pytest
 import numpy as np
+import pytest
 
 from src.decision_making.reinforcement_learning import (
     QLearningAgent,
@@ -123,7 +123,7 @@ class TestReinforcementLearningAgent:
 
     def test_select_action(self) -> None:
         """Testa seleção de ação."""
-        from src.decision_making.reinforcement_learning import RLState, RLAction
+        from src.decision_making.reinforcement_learning import RLAction, RLState
 
         agent = ReinforcementLearningAgent()
         state = RLState(features={"x": 1, "y": 2})
@@ -244,9 +244,9 @@ class TestRLComponents:
     def test_rl_transition_creation(self) -> None:
         """Testa criação de RLTransition."""
         from src.decision_making.reinforcement_learning import (
-            RLState,
             RLAction,
             RLReward,
+            RLState,
             RLTransition,
         )
 
@@ -290,8 +290,8 @@ class TestPolicyGradientAgent:
         """Testa cálculo de probabilidades de ação."""
         from src.decision_making.reinforcement_learning import (
             PolicyGradientAgent,
-            RLState,
             RLAction,
+            RLState,
         )
 
         agent = PolicyGradientAgent()
@@ -312,9 +312,9 @@ class TestPolicyGradientAgent:
         """Testa que update armazena transição."""
         from src.decision_making.reinforcement_learning import (
             PolicyGradientAgent,
-            RLState,
             RLAction,
             RLReward,
+            RLState,
             RLTransition,
         )
 
@@ -336,9 +336,9 @@ class TestPolicyGradientAgent:
         """Testa que update atualiza política quando episódio termina."""
         from src.decision_making.reinforcement_learning import (
             PolicyGradientAgent,
-            RLState,
             RLAction,
             RLReward,
+            RLState,
             RLTransition,
         )
 

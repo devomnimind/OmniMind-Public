@@ -8,9 +8,9 @@ Author: OmniMind Project - Phase 19
 License: MIT
 """
 
+import logging
 import math
 from typing import List, Tuple
-import logging
 
 logger = logging.getLogger(__name__)
 

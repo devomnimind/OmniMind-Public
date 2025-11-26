@@ -11,17 +11,18 @@ Cobertura de:
 
 from __future__ import annotations
 
-import pytest
-from pathlib import Path
 import tempfile
+from pathlib import Path
 from typing import Generator
+from unittest.mock import MagicMock, patch
+
+import pytest
 
 from src.audit.immutable_audit import (
     ImmutableAuditSystem,
     get_audit_system,
     log_action,
 )
-from unittest.mock import MagicMock, patch
 
 
 class TestImmutableAuditSystem:

@@ -3,9 +3,10 @@ Comprehensive tests for decision tree module.
 """
 
 import pytest
+
 from src.decision_making.decision_trees import (
-    DecisionNode,
     DecisionCriterion,
+    DecisionNode,
     DecisionOutcome,
     DecisionTreeBuilder,
 )

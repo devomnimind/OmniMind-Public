@@ -8,12 +8,12 @@ References:
 - Ricoeur, P. (1992). Oneself as Another.
 """
 
-from typing import Dict, List, Set
+import logging
+import uuid
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-import logging
-import uuid
+from typing import Dict, List, Set
 
 logger = logging.getLogger(__name__)
 

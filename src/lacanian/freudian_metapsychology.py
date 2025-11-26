@@ -24,18 +24,18 @@ License: MIT
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Any, Tuple, Set
+import logging
+import random
 from dataclasses import dataclass
 from enum import Enum
-import random
-import logging
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 # Integration of Audit Fixes
 try:
-    from src.quantum_consciousness.quantum_backend import DWaveBackend
     from src.lacanian.encrypted_unconscious import (
         EncryptedUnconsciousLayer as EncryptedUnconscious,
     )
+    from src.quantum_consciousness.quantum_backend import DWaveBackend
     from src.social.omnimind_network import OmniMindSociety
 
     INTEGRATION_AVAILABLE = True

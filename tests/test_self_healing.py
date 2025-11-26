@@ -6,11 +6,11 @@ import pytest
 
 from src.metacognition.self_healing import (
     Issue,
-    IssueType,
     IssueSeverity,
+    IssueType,
     RemediationAction,
-    SelfHealingLoop,
     SelfHealingIntegration,
+    SelfHealingLoop,
 )
 
 

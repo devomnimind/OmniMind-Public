@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .thermodynamic_attention import (
-        ThermodynamicAttention,
         MultiHeadThermodynamicAttention,
+        ThermodynamicAttention,
     )
 
 

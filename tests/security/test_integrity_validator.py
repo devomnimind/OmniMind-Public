@@ -10,16 +10,17 @@ Date: November 2025
 
 from __future__ import annotations
 
-from pathlib import Path
 import tempfile
-import pytest
 import typing
+from pathlib import Path
+
+import pytest
 
 from src.security.integrity_validator import (
-    IntegrityValidator,
-    IntegrityStatus,
-    ValidationScope,
     IntegrityReport,
+    IntegrityStatus,
+    IntegrityValidator,
+    ValidationScope,
 )
 
 

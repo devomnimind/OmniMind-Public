@@ -4,10 +4,10 @@ Sistema de Detecção e Correção de Viés Algorítmico.
 Detecta vieses comuns em decisões de IA e oferece correções.
 """
 
-from typing import Any, Dict, List, Optional
+import logging
 from dataclasses import dataclass, field
 from enum import Enum
-import logging
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

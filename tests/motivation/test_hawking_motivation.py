@@ -7,7 +7,6 @@ and motivation generation mechanisms.
 
 from datetime import datetime, timedelta, timezone
 
-
 from src.motivation.hawking_motivation import (
     EvaporationEvent,
     HawkingMotivationEngine,

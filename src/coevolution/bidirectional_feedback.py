@@ -6,11 +6,11 @@ Permite feedback estruturado em ambas direções:
 - IA → Humano: Observações, sugestões, questões
 """
 
-from typing import Any, Dict, List, Optional
+import logging
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-import logging
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

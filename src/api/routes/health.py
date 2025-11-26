@@ -1,8 +1,9 @@
-from fastapi import APIRouter
-from typing import Dict, Any
-import time
-import psutil
 import shutil
+import time
+from typing import Any, Dict
+
+import psutil
+from fastapi import APIRouter
 
 router = APIRouter()
 

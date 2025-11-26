@@ -11,14 +11,13 @@ Implements the revolutionary Artificial Desire Engine for OmniMind:
 
 from __future__ import annotations
 
+import pickle
+import zlib
+from collections import deque
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set
-import pickle
-import zlib
-from collections import deque
-
 
 # Type hints
 import structlog

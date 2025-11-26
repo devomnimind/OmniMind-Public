@@ -1,8 +1,8 @@
 from src.stress.tribunal import (
-    latency_attack,
-    corruption_attack,
     bifurcation_attack,
+    corruption_attack,
     exhaustion_attack,
+    latency_attack,
 )
 
 

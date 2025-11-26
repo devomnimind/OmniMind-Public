@@ -7,23 +7,23 @@ import json
 import logging
 import os
 import time
-import yaml
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Protocol, TypeAlias, TypedDict, cast, Optional
+from typing import Any, Dict, List, Optional, Protocol, TypeAlias, TypedDict, cast
 
+import yaml
 from langchain_ollama import OllamaLLM
 from langgraph.graph import END, StateGraph
 
+from ..integrations.supabase_adapter import SupabaseConfig
+from ..memory import EpisodicMemory
+from ..onboarding import SupabaseMemoryOnboarding
+from ..tools import FileOperations, ShellExecutor, SystemMonitor
 from .agent_protocol import (
     AgentMessage,
     MessagePriority,
     MessageType,
     get_message_bus,
 )
-from ..integrations.supabase_adapter import SupabaseConfig
-from ..memory import EpisodicMemory
-from ..onboarding import SupabaseMemoryOnboarding
-from ..tools import FileOperations, ShellExecutor, SystemMonitor
 
 logger = logging.getLogger(__name__)
 

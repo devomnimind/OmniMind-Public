@@ -5,16 +5,17 @@ Validates the core functionality of the intrinsic motivation engine,
 agent identity, marketplace automation, and ethics agent.
 """
 
-import pytest
-from pathlib import Path
-import tempfile
 import shutil
+import tempfile
+from pathlib import Path
 
-from src.motivation.intrinsic_rewards import IntrinsicMotivationEngine
-from src.motivation.achievement_system import AchievementEngine
-from src.identity.agent_signature import AgentIdentity
+import pytest
+
 from src.economics.marketplace_agent import MarketplaceAgent
-from src.ethics.ethics_agent import EthicsAgent, ActionImpact, EthicalFramework
+from src.ethics.ethics_agent import ActionImpact, EthicalFramework, EthicsAgent
+from src.identity.agent_signature import AgentIdentity
+from src.motivation.achievement_system import AchievementEngine
+from src.motivation.intrinsic_rewards import IntrinsicMotivationEngine
 
 
 @pytest.fixture
