@@ -293,7 +293,7 @@ mypy src
 
 | Categoria | Documento | Descrição |
 |-----------|-----------|-----------|
-| **Arquitetura** | [ARCHITECTURE.md](ARCHITECTURE.md) | Visão técnica detalhada (25KB) |
+| **Arquitetura** | [docs/architecture/ARCHITECTURE.md](docs/architecture/ARCHITECTURE.md) | Visão técnica detalhada (25KB) |
 | **Contribuição** | [CONTRIBUTING.md](CONTRIBUTING.md) | Guia para contribuidores (13KB) |
 | **Roadmap** | [ROADMAP.md](ROADMAP.md) | Plano de desenvolvimento futuro (10KB) |
 | **Changelog** | [CHANGELOG.md](CHANGELOG.md) | Histórico de mudanças (v1.0.0 → v1.15.2) |
