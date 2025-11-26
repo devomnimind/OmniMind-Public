@@ -11,6 +11,7 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root / "src"))
 
+
 def check_active_violations():
     """Check if there are active DLP violations that should block development."""
     try:
@@ -23,7 +24,7 @@ def check_active_violations():
             return []
 
         events = []
-        with open(log_file, 'r') as f:
+        with open(log_file, "r") as f:
             for line in f:
                 try:
                     event = json.loads(line.strip())
@@ -56,6 +57,7 @@ def check_active_violations():
         print(f"ERROR: Cannot check violations: {e}")
         return []
 
+
 def main():
     """Main pre-commit hook logic."""
     print("🔒 Running OmniMind security pre-commit checks...")
@@ -76,8 +78,12 @@ def main():
         from pathlib import Path
         import os
 
-        kernel_path = os.environ.get("OMNIMIND_FIRECRACKER_KERNEL", "/opt/firecracker/vmlinux.bin")
-        rootfs_path = os.environ.get("OMNIMIND_FIRECRACKER_ROOTFS", "/opt/firecracker/rootfs.ext4")
+        kernel_path = os.environ.get(
+            "OMNIMIND_FIRECRACKER_KERNEL", "/opt/firecracker/vmlinux.bin"
+        )
+        rootfs_path = os.environ.get(
+            "OMNIMIND_FIRECRACKER_ROOTFS", "/opt/firecracker/rootfs.ext4"
+        )
 
         if not Path(kernel_path).exists() or not Path(rootfs_path).exists():
             print("🚫 COMMIT BLOCKED: Firecracker sandbox assets missing!")
@@ -89,6 +95,7 @@ def main():
 
     print("✅ Security checks passed. Proceeding with commit.")
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())

@@ -6,6 +6,7 @@ Lista Spaces, status e hardware.
 import os
 from huggingface_hub import HfApi, get_token
 
+
 def check_spaces():
     token = get_token()
     if not token:
@@ -39,6 +40,7 @@ def check_spaces():
 
     if not found:
         print("⚠️  No Spaces found for this user.")
+
 
 if __name__ == "__main__":
     check_spaces()

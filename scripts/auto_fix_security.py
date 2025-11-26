@@ -30,6 +30,7 @@ YELLOW = "\033[93m"
 BLUE = "\033[94m"
 RESET = "\033[0m"
 
+
 class SecurityFixer:
     """Classe principal para correções de segurança automatizadas."""
 
@@ -54,10 +55,12 @@ class SecurityFixer:
 
     def fix_pickle_deserialization(self) -> bool:
         """Corrige vulnerabilidades de pickle deserialization."""
-        print(f"\n{BLUE}[PICKLE]{RESET} Procurando vulnerabilidades de pickle deserialization...")
+        print(
+            f"\n{BLUE}[PICKLE]{RESET} Procurando vulnerabilidades de pickle deserialization..."
+        )
 
         success = True
-        pattern = r'pickle\.loads?\([^)]*\)'
+        pattern = r"pickle\.loads?\([^)]*\)"
 
         for py_file in SRC_DIR.rglob("*.py"):
             try:
@@ -70,20 +73,22 @@ class SecurityFixer:
 
                     # Substituir pickle.loads por alternativa segura
                     new_content = re.sub(
-                        r'pickle\.load\((\w+)\)',
+                        r"pickle\.load\((\w+)\)",
                         r'pickle.load(\1, fix_imports=True, encoding="bytes")',
-                        content
+                        content,
                     )
 
                     # Adicionar comentário de segurança
                     new_content = new_content.replace(
-                        'import pickle',
-                        'import pickle  # WARNING: Pickle can be unsafe - review usage'
+                        "import pickle",
+                        "import pickle  # WARNING: Pickle can be unsafe - review usage",
                     )
 
                     py_file.write_text(new_content)
                     self.fixed_count += 1
-                    self.log_action("FIXED", str(py_file), "Pickle deserialization secured")
+                    self.log_action(
+                        "FIXED", str(py_file), "Pickle deserialization secured"
+                    )
 
             except Exception as e:
                 print(f"{RED}[ERROR]{RESET} Failed to process {py_file}: {e}")
@@ -93,13 +98,15 @@ class SecurityFixer:
 
     def fix_subprocess_injection(self) -> bool:
         """Corrige vulnerabilidades de subprocess shell injection."""
-        print(f"\n{BLUE}[SUBPROCESS]{RESET} Procurando vulnerabilidades de subprocess injection...")
+        print(
+            f"\n{BLUE}[SUBPROCESS]{RESET} Procurando vulnerabilidades de subprocess injection..."
+        )
 
         success = True
         dangerous_patterns = [
-            r'subprocess\.(call|Popen|run)\([^,]+.*shell\s*=\s*True',
-            r'os\.system\([^)]+\)',
-            r'os\.popen\([^)]+\)'
+            r"subprocess\.(call|Popen|run)\([^,]+.*shell\s*=\s*True",
+            r"os\.system\([^)]+\)",
+            r"os\.popen\([^)]+\)",
         ]
 
         for py_file in SRC_DIR.rglob("*.py"):
@@ -109,34 +116,36 @@ class SecurityFixer:
 
                 for pattern in dangerous_patterns:
                     if re.search(pattern, content):
-                        print(f"{YELLOW}[FOUND]{RESET} Dangerous subprocess usage in: {py_file}")
+                        print(
+                            f"{YELLOW}[FOUND]{RESET} Dangerous subprocess usage in: {py_file}"
+                        )
 
                         # Criar backup
                         self.create_backup(py_file)
 
                         # Substituir shell=True por shell=False + shlex.split
-                        if 'shell=True' in content:
-                            content = content.replace('shell=True', 'shell=False')
+                        if "shell=True" in content:
+                            content = content.replace("shell=True", "shell=False")
                             content = re.sub(
-                                r'subprocess\.(call|Popen|run)\(([^,]+),',
-                                r'subprocess.\1(shlex.split(\2),',
-                                content
+                                r"subprocess\.(call|Popen|run)\(([^,]+),",
+                                r"subprocess.\1(shlex.split(\2),",
+                                content,
                             )
-                            if 'import shlex' not in content:
-                                content = 'import shlex\n' + content
+                            if "import shlex" not in content:
+                                content = "import shlex\n" + content
 
                         # Substituir os.system por subprocess.run
                         content = re.sub(
-                            r'os\.system\(([^)]+)\)',
-                            r'subprocess.run(shlex.split(\1), shell=False)',
-                            content
+                            r"os\.system\(([^)]+)\)",
+                            r"subprocess.run(shlex.split(\1), shell=False)",
+                            content,
                         )
 
                         # Substituir os.popen por subprocess.Popen
                         content = re.sub(
-                            r'os\.popen\(([^)]+)\)',
-                            r'subprocess.Popen(shlex.split(\1), shell=False, stdout=subprocess.PIPE)',
-                            content
+                            r"os\.popen\(([^)]+)\)",
+                            r"subprocess.Popen(shlex.split(\1), shell=False, stdout=subprocess.PIPE)",
+                            content,
                         )
 
                         modified = True
@@ -144,7 +153,9 @@ class SecurityFixer:
                 if modified:
                     py_file.write_text(content)
                     self.fixed_count += 1
-                    self.log_action("FIXED", str(py_file), "Subprocess injection secured")
+                    self.log_action(
+                        "FIXED", str(py_file), "Subprocess injection secured"
+                    )
 
             except Exception as e:
                 print(f"{RED}[ERROR]{RESET} Failed to process {py_file}: {e}")
@@ -158,9 +169,9 @@ class SecurityFixer:
 
         success = True
         ssl_bypass_patterns = [
-            r'verify\s*=\s*False',
-            r'ssl\.create_default_context\(\)\.check_hostname\s*=\s*False',
-            r'ssl\.create_default_context\(\)\.verify_mode\s*=\s*ssl\.CERT_NONE'
+            r"verify\s*=\s*False",
+            r"ssl\.create_default_context\(\)\.check_hostname\s*=\s*False",
+            r"ssl\.create_default_context\(\)\.verify_mode\s*=\s*ssl\.CERT_NONE",
         ]
 
         for py_file in SRC_DIR.rglob("*.py"):
@@ -176,16 +187,16 @@ class SecurityFixer:
                         self.create_backup(py_file)
 
                         # Substituir verify=False por verify=True
-                        content = content.replace('verify=False', 'verify=True')
+                        content = content.replace("verify=False", "verify=True")
 
                         # Corrigir contextos SSL inseguros
                         content = content.replace(
-                            'ssl.create_default_context().check_hostname = False',
-                            'ssl.create_default_context().check_hostname = True'
+                            "ssl.create_default_context().check_hostname = False",
+                            "ssl.create_default_context().check_hostname = True",
                         )
                         content = content.replace(
-                            'ssl.create_default_context().verify_mode = ssl.CERT_NONE',
-                            'ssl.create_default_context().verify_mode = ssl.CERT_REQUIRED'
+                            "ssl.create_default_context().verify_mode = ssl.CERT_NONE",
+                            "ssl.create_default_context().verify_mode = ssl.CERT_REQUIRED",
                         )
 
                         modified = True
@@ -208,23 +219,23 @@ class SecurityFixer:
         try:
             # Executar bandit
             result = subprocess.run(
-                ['bandit', '-r', str(SRC_DIR), '-f', 'json'],
+                ["bandit", "-r", str(SRC_DIR), "-f", "json"],
                 capture_output=True,
                 text=True,
-                cwd=PROJECT_ROOT
+                cwd=PROJECT_ROOT,
             )
 
             if result.returncode == 0:
                 print(f"{GREEN}[SCAN]{RESET} Security scan passed")
-                return {'status': 'passed', 'issues': 0}
+                return {"status": "passed", "issues": 0}
             else:
-                issues = len(result.stdout.split('\n')) - 1  # Rough count
+                issues = len(result.stdout.split("\n")) - 1  # Rough count
                 print(f"{YELLOW}[SCAN]{RESET} Security scan found {issues} issues")
-                return {'status': 'issues_found', 'issues': issues}
+                return {"status": "issues_found", "issues": issues}
 
         except Exception as e:
             print(f"{RED}[SCAN]{RESET} Failed to run security scan: {e}")
-            return {'status': 'error', 'issues': -1}
+            return {"status": "error", "issues": -1}
 
     def generate_report(self) -> str:
         """Gera relatório das correções aplicadas."""
@@ -261,7 +272,7 @@ mypy src/ --ignore-missing-imports
 Os seguintes arquivos foram modificados e têm backups:
 """
         for entry in self.audit_log:
-            if '[BACKUP]' in entry:
+            if "[BACKUP]" in entry:
                 report += f"- {entry}\n"
 
         return report
@@ -271,6 +282,7 @@ Os seguintes arquivos foram modificados e têm backups:
         report_path = PROJECT_ROOT / "SECURITY_FIXES_20251122.md"
         report_path.write_text(self.generate_report())
         print(f"{GREEN}[REPORT]{RESET} Salvo em: {report_path}")
+
 
 def main():
     """Função principal."""
@@ -314,6 +326,7 @@ def main():
     except Exception as e:
         print(f"\n{RED}[CRITICAL ERROR]{RESET} {e}")
         return 1
+
 
 if __name__ == "__main__":
     sys.exit(main())

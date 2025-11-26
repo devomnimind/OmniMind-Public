@@ -1,0 +1,6 @@
+metric,value
+timestamp,2025-11-25 23:34:44
+duration_s,0.0
+quantum,"{'grover_success': True, 'anneal_optimal': True}"
+sinthome_health,0.85
+stress_exhaustion,"{'accepted': 50, 'hibernated': True}"

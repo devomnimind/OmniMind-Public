@@ -44,7 +44,7 @@ class AuditMigrationManager:
             "events_skipped": 0,
             "errors": 0,
             "start_time": time.time(),
-            "end_time": None
+            "end_time": None,
         }
 
     def log(self, message: str):
@@ -68,7 +68,7 @@ class AuditMigrationManager:
                 "hash_chain.json",
                 "audit_chain.log.bak",
                 "integrity_metrics.json",
-                "security_events.log"
+                "security_events.log",
             ]
 
             for filename in files_to_backup:
@@ -95,11 +95,13 @@ class AuditMigrationManager:
 
             self.log(f"   Sistema antigo - Válido: {integrity['valid']}")
             self.log(f"   Eventos verificados: {integrity['events_verified']}")
-            self.log(f"   Corrupções: {integrity.get('unauthorized_corruptions', 'N/A')}")
+            self.log(
+                f"   Corrupções: {integrity.get('unauthorized_corruptions', 'N/A')}"
+            )
 
             # Salvar relatório de validação
             validation_report = self.migration_dir / "old_system_validation.json"
-            with open(validation_report, 'w') as f:
+            with open(validation_report, "w") as f:
                 json.dump(integrity, f, indent=2)
 
             self.log("✅ PASSO 2 CONCLUÍDO: Validação do sistema antigo completa")
@@ -151,7 +153,7 @@ class AuditMigrationManager:
                         new_system.log_action(
                             action=event.get("action", "migrated_event"),
                             details=event.get("details", {}),
-                            category=event.get("category", "migrated")
+                            category=event.get("category", "migrated"),
                         )
                         migrated_count += 1
 
@@ -166,7 +168,9 @@ class AuditMigrationManager:
             self.stats["events_migrated"] = migrated_count
             self.stats["events_skipped"] = skipped_count
 
-            self.log(f"✅ PASSO 3 CONCLUÍDO: {migrated_count} eventos migrados, {skipped_count} pulados")
+            self.log(
+                f"✅ PASSO 3 CONCLUÍDO: {migrated_count} eventos migrados, {skipped_count} pulados"
+            )
             return True
 
         except Exception as e:
@@ -175,12 +179,15 @@ class AuditMigrationManager:
 
     def step_3_migrate_events_robust(self, old_integrity: Dict[str, Any]) -> bool:
         """PASSO 3 MELHORADO: Migrar com integridade robusta usando Merkle Tree e HMAC"""
-        self.log("🚀 PASSO 3 (Robusto): Migrando eventos com verificação de integridade criptográfica...")
+        self.log(
+            "🚀 PASSO 3 (Robusto): Migrando eventos com verificação de integridade criptográfica..."
+        )
 
         try:
             # Adicionar src ao path para importar módulos
             import sys
             from pathlib import Path
+
             script_dir = Path(__file__).parent
             src_dir = script_dir.parent / "src"
             if str(src_dir) not in sys.path:
@@ -215,17 +222,27 @@ class AuditMigrationManager:
             self.log(f"   Encontrados {len(events)} eventos para migração")
 
             # Migrar com verificação robusta de integridade
-            valid, integrity_result = migration_manager.migrate_with_robust_integrity(events)
+            valid, integrity_result = migration_manager.migrate_with_robust_integrity(
+                events
+            )
 
             self.log(f"✅ Integridade da migração: {valid}")
-            self.log(f"✅ Merkle Root: {integrity_result.get('merkle_root', 'N/A')[:16]}...")
+            self.log(
+                f"✅ Merkle Root: {integrity_result.get('merkle_root', 'N/A')[:16]}..."
+            )
             self.log(f"✅ Eventos migrados: {len(events)}")
-            self.log(f"✅ Corrupções detectadas: {len(integrity_result.get('corruptions', []))}")
+            self.log(
+                f"✅ Corrupções detectadas: {len(integrity_result.get('corruptions', []))}"
+            )
 
             if not valid:
-                self.log("⚠️  AVISO: Corrupções detectadas durante migração - revisar logs")
+                self.log(
+                    "⚠️  AVISO: Corrupções detectadas durante migração - revisar logs"
+                )
                 # Mesmo com corrupções, continua se for apenas eventos antigos corrompidos
-                if len(integrity_result.get('corruptions', [])) < len(events) * 0.1:  # < 10% corrompidos
+                if (
+                    len(integrity_result.get("corruptions", [])) < len(events) * 0.1
+                ):  # < 10% corrompidos
                     self.log("✅ Continuando - corrupções aceitáveis")
                     return True
                 else:
@@ -237,6 +254,7 @@ class AuditMigrationManager:
         except Exception as e:
             self.log(f"❌ ERRO no PASSO 3: {e}")
             import traceback
+
             self.log(f"   Detalhes: {traceback.format_exc()}")
             return False
 
@@ -249,6 +267,7 @@ class AuditMigrationManager:
 
             # Criar sistema de teste em um diretório temporário
             import tempfile
+
             with tempfile.TemporaryDirectory() as temp_dir:
                 test_system = RobustAuditSystem(temp_dir)
 
@@ -258,9 +277,10 @@ class AuditMigrationManager:
 
                 # Verificar se conseguimos ler o log
                 import os
+
                 log_file = os.path.join(temp_dir, "robust_audit_chain.log")
                 if os.path.exists(log_file):
-                    with open(log_file, 'r') as f:
+                    with open(log_file, "r") as f:
                         content = f.read()
                         if hash1 in content:
                             self.log("   ✅ Log contém o evento registrado")
@@ -282,7 +302,9 @@ class AuditMigrationManager:
             self.log("   ✅ Sistema robusto funciona basicamente")
             self.log("   ⚠️  AVISO: GPU não testada (problema conhecido)")
 
-            self.log("✅ PASSO 4 CONCLUÍDO: Sistema robusto testado com sucesso (básico)")
+            self.log(
+                "✅ PASSO 4 CONCLUÍDO: Sistema robusto testado com sucesso (básico)"
+            )
             return True
 
         except Exception as e:
@@ -296,21 +318,29 @@ class AuditMigrationManager:
         try:
             # Criar arquivo de flag para indicar migração completa
             migration_complete_flag = self.log_dir / "migration_complete.flag"
-            with open(migration_complete_flag, 'w') as f:
-                json.dump({
-                    "migration_completed": True,
-                    "timestamp": datetime.now().isoformat(),
-                    "stats": self.stats
-                }, f, indent=2)
+            with open(migration_complete_flag, "w") as f:
+                json.dump(
+                    {
+                        "migration_completed": True,
+                        "timestamp": datetime.now().isoformat(),
+                        "stats": self.stats,
+                    },
+                    f,
+                    indent=2,
+                )
 
             # Arquivo de configuração para usar sistema robusto
             config_file = self.log_dir / "audit_system_config.json"
-            with open(config_file, 'w') as f:
-                json.dump({
-                    "active_system": "robust",
-                    "migration_date": datetime.now().isoformat(),
-                    "version": "2.0.0"
-                }, f, indent=2)
+            with open(config_file, "w") as f:
+                json.dump(
+                    {
+                        "active_system": "robust",
+                        "migration_date": datetime.now().isoformat(),
+                        "version": "2.0.0",
+                    },
+                    f,
+                    indent=2,
+                )
 
             self.log("✅ PASSO 5 CONCLUÍDO: Sistema robusto ativado")
             return True
@@ -330,9 +360,14 @@ class AuditMigrationManager:
         steps = [
             ("backup", self.step_1_backup_system),
             ("validation", self.step_2_validate_old_system),
-            ("migration", lambda: self.step_3_migrate_events_robust(results.get("validation", {}))),
+            (
+                "migration",
+                lambda: self.step_3_migrate_events_robust(
+                    results.get("validation", {})
+                ),
+            ),
             ("testing", self.step_4_test_new_system),
-            ("activation", self.step_5_activate_new_system)
+            ("activation", self.step_5_activate_new_system),
         ]
 
         success = True
@@ -340,7 +375,9 @@ class AuditMigrationManager:
             try:
                 result = step_func()
                 results[step_name] = result
-                if result is False or (isinstance(result, dict) and not result.get("valid", True)):
+                if result is False or (
+                    isinstance(result, dict) and not result.get("valid", True)
+                ):
                     success = False
                     break
             except Exception as e:
@@ -350,17 +387,23 @@ class AuditMigrationManager:
 
         # Finalizar estatísticas
         self.stats["end_time"] = time.time()
-        self.stats["duration_seconds"] = self.stats["end_time"] - self.stats["start_time"]
+        self.stats["duration_seconds"] = (
+            self.stats["end_time"] - self.stats["start_time"]
+        )
         self.stats["success"] = success
 
         # Salvar relatório final
         final_report = self.migration_dir / "migration_report.json"
-        with open(final_report, 'w') as f:
-            json.dump({
-                "migration_stats": self.stats,
-                "step_results": results,
-                "timestamp": datetime.now().isoformat()
-            }, f, indent=2)
+        with open(final_report, "w") as f:
+            json.dump(
+                {
+                    "migration_stats": self.stats,
+                    "step_results": results,
+                    "timestamp": datetime.now().isoformat(),
+                },
+                f,
+                indent=2,
+            )
 
         # Resumo final
         self.log("=" * 60)
@@ -373,11 +416,7 @@ class AuditMigrationManager:
             self.log("❌ MIGRAÇÃO FALHADA - Verificar logs para detalhes")
             self.log("📁 Backup disponível em: {self.backup_dir}")
 
-        return {
-            "success": success,
-            "stats": self.stats,
-            "results": results
-        }
+        return {"success": success, "stats": self.stats, "results": results}
 
 
 def main():

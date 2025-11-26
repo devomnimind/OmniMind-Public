@@ -59,7 +59,6 @@ class MCPOrchestratorError(Exception):
     """Erro no orquestrador de MCPs."""
 
 
-
 class MCPOrchestrator:
     """
     Orquestrador centralizado para gerenciar múltiplos servidores MCP.

@@ -3,6 +3,7 @@ Validação dedicada do Hugging Face Space devbrain-inference.
 
 Testa conexão, latência e resposta do endpoint /generate.
 """
+
 import logging
 import os
 import sys
@@ -14,6 +15,7 @@ load_dotenv()
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message)s")
 logger = logging.getLogger("SpaceValidator")
+
 
 def validate_space():
     """Valida o Space HF com timeout estendido e retry."""
@@ -34,7 +36,9 @@ def validate_space():
         if response.status_code == 200:
             logger.info(f"✅ Health check OK: {response.json()}")
         else:
-            logger.warning(f"⚠️ Health endpoint não disponível (status {response.status_code})")
+            logger.warning(
+                f"⚠️ Health endpoint não disponível (status {response.status_code})"
+            )
     except Exception as e:
         logger.warning(f"⚠️ Health check falhou (normal se endpoint não existe): {e}")
 
@@ -47,10 +51,7 @@ def validate_space():
         headers = {"Authorization": f"Bearer {hf_token}"}
         payload = {
             "inputs": "What is 2+2?",
-            "parameters": {
-                "max_new_tokens": 50,
-                "temperature": 0.7
-            }
+            "parameters": {"max_new_tokens": 50, "temperature": 0.7},
         }
 
         response = requests.post(url, headers=headers, json=payload, timeout=120)
@@ -68,7 +69,9 @@ def validate_space():
         return True
 
     except requests.exceptions.Timeout:
-        logger.error("❌ Timeout após 120s - Space pode estar sobrecarregado ou em cold start")
+        logger.error(
+            "❌ Timeout após 120s - Space pode estar sobrecarregado ou em cold start"
+        )
         return False
     except requests.exceptions.HTTPError as e:
         logger.error(f"❌ HTTP Error: {e.response.status_code} - {e.response.text}")
@@ -76,6 +79,7 @@ def validate_space():
     except Exception as e:
         logger.exception(f"❌ Erro inesperado durante validação: {e}")
         return False
+
 
 if __name__ == "__main__":
     success = validate_space()

@@ -3,7 +3,6 @@
 Script de validação da integração neural (Ollama + Hugging Face).
 """
 import logging
-import os
 import sys
 from pathlib import Path
 
@@ -14,6 +13,7 @@ from src.neurosymbolic.neural_component import NeuralComponent
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("NeuralTest")
+
 
 def test_ollama():
     logger.info("--- Testing Ollama Integration ---")
@@ -33,6 +33,7 @@ def test_ollama():
         logger.error(f"❌ Ollama Test Failed: {e}")
         return False
 
+
 def test_huggingface():
     logger.info("\n--- Testing Hugging Face Integration ---")
     # Usar modelo opt-125m para teste de API
@@ -50,6 +51,7 @@ def test_huggingface():
     except Exception as e:
         logger.error(f"❌ Hugging Face Test Failed: {e}")
         return False
+
 
 def test_hf_space():
     logger.info("\n--- Testing Hugging Face Space (Dedicated) ---")
@@ -69,6 +71,7 @@ def test_hf_space():
         logger.error(f"❌ HF Space Test Failed: {e}")
         return False
 
+
 if __name__ == "__main__":
     ollama_ok = test_ollama()
     hf_ok = test_huggingface()
@@ -78,8 +81,10 @@ if __name__ == "__main__":
         logger.info("\n🎉 All Neural Integrations Verified!")
         sys.exit(0)
     elif ollama_ok:
-        logger.warning("\n⚠️ Partial success: Local Ollama is working, but remote endpoints failed.")
-        sys.exit(0) # Considerar sucesso parcial para não bloquear CI
+        logger.warning(
+            "\n⚠️ Partial success: Local Ollama is working, but remote endpoints failed."
+        )
+        sys.exit(0)  # Considerar sucesso parcial para não bloquear CI
     else:
         logger.error("\n❌ Critical failure: Local Ollama failed.")
         sys.exit(1)

@@ -23,6 +23,7 @@ from typing import Dict, List, Any
 # Adicionar src ao path
 import sys
 from pathlib import Path
+
 script_dir = Path(__file__).parent
 project_dir = script_dir.parent
 src_dir = project_dir / "src"
@@ -78,20 +79,28 @@ class OmniMindDataCollector:
                     "timestamp": datetime.now().isoformat(),
                     "cpu_percent": psutil.cpu_percent(interval=1),
                     "memory_percent": psutil.virtual_memory().percent,
-                    "disk_usage": psutil.disk_usage('/').percent,
+                    "disk_usage": psutil.disk_usage("/").percent,
                     "gpu_available": torch.cuda.is_available(),
                     "gpu_memory_allocated": 0,
-                    "gpu_memory_reserved": 0
+                    "gpu_memory_reserved": 0,
                 }
 
                 if torch.cuda.is_available():
-                    metrics["gpu_memory_allocated"] = torch.cuda.memory_allocated() / 1024**3  # GB
-                    metrics["gpu_memory_reserved"] = torch.cuda.memory_reserved() / 1024**3   # GB
-                    metrics["gpu_utilization"] = torch.cuda.utilization() if hasattr(torch.cuda, 'utilization') else 0
+                    metrics["gpu_memory_allocated"] = (
+                        torch.cuda.memory_allocated() / 1024**3
+                    )  # GB
+                    metrics["gpu_memory_reserved"] = (
+                        torch.cuda.memory_reserved() / 1024**3
+                    )  # GB
+                    metrics["gpu_utilization"] = (
+                        torch.cuda.utilization()
+                        if hasattr(torch.cuda, "utilization")
+                        else 0
+                    )
 
                 # Salvar métricas
-                with open(self.metrics_file, 'a') as f:
-                    f.write(json.dumps(metrics) + '\n')
+                with open(self.metrics_file, "a") as f:
+                    f.write(json.dumps(metrics) + "\n")
 
                 self.metrics_collected += 1
                 print(f"📊 Métricas coletadas: {self.metrics_collected}")
@@ -108,7 +117,9 @@ class OmniMindDataCollector:
                 # Simular repressão de memória
                 memory_id = f"memory_{int(time.time())}_{self.unconscious_events}"
                 # repress_memory expects emotional_weight as float
-                self.freudian_mind.id_agent.repress_memory(memory_id, -0.5)  # negative for repression
+                self.freudian_mind.id_agent.repress_memory(
+                    memory_id, -0.5
+                )  # negative for repression
 
                 # Medir influência do inconsciente (mock for now)
                 # TODO: implement calculate_unconscious_influence in EgoAgent
@@ -118,15 +129,17 @@ class OmniMindDataCollector:
                     "timestamp": datetime.now().isoformat(),
                     "memory_id": memory_id,
                     "unconscious_influence": influence,
-                    "repression_count": self.unconscious_events + 1
+                    "repression_count": self.unconscious_events + 1,
                 }
 
                 # Salvar dados do inconsciente
-                with open(self.unconscious_file, 'a') as f:
-                    f.write(json.dumps(unconscious_data) + '\n')
+                with open(self.unconscious_file, "a") as f:
+                    f.write(json.dumps(unconscious_data) + "\n")
 
                 self.unconscious_events += 1
-                print(f"🧠 Atividade inconsciente: {self.unconscious_events} repressões")
+                print(
+                    f"🧠 Atividade inconsciente: {self.unconscious_events} repressões"
+                )
 
             except Exception as e:
                 print(f"Erro na atividade inconsciente: {e}")
@@ -145,24 +158,28 @@ class OmniMindDataCollector:
                     pleasure_reward=0.1,
                     reality_cost=0.0,
                     moral_alignment=0.5,
-                    description=decision_context
+                    description=decision_context,
                 )
-                ethical_judgment = self.freudian_mind.superego_agent.evaluate_action(test_action)
+                ethical_judgment = self.freudian_mind.superego_agent.evaluate_action(
+                    test_action
+                )
 
                 # Consultar sociedade de mentes
-                consensus = self.freudian_mind.superego_agent.consult_society(test_action)
+                consensus = self.freudian_mind.superego_agent.consult_society(
+                    test_action
+                )
 
                 ethical_data = {
                     "timestamp": datetime.now().isoformat(),
                     "decision_context": decision_context,
                     "ethical_judgment": ethical_judgment,
                     "society_consensus": consensus,
-                    "decision_number": self.ethical_decisions + 1
+                    "decision_number": self.ethical_decisions + 1,
                 }
 
                 # Salvar dados éticos
-                with open(self.ethical_file, 'a') as f:
-                    f.write(json.dumps(ethical_data) + '\n')
+                with open(self.ethical_file, "a") as f:
+                    f.write(json.dumps(ethical_data) + "\n")
 
                 self.ethical_decisions += 1
                 print(f"⚖️ Decisão ética: {self.ethical_decisions} julgamentos")
@@ -185,15 +202,17 @@ class OmniMindDataCollector:
                     "events_verified": integrity["events_verified"],
                     "corruptions_detected": len(integrity["corruptions"]),
                     "merkle_root": integrity["merkle_root"],
-                    "check_number": self.audit_checks + 1
+                    "check_number": self.audit_checks + 1,
                 }
 
                 # Salvar dados de auditoria
-                with open(self.audit_file, 'a') as f:
-                    f.write(json.dumps(audit_data) + '\n')
+                with open(self.audit_file, "a") as f:
+                    f.write(json.dumps(audit_data) + "\n")
 
                 self.audit_checks += 1
-                print(f"🔒 Integridade auditada: {self.audit_checks} verificações (Válido: {integrity['valid']})")
+                print(
+                    f"🔒 Integridade auditada: {self.audit_checks} verificações (Válido: {integrity['valid']})"
+                )
 
             except Exception as e:
                 print(f"Erro na auditoria: {e}")
@@ -212,7 +231,7 @@ class OmniMindDataCollector:
             threading.Thread(target=self.collect_system_metrics, daemon=True),
             threading.Thread(target=self.simulate_unconscious_activity, daemon=True),
             threading.Thread(target=self.simulate_ethical_decisions, daemon=True),
-            threading.Thread(target=self.monitor_audit_integrity, daemon=True)
+            threading.Thread(target=self.monitor_audit_integrity, daemon=True),
         ]
 
         for thread in self.threads:
@@ -226,7 +245,9 @@ class OmniMindDataCollector:
                 remaining = self.end_time - datetime.now()
 
                 print(f"⏱️  Tempo decorrido: {elapsed} | Restante: {remaining}")
-                print(f"📊 Status: {self.metrics_collected} métricas, {self.unconscious_events} repressões, {self.ethical_decisions} decisões, {self.audit_checks} auditorias")
+                print(
+                    f"📊 Status: {self.metrics_collected} métricas, {self.unconscious_events} repressões, {self.ethical_decisions} decisões, {self.audit_checks} auditorias"
+                )
 
         except KeyboardInterrupt:
             print("\n🛑 Coleta interrompida pelo usuário")
@@ -254,17 +275,17 @@ class OmniMindDataCollector:
                 "system_metrics": str(self.metrics_file),
                 "unconscious_influence": str(self.unconscious_file),
                 "ethical_consensus": str(self.ethical_file),
-                "audit_integrity": str(self.audit_file)
+                "audit_integrity": str(self.audit_file),
             },
             "system_info": {
                 "quantum_backend": "IBM Qiskit Aer Simulator",
                 "audit_system": "Robust (Merkle Tree + HMAC-SHA256)",
                 "gpu_available": torch.cuda.is_available(),
-                "cpu_count": psutil.cpu_count()
-            }
+                "cpu_count": psutil.cpu_count(),
+            },
         }
 
-        with open(report_file, 'w') as f:
+        with open(report_file, "w") as f:
             json.dump(report, f, indent=2)
 
         print("\n" + "=" * 60)

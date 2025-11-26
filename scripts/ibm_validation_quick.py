@@ -38,6 +38,7 @@ import structlog
 # Configurar logging
 logger = structlog.get_logger(__name__)
 
+
 def main():
     """Executar benchmark rápido de validação no IBM Quantum."""
 
@@ -51,7 +52,7 @@ def main():
 
     # Carregar token IBM
     load_dotenv()
-    ibm_token = os.getenv('IBM_API_KEY')
+    ibm_token = os.getenv("IBM_API_KEY")
 
     if not ibm_token:
         print("❌ ERRO: IBM_API_KEY não encontrado no .env")
@@ -63,7 +64,9 @@ def main():
         # Inicializar QPUs
         print("\n1️⃣ Inicializando interfaces...")
         qpu_sim = QPUInterface()  # Simulador
-        qpu_ibm = QPUInterface(ibmq_token=ibm_token)  # IBM (mas ainda pode usar simulador)
+        qpu_ibm = QPUInterface(
+            ibmq_token=ibm_token
+        )  # IBM (mas ainda pode usar simulador)
 
         # Forçar uso do backend IBM se disponível
         if BackendType.IBMQ_CLOUD in qpu_ibm.backends:
@@ -86,9 +89,9 @@ def main():
                 "timestamp": datetime.now(timezone.utc).isoformat(),
                 "ibm_backend": ibm_name,
                 "simulator_backend": sim_name,
-                "shots": 1024
+                "shots": 1024,
             },
-            "benchmarks": {}
+            "benchmarks": {},
         }
 
         # Benchmark 1: Bell State (Entanglement)
@@ -101,7 +104,9 @@ def main():
 
         # Benchmark 3: Simple Superposition
         print("\n4️⃣ Benchmark 3: Simple Superposition")
-        results["benchmarks"]["superposition"] = benchmark_superposition(qpu_sim, qpu_ibm)
+        results["benchmarks"]["superposition"] = benchmark_superposition(
+            qpu_sim, qpu_ibm
+        )
 
         # Análise comparativa
         print("\n5️⃣ Análise Comparativa...")
@@ -124,16 +129,22 @@ def main():
         print(f"• Bell State Fidelity: {analysis['bell_state_fidelity']:.3f}")
         print(f"• Randomness Quality: {analysis['randomness_quality']:.3f}")
         print(f"• Superposition Accuracy: {analysis['superposition_accuracy']:.3f}")
-        print(f"• Noise Impact: {'Alto' if analysis['noise_impact'] > 0.1 else 'Baixo'}")
-        print(f"• Quantum Advantage: {'Detectado' if analysis['quantum_advantage'] else 'Não detectado'}")
+        print(
+            f"• Noise Impact: {'Alto' if analysis['noise_impact'] > 0.1 else 'Baixo'}"
+        )
+        print(
+            f"• Quantum Advantage: {'Detectado' if analysis['quantum_advantage'] else 'Não detectado'}"
+        )
 
         return 0
 
     except Exception as e:
         print(f"\n❌ ERRO: {str(e)}")
         import traceback
+
         traceback.print_exc()
         return 1
+
 
 def benchmark_bell_state(qpu_sim, qpu_ibm):
     """Benchmark de estado Bell para testar entanglement."""
@@ -160,22 +171,31 @@ def benchmark_bell_state(qpu_sim, qpu_ibm):
     prob_11_ibm = counts_ibm.get("11", 0) / total_ibm
 
     # Fidelity do entanglement (1.0 = entanglement perfeito)
-    fidelity_sim = 1.0 - abs(prob_00_sim - prob_11_sim) - (counts_sim.get("01", 0) + counts_sim.get("10", 0)) / total_sim
-    fidelity_ibm = 1.0 - abs(prob_00_ibm - prob_11_ibm) - (counts_ibm.get("01", 0) + counts_ibm.get("10", 0)) / total_ibm
+    fidelity_sim = (
+        1.0
+        - abs(prob_00_sim - prob_11_sim)
+        - (counts_sim.get("01", 0) + counts_sim.get("10", 0)) / total_sim
+    )
+    fidelity_ibm = (
+        1.0
+        - abs(prob_00_ibm - prob_11_ibm)
+        - (counts_ibm.get("01", 0) + counts_ibm.get("10", 0)) / total_ibm
+    )
 
     return {
         "circuit": "bell_state_phi_plus",
         "simulator": {
             "counts": counts_sim,
             "probabilities": {"00": prob_00_sim, "11": prob_11_sim},
-            "fidelity": fidelity_sim
+            "fidelity": fidelity_sim,
         },
         "ibm_hardware": {
             "counts": counts_ibm,
             "probabilities": {"00": prob_00_ibm, "11": prob_11_ibm},
-            "fidelity": fidelity_ibm
-        }
+            "fidelity": fidelity_ibm,
+        },
     }
+
 
 def benchmark_randomness(qpu_sim, qpu_ibm):
     """Benchmark de aleatoriedade quântica."""
@@ -209,14 +229,15 @@ def benchmark_randomness(qpu_sim, qpu_ibm):
         "simulator": {
             "counts": counts_sim,
             "probabilities": {"0": prob_0_sim, "1": prob_1_sim},
-            "quality": quality_sim
+            "quality": quality_sim,
         },
         "ibm_hardware": {
             "counts": counts_ibm,
             "probabilities": {"0": prob_0_ibm, "1": prob_1_ibm},
-            "quality": quality_ibm
-        }
+            "quality": quality_ibm,
+        },
     }
+
 
 def benchmark_superposition(qpu_sim, qpu_ibm):
     """Benchmark de superposição quântica."""
@@ -257,22 +278,23 @@ def benchmark_superposition(qpu_sim, qpu_ibm):
         uniformity_ibm += (prob_ibm - expected_prob) ** 2
 
     # Uniformity score (0 = perfeito, 1 = pior)
-    uniformity_sim = 1.0 - uniformity_sim / (4 * expected_prob ** 2)
-    uniformity_ibm = 1.0 - uniformity_ibm / (4 * expected_prob ** 2)
+    uniformity_sim = 1.0 - uniformity_sim / (4 * expected_prob**2)
+    uniformity_ibm = 1.0 - uniformity_ibm / (4 * expected_prob**2)
 
     return {
         "circuit": "two_qubit_superposition",
         "simulator": {
             "counts": counts_sim,
             "probabilities": sim_probs,
-            "uniformity": uniformity_sim
+            "uniformity": uniformity_sim,
         },
         "ibm_hardware": {
             "counts": counts_ibm,
             "probabilities": ibm_probs,
-            "uniformity": uniformity_ibm
-        }
+            "uniformity": uniformity_ibm,
+        },
     }
+
 
 def analyze_results(benchmarks):
     """Analisar resultados e calcular métricas comparativas."""
@@ -282,7 +304,7 @@ def analyze_results(benchmarks):
         "randomness_quality": 0.0,
         "superposition_accuracy": 0.0,
         "noise_impact": 0.0,
-        "quantum_advantage": False
+        "quantum_advantage": False,
     }
 
     # Bell State Analysis
@@ -313,12 +335,13 @@ def analyze_results(benchmarks):
     # Para Bell state, esperamos correlação perfeita (fidelity ~1.0)
     # Para randomness, esperamos distribuição uniforme (quality ~1.0)
     analysis["quantum_advantage"] = (
-        ibm_fidelity > 0.8 and  # Entanglement preservado
-        ibm_quality > 0.8 and   # Aleatoriedade quântica mantida
-        analysis["noise_impact"] < 0.2  # Ruído não destrutivo
+        ibm_fidelity > 0.8  # Entanglement preservado
+        and ibm_quality > 0.8  # Aleatoriedade quântica mantida
+        and analysis["noise_impact"] < 0.2  # Ruído não destrutivo
     )
 
     return analysis
+
 
 if __name__ == "__main__":
     sys.exit(main())

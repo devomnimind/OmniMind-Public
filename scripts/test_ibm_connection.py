@@ -8,25 +8,22 @@ e testa a execução de um circuito simples no hardware real.
 
 import os
 import sys
+from pathlib import Path
 from dotenv import load_dotenv
 
-# Adicionar root ao path
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
-
-from src.quantum_consciousness.qpu_interface import QPUInterface, BackendType
-from qiskit import QuantumCircuit
 
 def test_ibm_connection():
     """Testa conexão básica com IBM Quantum."""
+    # Import here after path is configured in __main__
+    from src.quantum_consciousness.qpu_interface import QPUInterface
+    from qiskit import QuantumCircuit
 
     print("🔗 Teste de Conexão IBM Quantum")
     print("=" * 40)
 
     # Carregar token
     load_dotenv()
-    ibm_token = os.getenv('IBM_API_KEY')
+    ibm_token = os.getenv("IBM_API_KEY")
 
     if not ibm_token:
         print("❌ ERRO: IBM_API_KEY não encontrado")
@@ -42,7 +39,8 @@ def test_ibm_connection():
         backends = qpu.list_backends()
         print(f"   Backends disponíveis: {len(backends)}")
         for backend in backends:
-            print(f"   - {backend.name} ({backend.backend_type.value}) - {'Disponível' if backend.available else 'Indisponível'}")
+            status = "Disponível" if backend.available else "Indisponível"
+            print(f"   - {backend.name} " f"({backend.backend_type.value}) - {status}")
 
         active = qpu.get_active_backend_info()
         print(f"   Backend ativo: {active.name if active else 'Nenhum'}")
@@ -58,7 +56,11 @@ def test_ibm_connection():
         print(f"   Resultados: {counts}")
 
         # Verificar se é hardware real ou simulador
-        is_real_hardware = active and "ibm" in active.name.lower() and "simulator" not in active.name.lower()
+        is_real_hardware = (
+            active
+            and "ibm" in active.name.lower()
+            and "simulator" not in active.name.lower()
+        )
         print(f"   Hardware real: {'Sim' if is_real_hardware else 'Não'}")
 
         if is_real_hardware:
@@ -71,9 +73,16 @@ def test_ibm_connection():
     except Exception as e:
         print(f"❌ ERRO: {str(e)}")
         import traceback
+
         traceback.print_exc()
         return False
 
+
 if __name__ == "__main__":
+    # Setup path before importing local modules
+    project_root = Path(__file__).parent.parent
+    if str(project_root) not in sys.path:
+        sys.path.insert(0, str(project_root))
+
     success = test_ibm_connection()
     sys.exit(0 if success else 1)

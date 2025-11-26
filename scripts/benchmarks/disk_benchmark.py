@@ -4,7 +4,7 @@ import random
 import time
 
 TEST_FILE = "docs/reports/benchmarks/disk_test.bin"
-SIZE = 100 * 1024 ** 2
+SIZE = 100 * 1024**2
 RANDOM_ACCESS = 1000
 
 
@@ -15,7 +15,7 @@ def write_seq() -> float:
         for _ in range(SIZE // len(data)):
             stream.write(data)
     os.sync()
-    return SIZE / (time.perf_counter() - start) / (1024 ** 2)
+    return SIZE / (time.perf_counter() - start) / (1024**2)
 
 
 def read_seq() -> float:
@@ -23,7 +23,7 @@ def read_seq() -> float:
     with open(TEST_FILE, "rb") as stream:
         while stream.read(1024 * 1024):
             pass
-    return SIZE / (time.perf_counter() - start) / (1024 ** 2)
+    return SIZE / (time.perf_counter() - start) / (1024**2)
 
 
 def random_access() -> float:
@@ -33,7 +33,7 @@ def random_access() -> float:
             offset = random.randint(0, SIZE - 4096)
             stream.seek(offset)
             stream.read(4096)
-    return (RANDOM_ACCESS * 4096) / (time.perf_counter() - start) / (1024 ** 2)
+    return (RANDOM_ACCESS * 4096) / (time.perf_counter() - start) / (1024**2)
 
 
 def main() -> None:
@@ -44,7 +44,9 @@ def main() -> None:
         "random_access_mb_s": random_access(),
         "timestamp": time.time(),
     }
-    with open("docs/reports/benchmarks/disk_benchmark.json", "w", encoding="utf-8") as stream:
+    with open(
+        "docs/reports/benchmarks/disk_benchmark.json", "w", encoding="utf-8"
+    ) as stream:
         json.dump(results, stream, indent=2)
 
 

@@ -29,6 +29,7 @@ import structlog
 # Configurar logging
 logger = structlog.get_logger(__name__)
 
+
 def main():
     """Executar benchmark final comparativo."""
 
@@ -41,7 +42,7 @@ def main():
 
     # Carregar token
     load_dotenv()
-    ibm_token = os.getenv('IBM_API_KEY')
+    ibm_token = os.getenv("IBM_API_KEY")
 
     if not ibm_token:
         print("❌ ERRO: IBM_API_KEY não encontrado")
@@ -66,11 +67,11 @@ def main():
                 "simulator_backend": "Qiskit Aer Simulator",
                 "ibm_backend": results_ibm.get("backend", "N/A"),
                 "shots": 1024,
-                "comparison_type": "simulator_vs_hardware"
+                "comparison_type": "simulator_vs_hardware",
             },
             "simulator": results_sim,
             "ibm_hardware": results_ibm,
-            "comparison": {}
+            "comparison": {},
         }
 
         # Análise comparativa
@@ -91,26 +92,38 @@ def main():
         # Relatório executivo
         comp = results["comparison"]
         print("\n📈 RELATÓRIO EXECUTIVO:")
-        print(f"• Bell State Fidelity - Sim: {comp['bell_state']['sim_fidelity']:.3f}, IBM: {comp['bell_state']['ibm_fidelity']:.3f}")
-        print(f"• Randomness Quality - Sim: {comp['randomness']['sim_quality']:.3f}, IBM: {comp['randomness']['ibm_quality']:.3f}")
-        print(f"• Superposition Accuracy - Sim: {comp['superposition']['sim_uniformity']:.3f}, IBM: {comp['superposition']['ibm_uniformity']:.3f}")
+        print(
+            f"• Bell State Fidelity - Sim: {comp['bell_state']['sim_fidelity']:.3f}, IBM: {comp['bell_state']['ibm_fidelity']:.3f}"
+        )
+        print(
+            f"• Randomness Quality - Sim: {comp['randomness']['sim_quality']:.3f}, IBM: {comp['randomness']['ibm_quality']:.3f}"
+        )
+        print(
+            f"• Superposition Accuracy - Sim: {comp['superposition']['sim_uniformity']:.3f}, IBM: {comp['superposition']['ibm_uniformity']:.3f}"
+        )
         print(f"• Noise Impact Estimado: {comp['noise_impact']:.3f}")
-        print(f"• Quantum Advantage Detectado: {'Sim' if comp['quantum_advantage'] else 'Não'}")
+        print(
+            f"• Quantum Advantage Detectado: {'Sim' if comp['quantum_advantage'] else 'Não'}"
+        )
 
-        if comp['quantum_advantage']:
+        if comp["quantum_advantage"]:
             print("\n🎉 EVIDÊNCIA DE VANTAGEM QUÂNTICA DETECTADA!")
             print("   Hardware IBM performa melhor que esperado classicamente.")
         else:
             print("\n⚠️ Nenhuma vantagem quântica clara detectada.")
-            print("   Pode ser devido a: circuitos simples, calibração do hardware, ou ruído.")
+            print(
+                "   Pode ser devido a: circuitos simples, calibração do hardware, ou ruído."
+            )
 
         return 0
 
     except Exception as e:
         print(f"\n❌ ERRO: {str(e)}")
         import traceback
+
         traceback.print_exc()
         return 1
+
 
 def run_simulator_benchmarks():
     """Executar benchmarks no simulador."""
@@ -131,6 +144,7 @@ def run_simulator_benchmarks():
     results["superposition"] = benchmark_superposition(qpu)
 
     return results
+
 
 def run_ibm_benchmarks(ibm_token):
     """Tentar executar benchmarks no IBM Quantum."""
@@ -158,7 +172,7 @@ def run_ibm_benchmarks(ibm_token):
             "note": "Dados estimados - API IBM precisa correção",
             "bell_state": generate_estimated_bell_data(),
             "randomness": generate_estimated_randomness_data(),
-            "superposition": generate_estimated_superposition_data()
+            "superposition": generate_estimated_superposition_data(),
         }
 
         return results
@@ -175,8 +189,9 @@ def run_ibm_benchmarks(ibm_token):
             "error": str(e),
             "bell_state": generate_estimated_bell_data(),
             "randomness": generate_estimated_randomness_data(),
-            "superposition": generate_estimated_superposition_data()
+            "superposition": generate_estimated_superposition_data(),
         }
+
 
 def generate_estimated_bell_data():
     """Gerar dados estimados para Bell State (com ruído simulado)."""
@@ -186,8 +201,9 @@ def generate_estimated_bell_data():
         "circuit": "bell_state_phi_plus",
         "fidelity": fidelity,
         "probabilities": {"00": 0.45, "11": 0.40, "01": 0.08, "10": 0.07},
-        "estimated": True
+        "estimated": True,
     }
+
 
 def generate_estimated_randomness_data():
     """Gerar dados estimados para randomness."""
@@ -196,8 +212,9 @@ def generate_estimated_randomness_data():
         "circuit": "single_qubit_superposition",
         "quality": quality,
         "probabilities": {"0": 0.54, "1": 0.46},
-        "estimated": True
+        "estimated": True,
     }
+
 
 def generate_estimated_superposition_data():
     """Gerar dados estimados para superposition."""
@@ -206,8 +223,9 @@ def generate_estimated_superposition_data():
         "circuit": "two_qubit_superposition",
         "uniformity": uniformity,
         "probabilities": {"00": 0.26, "01": 0.24, "10": 0.25, "11": 0.25},
-        "estimated": True
+        "estimated": True,
     }
+
 
 def benchmark_bell_state(qpu):
     """Benchmark de estado Bell."""
@@ -238,8 +256,9 @@ def benchmark_bell_state(qpu):
         "circuit": "bell_state_phi_plus",
         "counts": counts,
         "probabilities": {"00": prob_00, "01": prob_01, "10": prob_10, "11": prob_11},
-        "fidelity": fidelity
+        "fidelity": fidelity,
     }
+
 
 def benchmark_randomness(qpu):
     """Benchmark de aleatoriedade."""
@@ -265,8 +284,9 @@ def benchmark_randomness(qpu):
         "circuit": "single_qubit_superposition",
         "counts": counts,
         "probabilities": {"0": prob_0, "1": prob_1},
-        "quality": quality
+        "quality": quality,
     }
+
 
 def benchmark_superposition(qpu):
     """Benchmark de superposição."""
@@ -295,14 +315,15 @@ def benchmark_superposition(qpu):
         probs[state] = prob
         uniformity += (prob - expected_prob) ** 2
 
-    uniformity = 1.0 - uniformity / (4 * expected_prob ** 2)
+    uniformity = 1.0 - uniformity / (4 * expected_prob**2)
 
     return {
         "circuit": "two_qubit_superposition",
         "counts": counts,
         "probabilities": probs,
-        "uniformity": uniformity
+        "uniformity": uniformity,
     }
+
 
 def analyze_comparison(sim_results, ibm_results):
     """Analisar comparação entre simulador e hardware."""
@@ -311,40 +332,52 @@ def analyze_comparison(sim_results, ibm_results):
         "bell_state": {
             "sim_fidelity": sim_results["bell_state"]["fidelity"],
             "ibm_fidelity": ibm_results["bell_state"]["fidelity"],
-            "difference": abs(sim_results["bell_state"]["fidelity"] - ibm_results["bell_state"]["fidelity"])
+            "difference": abs(
+                sim_results["bell_state"]["fidelity"]
+                - ibm_results["bell_state"]["fidelity"]
+            ),
         },
         "randomness": {
             "sim_quality": sim_results["randomness"]["quality"],
             "ibm_quality": ibm_results["randomness"]["quality"],
-            "difference": abs(sim_results["randomness"]["quality"] - ibm_results["randomness"]["quality"])
+            "difference": abs(
+                sim_results["randomness"]["quality"]
+                - ibm_results["randomness"]["quality"]
+            ),
         },
         "superposition": {
             "sim_uniformity": sim_results["superposition"]["uniformity"],
             "ibm_uniformity": ibm_results["superposition"]["uniformity"],
-            "difference": abs(sim_results["superposition"]["uniformity"] - ibm_results["superposition"]["uniformity"])
+            "difference": abs(
+                sim_results["superposition"]["uniformity"]
+                - ibm_results["superposition"]["uniformity"]
+            ),
         },
         "noise_impact": 0.0,
-        "quantum_advantage": False
+        "quantum_advantage": False,
     }
 
     # Calcular impacto de ruído
     differences = [
         comparison["bell_state"]["difference"],
         comparison["randomness"]["difference"],
-        comparison["superposition"]["difference"]
+        comparison["superposition"]["difference"],
     ]
     comparison["noise_impact"] = sum(differences) / len(differences)
 
     # Detectar vantagem quântica
     # Se hardware performa consistentemente melhor que simulador (com ruído)
     ibm_better = (
-        ibm_results["bell_state"]["fidelity"] > sim_results["bell_state"]["fidelity"] * 0.9 and
-        ibm_results["randomness"]["quality"] > sim_results["randomness"]["quality"] * 0.9 and
-        comparison["noise_impact"] < 0.2
+        ibm_results["bell_state"]["fidelity"]
+        > sim_results["bell_state"]["fidelity"] * 0.9
+        and ibm_results["randomness"]["quality"]
+        > sim_results["randomness"]["quality"] * 0.9
+        and comparison["noise_impact"] < 0.2
     )
     comparison["quantum_advantage"] = ibm_better
 
     return comparison
+
 
 if __name__ == "__main__":
     sys.exit(main())

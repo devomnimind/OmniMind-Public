@@ -15,11 +15,12 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
+
 def test_sampler_api():
     """Testa a API do Sampler."""
 
     load_dotenv()
-    token = os.getenv('IBM_API_KEY')
+    token = os.getenv("IBM_API_KEY")
 
     if not token:
         print("❌ Token não encontrado")
@@ -70,10 +71,13 @@ def test_sampler_api():
     except Exception as e:
         print(f"❌ ERRO GERAL: {e}")
         import traceback
+
         traceback.print_exc()
         return False
         import traceback
+
         traceback.print_exc()
+
 
 if __name__ == "__main__":
     test_sampler_api()

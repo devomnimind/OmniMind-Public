@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import sys
+
 """
 Auto Generate Tests - Geração Automática de Skeletons de Teste
 Para Módulos Críticos Identificados na Auditoria 2025
@@ -31,13 +32,16 @@ YELLOW = "\033[93m"
 BLUE = "\033[94m"
 RESET = "\033[0m"
 
+
 class FunctionInfo:
     """Informações sobre uma função pública."""
+
     def __init__(self, name: str, line: int, args: List[str], returns: str = "None"):
         self.name = name
         self.line = line
         self.args = args
         self.returns = returns
+
 
 class TestGenerator:
     """Gerador automático de skeletons de teste."""
@@ -57,23 +61,27 @@ class TestGenerator:
         functions = []
 
         try:
-            with open(module_path, 'r', encoding='utf-8') as f:
+            with open(module_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
             tree = ast.parse(content)
 
             for node in ast.walk(tree):
-                if isinstance(node, ast.FunctionDef) and not node.name.startswith('_'):
+                if isinstance(node, ast.FunctionDef) and not node.name.startswith("_"):
                     # Extrair argumentos
                     args = []
                     for arg in node.args.args:
-                        if arg.arg != 'self':  # Pular self para métodos
+                        if arg.arg != "self":  # Pular self para métodos
                             args.append(arg.arg)
 
                     # Extrair tipo de retorno se disponível
                     returns = "None"
                     if node.returns:
-                        returns = ast.unparse(node.returns) if hasattr(ast, 'unparse') else "Any"
+                        returns = (
+                            ast.unparse(node.returns)
+                            if hasattr(ast, "unparse")
+                            else "Any"
+                        )
 
                     func_info = FunctionInfo(node.name, node.lineno, args, returns)
                     functions.append(func_info)
@@ -83,11 +91,13 @@ class TestGenerator:
 
         return functions
 
-    def generate_test_skeleton(self, module_name: str, functions: List[FunctionInfo]) -> str:
+    def generate_test_skeleton(
+        self, module_name: str, functions: List[FunctionInfo]
+    ) -> str:
         """Gera skeleton de teste pytest."""
-        module_parts = module_name.replace('.py', '').split('/')
+        module_parts = module_name.replace(".py", "").split("/")
         test_module_name = f"test_{module_parts[-1]}"
-        class_name = ''.join(word.capitalize() for word in module_parts[-1].split('_'))
+        class_name = "".join(word.capitalize() for word in module_parts[-1].split("_"))
 
         # Template do arquivo de teste
         template = f'''"""
@@ -131,14 +141,14 @@ class Test{class_name}:
             if func.args:
                 test_method += f'        # {"\n        # ".join([f"{arg} = Mock()" for arg in func.args])}\n'
 
-            test_method += f'''
+            test_method += f"""
         # Act
         # result = instance.{func.name}({", ".join(func.args) if func.args else ""})
 
         # Assert
         # assert result is not None
         pytest.skip("Teste não implementado - gerado automaticamente")
-'''
+"""
 
             template += test_method
 
@@ -188,7 +198,9 @@ class Test{class_name}:
         # Analisar funções
         functions = self.analyze_module_functions(module_path)
         if not functions:
-            print(f"{YELLOW}[SKIP]{RESET} Nenhuma função pública encontrada em {module_path}")
+            print(
+                f"{YELLOW}[SKIP]{RESET} Nenhuma função pública encontrada em {module_path}"
+            )
             return False
 
         print(f"{GREEN}[FOUND]{RESET} {len(functions)} funções públicas")
@@ -214,7 +226,9 @@ class Test{class_name}:
         self.generated_count += 1
 
         print(f"{GREEN}[CREATED]{RESET} {test_file}")
-        self.log_action("GENERATE_TEST", str(test_file), f"{len(functions)} funções testadas")
+        self.log_action(
+            "GENERATE_TEST", str(test_file), f"{len(functions)} funções testadas"
+        )
 
         return True
 
@@ -229,13 +243,11 @@ class Test{class_name}:
             "src/quantum_ai/quantum_ml.py",
             "src/quantum_ai/quantum_optimizer.py",
             "src/quantum_ai/superposition_computing.py",
-
             # Collective Intelligence (0% coverage)
             "src/collective_intelligence/swarm_intelligence.py",
             "src/collective_intelligence/emergent_behaviors.py",
             "src/collective_intelligence/collective_learning.py",
             "src/collective_intelligence/distributed_solver.py",
-
             # Core Tools (11% coverage)
             "src/tools/omnimind_tools.py",
             "src/security/forensics_system.py",
@@ -246,7 +258,9 @@ class Test{class_name}:
             if self.generate_test_for_module(module):
                 success_count += 1
 
-        print(f"\n{GREEN}[SUCCESS]{RESET} Gerados {success_count}/{len(priority_modules)} skeletons de teste")
+        print(
+            f"\n{GREEN}[SUCCESS]{RESET} Gerados {success_count}/{len(priority_modules)} skeletons de teste"
+        )
         return success_count > 0
 
     def validate_generated_tests(self) -> Dict:
@@ -255,28 +269,28 @@ class Test{class_name}:
 
         try:
             import subprocess
+
             result = subprocess.run(
                 ["python", "-m", "pytest", "--collect-only", "-q", str(TESTS_DIR)],
                 capture_output=True,
                 text=True,
-                cwd=PROJECT_ROOT
+                cwd=PROJECT_ROOT,
             )
 
-            collected = len([line for line in result.stdout.split('\n') if 'test_' in line])
-            errors = len([line for line in result.stderr.split('\n') if line.strip()])
+            collected = len(
+                [line for line in result.stdout.split("\n") if "test_" in line]
+            )
+            errors = len([line for line in result.stderr.split("\n") if line.strip()])
 
             return {
                 "status": "success" if result.returncode == 0 else "error",
                 "collected": collected,
                 "errors": errors,
-                "output": result.stdout if result.returncode == 0 else result.stderr
+                "output": result.stdout if result.returncode == 0 else result.stderr,
             }
 
         except Exception as e:
-            return {
-                "status": "error",
-                "error": str(e)
-            }
+            return {"status": "error", "error": str(e)}
 
     def generate_report(self) -> str:
         """Gera relatório da geração de testes."""
@@ -344,6 +358,7 @@ pytest tests/quantum_ai/ tests/collective_intelligence/ -v
         report_path.write_text(self.generate_report())
         print(f"{GREEN}[REPORT]{RESET} Salvo em: {report_path}")
 
+
 def main():
     """Função principal."""
     print(f"{BLUE}[START]{RESET} Iniciando geração automática de testes...")
@@ -360,9 +375,13 @@ def main():
             validation = generator.validate_generated_tests()
 
             if validation.get("status") == "success":
-                print(f"{GREEN}[VALIDATION]{RESET} Testes descobertos: {validation.get('collected', 0)}")
+                print(
+                    f"{GREEN}[VALIDATION]{RESET} Testes descobertos: {validation.get('collected', 0)}"
+                )
             else:
-                print(f"{YELLOW}[VALIDATION]{RESET} Validação limitada: {validation.get('error', 'Unknown')}")
+                print(
+                    f"{YELLOW}[VALIDATION]{RESET} Validação limitada: {validation.get('error', 'Unknown')}"
+                )
 
             # Gerar relatório
             generator.save_report()
@@ -385,6 +404,6 @@ def main():
         print(f"\n{RED}[CRITICAL ERROR]{RESET} {e}")
         return 1
 
+
 if __name__ == "__main__":
-    sys.exit(main())</content>
-<parameter name="filePath">/home/fahbrain/projects/omnimind/scripts/auto_generate_tests.py
+    sys.exit(main())

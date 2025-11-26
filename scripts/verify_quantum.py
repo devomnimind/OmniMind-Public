@@ -13,6 +13,7 @@ from qiskit import QuantumCircuit
 # Load environment variables
 load_dotenv()
 
+
 def verify_connection():
     api_key = os.getenv("IBM_API_KEY") or os.getenv("IBM_QUANTUM_TOKEN")
 
@@ -44,9 +45,9 @@ def verify_connection():
         qc.cx(0, 1)
         qc.measure_all()
 
-
         # Transpile circuit for target backend
         from qiskit import transpile
+
         qc_transpiled = transpile(qc, backend=backend, optimization_level=3)
 
         print("⚛️ Submitting job (Bell State)...")
@@ -63,6 +64,7 @@ def verify_connection():
                 timeout: Maximum time in seconds to wait for job completion.
             """
             import time
+
             start_time = time.time()
             while True:
                 status = job.status()
@@ -103,6 +105,7 @@ def verify_connection():
 
     except Exception as e:
         print(f"\n❌ Connection failed: {e}")
+
 
 if __name__ == "__main__":
     verify_connection()

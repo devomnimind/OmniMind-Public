@@ -3,6 +3,7 @@ Demo: Neural Response Cache - Phase 21.
 
 Demonstra cache inteligente com hit rate tracking.
 """
+
 import logging
 import sys
 from src.neurosymbolic.neural_component import NeuralComponent
@@ -10,6 +11,7 @@ from src.neurosymbolic.response_cache import get_response_cache
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message)s")
 logger = logging.getLogger("CacheDemo")
+
 
 def demo_cache():
     """Demonstração de cache de respostas."""
@@ -59,6 +61,7 @@ def demo_cache():
     logger.info("\n" + "=" * 70)
     logger.info("Demo completed successfully!")
     logger.info("=" * 70)
+
 
 if __name__ == "__main__":
     try:

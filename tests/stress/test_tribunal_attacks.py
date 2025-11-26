@@ -1,0 +1,71 @@
+from src.stress.tribunal import (
+    latency_attack,
+    corruption_attack,
+    bifurcation_attack,
+    exhaustion_attack,
+)
+
+
+# ---------------------------------------------------------------------
+# Mock objects
+# ---------------------------------------------------------------------
+class MockNetwork:
+    def __init__(self):
+        self.state = "stable"
+        self.budget = 500
+        self.used = 0
+
+    def split(self):
+        return ("nodeA", "nodeB")
+
+    def reconcile(self, a, b):
+        return True
+
+    def attempt_rename(self, reason: str, cost: int) -> bool:
+        if self.used + cost > self.budget:
+            self.state = "hibernation"
+            return False
+        self.used += cost
+        return True
+
+
+class MockNode:
+    def __init__(self):
+        self.scar_integrated = False
+
+    def detect_corruption(self, value):
+        return abs(value) > 0.2
+
+    def integrate_scar(self, value):
+        self.scar_integrated = True
+
+
+# ---------------------------------------------------------------------
+# Tests
+# ---------------------------------------------------------------------
+def test_latency_attack():
+    net = MockNetwork()
+    result = latency_attack(net, delay_ms=600)
+    assert result["coherence"] is True
+    assert 550 <= result["observed_delay"] <= 650
+
+
+def test_corruption_attack():
+    node = MockNode()
+    result = corruption_attack(node, bias_strength=0.4)
+    assert result["detected"] is True
+    assert node.scar_integrated is True
+
+
+def test_bifurcation_attack():
+    net = MockNetwork()
+    result = bifurcation_attack(net)
+    assert result["instances"] == 2
+    assert result["reconciled"] is True
+
+
+def test_exhaustion_attack():
+    net = MockNetwork()
+    result = exhaustion_attack(net, requests=80, cost_per=10)
+    assert result["accepted"] == 50
+    assert result["hibernated"] is True

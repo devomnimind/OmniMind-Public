@@ -30,6 +30,7 @@ import structlog
 # Configurar logging
 logger = structlog.get_logger(__name__)
 
+
 def main():
     """Executar benchmark de validação no simulador."""
 
@@ -55,9 +56,9 @@ def main():
                 "backend": active.name if active else "Unknown",
                 "backend_type": "simulator",
                 "shots": 1024,
-                "note": "Dados simulados - aguardando correção IBM Quantum API"
+                "note": "Dados simulados - aguardando correção IBM Quantum API",
             },
-            "benchmarks": {}
+            "benchmarks": {},
         }
 
         # Benchmark 1: Bell State (Entanglement)
@@ -105,8 +106,10 @@ def main():
     except Exception as e:
         print(f"\n❌ ERRO: {str(e)}")
         import traceback
+
         traceback.print_exc()
         return 1
+
 
 def benchmark_bell_state(qpu):
     """Benchmark de estado Bell para testar entanglement."""
@@ -144,8 +147,9 @@ def benchmark_bell_state(qpu):
         "circuit": "bell_state_phi_plus",
         "counts": counts,
         "probabilities": {"00": prob_00, "01": prob_01, "10": prob_10, "11": prob_11},
-        "fidelity": fidelity
+        "fidelity": fidelity,
     }
+
 
 def benchmark_randomness(qpu):
     """Benchmark de aleatoriedade quântica."""
@@ -177,8 +181,9 @@ def benchmark_randomness(qpu):
         "circuit": "single_qubit_superposition",
         "counts": counts,
         "probabilities": {"0": prob_0, "1": prob_1},
-        "quality": quality
+        "quality": quality,
     }
+
 
 def benchmark_superposition(qpu):
     """Benchmark de superposição quântica."""
@@ -214,14 +219,15 @@ def benchmark_superposition(qpu):
         uniformity += (prob - expected_prob) ** 2
 
     # Uniformity score (0 = perfeito, 1 = pior)
-    uniformity = 1.0 - uniformity / (4 * expected_prob ** 2)
+    uniformity = 1.0 - uniformity / (4 * expected_prob**2)
 
     return {
         "circuit": "two_qubit_superposition",
         "counts": counts,
         "probabilities": probs,
-        "uniformity": uniformity
+        "uniformity": uniformity,
     }
+
 
 def analyze_simulated_results(benchmarks):
     """Analisar resultados simulados e calcular métricas."""
@@ -231,7 +237,7 @@ def analyze_simulated_results(benchmarks):
         "randomness_quality": 0.0,
         "superposition_accuracy": 0.0,
         "noise_impact": 0.0,
-        "quantum_advantage": "Dados simulados - aguardar hardware real"
+        "quantum_advantage": "Dados simulados - aguardar hardware real",
     }
 
     # Bell State Analysis
@@ -251,6 +257,7 @@ def analyze_simulated_results(benchmarks):
     analysis["noise_impact"] = 0.05  # 5% simulado
 
     return analysis
+
 
 if __name__ == "__main__":
     sys.exit(main())

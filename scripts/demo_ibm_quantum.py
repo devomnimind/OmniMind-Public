@@ -30,6 +30,7 @@ import structlog
 # Configurar logging
 logger = structlog.get_logger(__name__)
 
+
 def main():
     """Demonstração completa do sistema quântico com IBM."""
 
@@ -38,7 +39,7 @@ def main():
 
     # Carregar variáveis de ambiente
     load_dotenv()
-    ibm_token = os.getenv('IBM_API_KEY')
+    ibm_token = os.getenv("IBM_API_KEY")
 
     if not ibm_token:
         print("❌ ERRO: IBM_API_KEY não encontrado no .env")
@@ -55,7 +56,9 @@ def main():
         active_backend = qpu.get_active_backend_info()
         if active_backend:
             print(f"   Backend ativo: {active_backend.name}")
-            print(f"   Status: {'✅ Disponível' if active_backend.available else '❌ Indisponível'}")
+            print(
+                f"   Status: {'✅ Disponível' if active_backend.available else '❌ Indisponível'}"
+            )
         else:
             print("   Backend ativo: Nenhum")
             print("   Status: ❌ Indisponível")
@@ -65,7 +68,9 @@ def main():
         backends = qpu.list_backends()
         for backend in backends:
             status = "✅" if backend.available else "❌"
-            print(f"   {status} {backend.name} ({backend.provider}) - {backend.num_qubits} qubits")
+            print(
+                f"   {status} {backend.name} ({backend.provider}) - {backend.num_qubits} qubits"
+            )
 
         # 3. Criar circuito quântico (Bell State)
         print("\n3️⃣ Criando circuito quântico (Bell State)...")
@@ -75,7 +80,7 @@ def main():
         qc.measure_all()
 
         print("   Circuito:")
-        print(qc.draw(output='text'))
+        print(qc.draw(output="text"))
 
         # 4. Executar no simulador (rápido)
         print("\n4️⃣ Executando no simulador local (shots=1000)...")
@@ -85,16 +90,18 @@ def main():
 
         # Calcular estatísticas
         total_shots = sum(counts_sim.values())
-        prob_00 = counts_sim.get('00 00', 0) / total_shots
-        prob_11 = counts_sim.get('11 00', 0) / total_shots
+        prob_00 = counts_sim.get("00 00", 0) / total_shots
+        prob_11 = counts_sim.get("11 00", 0) / total_shots
         print(".1%")
         print(".1%")
 
         # 5. Verificar disponibilidade do IBM Quantum
-        ibm_backends = [b for b in backends if 'IBM' in b.provider and b.available]
+        ibm_backends = [b for b in backends if "IBM" in b.provider and b.available]
         if ibm_backends:
             backend_ibm = ibm_backends[0]
-            print(f"\n5️⃣ IBM Quantum disponível: {backend_ibm.name} ({backend_ibm.num_qubits} qubits)")
+            print(
+                f"\n5️⃣ IBM Quantum disponível: {backend_ibm.name} ({backend_ibm.num_qubits} qubits)"
+            )
 
             # 6. Perguntar se quer executar no hardware real
             print("\n❓ Deseja executar no hardware IBM Quantum real?")
@@ -103,7 +110,8 @@ def main():
 
             # Para demonstração, vamos mostrar como seria
             print("\n📋 Código para execução em hardware real:")
-            print("""
+            print(
+                """
             # Mudar para backend IBM
             qpu.switch_backend(BackendType.IBMQ_CLOUD)
 
@@ -115,7 +123,8 @@ def main():
             print("Comparação Simulador vs Hardware Real:")
             print(f"Simulador: {counts_sim}")
             print(f"IBM Real:  {counts_ibm}")
-            """)
+            """
+            )
 
             print("\n✅ Sistema pronto para execução em hardware quântico real!")
             print("💡 Use o código acima para executar quando desejar")
@@ -146,8 +155,10 @@ def main():
     except Exception as e:
         print(f"\n❌ ERRO durante demonstração: {str(e)}")
         import traceback
+
         traceback.print_exc()
         return 1
+
 
 if __name__ == "__main__":
     sys.exit(main())

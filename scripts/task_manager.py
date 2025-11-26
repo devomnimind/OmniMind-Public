@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 
+
 class TaskManager:
     """Gerenciador de tarefas do OmniMind"""
 
@@ -25,7 +26,7 @@ class TaskManager:
             return self._create_default_structure()
 
         try:
-            with open(self.tasks_file, 'r', encoding='utf-8') as f:
+            with open(self.tasks_file, "r", encoding="utf-8") as f:
                 return json.load(f)
         except (json.JSONDecodeError, FileNotFoundError):
             print(f"Erro ao carregar {self.tasks_file}, criando estrutura padrão")
@@ -33,7 +34,7 @@ class TaskManager:
 
     def save_tasks(self, data: Dict[str, Any]) -> None:
         """Salva as tarefas no arquivo JSON"""
-        with open(self.tasks_file, 'w', encoding='utf-8') as f:
+        with open(self.tasks_file, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
 
     def _create_default_structure(self) -> Dict[str, Any]:
@@ -47,7 +48,7 @@ class TaskManager:
                 "test_coverage": "0%",
                 "services_active": 0,
                 "gpu_available": False,
-                "memory_usage": "0%"
+                "memory_usage": "0%",
             },
             "pending_tasks": [],
             "completed_tasks": [],
@@ -57,8 +58,8 @@ class TaskManager:
                 "critical_issues": 0,
                 "warnings": 0,
                 "recommendations": 0,
-                "next_audit_due": None
-            }
+                "next_audit_due": None,
+            },
         }
 
     def check_task_status(self, task_id: str) -> bool:
@@ -70,7 +71,7 @@ class TaskManager:
             print(f"Tarefa {task_id} não encontrada")
             return False
 
-        validation_criteria = task.get('validation_criteria', [])
+        validation_criteria = task.get("validation_criteria", [])
         if not validation_criteria:
             print(f"Tarefa {task_id} não tem critérios de validação definidos")
             return False
@@ -90,10 +91,12 @@ class TaskManager:
         print(f"Validação não implementada para tarefa {task_id}")
         return False
 
-    def _find_task(self, data: Dict[str, Any], task_id: str) -> Optional[Dict[str, Any]]:
+    def _find_task(
+        self, data: Dict[str, Any], task_id: str
+    ) -> Optional[Dict[str, Any]]:
         """Encontra uma tarefa pelo ID"""
-        for task in data.get('pending_tasks', []):
-            if task.get('id') == task_id:
+        for task in data.get("pending_tasks", []):
+            if task.get("id") == task_id:
                 return task
         return None
 
@@ -101,8 +104,16 @@ class TaskManager:
         """Verifica se o teste do MCP client está passando"""
         try:
             result = subprocess.run(
-                ['python', '-m', 'pytest', 'tests/integrations/test_mcp_client_async.py::TestAsyncMCPClient::test_send_request_success', '-v'],
-                capture_output=True, text=True, cwd=Path.cwd()
+                [
+                    "python",
+                    "-m",
+                    "pytest",
+                    "tests/integrations/test_mcp_client_async.py::TestAsyncMCPClient::test_send_request_success",
+                    "-v",
+                ],
+                capture_output=True,
+                text=True,
+                cwd=Path.cwd(),
             )
             return result.returncode == 0
         except Exception as e:
@@ -113,10 +124,12 @@ class TaskManager:
         """Verifica se CUDA está funcionando"""
         try:
             result = subprocess.run(
-                ['python', '-c', 'import torch; print(torch.cuda.is_available())'],
-                capture_output=True, text=True, cwd=Path.cwd()
+                ["python", "-c", "import torch; print(torch.cuda.is_available())"],
+                capture_output=True,
+                text=True,
+                cwd=Path.cwd(),
             )
-            return result.returncode == 0 and 'True' in result.stdout.strip()
+            return result.returncode == 0 and "True" in result.stdout.strip()
         except Exception as e:
             print(f"Erro ao verificar CUDA: {e}")
             return False
@@ -126,8 +139,10 @@ class TaskManager:
         try:
             # Executa benchmark de memória e verifica se está abaixo de 70%
             result = subprocess.run(
-                ['python', 'scripts/benchmarks/memory_benchmark.py'],
-                capture_output=True, text=True, cwd=Path.cwd()
+                ["python", "scripts/benchmarks/memory_benchmark.py"],
+                capture_output=True,
+                text=True,
+                cwd=Path.cwd(),
             )
             # Por enquanto, apenas verifica se o benchmark roda sem erro
             # Futuramente pode analisar a saída para verificar uso real
@@ -144,7 +159,7 @@ class TaskManager:
             return False
 
         try:
-            with open(readme_path, 'r', encoding='utf-8') as f:
+            with open(readme_path, "r", encoding="utf-8") as f:
                 content = f.read()
                 # Verifica se contém informações sobre cobertura de testes
                 return "90%+" in content and "362" in content
@@ -157,8 +172,10 @@ class TaskManager:
         # Executa auditoria de segurança
         try:
             result = subprocess.run(
-                ['python', '-m', 'src.audit.immutable_audit', 'verify_chain_integrity'],
-                capture_output=True, text=True, cwd=Path.cwd()
+                ["python", "-m", "src.audit.immutable_audit", "verify_chain_integrity"],
+                capture_output=True,
+                text=True,
+                cwd=Path.cwd(),
             )
             return result.returncode == 0
         except Exception as e:
@@ -179,13 +196,13 @@ class TaskManager:
             return False
 
         # Move tarefa para completed_tasks
-        task['status'] = 'completed'
-        task['completed_at'] = datetime.now(timezone.utc).isoformat()
-        task['last_checked'] = datetime.now(timezone.utc).isoformat()
-        task['check_count'] = task.get('check_count', 0) + 1
+        task["status"] = "completed"
+        task["completed_at"] = datetime.now(timezone.utc).isoformat()
+        task["last_checked"] = datetime.now(timezone.utc).isoformat()
+        task["check_count"] = task.get("check_count", 0) + 1
 
-        data['pending_tasks'] = [t for t in data['pending_tasks'] if t['id'] != task_id]
-        data['completed_tasks'].append(task)
+        data["pending_tasks"] = [t for t in data["pending_tasks"] if t["id"] != task_id]
+        data["completed_tasks"].append(task)
 
         self.save_tasks(data)
         print(f"✅ Tarefa {task_id} marcada como completa")
@@ -194,11 +211,11 @@ class TaskManager:
     def check_all_tasks(self) -> None:
         """Verifica o status de todas as tarefas pendentes"""
         data = self.load_tasks()
-        pending_tasks = data.get('pending_tasks', [])
+        pending_tasks = data.get("pending_tasks", [])
 
         for task in pending_tasks:
-            task_id = task['id']
-            was_complete = task.get('status') == 'completed'
+            task_id = task["id"]
+            was_complete = task.get("status") == "completed"
 
             if self.check_task_status(task_id):
                 if not was_complete:
@@ -206,7 +223,9 @@ class TaskManager:
                     self.mark_task_complete(task_id)
             else:
                 if was_complete:
-                    print(f"⚠️  Tarefa {task_id} deixou de estar completa, movendo de volta para pendente")
+                    print(
+                        f"⚠️  Tarefa {task_id} deixou de estar completa, movendo de volta para pendente"
+                    )
                     self._unmark_task_complete(task_id)
 
     def _unmark_task_complete(self, task_id: str) -> None:
@@ -215,8 +234,8 @@ class TaskManager:
 
         # Encontra na completed_tasks
         completed_task = None
-        for task in data.get('completed_tasks', []):
-            if task['id'] == task_id:
+        for task in data.get("completed_tasks", []):
+            if task["id"] == task_id:
                 completed_task = task
                 break
 
@@ -224,19 +243,21 @@ class TaskManager:
             return
 
         # Move de volta para pending
-        completed_task['status'] = 'pending'
-        completed_task['last_checked'] = datetime.now(timezone.utc).isoformat()
-        completed_task['check_count'] = completed_task.get('check_count', 0) + 1
+        completed_task["status"] = "pending"
+        completed_task["last_checked"] = datetime.now(timezone.utc).isoformat()
+        completed_task["check_count"] = completed_task.get("check_count", 0) + 1
 
-        data['completed_tasks'] = [t for t in data['completed_tasks'] if t['id'] != task_id]
-        data['pending_tasks'].append(completed_task)
+        data["completed_tasks"] = [
+            t for t in data["completed_tasks"] if t["id"] != task_id
+        ]
+        data["pending_tasks"].append(completed_task)
 
         self.save_tasks(data)
 
     def add_task(self, task: Dict[str, Any]) -> None:
         """Adiciona uma nova tarefa"""
         data = self.load_tasks()
-        data['pending_tasks'].append(task)
+        data["pending_tasks"].append(task)
         self.save_tasks(data)
         print(f"Tarefa {task['id']} adicionada")
 
@@ -244,15 +265,16 @@ class TaskManager:
         """Lista tarefas por status"""
         data = self.load_tasks()
 
-        if status_filter == 'pending' or status_filter is None:
+        if status_filter == "pending" or status_filter is None:
             print("\n📋 TAREFAS PENDENTES:")
-            for task in data.get('pending_tasks', []):
+            for task in data.get("pending_tasks", []):
                 print(f"  • {task['id']}: {task['title']} ({task['priority']})")
 
-        if status_filter == 'completed' or status_filter is None:
+        if status_filter == "completed" or status_filter is None:
             print("\n✅ TAREFAS CONCLUÍDAS:")
-            for task in data.get('completed_tasks', []):
+            for task in data.get("completed_tasks", []):
                 print(f"  • {task['id']}: {task['title']}")
+
 
 def main():
     """Função principal"""
@@ -268,26 +290,27 @@ def main():
     manager = TaskManager()
     command = sys.argv[1]
 
-    if command == 'check' and len(sys.argv) >= 3:
+    if command == "check" and len(sys.argv) >= 3:
         task_id = sys.argv[2]
         if manager.check_task_status(task_id):
             print(f"✅ Tarefa {task_id} está completa")
         else:
             print(f"❌ Tarefa {task_id} não está completa")
 
-    elif command == 'complete' and len(sys.argv) >= 3:
+    elif command == "complete" and len(sys.argv) >= 3:
         task_id = sys.argv[2]
         manager.mark_task_complete(task_id)
 
-    elif command == 'check-all':
+    elif command == "check-all":
         manager.check_all_tasks()
 
-    elif command == 'list':
+    elif command == "list":
         status_filter = sys.argv[2] if len(sys.argv) >= 3 else None
         manager.list_tasks(status_filter)
 
     else:
         print(f"Comando desconhecido: {command}")
+
 
 if __name__ == "__main__":
     main()

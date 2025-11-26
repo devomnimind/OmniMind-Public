@@ -17,13 +17,14 @@ import logging
 # Configuração de logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler('logs/metrics_collection.log'),
-        logging.StreamHandler()
-    ]
+        logging.FileHandler("logs/metrics_collection.log"),
+        logging.StreamHandler(),
+    ],
 )
 logger = logging.getLogger(__name__)
+
 
 class MetricsCollector:
     """
@@ -48,6 +49,7 @@ class MetricsCollector:
         """Inicializar componentes do sistema de métricas."""
         try:
             from src.audit.immutable_audit import get_audit_system
+
             self.audit_system = get_audit_system()
             logger.info("Sistema de auditoria inicializado")
         except Exception as e:
@@ -71,28 +73,36 @@ class MetricsCollector:
                 "total_gb": memory.total / (1024**3),
                 "available_gb": memory.available / (1024**3),
                 "used_gb": memory.used / (1024**3),
-                "percent": memory.percent
+                "percent": memory.percent,
             }
 
             # Disco
-            disk = psutil.disk_usage('/')
+            disk = psutil.disk_usage("/")
             disk_info = {
                 "total_gb": disk.total / (1024**3),
                 "free_gb": disk.free / (1024**3),
                 "used_gb": disk.used / (1024**3),
-                "percent": disk.percent
+                "percent": disk.percent,
             }
 
             # GPU (se disponível) - simplificado
             gpu_info = {}
             try:
                 # Verificar se há GPU NVIDIA disponível
-                result = subprocess.run(['nvidia-smi', '--query-gpu=name,memory.total,memory.used', '--format=csv,noheader,nounits'],
-                                      capture_output=True, text=True, timeout=5)
+                result = subprocess.run(
+                    [
+                        "nvidia-smi",
+                        "--query-gpu=name,memory.total,memory.used",
+                        "--format=csv,noheader,nounits",
+                    ],
+                    capture_output=True,
+                    text=True,
+                    timeout=5,
+                )
                 if result.returncode == 0:
-                    lines = result.stdout.strip().split('\n')
-                    if lines and ',' in lines[0]:
-                        parts = lines[0].split(', ')
+                    lines = result.stdout.strip().split("\n")
+                    if lines and "," in lines[0]:
+                        parts = lines[0].split(", ")
                         if len(parts) >= 3:
                             name = parts[0]
                             total_mb = int(parts[1])
@@ -101,7 +111,9 @@ class MetricsCollector:
                                 "name": name,
                                 "memory_total_mb": total_mb,
                                 "memory_used_mb": used_mb,
-                                "memory_percent": (used_mb / total_mb) * 100 if total_mb > 0 else 0
+                                "memory_percent": (
+                                    (used_mb / total_mb) * 100 if total_mb > 0 else 0
+                                ),
                             }
             except Exception:
                 pass  # GPU não disponível ou erro
@@ -112,19 +124,19 @@ class MetricsCollector:
                 "bytes_sent_mb": network.bytes_sent / (1024**2),
                 "bytes_recv_mb": network.bytes_recv / (1024**2),
                 "packets_sent": network.packets_sent,
-                "packets_recv": network.packets_recv
+                "packets_recv": network.packets_recv,
             }
 
             return {
                 "cpu": {
                     "percent": cpu_percent,
                     "count": cpu_count,
-                    "freq_mhz": cpu_freq.current if cpu_freq else None
+                    "freq_mhz": cpu_freq.current if cpu_freq else None,
                 },
                 "memory": memory_info,
                 "disk": disk_info,
                 "gpu": gpu_info,
-                "network": network_info
+                "network": network_info,
             }
 
         except Exception as e:
@@ -143,15 +155,20 @@ class MetricsCollector:
             # Calcular taxa de eventos por segundo
             current_time = time.time()
             elapsed_time = current_time - self.start_time
-            events_per_second = summary.get("total_events", 0) / elapsed_time if elapsed_time > 0 else 0
+            events_per_second = (
+                summary.get("total_events", 0) / elapsed_time if elapsed_time > 0 else 0
+            )
 
             return {
                 "available": True,
                 "total_events": summary.get("total_events", 0),
                 "events_per_second": events_per_second,
-                "chain_integrity": summary.get("chain_integrity", {}).get("valid", False),
+                "chain_integrity": summary.get("chain_integrity", {}).get(
+                    "valid", False
+                ),
                 "log_size_bytes": summary.get("log_size_bytes", 0),
-                "last_hash": summary.get("last_hash", "")[:16] + "..."  # Apenas prefixo para segurança
+                "last_hash": summary.get("last_hash", "")[:16]
+                + "...",  # Apenas prefixo para segurança
             }
 
         except Exception as e:
@@ -164,7 +181,7 @@ class MetricsCollector:
             security_metrics = {
                 "dlp_violations": 0,
                 "security_alerts": 0,
-                "integrity_checks": 0
+                "integrity_checks": 0,
             }
 
             # Verificar logs de segurança
@@ -188,7 +205,7 @@ class MetricsCollector:
             quantum_metrics = {
                 "quantum_available": False,
                 "simulations_run": 0,
-                "quantum_performance": {}
+                "quantum_performance": {},
             }
 
             # Verificar se há componentes quânticos ativos
@@ -211,7 +228,7 @@ class MetricsCollector:
             agent_metrics = {
                 "agents_active": 0,
                 "responses_generated": 0,
-                "average_response_time_ms": 0
+                "average_response_time_ms": 0,
             }
 
             # Verificar logs de agentes
@@ -222,7 +239,8 @@ class MetricsCollector:
                     agent_metrics["responses_generated"] = content.count("response")
                     # Contar agentes únicos mencionados
                     import re
-                    agents = set(re.findall(r'agent[_-](\w+)', content, re.IGNORECASE))
+
+                    agents = set(re.findall(r"agent[_-](\w+)", content, re.IGNORECASE))
                     agent_metrics["agents_active"] = len(agents)
 
             return agent_metrics
@@ -243,7 +261,7 @@ class MetricsCollector:
             "audit": self.collect_audit_metrics(),
             "security": self.collect_security_metrics(),
             "quantum": self.collect_quantum_metrics(),
-            "agents": self.collect_agent_metrics()
+            "agents": self.collect_agent_metrics(),
         }
 
         return sample
@@ -312,32 +330,71 @@ class MetricsCollector:
 
         try:
             # Calcular estatísticas básicas
-            cpu_usage = [s["system"].get("cpu", {}).get("percent", 0) for s in self.metrics_data if "cpu" in s["system"]]
-            memory_usage = [s["system"].get("memory", {}).get("percent", 0) for s in self.metrics_data if "memory" in s["system"]]
+            cpu_usage = [
+                s["system"].get("cpu", {}).get("percent", 0)
+                for s in self.metrics_data
+                if "cpu" in s["system"]
+            ]
+            memory_usage = [
+                s["system"].get("memory", {}).get("percent", 0)
+                for s in self.metrics_data
+                if "memory" in s["system"]
+            ]
 
             summary = {
                 "collection_info": {
-                    "start_time": self.metrics_data[0]["timestamp"] if self.metrics_data else None,
-                    "end_time": self.metrics_data[-1]["timestamp"] if self.metrics_data else None,
+                    "start_time": (
+                        self.metrics_data[0]["timestamp"] if self.metrics_data else None
+                    ),
+                    "end_time": (
+                        self.metrics_data[-1]["timestamp"]
+                        if self.metrics_data
+                        else None
+                    ),
                     "duration_seconds": self.collection_duration,
                     "samples_collected": len(self.metrics_data),
-                    "interval_seconds": self.interval
+                    "interval_seconds": self.interval,
                 },
                 "system_stats": {
-                    "cpu_avg_percent": sum(cpu_usage) / len(cpu_usage) if cpu_usage else 0,
+                    "cpu_avg_percent": (
+                        sum(cpu_usage) / len(cpu_usage) if cpu_usage else 0
+                    ),
                     "cpu_max_percent": max(cpu_usage) if cpu_usage else 0,
-                    "memory_avg_percent": sum(memory_usage) / len(memory_usage) if memory_usage else 0,
-                    "memory_max_percent": max(memory_usage) if memory_usage else 0
+                    "memory_avg_percent": (
+                        sum(memory_usage) / len(memory_usage) if memory_usage else 0
+                    ),
+                    "memory_max_percent": max(memory_usage) if memory_usage else 0,
                 },
                 "audit_stats": {
-                    "total_events": self.metrics_data[-1]["audit"].get("total_events", 0) if self.metrics_data else 0,
-                    "chain_integrity": all(s["audit"].get("chain_integrity", False) for s in self.metrics_data),
-                    "avg_events_per_second": sum(s["audit"].get("events_per_second", 0) for s in self.metrics_data) / len(self.metrics_data) if self.metrics_data else 0
+                    "total_events": (
+                        self.metrics_data[-1]["audit"].get("total_events", 0)
+                        if self.metrics_data
+                        else 0
+                    ),
+                    "chain_integrity": all(
+                        s["audit"].get("chain_integrity", False)
+                        for s in self.metrics_data
+                    ),
+                    "avg_events_per_second": (
+                        sum(
+                            s["audit"].get("events_per_second", 0)
+                            for s in self.metrics_data
+                        )
+                        / len(self.metrics_data)
+                        if self.metrics_data
+                        else 0
+                    ),
                 },
                 "security_stats": {
-                    "total_dlp_violations": sum(s["security"].get("dlp_violations", 0) for s in self.metrics_data),
-                    "total_security_alerts": sum(s["security"].get("security_alerts", 0) for s in self.metrics_data)
-                }
+                    "total_dlp_violations": sum(
+                        s["security"].get("dlp_violations", 0)
+                        for s in self.metrics_data
+                    ),
+                    "total_security_alerts": sum(
+                        s["security"].get("security_alerts", 0)
+                        for s in self.metrics_data
+                    ),
+                },
             }
 
             # Salvar relatório
@@ -351,6 +408,7 @@ class MetricsCollector:
 
         except Exception as e:
             logger.error(f"Erro ao gerar relatório de resumo: {e}")
+
 
 def main():
     """Função principal para executar coleta de métricas."""
@@ -372,6 +430,7 @@ def main():
     # Iniciar coleta
     collector = MetricsCollector()
     collector.run_collection()
+
 
 if __name__ == "__main__":
     main()

@@ -23,9 +23,9 @@ def benchmark_ibm_quantum():
 
         # Backends disponíveis (plan 'open' não suporta Session)
         backends_to_test = [
-            "ibm_fez",         # 0 fila (Omnimind)
-            "ibm_torino",      # 0 fila (Omnimind)
-            "ibm_marrakesh",   # 13k fila (skip)
+            "ibm_fez",  # 0 fila (Omnimind)
+            "ibm_torino",  # 0 fila (Omnimind)
+            "ibm_marrakesh",  # 13k fila (skip)
         ]
 
         # Configurar token
@@ -40,9 +40,7 @@ def benchmark_ibm_quantum():
         try:
             service = QiskitRuntimeService(channel="ibm_cloud", token=token)
         except ValueError:
-            service = QiskitRuntimeService(
-                channel="ibm_quantum_platform", token=token
-            )
+            service = QiskitRuntimeService(channel="ibm_quantum_platform", token=token)
 
         logger.info("connected_to_ibm_quantum")
 
@@ -107,7 +105,9 @@ def benchmark_ibm_quantum():
                 sampler = Sampler(mode=backend_obj)
                 job = sampler.run([qc_transpiled], shots=100)
 
-                logger.info("job_submitted", backend=backend_name, job_id=str(job.job_id()))
+                logger.info(
+                    "job_submitted", backend=backend_name, job_id=str(job.job_id())
+                )
 
                 # Esperar resultado
                 result = job.result(timeout=120)
@@ -140,9 +140,7 @@ def benchmark_ibm_quantum():
                 )
 
             except Exception as e:
-                logger.error(
-                    "benchmark_failed", backend=backend_name, error=str(e)
-                )
+                logger.error("benchmark_failed", backend=backend_name, error=str(e))
 
                 benchmark_data["backends"][backend_name] = {
                     "status": "failed",
@@ -171,9 +169,7 @@ def benchmark_ibm_quantum():
         print("\n" + "=" * 60)
         print("📊 IBM QUANTUM BENCHMARK RESULTS")
         print("=" * 60)
-        print(
-            f"⏱️  Total Time: {benchmark_data['metadata']['total_time_seconds']:.1f}s"
-        )
+        print(f"⏱️  Total Time: {benchmark_data['metadata']['total_time_seconds']:.1f}s")
         print(
             f"✅ Successful: {benchmark_data['metadata']['successful_runs']} "
             f"❌ Failed: {benchmark_data['metadata']['failed_runs']}"

@@ -283,8 +283,12 @@ class DiagnosticTool:
             disk = psutil.disk_usage("/")
 
             print(f"  ✓ CPU Usage: {cpu_percent:.1f}%")
-            print(f"  ✓ Memory Usage: {memory.percent:.1f}% ({memory.used // (1024**3)} GB / {memory.total // (1024**3)} GB)")
-            print(f"  ✓ Disk Usage: {disk.percent:.1f}% ({disk.used // (1024**3)} GB / {disk.total // (1024**3)} GB)")
+            print(
+                f"  ✓ Memory Usage: {memory.percent:.1f}% ({memory.used // (1024**3)} GB / {memory.total // (1024**3)} GB)"
+            )
+            print(
+                f"  ✓ Disk Usage: {disk.percent:.1f}% ({disk.used // (1024**3)} GB / {disk.total // (1024**3)} GB)"
+            )
 
             self.results["performance"]["cpu_percent"] = cpu_percent
             self.results["performance"]["memory_percent"] = memory.percent
@@ -316,7 +320,7 @@ class DiagnosticTool:
         """Generate diagnostic report."""
         logs_dir = self.omnimind_root / "logs"
         logs_dir.mkdir(parents=True, exist_ok=True)
-        
+
         output_path = logs_dir / output_file
 
         with open(output_path, "w") as f:

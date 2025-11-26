@@ -3,6 +3,7 @@ Demo: Neural Metrics Collector - Phase 20.
 
 Demonstra coleta de métricas de latência e health tracking.
 """
+
 import logging
 import sys
 from src.neurosymbolic.neural_component import NeuralComponent
@@ -10,6 +11,7 @@ from src.neurosymbolic.metrics_collector import get_metrics_collector
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message)s")
 logger = logging.getLogger("MetricsDemo")
+
 
 def demo_metrics():
     """Demonstração de coleta de métricas."""
@@ -31,7 +33,9 @@ def demo_metrics():
     for query in test_queries:
         try:
             result = ollama_nc.infer(query)
-            logger.info(f"✅ Query: {query[:30]}... | Response: {result.answer[:50]}...")
+            logger.info(
+                f"✅ Query: {query[:30]}... | Response: {result.answer[:50]}..."
+            )
         except Exception as e:
             logger.error(f"❌ Query failed: {e}")
 
@@ -39,7 +43,9 @@ def demo_metrics():
     for query in test_queries[:2]:  # Apenas 2 para economizar tempo
         try:
             result = hf_space_nc.infer(query)
-            logger.info(f"✅ Query: {query[:30]}... | Response: {result.answer[:50]}...")
+            logger.info(
+                f"✅ Query: {query[:30]}... | Response: {result.answer[:50]}..."
+            )
         except Exception as e:
             logger.error(f"❌ Query failed: {e}")
 
@@ -57,13 +63,16 @@ def demo_metrics():
         backend_metrics = metrics.get_backend_metrics(backend_name)
         if backend_metrics and backend_metrics.total_requests > 0:
             status = "✅ HEALTHY" if backend_metrics.is_healthy() else "❌ UNHEALTHY"
-            logger.info(f"  {backend_name}: {status} "
-                       f"({backend_metrics.success_rate:.1%} success, "
-                       f"{backend_metrics.average_latency*1000:.0f}ms avg)")
+            logger.info(
+                f"  {backend_name}: {status} "
+                f"({backend_metrics.success_rate:.1%} success, "
+                f"{backend_metrics.average_latency*1000:.0f}ms avg)"
+            )
 
     logger.info("\n" + "=" * 70)
     logger.info("Demo completed successfully!")
     logger.info("=" * 70)
+
 
 if __name__ == "__main__":
     try:

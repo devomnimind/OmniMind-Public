@@ -79,9 +79,7 @@ def run_mypy() -> bool:
 def run_tests() -> bool:
     """Run pytest."""
     logger.info("🧪 Running tests...")
-    returncode, stdout, stderr = run_command(
-        ["pytest", "tests/", "-v", "--tb=short"]
-    )
+    returncode, stdout, stderr = run_command(["pytest", "tests/", "-v", "--tb=short"])
 
     if returncode == 0:
         logger.info("✅ All tests passed")
@@ -124,15 +122,13 @@ def update_audit_report(results: dict) -> None:
 
 def main() -> int:
     """Main execution."""
-    logger.info("="*60)
+    logger.info("=" * 60)
     logger.info("🚀 OmniMind Autonomous Consolidation Script")
-    logger.info("="*60)
+    logger.info("=" * 60)
 
     results = {
         "timestamp": subprocess.run(
-            ["date", "+%Y-%m-%d %H:%M:%S"],
-            capture_output=True,
-            text=True
+            ["date", "+%Y-%m-%d %H:%M:%S"], capture_output=True, text=True
         ).stdout.strip(),
         "black": False,
         "flake8": False,
@@ -156,9 +152,9 @@ def main() -> int:
     update_audit_report(results)
 
     # Summary
-    logger.info("\n" + "="*60)
+    logger.info("\n" + "=" * 60)
     logger.info("📊 CONSOLIDATION SUMMARY")
-    logger.info("="*60)
+    logger.info("=" * 60)
 
     total = len(results) - 1  # Exclude timestamp
     passed = sum(1 for k, v in results.items() if k != "timestamp" and v)

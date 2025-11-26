@@ -63,7 +63,9 @@ def main() -> None:
         "compression_ms": compression_benchmark(),
         "timestamp": time.time(),
     }
-    with open("docs/reports/benchmarks/cpu_benchmark.json", "w", encoding="utf-8") as stream:
+    with open(
+        "docs/reports/benchmarks/cpu_benchmark.json", "w", encoding="utf-8"
+    ) as stream:
         json.dump(results, stream, indent=2)
 
 

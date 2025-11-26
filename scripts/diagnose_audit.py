@@ -2,8 +2,10 @@ import json
 import hashlib
 from pathlib import Path
 
+
 def hash_content(content: bytes) -> str:
     return hashlib.sha256(content).hexdigest()
+
 
 def diagnose_chain(log_file: str):
     path = Path(log_file)
@@ -31,7 +33,7 @@ def diagnose_chain(log_file: str):
             # Check 1: Prev Hash Link
             if action == "audit_system_initialized":
                 print(f"[INFO] Line {line_num}: System Initialized. Resetting chain.")
-                prev_hash = "0" * 64 # Reset expected prev hash
+                prev_hash = "0" * 64  # Reset expected prev hash
                 # But we still check if the event claims the correct prev_hash (which should be 0*64)
 
             if stored_prev_hash != prev_hash:
@@ -72,6 +74,7 @@ def diagnose_chain(log_file: str):
 
         except json.JSONDecodeError:
             print(f"[ERROR] Line {line_num}: Invalid JSON")
+
 
 if __name__ == "__main__":
     diagnose_chain("logs/audit_chain.log")

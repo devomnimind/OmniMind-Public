@@ -22,4 +22,3 @@ if __name__ == "__main__":
         main()
     else:
         print("⚠️ CUDA não disponível; não há otimizações aplicadas")
-

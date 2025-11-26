@@ -16,7 +16,8 @@ class TestQuantumAlgorithmsCoverage:
         # Hadamard
         circuit.apply_gate(QuantumGate.HADAMARD, [0])
         # |+0> = (|0> + |1>) / sqrt(2) * |0>
-        # Amplitudes: |00>: 1/sqrt(2), |01>: 1/sqrt(2), |10>: 0, |11>: 0 (assuming little endian for qubit 0)
+        # Amplitudes: |00>: 1/sqrt(2), |01>: 1/sqrt(2),
+        # |10>: 0, |11>: 0 (little endian for qubit 0)
         # Wait, implementation details:
         # _apply_hadamard(qubit):
         # if (i >> qubit) & 1 == 0: ...

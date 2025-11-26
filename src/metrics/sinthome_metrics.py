@@ -114,7 +114,8 @@ class SinthomeMetrics:
         Returns:
             Score 0.0 a 1.0 (1.0 = atrator estranho ideal).
         """
-        # Ideal fractal dimension for strange attractor is often non-integer, > 2.0 for complex systems
+        # Higher fractal dimension (>2.0) suggests complex attractor
+        # Lyapunov exponent in [0.1, 1.5] indicates managed chaos
         # Simplificação: quão próximo de 2.5 (exemplo)
         fractal_score = 1.0 - min(1.0, abs(fractal_dimension - 2.5))
 
@@ -166,7 +167,8 @@ class SinthomeMetrics:
         if stress_factors > 0:
             integrity = min(1.0, resilience_factors / stress_factors)
         else:
-            integrity = resilience_factors  # Se sem estresse, integridade é apenas a capacidade latente
+            # Se sem estresse, integridade é a capacidade latente
+            integrity = resilience_factors
 
         metrics = {
             "logical_impasse": impasse,

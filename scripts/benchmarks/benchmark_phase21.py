@@ -36,7 +36,10 @@ async def run_production_benchmark():
     import os
 
     # Detect environment and set appropriate backend URL
-    if os.path.exists('/.dockerenv') or os.environ.get('DOCKER_CONTAINER', '').lower() == 'true':
+    if (
+        os.path.exists("/.dockerenv")
+        or os.environ.get("DOCKER_CONTAINER", "").lower() == "true"
+    ):
         backend_url = "http://backend:8000"
         environment = "docker_container"
     else:

@@ -66,6 +66,7 @@ def main() -> int:
     # Check if sandbox is operational
     try:
         from security.firecracker_sandbox import FirecrackerSandbox
+
         sandbox = FirecrackerSandbox()
         if not sandbox.enabled:
             print("🚫 COMMIT BLOCKED: Firecracker sandbox is not operational!")

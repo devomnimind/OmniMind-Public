@@ -4,7 +4,7 @@ import time
 
 import psutil
 
-SIZES = [100 * 1024 ** 2, 1024 ** 3]
+SIZES = [100 * 1024**2, 1024**3]
 
 
 def memory_throughput(size: int) -> float:
@@ -12,7 +12,7 @@ def memory_throughput(size: int) -> float:
     start = time.perf_counter()
     for i in range(0, size, 4096):
         arr[i] = (arr[i] + 1) % 256
-    throughput = size / (time.perf_counter() - start) / (1024 ** 2)
+    throughput = size / (time.perf_counter() - start) / (1024**2)
     return throughput
 
 
@@ -23,7 +23,9 @@ def main() -> None:
         "memory_throughput_mb_s": [memory_throughput(size) for size in SIZES],
         "timestamp": time.time(),
     }
-    with open("docs/reports/benchmarks/memory_benchmark.json", "w", encoding="utf-8") as stream:
+    with open(
+        "docs/reports/benchmarks/memory_benchmark.json", "w", encoding="utf-8"
+    ) as stream:
         json.dump(results, stream, indent=2)
 
 

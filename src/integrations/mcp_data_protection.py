@@ -57,7 +57,6 @@ class DataProtectionError(Exception):
     """Erro na proteção de dados."""
 
 
-
 class MCPDataProtection:
     """
     Sistema de proteção de dados para MCPs.

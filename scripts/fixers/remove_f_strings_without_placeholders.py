@@ -20,7 +20,12 @@ FSTRING_SIMPLE = re.compile(r"(?P<prefix>\b)f(?P<quote>['\"]).*?\k<quote>")
 
 def files_to_fix() -> Iterable[Path]:
     for p in ROOT.rglob("*.py"):
-        if "tests/" in str(p) or "demo" in str(p) or "scripts/" in str(p) or "web/" in str(p):
+        if (
+            "tests/" in str(p)
+            or "demo" in str(p)
+            or "scripts/" in str(p)
+            or "web/" in str(p)
+        ):
             yield p
 
 
@@ -35,7 +40,7 @@ def fix_file(path: Path) -> bool:
 
     for ln in lines:
         # quick skip
-        if "f\"" not in ln and "f'" not in ln:
+        if 'f"' not in ln and "f'" not in ln:
             out.append(ln)
             continue
 

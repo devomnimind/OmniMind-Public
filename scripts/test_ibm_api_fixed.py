@@ -17,6 +17,7 @@ if project_root not in sys.path:
 from src.quantum_consciousness.qpu_interface import QPUInterface, BackendType
 from qiskit import QuantumCircuit
 
+
 def test_ibm_api_fixed():
     """Testa a API IBM corrigida."""
 
@@ -25,7 +26,7 @@ def test_ibm_api_fixed():
 
     # Carregar token
     load_dotenv()
-    ibm_token = os.getenv('IBM_API_KEY')
+    ibm_token = os.getenv("IBM_API_KEY")
 
     if not ibm_token:
         print("❌ ERRO: IBM_API_KEY não encontrado")
@@ -41,7 +42,9 @@ def test_ibm_api_fixed():
         backends = qpu.list_backends()
         print(f"   Backends disponíveis: {len(backends)}")
         for b in backends:
-            print(f"   - {b.name} ({b.backend_type.value}) - {'✅' if b.available else '❌'}")
+            print(
+                f"   - {b.name} ({b.backend_type.value}) - {'✅' if b.available else '❌'}"
+            )
 
         # Tentar usar IBM
         if BackendType.IBMQ_CLOUD in [b.backend_type for b in backends]:
@@ -70,8 +73,10 @@ def test_ibm_api_fixed():
     except Exception as e:
         print(f"❌ ERRO: {str(e)}")
         import traceback
+
         traceback.print_exc()
         return False
+
 
 if __name__ == "__main__":
     success = test_ibm_api_fixed()

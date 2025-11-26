@@ -68,7 +68,6 @@ class RateLimitExceeded(Exception):
     """Exceção quando rate limit é excedido."""
 
 
-
 class EnhancedMCPClient:
     """
     Cliente MCP aprimorado com cache, rate limiting e proteção de dados.

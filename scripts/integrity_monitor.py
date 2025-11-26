@@ -65,13 +65,13 @@ class IntegrityMonitor:
                 "smtp_port": 587,
                 "username": "alerts@omnimind.ai",
                 "password": "",  # Configurar
-                "recipients": ["admin@omnimind.ai"]
+                "recipients": ["admin@omnimind.ai"],
             },
             "slack": {
                 "enabled": False,
                 "webhook_url": "",  # Configurar
-                "channel": "#security-alerts"
-            }
+                "channel": "#security-alerts",
+            },
         }
 
         # Sistema de auditoria
@@ -85,7 +85,7 @@ class IntegrityMonitor:
         self.logger.setLevel(logging.INFO)
 
         handler = logging.FileHandler(self.monitor_log)
-        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
 
@@ -152,7 +152,7 @@ class IntegrityMonitor:
             "timestamp": datetime.now().isoformat(),
             "level": level,
             "title": title,
-            "message": message
+            "message": message,
         }
 
         with open(self.alerts_log, "a") as f:
@@ -163,7 +163,8 @@ class IntegrityMonitor:
         try:
             config = self.alert_config["email"]
 
-            msg = MIMEText(f"""
+            msg = MIMEText(
+                f"""
 ALERTA DE INTEGRIDADE - {level.upper()}
 
 {title}
@@ -175,11 +176,12 @@ Sistema: OmniMind Audit Monitor
 
 ---
 Este é um alerta automático do sistema de monitoramento de integridade.
-""")
+"""
+            )
 
-            msg['Subject'] = f"[OMNIMIND ALERT] {level.upper()}: {title}"
-            msg['From'] = config["username"]
-            msg['To'] = ", ".join(config["recipients"])
+            msg["Subject"] = f"[OMNIMIND ALERT] {level.upper()}: {title}"
+            msg["From"] = config["username"]
+            msg["To"] = ", ".join(config["recipients"])
 
             server = smtplib.SMTP(config["smtp_server"], config["smtp_port"])
             server.starttls()
@@ -197,30 +199,26 @@ Este é um alerta automático do sistema de monitoramento de integridade.
         try:
             config = self.alert_config["slack"]
 
-            emoji_map = {
-                "critical": "🚨",
-                "high": "⚠️",
-                "medium": "📊",
-                "low": "ℹ️"
-            }
+            emoji_map = {"critical": "🚨", "high": "⚠️", "medium": "📊", "low": "ℹ️"}
 
             payload = {
                 "channel": config["channel"],
                 "username": "OmniMind Audit Monitor",
                 "icon_emoji": emoji_map.get(level, "🤖"),
                 "text": f"*{title}*\n{message}",
-                "attachments": [{
-                    "color": "danger" if level == "critical" else "warning",
-                    "fields": [{
-                        "title": "Timestamp",
-                        "value": datetime.now().isoformat(),
-                        "short": True
-                    }, {
-                        "title": "Level",
-                        "value": level.upper(),
-                        "short": True
-                    }]
-                }]
+                "attachments": [
+                    {
+                        "color": "danger" if level == "critical" else "warning",
+                        "fields": [
+                            {
+                                "title": "Timestamp",
+                                "value": datetime.now().isoformat(),
+                                "short": True,
+                            },
+                            {"title": "Level", "value": level.upper(), "short": True},
+                        ],
+                    }
+                ],
             }
 
             response = requests.post(config["webhook_url"], json=payload)
@@ -243,27 +241,33 @@ Este é um alerta automático do sistema de monitoramento de integridade.
 
             # Verificar se GPU está sendo usada (métricas válidas)
             if report["gpu_status"]["utilization"] == 0.0:
-                issues.append({
-                    "type": "gpu_not_used",
-                    "severity": "high",
-                    "message": "GPU não está sendo utilizada - métricas de performance são FALSAS"
-                })
+                issues.append(
+                    {
+                        "type": "gpu_not_used",
+                        "severity": "high",
+                        "message": "GPU não está sendo utilizada - métricas de performance são FALSAS",
+                    }
+                )
 
             # Verificar se há muitos erros recentes
             if report["metrics"]["corruption_rate"] > 0.05:  # 5%
-                issues.append({
-                    "type": "high_corruption",
-                    "severity": "critical",
-                    "message": f"Taxa de corrupção elevada: {report['metrics']['corruption_rate']:.1%}"
-                })
+                issues.append(
+                    {
+                        "type": "high_corruption",
+                        "severity": "critical",
+                        "message": f"Taxa de corrupção elevada: {report['metrics']['corruption_rate']:.1%}",
+                    }
+                )
 
             # Verificar uso de memória
             if report["metrics"]["memory_usage"] > 0.9:  # 90%
-                issues.append({
-                    "type": "high_memory",
-                    "severity": "medium",
-                    "message": f"Uso de memória alto: {report['metrics']['memory_usage']:.1%}"
-                })
+                issues.append(
+                    {
+                        "type": "high_memory",
+                        "severity": "medium",
+                        "message": f"Uso de memória alto: {report['metrics']['memory_usage']:.1%}",
+                    }
+                )
 
             report["additional_issues"] = issues
             return report
@@ -273,7 +277,7 @@ Este é um alerta automático do sistema de monitoramento de integridade.
             return {
                 "error": str(e),
                 "system_status": "error",
-                "timestamp": datetime.now().isoformat()
+                "timestamp": datetime.now().isoformat(),
             }
 
     def _execute_corrective_actions(self, report: Dict[str, Any]):
@@ -292,24 +296,26 @@ Este é um alerta automático do sistema de monitoramento de integridade.
 
         try:
             # Verificar e corrigir configuração da GPU
-            config_file = Path("~/projects/omnimind/config/optimization_config.json").expanduser()
+            config_file = Path(
+                "~/projects/omnimind/config/optimization_config.json"
+            ).expanduser()
 
             if config_file.exists():
-                with open(config_file, 'r') as f:
+                with open(config_file, "r") as f:
                     config = json.load(f)
 
                 if not config.get("use_gpu", False):
                     config["use_gpu"] = True
                     config["device"] = "cuda"
 
-                    with open(config_file, 'w') as f:
+                    with open(config_file, "w") as f:
                         json.dump(config, f, indent=2)
 
                     self.logger.info("Configuração GPU corrigida")
                     self._send_alert(
                         "GPU Configuração Corrigida",
                         "Configuração de GPU foi automaticamente corrigida para usar CUDA",
-                        "info"
+                        "info",
                     )
                 else:
                     self.logger.info("Configuração GPU já está correta")
@@ -329,13 +335,13 @@ Este é um alerta automático do sistema de monitoramento de integridade.
                 self._send_alert(
                     "Reparo de Corrupção Executado",
                     f"Cadeia de auditoria reparada: {result['message']}",
-                    "info"
+                    "info",
                 )
             else:
                 self._send_alert(
                     "Falha no Reparo de Corrupção",
                     f"Reparo automático falhou: {result['message']}",
-                    "critical"
+                    "critical",
                 )
 
         except Exception as e:
@@ -355,12 +361,12 @@ Este é um alerta automático do sistema de monitoramento de integridade.
                 "monitor_dir": str(self.monitor_dir),
                 "alert_config": {
                     "email_enabled": self.alert_config["email"]["enabled"],
-                    "slack_enabled": self.alert_config["slack"]["enabled"]
-                }
-            }
+                    "slack_enabled": self.alert_config["slack"]["enabled"],
+                },
+            },
         }
 
-        with open(report_file, 'w') as f:
+        with open(report_file, "w") as f:
             json.dump(health_data, f, indent=2)
 
         return str(report_file)
@@ -376,7 +382,7 @@ Este é um alerta automático do sistema de monitoramento de integridade.
             self._send_alert(
                 "Erro no Monitoramento",
                 f"Falha ao verificar integridade: {report['error']}",
-                "critical"
+                "critical",
             )
             return report
 
@@ -387,13 +393,13 @@ Este é um alerta automático do sistema de monitoramento de integridade.
             self._send_alert(
                 "Integridade CRÍTICA Detectada",
                 "Sistema de auditoria comprometido - ação imediata necessária",
-                "critical"
+                "critical",
             )
         elif status == "high":
             self._send_alert(
                 "Integridade Comprometida",
                 "Quebras na cadeia de auditoria detectadas",
-                "high"
+                "high",
             )
 
         # Executar ações corretivas
@@ -402,13 +408,15 @@ Este é um alerta automático do sistema de monitoramento de integridade.
         # Gerar relatório de saúde
         health_report = self._generate_health_report()
 
-        self.logger.info(f"✅ Ciclo de monitoramento concluído - Relatório: {health_report}")
+        self.logger.info(
+            f"✅ Ciclo de monitoramento concluído - Relatório: {health_report}"
+        )
 
         return {
             "status": status,
             "report": report,
             "health_report": health_report,
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
         }
 
     def start_continuous_monitoring(self):
@@ -428,7 +436,7 @@ Este é um alerta automático do sistema de monitoramento de integridade.
             self._send_alert(
                 "Monitoramento Falhou",
                 f"Erro fatal no sistema de monitoramento: {e}",
-                "critical"
+                "critical",
             )
 
     def run_once(self) -> Dict[str, Any]:
@@ -440,13 +448,18 @@ def main():
     """Função principal do monitor"""
     import argparse
 
-    parser = argparse.ArgumentParser(description="Monitor de Integridade do Sistema de Auditoria")
-    parser.add_argument("--continuous", action="store_true",
-                       help="Executar monitoramento contínuo")
-    parser.add_argument("--once", action="store_true",
-                       help="Executar uma verificação única")
-    parser.add_argument("--log-dir", default="~/projects/omnimind/logs",
-                       help="Diretório de logs")
+    parser = argparse.ArgumentParser(
+        description="Monitor de Integridade do Sistema de Auditoria"
+    )
+    parser.add_argument(
+        "--continuous", action="store_true", help="Executar monitoramento contínuo"
+    )
+    parser.add_argument(
+        "--once", action="store_true", help="Executar uma verificação única"
+    )
+    parser.add_argument(
+        "--log-dir", default="~/projects/omnimind/logs", help="Diretório de logs"
+    )
 
     args = parser.parse_args()
 

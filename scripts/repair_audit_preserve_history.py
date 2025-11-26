@@ -5,8 +5,10 @@ from pathlib import Path
 import time
 from datetime import datetime, timezone
 
+
 def hash_content(content: bytes) -> str:
     return hashlib.sha256(content).hexdigest()
+
 
 def repair_chain_preserve_history(log_file: str):
     path = Path(log_file)
@@ -69,7 +71,9 @@ def repair_chain_preserve_history(log_file: str):
             prev_hash = current_hash
 
             # Serialize back to line
-            repaired_lines.append(json.dumps(event, sort_keys=True).encode("utf-8") + b"\n")
+            repaired_lines.append(
+                json.dumps(event, sort_keys=True).encode("utf-8") + b"\n"
+            )
 
         except json.JSONDecodeError:
             print(f"[WARN] Skipping invalid JSON at line {line_num}")
@@ -84,13 +88,18 @@ def repair_chain_preserve_history(log_file: str):
     # Update hash_chain.json
     hash_chain_file = path.parent / "hash_chain.json"
     with open(hash_chain_file, "w") as f:
-        json.dump({
-            "last_hash": prev_hash,
-            "timestamp": time.time(),
-            "datetime": datetime.now(timezone.utc).isoformat()
-        }, f, indent=2)
+        json.dump(
+            {
+                "last_hash": prev_hash,
+                "timestamp": time.time(),
+                "datetime": datetime.now(timezone.utc).isoformat(),
+            },
+            f,
+            indent=2,
+        )
 
     print(f"Repair complete. {events_modified} events re-hashed.")
+
 
 if __name__ == "__main__":
     repair_chain_preserve_history("logs/audit_chain.log")

@@ -37,13 +37,17 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 from src.quantum_consciousness.qpu_interface import QPUInterface, BackendType
-from src.quantum_consciousness.quantum_cognition import QuantumDecisionMaker, QuantumCognitionEngine
+from src.quantum_consciousness.quantum_cognition import (
+    QuantumDecisionMaker,
+    QuantumCognitionEngine,
+)
 from src.quantum_consciousness.quantum_memory import QuantumMemorySystem
 from qiskit import QuantumCircuit
 import structlog
 
 # Configurar logging
 logger = structlog.get_logger(__name__)
+
 
 class QuantumBenchmarkSuite:
     """
@@ -57,13 +61,17 @@ class QuantumBenchmarkSuite:
 
         # Inicializar interfaces
         self.qpu_sim = QPUInterface()  # Simulador
-        self.qpu_ibm = QPUInterface(ibmq_token=ibm_token, preferred_backend=BackendType.IBMQ_CLOUD)  # IBM Hardware
+        self.qpu_ibm = QPUInterface(
+            ibmq_token=ibm_token, preferred_backend=BackendType.IBMQ_CLOUD
+        )  # IBM Hardware
 
         # Configurações de benchmark
         self.shots_configs = [1024, 2048, 4096, 8192]
         self.qubit_configs = [2, 4, 8, 16]
 
-        logger.info("Quantum Benchmark Suite initialized", ibm_token_available=bool(ibm_token))
+        logger.info(
+            "Quantum Benchmark Suite initialized", ibm_token_available=bool(ibm_token)
+        )
 
     def run_full_benchmark_suite(self) -> Dict[str, Any]:
         """Executar suite completa de benchmarks."""
@@ -102,11 +110,7 @@ class QuantumBenchmarkSuite:
 
         logger.info("🎯 Benchmarking Quantum Decision Making")
 
-        results = {
-            "simulator": {},
-            "ibm_hardware": {},
-            "comparison": {}
-        }
+        results = {"simulator": {}, "ibm_hardware": {}, "comparison": {}}
 
         for num_options in [4, 8, 16]:
             num_qubits = int(np.ceil(np.log2(num_options)))
@@ -130,8 +134,9 @@ class QuantumBenchmarkSuite:
 
         return results
 
-    def _run_decision_making_benchmark(self, num_qubits: int, num_options: int,
-                                     qpu: QPUInterface, backend_name: str) -> Dict[str, Any]:
+    def _run_decision_making_benchmark(
+        self, num_qubits: int, num_options: int, qpu: QPUInterface, backend_name: str
+    ) -> Dict[str, Any]:
         """Executar benchmark de decision making em um backend específico."""
 
         try:
@@ -151,13 +156,15 @@ class QuantumBenchmarkSuite:
                 choice = decision.collapse()
                 execution_time = time.time() - start_time
 
-                decisions.append({
-                    "decision_id": i,
-                    "chosen_option": choice,
-                    "confidence": decision.confidence,
-                    "execution_time": execution_time,
-                    "probabilities": decision.probabilities
-                })
+                decisions.append(
+                    {
+                        "decision_id": i,
+                        "chosen_option": choice,
+                        "confidence": decision.confidence,
+                        "execution_time": execution_time,
+                        "probabilities": decision.probabilities,
+                    }
+                )
 
             # Calcular estatísticas
             execution_times = [d["execution_time"] for d in decisions]
@@ -173,8 +180,8 @@ class QuantumBenchmarkSuite:
                     "std_execution_time": np.std(execution_times),
                     "avg_confidence": np.mean(confidences),
                     "std_confidence": np.std(confidences),
-                    "uniformity_test": self._test_uniformity(decisions)
-                }
+                    "uniformity_test": self._test_uniformity(decisions),
+                },
             }
 
         except Exception as e:
@@ -186,11 +193,7 @@ class QuantumBenchmarkSuite:
 
         logger.info("🧠 Benchmarking Quantum Memory Fidelity")
 
-        results = {
-            "simulator": {},
-            "ibm_hardware": {},
-            "comparison": {}
-        }
+        results = {"simulator": {}, "ibm_hardware": {}, "comparison": {}}
 
         # Testar diferentes tamanhos de dados
         data_sizes = [2, 4, 8]  # qubits
@@ -199,11 +202,15 @@ class QuantumBenchmarkSuite:
             logger.info(f"Testing memory fidelity with {data_size} qubits")
 
             # Simulador
-            sim_results = self._run_memory_fidelity_benchmark(data_size, self.qpu_sim, "simulator")
+            sim_results = self._run_memory_fidelity_benchmark(
+                data_size, self.qpu_sim, "simulator"
+            )
             results["simulator"][f"{data_size}_qubits"] = sim_results
 
             # Hardware IBM
-            ibm_results = self._run_memory_fidelity_benchmark(data_size, self.qpu_ibm, "ibm_hardware")
+            ibm_results = self._run_memory_fidelity_benchmark(
+                data_size, self.qpu_ibm, "ibm_hardware"
+            )
             results["ibm_hardware"][f"{data_size}_qubits"] = ibm_results
 
         # Comparação
@@ -211,7 +218,9 @@ class QuantumBenchmarkSuite:
 
         return results
 
-    def _run_memory_fidelity_benchmark(self, data_size: int, qpu: QPUInterface, backend_name: str) -> Dict[str, Any]:
+    def _run_memory_fidelity_benchmark(
+        self, data_size: int, qpu: QPUInterface, backend_name: str
+    ) -> Dict[str, Any]:
         """Executar benchmark de memory fidelity."""
 
         try:
@@ -220,7 +229,7 @@ class QuantumBenchmarkSuite:
             # Testar diferentes padrões de dados
             test_patterns = [
                 [1.0] + [0.0] * (data_size - 1),  # |100...0⟩
-                [0.5] * data_size,                # Superposição uniforme
+                [0.5] * data_size,  # Superposição uniforme
                 [0.0] * (data_size - 1) + [1.0],  # |000...1⟩
             ]
 
@@ -242,12 +251,14 @@ class QuantumBenchmarkSuite:
                 else:
                     fidelity = 0.0
 
-                results.append({
-                    "pattern_id": i,
-                    "original": pattern.tolist(),
-                    "retrieved": retrieved,
-                    "fidelity": fidelity
-                })
+                results.append(
+                    {
+                        "pattern_id": i,
+                        "original": pattern.tolist(),
+                        "retrieved": retrieved,
+                        "fidelity": fidelity,
+                    }
+                )
 
             # Estatísticas
             fidelities = [r["fidelity"] for r in results]
@@ -260,8 +271,8 @@ class QuantumBenchmarkSuite:
                     "avg_fidelity": np.mean(fidelities),
                     "std_fidelity": np.std(fidelities),
                     "min_fidelity": np.min(fidelities),
-                    "max_fidelity": np.max(fidelities)
-                }
+                    "max_fidelity": np.max(fidelities),
+                },
             }
 
         except Exception as e:
@@ -273,11 +284,7 @@ class QuantumBenchmarkSuite:
 
         logger.info("🔍 Benchmarking Grover Search Algorithm")
 
-        results = {
-            "simulator": {},
-            "ibm_hardware": {},
-            "comparison": {}
-        }
+        results = {"simulator": {}, "ibm_hardware": {}, "comparison": {}}
 
         # Testar diferentes tamanhos de busca
         search_spaces = [4, 8, 16]  # 2^2, 2^3, 2^4
@@ -288,11 +295,15 @@ class QuantumBenchmarkSuite:
             logger.info(f"Testing Grover search in space of {search_space} items")
 
             # Simulador
-            sim_results = self._run_grover_benchmark(search_space, self.qpu_sim, "simulator")
+            sim_results = self._run_grover_benchmark(
+                search_space, self.qpu_sim, "simulator"
+            )
             results["simulator"][f"space_{search_space}"] = sim_results
 
             # Hardware IBM
-            ibm_results = self._run_grover_benchmark(search_space, self.qpu_ibm, "ibm_hardware")
+            ibm_results = self._run_grover_benchmark(
+                search_space, self.qpu_ibm, "ibm_hardware"
+            )
             results["ibm_hardware"][f"space_{search_space}"] = ibm_results
 
         # Comparação
@@ -300,7 +311,9 @@ class QuantumBenchmarkSuite:
 
         return results
 
-    def _run_grover_benchmark(self, search_space: int, qpu: QPUInterface, backend_name: str) -> Dict[str, Any]:
+    def _run_grover_benchmark(
+        self, search_space: int, qpu: QPUInterface, backend_name: str
+    ) -> Dict[str, Any]:
         """Executar benchmark do algoritmo de Grover."""
 
         try:
@@ -317,15 +330,15 @@ class QuantumBenchmarkSuite:
             qc.h(range(num_qubits))
 
             # Oráculo simples (marca o item alvo)
-            target_binary = format(target_item, f'0{num_qubits}b')
+            target_binary = format(target_item, f"0{num_qubits}b")
             for i, bit in enumerate(target_binary):
-                if bit == '0':
+                if bit == "0":
                     qc.x(i)
 
             # Diffuser (amplificação de amplitude)
             qc.h(range(num_qubits))
             qc.x(range(num_qubits))
-            qc.h(num_qubits-1)
+            qc.h(num_qubits - 1)
             qc.x(range(num_qubits))
             qc.h(range(num_qubits))
 
@@ -355,7 +368,11 @@ class QuantumBenchmarkSuite:
                 "execution_time": execution_time,
                 "success_probability": success_probability,
                 "classical_expectation": classical_expectation,
-                "quantum_advantage": quantum_expectation / classical_expectation if classical_expectation > 0 else 0
+                "quantum_advantage": (
+                    quantum_expectation / classical_expectation
+                    if classical_expectation > 0
+                    else 0
+                ),
             }
 
         except Exception as e:
@@ -367,11 +384,7 @@ class QuantumBenchmarkSuite:
 
         logger.info("🔗 Benchmarking Bell States Entanglement")
 
-        results = {
-            "simulator": {},
-            "ibm_hardware": {},
-            "comparison": {}
-        }
+        results = {"simulator": {}, "ibm_hardware": {}, "comparison": {}}
 
         # Diferentes estados Bell
         bell_states = [
@@ -385,11 +398,15 @@ class QuantumBenchmarkSuite:
             logger.info(f"Testing Bell state: {bell_name} ({bell_desc})")
 
             # Simulador
-            sim_results = self._run_bell_state_benchmark(bell_name, self.qpu_sim, "simulator")
+            sim_results = self._run_bell_state_benchmark(
+                bell_name, self.qpu_sim, "simulator"
+            )
             results["simulator"][bell_name] = sim_results
 
             # Hardware IBM
-            ibm_results = self._run_bell_state_benchmark(bell_name, self.qpu_ibm, "ibm_hardware")
+            ibm_results = self._run_bell_state_benchmark(
+                bell_name, self.qpu_ibm, "ibm_hardware"
+            )
             results["ibm_hardware"][bell_name] = ibm_results
 
         # Comparação
@@ -397,7 +414,9 @@ class QuantumBenchmarkSuite:
 
         return results
 
-    def _run_bell_state_benchmark(self, bell_state: str, qpu: QPUInterface, backend_name: str) -> Dict[str, Any]:
+    def _run_bell_state_benchmark(
+        self, bell_state: str, qpu: QPUInterface, backend_name: str
+    ) -> Dict[str, Any]:
         """Executar benchmark de estado Bell."""
 
         try:
@@ -447,11 +466,13 @@ class QuantumBenchmarkSuite:
                     "00": prob_00,
                     "01": prob_01,
                     "10": prob_10,
-                    "11": prob_11
+                    "11": prob_11,
                 },
                 "execution_time": execution_time,
                 "entanglement_fidelity": entanglement_fidelity,
-                "perfect_correlation": abs(prob_00 - prob_11) < 0.1 and prob_01 < 0.1 and prob_10 < 0.1
+                "perfect_correlation": abs(prob_00 - prob_11) < 0.1
+                and prob_01 < 0.1
+                and prob_10 < 0.1,
             }
 
         except Exception as e:
@@ -467,7 +488,7 @@ class QuantumBenchmarkSuite:
             "simulator": {},
             "ibm_hardware": {},
             "classical_comparison": {},
-            "comparison": {}
+            "comparison": {},
         }
 
         # Testar diferentes números de bits
@@ -477,11 +498,15 @@ class QuantumBenchmarkSuite:
             logger.info(f"Testing randomness quality with {bit_length} bits")
 
             # Simulador quântico
-            sim_results = self._run_randomness_benchmark(bit_length, self.qpu_sim, "simulator")
+            sim_results = self._run_randomness_benchmark(
+                bit_length, self.qpu_sim, "simulator"
+            )
             results["simulator"][f"{bit_length}_bits"] = sim_results
 
             # Hardware IBM
-            ibm_results = self._run_randomness_benchmark(bit_length, self.qpu_ibm, "ibm_hardware")
+            ibm_results = self._run_randomness_benchmark(
+                bit_length, self.qpu_ibm, "ibm_hardware"
+            )
             results["ibm_hardware"][f"{bit_length}_bits"] = ibm_results
 
             # Comparação com PRNG clássico
@@ -493,7 +518,9 @@ class QuantumBenchmarkSuite:
 
         return results
 
-    def _run_randomness_benchmark(self, bit_length: int, qpu: QPUInterface, backend_name: str) -> Dict[str, Any]:
+    def _run_randomness_benchmark(
+        self, bit_length: int, qpu: QPUInterface, backend_name: str
+    ) -> Dict[str, Any]:
         """Executar benchmark de qualidade da aleatoriedade."""
 
         try:
@@ -524,7 +551,7 @@ class QuantumBenchmarkSuite:
                 "backend": backend_name,
                 "bit_length": bit_length,
                 "sequences": sequences,
-                "quality_metrics": quality_metrics
+                "quality_metrics": quality_metrics,
             }
 
         except Exception as e:
@@ -539,18 +566,10 @@ class QuantumBenchmarkSuite:
         # Este benchmark compara Q-learning clássico vs híbrido
         # Implementação simplificada para demonstração
 
-        results = {
-            "classical_qlearning": {},
-            "hybrid_qlearning": {},
-            "comparison": {}
-        }
+        results = {"classical_qlearning": {}, "hybrid_qlearning": {}, "comparison": {}}
 
         # Simulação de ambiente simples (grid world)
-        env_config = {
-            "states": 10,
-            "actions": 4,
-            "episodes": 100
-        }
+        env_config = {"states": 10, "actions": 4, "episodes": 100}
 
         # Q-Learning Clássico
         classical_results = self._run_classical_qlearning(env_config)
@@ -561,7 +580,9 @@ class QuantumBenchmarkSuite:
         results["hybrid_qlearning"] = hybrid_results
 
         # Comparação
-        results["comparison"] = self._compare_qlearning_results(classical_results, hybrid_results)
+        results["comparison"] = self._compare_qlearning_results(
+            classical_results, hybrid_results
+        )
 
         return results
 
@@ -573,7 +594,7 @@ class QuantumBenchmarkSuite:
         results = {
             "simulator_clean": {},
             "ibm_hardware_noisy": {},
-            "noise_analysis": {}
+            "noise_analysis": {},
         }
 
         # Testar circuitos de diferentes profundidades
@@ -603,7 +624,7 @@ class QuantumBenchmarkSuite:
             "benchmarks_completed": len(self.results),
             "quantum_advantage_detected": False,
             "noise_impact_significant": False,
-            "recommendations": []
+            "recommendations": [],
         }
 
         # Verificar vantagem quântica
@@ -620,14 +641,22 @@ class QuantumBenchmarkSuite:
 
         # Recomendações
         if summary["quantum_advantage_detected"]:
-            summary["recommendations"].append("Quantum advantage detected - pursue quantum algorithms")
+            summary["recommendations"].append(
+                "Quantum advantage detected - pursue quantum algorithms"
+            )
         else:
-            summary["recommendations"].append("No quantum advantage detected - focus on hybrid approaches")
+            summary["recommendations"].append(
+                "No quantum advantage detected - focus on hybrid approaches"
+            )
 
         if summary["noise_impact_significant"]:
-            summary["recommendations"].append("High noise impact - implement error mitigation")
+            summary["recommendations"].append(
+                "High noise impact - implement error mitigation"
+            )
         else:
-            summary["recommendations"].append("Low noise impact - quantum algorithms feasible")
+            summary["recommendations"].append(
+                "Low noise impact - quantum algorithms feasible"
+            )
 
         return summary
 
@@ -647,7 +676,7 @@ class QuantumBenchmarkSuite:
     def _test_uniformity(self, decisions: List[Dict]) -> Dict[str, Any]:
         """Testar se as decisões são uniformemente distribuídas."""
         if not decisions:
-            return {"uniform": False, "chi_squared": float('inf')}
+            return {"uniform": False, "chi_squared": float("inf")}
 
         # Contar frequência de cada opção escolhida
         choice_counts = {}
@@ -659,13 +688,15 @@ class QuantumBenchmarkSuite:
         num_options = len(choice_counts)
 
         if num_options == 0:
-            return {"uniform": False, "chi_squared": float('inf')}
+            return {"uniform": False, "chi_squared": float("inf")}
 
         expected_count = total_decisions / num_options
 
         # Chi-squared test
-        chi_squared = sum((count - expected_count) ** 2 / expected_count
-                         for count in choice_counts.values())
+        chi_squared = sum(
+            (count - expected_count) ** 2 / expected_count
+            for count in choice_counts.values()
+        )
 
         # Para distribuição uniforme, chi-squared deve ser pequeno
         # Usando alpha=0.05, graus de liberdade = num_options - 1
@@ -675,7 +706,7 @@ class QuantumBenchmarkSuite:
             "uniform": chi_squared < critical_value,
             "chi_squared": chi_squared,
             "critical_value": critical_value,
-            "choice_distribution": choice_counts
+            "choice_distribution": choice_counts,
         }
 
     def _analyze_randomness_quality(self, sequences: List[str]) -> Dict[str, Any]:
@@ -688,8 +719,8 @@ class QuantumBenchmarkSuite:
             "sequence_length": len(sequences[0]) if sequences else 0,
             "num_sequences": len(sequences),
             "monobit_test": 0.0,  # Proporção de 0s vs 1s
-            "runs_test": 0.0,     # Número de sequências de bits iguais
-            "quality_score": 0.0
+            "runs_test": 0.0,  # Número de sequências de bits iguais
+            "quality_score": 0.0,
         }
 
         # Monobit test (proporção de 1s deve ser ~0.5)
@@ -698,18 +729,20 @@ class QuantumBenchmarkSuite:
 
         for seq in sequences:
             total_bits += len(seq)
-            total_ones += seq.count('1')
+            total_ones += seq.count("1")
 
         if total_bits > 0:
             proportion_ones = total_ones / total_bits
-            quality_metrics["monobit_test"] = 1.0 - abs(proportion_ones - 0.5) * 2  # 1.0 = perfeito
+            quality_metrics["monobit_test"] = (
+                1.0 - abs(proportion_ones - 0.5) * 2
+            )  # 1.0 = perfeito
 
         # Runs test (contar mudanças entre 0s e 1s)
         total_runs = 0
         for seq in sequences:
             runs = 1
             for i in range(1, len(seq)):
-                if seq[i] != seq[i-1]:
+                if seq[i] != seq[i - 1]:
                     runs += 1
             total_runs += runs
 
@@ -718,7 +751,9 @@ class QuantumBenchmarkSuite:
             quality_metrics["runs_test"] = min(1.0, expected_runs / total_runs)
 
         # Pontuação geral
-        quality_metrics["quality_score"] = (quality_metrics["monobit_test"] + quality_metrics["runs_test"]) / 2
+        quality_metrics["quality_score"] = (
+            quality_metrics["monobit_test"] + quality_metrics["runs_test"]
+        ) / 2
 
         return quality_metrics
 
@@ -744,17 +779,24 @@ class QuantumBenchmarkSuite:
     def _run_classical_qlearning(self, env_config: Dict) -> Dict[str, Any]:
         return {"classical_qlearning": "placeholder"}
 
-    def _run_hybrid_qlearning(self, env_config: Dict, qpu: QPUInterface) -> Dict[str, Any]:
+    def _run_hybrid_qlearning(
+        self, env_config: Dict, qpu: QPUInterface
+    ) -> Dict[str, Any]:
         return {"hybrid_qlearning": "placeholder"}
 
-    def _compare_qlearning_results(self, classical: Dict, hybrid: Dict) -> Dict[str, Any]:
+    def _compare_qlearning_results(
+        self, classical: Dict, hybrid: Dict
+    ) -> Dict[str, Any]:
         return {"qlearning_comparison": "placeholder"}
 
-    def _run_noise_test(self, depth: int, qpu: QPUInterface, noise_type: str) -> Dict[str, Any]:
+    def _run_noise_test(
+        self, depth: int, qpu: QPUInterface, noise_type: str
+    ) -> Dict[str, Any]:
         return {"noise_test": "placeholder"}
 
     def _analyze_noise_impact(self, results: Dict) -> Dict[str, Any]:
         return {"noise_analysis": "placeholder"}
+
 
 def main():
     """Executar suite completa de benchmarks quânticos."""
@@ -774,7 +816,7 @@ def main():
 
     # Carregar token IBM
     load_dotenv()
-    ibm_token = os.getenv('IBM_API_KEY')
+    ibm_token = os.getenv("IBM_API_KEY")
 
     if not ibm_token:
         print("❌ ERRO: IBM_API_KEY não encontrado no .env")
@@ -801,17 +843,23 @@ def main():
 
         print("✅ Benchmarks concluídos com sucesso!")
         print(f"📊 Resultados salvos em: {output_file}")
-        print(f"⏱️  Tempo total: {results['summary']['total_execution_time']:.1f} segundos")
+        print(
+            f"⏱️  Tempo total: {results['summary']['total_execution_time']:.1f} segundos"
+        )
 
         # Resumo executivo
         print("\n📈 RESUMO EXECUTIVO:")
         print(f"• Benchmarks executados: {results['summary']['benchmarks_completed']}")
-        print(f"• Vantagem quântica detectada: {results['summary']['quantum_advantage_detected']}")
-        print(f"• Impacto significativo do ruído: {results['summary']['noise_impact_significant']}")
+        print(
+            f"• Vantagem quântica detectada: {results['summary']['quantum_advantage_detected']}"
+        )
+        print(
+            f"• Impacto significativo do ruído: {results['summary']['noise_impact_significant']}"
+        )
 
-        if results['summary']['recommendations']:
+        if results["summary"]["recommendations"]:
             print("\n💡 RECOMENDAÇÕES:")
-            for rec in results['summary']['recommendations']:
+            for rec in results["summary"]["recommendations"]:
                 print(f"• {rec}")
 
         return 0
@@ -819,8 +867,10 @@ def main():
     except Exception as e:
         print(f"❌ ERRO FATAL: {str(e)}")
         import traceback
+
         traceback.print_exc()
         return 1
+
 
 if __name__ == "__main__":
     sys.exit(main())

@@ -48,7 +48,7 @@ class GPUConfigurator:
             "llm_configs": self._check_llm_configs(),
             "issues_found": [],
             "fixes_applied": [],
-            "recommendations": []
+            "recommendations": [],
         }
 
         # Identify issues
@@ -70,21 +70,26 @@ class GPUConfigurator:
             "name": None,
             "vram_gb": None,
             "driver_version": None,
-            "cuda_capability": None
+            "cuda_capability": None,
         }
 
         try:
             # Check nvidia-smi
             result = subprocess.run(
-                ["nvidia-smi", "--query-gpu=name,memory.total,driver_version",
-                 "--format=csv,noheader,nounits"],
-                capture_output=True, text=True, timeout=10
+                [
+                    "nvidia-smi",
+                    "--query-gpu=name,memory.total,driver_version",
+                    "--format=csv,noheader,nounits",
+                ],
+                capture_output=True,
+                text=True,
+                timeout=10,
             )
 
             if result.returncode == 0:
-                lines = result.stdout.strip().split('\n')
+                lines = result.stdout.strip().split("\n")
                 if lines and lines[0]:
-                    parts = [p.strip() for p in lines[0].split(',')]
+                    parts = [p.strip() for p in lines[0].split(",")]
                     if len(parts) >= 3:
                         gpu_info["available"] = True
                         gpu_info["name"] = parts[0]
@@ -93,14 +98,22 @@ class GPUConfigurator:
 
                         # Get CUDA capability
                         cap_result = subprocess.run(
-                            ["nvidia-smi", "--query-gpu=compute_cap",
-                             "--format=csv,noheader,nounits"],
-                            capture_output=True, text=True
+                            [
+                                "nvidia-smi",
+                                "--query-gpu=compute_cap",
+                                "--format=csv,noheader,nounits",
+                            ],
+                            capture_output=True,
+                            text=True,
                         )
                         if cap_result.returncode == 0:
                             gpu_info["cuda_capability"] = cap_result.stdout.strip()
 
-        except (subprocess.TimeoutExpired, FileNotFoundError, subprocess.SubprocessError):
+        except (
+            subprocess.TimeoutExpired,
+            FileNotFoundError,
+            subprocess.SubprocessError,
+        ):
             pass
 
         return gpu_info
@@ -111,21 +124,20 @@ class GPUConfigurator:
             "installed": False,
             "version": None,
             "nvcc_available": False,
-            "cudnn_available": False
+            "cudnn_available": False,
         }
 
         # Check CUDA version via nvcc
         try:
             result = subprocess.run(
-                ["nvcc", "--version"],
-                capture_output=True, text=True, timeout=5
+                ["nvcc", "--version"], capture_output=True, text=True, timeout=5
             )
             if result.returncode == 0 and "release" in result.stdout:
                 cuda_info["nvcc_available"] = True
                 # Extract version
-                for line in result.stdout.split('\n'):
+                for line in result.stdout.split("\n"):
                     if "release" in line:
-                        version_match = re.search(r'release (\d+\.\d+)', line)
+                        version_match = re.search(r"release (\d+\.\d+)", line)
                         if version_match:
                             cuda_info["version"] = version_match.group(1)
                             cuda_info["installed"] = True
@@ -137,6 +149,7 @@ class GPUConfigurator:
         try:
             # Try to import cuDNN-related CUDA libraries
             import ctypes
+
             libcudnn = ctypes.CDLL("libcudnn.so")
             cuda_info["cudnn_available"] = True
         except (ImportError, OSError):
@@ -151,7 +164,7 @@ class GPUConfigurator:
             "cuda_available": False,
             "cuda_version": None,
             "gpu_count": 0,
-            "current_device": None
+            "current_device": None,
         }
 
         try:
@@ -161,7 +174,11 @@ class GPUConfigurator:
             if pytorch_info["cuda_available"]:
                 pytorch_info["cuda_version"] = torch.version.cuda
                 pytorch_info["gpu_count"] = torch.cuda.device_count()
-                pytorch_info["current_device"] = torch.cuda.current_device() if torch.cuda.device_count() > 0 else None
+                pytorch_info["current_device"] = (
+                    torch.cuda.current_device()
+                    if torch.cuda.device_count() > 0
+                    else None
+                )
         except Exception:
             pass
 
@@ -172,7 +189,7 @@ class GPUConfigurator:
         llm_configs = {
             "ollama": self._check_ollama_config(),
             "huggingface": self._check_huggingface_config(),
-            "optimization": self._check_optimization_config()
+            "optimization": self._check_optimization_config(),
         }
         return llm_configs
 
@@ -182,14 +199,15 @@ class GPUConfigurator:
             "configured": False,
             "base_url": None,
             "gpu_layers": None,
-            "model": None
+            "model": None,
         }
 
         config_file = self.config_dir / "agent_config.yaml"
         if config_file.exists():
             try:
                 import yaml
-                with open(config_file, 'r') as f:
+
+                with open(config_file, "r") as f:
                     config = yaml.safe_load(f)
 
                 model_config = config.get("model", {})
@@ -212,7 +230,7 @@ class GPUConfigurator:
         hf_config = {
             "token_configured": False,
             "cache_dir": None,
-            "transformers_available": False
+            "transformers_available": False,
         }
 
         # Check for HuggingFace token
@@ -223,8 +241,11 @@ class GPUConfigurator:
         # Check transformers availability
         try:
             import transformers
+
             hf_config["transformers_available"] = True
-            hf_config["cache_dir"] = os.getenv("HF_HOME") or os.getenv("TRANSFORMERS_CACHE")
+            hf_config["cache_dir"] = os.getenv("HF_HOME") or os.getenv(
+                "TRANSFORMERS_CACHE"
+            )
         except ImportError:
             pass
 
@@ -232,16 +253,12 @@ class GPUConfigurator:
 
     def _check_optimization_config(self) -> Dict[str, Any]:
         """Check optimization configuration."""
-        opt_config = {
-            "use_gpu": False,
-            "device": "cpu",
-            "gpu_memory_limit": None
-        }
+        opt_config = {"use_gpu": False, "device": "cpu", "gpu_memory_limit": None}
 
         config_file = self.config_dir / "optimization_config.json"
         if config_file.exists():
             try:
-                with open(config_file, 'r') as f:
+                with open(config_file, "r") as f:
                     config = json.load(f)
                     opt_config.update(config)
             except Exception:
@@ -256,74 +273,86 @@ class GPUConfigurator:
         # GPU hardware issues
         gpu_hw = diagnosis["gpu_hardware"]
         if not gpu_hw["available"]:
-            issues.append({
-                "type": "hardware",
-                "severity": "HIGH",
-                "component": "gpu_hardware",
-                "description": "No GPU hardware detected",
-                "fix_available": False
-            })
+            issues.append(
+                {
+                    "type": "hardware",
+                    "severity": "HIGH",
+                    "component": "gpu_hardware",
+                    "description": "No GPU hardware detected",
+                    "fix_available": False,
+                }
+            )
 
         # CUDA issues
         cuda_status = diagnosis["cuda_status"]
         if not cuda_status["installed"]:
-            issues.append({
-                "type": "cuda",
-                "severity": "HIGH",
-                "component": "cuda",
-                "description": "CUDA not installed or not found",
-                "fix_available": False
-            })
+            issues.append(
+                {
+                    "type": "cuda",
+                    "severity": "HIGH",
+                    "component": "cuda",
+                    "description": "CUDA not installed or not found",
+                    "fix_available": False,
+                }
+            )
 
         # PyTorch GPU issues
         pytorch = diagnosis["pytorch_gpu"]
         if not pytorch["cuda_available"]:
-            issues.append({
-                "type": "pytorch",
-                "severity": "HIGH",
-                "component": "pytorch_cuda",
-                "description": "PyTorch CUDA support not available",
-                "fix_available": True,
-                "fix_command": "pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121"
-            })
+            issues.append(
+                {
+                    "type": "pytorch",
+                    "severity": "HIGH",
+                    "component": "pytorch_cuda",
+                    "description": "PyTorch CUDA support not available",
+                    "fix_available": True,
+                    "fix_command": "pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121",
+                }
+            )
 
         # Configuration issues
         opt_config = diagnosis["llm_configs"]["optimization"]
         if not opt_config["use_gpu"]:
-            issues.append({
-                "type": "config",
-                "severity": "MEDIUM",
-                "component": "optimization_config",
-                "description": "GPU usage disabled in optimization config",
-                "fix_available": True,
-                "fix_action": "enable_gpu_in_config"
-            })
+            issues.append(
+                {
+                    "type": "config",
+                    "severity": "MEDIUM",
+                    "component": "optimization_config",
+                    "description": "GPU usage disabled in optimization config",
+                    "fix_available": True,
+                    "fix_action": "enable_gpu_in_config",
+                }
+            )
 
         if opt_config["device"] == "cpu":
-            issues.append({
-                "type": "config",
-                "severity": "MEDIUM",
-                "component": "optimization_config",
-                "description": "Device set to CPU instead of CUDA",
-                "fix_available": True,
-                "fix_action": "set_cuda_device"
-            })
+            issues.append(
+                {
+                    "type": "config",
+                    "severity": "MEDIUM",
+                    "component": "optimization_config",
+                    "description": "Device set to CPU instead of CUDA",
+                    "fix_available": True,
+                    "fix_action": "set_cuda_device",
+                }
+            )
 
         # Hardware profile issues
         hw_profile_file = self.config_dir / "hardware_profile.json"
         if hw_profile_file.exists():
             try:
-                with open(hw_profile_file, 'r') as f:
+                with open(hw_profile_file, "r") as f:
                     hw_profile = json.load(f)
                     if not hw_profile.get("gpu_available", False):
-                        issues.append({
-                            "type": "config",
-                            "severity": "MEDIUM",
-                            "component": "hardware_profile",
-                            "description": "Hardware profile shows GPU as unavailable",
-                            "fix_available": True,
-                            "fix_action": "update_hardware_profile"
-                        })
+                        issues.append(
+                            {
+                                "type": "config",
+                                "severity": "MEDIUM",
+                                "component": "hardware_profile",
+                                "description": "Hardware profile shows GPU as unavailable",
+                                "fix_available": True,
+                                "fix_action": "update_hardware_profile",
+                            }
+                        )
             except Exception:
                 pass
 
@@ -347,7 +376,9 @@ class GPUConfigurator:
 
             elif issue["fix_action"] == "update_hardware_profile":
                 self._fix_hardware_profile()
-                fixes_applied.append("Updated hardware profile to reflect GPU availability")
+                fixes_applied.append(
+                    "Updated hardware profile to reflect GPU availability"
+                )
 
         return fixes_applied
 
@@ -356,13 +387,13 @@ class GPUConfigurator:
         config_file = self.config_dir / "optimization_config.json"
         if config_file.exists():
             try:
-                with open(config_file, 'r') as f:
+                with open(config_file, "r") as f:
                     config = json.load(f)
 
                 config["use_gpu"] = True
                 config["device"] = "cuda"
 
-                with open(config_file, 'w') as f:
+                with open(config_file, "w") as f:
                     json.dump(config, f, indent=2)
 
             except Exception as e:
@@ -377,19 +408,21 @@ class GPUConfigurator:
         hw_file = self.config_dir / "hardware_profile.json"
         if hw_file.exists():
             try:
-                with open(hw_file, 'r') as f:
+                with open(hw_file, "r") as f:
                     hw_profile = json.load(f)
 
                 # Update with current GPU detection
                 gpu_info = self._check_gpu_hardware()
-                hw_profile.update({
-                    "gpu_available": gpu_info["available"],
-                    "gpu_name": gpu_info["name"],
-                    "gpu_vram_gb": gpu_info["vram_gb"],
-                    "gpu_compute_capability": gpu_info["cuda_capability"]
-                })
+                hw_profile.update(
+                    {
+                        "gpu_available": gpu_info["available"],
+                        "gpu_name": gpu_info["name"],
+                        "gpu_vram_gb": gpu_info["vram_gb"],
+                        "gpu_compute_capability": gpu_info["cuda_capability"],
+                    }
+                )
 
-                with open(hw_file, 'w') as f:
+                with open(hw_file, "w") as f:
                     json.dump(hw_profile, f, indent=2)
 
             except Exception as e:
@@ -404,29 +437,43 @@ class GPUConfigurator:
         pytorch = diagnosis["pytorch_gpu"]
 
         if not gpu_hw["available"]:
-            recommendations.append("🔴 HARDWARE: No GPU detected - consider GPU-equipped hardware for LLM acceleration")
+            recommendations.append(
+                "🔴 HARDWARE: No GPU detected - consider GPU-equipped hardware for LLM acceleration"
+            )
         elif gpu_hw["available"] and not cuda_status["installed"]:
             recommendations.append("🟡 CUDA: Install CUDA toolkit for GPU acceleration")
         elif cuda_status["installed"] and not pytorch["cuda_available"]:
-            recommendations.append("🟡 PYTORCH: Install PyTorch with CUDA support: pip install torch --index-url https://download.pytorch.org/whl/cu121")
+            recommendations.append(
+                "🟡 PYTORCH: Install PyTorch with CUDA support: pip install torch --index-url https://download.pytorch.org/whl/cu121"
+            )
 
         if pytorch["cuda_available"]:
-            recommendations.append("✅ GPU READY: PyTorch CUDA support available - LLMs can use GPU acceleration")
+            recommendations.append(
+                "✅ GPU READY: PyTorch CUDA support available - LLMs can use GPU acceleration"
+            )
 
         # Ollama recommendations
         ollama_config = diagnosis["llm_configs"]["ollama"]
         if ollama_config["configured"] and gpu_hw["available"]:
             if ollama_config["gpu_layers"] == -1:  # Auto
-                recommendations.append("✅ OLLAMA: GPU layers set to auto - should use GPU automatically")
+                recommendations.append(
+                    "✅ OLLAMA: GPU layers set to auto - should use GPU automatically"
+                )
             elif ollama_config["gpu_layers"] == 0:
-                recommendations.append("🟡 OLLAMA: GPU layers set to 0 - increase for GPU acceleration")
+                recommendations.append(
+                    "🟡 OLLAMA: GPU layers set to 0 - increase for GPU acceleration"
+                )
 
         # HuggingFace recommendations
         hf_config = diagnosis["llm_configs"]["huggingface"]
         if not hf_config["transformers_available"]:
-            recommendations.append("🟡 HUGGINGFACE: Install transformers for HuggingFace model support")
+            recommendations.append(
+                "🟡 HUGGINGFACE: Install transformers for HuggingFace model support"
+            )
         if not hf_config["token_configured"]:
-            recommendations.append("🔵 HUGGINGFACE: Set HF_TOKEN for accessing private/gated models")
+            recommendations.append(
+                "🔵 HUGGINGFACE: Set HF_TOKEN for accessing private/gated models"
+            )
 
         return recommendations
 
@@ -435,7 +482,7 @@ class GPUConfigurator:
         test_results = {
             "ollama_test": self._test_ollama_inference(),
             "pytorch_gpu_test": self._test_pytorch_gpu(),
-            "transformers_test": self._test_transformers_gpu()
+            "transformers_test": self._test_transformers_gpu(),
         }
         return test_results
 
@@ -447,7 +494,9 @@ class GPUConfigurator:
             from langchain_ollama import OllamaLLM
 
             # Test basic connectivity
-            llm = OllamaLLM(model="qwen2:7b-instruct", base_url="http://localhost:11434")
+            llm = OllamaLLM(
+                model="qwen2:7b-instruct", base_url="http://localhost:11434"
+            )
             response = llm.invoke("Hello, test message")
 
             if response:
@@ -493,7 +542,7 @@ class GPUConfigurator:
             pipe = pipeline(
                 "text-generation",
                 model="distilgpt2",
-                device=0 if torch.cuda.is_available() else -1
+                device=0 if torch.cuda.is_available() else -1,
             )
 
             result["gpu_used"] = torch.cuda.is_available()
@@ -510,10 +559,21 @@ class GPUConfigurator:
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(description="Diagnose and fix GPU/LLM configuration")
-    parser.add_argument("--apply-fixes", action="store_true", help="Apply available fixes")
-    parser.add_argument("--test-inference", action="store_true", help="Test LLM inference after fixes")
-    parser.add_argument("--output", "-o", help="Output file for JSON report", default="gpu_llm_diagnosis_report.json")
+    parser = argparse.ArgumentParser(
+        description="Diagnose and fix GPU/LLM configuration"
+    )
+    parser.add_argument(
+        "--apply-fixes", action="store_true", help="Apply available fixes"
+    )
+    parser.add_argument(
+        "--test-inference", action="store_true", help="Test LLM inference after fixes"
+    )
+    parser.add_argument(
+        "--output",
+        "-o",
+        help="Output file for JSON report",
+        default="gpu_llm_diagnosis_report.json",
+    )
     parser.add_argument("--verbose", "-v", action="store_true", help="Verbose output")
 
     args = parser.parse_args()
@@ -525,7 +585,7 @@ def main():
         diagnosis["inference_tests"] = configurator.test_inference()
 
     # Save JSON report
-    with open(args.output, 'w', encoding='utf-8') as f:
+    with open(args.output, "w", encoding="utf-8") as f:
         json.dump(diagnosis, f, indent=2, ensure_ascii=False)
 
     if args.verbose:
