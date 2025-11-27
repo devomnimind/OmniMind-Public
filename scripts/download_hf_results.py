@@ -8,13 +8,16 @@ import sys
 from pathlib import Path
 from typing import Optional
 
+
 def load_env_file():
     """Load environment variables from .env file."""
     env_file = Path(__file__).parent.parent / ".env"
     if env_file.exists():
         from dotenv import load_dotenv
+
         load_dotenv(env_file)
         print("✓ Loaded environment from .env file")
+
 
 def download_test_results():
     """Download test results from the Hugging Face Space."""
@@ -32,6 +35,7 @@ def download_test_results():
 
     try:
         from huggingface_hub import HfApi
+
         api = HfApi(token=token)
 
         # Create local directory for results
@@ -47,7 +51,7 @@ def download_test_results():
                 repo_id=space_name,
                 filename="data/test_reports/coverage.json",
                 local_dir=".",
-                repo_type="space"
+                repo_type="space",
             )
             print("✓ Downloaded coverage.json")
         except Exception as e:
@@ -59,7 +63,7 @@ def download_test_results():
                 repo_id=space_name,
                 filename="data/test_reports/htmlcov/index.html",
                 local_dir=".",
-                repo_type="space"
+                repo_type="space",
             )
             print("✓ Downloaded HTML coverage report")
         except Exception as e:
@@ -71,6 +75,7 @@ def download_test_results():
     except Exception as e:
         print(f"✗ Failed to download results: {e}")
         return False
+
 
 if __name__ == "__main__":
     success = download_test_results()
