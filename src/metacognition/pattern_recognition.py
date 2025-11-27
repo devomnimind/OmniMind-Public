@@ -109,7 +109,9 @@ class PatternRecognition:
         """Count agent usage from operations."""
         return Counter(op.get("agent") for op in operations if op.get("agent"))
 
-    def _detect_tool_biases(self, tool_counts: Counter[str], total_ops: int) -> List[Dict[str, Any]]:
+    def _detect_tool_biases(
+        self, tool_counts: Counter[str], total_ops: int
+    ) -> List[Dict[str, Any]]:
         """Detect tool usage biases."""
         biases = []
         for tool, count in tool_counts.items():
@@ -118,7 +120,9 @@ class PatternRecognition:
                 biases.append(self._create_bias_entry("tool", tool, usage_ratio))
         return biases
 
-    def _detect_agent_biases(self, agent_counts: Counter[str], total_ops: int) -> List[Dict[str, Any]]:
+    def _detect_agent_biases(
+        self, agent_counts: Counter[str], total_ops: int
+    ) -> List[Dict[str, Any]]:
         """Detect agent usage biases."""
         biases = []
         for agent, count in agent_counts.items():
@@ -160,7 +164,9 @@ class PatternRecognition:
             "timestamp": datetime.now().isoformat(),
         }
 
-    def _detect_execution_time_anomalies(self, operations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    def _detect_execution_time_anomalies(
+        self, operations: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
         """Detect operations with unusual execution times."""
         anomalies = []
         execution_times = [op.get("duration", 0) for op in operations if op.get("duration")]
@@ -184,10 +190,12 @@ class PatternRecognition:
         """Calculate average and standard deviation of execution times."""
         avg_time = sum(execution_times) / len(execution_times)
         variance = sum((t - avg_time) ** 2 for t in execution_times) / len(execution_times)
-        std_dev = variance ** 0.5
+        std_dev = variance**0.5
         return avg_time, std_dev
 
-    def _create_slow_execution_anomaly(self, operation: Dict[str, Any], duration: float, avg_time: float) -> Dict[str, Any]:
+    def _create_slow_execution_anomaly(
+        self, operation: Dict[str, Any], duration: float, avg_time: float
+    ) -> Dict[str, Any]:
         """Create anomaly entry for slow execution."""
         return {
             "type": "slow_execution",
@@ -197,7 +205,9 @@ class PatternRecognition:
             "deviation": (duration - avg_time) / avg_time if avg_time > 0 else 0,
         }
 
-    def _detect_failure_rate_anomalies(self, operations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    def _detect_failure_rate_anomalies(
+        self, operations: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
         """Detect operations with high failure rates."""
         anomalies = []
         recent_operations = operations[-10:] if len(operations) >= 10 else operations
@@ -208,7 +218,9 @@ class PatternRecognition:
 
         return anomalies
 
-    def _create_failure_rate_anomaly(self, failures: List[Dict[str, Any]], total_recent: List[Dict[str, Any]]) -> Dict[str, Any]:
+    def _create_failure_rate_anomaly(
+        self, failures: List[Dict[str, Any]], total_recent: List[Dict[str, Any]]
+    ) -> Dict[str, Any]:
         """Create anomaly entry for high failure rate."""
         return {
             "type": "high_failure_rate",
@@ -287,8 +299,7 @@ class PatternRecognition:
         """Find most common decision paths."""
         sequence_counts = Counter(tuple(seq) for seq in sequences)
         return [
-            {"path": list(path), "count": count}
-            for path, count in sequence_counts.most_common(5)
+            {"path": list(path), "count": count} for path, count in sequence_counts.most_common(5)
         ]
 
     def calculate_diversity_score(self, operations: List[Dict[str, Any]]) -> Dict[str, Any]:

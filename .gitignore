@@ -186,3 +186,10 @@ data/long_term_logs/*.status
 # Requirements lock (gerado, não editar manualmente)
 requirements.lock
 
+# Additional log and JSON files to ignore
+data/long_term_logs/*.out
+data/long_term_logs/*.json
+data/long_term_logs/daemon_status_cache.json
+.pytest_cache/v/cache/lastfailed
+.pytest_cache/v/cache/nodeids
+

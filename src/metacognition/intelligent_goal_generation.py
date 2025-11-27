@@ -103,23 +103,13 @@ class CodeAnalyzer:
             Analysis results dictionary
         """
         try:
-            with open(file_path) as f:
-                source = f.read()
-
+            source = self._read_file_content(file_path)
             tree = ast.parse(source)
 
             # Extract information
-            classes = [node.name for node in ast.walk(tree) if isinstance(node, ast.ClassDef)]
-            functions = [node.name for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
-            imports = []
-            for node in ast.walk(tree):
-                if isinstance(node, ast.Import):
-                    imports.extend([alias.name for alias in node.names])
-                elif isinstance(node, ast.ImportFrom):
-                    if node.module:
-                        imports.append(node.module)
-
-            # Calculate complexity (simplified McCabe)
+            classes = self._extract_classes(tree)
+            functions = self._extract_functions(tree)
+            imports = self._extract_imports(tree)
             complexity = self._calculate_complexity(tree)
 
             return {
@@ -133,14 +123,42 @@ class CodeAnalyzer:
 
         except Exception as exc:
             logger.warning(f"Failed to analyze {file_path}: {exc}")
-            return {
-                "lines": 0,
-                "classes": [],
-                "functions": [],
-                "imports": [],
-                "complexity": 0,
-                "has_docstring": False,
-            }
+            return self._create_empty_analysis()
+
+    def _read_file_content(self, file_path: Path) -> str:
+        """Read file content safely."""
+        with open(file_path) as f:
+            return f.read()
+
+    def _extract_classes(self, tree: ast.AST) -> List[str]:
+        """Extract class names from AST."""
+        return [node.name for node in ast.walk(tree) if isinstance(node, ast.ClassDef)]
+
+    def _extract_functions(self, tree: ast.AST) -> List[str]:
+        """Extract function names from AST."""
+        return [node.name for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
+
+    def _extract_imports(self, tree: ast.AST) -> List[str]:
+        """Extract import statements from AST."""
+        imports = []
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                imports.extend([alias.name for alias in node.names])
+            elif isinstance(node, ast.ImportFrom):
+                if node.module:
+                    imports.append(node.module)
+        return imports
+
+    def _create_empty_analysis(self) -> Dict[str, Any]:
+        """Create empty analysis result for failed analysis."""
+        return {
+            "lines": 0,
+            "classes": [],
+            "functions": [],
+            "imports": [],
+            "complexity": 0,
+            "has_docstring": False,
+        }
 
     def _calculate_complexity(self, tree: ast.AST) -> int:
         """Calculate cyclomatic complexity.
@@ -237,55 +255,83 @@ class ImpactPredictor:
         impact = ImpactMetrics()
 
         # Category-based impact estimation
-        if goal_category == GoalCategory.SECURITY:
-            impact.security_impact = 0.9
-            impact.user_value_impact = 0.7
-            impact.confidence = 0.85
-
-        elif goal_category == GoalCategory.PERFORMANCE:
-            impact.performance_impact = 0.8
-            impact.user_value_impact = 0.8
-            impact.confidence = 0.75
-
-        elif goal_category == GoalCategory.TESTING:
-            impact.code_coverage_impact = 0.9
-            impact.maintainability_impact = 0.6
-            impact.confidence = 0.9
-
-        elif goal_category == GoalCategory.QUALITY:
-            impact.maintainability_impact = 0.8
-            impact.code_coverage_impact = 0.4
-            impact.confidence = 0.8
-
-        elif goal_category == GoalCategory.DOCUMENTATION:
-            impact.maintainability_impact = 0.6
-            impact.user_value_impact = 0.5
-            impact.confidence = 0.7
+        self._set_category_impacts(impact, goal_category)
 
         # Adjust based on repository state
-        if repository_analysis.complexity_hotspots:
-            if "refactor" in goal_description.lower() or "optimize" in goal_description.lower():
-                impact.performance_impact += 0.1
-                impact.maintainability_impact += 0.2
-
-        if repository_analysis.untested_modules:
-            if "test" in goal_description.lower():
-                impact.code_coverage_impact += 0.1
+        self._adjust_for_repository_state(impact, goal_description, repository_analysis)
 
         # Normalize values to 0-1
-        impact.code_coverage_impact = min(1.0, impact.code_coverage_impact)
-        impact.performance_impact = min(1.0, impact.performance_impact)
-        impact.security_impact = min(1.0, impact.security_impact)
-        impact.maintainability_impact = min(1.0, impact.maintainability_impact)
-        impact.user_value_impact = min(1.0, impact.user_value_impact)
+        self._normalize_impact_values(impact)
 
         # Calculate effort vs impact ratio
-        # Estimate effort from description
         effort_estimate = self._estimate_effort(goal_description)
         total_impact = impact.get_total_impact()
         impact.effort_vs_impact_ratio = total_impact / max(effort_estimate, 0.1)
 
         return impact
+
+    def _set_category_impacts(self, impact: ImpactMetrics, goal_category: str) -> None:
+        """Set impact values based on goal category."""
+        category_impacts = {
+            GoalCategory.SECURITY: {
+                "security_impact": 0.9,
+                "user_value_impact": 0.7,
+                "confidence": 0.85,
+            },
+            GoalCategory.PERFORMANCE: {
+                "performance_impact": 0.8,
+                "user_value_impact": 0.8,
+                "confidence": 0.75,
+            },
+            GoalCategory.TESTING: {
+                "code_coverage_impact": 0.9,
+                "maintainability_impact": 0.6,
+                "confidence": 0.9,
+            },
+            GoalCategory.QUALITY: {
+                "maintainability_impact": 0.8,
+                "code_coverage_impact": 0.4,
+                "confidence": 0.8,
+            },
+            GoalCategory.DOCUMENTATION: {
+                "maintainability_impact": 0.6,
+                "user_value_impact": 0.5,
+                "confidence": 0.7,
+            },
+        }
+
+        category_data = category_impacts.get(goal_category, {})
+        for attr, value in category_data.items():
+            setattr(impact, attr, value)
+
+    def _adjust_for_repository_state(
+        self, impact: ImpactMetrics, goal_description: str, repository_analysis: RepositoryAnalysis
+    ) -> None:
+        """Adjust impact based on current repository state."""
+        desc_lower = goal_description.lower()
+
+        # Adjust for complexity hotspots
+        if repository_analysis.complexity_hotspots:
+            if self._is_refactoring_goal(desc_lower):
+                impact.performance_impact += 0.1
+                impact.maintainability_impact += 0.2
+
+        # Adjust for untested modules
+        if repository_analysis.untested_modules:
+            if "test" in desc_lower:
+                impact.code_coverage_impact += 0.1
+
+    def _is_refactoring_goal(self, description_lower: str) -> bool:
+        """Check if goal description indicates refactoring."""
+        return "refactor" in description_lower or "optimize" in description_lower
+
+    def _normalize_impact_values(self, impact: ImpactMetrics) -> None:
+        """Normalize all impact values to 0-1 range."""
+        impact.code_coverage_impact = min(1.0, impact.code_coverage_impact)
+        impact.performance_impact = min(1.0, impact.performance_impact)
+        impact.security_impact = min(1.0, impact.security_impact)
+        impact.maintainability_impact = min(1.0, impact.maintainability_impact)
+        impact.user_value_impact = min(1.0, impact.user_value_impact)
 
     def _estimate_effort(self, description: str) -> float:
         """Estimate effort for a goal (1-10 scale).
