@@ -23,7 +23,6 @@ Welcome to the OmniMind documentation hub.
 
 | Document | Description |
 |----------|-------------|
-| [**Metrics Report (Nov 2025)**](reports/AUDITABLE_METRICS_REPORT_20251126.md) | Snapshot of Auditable Metrics and System Health. |
 | [**Research Papers**](research/) | Academic Papers, Studies, and Theoretical Foundations. |
 | [**Archive**](reports/archive/) | Historical Logs, Audits, and Verification Reports. |
 

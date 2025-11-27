@@ -175,9 +175,7 @@ class GPUConfigurator:
                 pytorch_info["cuda_version"] = torch.version.cuda
                 pytorch_info["gpu_count"] = torch.cuda.device_count()
                 pytorch_info["current_device"] = (
-                    torch.cuda.current_device()
-                    if torch.cuda.device_count() > 0
-                    else None
+                    torch.cuda.current_device() if torch.cuda.device_count() > 0 else None
                 )
         except Exception:
             pass
@@ -243,9 +241,7 @@ class GPUConfigurator:
             import transformers
 
             hf_config["transformers_available"] = True
-            hf_config["cache_dir"] = os.getenv("HF_HOME") or os.getenv(
-                "TRANSFORMERS_CACHE"
-            )
+            hf_config["cache_dir"] = os.getenv("HF_HOME") or os.getenv("TRANSFORMERS_CACHE")
         except ImportError:
             pass
 
@@ -376,9 +372,7 @@ class GPUConfigurator:
 
             elif issue["fix_action"] == "update_hardware_profile":
                 self._fix_hardware_profile()
-                fixes_applied.append(
-                    "Updated hardware profile to reflect GPU availability"
-                )
+                fixes_applied.append("Updated hardware profile to reflect GPU availability")
 
         return fixes_applied
 
@@ -494,9 +488,7 @@ class GPUConfigurator:
             from langchain_ollama import OllamaLLM
 
             # Test basic connectivity
-            llm = OllamaLLM(
-                model="qwen2:7b-instruct", base_url="http://localhost:11434"
-            )
+            llm = OllamaLLM(model="qwen2:7b-instruct", base_url="http://localhost:11434")
             response = llm.invoke("Hello, test message")
 
             if response:
@@ -559,12 +551,8 @@ class GPUConfigurator:
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Diagnose and fix GPU/LLM configuration"
-    )
-    parser.add_argument(
-        "--apply-fixes", action="store_true", help="Apply available fixes"
-    )
+    parser = argparse.ArgumentParser(description="Diagnose and fix GPU/LLM configuration")
+    parser.add_argument("--apply-fixes", action="store_true", help="Apply available fixes")
     parser.add_argument(
         "--test-inference", action="store_true", help="Test LLM inference after fixes"
     )

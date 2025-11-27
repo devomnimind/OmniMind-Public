@@ -3,6 +3,7 @@ import re
 import sys
 from pathlib import Path
 
+
 def fix_integrity_metrics():
     """
     Fix corrupted integrity_metrics.json file by extracting valid JSON content.
@@ -40,9 +41,9 @@ def fix_integrity_metrics():
     # The corruption pattern observed was `...}evel": "critical"`
     # This suggests content appended after the JSON object
 
-    last_brace = content.rfind('}')
+    last_brace = content.rfind("}")
     if last_brace != -1:
-        potential_json = content[:last_brace+1]
+        potential_json = content[: last_brace + 1]
         try:
             data = json.loads(potential_json)
             print("Recovered JSON data successfully using rfind strategy.")
@@ -54,9 +55,9 @@ def fix_integrity_metrics():
     # Strategy 3: Iterative parsing
     # Try to parse content[:i+1] for every position i where content[i] == '}'
 
-    indices = [i for i, char in enumerate(content) if char == '}']
+    indices = [i for i, char in enumerate(content) if char == "}"]
     for i in indices:
-        potential_json = content[:i+1]
+        potential_json = content[: i + 1]
         try:
             data = json.loads(potential_json)
             print(f"Recovered JSON data successfully at index {i}.")
@@ -66,6 +67,7 @@ def fix_integrity_metrics():
             continue
 
     print("Could not repair file automatically.")
+
 
 def _save_fixed_file(path: Path, data: dict):
     """Save the fixed data and backup the corrupted one."""
@@ -80,10 +82,11 @@ def _save_fixed_file(path: Path, data: dict):
         # but let's be safe and just write to a new file first
 
     print(f"Writing fixed content to {path}")
-    with open(path, 'w') as f:
+    with open(path, "w") as f:
         json.dump(data, f, indent=2)
 
     print("Success! File repaired.")
+
 
 if __name__ == "__main__":
     fix_integrity_metrics()

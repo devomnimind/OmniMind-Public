@@ -45,9 +45,7 @@ def run_gpu_benchmark() -> dict:
 def main() -> None:
     os.makedirs("docs/reports/benchmarks", exist_ok=True)
     results = run_gpu_benchmark()
-    with open(
-        "docs/reports/benchmarks/gpu_benchmark.json", "w", encoding="utf-8"
-    ) as stream:
+    with open("docs/reports/benchmarks/gpu_benchmark.json", "w", encoding="utf-8") as stream:
         json.dump(results, stream, indent=2)
 
 

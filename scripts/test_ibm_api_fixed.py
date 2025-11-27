@@ -42,9 +42,7 @@ def test_ibm_api_fixed():
         backends = qpu.list_backends()
         print(f"   Backends disponíveis: {len(backends)}")
         for b in backends:
-            print(
-                f"   - {b.name} ({b.backend_type.value}) - {'✅' if b.available else '❌'}"
-            )
+            print(f"   - {b.name} ({b.backend_type.value}) - {'✅' if b.available else '❌'}")
 
         # Tentar usar IBM
         if BackendType.IBMQ_CLOUD in [b.backend_type for b in backends]:

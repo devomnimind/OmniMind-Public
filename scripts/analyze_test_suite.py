@@ -98,9 +98,7 @@ def analyze_skip_markers(file_path: Path) -> Dict[str, List[str]]:
             markers["runtime_skip"].append("runtime skip found")
 
     except Exception as e:
-        print(
-            f"{Colors.WARNING}Error analyzing markers in {file_path}: {e}{Colors.ENDC}"
-        )
+        print(f"{Colors.WARNING}Error analyzing markers in {file_path}: {e}{Colors.ENDC}")
 
     return markers
 
@@ -119,11 +117,7 @@ def check_import_errors(test_file: Path, project_root: Path) -> Optional[str]:
         cwd=str(project_root),
     )
 
-    if (
-        result.returncode != 0
-        or "ERROR" in result.stdout
-        or "error" in result.stderr.lower()
-    ):
+    if result.returncode != 0 or "ERROR" in result.stdout or "error" in result.stderr.lower():
         error_msg = result.stderr if result.stderr else result.stdout
         error_lines = error_msg.split("\n")
 
@@ -137,9 +131,7 @@ def check_import_errors(test_file: Path, project_root: Path) -> Optional[str]:
     return None
 
 
-def find_source_modules_without_tests(
-    src_dir: Path, tests_dir: Path
-) -> List[Dict[str, any]]:
+def find_source_modules_without_tests(src_dir: Path, tests_dir: Path) -> List[Dict[str, any]]:
     """
     Find source modules that don't have corresponding test files.
 
@@ -189,9 +181,7 @@ def find_source_modules_without_tests(
                     for node in ast.walk(tree)
                     if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
                 )
-                classes = sum(
-                    1 for node in ast.walk(tree) if isinstance(node, ast.ClassDef)
-                )
+                classes = sum(1 for node in ast.walk(tree) if isinstance(node, ast.ClassDef))
 
                 untested_modules.append(
                     {
@@ -354,9 +344,7 @@ def main():
     )
 
     print(f"\n{Colors.BOLD}Testes Definidos:{Colors.ENDC}")
-    print(
-        f"  Total de funções de teste: {Colors.OKGREEN}{total_test_functions}{Colors.ENDC}"
-    )
+    print(f"  Total de funções de teste: {Colors.OKGREEN}{total_test_functions}{Colors.ENDC}")
     print(f"  Testes assíncronos: {Colors.OKBLUE}{total_async_tests}{Colors.ENDC}")
     print(
         f"  Testes síncronos: {Colors.OKBLUE}{total_test_functions - total_async_tests}{Colors.ENDC}"
@@ -372,26 +360,20 @@ def main():
 
     print(f"\n{Colors.BOLD}Previsão de Execução:{Colors.ENDC}")
     runnable_tests = total_test_functions - (total_skipped + total_skipif + total_xfail)
-    blocked_by_imports = sum(
-        f["test_count"] for f in file_stats if f["has_import_error"]
-    )
+    blocked_by_imports = sum(f["test_count"] for f in file_stats if f["has_import_error"])
     actually_runnable = runnable_tests - blocked_by_imports
 
     print(
         f"  Testes executáveis (sem erros import): {Colors.OKGREEN}{actually_runnable}{Colors.ENDC}"
     )
-    print(
-        f"  Testes bloqueados por import: {Colors.FAIL}{blocked_by_imports}{Colors.ENDC}"
-    )
+    print(f"  Testes bloqueados por import: {Colors.FAIL}{blocked_by_imports}{Colors.ENDC}")
     print(
         f"  Testes marcados para skip: {Colors.WARNING}{total_skipped + total_skipif + total_xfail}{Colors.ENDC}"
     )
 
     # Discrepancy explanation
     print_section("EXPLICAÇÃO DA DISCREPÂNCIA")
-    print(
-        f"Testes definidos no código:     {Colors.BOLD}{total_test_functions:5d}{Colors.ENDC}"
-    )
+    print(f"Testes definidos no código:     {Colors.BOLD}{total_test_functions:5d}{Colors.ENDC}")
     print(
         f"Testes bloqueados (imports):    {Colors.FAIL}{blocked_by_imports:5d}{Colors.ENDC} ({blocked_by_imports/total_test_functions*100:.1f}%)"
     )
@@ -412,26 +394,18 @@ def main():
         for err in import_errors:
             # Extract missing module name
             if "No module named" in err["error"]:
-                module = (
-                    err["error"].split("'")[-2] if "'" in err["error"] else "unknown"
-                )
+                module = err["error"].split("'")[-2] if "'" in err["error"] else "unknown"
                 error_groups[module].append(err["file"])
             else:
                 error_groups["other"].append(err["file"])
 
-        for module, files in sorted(
-            error_groups.items(), key=lambda x: len(x[1]), reverse=True
-        ):
+        for module, files in sorted(error_groups.items(), key=lambda x: len(x[1]), reverse=True):
             print(f"\n{Colors.FAIL}Módulo faltante: {module}{Colors.ENDC}")
             print(f"  Arquivos afetados: {len(files)}")
-            affected_tests = sum(
-                f["test_count"] for f in file_stats if f["file"] in files
-            )
+            affected_tests = sum(f["test_count"] for f in file_stats if f["file"] in files)
             print(f"  Testes bloqueados: {affected_tests}")
             for f in files[:5]:
-                test_count = next(
-                    (x["test_count"] for x in file_stats if x["file"] == f), 0
-                )
+                test_count = next((x["test_count"] for x in file_stats if x["file"] == f), 0)
                 print(f"    - {f} ({test_count} tests)")
             if len(files) > 5:
                 print(f"    ... e mais {len(files) - 5} arquivos")
@@ -439,9 +413,7 @@ def main():
     # Untested modules
     if untested:
         print_section("MÓDULOS SEM TESTES")
-        print(
-            f"Total de módulos sem testes: {Colors.WARNING}{len(untested)}{Colors.ENDC}"
-        )
+        print(f"Total de módulos sem testes: {Colors.WARNING}{len(untested)}{Colors.ENDC}")
         print(
             f"Módulos críticos sem testes: {Colors.FAIL if critical_untested else Colors.OKGREEN}{len(critical_untested)}{Colors.ENDC}"
         )
@@ -450,9 +422,7 @@ def main():
             print(f"\n{Colors.FAIL}MÓDULOS CRÍTICOS SEM TESTES:{Colors.ENDC}")
             for module in critical_untested[:10]:
                 print(f"  - {module['module']}")
-                print(
-                    f"    Funções: {module['functions']}, Classes: {module['classes']}"
-                )
+                print(f"    Funções: {module['functions']}, Classes: {module['classes']}")
             if len(critical_untested) > 10:
                 print(f"  ... e mais {len(critical_untested) - 10} módulos críticos")
 
@@ -496,9 +466,7 @@ def main():
     print_section("RECOMENDAÇÕES")
     print(f"1. {Colors.BOLD}Instalar dependências faltantes{Colors.ENDC}")
     print(f"   - Execute: pip install -r requirements.txt")
-    print(
-        f"   - Isso deve resolver {len(import_errors)} arquivos com erros de importação"
-    )
+    print(f"   - Isso deve resolver {len(import_errors)} arquivos com erros de importação")
 
     print(f"\n2. {Colors.BOLD}Revisar testes marcados para skip{Colors.ENDC}")
     print(f"   - {files_with_skips} arquivos têm testes marcados para skip")

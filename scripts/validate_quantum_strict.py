@@ -8,10 +8,11 @@ from src.quantum_consciousness.qpu_interface import QPUInterface, BackendType
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("QuantumValidator")
 
+
 def validate_quantum_execution():
-    print("="*50)
+    print("=" * 50)
     print("QUANTUM EXECUTION VALIDATOR (STRICT MODE)")
-    print("="*50)
+    print("=" * 50)
 
     # Check for credentials
     ibm_token = os.getenv("IBM_API_KEY") or os.getenv("IBMQ_API_TOKEN")
@@ -32,13 +33,13 @@ def validate_quantum_execution():
         print(f"   Initialized Backend Class: {backend_name}")
 
         if ibm_token and "Aer" in backend_name and "IBMQBackend" not in backend_name:
-             print("❌ FAILURE: Token provided but fallback to AerSimulator occurred!")
+            print("❌ FAILURE: Token provided but fallback to AerSimulator occurred!")
         elif ibm_token and "IBMQBackend" in backend_name:
-             print("✅ SUCCESS: Real IBMQBackend initialized.")
+            print("✅ SUCCESS: Real IBMQBackend initialized.")
         elif not ibm_token and "Aer" in backend_name:
-             print("✅ SUCCESS: Correctly defaulted to Aer (No Token).")
+            print("✅ SUCCESS: Correctly defaulted to Aer (No Token).")
         else:
-             print(f"⚠️  UNCERTAIN: Backend is {backend_name}")
+            print(f"⚠️  UNCERTAIN: Backend is {backend_name}")
 
     except Exception as e:
         print(f"❌ ERROR: {e}")
@@ -51,11 +52,12 @@ def validate_quantum_execution():
         print(f"   Active Backend: {active_info.name} ({active_info.provider})")
 
         if ibm_token and active_info.backend_type != BackendType.IBMQ_CLOUD:
-             print("❌ FAILURE: Preferred IBMQ but got something else.")
+            print("❌ FAILURE: Preferred IBMQ but got something else.")
 
         # Create a simple circuit (Bell State)
         try:
             from qiskit import QuantumCircuit
+
             qc = QuantumCircuit(2)
             qc.h(0)
             qc.cx(0, 1)
@@ -71,14 +73,15 @@ def validate_quantum_execution():
             print("⚠️  Qiskit not installed, skipping circuit execution.")
         except RuntimeError as e:
             if "Strict mode" in str(e):
-                 print(f"✅ SUCCESS: Strict mode correctly raised error on failure: {e}")
+                print(f"✅ SUCCESS: Strict mode correctly raised error on failure: {e}")
             else:
-                 print(f"❌ FAILURE: Unexpected error: {e}")
+                print(f"❌ FAILURE: Unexpected error: {e}")
         except Exception as e:
-             print(f"❌ FAILURE: Unexpected exception: {e}")
+            print(f"❌ FAILURE: Unexpected exception: {e}")
 
     except Exception as e:
         print(f"❌ ERROR: {e}")
+
 
 if __name__ == "__main__":
     validate_quantum_execution()

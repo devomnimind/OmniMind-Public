@@ -27,12 +27,8 @@ class MLCLI:
         print(f"  ⏰ Reset em: {gh_limits.get('reset', 'N/A')}")
 
         print("\\nHugging Face:")
-        print(
-            f"  📥 Downloads restantes: ~{hf_limits.get('downloads_remaining', 'N/A')}"
-        )
-        print(
-            f"  📤 Uploads restantes: ~{hf_limits.get('uploads_remaining', 'N/A')} MB"
-        )
+        print(f"  📥 Downloads restantes: ~{hf_limits.get('downloads_remaining', 'N/A')}")
+        print(f"  📤 Uploads restantes: ~{hf_limits.get('uploads_remaining', 'N/A')} MB")
 
     def cmd_optimize(self, args):
         """Otimiza escolha de modelo para tarefa"""
@@ -78,9 +74,7 @@ class MLCLI:
         print("=" * 40)
 
         print("\\nGitHub Models:")
-        print(
-            f"  📈 Requests restantes: {report['github_usage']['requests_remaining']}"
-        )
+        print(f"  📈 Requests restantes: {report['github_usage']['requests_remaining']}")
         print(f"  💰 Custo acumulado: ${report['github_usage']['estimated_cost']:.3f}")
 
         print("\\nHugging Face:")
@@ -97,9 +91,7 @@ class MLCLI:
         print("📋 Carregando dados de treinamento...")
 
         # Carrega plano de treinamento
-        plan_path = Path(
-            "data/ml/training_data_collection/comprehensive_training_plan.json"
-        )
+        plan_path = Path("data/ml/training_data_collection/comprehensive_training_plan.json")
         if plan_path.exists():
             with open(plan_path) as f:
                 plan = json.load(f)
@@ -136,9 +128,7 @@ Exemplos de uso:
     subparsers.add_parser("limits", help="Verifica limites atuais")
 
     # Comando optimize
-    optimize_parser = subparsers.add_parser(
-        "optimize", help="Otimiza escolha de modelo"
-    )
+    optimize_parser = subparsers.add_parser("optimize", help="Otimiza escolha de modelo")
     optimize_parser.add_argument(
         "--task",
         required=True,

@@ -30,9 +30,7 @@ except ImportError as e:
     print(f"❌ Erro ao importar DevelopmentObserver: {e}")
     print(f"📁 Project root: {project_root}")
     print(f"🔍 Src path: {src_path}")
-    print(
-        f"📂 Conteúdo src: {list(src_path.glob('*')) if src_path.exists() else 'NÃO EXISTE'}"
-    )
+    print(f"📂 Conteúdo src: {list(src_path.glob('*')) if src_path.exists() else 'NÃO EXISTE'}")
     print(f"🐍 PYTHONPATH: {os.environ.get('PYTHONPATH')}")
     print(f"🔍 sys.path: {sys.path[:3]}")
     sys.exit(1)

@@ -31,9 +31,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.lacanian.freudian_metapsychology import FreudianMind, Action, DefenseMechanism
 
 # Configure Logging
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 OUTPUT_DIR = "data/metrics"
@@ -61,9 +59,7 @@ def generate_random_actions(num_actions: int = 5) -> List[Action]:
     return actions
 
 
-def run_scenario(
-    backend_name: str, iterations: int = 50, seed: int = 42
-) -> Dict[str, Any]:
+def run_scenario(backend_name: str, iterations: int = 50, seed: int = 42) -> Dict[str, Any]:
     """Runs the scenario on a specific backend."""
     logger.info(f"Starting scenario for backend: {backend_name.upper()}")
 
@@ -112,9 +108,7 @@ def run_scenario(
             "step": i,
             "chosen_action": chosen_action.action_id,
             "defense": (
-                resolution.defense_mechanism.value
-                if resolution.defense_mechanism
-                else "None"
+                resolution.defense_mechanism.value if resolution.defense_mechanism else "None"
             ),
             "quality": resolution.compromise_quality,
             "latency": latency,

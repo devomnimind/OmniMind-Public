@@ -102,18 +102,14 @@ def main():
             f"• Superposition Accuracy - Sim: {comp['superposition']['sim_uniformity']:.3f}, IBM: {comp['superposition']['ibm_uniformity']:.3f}"
         )
         print(f"• Noise Impact Estimado: {comp['noise_impact']:.3f}")
-        print(
-            f"• Quantum Advantage Detectado: {'Sim' if comp['quantum_advantage'] else 'Não'}"
-        )
+        print(f"• Quantum Advantage Detectado: {'Sim' if comp['quantum_advantage'] else 'Não'}")
 
         if comp["quantum_advantage"]:
             print("\n🎉 EVIDÊNCIA DE VANTAGEM QUÂNTICA DETECTADA!")
             print("   Hardware IBM performa melhor que esperado classicamente.")
         else:
             print("\n⚠️ Nenhuma vantagem quântica clara detectada.")
-            print(
-                "   Pode ser devido a: circuitos simples, calibração do hardware, ou ruído."
-            )
+            print("   Pode ser devido a: circuitos simples, calibração do hardware, ou ruído.")
 
         return 0
 
@@ -333,16 +329,14 @@ def analyze_comparison(sim_results, ibm_results):
             "sim_fidelity": sim_results["bell_state"]["fidelity"],
             "ibm_fidelity": ibm_results["bell_state"]["fidelity"],
             "difference": abs(
-                sim_results["bell_state"]["fidelity"]
-                - ibm_results["bell_state"]["fidelity"]
+                sim_results["bell_state"]["fidelity"] - ibm_results["bell_state"]["fidelity"]
             ),
         },
         "randomness": {
             "sim_quality": sim_results["randomness"]["quality"],
             "ibm_quality": ibm_results["randomness"]["quality"],
             "difference": abs(
-                sim_results["randomness"]["quality"]
-                - ibm_results["randomness"]["quality"]
+                sim_results["randomness"]["quality"] - ibm_results["randomness"]["quality"]
             ),
         },
         "superposition": {
@@ -368,10 +362,8 @@ def analyze_comparison(sim_results, ibm_results):
     # Detectar vantagem quântica
     # Se hardware performa consistentemente melhor que simulador (com ruído)
     ibm_better = (
-        ibm_results["bell_state"]["fidelity"]
-        > sim_results["bell_state"]["fidelity"] * 0.9
-        and ibm_results["randomness"]["quality"]
-        > sim_results["randomness"]["quality"] * 0.9
+        ibm_results["bell_state"]["fidelity"] > sim_results["bell_state"]["fidelity"] * 0.9
+        and ibm_results["randomness"]["quality"] > sim_results["randomness"]["quality"] * 0.9
         and comparison["noise_impact"] < 0.2
     )
     comparison["quantum_advantage"] = ibm_better

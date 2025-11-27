@@ -37,6 +37,16 @@
 - **Solução:** Diretório criado com permissões corretas
 - **Status:** ✅ Resolvido
 
+### ✅ Resolvido: Tratamento de Erros (Bare Excepts & Silent Catches)
+- **Problema:** 15 instâncias de `except:` genérico e 20 capturas silenciosas (`pass`)
+- **Solução:** Removidos ou substituídos por exceções específicas. Verificação automatizada confirmou zero ocorrências.
+- **Status:** ✅ Resolvido (27/11/2025)
+
+### ✅ Resolvido: Padronização de Logs (Remoção de Prints)
+- **Problema:** Uso de `print()` para logs operacionais em módulos core (`episodic_memory.py`, etc.)
+- **Solução:** Substituído por `logger.info()` ou removido. Apenas scripts CLI/Demo mantêm `print`.
+- **Status:** ✅ Resolvido (27/11/2025)
+
 ---
 
 ## Executive Summary

@@ -105,9 +105,7 @@ def benchmark_ibm_quantum():
                 sampler = Sampler(mode=backend_obj)
                 job = sampler.run([qc_transpiled], shots=100)
 
-                logger.info(
-                    "job_submitted", backend=backend_name, job_id=str(job.job_id())
-                )
+                logger.info("job_submitted", backend=backend_name, job_id=str(job.job_id()))
 
                 # Esperar resultado
                 result = job.result(timeout=120)

@@ -16,7 +16,7 @@ from datetime import datetime
 from pathlib import Path
 
 # Add src to path
-sys.path.insert(0, '/home/fahbrain/projects/omnimind')
+sys.path.insert(0, "/home/fahbrain/projects/omnimind")
 
 from src.quantum_consciousness.qpu_interface import QPUInterface, BackendType
 from qiskit import QuantumCircuit
@@ -26,6 +26,7 @@ logger = logging.getLogger(__name__)
 
 # IBM Token
 IBM_TOKEN = os.getenv("IBM_API_KEY") or os.getenv("IBMQ_API_TOKEN")
+
 
 def run_grover_search_benchmark():
     """Experiment 1: Grover Search Speedup (N=16, target=7)"""
@@ -52,7 +53,7 @@ def run_grover_search_benchmark():
             qc.h(i)
             qc.x(i)
         qc.h(3)
-        qc.mcx([0,1,2], 3)  # Multi-controlled X
+        qc.mcx([0, 1, 2], 3)  # Multi-controlled X
         qc.h(3)
         for i in range(4):
             qc.x(i)
@@ -71,16 +72,17 @@ def run_grover_search_benchmark():
         logger.info(f"   ⏱️  Time: {elapsed:.1f}s")
 
         return {
-            'experiment': 'grover_search_n16',
-            'backend': qpu.get_active_backend_info().name if qpu.active_backend else 'UNKNOWN',
-            'result_counts': result,
-            'execution_time_s': elapsed,
-            'shots': 100,
-            'status': 'SUCCESS'
+            "experiment": "grover_search_n16",
+            "backend": qpu.get_active_backend_info().name if qpu.active_backend else "UNKNOWN",
+            "result_counts": result,
+            "execution_time_s": elapsed,
+            "shots": 100,
+            "status": "SUCCESS",
         }
     except Exception as e:
         logger.error(f"   ❌ Failed: {e}")
-        return {'status': 'FAILED', 'error': str(e)}
+        return {"status": "FAILED", "error": str(e)}
+
 
 def run_bell_state_benchmark():
     """Experiment 2: Bell State Entanglement"""
@@ -103,9 +105,9 @@ def run_bell_state_benchmark():
         elapsed = time.time() - start
 
         # Verify entanglement: should have ~50% |00⟩, ~50% |11⟩
-        count_00 = result.get('00', 0)
-        count_11 = result.get('11', 0)
-        count_invalid = result.get('01', 0) + result.get('10', 0)
+        count_00 = result.get("00", 0)
+        count_11 = result.get("11", 0)
+        count_invalid = result.get("01", 0) + result.get("10", 0)
 
         entanglement_verified = (count_invalid < 10) and (abs(count_00 - count_11) < 30)
 
@@ -114,20 +116,21 @@ def run_bell_state_benchmark():
         logger.info(f"   ⏱️  Time: {elapsed:.1f}s")
 
         return {
-            'experiment': 'bell_state_entanglement',
-            'backend': qpu.get_active_backend_info().name if qpu.active_backend else 'UNKNOWN',
-            'result_counts': result,
-            'count_00': count_00,
-            'count_11': count_11,
-            'count_invalid': count_invalid,
-            'entanglement_verified': entanglement_verified,
-            'execution_time_s': elapsed,
-            'shots': 100,
-            'status': 'SUCCESS'
+            "experiment": "bell_state_entanglement",
+            "backend": qpu.get_active_backend_info().name if qpu.active_backend else "UNKNOWN",
+            "result_counts": result,
+            "count_00": count_00,
+            "count_11": count_11,
+            "count_invalid": count_invalid,
+            "entanglement_verified": entanglement_verified,
+            "execution_time_s": elapsed,
+            "shots": 100,
+            "status": "SUCCESS",
         }
     except Exception as e:
         logger.error(f"   ❌ Failed: {e}")
-        return {'status': 'FAILED', 'error': str(e)}
+        return {"status": "FAILED", "error": str(e)}
+
 
 def run_integration_latency_benchmark():
     """Experiment 3: Quantum→Classical Integration Latency"""
@@ -156,22 +159,23 @@ def run_integration_latency_benchmark():
         meets_target = latency_ms < 100  # Cloud target
 
         return {
-            'experiment': 'quantum_classical_latency',
-            'backend': qpu.get_active_backend_info().name if qpu.active_backend else 'UNKNOWN',
-            'latency_ms': latency_ms,
-            'target_ms': 100,
-            'meets_target': meets_target,
-            'execution_time_s': time.time() - start,
-            'status': 'SUCCESS'
+            "experiment": "quantum_classical_latency",
+            "backend": qpu.get_active_backend_info().name if qpu.active_backend else "UNKNOWN",
+            "latency_ms": latency_ms,
+            "target_ms": 100,
+            "meets_target": meets_target,
+            "execution_time_s": time.time() - start,
+            "status": "SUCCESS",
         }
     except Exception as e:
         logger.error(f"   ❌ Failed: {e}")
-        return {'status': 'FAILED', 'error': str(e)}
+        return {"status": "FAILED", "error": str(e)}
+
 
 def main():
-    logger.info("="*60)
+    logger.info("=" * 60)
     logger.info("REAL HARDWARE BENCHMARK - IBM Quantum")
-    logger.info("="*60)
+    logger.info("=" * 60)
     logger.info(f"Budget: 350 seconds")
     logger.info(f"Token: {IBM_TOKEN[:5]}...{IBM_TOKEN[-5:] if IBM_TOKEN else 'MISSING'}")
 
@@ -183,37 +187,41 @@ def main():
     total_start = time.time()
 
     # Execute experiments
-    results['grover'] = run_grover_search_benchmark()
-    results['bell_state'] = run_bell_state_benchmark()
-    results['latency'] = run_integration_latency_benchmark()
+    results["grover"] = run_grover_search_benchmark()
+    results["bell_state"] = run_bell_state_benchmark()
+    results["latency"] = run_integration_latency_benchmark()
 
     total_time = time.time() - total_start
 
     # Save results
     output = {
-        'benchmark_date': datetime.now().isoformat(),
-        'total_execution_time_s': total_time,
-        'budget_used_s': total_time,
-        'budget_remaining_s': 350 - total_time,
-        'experiments': results
+        "benchmark_date": datetime.now().isoformat(),
+        "total_execution_time_s": total_time,
+        "budget_used_s": total_time,
+        "budget_remaining_s": 350 - total_time,
+        "experiments": results,
     }
 
-    output_file = Path("data/benchmarks") / f"ibm_quantum_benchmark_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    output_file = (
+        Path("data/benchmarks")
+        / f"ibm_quantum_benchmark_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    )
     output_file.parent.mkdir(parents=True, exist_ok=True)
 
-    with open(output_file, 'w') as f:
+    with open(output_file, "w") as f:
         json.dump(output, f, indent=2)
 
-    logger.info("\n" + "="*60)
+    logger.info("\n" + "=" * 60)
     logger.info("BENCHMARK COMPLETE")
-    logger.info("="*60)
+    logger.info("=" * 60)
     logger.info(f"Total time: {total_time:.1f}s")
     logger.info(f"Budget remaining: {350 - total_time:.1f}s")
     logger.info(f"Results saved to: {output_file}")
 
     # Summary
-    success_count = sum(1 for r in results.values() if r.get('status') == 'SUCCESS')
+    success_count = sum(1 for r in results.values() if r.get("status") == "SUCCESS")
     logger.info(f"\nSuccess rate: {success_count}/3 experiments")
+
 
 if __name__ == "__main__":
     main()

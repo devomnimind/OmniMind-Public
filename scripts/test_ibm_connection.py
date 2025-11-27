@@ -57,9 +57,7 @@ def test_ibm_connection():
 
         # Verificar se é hardware real ou simulador
         is_real_hardware = (
-            active
-            and "ibm" in active.name.lower()
-            and "simulator" not in active.name.lower()
+            active and "ibm" in active.name.lower() and "simulator" not in active.name.lower()
         )
         print(f"   Hardware real: {'Sim' if is_real_hardware else 'Não'}")
 

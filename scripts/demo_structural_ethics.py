@@ -129,9 +129,7 @@ def run_demo() -> None:
 
     # Display cycle details
     print("\nCycle details:")
-    print(
-        f"{'Cycle':<8} {'Baseline':<10} {'Trained':<10} {'Recovered':<12} {'Returns?'}"
-    )
+    print(f"{'Cycle':<8} {'Baseline':<10} {'Trained':<10} {'Recovered':<12} {'Returns?'}")
     print("-" * 60)
     for cycle_result in report.cycle_results:
         print(

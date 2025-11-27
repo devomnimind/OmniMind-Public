@@ -10,9 +10,12 @@ from qiskit import QuantumCircuit
 
 load_dotenv()
 
+
 def validate_bell_state_ibm():
     print("Connecting to IBM Quantum via QPUInterface...")
-    token = os.getenv("IBM_API_KEY") or os.getenv("IBMQ_API_TOKEN") or os.getenv("QUANTUM_API_TOKEN")
+    token = (
+        os.getenv("IBM_API_KEY") or os.getenv("IBMQ_API_TOKEN") or os.getenv("QUANTUM_API_TOKEN")
+    )
 
     if not token:
         print("❌ Error: IBM Token not found")
@@ -61,8 +64,8 @@ def validate_bell_state_ibm():
 
         total = sum(counts.values())
         # QPUInterface returns counts dict, keys are binary strings
-        state_00 = counts.get('00', 0)
-        state_11 = counts.get('11', 0)
+        state_00 = counts.get("00", 0)
+        state_11 = counts.get("11", 0)
         score = (state_00 + state_11) / total
 
         print(f"IBM Quantum Bell State Results:")
@@ -76,5 +79,6 @@ def validate_bell_state_ibm():
     except Exception as e:
         print(f"❌ Job failed: {e}")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     validate_bell_state_ibm()

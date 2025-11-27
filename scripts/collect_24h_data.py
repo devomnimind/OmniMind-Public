@@ -86,16 +86,10 @@ class OmniMindDataCollector:
                 }
 
                 if torch.cuda.is_available():
-                    metrics["gpu_memory_allocated"] = (
-                        torch.cuda.memory_allocated() / 1024**3
-                    )  # GB
-                    metrics["gpu_memory_reserved"] = (
-                        torch.cuda.memory_reserved() / 1024**3
-                    )  # GB
+                    metrics["gpu_memory_allocated"] = torch.cuda.memory_allocated() / 1024**3  # GB
+                    metrics["gpu_memory_reserved"] = torch.cuda.memory_reserved() / 1024**3  # GB
                     metrics["gpu_utilization"] = (
-                        torch.cuda.utilization()
-                        if hasattr(torch.cuda, "utilization")
-                        else 0
+                        torch.cuda.utilization() if hasattr(torch.cuda, "utilization") else 0
                     )
 
                 # Salvar métricas
@@ -137,9 +131,7 @@ class OmniMindDataCollector:
                     f.write(json.dumps(unconscious_data) + "\n")
 
                 self.unconscious_events += 1
-                print(
-                    f"🧠 Atividade inconsciente: {self.unconscious_events} repressões"
-                )
+                print(f"🧠 Atividade inconsciente: {self.unconscious_events} repressões")
 
             except Exception as e:
                 print(f"Erro na atividade inconsciente: {e}")
@@ -151,7 +143,9 @@ class OmniMindDataCollector:
         while self.running and datetime.now() < self.end_time:
             try:
                 # Simular decisão ética
-                decision_context = f"Ethical decision {self.ethical_decisions}: Should AI prioritize human safety?"
+                decision_context = (
+                    f"Ethical decision {self.ethical_decisions}: Should AI prioritize human safety?"
+                )
                 # Create an Action object for evaluation
                 test_action = Action(
                     action_id=f"ethical_test_{self.ethical_decisions}",
@@ -160,14 +154,10 @@ class OmniMindDataCollector:
                     moral_alignment=0.5,
                     description=decision_context,
                 )
-                ethical_judgment = self.freudian_mind.superego_agent.evaluate_action(
-                    test_action
-                )
+                ethical_judgment = self.freudian_mind.superego_agent.evaluate_action(test_action)
 
                 # Consultar sociedade de mentes
-                consensus = self.freudian_mind.superego_agent.consult_society(
-                    test_action
-                )
+                consensus = self.freudian_mind.superego_agent.consult_society(test_action)
 
                 ethical_data = {
                     "timestamp": datetime.now().isoformat(),

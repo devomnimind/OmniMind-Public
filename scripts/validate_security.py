@@ -30,12 +30,8 @@ def check_dlp() -> Dict[str, str]:
 
 
 def check_sandbox_artifacts() -> Dict[str, str]:
-    kernel = os.environ.get(
-        "OMNIMIND_FIRECRACKER_KERNEL", "/opt/firecracker/vmlinux.bin"
-    )
-    rootfs = os.environ.get(
-        "OMNIMIND_FIRECRACKER_ROOTFS", "/opt/firecracker/rootfs.ext4"
-    )
+    kernel = os.environ.get("OMNIMIND_FIRECRACKER_KERNEL", "/opt/firecracker/vmlinux.bin")
+    rootfs = os.environ.get("OMNIMIND_FIRECRACKER_ROOTFS", "/opt/firecracker/rootfs.ext4")
     kernel_exists = os.path.exists(kernel)
     rootfs_exists = os.path.exists(rootfs)
     logger.info("Sandbox assets kernel=%s rootfs=%s", kernel_exists, rootfs_exists)
@@ -60,9 +56,7 @@ def main() -> None:
         "sandbox": sandbox_result,
     }
     log_path = Path(
-        os.environ.get(
-            "OMNIMIND_SECURITY_VALIDATION_LOG", "logs/security_validation.jsonl"
-        )
+        os.environ.get("OMNIMIND_SECURITY_VALIDATION_LOG", "logs/security_validation.jsonl")
     )
     log_path.parent.mkdir(parents=True, exist_ok=True)
     with log_path.open("a", encoding="utf-8") as log_file:

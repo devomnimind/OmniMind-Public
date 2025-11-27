@@ -4,9 +4,7 @@ import sys
 from typing import Dict, Any
 
 # Add src to path
-sys.path.append(
-    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src")
-)
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 
 # pyright: reportMissingImports=false
 from quantum_consciousness.quantum_backend import DWaveBackend

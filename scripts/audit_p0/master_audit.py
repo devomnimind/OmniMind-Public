@@ -14,14 +14,14 @@ LOG_DIR = PROJECT_ROOT / "logs"
 OUTPUT_DIR = PROJECT_ROOT / "data/audit_p0"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
+
 def run_command(command: str) -> str:
     try:
-        result = subprocess.run(
-            command, shell=True, check=True, capture_output=True, text=True
-        )
+        result = subprocess.run(command, shell=True, check=True, capture_output=True, text=True)
         return result.stdout.strip()
     except subprocess.CalledProcessError as e:
         return f"Error: {e}"
+
 
 def audit_dependencies() -> Dict[str, Any]:
     print("Auditing dependencies...")
@@ -46,6 +46,7 @@ def audit_dependencies() -> Dict[str, Any]:
 
     return report
 
+
 def audit_services() -> Dict[str, Any]:
     print("Auditing services...")
     services = {
@@ -53,18 +54,24 @@ def audit_services() -> Dict[str, Any]:
         "auditor": False,
         "replay": False,
         "frontend": False,
-        "backend": False
+        "backend": False,
     }
 
     ps_output = run_command("ps aux")
     for line in ps_output.splitlines():
-        if "observer_service.py" in line: services["observer"] = True
-        if "external_auditor" in line: services["auditor"] = True
-        if "replay_service" in line: services["replay"] = True
-        if "vite" in line: services["frontend"] = True
-        if "uvicorn" in line: services["backend"] = True
+        if "observer_service.py" in line:
+            services["observer"] = True
+        if "external_auditor" in line:
+            services["auditor"] = True
+        if "replay_service" in line:
+            services["replay"] = True
+        if "vite" in line:
+            services["frontend"] = True
+        if "uvicorn" in line:
+            services["backend"] = True
 
     return services
+
 
 def audit_logs() -> Dict[str, Any]:
     print("Auditing logs...")
@@ -77,7 +84,7 @@ def audit_logs() -> Dict[str, Any]:
     for log_file in LOG_DIR.glob("**/*.log"):
         if log_file.stat().st_mtime > cutoff.timestamp():
             try:
-                with open(log_file, 'r') as f:
+                with open(log_file, "r") as f:
                     for line in f:
                         if "ERROR" in line or "Exception" in line:
                             errors.append({"file": log_file.name, "line": line.strip()})
@@ -87,6 +94,7 @@ def audit_logs() -> Dict[str, Any]:
                 print(f"Could not read {log_file}: {e}")
 
     return {"error_count": len(errors), "warning_count": len(warnings), "errors": errors[:50]}
+
 
 def audit_security() -> Dict[str, Any]:
     print("Auditing security placeholders...")
@@ -99,20 +107,23 @@ def audit_security() -> Dict[str, Any]:
                 continue
 
             try:
-                with open(file_path, 'r') as f:
+                with open(file_path, "r") as f:
                     for i, line in enumerate(f, 1):
                         for p in placeholders:
                             if p in line:
-                                findings.append({
-                                    "file": str(file_path.relative_to(PROJECT_ROOT)),
-                                    "line": i,
-                                    "type": p,
-                                    "content": line.strip()
-                                })
+                                findings.append(
+                                    {
+                                        "file": str(file_path.relative_to(PROJECT_ROOT)),
+                                        "line": i,
+                                        "type": p,
+                                        "content": line.strip(),
+                                    }
+                                )
             except:
                 pass
 
     return findings
+
 
 def main():
     audit_data = {
@@ -120,14 +131,15 @@ def main():
         "dependencies": audit_dependencies(),
         "services": audit_services(),
         "logs": audit_logs(),
-        "security": audit_security()
+        "security": audit_security(),
     }
 
     output_file = OUTPUT_DIR / "audit_report_raw.json"
-    with open(output_file, 'w') as f:
+    with open(output_file, "w") as f:
         json.dump(audit_data, f, indent=2)
 
     print(f"Audit complete. Data saved to {output_file}")
+
 
 if __name__ == "__main__":
     main()

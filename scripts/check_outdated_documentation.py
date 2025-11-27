@@ -164,11 +164,7 @@ def check_coverage_config(coveragerc_path: Path) -> List[Dict]:
 
     for i, line in enumerate(lines, 1):
         # Check if excluded files still exist
-        if (
-            line.strip()
-            and not line.strip().startswith("[")
-            and not line.strip().startswith("#")
-        ):
+        if line.strip() and not line.strip().startswith("[") and not line.strip().startswith("#"):
             if "src/" in line or ".py" in line:
                 # This is a file exclusion
                 file_pattern = line.strip()
@@ -222,9 +218,7 @@ def find_test_count_in_files(
                                 "file": str(file_path.relative_to(project_root)),
                                 "line": line_num,
                                 "found": match.group(0),
-                                "context": content[context_start:context_end].replace(
-                                    "\n", " "
-                                ),
+                                "context": content[context_start:context_end].replace("\n", " "),
                                 "type": "specific_test_count",
                             }
                         )
@@ -294,9 +288,7 @@ def main():
     print(f"{Colors.ENDC}\n")
 
     if not all_issues:
-        print(
-            f"{Colors.OKGREEN}✓ Nenhum problema de documentação encontrado!{Colors.ENDC}"
-        )
+        print(f"{Colors.OKGREEN}✓ Nenhum problema de documentação encontrado!{Colors.ENDC}")
         return 0
 
     # Group by file
@@ -337,9 +329,7 @@ def main():
             f"Testes bloqueados por imports: {Colors.WARNING}{actual_stats.get('tests_blocked_by_imports', 'N/A')}{Colors.ENDC}"
         )
 
-    print(
-        f"\n{Colors.BOLD}Total de problemas encontrados: {len(all_issues)}{Colors.ENDC}"
-    )
+    print(f"\n{Colors.BOLD}Total de problemas encontrados: {len(all_issues)}{Colors.ENDC}")
 
     # Save report
     report = {

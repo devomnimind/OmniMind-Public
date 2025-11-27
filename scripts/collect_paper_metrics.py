@@ -167,9 +167,7 @@ class MetricsCollector:
                 "available": True,
                 "total_events": summary.get("total_events", 0),
                 "events_per_second": events_per_second,
-                "chain_integrity": summary.get("chain_integrity", {}).get(
-                    "valid", False
-                ),
+                "chain_integrity": summary.get("chain_integrity", {}).get("valid", False),
                 "log_size_bytes": summary.get("log_size_bytes", 0),
                 "last_hash": summary.get("last_hash", "")[:16]
                 + "...",  # Apenas prefixo para segurança
@@ -350,19 +348,13 @@ class MetricsCollector:
                     "start_time": (
                         self.metrics_data[0]["timestamp"] if self.metrics_data else None
                     ),
-                    "end_time": (
-                        self.metrics_data[-1]["timestamp"]
-                        if self.metrics_data
-                        else None
-                    ),
+                    "end_time": (self.metrics_data[-1]["timestamp"] if self.metrics_data else None),
                     "duration_seconds": self.collection_duration,
                     "samples_collected": len(self.metrics_data),
                     "interval_seconds": self.interval,
                 },
                 "system_stats": {
-                    "cpu_avg_percent": (
-                        sum(cpu_usage) / len(cpu_usage) if cpu_usage else 0
-                    ),
+                    "cpu_avg_percent": (sum(cpu_usage) / len(cpu_usage) if cpu_usage else 0),
                     "cpu_max_percent": max(cpu_usage) if cpu_usage else 0,
                     "memory_avg_percent": (
                         sum(memory_usage) / len(memory_usage) if memory_usage else 0
@@ -376,14 +368,10 @@ class MetricsCollector:
                         else 0
                     ),
                     "chain_integrity": all(
-                        s["audit"].get("chain_integrity", False)
-                        for s in self.metrics_data
+                        s["audit"].get("chain_integrity", False) for s in self.metrics_data
                     ),
                     "avg_events_per_second": (
-                        sum(
-                            s["audit"].get("events_per_second", 0)
-                            for s in self.metrics_data
-                        )
+                        sum(s["audit"].get("events_per_second", 0) for s in self.metrics_data)
                         / len(self.metrics_data)
                         if self.metrics_data
                         else 0
@@ -391,12 +379,10 @@ class MetricsCollector:
                 },
                 "security_stats": {
                     "total_dlp_violations": sum(
-                        s["security"].get("dlp_violations", 0)
-                        for s in self.metrics_data
+                        s["security"].get("dlp_violations", 0) for s in self.metrics_data
                     ),
                     "total_security_alerts": sum(
-                        s["security"].get("security_alerts", 0)
-                        for s in self.metrics_data
+                        s["security"].get("security_alerts", 0) for s in self.metrics_data
                     ),
                 },
             }

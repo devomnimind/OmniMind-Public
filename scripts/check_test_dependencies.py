@@ -162,9 +162,7 @@ def main():
 
         print(f"  ✗ {module}")
         print(f"    Descrição: {info['description']}")
-        print(
-            f"    Testes bloqueados: {info['tests_blocked']} em {info['test_files']} arquivos"
-        )
+        print(f"    Testes bloqueados: {info['tests_blocked']} em {info['test_files']} arquivos")
         print(f"    Pacote: {info['package']}")
 
         if "system_deps" in info:
@@ -207,9 +205,7 @@ def main():
         print(f"  Instaladas: {len(installed_after)}/{len(DEPENDENCY_MAP)}")
 
         if missing_after:
-            print(
-                f"  {Colors.WARNING}Ainda faltando: {', '.join(missing_after)}{Colors.ENDC}"
-            )
+            print(f"  {Colors.WARNING}Ainda faltando: {', '.join(missing_after)}{Colors.ENDC}")
         else:
             print(f"  {Colors.OKGREEN}Todas as dependências instaladas!{Colors.ENDC}")
 
@@ -245,9 +241,7 @@ def main():
         print(
             f"{Colors.WARNING}Nota: Isso instalará TODAS as dependências do projeto.{Colors.ENDC}"
         )
-        print(
-            f"{Colors.WARNING}Pode levar alguns minutos dependendo da conexão.{Colors.ENDC}\n"
-        )
+        print(f"{Colors.WARNING}Pode levar alguns minutos dependendo da conexão.{Colors.ENDC}\n")
 
     else:
         print(f"\n{Colors.WARNING}Nenhuma instalação realizada.{Colors.ENDC}")

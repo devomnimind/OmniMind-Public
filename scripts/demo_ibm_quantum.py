@@ -68,9 +68,7 @@ def main():
         backends = qpu.list_backends()
         for backend in backends:
             status = "✅" if backend.available else "❌"
-            print(
-                f"   {status} {backend.name} ({backend.provider}) - {backend.num_qubits} qubits"
-            )
+            print(f"   {status} {backend.name} ({backend.provider}) - {backend.num_qubits} qubits")
 
         # 3. Criar circuito quântico (Bell State)
         print("\n3️⃣ Criando circuito quântico (Bell State)...")

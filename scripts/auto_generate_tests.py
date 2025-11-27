@@ -77,11 +77,7 @@ class TestGenerator:
                     # Extrair tipo de retorno se disponível
                     returns = "None"
                     if node.returns:
-                        returns = (
-                            ast.unparse(node.returns)
-                            if hasattr(ast, "unparse")
-                            else "Any"
-                        )
+                        returns = ast.unparse(node.returns) if hasattr(ast, "unparse") else "Any"
 
                     func_info = FunctionInfo(node.name, node.lineno, args, returns)
                     functions.append(func_info)
@@ -91,9 +87,7 @@ class TestGenerator:
 
         return functions
 
-    def generate_test_skeleton(
-        self, module_name: str, functions: List[FunctionInfo]
-    ) -> str:
+    def generate_test_skeleton(self, module_name: str, functions: List[FunctionInfo]) -> str:
         """Gera skeleton de teste pytest."""
         module_parts = module_name.replace(".py", "").split("/")
         test_module_name = f"test_{module_parts[-1]}"
@@ -139,7 +133,9 @@ class Test{class_name}:
 '''
 
             if func.args:
-                test_method += f'        # {"\n        # ".join([f"{arg} = Mock()" for arg in func.args])}\n'
+                test_method += (
+                    f'        # {"\n        # ".join([f"{arg} = Mock()" for arg in func.args])}\n'
+                )
 
             test_method += f"""
         # Act
@@ -198,9 +194,7 @@ class Test{class_name}:
         # Analisar funções
         functions = self.analyze_module_functions(module_path)
         if not functions:
-            print(
-                f"{YELLOW}[SKIP]{RESET} Nenhuma função pública encontrada em {module_path}"
-            )
+            print(f"{YELLOW}[SKIP]{RESET} Nenhuma função pública encontrada em {module_path}")
             return False
 
         print(f"{GREEN}[FOUND]{RESET} {len(functions)} funções públicas")
@@ -226,9 +220,7 @@ class Test{class_name}:
         self.generated_count += 1
 
         print(f"{GREEN}[CREATED]{RESET} {test_file}")
-        self.log_action(
-            "GENERATE_TEST", str(test_file), f"{len(functions)} funções testadas"
-        )
+        self.log_action("GENERATE_TEST", str(test_file), f"{len(functions)} funções testadas")
 
         return True
 
@@ -277,9 +269,7 @@ class Test{class_name}:
                 cwd=PROJECT_ROOT,
             )
 
-            collected = len(
-                [line for line in result.stdout.split("\n") if "test_" in line]
-            )
+            collected = len([line for line in result.stdout.split("\n") if "test_" in line])
             errors = len([line for line in result.stderr.split("\n") if line.strip()])
 
             return {

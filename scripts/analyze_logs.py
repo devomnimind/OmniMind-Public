@@ -58,9 +58,7 @@ class LogAnalyzer:
         if not self.log_dir.exists():
             return {"error": f"Log directory {self.log_dir} does not exist"}
 
-        log_files = list(self.log_dir.glob("*.log")) + list(
-            self.log_dir.glob("*.log.*")
-        )
+        log_files = list(self.log_dir.glob("*.log")) + list(self.log_dir.glob("*.log.*"))
         if not log_files:
             return {"warning": f"No log files found in {self.log_dir}"}
 
@@ -156,9 +154,7 @@ class LogAnalyzer:
         # Resource state transitions
         if "resource_state" in patterns:
             state_changes = [
-                p
-                for p in patterns["resource_state"]
-                if "changed" in p["content"].lower()
+                p for p in patterns["resource_state"] if "changed" in p["content"].lower()
             ]
             if len(state_changes) > 50:  # Frequent state changes indicate instability
                 anomalies["resource_instability"] = {
@@ -255,31 +251,23 @@ class LogAnalyzer:
             )
 
         if "phi_zero_detection" in anomalies:
-            recommendations.append(
-                "🔵 INFO: Phi-0 outputs detected - enhance silent bug detection"
-            )
+            recommendations.append("🔵 INFO: Phi-0 outputs detected - enhance silent bug detection")
 
         performance = analysis.get("performance", {})
         if "cpu" in performance and performance["cpu"]["high_usage_count"] > 10:
             recommendations.append("🟡 MEDIUM PRIORITY: Investigate CPU usage spikes")
 
         if "memory" in performance and performance["memory"]["high_usage_count"] > 10:
-            recommendations.append(
-                "🟡 MEDIUM PRIORITY: Investigate memory usage spikes"
-            )
+            recommendations.append("🟡 MEDIUM PRIORITY: Investigate memory usage spikes")
 
         if not recommendations:
-            recommendations.append(
-                "✅ No critical issues detected - continue monitoring"
-            )
+            recommendations.append("✅ No critical issues detected - continue monitoring")
 
         return recommendations
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Analyze OmniMind log files for anomalies"
-    )
+    parser = argparse.ArgumentParser(description="Analyze OmniMind log files for anomalies")
     parser.add_argument("log_directory", help="Directory containing log files")
     parser.add_argument(
         "--output",

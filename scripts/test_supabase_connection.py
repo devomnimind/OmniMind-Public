@@ -2,6 +2,7 @@ import os
 import asyncio
 from supabase import create_client, Client
 
+
 async def test_supabase():
     url = os.environ.get("OMNIMIND_SUPABASE_URL")
     key = os.environ.get("OMNIMIND_SUPABASE_SERVICE_ROLE_KEY")
@@ -35,7 +36,9 @@ async def test_supabase():
     except Exception as e:
         print(f"❌ Supabase Connection Failed: {e}")
 
+
 if __name__ == "__main__":
     from dotenv import load_dotenv
+
     load_dotenv()
     asyncio.run(test_supabase())

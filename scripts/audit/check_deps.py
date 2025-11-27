@@ -122,9 +122,7 @@ if __name__ == "__main__":
         print("UNUSED DEPENDENCIES (in requirements.txt but not imported in src):")
         for u in sorted(unused):
             print(f"- {u}")
-        print(
-            "\nPOTENTIALLY MISSING DEPENDENCIES (imported in src but not in requirements.txt):"
-        )
+        print("\nPOTENTIALLY MISSING DEPENDENCIES (imported in src but not in requirements.txt):")
         for m in sorted(missing):
             print(f"- {m}")
     else:

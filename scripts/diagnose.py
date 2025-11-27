@@ -74,9 +74,7 @@ class DiagnosticTool:
                 f"Python version {platform.python_version()} is too old. "
                 "Recommended: Python 3.12.8"
             )
-            self.results["recommendations"].append(
-                "Upgrade Python to 3.12.8 using pyenv"
-            )
+            self.results["recommendations"].append("Upgrade Python to 3.12.8 using pyenv")
         elif version >= (3, 13):
             self.results["issues"].append(
                 f"Python version {platform.python_version()} may have "
@@ -133,9 +131,7 @@ class DiagnosticTool:
 
         if missing:
             self.results["issues"].append(f"Missing packages: {', '.join(missing)}")
-            self.results["recommendations"].append(
-                "Run: pip install -r requirements.txt"
-            )
+            self.results["recommendations"].append("Run: pip install -r requirements.txt")
 
     def check_configuration(self) -> None:
         """Check configuration files."""
@@ -202,9 +198,7 @@ class DiagnosticTool:
         except Exception:
             print("  ✗ Qdrant: NOT RUNNING")
             self.results["services"]["qdrant"] = "stopped"
-            self.results["recommendations"].append(
-                "Start Qdrant: docker-compose up -d qdrant"
-            )
+            self.results["recommendations"].append("Start Qdrant: docker-compose up -d qdrant")
 
     def check_permissions(self) -> None:
         """Check file permissions."""
@@ -358,29 +352,15 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 
-    parser.add_argument(
-        "--full", action="store_true", help="Run full diagnostic (default)"
-    )
+    parser.add_argument("--full", action="store_true", help="Run full diagnostic (default)")
     parser.add_argument("--quick", action="store_true", help="Run quick health check")
-    parser.add_argument(
-        "--check-system", action="store_true", help="Check system information only"
-    )
-    parser.add_argument(
-        "--check-dependencies", action="store_true", help="Check dependencies only"
-    )
-    parser.add_argument(
-        "--check-config", action="store_true", help="Check configuration only"
-    )
-    parser.add_argument(
-        "--check-services", action="store_true", help="Check services only"
-    )
-    parser.add_argument(
-        "--check-permissions", action="store_true", help="Check permissions only"
-    )
+    parser.add_argument("--check-system", action="store_true", help="Check system information only")
+    parser.add_argument("--check-dependencies", action="store_true", help="Check dependencies only")
+    parser.add_argument("--check-config", action="store_true", help="Check configuration only")
+    parser.add_argument("--check-services", action="store_true", help="Check services only")
+    parser.add_argument("--check-permissions", action="store_true", help="Check permissions only")
     parser.add_argument("--check-gpu", action="store_true", help="Check GPU/CUDA only")
-    parser.add_argument(
-        "--check-performance", action="store_true", help="Check performance only"
-    )
+    parser.add_argument("--check-performance", action="store_true", help="Check performance only")
     parser.add_argument(
         "--output", type=str, default="diagnostic_report.json", help="Output file name"
     )

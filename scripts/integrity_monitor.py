@@ -243,10 +243,10 @@ Este é um alerta automático do sistema de monitoramento de integridade.
 
             if "metrics" not in report:
                 corruption_count = len(report.get("corruptions", []))
-                total_events = report.get("events_verified", 1) # Evitar div por zero
+                total_events = report.get("events_verified", 1)  # Evitar div por zero
                 report["metrics"] = {
                     "corruption_rate": corruption_count / total_events if total_events > 0 else 0.0,
-                    "memory_usage": psutil.virtual_memory().percent / 100.0
+                    "memory_usage": psutil.virtual_memory().percent / 100.0,
                 }
 
             # Calcular status do sistema
@@ -317,9 +317,7 @@ Este é um alerta automático do sistema de monitoramento de integridade.
 
         try:
             # Verificar e corrigir configuração da GPU
-            config_file = Path(
-                "~/projects/omnimind/config/optimization_config.json"
-            ).expanduser()
+            config_file = Path("~/projects/omnimind/config/optimization_config.json").expanduser()
 
             if config_file.exists():
                 with open(config_file, "r") as f:
@@ -411,7 +409,7 @@ Este é um alerta automático do sistema de monitoramento de integridade.
                 "gpu_utilization": gpu_status.get("utilization", 0.0),
                 "memory_usage": metrics.get("memory_usage", 0.0),
                 "system_load": psutil.cpu_percent(),
-                "integrity_level": report.get("status", "unknown")
+                "integrity_level": report.get("status", "unknown"),
             }
 
             # Atomic write
@@ -471,9 +469,7 @@ Este é um alerta automático do sistema de monitoramento de integridade.
         # Salvar métricas oficiais
         self._save_current_metrics(result)
 
-        self.logger.info(
-            f"✅ Ciclo de monitoramento concluído - Relatório: {health_report}"
-        )
+        self.logger.info(f"✅ Ciclo de monitoramento concluído - Relatório: {health_report}")
 
         return result
 
@@ -506,18 +502,10 @@ def main():
     """Função principal do monitor"""
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Monitor de Integridade do Sistema de Auditoria"
-    )
-    parser.add_argument(
-        "--continuous", action="store_true", help="Executar monitoramento contínuo"
-    )
-    parser.add_argument(
-        "--once", action="store_true", help="Executar uma verificação única"
-    )
-    parser.add_argument(
-        "--log-dir", default="~/projects/omnimind/logs", help="Diretório de logs"
-    )
+    parser = argparse.ArgumentParser(description="Monitor de Integridade do Sistema de Auditoria")
+    parser.add_argument("--continuous", action="store_true", help="Executar monitoramento contínuo")
+    parser.add_argument("--once", action="store_true", help="Executar uma verificação única")
+    parser.add_argument("--log-dir", default="~/projects/omnimind/logs", help="Diretório de logs")
 
     args = parser.parse_args()
 

@@ -78,12 +78,8 @@ def main():
         from pathlib import Path
         import os
 
-        kernel_path = os.environ.get(
-            "OMNIMIND_FIRECRACKER_KERNEL", "/opt/firecracker/vmlinux.bin"
-        )
-        rootfs_path = os.environ.get(
-            "OMNIMIND_FIRECRACKER_ROOTFS", "/opt/firecracker/rootfs.ext4"
-        )
+        kernel_path = os.environ.get("OMNIMIND_FIRECRACKER_KERNEL", "/opt/firecracker/vmlinux.bin")
+        rootfs_path = os.environ.get("OMNIMIND_FIRECRACKER_ROOTFS", "/opt/firecracker/rootfs.ext4")
 
         if not Path(kernel_path).exists() or not Path(rootfs_path).exists():
             print("🚫 COMMIT BLOCKED: Firecracker sandbox assets missing!")

@@ -71,9 +71,7 @@ def repair_chain_preserve_history(log_file: str):
             prev_hash = current_hash
 
             # Serialize back to line
-            repaired_lines.append(
-                json.dumps(event, sort_keys=True).encode("utf-8") + b"\n"
-            )
+            repaired_lines.append(json.dumps(event, sort_keys=True).encode("utf-8") + b"\n")
 
         except json.JSONDecodeError:
             print(f"[WARN] Skipping invalid JSON at line {line_num}")

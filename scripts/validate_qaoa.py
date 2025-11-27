@@ -20,9 +20,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.quantum_consciousness.quantum_backend import QuantumBackend
 
 # Configure Logging
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -41,9 +39,7 @@ def validate_qaoa():
     ego_energy = 0.2
     superego_energy = 0.9
 
-    logger.info(
-        f"Scenario: Id={id_energy}, Ego={ego_energy}, Superego={superego_energy}"
-    )
+    logger.info(f"Scenario: Id={id_energy}, Ego={ego_energy}, Superego={superego_energy}")
 
     start_time = time.time()
 

@@ -95,9 +95,7 @@ class AuditMigrationManager:
 
             self.log(f"   Sistema antigo - Válido: {integrity['valid']}")
             self.log(f"   Eventos verificados: {integrity['events_verified']}")
-            self.log(
-                f"   Corrupções: {integrity.get('unauthorized_corruptions', 'N/A')}"
-            )
+            self.log(f"   Corrupções: {integrity.get('unauthorized_corruptions', 'N/A')}")
 
             # Salvar relatório de validação
             validation_report = self.migration_dir / "old_system_validation.json"
@@ -222,23 +220,15 @@ class AuditMigrationManager:
             self.log(f"   Encontrados {len(events)} eventos para migração")
 
             # Migrar com verificação robusta de integridade
-            valid, integrity_result = migration_manager.migrate_with_robust_integrity(
-                events
-            )
+            valid, integrity_result = migration_manager.migrate_with_robust_integrity(events)
 
             self.log(f"✅ Integridade da migração: {valid}")
-            self.log(
-                f"✅ Merkle Root: {integrity_result.get('merkle_root', 'N/A')[:16]}..."
-            )
+            self.log(f"✅ Merkle Root: {integrity_result.get('merkle_root', 'N/A')[:16]}...")
             self.log(f"✅ Eventos migrados: {len(events)}")
-            self.log(
-                f"✅ Corrupções detectadas: {len(integrity_result.get('corruptions', []))}"
-            )
+            self.log(f"✅ Corrupções detectadas: {len(integrity_result.get('corruptions', []))}")
 
             if not valid:
-                self.log(
-                    "⚠️  AVISO: Corrupções detectadas durante migração - revisar logs"
-                )
+                self.log("⚠️  AVISO: Corrupções detectadas durante migração - revisar logs")
                 # Mesmo com corrupções, continua se for apenas eventos antigos corrompidos
                 if (
                     len(integrity_result.get("corruptions", [])) < len(events) * 0.1
@@ -302,9 +292,7 @@ class AuditMigrationManager:
             self.log("   ✅ Sistema robusto funciona basicamente")
             self.log("   ⚠️  AVISO: GPU não testada (problema conhecido)")
 
-            self.log(
-                "✅ PASSO 4 CONCLUÍDO: Sistema robusto testado com sucesso (básico)"
-            )
+            self.log("✅ PASSO 4 CONCLUÍDO: Sistema robusto testado com sucesso (básico)")
             return True
 
         except Exception as e:
@@ -362,9 +350,7 @@ class AuditMigrationManager:
             ("validation", self.step_2_validate_old_system),
             (
                 "migration",
-                lambda: self.step_3_migrate_events_robust(
-                    results.get("validation", {})
-                ),
+                lambda: self.step_3_migrate_events_robust(results.get("validation", {})),
             ),
             ("testing", self.step_4_test_new_system),
             ("activation", self.step_5_activate_new_system),
@@ -375,9 +361,7 @@ class AuditMigrationManager:
             try:
                 result = step_func()
                 results[step_name] = result
-                if result is False or (
-                    isinstance(result, dict) and not result.get("valid", True)
-                ):
+                if result is False or (isinstance(result, dict) and not result.get("valid", True)):
                     success = False
                     break
             except Exception as e:
@@ -387,9 +371,7 @@ class AuditMigrationManager:
 
         # Finalizar estatísticas
         self.stats["end_time"] = time.time()
-        self.stats["duration_seconds"] = (
-            self.stats["end_time"] - self.stats["start_time"]
-        )
+        self.stats["duration_seconds"] = self.stats["end_time"] - self.stats["start_time"]
         self.stats["success"] = success
 
         # Salvar relatório final

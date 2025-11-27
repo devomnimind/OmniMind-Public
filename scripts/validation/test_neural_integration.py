@@ -81,9 +81,7 @@ if __name__ == "__main__":
         logger.info("\n🎉 All Neural Integrations Verified!")
         sys.exit(0)
     elif ollama_ok:
-        logger.warning(
-            "\n⚠️ Partial success: Local Ollama is working, but remote endpoints failed."
-        )
+        logger.warning("\n⚠️ Partial success: Local Ollama is working, but remote endpoints failed.")
         sys.exit(0)  # Considerar sucesso parcial para não bloquear CI
     else:
         logger.error("\n❌ Critical failure: Local Ollama failed.")

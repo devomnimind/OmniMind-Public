@@ -62,10 +62,7 @@ class MLMonitor:
         # Verifica limites HF (aproximados)
         hf_limits = self.optimizer.check_hf_limits()
 
-        if (
-            hf_limits.get("downloads_remaining", 10000)
-            < self.alert_thresholds["hf_downloads"]
-        ):
+        if hf_limits.get("downloads_remaining", 10000) < self.alert_thresholds["hf_downloads"]:
             alerts.append(
                 {
                     "type": "hf_download_limit",
@@ -74,10 +71,7 @@ class MLMonitor:
                 }
             )
 
-        if (
-            hf_limits.get("uploads_remaining", 5000)
-            < self.alert_thresholds["hf_uploads"]
-        ):
+        if hf_limits.get("uploads_remaining", 5000) < self.alert_thresholds["hf_uploads"]:
             alerts.append(
                 {
                     "type": "hf_upload_limit",
@@ -133,9 +127,7 @@ class MLMonitor:
             github_trend = recent.get("github_requests_remaining", 0) - previous.get(
                 "github_requests_remaining", 0
             )
-            cost_trend = recent.get("estimated_cost", 0) - previous.get(
-                "estimated_cost", 0
-            )
+            cost_trend = recent.get("estimated_cost", 0) - previous.get("estimated_cost", 0)
         else:
             github_trend = 0
             cost_trend = 0
@@ -160,9 +152,7 @@ class MLMonitor:
             "github_requests_remaining": gh_limits.get("remaining", 5000),
             "hf_downloads_remaining": hf_limits.get("downloads_remaining", 10000),
             "hf_uploads_remaining": hf_limits.get("uploads_remaining", 5000),
-            "estimated_cost": self.optimizer.get_usage_report()["github_usage"][
-                "estimated_cost"
-            ],
+            "estimated_cost": self.optimizer.get_usage_report()["github_usage"]["estimated_cost"],
         }
 
         # Registra uso

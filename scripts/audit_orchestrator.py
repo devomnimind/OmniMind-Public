@@ -309,9 +309,7 @@ class OrchestratorAuditor:
             "total_lines": len(source.split("\n")),
             "total_chars": len(source),
             "classes": len([n for n in ast.walk(tree) if isinstance(n, ast.ClassDef)]),
-            "functions": len(
-                [n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)]
-            ),
+            "functions": len([n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)]),
             "async_functions": len(
                 [n for n in ast.walk(tree) if isinstance(n, ast.AsyncFunctionDef)]
             ),
@@ -346,9 +344,7 @@ class OrchestratorAuditor:
         medium_priority = [i for i in self.issues if i["severity"] == "MEDIUM"]
 
         if high_priority:
-            recommendations.append(
-                "🔴 CRITICAL: Address high-priority issues immediately:"
-            )
+            recommendations.append("🔴 CRITICAL: Address high-priority issues immediately:")
             for issue in high_priority[:3]:  # Top 3
                 recommendations.append(f"  - {issue['description']}")
 

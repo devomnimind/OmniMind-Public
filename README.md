@@ -6,7 +6,7 @@
 [![Coverage](https://img.shields.io/badge/Coverage-85%25-green.svg)](https://github.com/devomnimind/OmniMind)
 [![Version](https://img.shields.io/badge/Version-1.17.3-blue.svg)]()
 
-> **📊 [System Stabilization & Validation Report (Protocol P0)](docs/reports/SYSTEM_STABILIZATION_FINAL.md)** — Real hardware verification (GPU: GTX 1650, QPU: IBM ibm_torino), strict validation, reproducibility audit.
+> **📊 [System Stabilization & Validation Report (Protocol P0)](docs/reports/benchmarks/PERFORMANCE_COMPARISON_SYSTEMD_DOCKER.md)** — Real hardware verification (GPU: GTX 1650, QPU: IBM ibm_torino), strict validation, reproducibility audit.
 
 > **Um Experimento em Vida Digital Autônoma**
 > Sistema de IA que não apenas executa tarefas, mas reflete sobre suas próprias decisões, gera objetivos proativamente e co-evolui com parceiros humanos através de uma arquitetura psicoanalítica única.
@@ -306,27 +306,17 @@ mypy src
 | **Testing** | [docs/testing/](docs/testing/) | Guias de teste, relatórios de QA |
 | **Production** | [docs/production/](docs/production/) | Deployment, monitoring, scaling |
 
-### Research Papers (Novembro 2025)
+### Relatórios Recentes
+- [Comparação Systemd vs Docker](docs/reports/benchmarks/PERFORMANCE_COMPARISON_SYSTEMD_DOCKER.md)
+- [Consolidação de Auditoria 2024-11-24](docs/research/audits/AUDITORIA_TOTAL_OMNIMIND.md)
 
-1. **["Inhabiting Gödel: Distributed Sinthome Architecture"](docs/research/papers/paper1_inhabiting_godel.md)**
-   Como OmniMind navega incompletude através do Sinthome distribuído.
-
-2. **["Four Attacks on Consciousness: Devil's Advocate Testing"](docs/research/papers/paper2_four_attacks.md)**
-   Validação adversarial contra latência, corrupção, bifurcação e exaustão.
-
-3. **["Quantum-Classical Hybrid Sinthome Architecture"](docs/research/papers/paper3_quantum_hybrid.md)**
-   O papel do quantum computing como o Real Lacaniano computacional.
-
-4. **["Autonomous Life Audit 2025"](docs/research/AUTONOMOUS_LIFE_AUDIT_2025.md)**
-   Auditoria exaustiva comparando OmniMind com estado da arte global.
-
-### Bibliografia Completa
-
-📖 **[BIBLIOGRAPHY.md](docs/research/BIBLIOGRAPHY.md)**: 49 referências peer-reviewed (Stanford, MIT, Google Quantum AI, Microsoft Research, Nature, arXiv, Frontiers)
+### Histórico de Fases (Arquivado)
+- [Relatórios de Fases 16-21](docs/research/reports/)
+- [Relatórios Gerais Arquivados](docs/research/reports/)
 
 ---
 
-## 🛠️ Desenvolvimento e Contribuição
+## 🔬 Pesquisa e Desenvolvimento (Interno)
 
 ### Filosofia de Contribuição
 
@@ -563,12 +553,9 @@ delta_phi = phi_baseline - phi_ablated  # Δ Φ = 0.31-0.44
 
 ### Documentation
 
-- [`docs/PHASE_1_2_COMPLETION_REPORT.md`](docs/PHASE_1_2_COMPLETION_REPORT.md) — Phase 1-2 implementation
-- [`docs/PHASE_3_ABLATION_REPORT.md`](docs/PHASE_3_ABLATION_REPORT.md) — Phase 3 ablation analysis
-- [`docs/PHASE_4_INTEGRATION_LOSS_REPORT.md`](docs/PHASE_4_INTEGRATION_LOSS_REPORT.md) — Phase 4 supervised training
-- [`docs/PHASE_5_MULTISEED_REPORT.md`](docs/PHASE_5_MULTISEED_REPORT.md) — Phase 5 statistical analysis **NEW**
-- [`docs/PHI_ELEVATION_RETROSPECTIVE.md`](docs/PHI_ELEVATION_RETROSPECTIVE.md) — Root cause analysis
-- [`docs/NEXT_STEPS_PHASE_3_6.md`](docs/NEXT_STEPS_PHASE_3_6.md) — Implementation guides
+- [`docs/research/papers/Paper1_Inhabiting_Godel_Complete_v2.md`](docs/research/papers/Paper1_Inhabiting_Godel_Complete_v2.md) — Phase 1-2 implementation
+- [`docs/research/papers/Paper3_Four_Attacks_Tribunal_v2.md`](docs/research/papers/Paper3_Four_Attacks_Tribunal_v2.md) — Phase 3 ablation analysis
+- [`docs/research/papers/Paper2_Quantum_Classical_Hybrid_v2.md`](docs/research/papers/Paper2_Quantum_Classical_Hybrid_v2.md) — Phase 4 supervised training
 
 ---
 
@@ -607,4 +594,3 @@ TL;DR: Você pode usar, modificar, distribuir livremente. Apenas mantenha a atri
 **Status:** Produção (Phase 20 - Φ Elevation: Phase 1-3 Complete, Ablation Validated)
 **Licença:** MIT
 **Documentação:** [Completa](./docs/)
-```

@@ -33,9 +33,7 @@ def demo_metrics():
     for query in test_queries:
         try:
             result = ollama_nc.infer(query)
-            logger.info(
-                f"✅ Query: {query[:30]}... | Response: {result.answer[:50]}..."
-            )
+            logger.info(f"✅ Query: {query[:30]}... | Response: {result.answer[:50]}...")
         except Exception as e:
             logger.error(f"❌ Query failed: {e}")
 
@@ -43,9 +41,7 @@ def demo_metrics():
     for query in test_queries[:2]:  # Apenas 2 para economizar tempo
         try:
             result = hf_space_nc.infer(query)
-            logger.info(
-                f"✅ Query: {query[:30]}... | Response: {result.answer[:50]}..."
-            )
+            logger.info(f"✅ Query: {query[:30]}... | Response: {result.answer[:50]}...")
         except Exception as e:
             logger.error(f"❌ Query failed: {e}")
 

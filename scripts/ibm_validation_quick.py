@@ -64,9 +64,7 @@ def main():
         # Inicializar QPUs
         print("\n1️⃣ Inicializando interfaces...")
         qpu_sim = QPUInterface()  # Simulador
-        qpu_ibm = QPUInterface(
-            ibmq_token=ibm_token
-        )  # IBM (mas ainda pode usar simulador)
+        qpu_ibm = QPUInterface(ibmq_token=ibm_token)  # IBM (mas ainda pode usar simulador)
 
         # Forçar uso do backend IBM se disponível
         if BackendType.IBMQ_CLOUD in qpu_ibm.backends:
@@ -104,9 +102,7 @@ def main():
 
         # Benchmark 3: Simple Superposition
         print("\n4️⃣ Benchmark 3: Simple Superposition")
-        results["benchmarks"]["superposition"] = benchmark_superposition(
-            qpu_sim, qpu_ibm
-        )
+        results["benchmarks"]["superposition"] = benchmark_superposition(qpu_sim, qpu_ibm)
 
         # Análise comparativa
         print("\n5️⃣ Análise Comparativa...")
@@ -129,9 +125,7 @@ def main():
         print(f"• Bell State Fidelity: {analysis['bell_state_fidelity']:.3f}")
         print(f"• Randomness Quality: {analysis['randomness_quality']:.3f}")
         print(f"• Superposition Accuracy: {analysis['superposition_accuracy']:.3f}")
-        print(
-            f"• Noise Impact: {'Alto' if analysis['noise_impact'] > 0.1 else 'Baixo'}"
-        )
+        print(f"• Noise Impact: {'Alto' if analysis['noise_impact'] > 0.1 else 'Baixo'}")
         print(
             f"• Quantum Advantage: {'Detectado' if analysis['quantum_advantage'] else 'Não detectado'}"
         )

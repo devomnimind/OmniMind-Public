@@ -126,9 +126,7 @@ class HybridMLOptimizer:
         try:
             if model_choice["provider"] == "github":
                 # Chamada GitHub Models
-                response = self._call_github_model(
-                    model_choice["chosen_model"], prompt, **kwargs
-                )
+                response = self._call_github_model(model_choice["chosen_model"], prompt, **kwargs)
                 result.update(
                     {
                         "success": True,
@@ -140,9 +138,7 @@ class HybridMLOptimizer:
 
             elif model_choice["provider"] == "hf":
                 # Chamada Hugging Face (local ou API)
-                response = self._call_hf_model(
-                    model_choice["chosen_model"], prompt, **kwargs
-                )
+                response = self._call_hf_model(model_choice["chosen_model"], prompt, **kwargs)
                 result.update(
                     {
                         "success": True,
@@ -182,8 +178,7 @@ class HybridMLOptimizer:
         return {
             "github_usage": {
                 "requests_remaining": self.rate_limits.github_requests_remaining,
-                "estimated_cost": (5000 - self.rate_limits.github_requests_remaining)
-                * 0.002,
+                "estimated_cost": (5000 - self.rate_limits.github_requests_remaining) * 0.002,
             },
             "hf_usage": {
                 "downloads_remaining": self.rate_limits.hf_downloads_remaining,
@@ -228,9 +223,7 @@ def main():
     report = optimizer.get_usage_report()
     print(f"💰 Custo estimado GitHub: ${report['github_usage']['estimated_cost']:.3f}")
 
-    print(
-        "\\n✅ Otimizador configurado! Use hybrid_ml_optimizer.call_optimized_model()"
-    )
+    print("\\n✅ Otimizador configurado! Use hybrid_ml_optimizer.call_optimized_model()")
 
 
 if __name__ == "__main__":

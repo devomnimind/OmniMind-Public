@@ -15,6 +15,7 @@ DURATION_SECONDS = 60  # Total simulation time
 # Ensure log directory exists
 os.makedirs(LOG_DIR, exist_ok=True)
 
+
 class SimulationLogger:
     def __init__(self):
         self.logs = []
@@ -26,7 +27,7 @@ class SimulationLogger:
             "elapsed": time.time() - self.start_time,
             "type": event_type,
             "details": details,
-            "metrics": metrics or {}
+            "metrics": metrics or {},
         }
         self.logs.append(entry)
         print(f"[{entry['timestamp']}] [{event_type}] {details}")
@@ -35,6 +36,7 @@ class SimulationLogger:
         with open(LOG_FILE, "w") as f:
             json.dump(self.logs, f, indent=2)
         print(f"Logs saved to {LOG_FILE}")
+
 
 async def collect_metrics(page):
     # System Metrics
@@ -61,14 +63,11 @@ async def collect_metrics(page):
             "sim_entropy": entropy,
             "sim_latency": latency,
             "sim_coherence_state": coherence_state,
-            "sim_integrity": integrity
+            "sim_integrity": integrity,
         }
     except Exception as e:
-        return {
-            "system_cpu": cpu,
-            "system_ram": ram,
-            "error": str(e)
-        }
+        return {"system_cpu": cpu, "system_ram": ram, "error": str(e)}
+
 
 async def run_simulation():
     logger = SimulationLogger()
@@ -121,7 +120,7 @@ async def run_simulation():
             if await page.is_visible("text=Enter Sandbox"):
                 await page.click("text=Enter Sandbox")
                 logger.log("ACTION", "Clicked Enter Sandbox")
-                await asyncio.sleep(1) # Wait for transition
+                await asyncio.sleep(1)  # Wait for transition
 
             await page.click("text=Trigger DDoS")
             logger.log("ACTION", "Clicked Trigger DDoS")
@@ -161,6 +160,7 @@ async def run_simulation():
         finally:
             logger.save()
             await browser.close()
+
 
 if __name__ == "__main__":
     asyncio.run(run_simulation())

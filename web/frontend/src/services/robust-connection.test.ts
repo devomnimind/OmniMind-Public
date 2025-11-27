@@ -8,7 +8,7 @@ class MockWebSocket {
   close = vi.fn();
   addEventListener = vi.fn();
   removeEventListener = vi.fn();
-  constructor(url: string) {}
+  constructor(_url: string) {}
 }
 global.WebSocket = MockWebSocket as any;
 

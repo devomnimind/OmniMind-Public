@@ -91,9 +91,7 @@ class TaskManager:
         print(f"Validação não implementada para tarefa {task_id}")
         return False
 
-    def _find_task(
-        self, data: Dict[str, Any], task_id: str
-    ) -> Optional[Dict[str, Any]]:
+    def _find_task(self, data: Dict[str, Any], task_id: str) -> Optional[Dict[str, Any]]:
         """Encontra uma tarefa pelo ID"""
         for task in data.get("pending_tasks", []):
             if task.get("id") == task_id:
@@ -247,9 +245,7 @@ class TaskManager:
         completed_task["last_checked"] = datetime.now(timezone.utc).isoformat()
         completed_task["check_count"] = completed_task.get("check_count", 0) + 1
 
-        data["completed_tasks"] = [
-            t for t in data["completed_tasks"] if t["id"] != task_id
-        ]
+        data["completed_tasks"] = [t for t in data["completed_tasks"] if t["id"] != task_id]
         data["pending_tasks"].append(completed_task)
 
         self.save_tasks(data)

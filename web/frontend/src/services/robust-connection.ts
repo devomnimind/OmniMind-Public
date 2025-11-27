@@ -65,7 +65,6 @@ class RobustConnectionService {
 
   private connectionStartTime = 0;
   private totalConnectionTime = 0;
-  private lastMessageTime = 0;
   private heartbeatInterval: number | null = null;
   private healthCheckInterval: number | null = null;
 
@@ -216,7 +215,6 @@ class RobustConnectionService {
   private onWebSocketMessage(event: MessageEvent) {
     try {
       const message: WebSocketMessage = JSON.parse(event.data);
-      this.lastMessageTime = Date.now();
       this.metrics.total_messages_received++;
       this.notifyListeners(message);
     } catch (e) {

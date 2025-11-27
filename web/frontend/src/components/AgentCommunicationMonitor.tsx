@@ -10,6 +10,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { wsService } from '../services/websocket';
+import { WebSocketMessage } from '../services/websocket';
 
 interface AgentMessage {
   message_id: string;
@@ -44,7 +45,7 @@ export const AgentCommunicationMonitor: React.FC = () => {
 
   useEffect(() => {
     // Subscribe to agent communication updates
-    const unsubscribe = wsService.onMessage((message) => {
+    const unsubscribe = wsService.subscribe((message: WebSocketMessage) => {
       if (message.type === 'agent_message') {
         const agentMsg = message.data as AgentMessage;
         setMessages((prev) => [agentMsg, ...prev].slice(0, 50));

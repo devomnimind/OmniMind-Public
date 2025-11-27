@@ -44,9 +44,7 @@ def main() -> None:
         "random_access_mb_s": random_access(),
         "timestamp": time.time(),
     }
-    with open(
-        "docs/reports/benchmarks/disk_benchmark.json", "w", encoding="utf-8"
-    ) as stream:
+    with open("docs/reports/benchmarks/disk_benchmark.json", "w", encoding="utf-8") as stream:
         json.dump(results, stream, indent=2)
 
 

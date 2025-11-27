@@ -36,9 +36,7 @@ def validate_space():
         if response.status_code == 200:
             logger.info(f"✅ Health check OK: {response.json()}")
         else:
-            logger.warning(
-                f"⚠️ Health endpoint não disponível (status {response.status_code})"
-            )
+            logger.warning(f"⚠️ Health endpoint não disponível (status {response.status_code})")
     except Exception as e:
         logger.warning(f"⚠️ Health check falhou (normal se endpoint não existe): {e}")
 
@@ -69,9 +67,7 @@ def validate_space():
         return True
 
     except requests.exceptions.Timeout:
-        logger.error(
-            "❌ Timeout após 120s - Space pode estar sobrecarregado ou em cold start"
-        )
+        logger.error("❌ Timeout após 120s - Space pode estar sobrecarregado ou em cold start")
         return False
     except requests.exceptions.HTTPError as e:
         logger.error(f"❌ HTTP Error: {e.response.status_code} - {e.response.text}")

@@ -15,4 +15,5 @@ try:
 except Exception as e:
     print(f"Failed to initialize: {e}")
     import traceback
+
     traceback.print_exc()

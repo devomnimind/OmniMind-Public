@@ -55,9 +55,7 @@ class SecurityFixer:
 
     def fix_pickle_deserialization(self) -> bool:
         """Corrige vulnerabilidades de pickle deserialization."""
-        print(
-            f"\n{BLUE}[PICKLE]{RESET} Procurando vulnerabilidades de pickle deserialization..."
-        )
+        print(f"\n{BLUE}[PICKLE]{RESET} Procurando vulnerabilidades de pickle deserialization...")
 
         success = True
         pattern = r"pickle\.loads?\([^)]*\)"
@@ -86,9 +84,7 @@ class SecurityFixer:
 
                     py_file.write_text(new_content)
                     self.fixed_count += 1
-                    self.log_action(
-                        "FIXED", str(py_file), "Pickle deserialization secured"
-                    )
+                    self.log_action("FIXED", str(py_file), "Pickle deserialization secured")
 
             except Exception as e:
                 print(f"{RED}[ERROR]{RESET} Failed to process {py_file}: {e}")
@@ -98,9 +94,7 @@ class SecurityFixer:
 
     def fix_subprocess_injection(self) -> bool:
         """Corrige vulnerabilidades de subprocess shell injection."""
-        print(
-            f"\n{BLUE}[SUBPROCESS]{RESET} Procurando vulnerabilidades de subprocess injection..."
-        )
+        print(f"\n{BLUE}[SUBPROCESS]{RESET} Procurando vulnerabilidades de subprocess injection...")
 
         success = True
         dangerous_patterns = [
@@ -116,9 +110,7 @@ class SecurityFixer:
 
                 for pattern in dangerous_patterns:
                     if re.search(pattern, content):
-                        print(
-                            f"{YELLOW}[FOUND]{RESET} Dangerous subprocess usage in: {py_file}"
-                        )
+                        print(f"{YELLOW}[FOUND]{RESET} Dangerous subprocess usage in: {py_file}")
 
                         # Criar backup
                         self.create_backup(py_file)
@@ -153,9 +145,7 @@ class SecurityFixer:
                 if modified:
                     py_file.write_text(content)
                     self.fixed_count += 1
-                    self.log_action(
-                        "FIXED", str(py_file), "Subprocess injection secured"
-                    )
+                    self.log_action("FIXED", str(py_file), "Subprocess injection secured")
 
             except Exception as e:
                 print(f"{RED}[ERROR]{RESET} Failed to process {py_file}: {e}")

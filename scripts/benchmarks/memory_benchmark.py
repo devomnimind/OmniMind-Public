@@ -23,9 +23,7 @@ def main() -> None:
         "memory_throughput_mb_s": [memory_throughput(size) for size in SIZES],
         "timestamp": time.time(),
     }
-    with open(
-        "docs/reports/benchmarks/memory_benchmark.json", "w", encoding="utf-8"
-    ) as stream:
+    with open("docs/reports/benchmarks/memory_benchmark.json", "w", encoding="utf-8") as stream:
         json.dump(results, stream, indent=2)
 
 

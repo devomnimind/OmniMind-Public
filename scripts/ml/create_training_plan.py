@@ -6,9 +6,7 @@ from pathlib import Path
 
 def run_command(cmd, shell=True, timeout=30):
     try:
-        result = subprocess.run(
-            cmd, shell=shell, capture_output=True, text=True, timeout=timeout
-        )
+        result = subprocess.run(cmd, shell=shell, capture_output=True, text=True, timeout=timeout)
         return {
             "command": cmd,
             "returncode": result.returncode,
@@ -231,9 +229,7 @@ training_plan = create_practical_training_plan()
 setup_script = generate_setup_script()
 
 # Save everything
-with open(
-    "data/ml/training_data_collection/comprehensive_training_plan.json", "w"
-) as f:
+with open("data/ml/training_data_collection/comprehensive_training_plan.json", "w") as f:
     json.dump(training_plan, f, indent=2, default=str)
 
 with open("setup_ml_environment.sh", "w") as f:
@@ -241,9 +237,7 @@ with open("setup_ml_environment.sh", "w") as f:
 
 os.chmod("setup_ml_environment.sh", 0o755)
 
-print(
-    "✅ Plano salvo em: data/ml/training_data_collection/comprehensive_training_plan.json"
-)
+print("✅ Plano salvo em: data/ml/training_data_collection/comprehensive_training_plan.json")
 print("✅ Script de setup criado: setup_ml_environment.sh")
 print(
     f'📏 Tamanho do plano: {os.path.getsize("data/ml/training_data_collection/comprehensive_training_plan.json")} bytes'
