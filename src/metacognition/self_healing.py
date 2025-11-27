@@ -146,69 +146,119 @@ class SelfHealingLoop:
         self._metrics["cycles"] += 1
         actions: List[RemediationAction] = []
 
-        # Run all monitors
-        for monitor in self._monitors:
-            try:
-                result = await monitor()
-                if result and result.get("status") == "error":
-                    self._metrics["issues_detected"] += 1
-
-                    # Create issue record
-                    issue = Issue(
-                        issue_type=IssueType(result.get("type", "service_failure")),
-                        severity=IssueSeverity(result.get("severity", IssueSeverity.ERROR.value)),
-                        description=result.get("description", "Unknown issue"),
-                        metrics=result,
-                    )
-                    self.issue_history.append(issue)
-
-                    # Attempt remediation
-                    issue_type = result.get("type")
-                    if issue_type in self._remediations:
-                        self._metrics["remediations"] += 1
-                        remediation = self._remediations[issue_type]
-
-                        try:
-                            remediation_result = await remediation(result)
-                            success = remediation_result.get("success", False)
-
-                            if success:
-                                self._metrics["successful_remediations"] += 1
-                            else:
-                                self._metrics["failed_remediations"] += 1
-
-                            # Record action
-                            action = RemediationAction(
-                                issue_type=IssueType(issue_type),
-                                action=remediation_result.get("description", ""),
-                                success=success,
-                                details=str(remediation_result),
-                            )
-                            actions.append(action)
-                            self.action_history.append(action)
-
-                            # Update issue record
-                            issue.remediation_attempted = True
-                            issue.remediation_successful = success
-                            issue.remediation_details = str(remediation_result)
-
-                        except Exception as e:
-                            self._metrics["failed_remediations"] += 1
-                            logger.error(f"Remediation failed: {e}")
-
-                            if self._alert_callback:
-                                self._alert_callback(f"Remediation failed for {issue_type}: {e}")
-
-            except Exception as e:
-                logger.error(f"Monitor {monitor.__name__} failed: {e}")
-                if self._alert_callback:
-                    self._alert_callback(f"Monitor {monitor.__name__} failed: {e}")
+        # Run all monitors and collect actions
+        monitor_actions = await self._run_all_monitors()
+        actions.extend(monitor_actions)
 
         # Send metrics
         if self._metrics_sink:
             self._metrics_sink({"metrics": self._metrics.copy()})
 
         return actions
+
+    async def _run_all_monitors(self) -> List[RemediationAction]:
+        """Run all registered monitors and return remediation actions."""
+        actions: List[RemediationAction] = []
+
+        for monitor in self._monitors:
+            monitor_actions = await self._run_single_monitor(monitor)
+            actions.extend(monitor_actions)
+
+        return actions
+
+    async def _run_single_monitor(self, monitor: Any) -> List[RemediationAction]:
+        """Run a single monitor and handle any issues found."""
+        actions: List[RemediationAction] = []
+
+        try:
+            result = await monitor()
+            if result and result.get("status") == "error":
+                monitor_actions = await self._handle_monitor_error(result)
+                actions.extend(monitor_actions)
+
+        except Exception as e:
+            self._handle_monitor_exception(monitor, e)
+
+        return actions
+
+    async def _handle_monitor_error(self, result: Dict[str, Any]) -> List[RemediationAction]:
+        """Handle an error detected by a monitor."""
+        self._metrics["issues_detected"] += 1
+
+        # Create and record issue
+        issue = self._create_issue_from_result(result)
+        self.issue_history.append(issue)
+
+        # Attempt remediation
+        return await self._attempt_remediation(result, issue)
+
+    def _create_issue_from_result(self, result: Dict[str, Any]) -> Issue:
+        """Create an Issue object from monitor result."""
+        return Issue(
+            issue_type=IssueType(result.get("type", "service_failure")),
+            severity=IssueSeverity(result.get("severity", IssueSeverity.ERROR.value)),
+            description=result.get("description", "Unknown issue"),
+            metrics=result,
+        )
+
+    async def _attempt_remediation(self, result: Dict[str, Any], issue: Issue) -> List[RemediationAction]:
+        """Attempt to remediate an issue and return actions taken."""
+        actions: List[RemediationAction] = []
+        issue_type = result.get("type")
+
+        if issue_type in self._remediations:
+            self._metrics["remediations"] += 1
+            remediation = self._remediations[issue_type]
+
+            try:
+                remediation_result = await remediation(result)
+                action = self._process_remediation_result(remediation_result, issue_type, issue)
+                actions.append(action)
+
+            except Exception as e:
+                self._handle_remediation_failure(issue_type, e)
+
+        return actions
+
+    def _process_remediation_result(self, remediation_result: Dict[str, Any], issue_type: str, issue: Issue) -> RemediationAction:
+        """Process the result of a remediation attempt."""
+        success = remediation_result.get("success", False)
+
+        if success:
+            self._metrics["successful_remediations"] += 1
+        else:
+            self._metrics["failed_remediations"] += 1
+
+        # Record action
+        action = RemediationAction(
+            issue_type=IssueType(issue_type),
+            action=remediation_result.get("description", ""),
+            success=success,
+            details=str(remediation_result),
+        )
+
+        self.action_history.append(action)
+
+        # Update issue record
+        issue.remediation_attempted = True
+        issue.remediation_successful = success
+        issue.remediation_details = str(remediation_result)
+
+        return action
+
+    def _handle_remediation_failure(self, issue_type: str, error: Exception) -> None:
+        """Handle a remediation failure."""
+        self._metrics["failed_remediations"] += 1
+        logger.error(f"Remediation failed: {error}")
+
+        if self._alert_callback:
+            self._alert_callback(f"Remediation failed for {issue_type}: {error}")
+
+    def _handle_monitor_exception(self, monitor: Any, error: Exception) -> None:
+        """Handle an exception during monitor execution."""
+        logger.error(f"Monitor {monitor.__name__} failed: {error}")
+        if self._alert_callback:
+            self._alert_callback(f"Monitor {monitor.__name__} failed: {error}")
 
     def get_metrics(self) -> Dict[str, Any]:
         """Get current metrics.
