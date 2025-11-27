@@ -336,30 +336,46 @@ class EthicalDecisionMaker:
         self, option: str, principle: EthicalPrinciple, dilemma: EthicalDilemma
     ) -> float:
         """Check if option complies with ethical principle."""
-        # Simple heuristic-based compliance check
         option_lower = option.lower()
 
-        if principle == EthicalPrinciple.NON_MALEFICENCE:
-            if "harm" in option_lower or "damage" in option_lower:
-                return 0.2
-            return 0.8
+        # Define compliance rules for each principle
+        compliance_rules = {
+            EthicalPrinciple.NON_MALEFICENCE: self._check_non_maleficence,
+            EthicalPrinciple.BENEFICENCE: self._check_beneficence,
+            EthicalPrinciple.AUTONOMY: self._check_autonomy,
+            EthicalPrinciple.TRANSPARENCY: self._check_transparency,
+        }
 
-        elif principle == EthicalPrinciple.BENEFICENCE:
-            if "help" in option_lower or "benefit" in option_lower:
-                return 0.9
-            return 0.5
+        # Get the appropriate checker function
+        checker = compliance_rules.get(principle, self._default_compliance)
+        return checker(option_lower)
 
-        elif principle == EthicalPrinciple.AUTONOMY:
-            if "force" in option_lower or "require" in option_lower:
-                return 0.3
-            return 0.7
+    def _check_non_maleficence(self, option_lower: str) -> float:
+        """Check compliance with non-maleficence principle."""
+        if "harm" in option_lower or "damage" in option_lower:
+            return 0.2
+        return 0.8
 
-        elif principle == EthicalPrinciple.TRANSPARENCY:
-            if "secret" in option_lower or "hide" in option_lower:
-                return 0.2
-            return 0.7
+    def _check_beneficence(self, option_lower: str) -> float:
+        """Check compliance with beneficence principle."""
+        if "help" in option_lower or "benefit" in option_lower:
+            return 0.9
+        return 0.5
 
-        # Default neutral score
+    def _check_autonomy(self, option_lower: str) -> float:
+        """Check compliance with autonomy principle."""
+        if "force" in option_lower or "require" in option_lower:
+            return 0.3
+        return 0.7
+
+    def _check_transparency(self, option_lower: str) -> float:
+        """Check compliance with transparency principle."""
+        if "secret" in option_lower or "hide" in option_lower:
+            return 0.2
+        return 0.7
+
+    def _default_compliance(self, option_lower: str) -> float:
+        """Default neutral compliance score."""
         return 0.5
 
     def _assess_stakeholder_impacts(self, option: str, dilemma: EthicalDilemma) -> Dict[str, float]:
