@@ -30,4 +30,6 @@ snakeviz>=2.2.2
 
 # Jupyter para experimentação (opcional)
 jupyter>=1.1.0
-ipykernel>=7.0.0
+ipykernel>=7.0.0pandas>=2.2.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
