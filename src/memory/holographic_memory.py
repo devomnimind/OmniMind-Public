@@ -664,8 +664,12 @@ class EventHorizonMemory:
         for r in range(target_h):
             row: List[float] = []
             for c in range(target_w):
-                if (surface is not None and r < len(surface) and
-                    surface[r] is not None and c < len(surface[r])):
+                if (
+                    surface is not None
+                    and r < len(surface)
+                    and surface[r] is not None
+                    and c < len(surface[r])
+                ):
                     row.append(float(surface[r][c]))
                 else:
                     row.append(0.0)
