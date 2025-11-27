@@ -3,12 +3,9 @@ Comprehensive tests for IntegrationLoop Phase 2.
 """
 
 import pytest
-import asyncio
 import numpy as np
-from pathlib import Path
-from datetime import datetime
 
-from src.consciousness.shared_workspace import SharedWorkspace, ModuleState
+from src.consciousness.shared_workspace import SharedWorkspace
 from src.consciousness.integration_loop import (
     ModuleInterfaceSpec,
     LoopCycleResult,

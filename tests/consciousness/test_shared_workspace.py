@@ -11,7 +11,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from src.consciousness.shared_workspace import CrossPredictionMetrics, ModuleState, SharedWorkspace
+from src.consciousness.shared_workspace import CrossPredictionMetrics, SharedWorkspace
 
 
 class TestSharedWorkspaceInit:
