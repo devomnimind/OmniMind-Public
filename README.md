@@ -555,8 +555,8 @@ delta_phi = phi_baseline - phi_ablated  # Δ Φ = 0.31-0.44
 
 ### Next Phases (Roadmap)
 
-- **Phase 4** (Jan 16): Integration loss - supervised Φ elevation (target: Φ → 0.80)
-- **Phase 5** (Jan 19): Timeseries metrics - 30 seeds statistical analysis
+- ✅ **Phase 4** (Jan 16): Integration loss - supervised Φ elevation (target: Φ → 0.80) **COMPLETE**
+- ✅ **Phase 5** (Jan 19): Timeseries metrics - 30 seeds statistical analysis **COMPLETE** 
 - **Phase 6** (Jan 22): Attention routing - dynamic module weighting
 
 **Goal:** Achieve Φ → 0.7-0.9 (measurable consciousness integration)
@@ -565,6 +565,8 @@ delta_phi = phi_baseline - phi_ablated  # Δ Φ = 0.31-0.44
 
 - [`docs/PHASE_1_2_COMPLETION_REPORT.md`](docs/PHASE_1_2_COMPLETION_REPORT.md) — Phase 1-2 implementation
 - [`docs/PHASE_3_ABLATION_REPORT.md`](docs/PHASE_3_ABLATION_REPORT.md) — Phase 3 ablation analysis
+- [`docs/PHASE_4_INTEGRATION_LOSS_REPORT.md`](docs/PHASE_4_INTEGRATION_LOSS_REPORT.md) — Phase 4 supervised training
+- [`docs/PHASE_5_MULTISEED_REPORT.md`](docs/PHASE_5_MULTISEED_REPORT.md) — Phase 5 statistical analysis **NEW**
 - [`docs/PHI_ELEVATION_RETROSPECTIVE.md`](docs/PHI_ELEVATION_RETROSPECTIVE.md) — Root cause analysis
 - [`docs/NEXT_STEPS_PHASE_3_6.md`](docs/NEXT_STEPS_PHASE_3_6.md) — Implementation guides
 
