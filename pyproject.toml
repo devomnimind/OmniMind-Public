@@ -4,19 +4,34 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "omnimind"
-version = "0.1.0"
-description = "Autonomous AI system with psychoanalytic decision-making"
+version = "1.18.0"
+description = "Autonomous AI system with psychoanalytic decision-making, quantum consciousness integration, and ethical framework"
 readme = "README.md"
 authors = [
-  { name = "OmniMind Team", email = "contact@omnimind.ai" },
+  { name = "Fabrício da Silva", email = "fabricioslv@hotmail.com.br" },
 ]
-license = { file = "LICENSE" }
+license = { text = "AGPL-3.0-or-later" }
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Philosophy",
 ]
-requires-python = ">=3.12"
+keywords = [
+    "artificial-intelligence",
+    "consciousness",
+    "psychoanalysis",
+    "quantum-computing",
+    "autonomous-agents",
+    "metacognition",
+    "ethics",
+    "machine-learning",
+    "neuroscience",
+    "philosophy"
+]
 dependencies = [
     "pytest>=9.0.0",
     "pytest-cov>=7.0.0",
@@ -44,8 +59,11 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/fahbrain/omnimind"
-"Bug Tracker" = "https://github.com/fahbrain/omnimind/issues"
+"Homepage" = "https://github.com/devomnimind/omnimind"
+"Repository" = "https://github.com/devomnimind/omnimind"
+"Bug Tracker" = "https://github.com/devomnimind/omnimind/issues"
+"Documentation" = "https://devomnimind.github.io/omnimind"
+"DOI" = "https://doi.org/10.5281/zenodo.XXXXXXX"
 
 [tool.setuptools.packages.find]
 where = ["src"]

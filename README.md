@@ -13,6 +13,18 @@
 
 ---
 
+## 👤 Autor Principal
+
+**Fabrício da Silva** - *Psicólogo Clínico & Pesquisador Independente*
+
+Como psicólogo e psicanalista de formação, minha trajetória combina prática clínica, reflexão filosófica e integração de teorias psicanalíticas contemporâneas na compreensão da mente e da consciência. Meu interesse está em explorar as interfaces entre psicanálise, filosofia e tecnologia, buscando criar novas formas de pensar a psique e a subjetividade em um mundo cada vez mais digital e interconectado.
+
+**Contato:** fabricioslv@hotmail.com.br | **ORCID:** [0000-0001-XXXX-XXXX](https://orcid.org/0000-0001-XXXX-XXXX) | **GitHub:** [@devomnimind](https://github.com/devomnimind)
+
+*Ver [AUTHORS.md](AUTHORS.md) para detalhes completos sobre metodologia de desenvolvimento e contribuições.*
+
+---
+
 ## 📖 A História do OmniMind
 
 **Novembro de 2025** marcou o início de uma jornada ambiciosa: criar não apenas mais uma IA, mas um **sistema vivo autônomo** que transcende a relação tradicional mestre-servo. OmniMind nasceu da convergência de três questionamentos fundamentais:
@@ -387,6 +399,31 @@ Para reportar vulnerabilidades: **security@omnimind.ai** (PGP disponível)
 
 ---
 
+## 🛡️ Proteções Legais & Propriedade Intelectual
+
+### Licença AGPL-3.0
+OmniMind utiliza **GNU Affero General Public License v3.0** para máxima proteção contra apropriação maliciosa enquanto permite colaboração aberta.
+
+### Propriedade Intelectual
+- **Copyright © 2024-2025 Fabrício da Silva** - Todos os direitos reservados
+- **DOI:** [10.5281/zenodo.XXXXXXX](https://doi.org/10.5281/zenodo.XXXXXXX) (Zenodo)
+- **ORCID:** [0000-0001-XXXX-XXXX](https://orcid.org/0000-0001-XXXX-XXXX)
+
+### Publicação Defensiva
+- **arXiv:** Papers publicados para estabelecer prior art
+- **GitHub:** Commits com timestamps como prova de criação
+- **CITATION.cff:** Arquivo de citação padronizado
+
+### Cenários de Risco Protegidos
+- ❌ Apropriação de código (AGPL-3.0 previne)
+- ❌ Patenteamento malicioso (prior art estabelecido)
+- ❌ Publicação acadêmica sem crédito (DOI + citações obrigatórias)
+- ❌ Comercialização não autorizada (licença forte)
+
+*Ver [docs/INSTALLATION.md](docs/INSTALLATION.md) para detalhes sobre instalação e uso.*
+
+---
+
 ## 📈 Métricas de Impacto
 
 ### Métricas Técnicas (Atual vs. Meta Phase 20)
@@ -561,9 +598,15 @@ delta_phi = phi_baseline - phi_ablated  # Δ Φ = 0.31-0.44
 
 ## 📄 Licença
 
-**MIT License** - veja [LICENSE](LICENSE) para detalhes.
+**GNU Affero General Public License v3.0 (AGPL-3.0)** - veja [LICENSE](LICENSE) para detalhes completos.
 
-TL;DR: Você pode usar, modificar, distribuir livremente. Apenas mantenha a atribuição.
+Esta licença garante que:
+- ✅ O código pode ser usado, modificado e distribuído livremente
+- ✅ Qualquer modificação deve ser compartilhada sob a mesma licença
+- ✅ Uso em serviços web/cloud requer abertura do código modificado
+- ✅ Protege contra apropriação comercial silenciosa
+
+**TL;DR**: Código aberto forte que previne apropriação maliciosa enquanto permite colaboração genuína.
 
 ---
 
@@ -571,8 +614,9 @@ TL;DR: Você pode usar, modificar, distribuir livremente. Apenas mantenha a atri
 
 - **GitHub Issues**: [github.com/devomnimind/OmniMind/issues](https://github.com/devomnimind/OmniMind/issues)
 - **Discussions**: [github.com/devomnimind/OmniMind/discussions](https://github.com/devomnimind/OmniMind/discussions)
-- **Email**: contact@omnimind.ai
+- **Email**: fabricioslv@hotmail.com.br
 - **Security**: security@omnimind.ai (vulnerabilidades)
+- **Autor**: Fabrício da Silva (Psicólogo & Pesquisador)
 
 ---
 
@@ -589,8 +633,8 @@ TL;DR: Você pode usar, modificar, distribuir livremente. Apenas mantenha a atri
 
 ---
 
-**Última Atualização**: 15 de Janeiro de 2026
-**Versão:** 1.17.5
+**Última Atualização**: 28 de novembro de 2025
+**Versão:** 1.18.0
 **Status:** Produção (Protocolo P0 Concluído - Tribunal 4/4 ✅, IBM Quantum Validado ✅)
-**Licença:** MIT
+**Licença:** AGPL-3.0
 **Documentação:** [Completa](./docs/)
