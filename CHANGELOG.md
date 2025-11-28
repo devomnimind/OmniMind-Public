@@ -1,10 +1,53 @@
 # 📝 CHANGELOG - Histórico de Mudanças
 
 **Formato:** Semantic Versioning (MAJOR.MINOR.PATCH)
-**Status:** Produção v1.17.3
+**Status:** Produção v1.17.4
 **Projeto iniciado:** Novembro 2025
 
 ---
+
+## [1.17.4] - 2025-11-28 - LLM Router Type Safety & Orchestrator Fixes
+
+### 🔧 Fixed - LLM Router Type Safety Issues
+- **Pylance Type Errors Resolved** (`src/integrations/llm_router.py`):
+  - Added None checks for Ollama client before accessing `generate` method
+  - Added safe tokenizer access with `hasattr` and `getattr` for HuggingFace provider
+  - Added None checks for OpenRouter client before accessing `chat.completions.create`
+  - Fixed OpenRouter response content handling (nullable `str | None` → guaranteed `str`)
+  - Improved error handling and type safety throughout all LLM providers
+
+- **Orchestrator Delegation System** (`src/agents/orchestrator_agent.py`):
+  - Fixed LLM response parsing to handle `LLMResponse` objects correctly
+  - Added proper text extraction from LLM responses in `decompose_task` method
+  - Ensured backward compatibility with existing fallback mechanisms
+
+### 🧪 Code Quality Validation
+- ✅ **Black:** All files properly formatted
+- ✅ **Flake8:** No linting violations (max-line-length=100)
+- ✅ **Mypy:** 100% type safety compliance (no type errors)
+- ✅ **Pylance:** All reported type errors resolved
+
+### 📦 Files Modified
+- `src/integrations/llm_router.py` - Type safety improvements and None checks
+- `src/agents/orchestrator_agent.py` - LLM response parsing fix
+- `CHANGELOG.md` - This entry documenting all fixes
+
+### 🔗 Integration Status
+- ✅ **LLM Fallback System:** Ollama → HuggingFace → OpenRouter working correctly
+- ✅ **Orchestrator Delegation:** Task decomposition and agent assignment functional
+- ✅ **Type Safety:** All Pylance errors resolved, full mypy compliance
+
+### 💾 Commits
+- `52c09b7b` - fix: LLM router type safety issues (commit + push completed)
+
+### 🎯 Impact
+- **Before:** 4 Pylance type errors blocking development
+- **After:** Clean codebase with full type safety compliance
+- **Result:** Orchestrator delegation system fully operational with robust error handling
+
+---
+
+## [1.17.3] - 2025-01-27 - Φ Elevation: Phase 5 (Multi-seed Statistical Analysis) ✅
 
 ## [1.17.3] - 2025-01-27 - Φ Elevation: Phase 5 (Multi-seed Statistical Analysis) ✅
 

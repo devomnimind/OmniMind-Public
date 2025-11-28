@@ -92,7 +92,7 @@ class AgentCommunicationBroadcaster:
                     WSMessageType("agent_status"),  # type: ignore
                     {
                         "agent_id": message.sender,
-                        "status": message.payload.get("status"),
+                        "status": message.payload.get("status") if isinstance(message.payload, dict) else "unknown",
                         "timestamp": message.timestamp,
                     },
                     channel="agent_status",

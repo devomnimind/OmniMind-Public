@@ -150,7 +150,7 @@ class WebSocketManager:
                     self._message_queue.get(), timeout=1.0
                 )
 
-                channel = message.get("channel", "all")
+                channel = message.get("channel", "all") if isinstance(message, dict) else "all"
 
                 # Broadcast to subscribed clients
                 for client_id, conn in list(self._connections.items()):

@@ -133,5 +133,5 @@ def get_task_counts() -> Tuple[int, int]:
     """Get real task counts from Tribunal."""
     tasks_info = get_tribunal_tasks_info()
     active = tasks_info["total_tasks"]
-    completed = sum(t.get("success_count", 0) for t in tasks_info["tasks"])
+    completed = sum(t.get("success_count", 0) if isinstance(t, dict) else 0 for t in tasks_info["tasks"])
     return active, completed
