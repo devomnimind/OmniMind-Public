@@ -1,3 +1,10 @@
+from .architect_agent import ArchitectAgent
+from .code_agent import CodeAgent
+from .debug_agent import DebugAgent
+from .orchestrator_agent import AgentMode, OrchestratorAgent
+from .react_agent import AgentState, ReactAgent
+from .reviewer_agent import ReviewerAgent
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -36,12 +43,6 @@ Usage:
     result = orchestrator.run_orchestrated_task("Build authentication system")
 """
 
-from .architect_agent import ArchitectAgent
-from .code_agent import CodeAgent
-from .debug_agent import DebugAgent
-from .orchestrator_agent import AgentMode, OrchestratorAgent
-from .react_agent import AgentState, ReactAgent
-from .reviewer_agent import ReviewerAgent
 
 __all__ = [
     "ReactAgent",

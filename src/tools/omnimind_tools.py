@@ -1,4 +1,23 @@
+from __future__ import annotations
+
+import asyncio
+import hashlib
+import json
+import logging
+import os
+import subprocess
+import threading
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+from .tool_base import AuditedTool, ToolCategory
+            import psutil
+                from ..audit.immutable_audit import get_audit_system
+            from ..security.security_agent import SecurityAgent
+
 #!/usr/bin/env python3
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -37,21 +56,8 @@ Camadas:
 11. Workflow - Coordination (switch_mode)
 """
 
-from __future__ import annotations
 
-import asyncio
-import hashlib
-import json
-import logging
-import os
-import subprocess
-import threading
-import time
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Dict, List, Optional
 
-from .tool_base import AuditedTool, ToolCategory
 
 logger = logging.getLogger(__name__)
 
@@ -179,7 +185,6 @@ class InspectContextTool(AuditedTool):
     def execute(self) -> Dict[str, Any]:
         """Retorna estado do sistema"""
         try:
-            import psutil
 
             context = {
                 "timestamp": _current_utc_timestamp(),
@@ -762,7 +767,6 @@ class AuditSecurityTool(AuditedTool):
 
             elif check_type == "audit_chain":
                 # Verificar integridade da cadeia de auditoria
-                from ..audit.immutable_audit import get_audit_system
 
                 audit = get_audit_system()
                 if not audit.verify_chain_integrity():
@@ -791,7 +795,6 @@ class SecurityAgentTool(AuditedTool):
     def agent(self) -> Any:
         """Lazy load SecurityAgent to avoid circular imports."""
         if self._agent is None:
-            from ..security.security_agent import SecurityAgent
 
             self._agent = SecurityAgent(self.config_path)
         return self._agent

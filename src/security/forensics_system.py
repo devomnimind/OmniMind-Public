@@ -1,4 +1,19 @@
+from __future__ import annotations
+
+import json
+import logging
+import re
+import subprocess
+import time
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set
+from src.audit.immutable_audit import get_audit_system
+
 #!/usr/bin/env python3
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,21 +38,6 @@ Contact: fabricioslv@hotmail.com.br
 Forensics System - Digital Evidence Collection and Incident Analysis
 Collects, analyzes, and reports on security incidents and system anomalies.
 """
-
-from __future__ import annotations
-
-import json
-import logging
-import re
-import subprocess
-import time
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Set
-
-from src.audit.immutable_audit import get_audit_system
 
 
 class EvidenceType(Enum):

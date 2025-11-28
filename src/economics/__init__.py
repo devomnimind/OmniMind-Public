@@ -1,3 +1,5 @@
+from .marketplace_agent import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,7 +30,6 @@ Implements legal economic automation for autonomous agents, including:
 - Compliance and legal framework
 """
 
-from .marketplace_agent import (
     MarketplaceAgent,
     MarketplacePlatform,
     PublicationRequest,

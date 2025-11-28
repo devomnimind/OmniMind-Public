@@ -1,3 +1,6 @@
+import pytest
+from src.learning.ewc import ElasticWeightConsolidation
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -21,10 +24,6 @@ Contact: fabricioslv@hotmail.com.br
 """
 Tests for Elastic Weight Consolidation (EWC).
 """
-
-import pytest
-
-from src.learning.ewc import ElasticWeightConsolidation
 
 
 def test_fisher_information_computation():

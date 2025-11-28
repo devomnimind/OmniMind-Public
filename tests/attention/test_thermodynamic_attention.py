@@ -1,3 +1,7 @@
+import pytest
+    import torch
+from src.attention.thermodynamic_attention import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,10 +29,8 @@ Tests entropy-based attention, temperature control,
 and multi-head thermodynamic attention.
 """
 
-import pytest
 
 try:
-    import torch
 
     TORCH_AVAILABLE = True
 except (ImportError, OSError):
@@ -38,7 +40,6 @@ except (ImportError, OSError):
 pytestmark = pytest.mark.skipif(not TORCH_AVAILABLE, reason="PyTorch not available")
 
 if TORCH_AVAILABLE:
-    from src.attention.thermodynamic_attention import (
         MultiHeadThermodynamicAttention,
         ThermodynamicAttention,
     )

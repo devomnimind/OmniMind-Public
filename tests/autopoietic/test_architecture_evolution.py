@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+import pytest
+from src.autopoietic.architecture_evolution import ArchitectureEvolution
+from src.autopoietic.meta_architect import ComponentSpec, MetaArchitect
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,13 +33,6 @@ Cobertura de:
 - Validação de especificações evoluídas
 - Integração com MetaArchitect
 """
-
-from __future__ import annotations
-
-import pytest
-
-from src.autopoietic.architecture_evolution import ArchitectureEvolution
-from src.autopoietic.meta_architect import ComponentSpec, MetaArchitect
 
 
 class TestArchitectureEvolution:

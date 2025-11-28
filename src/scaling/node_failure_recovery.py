@@ -1,3 +1,14 @@
+from __future__ import annotations
+
+import asyncio
+import logging
+import random
+from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, List, Optional, Set
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,15 +39,6 @@ This module implements:
 - Automatic failover
 """
 
-from __future__ import annotations
-
-import asyncio
-import logging
-import random
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
-from typing import Any, Dict, List, Optional, Set
 
 logger = logging.getLogger(__name__)
 

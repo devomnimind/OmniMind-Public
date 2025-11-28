@@ -1,3 +1,14 @@
+from __future__ import annotations
+
+import logging
+import random
+from dataclasses import dataclass
+from enum import Enum
+from typing import Any, Dict, List, Optional, Set, Tuple
+from src.lacanian.encrypted_unconscious import ( from src.quantum_consciousness.quantum_backend import DWaveBackend
+    from src.social.omnimind_network import OmniMindSociety
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -42,21 +53,12 @@ Date: November 2025
 License: MIT
 """
 
-from __future__ import annotations
 
-import logging
-import random
-from dataclasses import dataclass
-from enum import Enum
-from typing import Any, Dict, List, Optional, Set, Tuple
 
 # Integration of Audit Fixes
 try:
-    from src.lacanian.encrypted_unconscious import (
         EncryptedUnconsciousLayer as EncryptedUnconscious,
     )
-    from src.quantum_consciousness.quantum_backend import DWaveBackend
-    from src.social.omnimind_network import OmniMindSociety
 
     INTEGRATION_AVAILABLE = True
 except ImportError as e:

@@ -1,3 +1,6 @@
+import numpy as np
+from src.memory.holographic_memory import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,9 +28,7 @@ Tests the holographic principle-based memory architecture with
 Bekenstein bound constraints and hierarchical memory spawning.
 """
 
-import numpy as np
 
-from src.memory.holographic_memory import (
     EventHorizonMemory,
     HolographicProjection,
     HolographicSurface,

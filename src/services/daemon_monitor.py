@@ -1,3 +1,11 @@
+import asyncio
+import json
+import logging
+import time
+from pathlib import Path
+from typing import Any, Dict
+import psutil
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,14 +31,6 @@ Daemon Monitor - Background worker that collects heavy metrics.
 Runs in async loop, caches results to avoid blocking FastAPI endpoints.
 """
 
-import asyncio
-import json
-import logging
-import time
-from pathlib import Path
-from typing import Any, Dict
-
-import psutil
 
 logger = logging.getLogger(__name__)
 

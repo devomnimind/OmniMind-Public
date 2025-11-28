@@ -1,3 +1,10 @@
+import asyncio
+import os
+from unittest.mock import AsyncMock, patch
+import pytest
+from src.integrations.external_ai_providers import ( from src.integrations.task_delegation import DelegationResult, TaskDelegationManager
+from src.integrations.task_isolation import IsolatedTask, TaskIsolationEngine
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,13 +30,8 @@ Testes para Integração de Provedores Externos de IA - OmniMind
 Testa isolamento, delegação e execução segura de tarefas externas
 """
 
-import asyncio
-import os
-from unittest.mock import AsyncMock, patch
 
-import pytest
 
-from src.integrations.external_ai_providers import (
     CopilotProvider,
     GeminiProvider,
     OpenRouterProvider,
@@ -37,8 +39,6 @@ from src.integrations.external_ai_providers import (
     TaskSpec,
     TaskType,
 )
-from src.integrations.task_delegation import DelegationResult, TaskDelegationManager
-from src.integrations.task_isolation import IsolatedTask, TaskIsolationEngine
 
 
 class TestTaskIsolationEngine:

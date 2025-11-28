@@ -1,3 +1,6 @@
+import pytest
+from src.coevolution.hchac_framework import ( from src.coevolution.bidirectional_feedback import FeedbackType
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,9 +25,7 @@ Contact: fabricioslv@hotmail.com.br
 Testes para HCHAC Framework.
 """
 
-import pytest
 
-from src.coevolution.hchac_framework import (
     CollaborationOutcome,
     ExecutionResult,
     HCHACFramework,
@@ -224,7 +225,6 @@ class TestHCHACFramework:
         framework = HCHACFramework()
 
         # IA submete feedback
-        from src.coevolution.bidirectional_feedback import FeedbackType
 
         framework.feedback.submit_ai_feedback(
             feedback_type=FeedbackType.OBSERVATION, content="I observed something"

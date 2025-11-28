@@ -1,3 +1,8 @@
+import logging
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,10 +30,6 @@ Stores abstract knowledge, concepts, and their relationships.
 Acts as the long-term store for factual information, independent of specific episodes.
 """
 
-import logging
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 

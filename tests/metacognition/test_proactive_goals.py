@@ -1,3 +1,9 @@
+import json
+from pathlib import Path
+from unittest.mock import patch
+import pytest
+from src.metacognition.proactive_goals import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,13 +30,8 @@ Tests for proactive goal generation and repository analysis.
 Total: 29 tests covering all goal generation capabilities.
 """
 
-import json
-from pathlib import Path
-from unittest.mock import patch
 
-import pytest
 
-from src.metacognition.proactive_goals import (
     GoalCategory,
     GoalPriority,
     ProactiveGoal,

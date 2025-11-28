@@ -1,3 +1,8 @@
+from typing import List
+import pytest
+from src.swarm import (
+            import math
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,11 +29,8 @@ Integration tests for swarm module - Phase 19.
 End-to-end tests for complete swarm scenarios.
 """
 
-from typing import List
 
-import pytest
 
-from src.swarm import (
     ACOConfig,
     AntColonyOptimizer,
     EmergenceDetector,
@@ -276,7 +278,6 @@ class TestSwarmBenchmarks:
 
         # Rastrigin function (harder to optimize)
         def rastrigin(pos: List[float]) -> float:
-            import math
 
             n = len(pos)
             return 10 * n + sum(x**2 - 10 * math.cos(2 * math.pi * x) for x in pos)

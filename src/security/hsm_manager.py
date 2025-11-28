@@ -1,3 +1,15 @@
+from __future__ import annotations
+
+import hashlib
+import hmac
+import os
+import secrets
+import threading
+from dataclasses import dataclass
+from typing import Any, Dict, Optional
+import structlog
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,17 +35,6 @@ Hardware Security Module (HSM) Manager
 Provides secure key management and cryptographic operations
 """
 
-from __future__ import annotations
-
-import hashlib
-import hmac
-import os
-import secrets
-import threading
-from dataclasses import dataclass
-from typing import Any, Dict, Optional
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

@@ -1,3 +1,14 @@
+from __future__ import annotations
+
+import logging
+import random
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Dict, Generic, List, Optional, Set, TypeVar, cast
+import torch
+import torch.nn as nn
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -34,16 +45,6 @@ Author: OmniMind Development Team
 License: MIT
 """
 
-from __future__ import annotations
-
-import logging
-import random
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Dict, Generic, List, Optional, Set, TypeVar, cast
-
-import torch
-import torch.nn as nn
 
 logger = logging.getLogger(__name__)
 

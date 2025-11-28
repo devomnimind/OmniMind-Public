@@ -1,3 +1,10 @@
+import json
+import numpy as np
+import pytest
+import tempfile
+from pathlib import Path
+from src.consciousness.multiseed_analysis import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,13 +31,7 @@ Phase 5 Tests: Multi-seed Statistical Analysis
 Tests for MultiSeedRunner, ConvergenceAggregator, StatisticalValidator.
 """
 
-import json
-import numpy as np
-import pytest
-import tempfile
-from pathlib import Path
 
-from src.consciousness.multiseed_analysis import (
     SeedResult,
     MultiSeedRunner,
     ConvergenceAggregator,

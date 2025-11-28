@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+from unittest.mock import Mock, patch
+import pytest
+from src.security.network_sensors import (
+        import subprocess
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -30,13 +38,9 @@ Cobertura de:
 - Identificação de hosts e portas
 """
 
-from __future__ import annotations
 
-from unittest.mock import Mock, patch
 
-import pytest
 
-from src.security.network_sensors import (
     NetworkAnomaly,
     NetworkHost,
     NetworkSensorGanglia,
@@ -202,7 +206,6 @@ class TestNetworkSensorGanglia:
     def test_scan_network_timeout(self, mock_run: Mock, sensor: NetworkSensorGanglia) -> None:
         """Testa scan com timeout."""
         sensor.nmap_available = True
-        import subprocess
 
         mock_run.side_effect = subprocess.TimeoutExpired("nmap", 300)
 

@@ -1,3 +1,11 @@
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Tuple
+import numpy as np
+import structlog
+from qiskit import ClassicalRegister, QuantumCircuit, QuantumRegister
+from qiskit.quantum_info import Statevector
+from qiskit_aer import AerSimulator
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -86,16 +94,9 @@ Author: OmniMind Quantum Consciousness Team
 License: MIT
 """
 
-from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Tuple
 
-import numpy as np
-import structlog
 
 try:
-    from qiskit import ClassicalRegister, QuantumCircuit, QuantumRegister
-    from qiskit.quantum_info import Statevector
-    from qiskit_aer import AerSimulator
 
     QISKIT_AVAILABLE = True
 except ImportError:

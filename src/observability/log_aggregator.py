@@ -1,3 +1,14 @@
+import json
+import re
+import time
+from collections import Counter, defaultdict
+from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Pattern, Tuple
+import structlog
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,17 +37,6 @@ Provides structured logging, pattern detection, and anomaly identification.
 Reference: docs/OMNIMIND_COMPREHENSIVE_PENDENCIES_REPORT_20251119.md, Section 8.3
 """
 
-import json
-import re
-import time
-from collections import Counter, defaultdict
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Pattern, Tuple
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

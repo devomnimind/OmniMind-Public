@@ -1,3 +1,16 @@
+from __future__ import annotations
+
+import hashlib
+import logging
+import re
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Pattern, Tuple
+from cryptography.fernet import Fernet
+from src.audit.immutable_audit import get_audit_system
+from src.security.dlp import DLPValidator, DLPViolation
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,19 +40,6 @@ incluindo detecção, proteção (hash/criptografia/máscara), sanitização e a
 Baseado nos requisitos de segurança LGPD e zero vazamento de dados.
 """
 
-from __future__ import annotations
-
-import hashlib
-import logging
-import re
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Pattern, Tuple
-
-from cryptography.fernet import Fernet
-
-from src.audit.immutable_audit import get_audit_system
-from src.security.dlp import DLPValidator, DLPViolation
 
 logger = logging.getLogger(__name__)
 

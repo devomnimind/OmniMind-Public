@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+import logging
+from typing import Dict, List, Mapping
+from .code_synthesizer import CodeSynthesizer, SynthesizedComponent
+from .meta_architect import ComponentSpec
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,13 +35,6 @@ not rely on external AI services, satisfying OmniMind’s production constraints
 All functions include full type hints and Google‑style docstrings.
 """
 
-from __future__ import annotations
-
-import logging
-from typing import Dict, List, Mapping
-
-from .code_synthesizer import CodeSynthesizer, SynthesizedComponent
-from .meta_architect import ComponentSpec
 
 logger = logging.getLogger(__name__)
 

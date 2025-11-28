@@ -1,3 +1,10 @@
+import numpy as np
+import torch
+import torch.nn as nn
+from typing import Dict, List, Optional, Tuple, Any
+from dataclasses import dataclass
+import structlog
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,12 +38,6 @@ Key Features:
 - Adaptive expectation adjustment
 """
 
-import numpy as np
-import torch
-import torch.nn as nn
-from typing import Dict, List, Optional, Tuple, Any
-from dataclasses import dataclass
-import structlog
 
 logger = structlog.get_logger(__name__)
 

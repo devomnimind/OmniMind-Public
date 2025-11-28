@@ -1,3 +1,6 @@
+import pytest
+from src.common.types import ( from src.common.types import (
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -24,9 +27,7 @@ Testes unitários para o módulo common/types.py
 Garante cobertura e validação de tipos customizados - Grupo 3 - Phase 1.
 """
 
-import pytest
 
-from src.common.types import (
     ID,
     AgentID,
     Config,
@@ -365,7 +366,6 @@ class TestModuleImports:
 
     def test_all_types_importable(self) -> None:
         """Testa que todos os tipos podem ser importados."""
-        from src.common.types import (
             ID,
             AgentID,
             Config,

@@ -1,3 +1,12 @@
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, List, Optional
+import structlog
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,14 +36,6 @@ Implements mental state attribution capabilities for AI consciousness:
 - Integration with metacognition system
 """
 
-from __future__ import annotations
-
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
-from typing import Any, Dict, List, Optional
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

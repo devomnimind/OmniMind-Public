@@ -1,3 +1,9 @@
+from pathlib import Path
+from typing import Iterable
+import pytest
+from src.integrations import MCPClient, MCPConfig, MCPServer
+from src.integrations.mcp_client import MCPClientError
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -17,14 +23,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Contact: fabricioslv@hotmail.com.br
 """
-
-from pathlib import Path
-from typing import Iterable
-
-import pytest
-
-from src.integrations import MCPClient, MCPConfig, MCPServer
-from src.integrations.mcp_client import MCPClientError
 
 
 def _start_mcp_server(tmp_path: Path, allowed_paths: Iterable[str] | None = None) -> MCPServer:

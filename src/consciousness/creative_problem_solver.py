@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import random
+from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, List, Optional
+import structlog
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,15 +37,6 @@ Implements creative thinking and novel solution generation:
 - Creative pattern synthesis
 """
 
-from __future__ import annotations
-
-import random
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
-from typing import Any, Dict, List, Optional
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

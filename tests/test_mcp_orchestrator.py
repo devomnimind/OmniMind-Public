@@ -1,3 +1,12 @@
+import json
+import tempfile
+import time
+from pathlib import Path
+from typing import Any, Dict
+from unittest.mock import MagicMock, Mock, patch
+import pytest
+from src.integrations.mcp_orchestrator import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,16 +34,8 @@ Tests the lifecycle management, health checks, and metrics collection
 of the MCP Orchestrator system.
 """
 
-import json
-import tempfile
-import time
-from pathlib import Path
-from typing import Any, Dict
-from unittest.mock import MagicMock, Mock, patch
 
-import pytest
 
-from src.integrations.mcp_orchestrator import (
     MCPOrchestrator,
     MCPOrchestratorError,
     MCPServerConfig,

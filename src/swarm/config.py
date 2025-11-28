@@ -1,3 +1,6 @@
+from dataclasses import dataclass
+from typing import Optional
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,9 +30,6 @@ otimizados para escalabilidade de 100-1000 agentes com restrições de hardware.
 Author: OmniMind Project - Phase 19
 License: MIT
 """
-
-from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass

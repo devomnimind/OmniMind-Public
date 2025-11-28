@@ -1,3 +1,16 @@
+from __future__ import annotations
+
+import asyncio
+import json
+import tempfile
+from datetime import datetime, timezone
+from pathlib import Path
+from unittest.mock import Mock, patch
+import pytest
+from src.audit.alerting_system import (
+        import src.audit.alerting_system as module
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -30,18 +43,9 @@ Cobertura de:
 - Monitoramento de integridade de audit chain
 """
 
-from __future__ import annotations
 
-import asyncio
-import json
-import tempfile
-from datetime import datetime, timezone
-from pathlib import Path
-from unittest.mock import Mock, patch
 
-import pytest
 
-from src.audit.alerting_system import (
     Alert,
     AlertCategory,
     AlertingSystem,
@@ -609,7 +613,6 @@ class TestConvenienceFunctions:
     def test_get_alerting_system_singleton(self) -> None:
         """Testa que get_alerting_system retorna singleton."""
         # Reset global instance
-        import src.audit.alerting_system as module
 
         module._alerting_system = None
 

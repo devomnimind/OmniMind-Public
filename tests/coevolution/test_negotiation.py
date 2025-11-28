@@ -1,3 +1,6 @@
+import pytest
+from src.coevolution.negotiation import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,9 +25,7 @@ Contact: fabricioslv@hotmail.com.br
 Testes para Goal Negotiation System.
 """
 
-import pytest
 
-from src.coevolution.negotiation import (
     GoalNegotiator,
     NegotiationResult,
     NegotiationRound,

@@ -1,3 +1,9 @@
+import pytest
+import numpy as np
+from dataclasses import dataclass
+from typing import Dict, Any
+from src.consciousness.integration_loop import IntegrationLoop
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,13 +34,6 @@ Expected results:
 - Validates that each module contributes meaningfully to integration
 - Enables interpretability analysis of module roles
 """
-
-import pytest
-import numpy as np
-from dataclasses import dataclass
-from typing import Dict, Any
-
-from src.consciousness.integration_loop import IntegrationLoop
 
 
 @dataclass

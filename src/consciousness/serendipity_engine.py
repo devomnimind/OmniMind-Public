@@ -1,3 +1,11 @@
+import random
+import uuid
+from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, List, Optional, Set, Tuple
+import structlog
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -36,14 +44,6 @@ Author: OmniMind Project
 License: MIT
 """
 
-import random
-import uuid
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
-from typing import Any, Dict, List, Optional, Set, Tuple
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

@@ -1,3 +1,7 @@
+import pytest
+import torch
+from src.lacanian.free_energy_lacanian import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,10 +26,7 @@ Contact: fabricioslv@hotmail.com.br
 Tests for Free Energy Lacanian module.
 """
 
-import pytest
-import torch
 
-from src.lacanian.free_energy_lacanian import (
     ActiveInferenceAgent,
     DesireVector,
     FreeEnergyState,

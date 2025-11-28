@@ -1,3 +1,6 @@
+import pytest
+from src.autopoietic.art_generator import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,9 +28,7 @@ Author: OmniMind Project
 License: MIT
 """
 
-import pytest
 
-from src.autopoietic.art_generator import (
     AestheticEvaluator,
     ArtElement,
     ArtGenerator,

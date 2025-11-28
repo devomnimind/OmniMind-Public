@@ -1,4 +1,11 @@
-#!/usr/bin/env python3
+import json
+import re
+import statistics
+from collections import Counter, defaultdict
+from dataclasses import dataclass
+from datetime import datetime, timedelta, timezone
+from typing import Any, Dict, List, Optional
+from .immutable_audit import ImmutableAuditSystem, get_audit_system
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -30,14 +37,7 @@ Features:
 - Forensic investigation tools
 """
 
-import json
-import re
-from collections import Counter, defaultdict
-from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
-from typing import Any, Dict, List, Optional
 
-from .immutable_audit import ImmutableAuditSystem, get_audit_system
 
 
 @dataclass
@@ -266,7 +266,6 @@ class AuditLogAnalyzer:
             ]
 
             # Calculate mean and std dev
-            import statistics
 
             if len(time_gaps) > 1:
                 mean_gap = statistics.mean(time_gaps)

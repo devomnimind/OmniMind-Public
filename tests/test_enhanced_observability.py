@@ -1,3 +1,8 @@
+import time
+import pytest
+from src.observability.opentelemetry_integration import ( from src.observability.performance_analyzer import (
+from src.observability.profiling_tools import ProfileSample
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,20 +28,15 @@ Contact: fabricioslv@hotmail.com.br
 Tests OpenTelemetry integration, performance analyzer, and enhanced features.
 """
 
-import time
 
-import pytest
 
-from src.observability.opentelemetry_integration import (
     OpenTelemetryConfig,
     OpenTelemetryIntegration,
 )
-from src.observability.performance_analyzer import (
     BottleneckCategory,
     BottleneckSeverity,
     PerformanceAnalyzer,
 )
-from src.observability.profiling_tools import ProfileSample
 
 
 class TestOpenTelemetryIntegration:

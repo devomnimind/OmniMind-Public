@@ -1,3 +1,12 @@
+from __future__ import annotations
+
+import json
+import logging
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Any, Dict, List, cast
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,13 +32,6 @@ Contact: fabricioslv@hotmail.com.br
 Analyzes OmniMind's own decision-making patterns and execution history.
 """
 
-from __future__ import annotations
-
-import json
-import logging
-from datetime import datetime, timedelta
-from pathlib import Path
-from typing import Any, Dict, List, cast
 
 logger = logging.getLogger(__name__)
 

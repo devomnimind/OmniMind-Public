@@ -1,3 +1,10 @@
+from datetime import datetime, timedelta
+from src.memory.memory_consolidator import MemoryConsolidator
+from src.memory.memory_replay import MemoryReplay
+from src.memory.procedural_memory import ProceduralMemory
+from src.memory.semantic_memory import SemanticMemory
+from src.memory.strategic_forgetting import StrategicForgetting
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -21,14 +28,6 @@ Contact: fabricioslv@hotmail.com.br
 """
 Tests for Phase 18: Tri-Partite Memory.
 """
-
-from datetime import datetime, timedelta
-
-from src.memory.memory_consolidator import MemoryConsolidator
-from src.memory.memory_replay import MemoryReplay
-from src.memory.procedural_memory import ProceduralMemory
-from src.memory.semantic_memory import SemanticMemory
-from src.memory.strategic_forgetting import StrategicForgetting
 
 
 class TestSemanticMemory:

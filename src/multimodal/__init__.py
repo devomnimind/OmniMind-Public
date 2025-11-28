@@ -1,3 +1,8 @@
+from src.multimodal.audio_processor import AudioProcessor
+from src.multimodal.embodied_intelligence import EmbodiedIntelligence
+from src.multimodal.multi_modal_fusion import MultiModalFusion
+from src.multimodal.vision_processor import VisionProcessor
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,10 +32,6 @@ This module provides multi-modal capabilities for OmniMind:
 - Embodied intelligence (physical world interaction)
 """
 
-from src.multimodal.audio_processor import AudioProcessor
-from src.multimodal.embodied_intelligence import EmbodiedIntelligence
-from src.multimodal.multi_modal_fusion import MultiModalFusion
-from src.multimodal.vision_processor import VisionProcessor
 
 __all__ = [
     "VisionProcessor",

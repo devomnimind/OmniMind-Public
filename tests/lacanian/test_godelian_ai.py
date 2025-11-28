@@ -1,3 +1,6 @@
+import pytest
+from src.lacanian.godelian_ai import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,9 +30,7 @@ Tests components:
 - ImpossibilityMetaStrategy (strategies for impossible problems)
 """
 
-import pytest
 
-from src.lacanian.godelian_ai import (
     GodelianAI,
     GodelianStatement,
     ImpossibilityMetaStrategy,

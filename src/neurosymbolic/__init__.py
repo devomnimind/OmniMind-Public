@@ -1,3 +1,8 @@
+from .hybrid_reasoner import Inference, NeurosymbolicReasoner
+from .neural_component import NeuralComponent
+from .reconciliation import ReconciliationStrategy
+from .symbolic_component import SymbolicComponent
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,10 +34,6 @@ Motor de raciocínio híbrido que combina:
 Objetivo: Resolver problemas combinando intuição neural com rigor simbólico.
 """
 
-from .hybrid_reasoner import Inference, NeurosymbolicReasoner
-from .neural_component import NeuralComponent
-from .reconciliation import ReconciliationStrategy
-from .symbolic_component import SymbolicComponent
 
 __all__ = [
     "NeurosymbolicReasoner",

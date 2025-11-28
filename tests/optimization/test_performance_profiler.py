@@ -1,3 +1,10 @@
+import json
+import tempfile
+import time
+from pathlib import Path
+import pytest
+from src.optimization.performance_profiler import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,14 +35,8 @@ Cobertura de:
 - profile_function decorator
 """
 
-import json
-import tempfile
-import time
-from pathlib import Path
 
-import pytest
 
-from src.optimization.performance_profiler import (
     BottleneckReport,
     PerformanceMetrics,
     PerformanceProfiler,

@@ -1,4 +1,15 @@
+from __future__ import annotations
+
+import asyncio
+import logging
+import uuid
+from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from typing import Any, Callable, Dict, List, Optional, Set
+
 #!/usr/bin/env python3
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,15 +40,6 @@ Fornece infraestrutura para comunicação padronizada entre agentes:
 - Contratos de mensagem tipados
 """
 
-from __future__ import annotations
-
-import asyncio
-import logging
-import uuid
-from dataclasses import asdict, dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
-from typing import Any, Callable, Dict, List, Optional, Set
 
 logger = logging.getLogger(__name__)
 

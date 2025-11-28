@@ -1,3 +1,9 @@
+import tempfile
+from pathlib import Path
+from typing import Generator
+import pytest
+from src.metrics.consciousness_metrics_legacy import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,13 +32,8 @@ Tests:
 - Trend analysis
 """
 
-import tempfile
-from pathlib import Path
-from typing import Generator
 
-import pytest
 
-from src.metrics.consciousness_metrics_legacy import (
     AgentConnection,
     ConsciousnessMetrics,
     FeedbackLoop,

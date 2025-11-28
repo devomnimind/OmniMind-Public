@@ -1,3 +1,7 @@
+import numpy as np
+import pytest
+from src.quantum_consciousness.quantum_cognition import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,10 +26,7 @@ Contact: fabricioslv@hotmail.com.br
 Tests for Quantum Weighted Decision Making.
 """
 
-import numpy as np
-import pytest
 
-from src.quantum_consciousness.quantum_cognition import (
     QISKIT_AVAILABLE,
     QuantumDecisionMaker,
 )

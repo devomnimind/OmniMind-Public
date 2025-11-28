@@ -1,3 +1,10 @@
+import logging
+import statistics
+import time
+from collections import deque
+from dataclasses import dataclass, field
+from typing import Dict, Optional
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,12 +31,6 @@ Neural Component Metrics Collector - Phase 20.
 Coleta métricas de latência, throughput e health status dos backends neurais.
 """
 
-import logging
-import statistics
-import time
-from collections import deque
-from dataclasses import dataclass, field
-from typing import Dict, Optional
 
 logger = logging.getLogger(__name__)
 

@@ -1,3 +1,7 @@
+import json
+from pathlib import Path
+from src.optimization.hardware_detector import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,10 +26,7 @@ Contact: fabricioslv@hotmail.com.br
 Tests for hardware detection and auto-configuration.
 """
 
-import json
-from pathlib import Path
 
-from src.optimization.hardware_detector import (
     HardwareDetector,
     HardwareProfile,
     OptimizationConfig,

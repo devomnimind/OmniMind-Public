@@ -1,3 +1,5 @@
+from .ethics_agent import ( from .ml_ethics_engine import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,13 +28,11 @@ acting as a conscience that evaluates high-impact actions.
 Includes ML-enhanced ethical decision making with multi-framework consensus.
 """
 
-from .ethics_agent import (
     ActionImpact,
     EthicalDecision,
     EthicalFramework,
     EthicsAgent,
 )
-from .ml_ethics_engine import (
     ConsensusDecision,
     EthicalContext,
     EthicalFeatureExtractor,

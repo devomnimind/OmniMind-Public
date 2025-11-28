@@ -1,3 +1,5 @@
+from .hawking_motivation import ( from .intrinsic_rewards import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -36,12 +38,10 @@ Features:
 - Frustration-based motivation generation
 """
 
-from .hawking_motivation import (
     EvaporationEvent,
     HawkingMotivationEngine,
     KnowledgeItem,
 )
-from .intrinsic_rewards import (
     IntrinsicMotivationEngine,
     SatisfactionMetrics,
     TaskOutcome,

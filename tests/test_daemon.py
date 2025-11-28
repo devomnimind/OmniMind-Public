@@ -1,3 +1,10 @@
+import asyncio
+from datetime import datetime, timedelta
+from pathlib import Path
+from unittest.mock import Mock, patch
+import pytest
+from src.daemon import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,14 +31,8 @@ Tests for OmniMind Daemon
 Tests the 24/7 autonomous background service functionality.
 """
 
-import asyncio
-from datetime import datetime, timedelta
-from pathlib import Path
-from unittest.mock import Mock, patch
 
-import pytest
 
-from src.daemon import (
     DaemonState,
     DaemonTask,
     OmniMindDaemon,

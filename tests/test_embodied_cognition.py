@@ -1,3 +1,6 @@
+import pytest
+from src.embodied_cognition import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,9 +31,7 @@ Tests for:
 - Proprioception (self-awareness)
 """
 
-import pytest
 
-from src.embodied_cognition import (
     Emotion,
     MotorController,
     ProprioceptionModule,

@@ -1,3 +1,8 @@
+from src.scaling.database_connection_pool import ( from src.scaling.gpu_resource_pool import (
+from src.scaling.intelligent_load_balancer import ( from src.scaling.multi_level_cache import (
+from src.scaling.multi_node import ( from src.scaling.multi_tenant_isolation import (
+from src.scaling.node_failure_recovery import ( from src.scaling.redis_cluster_manager import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,32 +28,27 @@ Contact: fabricioslv@hotmail.com.br
 Multi-node scaling, load balancing, distributed transactions, and resource pooling.
 """
 
-from src.scaling.database_connection_pool import (
     ConnectionInfo,
     ConnectionStatus,
     DatabaseConnectionPool,
     PoolConfig,
 )
-from src.scaling.gpu_resource_pool import (
     GPUDevice,
     GPUPoolConfig,
     GPUResourcePool,
     GPUStatus,
     GPUTask,
 )
-from src.scaling.intelligent_load_balancer import (
     IntelligentLoadBalancer,
     NodePerformanceMetrics,
     WorkloadPrediction,
 )
-from src.scaling.multi_level_cache import (
     CacheConfig,
     CacheLayer,
     CacheLevel,
     EvictionPolicy,
     MultiLevelCache,
 )
-from src.scaling.multi_node import (
     ClusterCoordinator,
     DistributedTask,
     LoadBalancer,
@@ -58,7 +58,6 @@ from src.scaling.multi_node import (
 )
 
 # Multi-tenant isolation (new module)
-from src.scaling.multi_tenant_isolation import (
     MultiTenantIsolationManager,
     ResourceQuota,
     ResourceType,
@@ -68,7 +67,6 @@ from src.scaling.multi_tenant_isolation import (
     get_isolation_manager,
     get_tenant,
 )
-from src.scaling.node_failure_recovery import (
     FailoverCoordinator,
     LogEntry,
     LogEntryType,
@@ -76,7 +74,6 @@ from src.scaling.node_failure_recovery import (
     RaftNode,
     RaftState,
 )
-from src.scaling.redis_cluster_manager import (
     ClusterHealth,
     ClusterNode,
     ClusterState,

@@ -1,3 +1,14 @@
+import hashlib
+import json
+import secrets
+import threading
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+from ..audit.immutable_audit import ImmutableAuditSystem, get_audit_system
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -32,18 +43,6 @@ Features:
 - Access control enforcement
 - Cross-tenant communication controls
 """
-
-import hashlib
-import json
-import secrets
-import threading
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Optional
-
-from ..audit.immutable_audit import ImmutableAuditSystem, get_audit_system
 
 
 class TenantStatus(Enum):

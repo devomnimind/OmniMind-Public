@@ -1,3 +1,6 @@
+import math
+from src.quantum_ai.quantum_algorithms import (
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -24,9 +27,7 @@ Comprehensive tests for quantum_algorithms.py module.
 Tests quantum circuit simulation and Grover's search algorithm.
 """
 
-import math
 
-from src.quantum_ai.quantum_algorithms import (
     GroverSearch,
     QuantumCircuit,
     QuantumGate,

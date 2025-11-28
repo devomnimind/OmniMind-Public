@@ -1,3 +1,12 @@
+import json
+import logging
+import os
+import time
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional
+import requests
+from dotenv import load_dotenv
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,15 +37,6 @@ Responsável por:
   - Embeddings e representações latentes
 """
 
-import json
-import logging
-import os
-import time
-from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
-
-import requests
-from dotenv import load_dotenv
 
 # Carregar variáveis de ambiente
 load_dotenv()

@@ -1,3 +1,13 @@
+import asyncio
+import json
+import logging
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Any, Callable, Dict, Optional, List, Tuple
+from pathlib import Path
+from datetime import datetime
+from src.consciousness.shared_workspace import SharedWorkspace, ModuleState
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,16 +37,6 @@ Phase 2 of Φ elevation refactoring plan. The IntegrationLoop creates the feedba
 This enables real causal coupling measured by SharedWorkspace cross-prediction metrics.
 """
 
-import asyncio
-import json
-import logging
-import numpy as np
-from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, Optional, List, Tuple
-from pathlib import Path
-from datetime import datetime
-
-from src.consciousness.shared_workspace import SharedWorkspace, ModuleState
 
 logger = logging.getLogger(__name__)
 

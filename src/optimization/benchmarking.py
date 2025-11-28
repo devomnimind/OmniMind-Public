@@ -1,3 +1,13 @@
+import json
+import time
+from dataclasses import dataclass, field
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional
+import psutil
+import structlog
+        from datetime import datetime, timedelta
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,15 +38,7 @@ Implements performance benchmarking framework based on:
 Reference: docs/autootimizacao-hardware-omnidev.md, Section 5
 """
 
-import json
-import time
-from dataclasses import dataclass, field
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
 
-import psutil
-import structlog
 
 logger = structlog.get_logger(__name__)
 
@@ -610,7 +612,6 @@ class RegressionDetector:
         Args:
             days: Keep entries from last N days
         """
-        from datetime import datetime, timedelta
 
         cutoff = datetime.now() - timedelta(days=days)
 

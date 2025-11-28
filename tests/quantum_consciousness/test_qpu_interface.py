@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+import pytest
+from src.quantum_consciousness.qpu_interface import ( from qiskit import QuantumCircuit
+        from qiskit import QuantumCircuit
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,11 +36,8 @@ Cobertura de:
 - Backend switching
 """
 
-from __future__ import annotations
 
-import pytest
 
-from src.quantum_consciousness.qpu_interface import (
     QISKIT_AVAILABLE,
     BackendInfo,
     BackendType,
@@ -116,7 +120,6 @@ class TestSimulatorBackend:
     @pytest.mark.skipif(not QISKIT_AVAILABLE, reason="Qiskit not installed")
     def test_simulator_execute_simple_circuit(self) -> None:
         """Testa execução de circuito simples."""
-        from qiskit import QuantumCircuit
 
         backend = SimulatorBackend(num_qubits=2)
 
@@ -181,7 +184,6 @@ class TestIBMQBackend:
     @pytest.mark.skipif(not QISKIT_AVAILABLE, reason="Qiskit not installed")
     def test_ibmq_execute_fallback_to_simulator(self) -> None:
         """Testa fallback para simulador quando IBMQ não disponível."""
-        from qiskit import QuantumCircuit
 
         backend = IBMQBackend(token=None)
 

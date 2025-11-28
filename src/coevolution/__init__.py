@@ -1,3 +1,5 @@
+from typing import Any
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -34,7 +36,6 @@ Componentes principais:
 - Coevolution Memory: Histórico de colaboração
 """
 
-from typing import Any
 
 __version__ = "0.1.0"
 __all__ = [

@@ -1,3 +1,12 @@
+import json
+import platform
+from pathlib import Path
+from typing import TYPE_CHECKING, Any, Dict, Literal, Optional
+import psutil
+    from psutil import sensors_battery as _typed_sensors_battery
+from dataclasses import asdict, dataclass
+from datetime import datetime
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -35,23 +44,15 @@ Features:
 - Local-first service configuration
 """
 
-import json
-import platform
-from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, Literal, Optional
 
-import psutil
 
 if TYPE_CHECKING:
-    from psutil import sensors_battery as _typed_sensors_battery
 else:
 
     def _typed_sensors_battery() -> Any:
         return psutil.sensors_battery()
 
 
-from dataclasses import asdict, dataclass
-from datetime import datetime
 
 
 @dataclass

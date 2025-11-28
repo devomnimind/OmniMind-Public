@@ -1,0 +1,20 @@
+# Quantum computing dependencies for OmniMind
+# Install with: pip install -r requirements-quantum.txt
+# Requires: IBM Quantum account (free tier available)
+
+# IBM Qiskit (Primary)
+qiskit>=2.2.0
+qiskit-aer>=0.17.0
+qiskit-algorithms>=0.3.0
+qiskit-optimization>=0.6.0
+
+# Alternative Quantum Frameworks
+cirq>=1.6.0
+
+# Quantum Annealing (D-Wave)
+dwave-system>=1.23.0
+dimod>=0.12.14
+
+# Additional Quantum Libraries
+# pennylane>=0.37.0     # Optional: Quantum ML framework
+# qutip>=5.0.0         # Optional: Quantum simulations

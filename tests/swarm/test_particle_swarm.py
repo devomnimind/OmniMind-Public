@@ -1,3 +1,9 @@
+from typing import List
+import pytest
+from src.swarm.config import PSOConfig
+from src.swarm.particle_swarm import ParticleSwarmOptimizer
+from src.swarm.types import Particle
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,14 +29,6 @@ Comprehensive tests for Particle Swarm Optimization - Phase 19.
 
 Tests PSO implementation with scalability, convergence, and optimization quality.
 """
-
-from typing import List
-
-import pytest
-
-from src.swarm.config import PSOConfig
-from src.swarm.particle_swarm import ParticleSwarmOptimizer
-from src.swarm.types import Particle
 
 
 class TestPSOConfig:

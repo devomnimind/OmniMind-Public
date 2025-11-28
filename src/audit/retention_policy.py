@@ -1,3 +1,11 @@
+import json
+import shutil
+from datetime import datetime, timedelta, timezone
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+from .immutable_audit import ImmutableAuditSystem, get_audit_system
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -25,15 +33,6 @@ Implements configurable retention periods, automatic archival, and purge mechani
 
 Compliance: LGPD Art. 15, GDPR Art. 5.1.e (Storage Limitation)
 """
-
-import json
-import shutil
-from datetime import datetime, timedelta, timezone
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Optional
-
-from .immutable_audit import ImmutableAuditSystem, get_audit_system
 
 
 class RetentionPeriod(Enum):

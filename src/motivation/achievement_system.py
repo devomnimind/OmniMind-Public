@@ -1,3 +1,10 @@
+import json
+import logging
+from dataclasses import asdict, dataclass
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, Optional
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,12 +32,6 @@ Tracks milestones, progress, and motivation state for autonomous agents.
 Implements gamification elements to encourage continuous improvement.
 """
 
-import json
-import logging
-from dataclasses import asdict, dataclass
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Dict, Optional
 
 logger = logging.getLogger(__name__)
 

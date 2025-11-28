@@ -1,3 +1,9 @@
+import tempfile
+from pathlib import Path
+from typing import Generator
+import pytest
+from src.metrics.ethics_metrics import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,13 +32,8 @@ Tests:
 - Decision logging
 """
 
-import tempfile
-from pathlib import Path
-from typing import Generator
 
-import pytest
 
-from src.metrics.ethics_metrics import (
     DecisionLog,
     EthicsMetrics,
     MoralFoundation,

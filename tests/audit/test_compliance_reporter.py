@@ -1,3 +1,14 @@
+from __future__ import annotations
+
+import json
+import tempfile
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from unittest.mock import Mock, patch
+import pytest
+from src.audit.compliance_reporter import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,17 +40,9 @@ Cobertura de:
 - Verificações de conformidade
 """
 
-from __future__ import annotations
 
-import json
-import tempfile
-from datetime import datetime, timedelta, timezone
-from pathlib import Path
-from unittest.mock import Mock, patch
 
-import pytest
 
-from src.audit.compliance_reporter import (
     ComplianceReporter,
     ComplianceStandard,
     export_audit_trail,

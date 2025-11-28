@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+from pathlib import Path
+import pytest
+from src.security.geo_distributed_backup import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,13 +29,9 @@ Contact: fabricioslv@hotmail.com.br
 Tests for Geo-Distributed Backup Manager.
 """
 
-from __future__ import annotations
 
-from pathlib import Path
 
-import pytest
 
-from src.security.geo_distributed_backup import (
     BackupLocation,
     BackupRegion,
     BackupStatus,

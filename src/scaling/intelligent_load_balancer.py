@@ -1,3 +1,14 @@
+from __future__ import annotations
+
+import logging
+import statistics
+from collections import deque
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Deque, Dict, List, Optional, Tuple
+from src.scaling.multi_node import DistributedTask, NodeInfo
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,16 +38,6 @@ This module extends the basic load balancer with:
 - Adaptive strategy selection
 """
 
-from __future__ import annotations
-
-import logging
-import statistics
-from collections import deque
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Any, Deque, Dict, List, Optional, Tuple
-
-from src.scaling.multi_node import DistributedTask, NodeInfo
 
 logger = logging.getLogger(__name__)
 

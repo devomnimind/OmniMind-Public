@@ -1,3 +1,7 @@
+from pathlib import Path
+from typing import Any, Dict
+from src.security.firecracker_sandbox import FirecrackerSandbox
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -17,11 +21,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Contact: fabricioslv@hotmail.com.br
 """
-
-from pathlib import Path
-from typing import Any, Dict
-
-from src.security.firecracker_sandbox import FirecrackerSandbox
 
 
 def test_sandbox_disabled_without_artifacts(tmp_path: Path) -> None:

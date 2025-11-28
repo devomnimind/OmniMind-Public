@@ -1,3 +1,9 @@
+from __future__ import annotations
+
+import pytest
+from src.metrics.behavioral_metrics import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,11 +31,8 @@ Author: OmniMind Development Team
 Date: November 2025
 """
 
-from __future__ import annotations
 
-import pytest
 
-from src.metrics.behavioral_metrics import (
     compute_behavioral_distance,
     compute_return_rate,
     compute_statistical_significance,

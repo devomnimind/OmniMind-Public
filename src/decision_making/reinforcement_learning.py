@@ -1,3 +1,12 @@
+import math
+import random
+import time
+from abc import ABC, abstractmethod
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Tuple
+import numpy as np
+import structlog
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,15 +40,6 @@ Author: OmniMind Project
 License: MIT
 """
 
-import math
-import random
-import time
-from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Tuple
-
-import numpy as np
-import structlog
 
 logger = structlog.get_logger(__name__)
 

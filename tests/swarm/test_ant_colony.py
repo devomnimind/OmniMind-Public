@@ -1,3 +1,9 @@
+import pytest
+from src.swarm.ant_colony import AntColonyOptimizer
+from src.swarm.config import ACOConfig
+from src.swarm.types import Ant
+        import random
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,11 +30,7 @@ Comprehensive tests for Ant Colony Optimization - Phase 19.
 Tests ACO implementation for TSP with elitismo and local search.
 """
 
-import pytest
 
-from src.swarm.ant_colony import AntColonyOptimizer
-from src.swarm.config import ACOConfig
-from src.swarm.types import Ant
 
 
 class TestACOConfig:
@@ -315,7 +317,6 @@ class TestACOIntegration:
 
     def test_larger_tsp_instance(self) -> None:
         """Test ACO on larger TSP instance (10 cities)."""
-        import random
 
         config = ACOConfig(num_ants=50)
         aco = AntColonyOptimizer(config)

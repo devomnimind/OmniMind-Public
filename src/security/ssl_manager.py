@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import logging
+import subprocess
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, Optional, Tuple
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,14 +39,6 @@ This module provides comprehensive SSL/TLS certificate management including:
 - Production-ready HTTPS configuration
 """
 
-from __future__ import annotations
-
-import logging
-import subprocess
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Dict, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 

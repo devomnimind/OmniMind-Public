@@ -1,3 +1,8 @@
+import logging
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Dict, List, Optional
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,10 +29,6 @@ Sistema de Detecção e Correção de Viés Algorítmico.
 Detecta vieses comuns em decisões de IA e oferece correções.
 """
 
-import logging
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

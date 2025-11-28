@@ -1,3 +1,9 @@
+import tempfile
+from pathlib import Path
+import numpy as np
+import pytest
+from src.consciousness.shared_workspace import CrossPredictionMetrics, SharedWorkspace
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,14 +30,6 @@ Testes para Shared Workspace - Verificar leitura/escrita e cálculos de integra�
 Author: OmniMind Development Team
 Date: November 2025
 """
-
-import tempfile
-from pathlib import Path
-
-import numpy as np
-import pytest
-
-from src.consciousness.shared_workspace import CrossPredictionMetrics, SharedWorkspace
 
 
 class TestSharedWorkspaceInit:

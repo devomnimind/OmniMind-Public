@@ -1,3 +1,8 @@
+from pathlib import Path
+import pytest
+from src.agents.agent_protocol import ( from src.agents.architect_agent import ArchitectAgent
+from src.agents.code_agent import CodeAgent
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -25,17 +30,12 @@ Integration Tests for Enhanced Agent System
 Testa integração entre AST parser, comunicação inter-agentes e agentes aprimorados.
 """
 
-from pathlib import Path
 
-import pytest
 
-from src.agents.agent_protocol import (
     MessagePriority,
     MessageType,
     get_message_bus,
 )
-from src.agents.architect_agent import ArchitectAgent
-from src.agents.code_agent import CodeAgent
 
 
 class TestCodeAgentIntegration:

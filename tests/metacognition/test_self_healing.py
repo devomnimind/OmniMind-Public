@@ -1,3 +1,8 @@
+from datetime import datetime
+from typing import Any, Dict, Optional
+import pytest
+from src.metacognition.self_healing import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,12 +29,8 @@ Tests for automated recovery and self-repair capabilities.
 Total: 29 tests covering all self-healing functionality.
 """
 
-from datetime import datetime
-from typing import Any, Dict, Optional
 
-import pytest
 
-from src.metacognition.self_healing import (
     Issue,
     IssueSeverity,
     IssueType,

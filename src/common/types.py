@@ -1,3 +1,5 @@
+from typing import Any, TypeAlias
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,7 +27,6 @@ This module provides reusable type definitions used across the codebase
 to ensure type safety and consistency.
 """
 
-from typing import Any, TypeAlias
 
 # JSON-like structures
 JSONDict: TypeAlias = dict[str, Any]

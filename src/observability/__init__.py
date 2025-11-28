@@ -1,3 +1,6 @@
+from src.observability.distributed_tracing import ( from src.observability.log_aggregator import (
+from src.observability.metrics_exporter import ( from src.observability.profiling_tools import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,22 +32,18 @@ This module implements comprehensive observability features including:
 Reference: docs/OMNIMIND_COMPREHENSIVE_PENDENCIES_REPORT_20251119.md, Section 8
 """
 
-from src.observability.distributed_tracing import (
     DistributedTracer,
     SpanContext,
     TraceConfig,
 )
-from src.observability.log_aggregator import (
     LogAggregator,
     LogAnalytics,
     LogConfig,
 )
-from src.observability.metrics_exporter import (
     CustomMetricsExporter,
     MetricsConfig,
     MLMetrics,
 )
-from src.observability.profiling_tools import (
     ContinuousProfiler,
     FlameGraphGenerator,
     ProfilingConfig,

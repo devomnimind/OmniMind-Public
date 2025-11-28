@@ -1,3 +1,15 @@
+from __future__ import annotations
+
+import tempfile
+from pathlib import Path
+from typing import Generator
+from unittest.mock import MagicMock, patch
+import pytest
+from src.audit.immutable_audit import (
+        import threading
+        import time
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,16 +41,9 @@ Cobertura de:
 - Tratamento de exceções
 """
 
-from __future__ import annotations
 
-import tempfile
-from pathlib import Path
-from typing import Generator
-from unittest.mock import MagicMock, patch
 
-import pytest
 
-from src.audit.immutable_audit import (
     ImmutableAuditSystem,
     get_audit_system,
     log_action,
@@ -202,8 +207,6 @@ class TestImmutableAuditSystem:
 
     def test_concurrent_access_simulation(self, temp_log_dir: Path) -> None:
         """Testa acesso concorrente simulado."""
-        import threading
-        import time
 
         audit = ImmutableAuditSystem(log_dir=str(temp_log_dir))
 

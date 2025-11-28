@@ -1,3 +1,15 @@
+from __future__ import annotations
+
+import time
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from enum import Enum
+from typing import Any, Dict, List, Optional
+import aiohttp
+import structlog
+        import os
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,16 +37,8 @@ Integração segura com provedores externos de IA (Gemini, Copilot, OpenRouter)
 Mantém isolamento completo dos dados internos do OmniMind.
 """
 
-from __future__ import annotations
 
-import time
-from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from enum import Enum
-from typing import Any, Dict, List, Optional
 
-import aiohttp
-import structlog
 
 logger = structlog.get_logger(__name__)
 
@@ -530,7 +534,6 @@ class OpenRouterProvider(ExternalAIProvider):
     async def initialize(self) -> None:
         """Inicializa conexão com OpenRouter"""
         await self._ensure_session()
-        import os
 
         api_key_env = self.config.get("api_key_env")
         if not api_key_env:

@@ -1,3 +1,9 @@
+from __future__ import annotations
+
+import pytest
+from src.decision_making.ethical_decision_framework import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,11 +35,8 @@ Cobertura de:
 - Tratamento de exceções
 """
 
-from __future__ import annotations
 
-import pytest
 
-from src.decision_making.ethical_decision_framework import (
     EthicalDecisionMaker,
     EthicalDilemma,
     EthicalFramework,

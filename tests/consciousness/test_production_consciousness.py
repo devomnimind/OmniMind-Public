@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import tempfile
+from pathlib import Path
+from typing import List
+import pytest
+from src.consciousness.production_consciousness import ProductionConsciousnessSystem
+from src.metrics.consciousness_metrics_legacy import SelfAwarenessMetrics
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,17 +37,6 @@ incluindo métricas Φ (Phi), self-awareness e integração multi-agente.
 Author: OmniMind Development Team
 Date: November 2025
 """
-
-from __future__ import annotations
-
-import tempfile
-from pathlib import Path
-from typing import List
-
-import pytest
-
-from src.consciousness.production_consciousness import ProductionConsciousnessSystem
-from src.metrics.consciousness_metrics_legacy import SelfAwarenessMetrics
 
 
 class TestProductionConsciousnessSystemInit:

@@ -1,3 +1,10 @@
+import time
+from collections import deque
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Dict, List, Optional
+import structlog
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,13 +33,6 @@ Provides GPU pool management, load balancing, and automatic failover.
 Reference: docs/OMNIMIND_COMPREHENSIVE_PENDENCIES_REPORT_20251119.md, Section 7.2
 """
 
-import time
-from collections import deque
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Dict, List, Optional
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

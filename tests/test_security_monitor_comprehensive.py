@@ -1,3 +1,9 @@
+import tempfile
+from pathlib import Path
+import pytest
+from src.audit.immutable_audit import ImmutableAuditSystem
+from src.security.security_monitor import (
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -24,13 +30,8 @@ Comprehensive tests for security_monitor.py module.
 Tests SecurityMonitor class and related functionality.
 """
 
-import tempfile
-from pathlib import Path
 
-import pytest
 
-from src.audit.immutable_audit import ImmutableAuditSystem
-from src.security.security_monitor import (
     AnomalyType,
     ProcessSnapshot,
     SecurityEvent,

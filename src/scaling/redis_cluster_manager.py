@@ -1,3 +1,14 @@
+import logging
+import time
+from dataclasses import dataclass
+from enum import Enum
+from typing import (
+    import redis.cluster as redis_cluster_module
+    import redis.sentinel as redis_sentinel_module
+    from redis.cluster import ClusterNode as RedisClusterNodeType
+    from redis.cluster import RedisCluster as RedisClusterType
+    from redis.sentinel import Sentinel as SentinelType
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -40,11 +51,6 @@ Example:
     >>> value = manager.get("key")
 """
 
-import logging
-import time
-from dataclasses import dataclass
-from enum import Enum
-from typing import (
     TYPE_CHECKING,
     Any,
     Callable,
@@ -64,8 +70,6 @@ SentinelCtor: Type[Any] | None = None
 
 # Redis is optional dependency for local-first operation
 try:
-    import redis.cluster as redis_cluster_module
-    import redis.sentinel as redis_sentinel_module
 
     RedisClusterNodeCtor = redis_cluster_module.ClusterNode
     RedisClusterCtor = redis_cluster_module.RedisCluster
@@ -78,9 +82,6 @@ except ImportError:
     SentinelCtor = None
 
 if TYPE_CHECKING:
-    from redis.cluster import ClusterNode as RedisClusterNodeType
-    from redis.cluster import RedisCluster as RedisClusterType
-    from redis.sentinel import Sentinel as SentinelType
 else:
     RedisClusterType = Any
     SentinelType = Any

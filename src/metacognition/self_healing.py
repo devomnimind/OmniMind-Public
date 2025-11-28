@@ -1,3 +1,12 @@
+from __future__ import annotations
+
+import logging
+from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+from typing import Any, Callable, Dict, List, Optional
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,13 +37,6 @@ This module provides automated recovery and self-repair capabilities:
 - Automatic remediation actions
 """
 
-from __future__ import annotations
-
-import logging
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
-from typing import Any, Callable, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

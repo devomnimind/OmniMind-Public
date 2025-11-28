@@ -1,3 +1,8 @@
+from typing import Any, Dict
+from unittest.mock import patch
+import pytest
+from src.experiments.run_all_experiments import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,12 +29,8 @@ Testes para src/experiments/run_all_experiments.py.
 Testa execução de experimentos de consciência e ética.
 """
 
-from typing import Any, Dict
-from unittest.mock import patch
 
-import pytest
 
-from src.experiments.run_all_experiments import (
     generate_summary,
     main,
     run_all_experiments,

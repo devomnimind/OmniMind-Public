@@ -1,3 +1,6 @@
+from src.optimization.benchmarking import ( from src.optimization.memory_optimization import (
+from src.optimization.performance_profiler import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,12 +32,10 @@ Modules:
     memory_optimization: Memory management and optimization
 """
 
-from src.optimization.benchmarking import (
     BenchmarkResult,
     PerformanceBenchmark,
     compare_performance,
 )
-from src.optimization.memory_optimization import (
     AllocationStats,
     MemoryAllocator,
     MemoryLeakDetector,
@@ -43,7 +44,6 @@ from src.optimization.memory_optimization import (
     MemoryProfiler,
     MemoryUsageSnapshot,
 )
-from src.optimization.performance_profiler import (
     PerformanceMetrics,
     PerformanceProfiler,
     profile_function,

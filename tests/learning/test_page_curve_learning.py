@@ -1,3 +1,6 @@
+import numpy as np
+from src.learning.page_curve_learning import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,9 +28,7 @@ Tests non-monotonic learning dynamics, entropy tracking,
 and Page time detection.
 """
 
-import numpy as np
 
-from src.learning.page_curve_learning import (
     LearningPhase,
     PageCurve,
     PageCurveLearner,

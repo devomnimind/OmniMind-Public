@@ -1,3 +1,16 @@
+from __future__ import annotations
+
+import json
+import logging
+import os
+from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set, Tuple, Type
+        import shutil
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -30,16 +43,7 @@ Provides comprehensive configuration validation with:
 - Migration utilities
 """
 
-from __future__ import annotations
 
-import json
-import logging
-import os
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple, Type
 
 logger = logging.getLogger(__name__)
 
@@ -717,7 +721,6 @@ class ConfigurationValidator:
 
     def _check_disk_space(self, min_gb: int = 5) -> Dict[str, Any]:
         """Check available disk space."""
-        import shutil
 
         result: Dict[str, Any] = {"passed": True, "details": [], "warnings": []}
 

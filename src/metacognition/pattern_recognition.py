@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+import logging
+from collections import Counter
+from datetime import datetime
+from typing import Any, Dict, List
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,12 +31,6 @@ Contact: fabricioslv@hotmail.com.br
 Identifies behavioral patterns and anomalies in agent decision-making.
 """
 
-from __future__ import annotations
-
-import logging
-from collections import Counter
-from datetime import datetime
-from typing import Any, Dict, List
 
 logger = logging.getLogger(__name__)
 

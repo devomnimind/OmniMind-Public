@@ -1,3 +1,6 @@
+import pytest
+from src.quantum_ai.quantum_optimizer import (
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -24,9 +27,7 @@ Comprehensive tests for quantum_optimizer.py module.
 Tests quantum-inspired optimization algorithms.
 """
 
-import pytest
 
-from src.quantum_ai.quantum_optimizer import (
     QAOAOptimizer,
     QuantumOptimizer,
 )

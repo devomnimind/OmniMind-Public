@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+from src.autopoietic.advanced_repair import AdvancedRepair
+from src.autopoietic.code_synthesizer import SynthesizedComponent
+from src.autopoietic.meta_architect import ComponentSpec
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,12 +34,6 @@ Cobertura de:
 - Aplicação de patches (apply_patches)
 - Fluxo completo de reparo
 """
-
-from __future__ import annotations
-
-from src.autopoietic.advanced_repair import AdvancedRepair
-from src.autopoietic.code_synthesizer import SynthesizedComponent
-from src.autopoietic.meta_architect import ComponentSpec
 
 
 class TestAdvancedRepair:

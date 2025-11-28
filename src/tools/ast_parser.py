@@ -1,4 +1,12 @@
+from __future__ import annotations
+
+import ast
+import logging
+from dataclasses import dataclass, field
+from typing import List, Optional, Set
+
 #!/usr/bin/env python3
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,12 +39,6 @@ Fornece funcionalidades avançadas de:
 - Geração de código seguro
 """
 
-from __future__ import annotations
-
-import ast
-import logging
-from dataclasses import dataclass, field
-from typing import List, Optional, Set
 
 logger = logging.getLogger(__name__)
 

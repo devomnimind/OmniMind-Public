@@ -1,3 +1,18 @@
+from __future__ import annotations
+
+import hashlib
+import hmac
+import json
+import time
+import urllib.error
+import urllib.request
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Callable, Dict, List, Optional
+from uuid import uuid4
+import structlog
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,20 +41,6 @@ Supports webhook validation, retry logic, and event handling.
 Reference: Problem Statement - FRENTE 5: APIs Externas - Webhooks e callbacks
 """
 
-from __future__ import annotations
-
-import hashlib
-import hmac
-import json
-import time
-import urllib.error
-import urllib.request
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Callable, Dict, List, Optional
-from uuid import uuid4
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

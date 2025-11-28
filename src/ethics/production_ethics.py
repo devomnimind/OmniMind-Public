@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import logging
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+from src.metrics.ethics_metrics import (
+        import datetime
+        import datetime
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,15 +41,10 @@ Date: November 2025
 License: MIT
 """
 
-from __future__ import annotations
 
-import logging
-from pathlib import Path
-from typing import Any, Dict, List, Optional
 
 # Import from existing ethics metrics
 try:
-    from src.metrics.ethics_metrics import (
         DecisionLog,
         EthicsMetrics,
         MoralFoundation,
@@ -143,7 +148,6 @@ class ProductionEthicsSystem:
             confidence: Confiança (0.0-1.0)
             traceable: Se é rastreável
         """
-        import datetime
 
         decision_log = DecisionLog(
             timestamp=datetime.datetime.now().isoformat(),
@@ -266,7 +270,6 @@ class ProductionEthicsSystem:
         Returns:
             Dict com informações do audit trail
         """
-        import datetime
 
         trail = {
             "timestamp": datetime.datetime.now().isoformat(),

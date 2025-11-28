@@ -1,3 +1,8 @@
+from __future__ import annotations
+
+from src.lacanian.discourse_discovery import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,9 +36,7 @@ Cobertura de:
 - Casos especiais e edge cases
 """
 
-from __future__ import annotations
 
-from src.lacanian.discourse_discovery import (
     DiscourseAnalysisResult,
     DiscourseMarkers,
     EmotionalSignature,

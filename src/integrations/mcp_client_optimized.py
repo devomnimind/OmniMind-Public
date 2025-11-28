@@ -1,3 +1,16 @@
+from __future__ import annotations
+
+import hashlib
+import json
+import logging
+import time
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Tuple, cast
+from src.audit.immutable_audit import get_audit_system
+from src.integrations.mcp_client import MCPClient, MCPClientError
+from src.integrations.mcp_data_protection import ProtectionResult, get_data_protection
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -30,18 +43,6 @@ Implementa:
 - Proteção de dados integrada
 """
 
-from __future__ import annotations
-
-import hashlib
-import json
-import logging
-import time
-from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Tuple, cast
-
-from src.audit.immutable_audit import get_audit_system
-from src.integrations.mcp_client import MCPClient, MCPClientError
-from src.integrations.mcp_data_protection import ProtectionResult, get_data_protection
 
 logger = logging.getLogger(__name__)
 

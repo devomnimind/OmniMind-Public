@@ -1,3 +1,6 @@
+import pytest
+from src.decision_making.decision_trees import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,9 +25,7 @@ Contact: fabricioslv@hotmail.com.br
 Comprehensive tests for decision tree module.
 """
 
-import pytest
 
-from src.decision_making.decision_trees import (
     DecisionCriterion,
     DecisionNode,
     DecisionOutcome,

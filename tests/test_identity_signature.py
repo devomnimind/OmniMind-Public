@@ -1,3 +1,9 @@
+import json
+import tempfile
+from pathlib import Path
+import pytest
+from src.identity.agent_signature import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,13 +30,8 @@ Testes para Identity - Agent Signature and Digital Identity.
 Group 14: Integration Layer - identity/
 """
 
-import json
-import tempfile
-from pathlib import Path
 
-import pytest
 
-from src.identity.agent_signature import (
     AgentIdentity,
     ReputationScore,
     WorkSignature,

@@ -1,3 +1,10 @@
+import logging
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Tuple
+from .neural_component import NeuralComponent
+from .reconciliation import ReconciliationStrategy, Reconciliator
+from .symbolic_component import SymbolicComponent
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,13 +32,6 @@ Combina neural + simbólico em um único motor de raciocínio
 que toma decisões inteligentes sobre qual usar.
 """
 
-import logging
-from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Tuple
-
-from .neural_component import NeuralComponent
-from .reconciliation import ReconciliationStrategy, Reconciliator
-from .symbolic_component import SymbolicComponent
 
 logger = logging.getLogger(__name__)
 

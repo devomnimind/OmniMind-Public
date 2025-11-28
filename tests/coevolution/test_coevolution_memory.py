@@ -1,3 +1,7 @@
+from datetime import datetime, timedelta
+import pytest
+from src.coevolution.coevolution_memory import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,11 +26,8 @@ Contact: fabricioslv@hotmail.com.br
 Testes para Coevolution Memory System.
 """
 
-from datetime import datetime, timedelta
 
-import pytest
 
-from src.coevolution.coevolution_memory import (
     CoevolutionMemory,
     CollaborationSession,
     LearningPattern,

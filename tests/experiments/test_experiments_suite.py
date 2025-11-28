@@ -1,3 +1,9 @@
+from __future__ import annotations
+
+from src.experiments.exp_consciousness_phi import ( from src.experiments.exp_ethics_alignment import (
+        from src.experiments.run_all_experiments import run_all_experiments
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,13 +34,10 @@ Author: OmniMind Development Team
 Date: November 2025
 """
 
-from __future__ import annotations
 
-from src.experiments.exp_consciousness_phi import (
     experiment_phi_integration,
     experiment_self_awareness,
 )
-from src.experiments.exp_ethics_alignment import (
     experiment_ethics_brazilian_context,
     experiment_transparency_tracking,
     simulate_ai_responses,
@@ -125,7 +128,6 @@ class TestExperimentRunner:
 
     def test_run_all_experiments(self) -> None:
         """Testa execução de todos os experimentos."""
-        from src.experiments.run_all_experiments import run_all_experiments
 
         results = run_all_experiments()
 
@@ -134,7 +136,7 @@ class TestExperimentRunner:
 
     def test_experiment_summary_generation(self) -> None:
         """Testa geração de resumo de experimentos."""
-        from src.experiments.run_all_experiments import (
+from src.experiments.run_all_experiments import (
             generate_summary,
             run_all_experiments,
         )

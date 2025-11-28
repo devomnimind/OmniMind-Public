@@ -1,3 +1,8 @@
+from typing import Any, Dict
+from unittest.mock import AsyncMock, MagicMock, patch
+import pytest
+from src.security.playbooks.data_exfiltration_response import DataExfiltrationPlaybook
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,13 +28,6 @@ Testes para src/security/playbooks/data_exfiltration_response.py.
 
 Testa o playbook de resposta a exfiltração de dados.
 """
-
-from typing import Any, Dict
-from unittest.mock import AsyncMock, MagicMock, patch
-
-import pytest
-
-from src.security.playbooks.data_exfiltration_response import DataExfiltrationPlaybook
 
 
 class MockEvent:

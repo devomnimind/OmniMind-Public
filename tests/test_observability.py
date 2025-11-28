@@ -1,3 +1,10 @@
+import json
+import time
+from pathlib import Path
+import pytest
+from src.observability.distributed_tracing import ( from src.observability.log_aggregator import (
+from src.observability.metrics_exporter import ( from src.observability.profiling_tools import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,32 +30,24 @@ Contact: fabricioslv@hotmail.com.br
 Tests distributed tracing, metrics export, log aggregation, and profiling tools.
 """
 
-import json
-import time
-from pathlib import Path
 
-import pytest
 
-from src.observability.distributed_tracing import (
     DistributedTracer,
     SpanKind,
     SpanStatus,
     TraceConfig,
 )
-from src.observability.log_aggregator import (
     AlertSeverity,
     LogAggregator,
     LogConfig,
     LogLevel,
     LogPattern,
 )
-from src.observability.metrics_exporter import (
     CustomMetricsExporter,
     MetricsConfig,
     MetricType,
     MLMetrics,
 )
-from src.observability.profiling_tools import (
     ContinuousProfiler,
     FlameGraphGenerator,
     ProfilingConfig,

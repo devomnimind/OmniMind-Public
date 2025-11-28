@@ -1,3 +1,5 @@
+from .agent_signature import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,7 +27,6 @@ This module implements digital identity and reputation systems for autonomous ag
 allowing them to sign their work, build reputation, and maintain verifiable identity.
 """
 
-from .agent_signature import (
     AgentIdentity,
     ReputationScore,
     WorkSignature,

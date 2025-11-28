@@ -1,3 +1,12 @@
+from __future__ import annotations
+
+import logging
+import random
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta, timezone
+from typing import Any, Dict, List, Optional, Tuple
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -36,13 +45,6 @@ Author: OmniMind Development Team
 License: MIT
 """
 
-from __future__ import annotations
-
-import logging
-import random
-from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
-from typing import Any, Dict, List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 

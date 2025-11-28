@@ -1,3 +1,5 @@
+from .omnimind_network import EthicalDilemma, OmniMindNode, OmniMindSociety
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,6 +25,5 @@ Social Module for OmniMind.
 Implements the Society of Minds and ethical consensus protocols.
 """
 
-from .omnimind_network import EthicalDilemma, OmniMindNode, OmniMindSociety
 
 __all__ = ["OmniMindSociety", "OmniMindNode", "EthicalDilemma"]

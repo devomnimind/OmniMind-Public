@@ -1,3 +1,6 @@
+from src.ethics.ethics_agent import ActionImpact, EthicalFramework
+from src.ethics.ml_ethics_engine import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,8 +25,6 @@ Contact: fabricioslv@hotmail.com.br
 Tests for ML-based ethical decision engine.
 """
 
-from src.ethics.ethics_agent import ActionImpact, EthicalFramework
-from src.ethics.ml_ethics_engine import (
     ConsensusDecision,
     EthicalContext,
     EthicalFeatureExtractor,

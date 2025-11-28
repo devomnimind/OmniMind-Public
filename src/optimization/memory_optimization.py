@@ -1,3 +1,15 @@
+from __future__ import annotations
+
+import gc
+import logging
+import weakref
+from collections import defaultdict, deque
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Callable, Dict, Generic, List, Optional, TypeVar
+import psutil
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,17 +41,6 @@ This module provides memory management optimizations:
 - Usage optimization and monitoring
 """
 
-from __future__ import annotations
-
-import gc
-import logging
-import weakref
-from collections import defaultdict, deque
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Any, Callable, Dict, Generic, List, Optional, TypeVar
-
-import psutil
 
 logger = logging.getLogger(__name__)
 

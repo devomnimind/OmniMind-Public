@@ -1,3 +1,17 @@
+import argparse
+import asyncio
+import json
+import logging
+import os
+import sys
+import time
+from typing import Dict
+from src.tribunal_do_diabo.attacks.bifurcation import BifurcationAttack
+from src.tribunal_do_diabo.attacks.corruption import CorruptionAttack
+from src.tribunal_do_diabo.attacks.exhaustion import ExhaustionAttack
+from src.tribunal_do_diabo.attacks.latency import LatencyAttack
+from src.tribunal_do_diabo.system_adapter import OmniMindSystem
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -18,20 +32,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import argparse
-import asyncio
-import json
-import logging
-import os
-import sys
-import time
-from typing import Dict
-
-from src.tribunal_do_diabo.attacks.bifurcation import BifurcationAttack
-from src.tribunal_do_diabo.attacks.corruption import CorruptionAttack
-from src.tribunal_do_diabo.attacks.exhaustion import ExhaustionAttack
-from src.tribunal_do_diabo.attacks.latency import LatencyAttack
-from src.tribunal_do_diabo.system_adapter import OmniMindSystem
 
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))

@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import logging
+from collections import defaultdict, deque
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
+from enum import Enum
+from typing import Any, Deque, Dict, List, Optional, Set, Tuple
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,14 +37,6 @@ This module implements automated root cause analysis:
 - Impact analysis
 """
 
-from __future__ import annotations
-
-import logging
-from collections import defaultdict, deque
-from dataclasses import dataclass, field
-from datetime import datetime, timedelta
-from enum import Enum
-from typing import Any, Deque, Dict, List, Optional, Set, Tuple
 
 logger = logging.getLogger(__name__)
 

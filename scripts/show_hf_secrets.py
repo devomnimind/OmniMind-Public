@@ -25,14 +25,13 @@ Show secrets that need to be configured in Hugging Face Space
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 
 def load_env_file():
     """Load environment variables from .env file."""
     env_file = Path(__file__).parent.parent / ".env"
     if env_file.exists():
-        from dotenv import load_dotenv
-
         load_dotenv(env_file)
         print("✓ Loaded environment from .env file")
 

@@ -1,3 +1,10 @@
+import logging
+import uuid
+from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+from typing import Dict, List, Set
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,12 +35,6 @@ References:
 - Ricoeur, P. (1992). Oneself as Another.
 """
 
-import logging
-import uuid
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
-from typing import Dict, List, Set
 
 logger = logging.getLogger(__name__)
 

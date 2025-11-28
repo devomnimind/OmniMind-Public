@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+from pathlib import Path
+import pytest
+from src.security.soc2_compliance import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,13 +29,9 @@ Contact: fabricioslv@hotmail.com.br
 Tests for SOC 2 Compliance Manager.
 """
 
-from __future__ import annotations
 
-from pathlib import Path
 
-import pytest
 
-from src.security.soc2_compliance import (
     ControlStatus,
     PentestResult,
     RiskLevel,

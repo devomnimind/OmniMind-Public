@@ -1,3 +1,11 @@
+import json
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+import pytest
+from PIL import Image as PILImage
+from PIL.Image import Image as PILImageType
+from playwright.sync_api import sync_playwright
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,16 +32,9 @@ Visual Regression Testing for OmniMind UI
 Uses Playwright for screenshot comparison to detect UI changes.
 """
 
-import json
-from pathlib import Path
-from typing import Any, Dict, List, Optional
 
-import pytest
 
 try:
-    from PIL import Image as PILImage
-    from PIL.Image import Image as PILImageType
-    from playwright.sync_api import sync_playwright
 
     VISUAL_TESTING_AVAILABLE = True
 except ImportError:

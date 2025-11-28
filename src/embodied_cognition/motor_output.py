@@ -1,3 +1,8 @@
+import logging
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional
+        import random
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -33,9 +38,6 @@ References:
 - Gibson (1977): Affordances enable action
 """
 
-import logging
-from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -187,7 +189,6 @@ class MotorController:
         logger.info(f"[SIMULATED ACTION] {action}")
 
         # Simulate successful execution (90% success rate)
-        import random
 
         success = random.random() > 0.1
 

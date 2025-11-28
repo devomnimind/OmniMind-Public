@@ -1,3 +1,12 @@
+from __future__ import annotations
+
+import hashlib
+import re
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Set
+import structlog
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,14 +34,6 @@ Isolamento seguro de tarefas para execução em provedores externos de IA
 Garante que dados sensíveis do OmniMind não sejam compartilhados com AIs externas.
 """
 
-from __future__ import annotations
-
-import hashlib
-import re
-from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Set
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

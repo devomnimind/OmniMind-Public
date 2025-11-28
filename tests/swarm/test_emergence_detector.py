@@ -1,3 +1,8 @@
+import pytest
+from src.swarm.config import EmergenceConfig
+from src.swarm.emergence_detector import EmergenceDetector
+from src.swarm.types import EmergenceType
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,12 +28,6 @@ Comprehensive tests for Emergence Detector - Phase 19.
 
 Tests detection of emergent patterns (clustering, synchronization, specialization).
 """
-
-import pytest
-
-from src.swarm.config import EmergenceConfig
-from src.swarm.emergence_detector import EmergenceDetector
-from src.swarm.types import EmergenceType
 
 
 class TestEmergenceConfig:

@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import json
+import logging
+import subprocess
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,14 +38,6 @@ This module analyzes the repository state and generates improvement goals:
 - Security vulnerabilities
 """
 
-from __future__ import annotations
-
-import json
-import logging
-import subprocess
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 

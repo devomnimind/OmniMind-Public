@@ -1,3 +1,12 @@
+import tempfile
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from typing import Generator
+from unittest.mock import MagicMock, patch
+import pytest
+from src.audit.immutable_audit import ImmutableAuditSystem
+from src.audit.retention_policy import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,16 +33,8 @@ Testes para src/audit/retention_policy.py.
 Testa políticas de retenção, arquivamento e purge de dados.
 """
 
-import tempfile
-from datetime import datetime, timedelta, timezone
-from pathlib import Path
-from typing import Generator
-from unittest.mock import MagicMock, patch
 
-import pytest
 
-from src.audit.immutable_audit import ImmutableAuditSystem
-from src.audit.retention_policy import (
     DataCategory,
     RetentionPeriod,
     RetentionPolicyManager,

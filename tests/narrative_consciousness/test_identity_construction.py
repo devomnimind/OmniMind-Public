@@ -1,3 +1,6 @@
+import pytest
+from src.narrative_consciousness.identity_construction import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,9 +27,7 @@ Tests for Identity Construction (Phase 16.2).
 Tests value systems, belief networks, and identity evolution.
 """
 
-import pytest
 
-from src.narrative_consciousness.identity_construction import (
     BeliefNetwork,
     IdentityConstruction,
     ValueSystem,

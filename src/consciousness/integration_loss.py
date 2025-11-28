@@ -1,3 +1,15 @@
+from __future__ import annotations
+
+import json
+import logging
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Any, Dict, Optional, List
+from datetime import datetime
+from pathlib import Path
+from src.consciousness.integration_loop import IntegrationLoop
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,17 +41,6 @@ Date: January 2026
 License: MIT
 """
 
-from __future__ import annotations
-
-import json
-import logging
-import numpy as np
-from dataclasses import dataclass, field
-from typing import Any, Dict, Optional, List
-from datetime import datetime
-from pathlib import Path
-
-from src.consciousness.integration_loop import IntegrationLoop
 
 logger = logging.getLogger(__name__)
 

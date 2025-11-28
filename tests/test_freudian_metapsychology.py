@@ -1,3 +1,6 @@
+import pytest
+from src.lacanian.freudian_metapsychology import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,9 +25,7 @@ Contact: fabricioslv@hotmail.com.br
 Tests for Freudian Metapsychology module.
 """
 
-import pytest
 
-from src.lacanian.freudian_metapsychology import (
     Action,
     DefenseMechanism,
     EgoAgent,

@@ -1,3 +1,6 @@
+import pytest
+from src.coevolution.trust_metrics import TrustEvent, TrustMetrics
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -21,10 +24,6 @@ Contact: fabricioslv@hotmail.com.br
 """
 Testes para Trust Metrics System.
 """
-
-import pytest
-
-from src.coevolution.trust_metrics import TrustEvent, TrustMetrics
 
 
 class TestTrustMetrics:

@@ -1,3 +1,14 @@
+from __future__ import annotations
+
+import asyncio
+import time
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional
+import structlog
+import yaml
+from .external_ai_providers import ( from .task_isolation import IsolatedTask, TaskIsolationEngine
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,17 +36,9 @@ Gerenciamento de delegação segura de tarefas para provedores externos de IA
 Coordena seleção de provedores, isolamento de tarefas e execução distribuída.
 """
 
-from __future__ import annotations
 
-import asyncio
-import time
-from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
 
-import structlog
-import yaml
 
-from .external_ai_providers import (
     CopilotProvider,
     ExternalAIProvider,
     GeminiProvider,
@@ -44,7 +47,6 @@ from .external_ai_providers import (
     TaskSpec,
     TaskType,
 )
-from .task_isolation import IsolatedTask, TaskIsolationEngine
 
 logger = structlog.get_logger(__name__)
 

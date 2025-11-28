@@ -1,3 +1,8 @@
+import math
+from dataclasses import dataclass, field
+from typing import Any, Callable, List
+import structlog
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,11 +33,6 @@ Author: OmniMind Project
 License: MIT
 """
 
-import math
-from dataclasses import dataclass, field
-from typing import Any, Callable, List
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

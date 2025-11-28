@@ -1,3 +1,9 @@
+import json
+from datetime import datetime, timedelta
+from pathlib import Path
+import pytest
+from src.metacognition.self_analysis import SelfAnalysis
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,14 +29,6 @@ Contact: fabricioslv@hotmail.com.br
 Tests for analyzing agent's own decision-making and execution patterns.
 Total: 29 tests covering all self-analysis capabilities.
 """
-
-import json
-from datetime import datetime, timedelta
-from pathlib import Path
-
-import pytest
-
-from src.metacognition.self_analysis import SelfAnalysis
 
 
 class TestSelfAnalysisInitialization:

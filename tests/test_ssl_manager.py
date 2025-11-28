@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+from pathlib import Path
+import pytest
+from src.security.ssl_manager import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,13 +29,9 @@ Contact: fabricioslv@hotmail.com.br
 Tests for SSL/TLS Manager.
 """
 
-from __future__ import annotations
 
-from pathlib import Path
 
-import pytest
 
-from src.security.ssl_manager import (
     SSLConfig,
     SSLManager,
     create_production_ssl_config,

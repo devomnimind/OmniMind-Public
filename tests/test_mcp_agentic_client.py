@@ -1,3 +1,9 @@
+import time
+from pathlib import Path
+import pytest
+from src.integrations.mcp_agentic_client import (
+import os
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,12 +28,8 @@ Contact: fabricioslv@hotmail.com.br
 Tests for MCP Agentic Client module.
 """
 
-import time
-from pathlib import Path
 
-import pytest
 
-from src.integrations.mcp_agentic_client import (
     AuditLogEntry,
     CodeExecutionContext,
     MCPAgenticClient,
@@ -310,7 +312,6 @@ else:
         client = MCPAgenticClient(agent_id="test")
 
         dangerous_code = """
-import os
 os.system('whoami')
 """
 

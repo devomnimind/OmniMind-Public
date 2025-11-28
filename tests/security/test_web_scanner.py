@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+from unittest.mock import MagicMock, Mock, patch
+import pytest
+from src.security.web_scanner import (
+        import requests
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -30,13 +38,9 @@ Cobertura de:
 - Tratamento de exceções
 """
 
-from __future__ import annotations
 
-from unittest.mock import MagicMock, Mock, patch
 
-import pytest
 
-from src.security.web_scanner import (
     VulnerabilitySeverity,
     VulnerabilityType,
     WebScannerBrain,
@@ -252,7 +256,6 @@ class TestWebScannerBrain:
         self, mock_get: Mock, mock_alerting: Mock, mock_audit: Mock
     ) -> None:
         """Testa erro de conexão."""
-        import requests
 
         mock_get.side_effect = requests.ConnectionError("Failed to connect")
 

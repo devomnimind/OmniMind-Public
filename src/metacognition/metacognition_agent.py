@@ -1,3 +1,15 @@
+from __future__ import annotations
+
+import logging
+from datetime import datetime
+from typing import Any, Dict, List, Optional
+from src.metacognition.optimization_suggestions import OptimizationSuggestions
+from src.metacognition.pattern_recognition import PatternRecognition
+from src.metacognition.self_analysis import SelfAnalysis
+                from datetime import timedelta
+        from datetime import timedelta
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,15 +39,8 @@ Provides self-reflective AI capabilities including:
 - Bias detection and mitigation
 """
 
-from __future__ import annotations
 
-import logging
-from datetime import datetime
-from typing import Any, Dict, List, Optional
 
-from src.metacognition.optimization_suggestions import OptimizationSuggestions
-from src.metacognition.pattern_recognition import PatternRecognition
-from src.metacognition.self_analysis import SelfAnalysis
 
 logger = logging.getLogger(__name__)
 
@@ -97,7 +102,6 @@ class MetacognitionAgent:
             entries = self.self_analysis._load_hash_chain()
             if entries:
                 # Filter recent entries
-                from datetime import timedelta
 
                 cutoff_time = datetime.now() - timedelta(hours=lookback_hours)
                 recent_ops = [
@@ -246,7 +250,6 @@ class MetacognitionAgent:
         if self.last_analysis is None:
             return True
 
-        from datetime import timedelta
 
         elapsed = datetime.now() - self.last_analysis
         return elapsed > timedelta(seconds=self.analysis_interval)

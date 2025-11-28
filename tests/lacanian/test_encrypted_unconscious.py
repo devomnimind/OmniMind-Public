@@ -1,3 +1,8 @@
+from typing import List
+import numpy as np
+import pytest
+from src.lacanian.encrypted_unconscious import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,12 +29,8 @@ Testes para src/lacanian/encrypted_unconscious.py.
 Testa a camada de inconsciente criptografado com homomorphic encryption.
 """
 
-from typing import List
 
-import numpy as np
-import pytest
 
-from src.lacanian.encrypted_unconscious import (
     TENSEAL_AVAILABLE,
     EncryptedUnconsciousLayer,
 )

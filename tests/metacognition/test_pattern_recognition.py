@@ -1,3 +1,7 @@
+from datetime import datetime
+import pytest
+from src.metacognition.pattern_recognition import PatternRecognition
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,12 +27,6 @@ Contact: fabricioslv@hotmail.com.br
 Tests for behavioral pattern detection and anomaly identification.
 Total: 29 tests covering all pattern recognition capabilities.
 """
-
-from datetime import datetime
-
-import pytest
-
-from src.metacognition.pattern_recognition import PatternRecognition
 
 
 class TestPatternRecognitionInitialization:

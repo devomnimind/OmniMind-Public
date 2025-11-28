@@ -1,3 +1,18 @@
+from __future__ import annotations
+
+import json
+import time
+import urllib.error
+import urllib.request
+from collections import deque
+from dataclasses import dataclass, field
+from enum import Enum
+from threading import Lock
+from typing import Any, Callable, Dict, Optional, TypeVar, cast
+from uuid import uuid4
+import structlog
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,20 +42,6 @@ and comprehensive error handling.
 Reference: Problem Statement - FRENTE 5: MCP Client Completo
 """
 
-from __future__ import annotations
-
-import json
-import time
-import urllib.error
-import urllib.request
-from collections import deque
-from dataclasses import dataclass, field
-from enum import Enum
-from threading import Lock
-from typing import Any, Callable, Dict, Optional, TypeVar, cast
-from uuid import uuid4
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

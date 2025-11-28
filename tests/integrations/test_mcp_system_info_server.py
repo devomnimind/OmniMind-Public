@@ -1,3 +1,8 @@
+from __future__ import annotations
+
+from src.integrations.mcp_system_info_server import SystemInfoMCPServer
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,10 +33,6 @@ Cobertura de:
 - Informações de disco (get_disk_info)
 - Informações de temperatura (get_temperature)
 """
-
-from __future__ import annotations
-
-from src.integrations.mcp_system_info_server import SystemInfoMCPServer
 
 
 class TestSystemInfoMCPServer:

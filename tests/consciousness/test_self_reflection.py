@@ -1,3 +1,6 @@
+        from datetime import datetime
+        from datetime import datetime, timedelta
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -56,7 +59,6 @@ class TestIntrospectionLog:
 
     def test_introspection_log_validation(self) -> None:
         """Test introspection log validation."""
-        from datetime import datetime
 
         # Invalid confidence
         with pytest.raises(ValueError, match="Confidence"):
@@ -115,7 +117,6 @@ class TestAdvancedSelfReflection:
     @pytest.fixture
     def temp_hash_chain(self) -> Path:
         """Create a temporary hash chain file for testing."""
-        from datetime import datetime, timedelta
 
         temp_dir = tempfile.mkdtemp()
         hash_chain_path = Path(temp_dir) / "hash_chain.json"

@@ -1,3 +1,6 @@
+from src.decision_making.autonomous_goal_setting import ( from src.decision_making.decision_trees import (
+from src.decision_making.ethical_decision_framework import ( from src.decision_making.reinforcement_learning import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,7 +34,6 @@ All components are designed for local-first operation with no external
 dependencies beyond standard scientific libraries.
 """
 
-from src.decision_making.autonomous_goal_setting import (
     Goal,
     GoalHierarchy,
     GoalOptimizer,
@@ -39,21 +41,18 @@ from src.decision_making.autonomous_goal_setting import (
     GoalSetter,
     GoalStatus,
 )
-from src.decision_making.decision_trees import (
     DecisionCriterion,
     DecisionNode,
     DecisionOutcome,
     DecisionTree,
     DecisionTreeBuilder,
 )
-from src.decision_making.ethical_decision_framework import (
     EthicalDecisionMaker,
     EthicalDilemma,
     EthicalFramework,
     EthicalOutcome,
     EthicalPrinciple,
 )
-from src.decision_making.reinforcement_learning import (
     PolicyGradientAgent,
     QLearningAgent,
     RLAction,

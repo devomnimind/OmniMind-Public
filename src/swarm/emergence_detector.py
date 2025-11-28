@@ -1,3 +1,10 @@
+import logging
+import time
+from typing import Any, Dict, List, Optional
+from src.swarm.config import EmergenceConfig
+from src.swarm.types import EmergenceType, EmergentPattern
+from src.swarm.utils import calculate_diversity, detect_clustering
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,13 +35,6 @@ Author: OmniMind Project - Phase 19
 License: MIT
 """
 
-import logging
-import time
-from typing import Any, Dict, List, Optional
-
-from src.swarm.config import EmergenceConfig
-from src.swarm.types import EmergenceType, EmergentPattern
-from src.swarm.utils import calculate_diversity, detect_clustering
 
 logger = logging.getLogger(__name__)
 

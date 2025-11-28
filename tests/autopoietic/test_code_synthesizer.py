@@ -1,3 +1,5 @@
+from src.autopoietic.code_synthesizer import CodeSynthesizer, ComponentSpec
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,8 +26,6 @@ Contact: fabricioslv@hotmail.com.br
 Validates that component specifications are turned into valid Python source
 strings and that the generated class contains expected attributes.
 """
-
-from src.autopoietic.code_synthesizer import CodeSynthesizer, ComponentSpec
 
 
 def test_synthesize_single_spec() -> None:

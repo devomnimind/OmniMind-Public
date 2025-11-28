@@ -1,3 +1,9 @@
+from typing import Any
+from unittest.mock import MagicMock, patch
+import pytest
+from src.integrations.dbus_controller import (
+        import dbus
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -18,12 +24,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-from typing import Any
-from unittest.mock import MagicMock, patch
 
-import pytest
 
-from src.integrations.dbus_controller import (
     DBusSessionController,
     DBusSystemController,
     _load_psutil,
@@ -166,7 +168,6 @@ class TestDBusSessionController:
     @patch("src.integrations.dbus_controller.dbus.Interface")
     def test_control_media_player_dbus_exception(self, mock_interface: MagicMock) -> None:
         """Test DBusException handling."""
-        import dbus
 
         mock_iface = MagicMock()
         mock_iface.Play.side_effect = dbus.DBusException("Connection failed")

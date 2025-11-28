@@ -1,3 +1,9 @@
+from __future__ import annotations
+
+import sys
+from src.integrations.mcp_python_server import PythonMCPServer
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,12 +37,6 @@ Cobertura de:
 - Execução de testes (run_tests)
 - Formatação de código (format_code)
 """
-
-from __future__ import annotations
-
-import sys
-
-from src.integrations.mcp_python_server import PythonMCPServer
 
 
 class TestPythonMCPServer:

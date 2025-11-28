@@ -1,3 +1,6 @@
+from datetime import datetime, timedelta, timezone
+from src.motivation.hawking_motivation import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,9 +28,7 @@ Tests knowledge evaporation, correlation preservation,
 and motivation generation mechanisms.
 """
 
-from datetime import datetime, timedelta, timezone
 
-from src.motivation.hawking_motivation import (
     EvaporationEvent,
     HawkingMotivationEngine,
     KnowledgeItem,

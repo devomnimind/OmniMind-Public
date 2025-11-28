@@ -1,3 +1,16 @@
+from __future__ import annotations
+
+import ast
+import logging
+import re
+from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+    import sys
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,16 +44,7 @@ Provides comprehensive code analysis with:
 - Performance analysis
 """
 
-from __future__ import annotations
 
-import ast
-import logging
-import re
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -731,7 +735,6 @@ def review_code(
 
 if __name__ == "__main__":
     # Demo usage
-    import sys
 
     if len(sys.argv) > 1:
         file_path = Path(sys.argv[1])

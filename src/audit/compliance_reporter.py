@@ -1,4 +1,10 @@
-#!/usr/bin/env python3
+import csv
+import json
+from datetime import datetime, timedelta, timezone
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+from .immutable_audit import ImmutableAuditSystem, get_audit_system
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,13 +32,7 @@ Automated compliance reporting for LGPD, GDPR, SOC2, and other standards.
 Based on: docs/Omni-Dev-Integrationforensis.md (LGPD Compliance section)
 """
 
-import json
-from datetime import datetime, timedelta, timezone
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Optional
 
-from .immutable_audit import ImmutableAuditSystem, get_audit_system
 
 
 class ComplianceStandard(Enum):
@@ -443,7 +443,6 @@ class ComplianceReporter:
 
     def _export_csv(self, events: List[Dict[str, Any]], file_path: Path) -> None:
         """Export events to CSV format."""
-        import csv
 
         if not events:
             return

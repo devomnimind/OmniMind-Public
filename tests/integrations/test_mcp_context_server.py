@@ -1,3 +1,8 @@
+from __future__ import annotations
+
+from src.integrations.mcp_context_server import ContextMCPServer
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,10 +33,6 @@ Cobertura de:
 - Snapshot de contexto (snapshot_context)
 - Métodos herdados de MCPServer
 """
-
-from __future__ import annotations
-
-from src.integrations.mcp_context_server import ContextMCPServer
 
 
 class TestContextMCPServer:

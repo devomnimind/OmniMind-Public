@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import json
+import logging
+from pathlib import Path
+from typing import Any, Dict, List
+import numpy as np
+        from scipy import stats
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,14 +39,8 @@ Date: November 2025
 License: MIT
 """
 
-from __future__ import annotations
 
-import json
-import logging
-from pathlib import Path
-from typing import Any, Dict, List
 
-import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -253,7 +257,6 @@ def compute_statistical_significance(
         raise ValueError("return_rates deve conter apenas números")
 
     try:
-        from scipy import stats
     except ImportError:
         logger.warning("scipy não disponível, retornando análise simplificada")
         avg_return = np.mean(return_rates)

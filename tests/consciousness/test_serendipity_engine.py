@@ -1,3 +1,6 @@
+import pytest
+from src.consciousness.serendipity_engine import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,9 +28,7 @@ Author: OmniMind Project
 License: MIT
 """
 
-import pytest
 
-from src.consciousness.serendipity_engine import (
     Connection,
     ConnectionDetector,
     Discovery,

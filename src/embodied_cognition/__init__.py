@@ -1,3 +1,6 @@
+from .motor_output import ( from .proprioception import (
+from .sensory_integration import ( from .somatic_loop import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -34,22 +37,18 @@ References:
 - Lakoff & Johnson (2002): "Metaphors We Live By"
 """
 
-from .motor_output import (
     ActionExecution,
     MotorController,
 )
-from .proprioception import (
     InternalState,
     ProprioceptionModule,
     StateAwareness,
 )
-from .sensory_integration import (
     AudioUnderstanding,
     MultimodalInput,
     SensoryIntegration,
     VisualUnderstanding,
 )
-from .somatic_loop import (
     Emotion,
     EmotionalMarker,
     SomaticLoop,

@@ -1,3 +1,8 @@
+import json
+from pathlib import Path
+from typing import Any, TypedDict, cast
+from src.metrics.ethics_metrics import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,11 +31,7 @@ transparency metrics using real moral scenarios.
 Reference: docs/concienciaetica-autonomia.md, Section 5 - Experimento 2
 """
 
-import json
-from pathlib import Path
-from typing import Any, TypedDict, cast
 
-from src.metrics.ethics_metrics import (
     DecisionLog,
     EthicsMetrics,
     MFAScoreError,

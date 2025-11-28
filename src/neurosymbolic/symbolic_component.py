@@ -1,3 +1,7 @@
+import logging
+from dataclasses import dataclass
+from typing import Any, List, Optional, Set, Tuple
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,9 +32,6 @@ Responsável por:
   - Inferência simbólica determinística
 """
 
-import logging
-from dataclasses import dataclass
-from typing import Any, List, Optional, Set, Tuple
 
 logger = logging.getLogger(__name__)
 

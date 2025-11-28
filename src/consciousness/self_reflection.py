@@ -1,3 +1,12 @@
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
+from typing import Any, Dict, List
+import structlog
+from src.metacognition.self_analysis import SelfAnalysis
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,15 +36,6 @@ Enhanced meta-cognitive self-analysis capabilities:
 - Self-improvement insights
 """
 
-from __future__ import annotations
-
-from dataclasses import dataclass, field
-from datetime import datetime, timedelta
-from typing import Any, Dict, List
-
-import structlog
-
-from src.metacognition.self_analysis import SelfAnalysis
 
 logger = structlog.get_logger(__name__)
 

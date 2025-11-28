@@ -1,3 +1,11 @@
+import pytest
+import numpy as np
+from pathlib import Path
+import tempfile
+import json
+from src.consciousness.integration_loop import IntegrationLoop
+from src.consciousness.integration_loss import IntegrationLoss, IntegrationTrainer, TrainingStep
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,15 +31,6 @@ Phase 4: Integration Loss Training Tests
 
 Comprehensive test suite for supervised Φ elevation through gradient-based training.
 """
-
-import pytest
-import numpy as np
-from pathlib import Path
-import tempfile
-import json
-
-from src.consciousness.integration_loop import IntegrationLoop
-from src.consciousness.integration_loss import IntegrationLoss, IntegrationTrainer, TrainingStep
 
 
 class TestIntegrationLoss:

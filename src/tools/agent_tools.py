@@ -1,3 +1,9 @@
+import os
+import subprocess
+from pathlib import Path
+from typing import Any, Dict, List
+import psutil
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,13 +28,6 @@ Contact: fabricioslv@hotmail.com.br
 Agent Tools for OmniMind
 Provides safe file operations, shell execution, and system monitoring.
 """
-
-import os
-import subprocess
-from pathlib import Path
-from typing import Any, Dict, List
-
-import psutil
 
 
 class FileOperations:

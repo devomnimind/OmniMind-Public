@@ -1,3 +1,18 @@
+from __future__ import annotations
+
+import asyncio
+import json
+import logging
+import os
+import subprocess
+import time
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Union, cast
+from src.audit.immutable_audit import get_audit_system
+                import socket
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,19 +40,8 @@ Este módulo gerencia o ciclo de vida, health checks, e roteamento de requests
 para múltiplos servidores MCP, integrando com o sistema de auditoria do OmniMind.
 """
 
-from __future__ import annotations
 
-import asyncio
-import json
-import logging
-import os
-import subprocess
-import time
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Union, cast
 
-from src.audit.immutable_audit import get_audit_system
 
 logger = logging.getLogger(__name__)
 
@@ -468,7 +472,6 @@ class MCPOrchestrator:
         config = self.servers.get(name)
         if config and config.port:
             try:
-                import socket
 
                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 sock.settimeout(0.5)

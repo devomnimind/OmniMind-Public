@@ -1,3 +1,11 @@
+import logging
+from collections import Counter
+from datetime import datetime
+from typing import Any, Dict, List
+from .semantic_memory import SemanticMemory
+        from collections import defaultdict
+        from itertools import combinations
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,12 +34,7 @@ to long-term semantic memory ("sleep" consolidation).
 Identifies patterns and abstractions from repeated experiences.
 """
 
-import logging
-from collections import Counter
-from datetime import datetime
-from typing import Any, Dict, List
 
-from .semantic_memory import SemanticMemory
 
 logger = logging.getLogger(__name__)
 
@@ -143,8 +146,6 @@ class MemoryConsolidator:
             return 0
 
         # Track co-occurrences
-        from collections import defaultdict
-        from itertools import combinations
 
         cooccurrence_counts: Dict[tuple, int] = defaultdict(int)
 

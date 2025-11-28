@@ -1,3 +1,9 @@
+import tempfile
+import pytest
+from src.audit.immutable_audit import ImmutableAuditSystem
+from src.security.network_sensors import ( from src.security.security_orchestrator import (
+from src.security.web_scanner import ( from src.security.security_agent import SecurityAgent
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -24,22 +30,16 @@ Tests for security forensics modules.
 Tests network sensors, web scanners, and security orchestrator.
 """
 
-import tempfile
 
-import pytest
 
-from src.audit.immutable_audit import ImmutableAuditSystem
-from src.security.network_sensors import (
     NetworkAnomaly,
     NetworkHost,
     NetworkSensorGanglia,
     ThreatSeverity,
 )
-from src.security.security_orchestrator import (
     SecurityOrchestrator,
     SecurityStatus,
 )
-from src.security.web_scanner import (
     VulnerabilitySeverity,
     VulnerabilityType,
     WebScannerBrain,
@@ -295,7 +295,6 @@ class TestSecurityOrchestrator:
         assert orchestrator.web_scanner is not None
         # SecurityAgent may be None if config not available
         # (Import here to avoid unused import warning)
-        from src.security.security_agent import SecurityAgent
 
         assert orchestrator.security_agent is None or isinstance(
             orchestrator.security_agent, SecurityAgent

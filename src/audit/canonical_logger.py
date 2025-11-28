@@ -1,3 +1,10 @@
+import hashlib
+import json
+import logging
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -24,12 +31,6 @@ OmniMind Canonical Action Logger
 Sistema para registro automático de ações das AIs com integridade garantida.
 """
 
-import hashlib
-import json
-import logging
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

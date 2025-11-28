@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+from typing import List
+import pytest
+from src.quantum_ai.quantum_ml import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,13 +36,9 @@ Cobertura de:
 - Tratamento de exceções
 """
 
-from __future__ import annotations
 
-from typing import List
 
-import pytest
 
-from src.quantum_ai.quantum_ml import (
     QuantumClassifier,
     QuantumFeatureMap,
     QuantumKernel,

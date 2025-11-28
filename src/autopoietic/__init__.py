@@ -1,3 +1,5 @@
+from typing import List
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -30,7 +32,6 @@ Implements Maturana & Varela's autopoiesis for cloud infrastructure:
 Author: OmniMind Development Team
 """
 
-from typing import List
 
 __version__ = "1.0.0"
 __author__ = "OmniMind Development Team"

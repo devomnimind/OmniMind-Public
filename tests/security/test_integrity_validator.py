@@ -1,3 +1,12 @@
+from __future__ import annotations
+
+import tempfile
+import typing
+from pathlib import Path
+import pytest
+from src.security.integrity_validator import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,15 +37,9 @@ Author: OmniMind Development Team
 Date: November 2025
 """
 
-from __future__ import annotations
 
-import tempfile
-import typing
-from pathlib import Path
 
-import pytest
 
-from src.security.integrity_validator import (
     IntegrityReport,
     IntegrityStatus,
     IntegrityValidator,

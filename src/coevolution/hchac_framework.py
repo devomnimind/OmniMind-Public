@@ -1,3 +1,15 @@
+import logging
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Dict, List, Optional
+        from .bias_detector import BiasDetector
+        from .bidirectional_feedback import BidirectionalFeedback
+        from .coevolution_memory import CoevolutionMemory
+        from .negotiation import GoalNegotiator
+        from .trust_metrics import TrustMetrics
+        from .bidirectional_feedback import FeedbackType
+        from .bidirectional_feedback import FeedbackDirection
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,10 +41,6 @@ Orquestra colaboração humano-IA baseada em:
 5. Feedback é diálogo, não comando
 """
 
-import logging
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -83,11 +91,6 @@ class HCHACFramework:
 
     def __init__(self) -> None:
         """Inicializa framework HCHAC."""
-        from .bias_detector import BiasDetector
-        from .bidirectional_feedback import BidirectionalFeedback
-        from .coevolution_memory import CoevolutionMemory
-        from .negotiation import GoalNegotiator
-        from .trust_metrics import TrustMetrics
 
         self.trust = TrustMetrics()
         self.negotiator = GoalNegotiator()
@@ -343,7 +346,6 @@ class HCHACFramework:
             content: Conteúdo do feedback
             context: Contexto adicional
         """
-        from .bidirectional_feedback import FeedbackType
 
         # Converte string para enum
         try:
@@ -364,7 +366,6 @@ class HCHACFramework:
         Returns:
             Lista de feedback
         """
-        from .bidirectional_feedback import FeedbackDirection
 
         items = self.feedback.get_feedback_summary(
             direction=FeedbackDirection.AI_TO_HUMAN, limit=limit

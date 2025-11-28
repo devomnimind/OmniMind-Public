@@ -1,3 +1,5 @@
+from src.agents.psychoanalytic_analyst import PsychoanalyticDecisionSystem
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -21,8 +23,6 @@ Contact: fabricioslv@hotmail.com.br
 """
 Tests for Psychoanalytic Decision System.
 """
-
-from src.agents.psychoanalytic_analyst import PsychoanalyticDecisionSystem
 
 
 def test_agents_initialization():

@@ -1,3 +1,7 @@
+import pytest
+import torch
+from src.lacanian.computational_lack import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,10 +33,7 @@ Tests the core components:
 - ComputationalLackArchitecture (full integration)
 """
 
-import pytest
-import torch
 
-from src.lacanian.computational_lack import (
     ComputationalFrustration,
     ComputationalLackArchitecture,
     FrustrationSignal,

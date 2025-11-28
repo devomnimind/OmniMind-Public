@@ -1,3 +1,9 @@
+import logging
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict
+import psutil
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -36,12 +42,6 @@ References:
 - Varela et al. (1991): Sensorimotor coupling
 """
 
-import logging
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Any, Dict
-
-import psutil
 
 logger = logging.getLogger(__name__)
 

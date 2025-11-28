@@ -1,3 +1,7 @@
+import logging
+from dataclasses import dataclass
+from enum import Enum
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,9 +32,6 @@ Estratégias:
   - synthesis: Combinar ambos (recomendado)
 """
 
-import logging
-from dataclasses import dataclass
-from enum import Enum
 
 logger = logging.getLogger(__name__)
 

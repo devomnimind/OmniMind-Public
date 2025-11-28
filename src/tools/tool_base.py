@@ -1,3 +1,16 @@
+from __future__ import annotations
+
+import hashlib
+import json
+import logging
+import os
+from dataclasses import asdict, dataclass
+from datetime import datetime, timezone
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, Optional
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,17 +38,6 @@ This module contains the fundamental classes used by all tools,
 separated to avoid circular import issues.
 """
 
-from __future__ import annotations
-
-import hashlib
-import json
-import logging
-import os
-from dataclasses import asdict, dataclass
-from datetime import datetime, timezone
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, Optional
 
 logger = logging.getLogger(__name__)
 

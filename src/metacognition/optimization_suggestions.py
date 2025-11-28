@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+import logging
+from datetime import datetime
+from typing import Any, Dict, List, Optional
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,11 +30,6 @@ Contact: fabricioslv@hotmail.com.br
 Generates actionable optimization suggestions based on self-analysis.
 """
 
-from __future__ import annotations
-
-import logging
-from datetime import datetime
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

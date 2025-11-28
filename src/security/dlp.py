@@ -1,3 +1,15 @@
+from __future__ import annotations
+
+import logging
+import re
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+import yaml
+from ..audit.immutable_audit import log_action
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -17,19 +29,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Contact: fabricioslv@hotmail.com.br
 """
-
-from __future__ import annotations
-
-import logging
-import re
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Dict, List, Optional
-
-import yaml
-
-from ..audit.immutable_audit import log_action
 
 
 # Simple observability for DLP alerts (replaces DEVBRAIN_V23 import)

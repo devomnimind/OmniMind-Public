@@ -32,7 +32,6 @@ Focus: Simulation first (Qiskit Aer simulator), QPU integration is future work.
 
 Author: OmniMind Project
 License: MIT
-# ...existing code...
 """
 
 from .hybrid_cognition import (
@@ -52,9 +51,7 @@ from .quantum_backend import DWaveBackend, QuantumBackend
 from .quantum_cognition import (
     QuantumCognitionEngine,
     QuantumDecisionMaker,
-)
-from .quantum_cognition import QuantumState as QCState
-from .quantum_cognition import (
+    QuantumState as QCState,
     SuperpositionDecision,
 )
 from .quantum_memory import (
@@ -89,6 +86,5 @@ __all__ = [
     "CognitionMetrics",
     "OptimizationStrategy",
 ]
-# ...existing code...
 
 __version__ = "0.1.0-experimental"

@@ -1,3 +1,9 @@
+import time
+from src.observability.distributed_tracing import ( from src.observability.distributed_tracing import TraceConfig
+        from src.observability.distributed_tracing import TraceConfig
+        from src.observability.distributed_tracing import TraceConfig
+        from src.observability.distributed_tracing import TraceConfig
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,9 +30,7 @@ Testes para Observability - Distributed Tracing.
 Group 15: Learning & Monitoring - observability/
 """
 
-import time
 
-from src.observability.distributed_tracing import (
     DistributedTracer,
     Span,
     SpanContext,
@@ -210,7 +214,6 @@ class TestDistributedTracer:
 
     def test_initialization(self) -> None:
         """Testa inicialização de DistributedTracer."""
-        from src.observability.distributed_tracing import TraceConfig
 
         config = TraceConfig(service_name="test_service")
         tracer = DistributedTracer(config)
@@ -233,7 +236,6 @@ class TestDistributedTracer:
 
     def test_start_child_span(self) -> None:
         """Testa início de span filho."""
-        from src.observability.distributed_tracing import TraceConfig
 
         config = TraceConfig(service_name="test_service")
         tracer = DistributedTracer(config)
@@ -261,7 +263,6 @@ class TestDistributedTracer:
 
     def test_span_kinds(self) -> None:
         """Testa diferentes tipos de spans."""
-        from src.observability.distributed_tracing import TraceConfig
 
         config = TraceConfig(service_name="test_service")
         tracer = DistributedTracer(config)
@@ -295,7 +296,6 @@ class TestDistributedTracer:
 
     def test_create_context(self) -> None:
         """Testa criação de contexto."""
-        from src.observability.distributed_tracing import TraceConfig
 
         config = TraceConfig(service_name="test_service")
         tracer = DistributedTracer(config)

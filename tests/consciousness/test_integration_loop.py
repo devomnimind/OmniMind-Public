@@ -1,3 +1,8 @@
+import pytest
+import numpy as np
+from src.consciousness.shared_workspace import SharedWorkspace
+from src.consciousness.integration_loop import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,11 +27,7 @@ Contact: fabricioslv@hotmail.com.br
 Comprehensive tests for IntegrationLoop Phase 2.
 """
 
-import pytest
-import numpy as np
 
-from src.consciousness.shared_workspace import SharedWorkspace
-from src.consciousness.integration_loop import (
     ModuleInterfaceSpec,
     LoopCycleResult,
     ModuleExecutor,

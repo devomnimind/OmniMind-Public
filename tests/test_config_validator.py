@@ -1,3 +1,12 @@
+from __future__ import annotations
+
+import json
+from pathlib import Path
+import pytest
+from src.security.config_validator import (
+    import json
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,14 +31,9 @@ Contact: fabricioslv@hotmail.com.br
 Tests for Advanced Configuration Validator.
 """
 
-from __future__ import annotations
 
-import json
-from pathlib import Path
 
-import pytest
 
-from src.security.config_validator import (
     ConfigEnvironment,
     ConfigurationValidator,
     ValidationIssue,
@@ -271,7 +275,6 @@ def test_export_validation_report(validator: ConfigurationValidator, tmp_path: P
     assert output_path.exists()
 
     # Verify report contents
-    import json
 
     with output_path.open() as f:
         report = json.load(f)

@@ -1,3 +1,14 @@
+from __future__ import annotations
+
+import logging
+from collections import defaultdict
+from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+from .ethics_agent import ActionImpact, EthicalFramework
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,16 +39,6 @@ This module enhances the rule-based ethics agent with machine learning capabilit
 - Multi-framework consensus building
 """
 
-from __future__ import annotations
-
-import logging
-from collections import defaultdict
-from dataclasses import asdict, dataclass, field
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Dict, List, Optional
-
-from .ethics_agent import ActionImpact, EthicalFramework
 
 logger = logging.getLogger(__name__)
 

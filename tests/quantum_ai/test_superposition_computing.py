@@ -1,3 +1,6 @@
+import pytest
+from src.quantum_ai.superposition_computing import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,9 +31,7 @@ Cobertura de:
 - StateAmplification
 """
 
-import pytest
 
-from src.quantum_ai.superposition_computing import (
     QuantumParallelism,
     StateAmplification,
     SuperpositionProcessor,

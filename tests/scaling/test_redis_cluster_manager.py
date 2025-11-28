@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+from unittest.mock import MagicMock, Mock, patch
+import pytest
+from src.scaling.redis_cluster_manager import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -30,13 +37,9 @@ Cobertura de:
 - Tratamento de exceções
 """
 
-from __future__ import annotations
 
-from unittest.mock import MagicMock, Mock, patch
 
-import pytest
 
-from src.scaling.redis_cluster_manager import (
     REDIS_AVAILABLE,
     ClusterHealth,
     ClusterNode,

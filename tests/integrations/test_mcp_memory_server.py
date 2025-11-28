@@ -1,3 +1,8 @@
+from __future__ import annotations
+
+from src.integrations.mcp_memory_server import MemoryMCPServer
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,10 +36,6 @@ Cobertura de:
 - Consolidação de memórias (consolidate_memories)
 - Exportação de grafo (export_graph)
 """
-
-from __future__ import annotations
-
-from src.integrations.mcp_memory_server import MemoryMCPServer
 
 
 class TestMemoryMCPServer:

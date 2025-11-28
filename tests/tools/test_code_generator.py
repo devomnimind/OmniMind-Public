@@ -1,3 +1,7 @@
+from pathlib import Path
+import pytest
+from src.tools.code_generator import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,11 +26,8 @@ Contact: fabricioslv@hotmail.com.br
 Tests for code_generator module.
 """
 
-from pathlib import Path
 
-import pytest
 
-from src.tools.code_generator import (
     CodeGenerator,
     generate_agent,
     generate_test_for_class,

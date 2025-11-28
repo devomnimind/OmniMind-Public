@@ -1,3 +1,5 @@
+from .core import (  # Main classes; Enums; Data classes
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,7 +31,6 @@ Revolutionary AI autonomy through intrinsic motivation:
 - Self-Transcendence Engine (consciousness evolution)
 """
 
-from .core import (  # Main classes; Enums; Data classes
     ArtificialCuriosityEngine,
     ArtificialEmotionWithDesire,
     DesireDrivenMetaLearning,

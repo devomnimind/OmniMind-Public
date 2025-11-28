@@ -1,3 +1,7 @@
+import numpy as np
+import pytest
+from src.distributed.quantum_entanglement import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,10 +29,7 @@ Tests Bell pair creation, entanglement swapping,
 and agent correlation.
 """
 
-import numpy as np
-import pytest
 
-from src.distributed.quantum_entanglement import (
     AgentState,
     BellState,
     EntangledAgentNetwork,

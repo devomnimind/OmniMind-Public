@@ -1,3 +1,21 @@
+import json
+import logging
+import os
+import time
+from datetime import datetime, timezone
+from typing import Any, Dict, List, Optional, Protocol, TypeAlias, TypedDict, cast
+import yaml
+from langchain_ollama import OllamaLLM
+from langgraph.graph import END, StateGraph
+from ..consciousness.affective_memory import AffectiveTraceNetwork, JouissanceProfile
+from ..integrations.llm_router import get_llm_router, LLMModelTier, invoke_llm_sync
+from ..integrations.supabase_adapter import SupabaseConfig
+from ..memory import EpisodicMemory
+from ..onboarding import SupabaseMemoryOnboarding
+from ..tools import FileOperations, ShellExecutor, SystemMonitor
+from .agent_protocol import ( from dotenv import load_dotenv
+        import threading
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -23,24 +41,8 @@ Contact: fabricioslv@hotmail.com.br
 OmniMind ReactAgent - Fixed version with proper completion detection
 """
 
-import json
-import logging
-import os
-import time
-from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional, Protocol, TypeAlias, TypedDict, cast
 
-import yaml
-from langchain_ollama import OllamaLLM
-from langgraph.graph import END, StateGraph
 
-from ..consciousness.affective_memory import AffectiveTraceNetwork, JouissanceProfile
-from ..integrations.llm_router import get_llm_router, LLMModelTier, invoke_llm_sync
-from ..integrations.supabase_adapter import SupabaseConfig
-from ..memory import EpisodicMemory
-from ..onboarding import SupabaseMemoryOnboarding
-from ..tools import FileOperations, ShellExecutor, SystemMonitor
-from .agent_protocol import (
     AgentMessage,
     MessagePriority,
     MessageType,
@@ -86,7 +88,6 @@ class ReactAgent:
     def __init__(self, config_path: str):
         """Initialize agent with configuration."""
         # Load environment variables from .env file
-        from dotenv import load_dotenv
 
         load_dotenv()
 
@@ -598,7 +599,6 @@ Your response:"""
                 logger.error("Supabase onboarding failed: %s", exc)
 
         # Run in background thread
-        import threading
 
         thread = threading.Thread(target=_onboard, daemon=True, name="SupabaseOnboarding")
         thread.start()

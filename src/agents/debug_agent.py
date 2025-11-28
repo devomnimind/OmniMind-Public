@@ -1,3 +1,9 @@
+import json
+from typing import Any, Dict, List
+from ..memory.episodic_memory import SimilarEpisode
+from ..tools.omnimind_tools import ToolCategory, ToolsFramework
+from .react_agent import AgentState, ReactAgent
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -27,13 +33,6 @@ Função: Diagnostico avançado, isolamento de bugs, identificação de causas
 Ferramentas: read, search, inspect_context, execute_command (limitado), diagnose_error
 Quando usar: Build quebrado, edge cases, race conditions
 """
-
-import json
-from typing import Any, Dict, List
-
-from ..memory.episodic_memory import SimilarEpisode
-from ..tools.omnimind_tools import ToolCategory, ToolsFramework
-from .react_agent import AgentState, ReactAgent
 
 
 class DebugAgent(ReactAgent):

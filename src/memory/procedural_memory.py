@@ -1,3 +1,8 @@
+import logging
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,10 +30,6 @@ Stores skills, habits, and action sequences ("knowing how").
 Manages the learning and refinement of motor and cognitive skills.
 """
 
-import logging
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

@@ -1,3 +1,9 @@
+import logging
+import uuid
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Callable, Dict, List
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,11 +33,6 @@ aggregating solutions to complex problems across multiple agents.
 Migrated from src.collective_intelligence.distributed_solver.
 """
 
-import logging
-import uuid
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Callable, Dict, List
 
 logger = logging.getLogger(__name__)
 

@@ -1,3 +1,8 @@
+import asyncio
+import time
+import pytest
+from src.orchestrator.task_executor import TaskExecutor
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -17,13 +22,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Contact: fabricioslv@hotmail.com.br
 """
-
-import asyncio
-import time
-
-import pytest
-
-from src.orchestrator.task_executor import TaskExecutor
 
 
 async def run_load_test(num_tasks: int):

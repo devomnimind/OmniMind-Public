@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import hashlib
+import json
+from datetime import UTC, datetime, timedelta
+from enum import Enum
+from typing import Any, Dict, List, Optional
+import structlog
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,15 +33,6 @@ GDPR Compliance Framework for OmniMind
 Implements data protection and privacy regulations
 """
 
-from __future__ import annotations
-
-import hashlib
-import json
-from datetime import UTC, datetime, timedelta
-from enum import Enum
-from typing import Any, Dict, List, Optional
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

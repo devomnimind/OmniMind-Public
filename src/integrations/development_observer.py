@@ -1,3 +1,22 @@
+from __future__ import annotations
+
+import asyncio
+import json
+import logging
+import os
+import time
+from collections import defaultdict
+from dataclasses import dataclass, field
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List
+import psutil
+import watchfiles
+from src.memory.episodic_memory import EpisodicMemory
+from src.memory.semantic_memory import SemanticMemory
+from src.metacognition.pattern_recognition import PatternRecognition
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -32,25 +51,6 @@ Funcionalidades:
 - Integra com VS Code e terminal
 """
 
-from __future__ import annotations
-
-import asyncio
-import json
-import logging
-import os
-import time
-from collections import defaultdict
-from dataclasses import dataclass, field
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List
-
-import psutil
-import watchfiles
-
-from src.memory.episodic_memory import EpisodicMemory
-from src.memory.semantic_memory import SemanticMemory
-from src.metacognition.pattern_recognition import PatternRecognition
 
 logger = logging.getLogger(__name__)
 

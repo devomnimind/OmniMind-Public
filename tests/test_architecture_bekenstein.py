@@ -1,3 +1,7 @@
+import pytest
+from src.architecture.bekenstein_capacity import BekensteinArchitect
+        from src.architecture.bekenstein_capacity import HBAR, LN2, C
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,9 +28,7 @@ Testes para Architecture - Bekenstein Capacity.
 Group 11: Core Infrastructure - architecture/
 """
 
-import pytest
 
-from src.architecture.bekenstein_capacity import BekensteinArchitect
 
 
 class TestBekensteinArchitect:
@@ -128,7 +130,6 @@ class TestBekensteinArchitect:
 
     def test_physical_constants_are_realistic(self) -> None:
         """Testa que as constantes físicas usadas são realistas."""
-        from src.architecture.bekenstein_capacity import HBAR, LN2, C
 
         # Planck constant aproximado
         assert 1e-35 < HBAR < 1e-33

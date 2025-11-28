@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+import time
+from unittest.mock import Mock, patch
+import pytest
+from src.integrations.mcp_client_optimized import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,14 +39,9 @@ Cobertura de:
 - Tratamento de exceções e edge cases
 """
 
-from __future__ import annotations
 
-import time
-from unittest.mock import Mock, patch
 
-import pytest
 
-from src.integrations.mcp_client_optimized import (
     CallMetrics,
     ContextEntry,
     EnhancedMCPClient,

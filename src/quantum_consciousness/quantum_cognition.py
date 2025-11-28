@@ -1,3 +1,13 @@
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple
+import numpy as np
+import random
+import structlog
+from qiskit import ClassicalRegister, QuantumCircuit, QuantumRegister
+from qiskit.quantum_info import Statevector
+from qiskit_aer import AerSimulator
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -71,17 +81,9 @@ Author: OmniMind Quantum Cognition Team
 License: MIT
 """
 
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
 
-import numpy as np
-import structlog
 
 try:
-    from qiskit import ClassicalRegister, QuantumCircuit, QuantumRegister
-    from qiskit.quantum_info import Statevector
-    from qiskit_aer import AerSimulator
 
     QISKIT_AVAILABLE = True
 except ImportError:
@@ -339,7 +341,6 @@ class SuperpositionDecision:
         if not QISKIT_AVAILABLE:
             # Classical fallback when quantum simulation unavailable
             logger.warning("Qiskit not available, using classical fallback")
-            import random
 
             self.final_decision = random.choice(self.options)
             self.confidence = 1.0 / len(self.options)

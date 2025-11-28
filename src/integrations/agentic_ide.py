@@ -1,3 +1,15 @@
+from __future__ import annotations
+
+import hashlib
+import logging
+import time
+from collections import defaultdict
+from dataclasses import dataclass, field
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -33,16 +45,6 @@ Date: November 2025
 License: MIT
 """
 
-from __future__ import annotations
-
-import hashlib
-import logging
-import time
-from collections import defaultdict
-from dataclasses import dataclass, field
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

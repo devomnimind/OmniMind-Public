@@ -1,3 +1,7 @@
+import time
+from src.scaling.database_connection_pool import ( from src.scaling.gpu_resource_pool import (
+from src.scaling.multi_level_cache import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,19 +27,15 @@ Contact: fabricioslv@hotmail.com.br
 Tests GPU resource pooling, database connection pooling, and multi-level caching.
 """
 
-import time
 
-from src.scaling.database_connection_pool import (
     DatabaseConnectionPool,
     PoolConfig,
 )
-from src.scaling.gpu_resource_pool import (
     GPUDevice,
     GPUPoolConfig,
     GPUResourcePool,
     GPUTask,
 )
-from src.scaling.multi_level_cache import (
     CacheConfig,
     CacheLayer,
     CacheLevel,

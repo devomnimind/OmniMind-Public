@@ -1,3 +1,6 @@
+import logging
+from typing import Any, Dict, List
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,8 +28,6 @@ This module implements EWC to allow the OmniMind system to learn from new experi
 (adjusting weights) without forgetting previous important knowledge (catastrophic forgetting).
 """
 
-import logging
-from typing import Any, Dict, List
 
 logger = logging.getLogger(__name__)
 

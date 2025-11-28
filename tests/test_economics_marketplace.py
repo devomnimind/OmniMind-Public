@@ -1,3 +1,10 @@
+import tempfile
+from pathlib import Path
+import pytest
+from src.economics.marketplace_agent import (
+                import logging
+                import logging
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,12 +31,8 @@ Testes para Economics - Marketplace Agent.
 Group 13: System Services - economics/
 """
 
-import tempfile
-from pathlib import Path
 
-import pytest
 
-from src.economics.marketplace_agent import (
     MarketplaceAgent,
     MarketplacePlatform,
     PublicationRequest,
@@ -205,7 +208,6 @@ class TestMarketplaceAgent:
         def process_data(data: list[str]) -> dict[str, int]:
             """Process data and return statistics."""
             try:
-                import logging
                 logger = logging.getLogger(__name__)
                 logger.info("Processing data")
                 return {"count": len(data)}
@@ -387,7 +389,6 @@ class TestMarketplaceAgent:
         def process(data: list) -> dict:
             """Process data."""
             try:
-                import logging
                 logger = logging.getLogger(__name__)
                 return {"result": data}
             except Exception as e:

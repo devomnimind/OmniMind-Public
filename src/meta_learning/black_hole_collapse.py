@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+import logging
+import math
+from dataclasses import dataclass
+from typing import Any, Dict, List
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -34,12 +42,6 @@ Author: OmniMind Development Team
 License: MIT
 """
 
-from __future__ import annotations
-
-import logging
-import math
-from dataclasses import dataclass
-from typing import Any, Dict, List
 
 logger = logging.getLogger(__name__)
 

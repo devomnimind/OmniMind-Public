@@ -1,3 +1,14 @@
+import os
+import hashlib
+import logging
+from pathlib import Path
+from typing import List, Dict, Any, Optional
+from dataclasses import dataclass
+from enum import Enum
+from sentence_transformers import SentenceTransformer
+from qdrant_client import QdrantClient
+from qdrant_client.http import models as qmodels
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,17 +42,6 @@ Gera embeddings semânticos para múltiplos tipos de conteúdo:
 Armazena no Qdrant para busca semântica abrangente do projeto.
 """
 
-import os
-import hashlib
-import logging
-from pathlib import Path
-from typing import List, Dict, Any, Optional
-from dataclasses import dataclass
-from enum import Enum
-
-from sentence_transformers import SentenceTransformer
-from qdrant_client import QdrantClient
-from qdrant_client.http import models as qmodels
 
 logger = logging.getLogger(__name__)
 

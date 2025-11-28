@@ -1,3 +1,18 @@
+from __future__ import annotations
+from __future__ import annotations
+
+import ast
+import inspect
+import logging
+from dataclasses import dataclass
+from enum import Enum
+from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional
+import logging
+from typing import Any, Dict, List, Optional
+from ..tools.omnimind_tools import ToolsFramework
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,15 +44,6 @@ Provides intelligent code generation with:
 - Test case generation
 """
 
-from __future__ import annotations
-
-import ast
-import inspect
-import logging
-from dataclasses import dataclass
-from enum import Enum
-from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -88,12 +94,8 @@ Agent: {agent_name}
 Purpose: {purpose}
 """
 
-from __future__ import annotations
 
-import logging
-from typing import Any, Dict, List, Optional
 
-from ..tools.omnimind_tools import ToolsFramework
 
 logger = logging.getLogger(__name__)
 

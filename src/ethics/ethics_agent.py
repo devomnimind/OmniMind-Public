@@ -1,3 +1,12 @@
+import json
+import logging
+from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+            import yaml
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,13 +34,6 @@ Implements ethical reasoning and action evaluation for autonomous agents.
 Acts as a conscience that moderates actions based on ethical principles.
 """
 
-import json
-import logging
-from dataclasses import asdict, dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -481,7 +483,6 @@ class EthicsAgent:
 
         # Would load from YAML in production
         try:
-            import yaml
 
             with self.config_file.open("r") as f:
                 rules: Dict[str, Any] = yaml.safe_load(f)

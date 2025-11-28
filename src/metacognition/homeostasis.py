@@ -1,3 +1,14 @@
+from __future__ import annotations
+
+import asyncio
+import logging
+import time
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Callable, Dict, List, Optional
+import psutil
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,18 +38,9 @@ This module implements:
 - Emergency throttling on resource exhaustion
 """
 
-from __future__ import annotations
-
-import asyncio
-import logging
-import time
-from dataclasses import dataclass, field
 
 # datetime imported but not used directly - used via datetime.now()
-from enum import Enum
-from typing import Any, Callable, Dict, List, Optional
 
-import psutil
 
 logger = logging.getLogger(__name__)
 

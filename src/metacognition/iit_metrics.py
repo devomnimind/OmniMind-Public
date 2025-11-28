@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import logging
+import math
+import statistics
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Set, Tuple
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,14 +37,6 @@ This module implements:
 - Enhanced metacognition metrics
 """
 
-from __future__ import annotations
-
-import logging
-import math
-import statistics
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Any, Dict, List, Optional, Set, Tuple
 
 logger = logging.getLogger(__name__)
 

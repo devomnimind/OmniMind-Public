@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+import logging
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+from src.metrics.consciousness_metrics_legacy import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,14 +39,9 @@ Date: November 2025
 License: MIT
 """
 
-from __future__ import annotations
 
-import logging
-from pathlib import Path
-from typing import Any, Dict, List, Optional
 
 # Import from existing consciousness metrics
-from src.metrics.consciousness_metrics_legacy import (
     AgentConnection,
     ConsciousnessMetrics,
     FeedbackLoop,

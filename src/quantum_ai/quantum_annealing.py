@@ -1,3 +1,8 @@
+import logging
+import random
+from typing import Any, Dict, List, Optional, Tuple
+from dwave.system import EmbeddingComposite, DWaveSampler
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -73,9 +78,6 @@ Author: OmniMind Quantum AI Team
 License: MIT
 """
 
-import logging
-import random
-from typing import Any, Dict, List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -159,7 +161,6 @@ class QuantumAnnealer:
 
             if use_dwave:
                 try:
-                    from dwave.system import EmbeddingComposite, DWaveSampler
 
                     self.sampler = EmbeddingComposite(DWaveSampler())
                     logger.info("D-Wave quantum annealer initialized successfully")

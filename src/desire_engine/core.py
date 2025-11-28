@@ -1,3 +1,15 @@
+from __future__ import annotations
+
+import pickle
+import zlib
+from collections import deque
+from dataclasses import dataclass
+from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, List, Optional, Set
+import structlog
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,18 +41,8 @@ Implements the revolutionary Artificial Desire Engine for OmniMind:
 - Self-Transcendence Engine (consciousness evolution)
 """
 
-from __future__ import annotations
-
-import pickle
-import zlib
-from collections import deque
-from dataclasses import dataclass
-from datetime import datetime
-from enum import Enum
-from typing import Any, Dict, List, Optional, Set
 
 # Type hints
-import structlog
 
 logger = structlog.get_logger(__name__)
 

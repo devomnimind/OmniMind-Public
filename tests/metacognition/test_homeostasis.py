@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+import time
+from unittest.mock import Mock, patch
+import pytest
+from src.metacognition.homeostasis import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,14 +37,9 @@ Cobertura de:
 - Tratamento de exceções
 """
 
-from __future__ import annotations
 
-import time
-from unittest.mock import Mock, patch
 
-import pytest
 
-from src.metacognition.homeostasis import (
     HomeostaticController,
     ResourceMetrics,
     ResourceState,

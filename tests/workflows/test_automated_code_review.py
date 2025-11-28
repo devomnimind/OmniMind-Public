@@ -1,3 +1,7 @@
+from pathlib import Path
+import pytest
+from src.workflows.automated_code_review import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,11 +26,8 @@ Contact: fabricioslv@hotmail.com.br
 Tests for automated_code_review module.
 """
 
-from pathlib import Path
 
-import pytest
 
-from src.workflows.automated_code_review import (
     AutomatedCodeReviewer,
     CodeIssue,
     IssueCategory,

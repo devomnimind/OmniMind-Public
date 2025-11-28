@@ -1,3 +1,6 @@
+import pytest
+from src.integrations.mcp_data_protection import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,9 +25,7 @@ Contact: fabricioslv@hotmail.com.br
 Testes para o sistema de proteção de dados MCP.
 """
 
-import pytest
 
-from src.integrations.mcp_data_protection import (
     MCPDataProtection,
     SensitivePattern,
     get_data_protection,

@@ -1,3 +1,11 @@
+import hashlib
+import hmac
+import json
+import os
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,14 +32,6 @@ Sistema de Auditoria Robusta com Merkle Tree e Cadeamento Criptográfico
 Implementação baseada em blockchain best practices e ISO 27037 (chain of custody).
 Fornece integridade tamper-evident com verificação eficiente via Merkle proofs.
 """
-
-import hashlib
-import hmac
-import json
-import os
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
 
 
 class RobustChainIntegrityManager:

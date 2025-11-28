@@ -1,4 +1,22 @@
+from __future__ import annotations
+
+import asyncio
+import hashlib
+import json
+import logging
+import os
+import time
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set, Tuple
+import psutil
+from src.audit.alerting_system import AlertCategory, AlertingSystem, AlertSeverity
+from src.audit.immutable_audit import get_audit_system
+
 #!/usr/bin/env python3
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,25 +42,6 @@ Security Monitor - Real-time Process and System Monitoring
 Monitors processes, network connections, file system changes, and system resources.
 Detects anomalies and generates security alerts.
 """
-
-from __future__ import annotations
-
-import asyncio
-import hashlib
-import json
-import logging
-import os
-import time
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
-
-import psutil
-
-from src.audit.alerting_system import AlertCategory, AlertingSystem, AlertSeverity
-from src.audit.immutable_audit import get_audit_system
 
 
 class AnomalyType(Enum):

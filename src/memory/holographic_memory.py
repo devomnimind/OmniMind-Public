@@ -1,3 +1,18 @@
+from __future__ import annotations
+
+import logging
+import math
+import statistics
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Sequence, Union
+    import numpy as np
+    import torch
+    import torch.nn as nn
+    import numpy as np  # noqa: F811
+    import torch  # noqa: F811
+    import torch.nn as nn  # noqa: F811
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -37,19 +52,10 @@ Author: OmniMind Development Team
 License: MIT
 """
 
-from __future__ import annotations
 
-import logging
-import math
-import statistics
-from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Sequence, Union
 
 # Type checking imports (for type hints only)
 if TYPE_CHECKING:
-    import numpy as np
-    import torch
-    import torch.nn as nn
 
     NDArray = Any
 else:
@@ -57,7 +63,6 @@ else:
 
 # Runtime imports
 try:
-    import numpy as np  # noqa: F811
 
     NUMPY_AVAILABLE = True
 except ImportError:
@@ -65,8 +70,6 @@ except ImportError:
     np = None  # type: ignore
 
 try:
-    import torch  # noqa: F811
-    import torch.nn as nn  # noqa: F811
 
     TORCH_AVAILABLE = True
 except (ImportError, OSError):

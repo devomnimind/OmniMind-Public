@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+import json
+from pathlib import Path
+import pytest
+from src.security.api_documentation import APIDocumentationGenerator, APIEndpoint
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -21,15 +29,6 @@ Contact: fabricioslv@hotmail.com.br
 """
 Tests for API Documentation Generator.
 """
-
-from __future__ import annotations
-
-import json
-from pathlib import Path
-
-import pytest
-
-from src.security.api_documentation import APIDocumentationGenerator, APIEndpoint
 
 
 @pytest.fixture

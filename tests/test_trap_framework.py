@@ -1,3 +1,6 @@
+import pytest
+from src.metacognition.trap_framework import ( from src.neurosymbolic import NeurosymbolicReasoner
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,9 +27,7 @@ Testes para TRAP Framework - Transparency, Reasoning, Adaptation, Perception
 Phase 16: 11-tier metacognition hierarchy com scoring
 """
 
-import pytest
 
-from src.metacognition.trap_framework import (
     TRAPComponent,
     TRAPFramework,
     TRAPScore,
@@ -228,7 +229,6 @@ class TestTRAPIntegration:
 
     def test_trap_with_neurosymbolic_inference(self) -> None:
         """Testa TRAP avaliando inferência neurosymbolic."""
-        from src.neurosymbolic import NeurosymbolicReasoner
 
         trap = TRAPFramework()
         reasoner = NeurosymbolicReasoner()

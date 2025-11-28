@@ -1,3 +1,6 @@
+from .network_sensors import ( from .security_agent import SecurityAgent
+from .security_orchestrator import ( from .web_scanner import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,7 +30,6 @@ Includes:
 - Security Orchestrator: Unified security monitoring
 """
 
-from .network_sensors import (
     NetworkAnomaly,
     NetworkHost,
     NetworkSensorGanglia,
@@ -35,15 +37,12 @@ from .network_sensors import (
     detect_network_anomalies,
     scan_local_network,
 )
-from .security_agent import SecurityAgent
-from .security_orchestrator import (
     SecurityOrchestrator,
     SecurityReport,
     SecurityStatus,
     run_security_audit,
     start_security_monitoring,
 )
-from .web_scanner import (
     VulnerabilitySeverity,
     VulnerabilityType,
     WebScannerBrain,

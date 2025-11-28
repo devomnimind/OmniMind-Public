@@ -1,3 +1,13 @@
+import subprocess
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from typing import Any, Dict, List, Optional
+from urllib.parse import urlparse
+import requests
+from ..audit.alerting_system import AlertCategory, AlertingSystem, AlertSeverity
+from ..audit.immutable_audit import ImmutableAuditSystem, get_audit_system
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -27,18 +37,6 @@ Based on: docs/Omni-Dev-Integrationforensis.md
 Legal Compliance: 100% legal when used on own web applications
 Tools: Nikto (GPL v2), Custom scanners
 """
-
-import subprocess
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
-from typing import Any, Dict, List, Optional
-from urllib.parse import urlparse
-
-import requests
-
-from ..audit.alerting_system import AlertCategory, AlertingSystem, AlertSeverity
-from ..audit.immutable_audit import ImmutableAuditSystem, get_audit_system
 
 
 class VulnerabilityType(Enum):

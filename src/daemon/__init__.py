@@ -1,3 +1,5 @@
+from .omnimind_daemon import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,7 +27,6 @@ OmniMind Daemon Module
 Works proactively while the user sleeps.
 """
 
-from .omnimind_daemon import (
     DaemonState,
     DaemonTask,
     OmniMindDaemon,

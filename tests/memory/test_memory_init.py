@@ -1,3 +1,26 @@
+from __future__ import annotations
+
+import pytest
+        from src.memory import EpisodicMemory
+        from src.memory import HolographicProjection
+        from src.memory import SoftHair
+        from src.memory import SoftHairMemory
+        import src.memory as memory
+        import src.memory as memory
+        import src.memory as memory
+        import src.memory as memory
+        import src.memory as memory
+        from src.memory import __all__
+        from src.memory import EpisodicMemory as EM1
+        from src.memory import EpisodicMemory as EM2
+        import src.memory
+        from src.memory import __all__
+        import src.memory as memory
+        import src.memory as memory
+        import src.memory as memory
+from src.memory import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,9 +52,7 @@ Cobertura de:
 - TYPE_CHECKING imports
 """
 
-from __future__ import annotations
 
-import pytest
 
 
 class TestMemoryInitLazyImports:
@@ -39,7 +60,6 @@ class TestMemoryInitLazyImports:
 
     def test_episodic_memory_import(self) -> None:
         """Testa importação lazy de EpisodicMemory."""
-        from src.memory import EpisodicMemory
 
         assert EpisodicMemory is not None
         assert hasattr(EpisodicMemory, "__name__")
@@ -53,7 +73,6 @@ class TestMemoryInitLazyImports:
 
     def test_holographic_projection_import(self) -> None:
         """Testa importação lazy de HolographicProjection."""
-        from src.memory import HolographicProjection
 
         assert HolographicProjection is not None
         assert hasattr(HolographicProjection, "__name__")
@@ -67,7 +86,6 @@ class TestMemoryInitLazyImports:
 
     def test_soft_hair_import(self) -> None:
         """Testa importação lazy de SoftHair."""
-        from src.memory import SoftHair
 
         assert SoftHair is not None
         assert hasattr(SoftHair, "__name__")
@@ -81,7 +99,6 @@ class TestMemoryInitLazyImports:
 
     def test_soft_hair_memory_import(self) -> None:
         """Testa importação lazy de SoftHairMemory."""
-        from src.memory import SoftHairMemory
 
         assert SoftHairMemory is not None
         assert hasattr(SoftHairMemory, "__name__")
@@ -92,7 +109,6 @@ class TestMemoryInitGetAttr:
 
     def test_getattr_invalid_attribute(self) -> None:
         """Testa que atributos inválidos geram AttributeError."""
-        import src.memory as memory
 
         with pytest.raises(AttributeError, match="has no attribute"):
             _ = memory.NonExistentClass  # type: ignore
@@ -107,7 +123,6 @@ class TestMemoryInitGetAttr:
 
     def test_getattr_event_horizon_memory(self) -> None:
         """Testa __getattr__ para EventHorizonMemory."""
-        import src.memory as memory
 
         cls = memory.__getattr__("EventHorizonMemory")
         assert cls is not None
@@ -123,7 +138,6 @@ class TestMemoryInitGetAttr:
 
     def test_getattr_holographic_surface(self) -> None:
         """Testa __getattr__ para HolographicSurface."""
-        import src.memory as memory
 
         cls = memory.__getattr__("HolographicSurface")
         assert cls is not None
@@ -139,7 +153,6 @@ class TestMemoryInitGetAttr:
 
     def test_getattr_soft_hair_encoder(self) -> None:
         """Testa __getattr__ para SoftHairEncoder."""
-        import src.memory as memory
 
         cls = memory.__getattr__("SoftHairEncoder")
         assert cls is not None
@@ -176,8 +189,6 @@ class TestMemoryInitAll:
 
     def test_all_imports_work(self) -> None:
         """Testa que todas as classes em __all__ podem ser importadas."""
-        import src.memory as memory
-        from src.memory import __all__
 
         for name in __all__:
             cls = getattr(memory, name)
@@ -189,14 +200,12 @@ class TestMemoryInitMultipleImports:
 
     def test_import_same_class_twice(self) -> None:
         """Testa que importar mesma classe duas vezes retorna mesmo objeto."""
-        from src.memory import EpisodicMemory as EM1
-        from src.memory import EpisodicMemory as EM2
 
         assert EM1 is EM2
 
     def test_import_multiple_classes(self) -> None:
         """Testa importação de múltiplas classes ao mesmo tempo."""
-        from src.memory import (
+from src.memory import (
             EpisodicMemory,
             EventHorizonMemory,
             HolographicProjection,
@@ -212,8 +221,6 @@ class TestMemoryInitMultipleImports:
         """Testa importação de todas as classes."""
         # This would be: from src.memory import *
         # But we test it differently to avoid wildcard import
-        import src.memory
-        from src.memory import __all__
 
         for name in __all__:
             assert hasattr(src.memory, name)
@@ -224,7 +231,6 @@ class TestMemoryInitTypeChecking:
 
     def test_type_checking_imports_not_loaded(self) -> None:
         """Testa que imports de TYPE_CHECKING não são carregados em runtime."""
-        import src.memory as memory
 
         # TYPE_CHECKING imports não devem estar no __dict__ até serem acessados
         # por __getattr__
@@ -254,7 +260,6 @@ class TestMemoryInitEdgeCases:
 
     def test_getattr_with_empty_string(self) -> None:
         """Testa comportamento com string vazia."""
-        import src.memory as memory
 
         with pytest.raises(AttributeError):
             memory.__getattr__("")
@@ -268,7 +273,6 @@ class TestMemoryInitEdgeCases:
 
     def test_module_name(self) -> None:
         """Testa que módulo tem nome correto."""
-        import src.memory as memory
 
         assert memory.__name__ == "src.memory"
 
@@ -297,7 +301,6 @@ class TestMemoryInitIntegration:
 
     def test_all_classes_are_distinct(self) -> None:
         """Testa que todas as classes são objetos distintos."""
-        from src.memory import (
             EpisodicMemory,
             EventHorizonMemory,
             HolographicProjection,

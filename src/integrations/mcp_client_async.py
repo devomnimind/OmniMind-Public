@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import asyncio
+import logging
+from typing import TYPE_CHECKING, Any, Dict, Optional
+from uuid import uuid4
+    import httpx
+        import httpx
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,18 +38,11 @@ This module provides an enhanced Model Context Protocol client with:
 - Protocol validation
 """
 
-from __future__ import annotations
 
-import asyncio
-import logging
-from typing import TYPE_CHECKING, Any, Dict, Optional
-from uuid import uuid4
 
 if TYPE_CHECKING:
-    import httpx
 else:
     try:
-        import httpx
     except ImportError:
         httpx = None
 

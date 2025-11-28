@@ -1,3 +1,8 @@
+import sys
+import os
+    from src.agents.orchestrator_agent import OrchestratorAgent
+    import traceback
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -19,13 +24,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import sys
-import os
 
 sys.path.insert(0, os.path.dirname(__file__))
 
 try:
-    from src.agents.orchestrator_agent import OrchestratorAgent
 
     print("Import successful")
     orch = OrchestratorAgent("config/agent_config.yaml")
@@ -59,6 +61,5 @@ try:
 
 except Exception as e:
     print(f"Error: {e}")
-    import traceback
 
     traceback.print_exc()

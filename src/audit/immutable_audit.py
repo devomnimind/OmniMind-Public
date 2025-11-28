@@ -1,4 +1,12 @@
-#!/usr/bin/env python3
+import hashlib
+import json
+import shutil
+import subprocess
+import threading
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, Optional
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,14 +34,6 @@ Implementa chain hashing e validação de integridade para todas as operações 
 Baseado em: /home/fahbrain/OmniAgent/registroauditoria.md
 """
 
-import hashlib
-import json
-import subprocess
-import threading
-import time
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Dict, Optional
 
 
 class ImmutableAuditSystem:
@@ -502,7 +502,6 @@ class ImmutableAuditSystem:
 
         # Fazer backup do log original
         backup_file = self.audit_log_file.with_suffix(".bak")
-        import shutil
 
         shutil.copy2(self.audit_log_file, backup_file)
 

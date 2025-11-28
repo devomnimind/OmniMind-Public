@@ -1,3 +1,7 @@
+import asyncio
+import pytest
+from src.agents.agent_protocol import (
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -25,11 +29,8 @@ Tests for Agent Communication Protocol
 Testa sistema de mensagens inter-agentes.
 """
 
-import asyncio
 
-import pytest
 
-from src.agents.agent_protocol import (
     AgentMessage,
     AgentMessageBus,
     MessagePriority,

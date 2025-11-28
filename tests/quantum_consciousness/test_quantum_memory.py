@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+import numpy as np
+import pytest
+from src.quantum_consciousness.quantum_memory import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,12 +35,8 @@ Cobertura de:
 - Fidelity calculations
 """
 
-from __future__ import annotations
 
-import numpy as np
-import pytest
 
-from src.quantum_consciousness.quantum_memory import (
     QISKIT_AVAILABLE,
     HybridQLearning,
     QLearningState,

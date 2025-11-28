@@ -1,3 +1,20 @@
+from __future__ import annotations
+
+import json
+import logging
+import os
+import shutil
+import subprocess
+import threading
+from dataclasses import dataclass
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from typing import Any, Dict, Optional
+from src.audit.immutable_audit import get_audit_system
+    import signal
+    import sys
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,20 +42,8 @@ Este módulo cria um servidor HTTP que faz a ponte entre o protocolo HTTP usado
 pelo OmniMind e o protocolo stdio usado pelo mcp-server-sqlite via uvx.
 """
 
-from __future__ import annotations
 
-import json
-import logging
-import os
-import shutil
-import subprocess
-import threading
-from dataclasses import dataclass
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from pathlib import Path
-from typing import Any, Dict, Optional
 
-from src.audit.immutable_audit import get_audit_system
 
 logger = logging.getLogger(__name__)
 
@@ -304,8 +309,6 @@ class MCPSQLiteWrapper:
 
 
 if __name__ == "__main__":
-    import signal
-    import sys
 
     wrapper = MCPSQLiteWrapper()
     wrapper.start(daemon=False)

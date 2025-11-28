@@ -1,3 +1,12 @@
+import logging
+import random
+import time
+from typing import Dict, List, Optional, Tuple
+from src.swarm.config import ACOConfig
+from src.swarm.types import Ant, SwarmMetrics
+            import os
+            import psutil
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,13 +37,7 @@ Author: OmniMind Project - Phase 19
 License: MIT
 """
 
-import logging
-import random
-import time
-from typing import Dict, List, Optional, Tuple
 
-from src.swarm.config import ACOConfig
-from src.swarm.types import Ant, SwarmMetrics
 
 logger = logging.getLogger(__name__)
 
@@ -122,9 +125,7 @@ class AntColonyOptimizer:
 
         # Calcula uso de memória
         try:
-            import os
 
-            import psutil
 
             process = psutil.Process(os.getpid())
             memory_info = process.memory_info()

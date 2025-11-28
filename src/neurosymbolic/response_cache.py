@@ -1,3 +1,10 @@
+import hashlib
+import logging
+import time
+from collections import OrderedDict
+from dataclasses import dataclass
+from typing import Any, Dict, Optional
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,12 +31,6 @@ Neural Response Cache - Phase 21.
 Implementa cache inteligente com TTL e LRU para reduzir latência e custo.
 """
 
-import hashlib
-import logging
-import time
-from collections import OrderedDict
-from dataclasses import dataclass
-from typing import Any, Dict, Optional
 
 logger = logging.getLogger(__name__)
 

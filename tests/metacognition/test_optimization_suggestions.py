@@ -1,3 +1,6 @@
+import pytest
+from src.metacognition.optimization_suggestions import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,9 +27,7 @@ Tests for generating actionable optimization suggestions.
 Total: 29 tests covering all optimization analysis capabilities.
 """
 
-import pytest
 
-from src.metacognition.optimization_suggestions import (
     OptimizationSuggestion,
     OptimizationSuggestions,
 )

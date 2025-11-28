@@ -1,3 +1,7 @@
+from pathlib import Path
+import pytest
+from src.integrations.agentic_ide import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,11 +26,8 @@ Contact: fabricioslv@hotmail.com.br
 Tests for Agentic IDE module.
 """
 
-from pathlib import Path
 
-import pytest
 
-from src.integrations.agentic_ide import (
     AgenticIDE,
     AgentTask,
     AIModel,

@@ -1,3 +1,11 @@
+import base64
+import importlib
+import json
+from pathlib import Path
+from typing import Any, Dict, Tuple
+import pytest
+from fastapi.testclient import TestClient
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -17,15 +25,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Contact: fabricioslv@hotmail.com.br
 """
-
-import base64
-import importlib
-import json
-from pathlib import Path
-from typing import Any, Dict, Tuple
-
-import pytest
-from fastapi.testclient import TestClient
 
 
 class DummyLLM:

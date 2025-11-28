@@ -1,3 +1,8 @@
+from __future__ import annotations
+
+from src.integrations.mcp_thinking_server import ThinkingMCPServer
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,10 +36,6 @@ Cobertura de:
 - Exportação de cadeia (export_chain)
 - Retomada de sessão (resume_session)
 """
-
-from __future__ import annotations
-
-from src.integrations.mcp_thinking_server import ThinkingMCPServer
 
 
 class TestThinkingMCPServer:

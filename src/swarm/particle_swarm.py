@@ -1,3 +1,11 @@
+import logging
+import random
+import time
+from typing import Callable, List, Optional, Tuple
+from src.swarm.config import PSOConfig
+from src.swarm.types import Particle, SwarmMetrics, SwarmState
+from src.swarm.utils import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,14 +36,7 @@ Author: OmniMind Project - Phase 19
 License: MIT
 """
 
-import logging
-import random
-import time
-from typing import Callable, List, Optional, Tuple
 
-from src.swarm.config import PSOConfig
-from src.swarm.types import Particle, SwarmMetrics, SwarmState
-from src.swarm.utils import (
     calculate_convergence,
     calculate_diversity,
     clamp_velocity,

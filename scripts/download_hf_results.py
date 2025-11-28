@@ -27,14 +27,14 @@ import os
 import sys
 from pathlib import Path
 from typing import Optional
+from dotenv import load_dotenv
+from huggingface_hub import HfApi
 
 
 def load_env_file():
     """Load environment variables from .env file."""
     env_file = Path(__file__).parent.parent / ".env"
     if env_file.exists():
-        from dotenv import load_dotenv
-
         load_dotenv(env_file)
         print("✓ Loaded environment from .env file")
 
@@ -54,8 +54,6 @@ def download_test_results():
     space_name = "fabricioslv/omnimind-tests"
 
     try:
-        from huggingface_hub import HfApi
-
         api = HfApi(token=token)
 
         # Create local directory for results

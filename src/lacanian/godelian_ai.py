@@ -1,3 +1,7 @@
+import logging
+from dataclasses import dataclass
+from typing import Any, Callable, Dict, List, Optional, Protocol, Set
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -32,9 +36,6 @@ Based on:
 Author: OmniMind Development Team
 """
 
-import logging
-from dataclasses import dataclass
-from typing import Any, Callable, Dict, List, Optional, Protocol, Set
 
 logger = logging.getLogger(__name__)
 

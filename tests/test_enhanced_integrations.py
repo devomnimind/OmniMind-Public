@@ -1,3 +1,10 @@
+import json
+import time
+from unittest.mock import Mock, patch
+import pytest
+from src.integrations.mcp_client_enhanced import ( from src.integrations.oauth2_client import (
+from src.integrations.webhook_framework import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,13 +30,8 @@ Contact: fabricioslv@hotmail.com.br
 Tests MCP client enhancements, OAuth 2.0, and webhook framework.
 """
 
-import json
-import time
-from unittest.mock import Mock, patch
 
-import pytest
 
-from src.integrations.mcp_client_enhanced import (
     CircuitBreaker,
     CircuitBreakerConfig,
     CircuitOpenError,
@@ -37,12 +39,10 @@ from src.integrations.mcp_client_enhanced import (
     EnhancedMCPClient,
     RetryConfig,
 )
-from src.integrations.oauth2_client import (
     OAuth2Client,
     OAuth2Config,
     OAuth2Token,
 )
-from src.integrations.webhook_framework import (
     WebhookConfig,
     WebhookError,
     WebhookEvent,

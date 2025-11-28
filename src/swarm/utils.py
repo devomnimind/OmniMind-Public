@@ -1,3 +1,7 @@
+import logging
+import math
+from typing import List, Tuple
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,9 +32,6 @@ Author: OmniMind Project - Phase 19
 License: MIT
 """
 
-import logging
-import math
-from typing import List, Tuple
 
 logger = logging.getLogger(__name__)
 

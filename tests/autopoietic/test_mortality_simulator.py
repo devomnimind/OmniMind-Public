@@ -1,3 +1,7 @@
+from datetime import datetime, timedelta
+import pytest
+from src.autopoietic.mortality_simulator import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,11 +29,8 @@ Author: OmniMind Project
 License: MIT
 """
 
-from datetime import datetime, timedelta
 
-import pytest
 
-from src.autopoietic.mortality_simulator import (
     LegacyItem,
     LegacyPlanner,
     LifeEvent,

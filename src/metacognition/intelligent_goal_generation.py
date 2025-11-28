@@ -1,3 +1,15 @@
+from __future__ import annotations
+
+import ast
+import logging
+from collections import defaultdict
+from dataclasses import dataclass, field
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set, Tuple
+from .proactive_goals import GoalCategory, GoalPriority, ProactiveGoal
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,17 +41,6 @@ goal creation with:
 - Integration with metacognition for self-improvement
 """
 
-from __future__ import annotations
-
-import ast
-import logging
-from collections import defaultdict
-from dataclasses import dataclass, field
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
-
-from .proactive_goals import GoalCategory, GoalPriority, ProactiveGoal
 
 logger = logging.getLogger(__name__)
 

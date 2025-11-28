@@ -1,3 +1,8 @@
+import logging
+from dataclasses import dataclass
+from enum import Enum
+from typing import Any, Dict, List, Optional
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -35,10 +40,6 @@ TRAP = Transparency, Reasoning, Adaptation, Perception
   8-10. Futuros níveis
 """
 
-import logging
-from dataclasses import dataclass
-from enum import Enum
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

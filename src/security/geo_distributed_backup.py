@@ -1,3 +1,17 @@
+from __future__ import annotations
+
+import hashlib
+import json
+import logging
+import shutil
+import subprocess
+from dataclasses import asdict, dataclass, field
+from datetime import datetime, timedelta, timezone
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,18 +43,6 @@ This module implements enterprise-grade disaster recovery with:
 - Point-in-time recovery capabilities
 """
 
-from __future__ import annotations
-
-import hashlib
-import json
-import logging
-import shutil
-import subprocess
-from dataclasses import asdict, dataclass, field
-from datetime import datetime, timedelta, timezone
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

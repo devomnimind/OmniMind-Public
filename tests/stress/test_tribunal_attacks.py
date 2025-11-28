@@ -1,3 +1,5 @@
+from src.stress.tribunal import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -18,7 +20,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-from src.stress.tribunal import (
     bifurcation_attack,
     corruption_attack,
     exhaustion_attack,

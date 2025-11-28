@@ -1,3 +1,8 @@
+import hashlib
+from typing import List
+import numpy as np
+    import tenseal as ts_lib
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -18,16 +23,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import hashlib
-from typing import List
 
-import numpy as np
 
 # Try to import tenseal, but provide a fallback/mock if not available
 # so the code can be analyzed without crashing immediately.
 ts = None
 try:
-    import tenseal as ts_lib
 
     ts = ts_lib
     TENSEAL_AVAILABLE = True

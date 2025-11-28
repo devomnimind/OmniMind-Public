@@ -1,3 +1,12 @@
+import json
+import time
+from dataclasses import dataclass
+from datetime import datetime
+from enum import Enum
+from pathlib import Path
+from typing import List, Literal, Optional, TypedDict, Union
+import structlog
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,15 +36,6 @@ Implements ethics measurement metrics based on:
 Reference: docs/concienciaetica-autonomia.md, Section 2
 """
 
-import json
-import time
-from dataclasses import dataclass
-from datetime import datetime
-from enum import Enum
-from pathlib import Path
-from typing import List, Literal, Optional, TypedDict, Union
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

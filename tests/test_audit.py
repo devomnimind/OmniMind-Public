@@ -1,3 +1,12 @@
+import json
+import shutil
+import tempfile
+from pathlib import Path
+from typing import Iterator
+import pytest
+from src.audit.immutable_audit import ImmutableAuditSystem
+        from src.audit import get_audit_system
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,15 +32,8 @@ Testes unitários para o sistema de auditoria imutável.
 Garante cobertura mínima de 90% conforme regras do projeto.
 """
 
-import json
-import shutil
-import tempfile
-from pathlib import Path
-from typing import Iterator
 
-import pytest
 
-from src.audit.immutable_audit import ImmutableAuditSystem
 
 
 class TestImmutableAuditSystem:
@@ -268,7 +270,6 @@ class TestModuleInterface:
 
     def test_singleton_pattern(self) -> None:
         """Testa que get_audit_system retorna singleton."""
-        from src.audit import get_audit_system
 
         instance1 = get_audit_system()
         instance2 = get_audit_system()

@@ -1,4 +1,27 @@
+from __future__ import annotations
+
+import logging
+import re
+import time
+from datetime import datetime, timezone
+from enum import Enum
+from typing import Any, Dict, List, Optional
+from ..integrations.dbus_controller import ( from ..integrations.llm_router import LLMModelTier, invoke_llm_sync
+from ..integrations.mcp_client import MCPClient, MCPClientError
+from ..integrations.qdrant_adapter import ( from ..integrations.supabase_adapter import (
+from ..metacognition.metacognition_agent import MetacognitionAgent
+from ..security.security_agent import SecurityAgent
+from ..tools.omnimind_tools import ToolsFramework
+from .architect_agent import ArchitectAgent
+from .code_agent import CodeAgent
+from .debug_agent import DebugAgent
+from .orchestrator_metrics import OrchestratorMetricsCollector
+from .psychoanalytic_analyst import PsychoanalyticAnalyst
+from .react_agent import ReactAgent
+from .reviewer_agent import ReviewerAgent
+
 #!/usr/bin/env python3
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,41 +54,19 @@ Quando usar: Tarefas complexas multi-fase que exigem coordenação entre agentes
 Integração: Controla todos os modos (code, architect, debug, reviewer, ask)
 """
 
-from __future__ import annotations
 
-import logging
-import re
-import time
-from datetime import datetime, timezone
-from enum import Enum
-from typing import Any, Dict, List, Optional
 
-from ..integrations.dbus_controller import (
     DBusSessionController,
     DBusSystemController,
 )
-from ..integrations.llm_router import LLMModelTier, invoke_llm_sync
-from ..integrations.mcp_client import MCPClient, MCPClientError
-from ..integrations.qdrant_adapter import (
     QdrantAdapter,
     QdrantAdapterError,
     QdrantConfig,
 )
-from ..integrations.supabase_adapter import (
     SupabaseAdapter,
     SupabaseAdapterError,
     SupabaseConfig,
 )
-from ..metacognition.metacognition_agent import MetacognitionAgent
-from ..security.security_agent import SecurityAgent
-from ..tools.omnimind_tools import ToolsFramework
-from .architect_agent import ArchitectAgent
-from .code_agent import CodeAgent
-from .debug_agent import DebugAgent
-from .orchestrator_metrics import OrchestratorMetricsCollector
-from .psychoanalytic_analyst import PsychoanalyticAnalyst
-from .react_agent import ReactAgent
-from .reviewer_agent import ReviewerAgent
 
 logger = logging.getLogger(__name__)
 

@@ -1,3 +1,8 @@
+import uuid
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Dict, List
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,11 +32,6 @@ partículas, formigas e padrões emergentes no sistema de enxame.
 Author: OmniMind Project - Phase 19
 License: MIT
 """
-
-import uuid
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Dict, List
 
 
 class SwarmAlgorithm(Enum):

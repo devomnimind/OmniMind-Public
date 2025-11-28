@@ -1,3 +1,9 @@
+import os
+import time
+from typing import Any, Dict
+            from qiskit import QuantumCircuit, transpile
+            from qiskit_aer import AerSimulator
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -18,9 +24,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import os
-import time
-from typing import Any, Dict
 
 
 class QuantumRealInjection:
@@ -67,8 +70,6 @@ class QuantumRealInjection:
         """
         try:
             # Tentar D-Wave ou Qiskit
-            from qiskit import QuantumCircuit, transpile
-            from qiskit_aer import AerSimulator
 
             qc = QuantumCircuit(1)
             qc.h(0)  # Hadamard: superposição

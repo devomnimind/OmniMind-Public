@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import logging
+import time
+from dataclasses import dataclass
+from typing import Any, Dict, Iterable, List, Optional, Protocol, cast
+import requests
+from .supabase_adapter import SupabaseConfig
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -18,16 +28,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-from __future__ import annotations
-
-import logging
-import time
-from dataclasses import dataclass
-from typing import Any, Dict, Iterable, List, Optional, Protocol, cast
-
-import requests
-
-from .supabase_adapter import SupabaseConfig
 
 logger = logging.getLogger(__name__)
 

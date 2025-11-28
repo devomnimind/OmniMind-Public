@@ -1,4 +1,14 @@
+from __future__ import annotations
+
+import uuid
+from datetime import datetime, timezone
+from typing import Dict, Any, List, Optional
+import networkx as nx
+import numpy as np
+import logging
+
 #!/usr/bin/env python3
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,14 +34,6 @@ Affective Memory System - Memória Afetiva Lacaniana
 Baseado em Lacan: traços, afeto, re-significação retroativa (Nachträglichkeit)
 """
 
-from __future__ import annotations
-
-import uuid
-from datetime import datetime, timezone
-from typing import Dict, Any, List, Optional
-import networkx as nx
-import numpy as np
-import logging
 
 logger = logging.getLogger(__name__)
 

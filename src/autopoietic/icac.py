@@ -1,3 +1,7 @@
+import logging
+from dataclasses import dataclass
+from typing import Any, Dict, List
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,9 +31,6 @@ This module implements the autopoietic mechanism for OmniMind, responsible for:
 3. Maintaining system coherence (homeostasis).
 """
 
-import logging
-from dataclasses import dataclass
-from typing import Any, Dict, List
 
 logger = logging.getLogger(__name__)
 

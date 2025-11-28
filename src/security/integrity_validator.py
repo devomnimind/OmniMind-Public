@@ -1,4 +1,18 @@
+from __future__ import annotations
+
+import hashlib
+import json
+import logging
+import time
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+from src.audit.immutable_audit import get_audit_system
+
 #!/usr/bin/env python3
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,20 +37,6 @@ Contact: fabricioslv@hotmail.com.br
 Integrity Validator - File and System Integrity Validation
 Validates file integrity, detects unauthorized modifications, and generates compliance reports.
 """
-
-from __future__ import annotations
-
-import hashlib
-import json
-import logging
-import time
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
-
-from src.audit.immutable_audit import get_audit_system
 
 
 class IntegrityStatus(Enum):

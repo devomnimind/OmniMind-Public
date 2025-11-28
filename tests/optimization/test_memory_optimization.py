@@ -1,3 +1,7 @@
+import gc
+import time
+from src.optimization.memory_optimization import ( from datetime import datetime
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,10 +26,7 @@ Contact: fabricioslv@hotmail.com.br
 Tests for memory optimization module.
 """
 
-import gc
-import time
 
-from src.optimization.memory_optimization import (
     AllocationStats,
     MemoryAllocator,
     MemoryLeakDetector,
@@ -41,7 +42,6 @@ class TestMemoryUsageSnapshot:
 
     def test_snapshot_creation(self) -> None:
         """Test creating memory snapshot."""
-        from datetime import datetime
 
         snapshot = MemoryUsageSnapshot(
             timestamp=datetime.now(),

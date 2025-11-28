@@ -1,3 +1,15 @@
+from __future__ import annotations
+
+import logging
+import os
+import re
+from dataclasses import dataclass
+from typing import Any, Dict, Iterable, List, Optional, Sequence, cast
+from qdrant_client import QdrantClient
+from qdrant_client.http import models as qdrant_models
+from .mcp_client import MCPClient, MCPClientError
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -18,18 +30,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-from __future__ import annotations
-
-import logging
-import os
-import re
-from dataclasses import dataclass
-from typing import Any, Dict, Iterable, List, Optional, Sequence, cast
-
-from qdrant_client import QdrantClient
-from qdrant_client.http import models as qdrant_models
-
-from .mcp_client import MCPClient, MCPClientError
 
 logger = logging.getLogger(__name__)
 

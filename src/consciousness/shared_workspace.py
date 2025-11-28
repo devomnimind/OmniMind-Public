@@ -1,3 +1,16 @@
+from __future__ import annotations
+
+import json
+import logging
+import time
+from dataclasses import asdict, dataclass, field
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,18 +42,6 @@ Date: November 2025
 License: MIT
 """
 
-from __future__ import annotations
-
-import json
-import logging
-import time
-from dataclasses import asdict, dataclass, field
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Optional
-
-import numpy as np
-from sklearn.linear_model import LinearRegression
 
 logger = logging.getLogger(__name__)
 

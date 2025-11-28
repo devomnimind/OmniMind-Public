@@ -1,3 +1,12 @@
+import re
+import subprocess
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from typing import Any, Dict, List, Optional
+from ..audit.alerting_system import AlertCategory, AlertingSystem, AlertSeverity
+from ..audit.immutable_audit import ImmutableAuditSystem, get_audit_system
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -26,16 +35,6 @@ Implements Wireshark + Nmap integration as sensory organs.
 Based on: docs/Omni-Dev-Integrationforensis.md
 Legal Compliance: 100% legal when used on own systems (GPL v2 licenses)
 """
-
-import re
-import subprocess
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
-from typing import Any, Dict, List, Optional
-
-from ..audit.alerting_system import AlertCategory, AlertingSystem, AlertSeverity
-from ..audit.immutable_audit import ImmutableAuditSystem, get_audit_system
 
 
 class ThreatSeverity(Enum):

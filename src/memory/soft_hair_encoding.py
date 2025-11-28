@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import cmath
+import logging
+import math
+import statistics
+from dataclasses import dataclass
+from typing import Any, Dict, Iterator, List, Optional, Sequence, Tuple
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,14 +35,6 @@ Implements soft hair encoding focused on typed helpers rather than heavy numeric
 libraries so MyPy can reason about the entire compression pipeline.
 """
 
-from __future__ import annotations
-
-import cmath
-import logging
-import math
-import statistics
-from dataclasses import dataclass
-from typing import Any, Dict, Iterator, List, Optional, Sequence, Tuple
 
 logger = logging.getLogger(__name__)
 

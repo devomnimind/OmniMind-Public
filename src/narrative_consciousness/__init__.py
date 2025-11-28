@@ -1,3 +1,6 @@
+from .dialogue_engine import DialogueEngine, MutualUnderstanding, Relationship
+from .identity_construction import ( from .life_story_model import IdentityModel, LifeChapter, LifeStory, NarrativeArc
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -30,14 +33,11 @@ References:
 - Buber (1923): "I and Thou"
 """
 
-from .dialogue_engine import DialogueEngine, MutualUnderstanding, Relationship
-from .identity_construction import (
     Belief,
     IdentityConstruction,
     IdentitySnapshot,
     Value,
 )
-from .life_story_model import IdentityModel, LifeChapter, LifeStory, NarrativeArc
 
 __all__ = [
     "LifeStory",

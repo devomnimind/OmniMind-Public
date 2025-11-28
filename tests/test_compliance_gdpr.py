@@ -1,3 +1,7 @@
+from datetime import datetime
+from src.compliance.gdpr_compliance import (
+        import time
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,9 +28,7 @@ Testes para Compliance - GDPR Framework.
 Group 13: System Services - compliance/
 """
 
-from datetime import datetime
 
-from src.compliance.gdpr_compliance import (
     ConsentStatus,
     DataCategory,
     DataProcessingPurpose,
@@ -238,7 +240,6 @@ class TestDataProcessingRecord:
         )
 
         # Small delay to ensure different timestamp
-        import time
 
         time.sleep(0.01)
 

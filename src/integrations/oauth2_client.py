@@ -1,3 +1,19 @@
+from __future__ import annotations
+
+import base64
+import hashlib
+import json
+import secrets
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Dict, Optional
+import structlog
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,21 +42,6 @@ Supports authorization code flow, client credentials, and refresh tokens.
 Reference: Problem Statement - FRENTE 5: APIs Externas - Autenticação OAuth
 """
 
-from __future__ import annotations
-
-import base64
-import hashlib
-import json
-import secrets
-import time
-import urllib.error
-import urllib.parse
-import urllib.request
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Dict, Optional
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

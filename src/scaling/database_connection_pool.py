@@ -1,3 +1,10 @@
+import time
+from contextlib import contextmanager
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Callable, Dict, List, Optional, TypeVar, cast
+import structlog
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,13 +33,6 @@ Provides connection lifecycle management, automatic reconnection, and health mon
 Reference: docs/OMNIMIND_COMPREHENSIVE_PENDENCIES_REPORT_20251119.md, Section 7.3
 """
 
-import time
-from contextlib import contextmanager
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Callable, Dict, List, Optional, TypeVar, cast
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

@@ -1,3 +1,12 @@
+from __future__ import annotations
+
+import asyncio
+from typing import Any
+from unittest.mock import AsyncMock, Mock, patch
+import pytest
+from src.security.security_orchestrator import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -31,15 +40,9 @@ Cobertura de:
 - Integração com sensores de rede e web
 """
 
-from __future__ import annotations
 
-import asyncio
-from typing import Any
-from unittest.mock import AsyncMock, Mock, patch
 
-import pytest
 
-from src.security.security_orchestrator import (
     SecurityOrchestrator,
     SecurityReport,
     SecurityStatus,

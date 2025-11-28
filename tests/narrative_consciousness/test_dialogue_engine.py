@@ -1,3 +1,6 @@
+import pytest
+from src.narrative_consciousness.dialogue_engine import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,9 +27,7 @@ Tests for Dialogue Engine (Phase 16.2).
 Tests intersubjective communication, empathy, and horizon fusion.
 """
 
-import pytest
 
-from src.narrative_consciousness.dialogue_engine import (
     DialogueEngine,
     DialogueMode,
     EmpathyModule,

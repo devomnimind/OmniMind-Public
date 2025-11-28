@@ -1,3 +1,11 @@
+import asyncio
+import logging
+import random
+import time
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Callable, Dict, List, Optional, Type, cast
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,13 +32,6 @@ Chaos Engineering Framework for OmniMind
 Implements failure injection and resilience testing.
 """
 
-import asyncio
-import logging
-import random
-import time
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Callable, Dict, List, Optional, Type, cast
 
 logger = logging.getLogger(__name__)
 

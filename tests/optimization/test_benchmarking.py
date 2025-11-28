@@ -1,3 +1,14 @@
+from __future__ import annotations
+
+import time
+from pathlib import Path
+import pytest
+from src.optimization.benchmarking import ( from src.optimization.benchmarking import RegressionDetector
+        from datetime import datetime, timedelta
+        import json
+        from src.optimization.benchmarking import benchmark_with_regression_detection
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -30,14 +41,9 @@ Cobertura de:
 - Tratamento de exceções
 """
 
-from __future__ import annotations
 
-import time
-from pathlib import Path
 
-import pytest
 
-from src.optimization.benchmarking import (
     BenchmarkResult,
     ComparisonResult,
     PerformanceBenchmark,
@@ -406,7 +412,6 @@ class TestRegressionDetector:
     @pytest.fixture
     def detector(self, temp_dir: Path) -> "RegressionDetector":
         """Cria instância de RegressionDetector."""
-        from src.optimization.benchmarking import RegressionDetector
 
         return RegressionDetector(history_dir=temp_dir, regression_threshold=10.0)
 
@@ -607,7 +612,6 @@ class TestRegressionDetector:
 
     def test_clean_old_history_with_old_entries(self, detector: "RegressionDetector") -> None:
         """Testa remoção de entradas antigas."""
-        from datetime import datetime, timedelta
 
         # Create old entry (100 days ago)
         old_timestamp = (datetime.now() - timedelta(days=100)).isoformat()
@@ -636,7 +640,6 @@ class TestRegressionDetector:
         detector.clean_old_history(days=90)
 
         # Verify old entry was removed
-        import json
 
         history_file = detector.history_dir / "cleanup_test_history.json"
         with history_file.open() as f:
@@ -651,7 +654,6 @@ class TestBenchmarkWithRegressionDetection:
 
     def test_benchmark_with_regression_detection_basic(self, tmp_path: Path) -> None:
         """Testa benchmark com detecção de regressão."""
-        from src.optimization.benchmarking import benchmark_with_regression_detection
 
         def test_workload() -> None:
             """Test workload."""

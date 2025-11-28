@@ -1,3 +1,6 @@
+import pytest
+from src.phase16_integration import CognitiveState, Phase16Integration
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,10 +27,6 @@ Integration Tests for Phase 16 Full System.
 Verifies the integration of Neurosymbolic, Embodied, Narrative,
 Creative, and Existential modules.
 """
-
-import pytest
-
-from src.phase16_integration import CognitiveState, Phase16Integration
 
 
 class TestPhase16FullIntegration:

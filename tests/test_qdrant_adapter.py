@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+from unittest.mock import MagicMock, patch
+import pytest
+from src.integrations.qdrant_adapter import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -18,13 +25,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-from __future__ import annotations
 
-from unittest.mock import MagicMock, patch
 
-import pytest
 
-from src.integrations.qdrant_adapter import (
     QdrantAdapter,
     QdrantAdapterError,
     QdrantConfig,

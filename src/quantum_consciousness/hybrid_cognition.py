@@ -1,3 +1,12 @@
+import time
+from dataclasses import dataclass
+from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple
+import numpy as np
+import structlog
+from .qpu_interface import BackendType, QPUInterface
+from .quantum_cognition import QuantumCognitionEngine, QuantumDecisionMaker
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -66,23 +75,6 @@ Author: OmniMind Hybrid Cognition Team
 License: MIT
 """
 
-import time
-from dataclasses import dataclass
-from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
-
-import numpy as np
-import structlog
-
-from .qpu_interface import BackendType, QPUInterface
-
-# ...existing code...
-from .quantum_cognition import (
-    QuantumCognitionEngine,
-    QuantumDecisionMaker,
-)
-
-# ...existing code...
 
 logger = structlog.get_logger(__name__)
 

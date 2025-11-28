@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+from pathlib import Path
+from unittest.mock import MagicMock, patch
+import pytest
+from src.security.forensics_system import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -30,14 +38,9 @@ Cobertura de:
 - Tratamento de exceções
 """
 
-from __future__ import annotations
 
-from pathlib import Path
-from unittest.mock import MagicMock, patch
 
-import pytest
 
-from src.security.forensics_system import (
     EvidenceCollector,
     EvidenceItem,
     EvidenceType,

@@ -1,3 +1,12 @@
+from __future__ import annotations
+
+import tempfile
+from pathlib import Path
+from unittest.mock import Mock, patch
+import pytest
+from src.security.dlp import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -29,15 +38,9 @@ Cobertura de:
 - Carregamento de políticas customizadas
 """
 
-from __future__ import annotations
 
-import tempfile
-from pathlib import Path
-from unittest.mock import Mock, patch
 
-import pytest
 
-from src.security.dlp import (
     DLPPolicy,
     DLPValidator,
     DLPViolation,

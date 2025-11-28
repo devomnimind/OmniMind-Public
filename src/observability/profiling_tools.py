@@ -1,3 +1,13 @@
+import cProfile
+import json
+import pstats
+import time
+from dataclasses import dataclass, field
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional, TypeVar
+import structlog
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,16 +36,6 @@ Provides real-time performance insights and bottleneck identification.
 Reference: docs/OMNIMIND_COMPREHENSIVE_PENDENCIES_REPORT_20251119.md, Section 8.4
 """
 
-import cProfile
-import json
-import pstats
-import time
-from dataclasses import dataclass, field
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, TypeVar
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

@@ -1,3 +1,8 @@
+import logging
+from datetime import datetime, timedelta
+from typing import Any, Dict, List
+from .semantic_memory import SemanticMemory
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,11 +31,6 @@ irrelevant, redundant, or low-value information.
 Implements decay mechanisms based on access frequency and emotional significance.
 """
 
-import logging
-from datetime import datetime, timedelta
-from typing import Any, Dict, List
-
-from .semantic_memory import SemanticMemory
 
 logger = logging.getLogger(__name__)
 

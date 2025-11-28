@@ -1,3 +1,9 @@
+import tempfile
+from pathlib import Path
+import pytest
+from src.audit.immutable_audit import ImmutableAuditSystem
+from src.scaling.multi_tenant_isolation import (
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -25,13 +31,8 @@ Tests database isolation, resource quotas, security boundaries,
 and tenant management.
 """
 
-import tempfile
-from pathlib import Path
 
-import pytest
 
-from src.audit.immutable_audit import ImmutableAuditSystem
-from src.scaling.multi_tenant_isolation import (
     MultiTenantIsolationManager,
     ResourceQuota,
     ResourceType,

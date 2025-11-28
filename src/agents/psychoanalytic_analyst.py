@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import json
+import logging
+from dataclasses import dataclass
+from enum import Enum
+from typing import Any, Dict, List
+from .react_agent import ReactAgent
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,15 +37,6 @@ lentes teóricas da psicanálise para gerar insights e relatórios.
 Implementa o sistema de decisão Id/Ego/Superego com votação ponderada.
 """
 
-from __future__ import annotations
-
-import json
-import logging
-from dataclasses import dataclass
-from enum import Enum
-from typing import Any, Dict, List
-
-from .react_agent import ReactAgent
 
 logger = logging.getLogger(__name__)
 

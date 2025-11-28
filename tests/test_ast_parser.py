@@ -1,3 +1,10 @@
+import pytest
+from src.tools.ast_parser import ASTParser
+import os
+import sys
+from pathlib import Path
+from typing import Any
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -24,10 +31,6 @@ Tests for AST Parser Tool
 
 Testa funcionalidades de parsing e análise de código Python.
 """
-
-import pytest
-
-from src.tools.ast_parser import ASTParser
 
 
 class TestASTParser:
@@ -192,10 +195,6 @@ def complex(x):
     def test_dependencies_extraction(self, parser: ASTParser) -> None:
         """Testa extração de dependências"""
         code = """
-import os
-import sys
-from pathlib import Path
-from typing import Any
 """
         structure = parser.parse_source(code)
 

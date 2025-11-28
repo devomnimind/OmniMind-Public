@@ -1,3 +1,6 @@
+import numpy as np
+from src.memory.soft_hair_encoding import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,9 +28,7 @@ Tests low-frequency mode extraction, compression,
 and reconstruction fidelity.
 """
 
-import numpy as np
 
-from src.memory.soft_hair_encoding import (
     SoftHair,
     SoftHairEncoder,
     SoftHairMemory,

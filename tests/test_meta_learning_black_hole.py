@@ -1,3 +1,6 @@
+import pytest
+from src.meta_learning.black_hole_collapse import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,9 +27,7 @@ Testes para Meta Learning - Black Hole Collapse.
 Group 15: Learning & Monitoring - meta_learning/
 """
 
-import pytest
 
-from src.meta_learning.black_hole_collapse import (
     CRITICAL_DENSITY,
     BlackHoleMetaLearner,
     MetaKnowledge,

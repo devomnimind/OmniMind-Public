@@ -1,3 +1,12 @@
+from __future__ import annotations
+
+import asyncio
+from unittest.mock import AsyncMock, MagicMock, Mock, patch
+import pytest
+from src.integrations.mcp_client_async import (
+        import httpx as httpx_real
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -30,14 +39,9 @@ Cobertura de:
 - Context manager async
 """
 
-from __future__ import annotations
 
-import asyncio
-from unittest.mock import AsyncMock, MagicMock, Mock, patch
 
-import pytest
 
-from src.integrations.mcp_client_async import (
     AsyncMCPClient,
     MCPClientError,
     MCPConnectionError,
@@ -243,7 +247,6 @@ class TestAsyncMCPClient:
         mock_client = AsyncMock()
 
         # Simulate timeout
-        import httpx as httpx_real
 
         mock_client.post.side_effect = httpx_real.TimeoutException("Timeout")
 

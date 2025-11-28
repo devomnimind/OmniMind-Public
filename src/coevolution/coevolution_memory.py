@@ -1,3 +1,8 @@
+import logging
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,10 +29,6 @@ Sistema de Memória de Co-evolução.
 Armazena histórico de colaboração humano-IA para aprendizado contínuo.
 """
 
-import logging
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

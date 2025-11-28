@@ -1,3 +1,6 @@
+import pytest
+from src.phase16_integration import CognitiveState, Phase16Integration
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,10 +26,6 @@ Tests for Phase 16/16.1 Integration Module
 
 Tests the unified system combining neurosymbolic reasoning with embodied cognition.
 """
-
-import pytest
-
-from src.phase16_integration import CognitiveState, Phase16Integration
 
 
 class TestPhase16Integration:

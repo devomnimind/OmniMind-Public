@@ -1,3 +1,14 @@
+from __future__ import annotations
+
+import logging
+import random
+import statistics
+from collections import defaultdict
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Callable, Dict, List, Optional, Set, Tuple
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -40,15 +51,6 @@ Author: OmniMind Development Team
 Date: November 2025
 """
 
-from __future__ import annotations
-
-import logging
-import random
-import statistics
-from collections import defaultdict
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 
 logger = logging.getLogger(__name__)
 

@@ -1,3 +1,8 @@
+import json
+from pathlib import Path
+from typing import Any, TypedDict
+from src.metrics.consciousness_metrics_legacy import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,11 +31,7 @@ by simulating different agent architectures.
 Reference: docs/concienciaetica-autonomia.md, Section 5 - Experimento 1
 """
 
-import json
-from pathlib import Path
-from typing import Any, TypedDict
 
-from src.metrics.consciousness_metrics_legacy import (
     AgentConnection,
     ConsciousnessMetrics,
     FeedbackLoop,

@@ -1,0 +1,42 @@
+# Core dependencies for OmniMind (essential runtime)
+# Install with: pip install -r requirements-core.txt
+
+# Web Framework
+fastapi>=0.122.0
+uvicorn>=0.38.0
+
+# Core AI/ML
+torch>=2.9.0
+transformers>=4.57.0
+sentence-transformers>=3.0.0
+
+# Vector Database
+qdrant-client>=1.16.0,<2.0.0
+
+# Data Models & Config
+pydantic>=2.12.0
+python-dotenv>=1.2.0
+PyYAML>=6.0.3
+
+# System & Utils
+rich>=14.0.0
+psutil>=7.0.0
+requests>=2.32.0
+structlog>=25.0.0
+
+# Observability (Core)
+opentelemetry-api>=1.38.0
+prometheus-client>=0.23.0
+
+# Database (Core)
+redis>=7.0.0
+
+# Testing (Core)
+pytest>=9.0.0
+pytest-cov>=7.0.0
+pytest-asyncio>=1.3.0
+
+# Code Quality (Development)
+black>=24.0.0
+flake8>=7.0.0
+mypy>=1.8.0

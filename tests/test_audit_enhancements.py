@@ -1,3 +1,12 @@
+import json
+import tempfile
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+import pytest
+from src.audit.alerting_system import ( from src.audit.compliance_reporter import ComplianceReporter
+from src.audit.immutable_audit import ImmutableAuditSystem
+from src.audit.log_analyzer import ( from src.audit.retention_policy import (
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -24,26 +33,16 @@ Tests for enhanced audit trail features.
 Tests compliance reporting, retention policies, alerting, and log analysis.
 """
 
-import json
-import tempfile
-from datetime import datetime, timedelta, timezone
-from pathlib import Path
 
-import pytest
 
-from src.audit.alerting_system import (
     Alert,
     AlertCategory,
     AlertingSystem,
     AlertSeverity,
 )
-from src.audit.compliance_reporter import ComplianceReporter
-from src.audit.immutable_audit import ImmutableAuditSystem
-from src.audit.log_analyzer import (
     AuditLogAnalyzer,
     QueryFilter,
 )
-from src.audit.retention_policy import (
     DataCategory,
     RetentionPeriod,
     RetentionPolicyManager,

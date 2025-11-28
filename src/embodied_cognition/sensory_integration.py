@@ -1,3 +1,9 @@
+import logging
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional
+from numpy.typing import NDArray
+            from src.neurosymbolic import NeuralComponent, SymbolicComponent
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -30,11 +36,7 @@ Refs:
 - Damasio (2010): Somatic markers in perception
 """
 
-import logging
-from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
 
-from numpy.typing import NDArray
 
 logger = logging.getLogger(__name__)
 
@@ -99,7 +101,6 @@ class SensoryIntegration:
 
         # Import neural/symbolic components
         try:
-            from src.neurosymbolic import NeuralComponent, SymbolicComponent
 
             self.neural: Optional[NeuralComponent] = NeuralComponent()
             self.symbolic: Optional[SymbolicComponent] = SymbolicComponent()

@@ -1,3 +1,9 @@
+import tempfile
+from datetime import datetime, timezone
+from pathlib import Path
+import pytest
+from src.security.forensics_system import (
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -24,13 +30,8 @@ Comprehensive tests for forensics_system.py module.
 Tests EvidenceCollector, Incident, and related functionality.
 """
 
-import tempfile
-from datetime import datetime, timezone
-from pathlib import Path
 
-import pytest
 
-from src.security.forensics_system import (
     EvidenceCollector,
     EvidenceItem,
     EvidenceType,

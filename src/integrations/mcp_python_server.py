@@ -1,3 +1,8 @@
+import logging
+from typing import Any, Dict
+from src.integrations.mcp_server import MCPServer
+        import sys
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -18,10 +23,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import logging
-from typing import Any, Dict
 
-from src.integrations.mcp_server import MCPServer
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +55,6 @@ class PythonMCPServer(MCPServer):
         return {"packages": ["numpy", "torch"]}
 
     def get_python_info(self) -> Dict[str, Any]:
-        import sys
 
         return {"version": sys.version}
 

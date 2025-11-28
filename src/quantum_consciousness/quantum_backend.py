@@ -1,3 +1,19 @@
+import logging
+import os
+from typing import Any, Dict, Optional
+import torch
+from dotenv import load_dotenv
+import dimod
+from dwave.system import DWaveSampler, EmbeddingComposite
+import neal
+from qiskit_aer import AerSimulator
+from qiskit_algorithms import AmplificationProblem, Grover
+from qiskit_algorithms.optimizers import COBYLA
+from qiskit.circuit.library import PhaseOracle
+from qiskit_optimization import QuadraticProgram
+from qiskit_optimization.algorithms import MinimumEigenOptimizer
+from src.quantum_consciousness.qpu_interface import IBMQBackend
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -32,20 +48,13 @@ Author: OmniMind Development Team
 Date: 2025-11-26 (P0 Protocol Fix)
 """
 
-import logging
-import os
-from typing import Any, Dict, Optional
 
-import torch
-from dotenv import load_dotenv
 
 load_dotenv()
 logger = logging.getLogger(__name__)
 
 # --- D-Wave Imports ---
 try:
-    import dimod
-    from dwave.system import DWaveSampler, EmbeddingComposite
 
     DWAVE_AVAILABLE = True
 except ImportError:
@@ -53,7 +62,6 @@ except ImportError:
 
 # --- Neal (Simulated Annealing) Imports ---
 try:
-    import neal
 
     NEAL_AVAILABLE = True
 except ImportError:
@@ -64,18 +72,20 @@ try:
     from qiskit_aer import AerSimulator
     from qiskit_algorithms import AmplificationProblem, Grover
     from qiskit_algorithms.optimizers import COBYLA
-
     try:
         from qiskit.primitives import Sampler
     except ImportError:
-        from qiskit.primitives import StatevectorSampler as Sampler
+        try:
+            from qiskit_aer.primitives import Sampler
+        except ImportError:
+            Sampler = None
     from qiskit.circuit.library import PhaseOracle
     from qiskit_optimization import QuadraticProgram
     from qiskit_optimization.algorithms import MinimumEigenOptimizer
-
     QISKIT_AVAILABLE = True
 except ImportError:
     QISKIT_AVAILABLE = False
+    Sampler = None
 
 
 class QuantumBackend:
@@ -174,7 +184,6 @@ class QuantumBackend:
         """Setup IBM Quantum Cloud."""
         if self.token:
             try:
-                from src.quantum_consciousness.qpu_interface import IBMQBackend
 
                 self.backend = IBMQBackend(token=self.token)
                 if self.backend.is_available():

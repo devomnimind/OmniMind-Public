@@ -1,3 +1,7 @@
+from datetime import datetime
+import pytest
+from src.narrative_consciousness.life_story_model import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,11 +28,8 @@ Tests for Life Story Model (Phase 16.2).
 Tests narrative consciousness, autobiographical memory, and identity evolution.
 """
 
-from datetime import datetime
 
-import pytest
 
-from src.narrative_consciousness.life_story_model import (
     IdentityModel,
     LifeChapter,
     LifeStory,

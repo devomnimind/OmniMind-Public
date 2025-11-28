@@ -1,3 +1,17 @@
+import asyncio
+import time
+import logging
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Any
+from enum import Enum
+import os
+from dotenv import load_dotenv
+import ollama
+from transformers import pipeline
+import torch
+import concurrent.futures
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -41,17 +55,8 @@ Autor: OmniMind Team
 Data: 2025-11-27
 """
 
-import asyncio
-import time
-import logging
-from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from typing import Dict, List, Optional, Any
-from enum import Enum
-import os
 
 # Carrega variáveis de ambiente do .env
-from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -132,7 +137,6 @@ class OllamaProvider(LLMProviderInterface):
     def _check_availability(self):
         """Verifica disponibilidade do Ollama."""
         try:
-            import ollama
 
             # Tenta listar modelos para verificar se Ollama está rodando
             ollama.list()
@@ -249,8 +253,6 @@ class HuggingFaceProvider(LLMProviderInterface):
             return  # Já carregado
 
         try:
-            from transformers import pipeline
-            import torch
 
             # Configuração para GPU se disponível
             device = 0 if torch.cuda.is_available() else -1
@@ -696,7 +698,6 @@ def invoke_llm_sync(prompt: str, **kwargs) -> LLMResponse:
         # Verificar se estamos em um loop rodando
         asyncio.get_running_loop()
         # Se estamos em um loop, usar ThreadPoolExecutor
-        import concurrent.futures
 
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future = executor.submit(asyncio.run, _invoke_async(prompt, **kwargs))

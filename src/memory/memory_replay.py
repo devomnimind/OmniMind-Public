@@ -1,3 +1,7 @@
+import logging
+import random
+from typing import Any, Dict, List
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,9 +29,6 @@ Facilitates offline learning by replaying significant episodes.
 Used for reinforcement learning and memory consolidation.
 """
 
-import logging
-import random
-from typing import Any, Dict, List
 
 logger = logging.getLogger(__name__)
 

@@ -1,3 +1,22 @@
+import pytest
+        from src.lacanian import __version__
+        from src.lacanian import __all__
+        from src.lacanian import RSIArchitecture
+        from src.lacanian import StructuralLack
+        import src.lacanian as lacanian
+        from src.lacanian import ComputationalLackArchitecture as CLA1
+        from src.lacanian import ComputationalLackArchitecture as CLA2
+        from src import lacanian
+        from src.lacanian import RSIArchitecture
+        import src.lacanian as lacanian
+        import src.lacanian
+        from src import lacanian
+        import src.lacanian as lacanian
+        import src.lacanian as lacanian1
+        import importlib
+        from src.lacanian import StructuralLack
+from src.lacanian import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,7 +46,6 @@ Cobertura de:
 - Module exports
 """
 
-import pytest
 
 
 class TestLacanianInit:
@@ -35,7 +53,6 @@ class TestLacanianInit:
 
     def test_module_version(self) -> None:
         """Testa que módulo tem versão definida."""
-        from src.lacanian import __version__
 
         assert __version__ is not None
         assert isinstance(__version__, str)
@@ -51,7 +68,6 @@ class TestLacanianInit:
 
     def test_module_all_exports(self) -> None:
         """Testa que __all__ está definido corretamente."""
-        from src.lacanian import __all__
 
         assert isinstance(__all__, list)
         assert len(__all__) > 0
@@ -69,7 +85,6 @@ class TestLacanianInit:
 
     def test_lazy_import_rsi_architecture(self) -> None:
         """Testa lazy import de RSIArchitecture."""
-        from src.lacanian import RSIArchitecture
 
         assert RSIArchitecture is not None
         assert isinstance(RSIArchitecture, type)
@@ -83,7 +98,6 @@ class TestLacanianInit:
 
     def test_lazy_import_structural_lack(self) -> None:
         """Testa lazy import de StructuralLack."""
-        from src.lacanian import StructuralLack
 
         assert StructuralLack is not None
         assert isinstance(StructuralLack, type)
@@ -97,7 +111,6 @@ class TestLacanianInit:
 
     def test_invalid_attribute_raises_error(self) -> None:
         """Testa que atributo inválido lança AttributeError."""
-        import src.lacanian as lacanian
 
         with pytest.raises(AttributeError) as exc_info:
             _ = lacanian.NonExistentClass  # type: ignore
@@ -107,7 +120,7 @@ class TestLacanianInit:
 
     def test_multiple_lazy_imports(self) -> None:
         """Testa múltiplos lazy imports na mesma sessão."""
-        from src.lacanian import (
+from src.lacanian import (
             ComputationalLackArchitecture,
             GodelianAI,
             RSIArchitecture,
@@ -119,8 +132,6 @@ class TestLacanianInit:
 
     def test_lazy_import_idempotency(self) -> None:
         """Testa que lazy import retorna mesma classe em chamadas múltiplas."""
-        from src.lacanian import ComputationalLackArchitecture as CLA1
-        from src.lacanian import ComputationalLackArchitecture as CLA2
 
         # Should be the same class object
         assert CLA1 is CLA2
@@ -139,7 +150,6 @@ class TestLacanianInit:
 
     def test_all_exports_are_importable(self) -> None:
         """Testa que todos os exports em __all__ são importáveis."""
-        from src import lacanian
 
         for export_name in lacanian.__all__:
             # Should not raise
@@ -159,7 +169,6 @@ class TestLacanianInit:
 
     def test_instantiate_rsi_architecture(self) -> None:
         """Testa que pode instanciar RSIArchitecture."""
-        from src.lacanian import RSIArchitecture
 
         try:
             instance = RSIArchitecture()
@@ -181,7 +190,6 @@ class TestLacanianInit:
 
     def test_module_docstring(self) -> None:
         """Testa que módulo tem docstring."""
-        import src.lacanian as lacanian
 
         assert lacanian.__doc__ is not None
         assert isinstance(lacanian.__doc__, str)
@@ -218,7 +226,6 @@ class TestLacanianImportPatterns:
 
     def test_direct_import(self) -> None:
         """Testa import direto."""
-        import src.lacanian
 
         assert hasattr(src.lacanian, "__version__")
         assert hasattr(src.lacanian, "__all__")
@@ -232,7 +239,6 @@ class TestLacanianImportPatterns:
 
     def test_nested_import(self) -> None:
         """Testa import aninhado."""
-        from src import lacanian
 
         CLA = lacanian.ComputationalLackArchitecture
         assert CLA is not None
@@ -243,7 +249,6 @@ class TestLacanianEdgeCases:
 
     def test_getattr_with_private_attribute(self) -> None:
         """Testa __getattr__ com atributo privado."""
-        import src.lacanian as lacanian
 
         # Private attributes should raise AttributeError
         with pytest.raises(AttributeError):
@@ -259,13 +264,11 @@ class TestLacanianEdgeCases:
 
     def test_reimport_module(self) -> None:
         """Testa reimportação do módulo."""
-        import src.lacanian as lacanian1
 
         # Get a class
         lacanian1.ComputationalLackArchitecture  # noqa: B018
 
         # Reimport
-        import importlib
 
         importlib.reload(lacanian1)
 
@@ -281,7 +284,6 @@ class TestLacanianClassAvailability:
 
     def test_structural_lack_available(self) -> None:
         """Testa que StructuralLack está disponível."""
-        from src.lacanian import StructuralLack
 
         assert StructuralLack is not None
 
@@ -293,7 +295,6 @@ class TestLacanianClassAvailability:
 
     def test_all_five_exports_unique(self) -> None:
         """Testa que os 5 exports são classes únicas."""
-        from src.lacanian import (
             ComputationalLackArchitecture,
             GodelianAI,
             ObjectSmallA,
@@ -314,7 +315,7 @@ class TestLacanianClassAvailability:
 
     def test_classes_have_names(self) -> None:
         """Testa que classes têm nomes corretos."""
-        from src.lacanian import (
+from src.lacanian import (
             ComputationalLackArchitecture,
             GodelianAI,
             RSIArchitecture,

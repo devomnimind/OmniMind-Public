@@ -1,3 +1,15 @@
+from __future__ import annotations
+
+import json
+import logging
+import time
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, List
+from src.metrics.behavioral_metrics import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -41,17 +53,8 @@ Date: November 2025
 License: MIT
 """
 
-from __future__ import annotations
 
-import json
-import logging
-import time
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Dict, List
 
-from src.metrics.behavioral_metrics import (
     compute_return_rate,
     compute_statistical_significance,
     get_marker_config,

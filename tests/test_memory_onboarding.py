@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+from typing import Any, Dict, List, Optional, cast
+from src.integrations.graphql_supabase import ( from src.integrations.supabase_adapter import SupabaseConfig
+from src.memory import EpisodicMemory
+from src.onboarding.memory_onboarding import SupabaseMemoryOnboarding
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -18,17 +26,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, cast
 
-from src.integrations.graphql_supabase import (
     GraphQLSupabaseError,
     GraphQLSupabaseHelper,
 )
-from src.integrations.supabase_adapter import SupabaseConfig
-from src.memory import EpisodicMemory
-from src.onboarding.memory_onboarding import SupabaseMemoryOnboarding
 
 
 class DummyMemory:

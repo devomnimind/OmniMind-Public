@@ -1,3 +1,8 @@
+from typing import List
+import pytest
+from src.swarm.config import SwarmConfig
+from src.swarm.swarm_manager import SwarmManager
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,13 +28,6 @@ Comprehensive tests for Swarm Manager - Phase 19.
 
 Tests orchestration of PSO, ACO and emergence detection.
 """
-
-from typing import List
-
-import pytest
-
-from src.swarm.config import SwarmConfig
-from src.swarm.swarm_manager import SwarmManager
 
 
 class TestSwarmManager:

@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import re
+from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple
+import structlog
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,15 +37,6 @@ Implements emotional understanding and response capabilities:
 - Multi-modal emotion detection
 """
 
-from __future__ import annotations
-
-import re
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 

@@ -1,3 +1,12 @@
+from __future__ import annotations
+
+import json
+import logging
+from typing import Any, Dict, cast
+from uuid import uuid4
+import httpx
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -18,14 +27,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-from __future__ import annotations
-
-import json
-import logging
-from typing import Any, Dict, cast
-from uuid import uuid4
-
-import httpx
 
 logger = logging.getLogger(__name__)
 

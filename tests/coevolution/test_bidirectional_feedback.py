@@ -1,3 +1,5 @@
+from src.coevolution.bidirectional_feedback import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -22,7 +24,6 @@ Contact: fabricioslv@hotmail.com.br
 Testes para Bidirectional Feedback System.
 """
 
-from src.coevolution.bidirectional_feedback import (
     BidirectionalFeedback,
     FeedbackDirection,
     FeedbackItem,

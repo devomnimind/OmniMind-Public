@@ -1,3 +1,12 @@
+import asyncio
+import json
+import uuid
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from typing import Any, Callable, Dict, List, Optional, Set
+from .immutable_audit import ImmutableAuditSystem, get_audit_system
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -29,16 +38,6 @@ Features:
 - Alert history and analytics
 - Integration with audit system
 """
-
-import asyncio
-import json
-import uuid
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
-from typing import Any, Callable, Dict, List, Optional, Set
-
-from .immutable_audit import ImmutableAuditSystem, get_audit_system
 
 
 class AlertSeverity(Enum):

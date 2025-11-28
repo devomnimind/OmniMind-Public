@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+import logging
+from typing import Any, Dict, List, Optional, Protocol, cast
+import dbus  # type: ignore  # external library without stubs
+import psutil
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -18,12 +26,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-from __future__ import annotations
 
-import logging
-from typing import Any, Dict, List, Optional, Protocol, cast
 
-import dbus  # type: ignore  # external library without stubs
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +46,6 @@ class _PsutilInterface(Protocol):
 
 def _load_psutil() -> Optional[_PsutilInterface]:
     try:
-        import psutil
 
         return cast(_PsutilInterface, psutil)
     except ImportError:

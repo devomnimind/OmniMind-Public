@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -20,7 +23,6 @@ Contact: fabricioslv@hotmail.com.br
 
 """Workflow Code→Review→Fix→Document com heurísticas rastreáveis."""
 
-from __future__ import annotations
 
 import statistics
 from dataclasses import dataclass

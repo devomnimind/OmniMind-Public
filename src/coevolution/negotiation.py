@@ -1,3 +1,8 @@
+import logging
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Dict, List
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -25,10 +30,6 @@ Permite que humanos e IA negociem objetivos de forma bidirecional,
 ao invés de imposição unilateral.
 """
 
-import logging
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Dict, List
 
 logger = logging.getLogger(__name__)
 

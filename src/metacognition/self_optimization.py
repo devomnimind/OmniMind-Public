@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import logging
+import statistics
+from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,14 +37,6 @@ This module implements automated system optimization:
 - Safe rollback mechanisms
 """
 
-from __future__ import annotations
-
-import logging
-import statistics
-from dataclasses import dataclass, field
-from datetime import datetime
-from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 

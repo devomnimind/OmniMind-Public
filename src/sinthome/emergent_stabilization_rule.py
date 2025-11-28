@@ -1,3 +1,6 @@
+import time
+from typing import Any, Dict, List
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -17,9 +20,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Contact: fabricioslv@hotmail.com.br
 """
-
-import time
-from typing import Any, Dict, List
 
 
 class SinthomaticStabilizationRule:

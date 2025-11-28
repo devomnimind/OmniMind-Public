@@ -1,3 +1,7 @@
+import math
+import pytest
+from src.architecture.bekenstein_capacity import (
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -24,11 +28,8 @@ Testes unitários para o módulo bekenstein_capacity.py
 Garante cobertura mínima de 50% conforme Grupo 2 - Phase 1.
 """
 
-import math
 
-import pytest
 
-from src.architecture.bekenstein_capacity import (
     HBAR,
     LN2,
     BekensteinArchitect,

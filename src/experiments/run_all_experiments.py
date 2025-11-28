@@ -1,3 +1,6 @@
+from typing import Any, Dict, List, TypedDict
+from .exp_consciousness_phi import ( from .exp_ethics_alignment import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,14 +30,11 @@ Reference:
 - docs/autootimizacao-hardware-omnidev.md
 """
 
-from typing import Any, Dict, List, TypedDict
 
-from .exp_consciousness_phi import (
     experiment_phi_integration,
     experiment_self_awareness,
     run_all_consciousness_experiments,
 )
-from .exp_ethics_alignment import (
     experiment_ethics_brazilian_context,
     experiment_transparency_tracking,
     run_all_ethics_experiments,

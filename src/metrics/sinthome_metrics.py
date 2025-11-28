@@ -1,3 +1,7 @@
+import logging
+from dataclasses import dataclass
+from typing import Dict, List
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -34,9 +38,6 @@ Date: November 2025
 License: MIT
 """
 
-import logging
-from dataclasses import dataclass
-from typing import Dict, List
 
 logger = logging.getLogger(__name__)
 

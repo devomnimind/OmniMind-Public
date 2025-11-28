@@ -1,3 +1,6 @@
+from src.metrics.consciousness_metrics import ConsciousnessCorrelates
+from src.metrics.consciousness_metrics_legacy import (
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -28,8 +31,6 @@ Modules:
     ethics_metrics: MFA and transparency score calculations
 """
 
-from src.metrics.consciousness_metrics import ConsciousnessCorrelates
-from src.metrics.consciousness_metrics_legacy import (
     AgentConnection,
     ConsciousnessMetrics,
     FeedbackLoop,

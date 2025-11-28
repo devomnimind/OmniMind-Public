@@ -1,3 +1,13 @@
+import shutil
+import tempfile
+from pathlib import Path
+import pytest
+from src.economics.marketplace_agent import MarketplaceAgent
+from src.ethics.ethics_agent import ActionImpact, EthicalFramework, EthicsAgent
+from src.identity.agent_signature import AgentIdentity
+from src.motivation.achievement_system import AchievementEngine
+from src.motivation.intrinsic_rewards import IntrinsicMotivationEngine
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -24,18 +34,6 @@ Tests for Phase 9 modules: Motivation, Identity, Economics, Ethics
 Validates the core functionality of the intrinsic motivation engine,
 agent identity, marketplace automation, and ethics agent.
 """
-
-import shutil
-import tempfile
-from pathlib import Path
-
-import pytest
-
-from src.economics.marketplace_agent import MarketplaceAgent
-from src.ethics.ethics_agent import ActionImpact, EthicalFramework, EthicsAgent
-from src.identity.agent_signature import AgentIdentity
-from src.motivation.achievement_system import AchievementEngine
-from src.motivation.intrinsic_rewards import IntrinsicMotivationEngine
 
 
 @pytest.fixture

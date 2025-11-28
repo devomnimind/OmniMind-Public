@@ -1,0 +1,15 @@
+# GPU-specific dependencies for OmniMind
+# Install with: pip install -r requirements-gpu.txt
+# Requires: NVIDIA GPU with CUDA 12.0+
+
+# PyTorch GPU (CUDA)
+torch>=2.9.0
+torchvision>=0.19.0
+torchaudio>=2.4.0
+
+# NVIDIA Monitoring
+nvidia-ml-py>=12.560.30
+
+# GPU-accelerated libraries (if needed)
+# cupy-cuda12x>=13.0.0  # Optional: CuPy for GPU computing
+# numba>=0.59.0         # Optional: JIT compilation for GPU

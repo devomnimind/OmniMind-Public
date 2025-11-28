@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+from pathlib import Path
+from unittest.mock import MagicMock, Mock, patch
+import pytest
+from src.tools.omnimind_tools import (
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -32,14 +40,9 @@ Cobertura de:
 - Tratamento de exceções
 """
 
-from __future__ import annotations
 
-from pathlib import Path
-from unittest.mock import MagicMock, Mock, patch
 
-import pytest
 
-from src.tools.omnimind_tools import (
     AuditSecurityTool,
     EpisodicMemoryTool,
     ExecuteCommandTool,

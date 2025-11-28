@@ -1,3 +1,6 @@
+        import time
+        import time
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -227,7 +230,6 @@ class TestRootCauseEngine:
         )
 
         # Record failures in sequence (db fails first, then cascade)
-        import time
 
         engine.record_failure("fail-db", "db-1", FailureType.CRASH, "Database crashed")
         time.sleep(0.1)
@@ -508,7 +510,6 @@ class TestRootCauseEngine:
             dependencies=["service-1", "service-2"],
         )
 
-        import time
 
         # Both services fail independently
         engine.record_failure("fail-s1", "service-1", FailureType.CRASH, "S1 crashed")

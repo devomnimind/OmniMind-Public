@@ -1,3 +1,6 @@
+import pytest
+from src.autopoietic.system_boundary import SystemBoundary
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,10 +26,6 @@ Contact: fabricioslv@hotmail.com.br
 
 Ensures registration, internal checks, and policy enforcement work as expected.
 """
-
-import pytest
-
-from src.autopoietic.system_boundary import SystemBoundary
 
 
 def test_register_and_is_internal() -> None:

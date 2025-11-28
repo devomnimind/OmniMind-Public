@@ -1,3 +1,13 @@
+from __future__ import annotations
+
+import json
+import logging
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Optional, Set
+from ..integrations.graphql_supabase import ( from ..integrations.supabase_adapter import SupabaseConfig
+    from ..memory import EpisodicMemory
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -18,22 +28,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-from __future__ import annotations
 
-import json
-import logging
-from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Optional, Set
 
-from ..integrations.graphql_supabase import (
     GraphQLCollectionPage,
     GraphQLSupabaseError,
     GraphQLSupabaseHelper,
 )
-from ..integrations.supabase_adapter import SupabaseConfig
 
 if TYPE_CHECKING:
-    from ..memory import EpisodicMemory
 else:
     EpisodicMemory = Any
 

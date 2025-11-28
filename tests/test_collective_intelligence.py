@@ -1,3 +1,12 @@
+import math
+import time
+import pytest
+from src.swarm.collective_learning import ( from src.swarm.distributed_solver import (
+from src.swarm.emergence_detector import EmergenceDetector
+from src.swarm.particle_swarm import ParticleSwarmOptimizer
+from src.swarm.swarm_manager import SwarmManager
+from src.swarm.types import EmergenceType, EmergentPattern, Particle
+
 #!/usr/bin/env python3
 """
 OmniMind Project - Artificial Consciousness System
@@ -24,13 +33,9 @@ Smoke tests para módulos de Collective Intelligence (Migrated to Swarm).
 Grupo 5 - Phase 1: Testes básicos de inicialização e métodos principais
 """
 
-import math
-import time
 
-import pytest
 
 # Collective Learning (Migrated)
-from src.swarm.collective_learning import (
     CollectiveLearner,
     ConsensusLearning,
     FederatedLearning,
@@ -40,18 +45,13 @@ from src.swarm.collective_learning import (
 )
 
 # Distributed Solver (Migrated)
-from src.swarm.distributed_solver import (
     DistributedProblem,
     DistributedSolver,
 )
 
 # Emergent Behaviors (Migrated)
-from src.swarm.emergence_detector import EmergenceDetector
 
 # Swarm Intelligence (New Architecture)
-from src.swarm.particle_swarm import ParticleSwarmOptimizer
-from src.swarm.swarm_manager import SwarmManager
-from src.swarm.types import EmergenceType, EmergentPattern, Particle
 
 
 class TestSharedExperience:

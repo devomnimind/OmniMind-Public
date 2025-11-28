@@ -1,3 +1,6 @@
+    import os
+    import os
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -46,7 +49,6 @@ def test_health_routes_can_be_imported():
 
 def test_health_dashboard_component():
     """Test that HealthDashboard component exists."""
-    import os
 
     health_component_path = "web/frontend/src/components/HealthDashboard.tsx"
     assert os.path.exists(health_component_path), "HealthDashboard.tsx should exist"
@@ -77,7 +79,6 @@ def test_error_boundaries_component():
 
 def test_drag_drop_task_list():
     """Test that DragDropTaskList component exists."""
-    import os
 
     component_path = "web/frontend/src/components/DragDropTaskList.tsx"
     assert os.path.exists(component_path), "DragDropTaskList.tsx should exist"

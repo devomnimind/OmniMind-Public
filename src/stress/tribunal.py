@@ -1,3 +1,8 @@
+import random
+import time
+from typing import Any, Dict
+    import random
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,9 +31,6 @@ framework that the test suite can exercise.  Real‑world stress testing will
 replace the stubs with integration‑level calls to the frontend simulator and
 the distributed network layer.
 """
-import random
-import time
-from typing import Any, Dict
 
 # ---------------------------------------------------------------------------
 # Latency attack – inject artificial network delay and verify quorum handling.
@@ -67,7 +69,6 @@ def corruption_attack(node, bias_strength: float = 0.35) -> Dict[str, Any]:
     """
     # Generate a deterministic corrupted datum based on bias_strength
     # Use a fixed seed for reproducibility in tests
-    import random
 
     random.seed(42)  # Fixed seed for deterministic testing
 

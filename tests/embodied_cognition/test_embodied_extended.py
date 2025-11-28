@@ -1,3 +1,9 @@
+import pytest
+from src.embodied_cognition.motor_output import MotorController
+from src.embodied_cognition.proprioception import ProprioceptionModule
+from src.embodied_cognition.sensory_integration import SensoryIntegration
+from src.embodied_cognition.somatic_loop import SomaticLoop
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -23,13 +29,6 @@ Extended tests for Embodied Cognition (Phase 16.1 completion).
 
 Tests multimodal fusion, edge cases, and advanced scenarios.
 """
-
-import pytest
-
-from src.embodied_cognition.motor_output import MotorController
-from src.embodied_cognition.proprioception import ProprioceptionModule
-from src.embodied_cognition.sensory_integration import SensoryIntegration
-from src.embodied_cognition.somatic_loop import SomaticLoop
 
 
 class TestMultimodalFusion:

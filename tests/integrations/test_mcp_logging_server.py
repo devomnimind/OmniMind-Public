@@ -1,3 +1,8 @@
+from __future__ import annotations
+
+from src.integrations.mcp_logging_server import LoggingMCPServer
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -26,10 +31,6 @@ Cobertura de:
 - Recuperação de logs recentes (get_recent_logs)
 - Métodos herdados de MCPServer
 """
-
-from __future__ import annotations
-
-from src.integrations.mcp_logging_server import LoggingMCPServer
 
 
 class TestLoggingMCPServer:

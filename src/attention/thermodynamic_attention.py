@@ -1,3 +1,17 @@
+from __future__ import annotations
+
+import logging
+import math
+from typing import TYPE_CHECKING, Any, Optional, cast
+    import torch
+    import torch.nn as nn
+    import torch.nn.functional as F
+    from torch import Tensor as TorchTensor
+    import torch  # noqa: F811
+    import torch.nn as nn  # noqa: F811
+    import torch.nn.functional as F  # noqa: F811
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -36,25 +50,14 @@ Author: OmniMind Development Team
 License: MIT
 """
 
-from __future__ import annotations
 
-import logging
-import math
-from typing import TYPE_CHECKING, Any, Optional, cast
 
 if TYPE_CHECKING:
-    import torch
-    import torch.nn as nn
-    import torch.nn.functional as F
-    from torch import Tensor as TorchTensor
 else:
     TorchTensor = Any
 
 # Runtime imports
 try:
-    import torch  # noqa: F811
-    import torch.nn as nn  # noqa: F811
-    import torch.nn.functional as F  # noqa: F811
 
     TORCH_AVAILABLE = True
 except (ImportError, OSError):

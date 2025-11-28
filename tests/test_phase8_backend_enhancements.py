@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+            from src.metacognition.pattern_recognition import PatternRecognition
+            from src.metacognition.metacognition_agent import MetacognitionAgent
+            from src.integrations.dbus_controller import DBusSystemController
+
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -20,7 +27,6 @@ Contact: fabricioslv@hotmail.com.br
 
 """Tests for Phase 8.2 backend enhancements (WebSocket and APIs)."""
 
-from __future__ import annotations
 
 import pytest
 from fastapi.testclient import TestClient
@@ -253,7 +259,6 @@ class TestMetacognitionModule:
     def test_pattern_recognition_import(self) -> None:
         """Test importing pattern recognition module."""
         try:
-            from src.metacognition.pattern_recognition import PatternRecognition
 
             recognizer = PatternRecognition(sensitivity=0.7)
             assert recognizer.sensitivity == 0.7
@@ -263,7 +268,7 @@ class TestMetacognitionModule:
     def test_optimization_suggestions_import(self) -> None:
         """Test importing optimization suggestions module."""
         try:
-            from src.metacognition.optimization_suggestions import (
+from src.metacognition.optimization_suggestions import (
                 OptimizationSuggestions,
             )
 
@@ -275,7 +280,6 @@ class TestMetacognitionModule:
     def test_metacognition_agent_import(self) -> None:
         """Test importing metacognition agent."""
         try:
-            from src.metacognition.metacognition_agent import MetacognitionAgent
 
             agent = MetacognitionAgent()
             assert agent.analysis_interval == 3600
@@ -290,7 +294,6 @@ class TestDBusEnhancements:
     def test_dbus_controller_import(self) -> None:
         """Test importing enhanced D-Bus controller."""
         try:
-            from src.integrations.dbus_controller import DBusSystemController
 
             # Just test that new methods exist
             controller = DBusSystemController.__dict__

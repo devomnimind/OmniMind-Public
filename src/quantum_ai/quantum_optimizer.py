@@ -1,3 +1,8 @@
+import math
+import random
+from typing import Callable, List, Tuple
+import structlog
+
 """
 OmniMind Project - Artificial Consciousness System
 Copyright (C) 2024-2025 Fabrício da Silva
@@ -27,11 +32,6 @@ Author: OmniMind Project
 License: MIT
 """
 
-import math
-import random
-from typing import Callable, List, Tuple
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 
