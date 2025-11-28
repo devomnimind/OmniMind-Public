@@ -46,7 +46,49 @@
 
 ---
 
-### 3. [CHECKPOINT_SECURITY.md](CHECKPOINT_SECURITY.md) - CRÍTICO
+### 3. [DIAGNOSIS_WARNINGS_AND_TIMING.md](DIAGNOSIS_WARNINGS_AND_TIMING.md) - CRÍTICO
+**Tamanho:** ~12 KB  
+**Tempo de Leitura:** 20-30 minutos
+**Status:** ✅ Completo - 28 de Novembro 2025
+
+#### O que contém:
+- 📊 Análise de 48 warnings identificados
+- 🔍 Categorização de todos os tipos de warnings
+- ⏱️ Investigação de discrepância de timing (1h26m vs 12min)
+- 🔧 Causa raiz: múltiplas sessões de teste no mesmo arquivo
+- ✅ Validação de que todos os warnings são esperados
+- 💡 Recomendações de curto/médio/longo prazo
+
+#### Use quando:
+- Você quer entender os warnings encontrados
+- Precisa validar se warnings são problemas
+- Quer investigar discrepância de timing
+- Está preparando próxima execução de testes
+
+---
+
+### 4. [MANUAL_VALIDATION_GUIDE.md](MANUAL_VALIDATION_GUIDE.md) - ESSENCIAL
+**Tamanho:** ~8 KB  
+**Tempo de Leitura:** 15-20 minutos
+**Status:** ✅ Completo - 28 de Novembro 2025
+
+#### O que contém:
+- 🛡️ Checklist de validação segura
+- 🔧 Processo passo-a-passo para investigação
+- ❌ O QUE NUNCA FAZER (proteções)
+- ✅ O QUE FAZER (boas práticas)
+- 📝 Guia para categorizar warnings
+- 🆘 Plano de contingência
+
+#### Use quando:
+- Você precisa fazer investigação manual
+- Quer fazer alteração segura
+- Está preocupado com erros automáticos
+- Precisa de checklist de conclusão
+
+---
+
+### 5. [CHECKPOINT_SECURITY.md](CHECKPOINT_SECURITY.md) - CRÍTICO
 **Tamanho:** ~5 KB  
 **Tempo de Leitura:** 10-15 minutos
 
