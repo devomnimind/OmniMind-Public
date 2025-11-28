@@ -74,6 +74,12 @@ except ImportError:
 
 logger = structlog.get_logger(__name__)
 
+# Initialize numpy random generator for reproducible randomness
+_rng = np.random.default_rng()
+
+# Constants for error messages
+QISKIT_ERROR_MSG = "Qiskit required for quantum operations"
+
 
 class QuantumGateType(Enum):
     """
@@ -185,7 +191,7 @@ class QuantumState:
 
         # Sample from probability distribution
         size = len(self.statevector)
-        outcome_idx = np.random.choice(size, p=probs)
+        outcome_idx = _rng.choice(size, p=probs)
 
         # Convert to binary string (remove spaces, pad with zeros)
         outcome = format(outcome_idx, f"0{self.num_qubits}b")
@@ -454,7 +460,7 @@ class QuantumCognitionEngine:
             >>> circuit = engine.create_superposition([0], [0.7])
         """
         if not QISKIT_AVAILABLE:
-            raise ImportError("Qiskit required for quantum operations")
+            raise ImportError(QISKIT_ERROR_MSG)
 
         qr = QuantumRegister(self.num_qubits, "q")
         cr = ClassicalRegister(self.num_qubits, "c")
@@ -509,7 +515,7 @@ class QuantumCognitionEngine:
             >>> circuit = engine.create_entanglement(0, 1)
         """
         if not QISKIT_AVAILABLE:
-            raise ImportError("Qiskit required for quantum operations")
+            raise ImportError(QISKIT_ERROR_MSG)
 
         if not (0 <= control_qubit < self.num_qubits and 0 <= target_qubit < self.num_qubits):
             raise ValueError("Qubit indices must be valid")
@@ -555,7 +561,7 @@ class QuantumCognitionEngine:
             >>> print(f"Probabilities: {state.probabilities}")
         """
         if not QISKIT_AVAILABLE:
-            raise ImportError("Qiskit required for quantum operations")
+            raise ImportError(QISKIT_ERROR_MSG)
 
         # Get statevector from Qiskit
         sv = Statevector(circuit)
@@ -598,7 +604,7 @@ class QuantumCognitionEngine:
             >>> print(counts)  # {'00': 498, '11': 502} (Bell state correlations)
         """
         if not QISKIT_AVAILABLE:
-            raise ImportError("Qiskit required for quantum operations")
+            raise ImportError(QISKIT_ERROR_MSG)
 
         # Add measurement operations to all qubits
         qc = circuit.copy()
@@ -634,7 +640,7 @@ class QuantumCognitionEngine:
             ImportError: If Qiskit is not available.
         """
         if not QISKIT_AVAILABLE:
-            raise ImportError("Qiskit required for quantum operations")
+            raise ImportError(QISKIT_ERROR_MSG)
 
         qr = QuantumRegister(self.num_qubits, "q")
         cr = ClassicalRegister(self.num_qubits, "c")
@@ -673,7 +679,7 @@ class QuantumCognitionEngine:
             ImportError: If Qiskit is not available.
         """
         if not QISKIT_AVAILABLE:
-            raise ImportError("Qiskit required for quantum operations")
+            raise ImportError(QISKIT_ERROR_MSG)
 
         qc = circuit.copy()
 
@@ -823,7 +829,7 @@ class QuantumDecisionMaker:
             >>> print(counts)  # Should show Bell state correlations
         """
         if not QISKIT_AVAILABLE:
-            raise ImportError("Qiskit required for quantum operations")
+            raise ImportError(QISKIT_ERROR_MSG)
 
         circuit = self.engine.create_entanglement(0, 1)
         counts = self.engine.measure_circuit(circuit, shots=1000)
@@ -851,7 +857,7 @@ class QuantumDecisionMaker:
             ImportError: If Qiskit is not available.
         """
         if not QISKIT_AVAILABLE:
-            raise ImportError("Qiskit required for quantum operations")
+            raise ImportError(QISKIT_ERROR_MSG)
 
         circuit = self.engine.create_superposition()
         counts = self.engine.measure_circuit(circuit, shots=1000)

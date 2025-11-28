@@ -88,6 +88,8 @@ except ImportError:
 
 logger = structlog.get_logger(__name__)
 
+_rng = np.random.default_rng()
+
 
 @dataclass
 class QuantumMemoryCell:
@@ -244,7 +246,7 @@ class QuantumMemoryCell:
 
             # Sample from probability distribution
             size = len(self.quantum_state)
-            outcome_idx = np.random.choice(size, p=probs)
+            outcome_idx = _rng.choice(size, p=probs)
 
             # Return real part of measured amplitude
             measured_value = float(np.real(self.quantum_state[outcome_idx]))
@@ -489,7 +491,7 @@ class QuantumMemorySystem:
         if len(self.memory_cells) >= self.capacity:
             logger.warning("quantum_memory_full_evicting_oldest", capacity=self.capacity)
             # Evict oldest (LRU policy)
-            evicted = self.memory_cells.pop(0)
+            self.memory_cells.pop(0)
             logger.debug("evicted_memory_cell", index=0)
 
         # Create and encode new cell
@@ -894,7 +896,7 @@ class QuantumMemorySystem:
 
             # Sample from probability distribution
             size = len(self.quantum_state)
-            outcome_idx = np.random.choice(size, p=probs)
+            outcome_idx = _rng.choice(size, p=probs)
 
             # Return real part of measured amplitude
             measured_value = float(np.real(self.quantum_state[outcome_idx]))
@@ -974,235 +976,6 @@ class QuantumMemorySystem:
             )
 
         return info
-
-
-class QuantumMemorySystem:
-    """
-    Quantum memory system managing multiple entangled memory cells.
-
-    This system explores quantum advantages in memory operations:
-    - Superposition: Store multiple patterns simultaneously
-    - Entanglement: Create correlated memory associations
-    - Parallel Search: Quantum fidelity-based similarity search
-    - Decoherence: Memory stability over time
-
-    Architecture:
-    - Memory cells stored in classical list (quantum states inside)
-    - LRU eviction policy when capacity exceeded
-    - Quantum parallelism for bulk operations
-
-    Attributes:
-        num_qubits: Qubits per memory cell
-        capacity: Maximum number of cells
-        memory_cells: List of QuantumMemoryCell objects
-        simulator: Qiskit simulator instance
-
-    Example:
-        >>> memory = QuantumMemorySystem(num_qubits=3, capacity=50)
-        >>> idx = memory.store([0.6, 0.4, 0.2, 0.1, 0.3, 0.5, 0.8, 0.9])
-        >>> similar = memory.search_similar([0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0])
-    """
-
-    def __init__(self, num_qubits: int = 4, capacity: int = 10) -> None:
-        """
-        Initialize quantum memory system.
-
-        Args:
-            num_qubits: Number of qubits per memory cell (2^num_qubits = max vector size)
-            capacity: Maximum number of memory cells (LRU eviction when exceeded)
-
-        Raises:
-            ValueError: If num_qubits or capacity are invalid
-        """
-        if num_qubits <= 0:
-            raise ValueError("num_qubits must be positive")
-        if capacity <= 0:
-            raise ValueError("capacity must be positive")
-
-        self.num_qubits = num_qubits
-        self.capacity = capacity
-        self.memory_cells: List[QuantumMemoryCell] = []
-        self.simulator = AerSimulator() if QISKIT_AVAILABLE else None
-
-        logger.info(
-            "quantum_memory_system_initialized",
-            num_qubits=num_qubits,
-            capacity=capacity,
-            max_vector_size=2**num_qubits,
-            qiskit_available=QISKIT_AVAILABLE,
-        )
-
-    def store(self, data: Any, key: Optional[str] = None) -> int:
-        """
-        Store data in quantum memory cell.
-
-        Process:
-        1. Create new QuantumMemoryCell
-        2. Encode classical data to quantum state
-        3. Add to memory (evict oldest if at capacity)
-        4. Return cell index for retrieval
-
-        Args:
-            data: Classical data to store (list, array, or scalar)
-            key: Optional string key for future retrieval
-
-        Returns:
-            Memory cell index (int)
-
-        Example:
-            >>> idx = memory.store([1, 0, 0, 0])  # Stores |00⟩ state
-            >>> idx = memory.store(3.14)  # Stores scalar value
-        """
-        if len(self.memory_cells) >= self.capacity:
-            logger.warning("quantum_memory_full_evicting_oldest", capacity=self.capacity)
-            # Evict oldest (LRU policy)
-            evicted = self.memory_cells.pop(0)
-            logger.debug("evicted_memory_cell", index=0)
-
-        # Create and encode new cell
-        cell = QuantumMemoryCell(data=data, num_qubits=self.num_qubits)
-        cell.encode()
-
-        self.memory_cells.append(cell)
-        idx = len(self.memory_cells) - 1
-
-        logger.info(
-            "quantum_memory_stored",
-            index=idx,
-            key=key,
-            data_type=type(data).__name__,
-            total_cells=len(self.memory_cells),
-        )
-
-        return idx
-
-    def retrieve(self, index: int) -> Any:
-        """
-        Retrieve and decode data from quantum memory.
-
-        Process:
-        1. Validate index bounds
-        2. Access memory cell
-        3. Decode quantum state (probabilistic measurement)
-        4. Return classical data
-
-        Args:
-            index: Memory cell index (0-based)
-
-        Returns:
-            Decoded classical data, or None if invalid index
-
-        Note:
-            Retrieval is probabilistic due to quantum measurement.
-            Repeated retrievals may give different results.
-        """
-        if index < 0 or index >= len(self.memory_cells):
-            logger.error(
-                "invalid_memory_index",
-                requested=index,
-                valid_range=f"[0, {len(self.memory_cells)-1}]",
-            )
-            return None
-
-        cell = self.memory_cells[index]
-        decoded_data = cell.decode()
-
-        logger.info(
-            "quantum_memory_retrieved",
-            index=index,
-            data_type=type(decoded_data).__name__,
-        )
-
-        return decoded_data
-
-    def search_similar(self, query_data: Any, threshold: float = 0.8) -> List[int]:
-        """
-        Search for memory cells similar to query using quantum fidelity.
-
-        This implements quantum similarity search:
-        1. Encode query data to quantum state
-        2. Calculate fidelity with all stored cells
-        3. Return indices where F ≥ threshold
-
-        Advantages over classical search:
-        - Parallel comparison of all stored patterns
-        - Quantum superposition enables bulk operations
-        - Fidelity captures quantum state similarity
-
-        Args:
-            query_data: Data to search for (same format as stored data)
-            threshold: Minimum fidelity for match [0, 1]
-
-        Returns:
-            List of matching memory cell indices
-
-        Example:
-            >>> matches = memory.search_similar([0.7, 0.3], threshold=0.9)
-            >>> print(f"Found {len(matches)} similar patterns")
-        """
-        # Create query cell and encode
-        query_cell = QuantumMemoryCell(data=query_data, num_qubits=self.num_qubits)
-        query_cell.encode()
-
-        matches = []
-        for idx, cell in enumerate(self.memory_cells):
-            fidelity = query_cell.fidelity(cell)
-            if fidelity >= threshold:
-                matches.append(idx)
-                logger.debug("similar_memory_found", index=idx, fidelity=fidelity)
-
-        logger.info(
-            "quantum_memory_search_complete",
-            query_type=type(query_data).__name__,
-            num_matches=len(matches),
-            threshold=threshold,
-            total_cells=len(self.memory_cells),
-        )
-
-        return matches
-
-    def get_memory_stats(self) -> Dict[str, Any]:
-        """
-        Get comprehensive memory system statistics.
-
-        Returns:
-            Dictionary with usage statistics and health metrics
-        """
-        stats = {
-            "capacity": self.capacity,
-            "used": len(self.memory_cells),
-            "utilization": len(self.memory_cells) / self.capacity,
-            "num_qubits": self.num_qubits,
-            "max_vector_size": 2**self.num_qubits,
-            "qiskit_available": QISKIT_AVAILABLE,
-        }
-
-        # Calculate average fidelity between random pairs
-        if len(self.memory_cells) >= 2:
-            fidelities = []
-            for i in range(min(10, len(self.memory_cells))):  # Sample up to 10 pairs
-                j = (i + 1) % len(self.memory_cells)
-                fid = self.memory_cells[i].fidelity(self.memory_cells[j])
-                fidelities.append(fid)
-
-            stats["avg_inter_fidelity"] = float(np.mean(fidelities))
-            stats["fidelity_std"] = float(np.std(fidelities))
-
-        return stats
-
-    def clear(self) -> None:
-        """
-        Clear all quantum memory cells.
-
-        This operation:
-        - Removes all stored memory cells
-        - Resets to empty state
-        - Logs the operation
-        """
-        num_cleared = len(self.memory_cells)
-        self.memory_cells.clear()
-
-        logger.info("quantum_memory_cleared", cells_cleared=num_cleared)
 
 
 @dataclass
@@ -1399,9 +1172,9 @@ class HybridQLearning:
         2. With probability (1-ε): select best known action (exploitation)
         3. Return action with highest Q-value for current state
         """
-        if np.random.random() < epsilon:
+        if _rng.random() < epsilon:
             # Exploration: random action
-            action_idx = np.random.randint(0, self.num_actions)
+            action_idx = _rng.integers(0, self.num_actions)
             logger.debug("exploration_random_action", state=state, action_idx=action_idx)
         else:
             # Exploitation: best action
@@ -1574,8 +1347,9 @@ class QuantumMemoryComparison:
         return "\n".join(
             [
                 "Quantum vs Classical Memory Comparison:",
-                f"  Retrieval Time: {self.quantum_retrieval_time:.4f}s vs {self.classical_retrieval_time:.4f}s",
-                f"  Accuracy: {self.quantum_accuracy:.2%} vs {self.classical_accuracy:.2%}",
+                f"  Retrieval Time: {self.quantum_retrieval_time:.4f}s vs "
+                f"{self.classical_retrieval_time:.4f}s",
+                f"  Accuracy: {self.quantum_accuracy:.2%} vs " f"{self.classical_accuracy:.2%}",
                 f"  Speedup: {self.quantum_speedup:.2f}x",
                 f"  Notes: {self.notes}",
             ]

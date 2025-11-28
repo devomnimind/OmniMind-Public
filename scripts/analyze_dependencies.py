@@ -21,7 +21,6 @@ License: MIT
 
 import argparse
 import json
-import logging
 import subprocess
 import sys
 from pathlib import Path
@@ -61,7 +60,7 @@ class DependencyAnalyzer:
         self.project_root = project_root
         self.installed_packages: Dict[str, str] = {}
         self.declared_deps: Dict[str, Set[str]] = {}
-        self.security_issues: List[Dict] = []
+        self.security_issues: List[Dict[str, Any]] = []
 
         logger.info("dependency_analyzer_initialized", project_root=str(project_root))
 
@@ -116,7 +115,7 @@ class DependencyAnalyzer:
                 self.declared_deps[req_file] = deps
                 logger.debug("requirements_loaded", file=req_file, deps_count=len(deps))
 
-    def analyze_dependency_health(self) -> Dict[str, any]:
+    def analyze_dependency_health(self) -> Dict[str, Any]:
         """
         Perform comprehensive dependency health analysis.
 
@@ -175,7 +174,7 @@ class DependencyAnalyzer:
             'qiskit', 'qiskit-aer', 'structlog', 'pyyaml',
         }
 
-        unused = []
+        unused: List[str] = []
         for package in self.installed_packages:
             if package not in declared and package not in runtime_deps:
                 # Additional heuristics could be added here
@@ -191,7 +190,7 @@ class DependencyAnalyzer:
         for deps in self.declared_deps.values():
             declared.update(deps)
 
-        missing = []
+        missing: List[str] = []
         for package in declared:
             if package not in self.installed_packages:
                 missing.append(package)
@@ -205,7 +204,7 @@ class DependencyAnalyzer:
         This is a simplified check - real conflicts require solving the
         constraint satisfaction problem.
         """
-        conflicts = []
+        conflicts: List[Dict[str, Any]] = []
 
         # For now, just check if same package appears in multiple files
         # with different version specs (would need more sophisticated parsing)
@@ -216,7 +215,7 @@ class DependencyAnalyzer:
         """
         Generate actionable recommendations based on analysis.
         """
-        recommendations = []
+        recommendations: List[str] = []
 
         if analysis["summary"]["unused_count"] > 0:
             recommendations.append(
@@ -250,7 +249,7 @@ class DependencyAnalyzer:
 
         Uses safety package if available, otherwise provides basic checks.
         """
-        vulnerabilities = []
+        vulnerabilities: List[Dict[str, Any]] = []
 
         try:
             # Try to use safety package
@@ -283,7 +282,7 @@ class DependencyAnalyzer:
 
         return vulnerabilities
 
-    def analyze_licenses(self) -> Dict[str, any]:
+    def analyze_licenses(self) -> Dict[str, Any]:
         """
         Analyze license compatibility of installed packages.
 

@@ -123,6 +123,38 @@ class ModuleExecutor:
 
     def _compute_output(self, inputs: Dict[str, np.ndarray], **kwargs: Any) -> np.ndarray:
         """Compute module output from inputs."""
+        # Special handling for expectation module
+        if self.module_name == "expectation":
+            from .expectation_module import predict_next_state
+            if inputs:
+                # Use first input as current state for prediction
+                current_state = next(iter(inputs.values()))
+                return predict_next_state(current_state)
+            else:
+                # No inputs - return zero embedding
+                return np.zeros(self.spec.embedding_dim)
+
+        # Check if required inputs are available and non-zero
+        missing_required = []
+        zero_required = []
+
+        for req_input in self.spec.required_inputs:
+            if req_input not in inputs:
+                missing_required.append(req_input)
+            elif np.allclose(inputs[req_input], 0.0):
+                zero_required.append(req_input)
+
+        # If required inputs are missing or zero, module cannot function properly
+        if missing_required or zero_required:
+            logger.warning(
+                f"Module {self.module_name} missing/zero required inputs: "
+                f"missing={missing_required}, zero={zero_required}. "
+                f"Cannot compute meaningful output."
+            )
+            # Return zeros to indicate module failure
+            return np.zeros(self.spec.embedding_dim)
+
+        # Default behavior for other modules
         if inputs:
             # Blend inputs via averaging
             stacked = np.array(list(inputs.values()))

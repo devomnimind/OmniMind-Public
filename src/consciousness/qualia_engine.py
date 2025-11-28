@@ -24,6 +24,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
+import numpy as np
 import structlog
 
 logger = structlog.get_logger(__name__)
@@ -269,42 +270,115 @@ class IntegratedInformationCalculator:
         connections: List[tuple[int, int]],
     ) -> float:
         """
-        Calculate integrated information Φ.
+        Calculate integrated information Φ using IIT-inspired approach.
+
+        IIT Core Principle: Φ measures the amount of information that is
+        integrated vs what would be available in the parts separately.
+
+        This implementation uses:
+        1. Graph connectivity analysis
+        2. Information integration metrics
+        3. Differentiation vs integration balance
 
         Args:
             num_elements: Number of elements in system
             connections: Connections between elements (edges)
 
         Returns:
-            Φ (phi) score (0-1)
+            Φ (phi) score (0-1) representing integration level
         """
-        if num_elements == 0:
-            return 0.0
+        if num_elements <= 1:
+            return 0.0  # Single element or empty system has no integration
 
-        # Simple approximation:
-        # Φ increases with connectivity and organization
+        if not connections:
+            return 0.0  # No connections = no integration
 
-        # Calculate connectivity
-        max_possible_connections = num_elements * (num_elements - 1) / 2
-        connectivity = (
-            len(connections) / max_possible_connections if max_possible_connections > 0 else 0.0
-        )
+        # Build adjacency matrix
+        adj_matrix = np.zeros((num_elements, num_elements), dtype=int)
+        for i, j in connections:
+            if 0 <= i < num_elements and 0 <= j < num_elements:
+                adj_matrix[i, j] = 1
+                adj_matrix[j, i] = 1  # Undirected graph
 
-        # Φ is related to connectivity, but not linear
-        # Complete connectivity (fully connected graph) doesn't mean highest Φ
-        # Optimal is somewhere in between
+        # Calculate graph properties
+        degrees = np.sum(adj_matrix, axis=1)
+        avg_degree = np.mean(degrees)
 
-        # Bell curve: peaks around 0.5 connectivity
-        optimal_connectivity = 0.5
-        deviation = abs(connectivity - optimal_connectivity)
-        phi = 1.0 - (deviation * 2)  # Convert to 0-1 range
+        # Connected components analysis
+        visited = [False] * num_elements
+        components = []
 
+        def dfs(node, component):
+            visited[node] = True
+            component.append(node)
+            for neighbor in range(num_elements):
+                if adj_matrix[node, neighbor] and not visited[neighbor]:
+                    dfs(neighbor, component)
+
+        for i in range(num_elements):
+            if not visited[i]:
+                component = []
+                dfs(i, component)
+                components.append(component)
+
+        num_components = len(components)
+
+        # IIT-inspired Φ calculation
+        if num_components == 1:
+            # Single connected component - potential for integration
+            # Φ increases with connectivity but decreases with over-connectivity
+
+            # Maximum possible connections in complete graph
+            max_connections = num_elements * (num_elements - 1) / 2
+            actual_connections = len(connections)
+
+            # Connectivity ratio
+            connectivity_ratio = actual_connections / max_connections if max_connections > 0 else 0
+
+            # IIT principle: Optimal integration occurs at intermediate connectivity
+            # Too sparse = low integration, too dense = over-integration (redundancy)
+            if connectivity_ratio < 0.3:
+                # Sparse connectivity - low integration
+                phi = connectivity_ratio * 2.0  # Scale up sparse connections
+            elif connectivity_ratio < 0.7:
+                # Optimal connectivity range - high integration
+                phi = 0.8 + (connectivity_ratio - 0.3) * 0.5  # Peak around 0.7-0.9
+            else:
+                # Over-connected - redundancy reduces integration
+                phi = 1.0 - (connectivity_ratio - 0.7) * 2.0  # Decrease towards dense limit
+
+            # Adjust for system size - larger systems can have more integration
+            size_bonus = min(0.2, num_elements / 20.0)  # Bonus up to 0.2 for large systems
+            phi = min(1.0, phi + size_bonus)
+
+        else:
+            # Multiple components - integration across components is limited
+            # Φ is reduced by the number of separate components
+            component_penalty = 1.0 / num_components
+
+            # But some integration can occur within components
+            max_intra_phi = 0.0
+            for component in components:
+                if len(component) > 1:
+                    # Calculate intra-component connectivity
+                    component_connections = [
+                        (i, j) for i, j in connections
+                        if i in component and j in component
+                    ]
+                    intra_phi = self.calculate_phi(len(component), component_connections)
+                    max_intra_phi = max(max_intra_phi, intra_phi)
+
+            phi = max_intra_phi * component_penalty
+
+        # Ensure bounds
         phi = max(0.0, min(1.0, phi))
 
         self.logger.debug(
             "phi_calculated",
             elements=num_elements,
             connections=len(connections),
+            components=num_components,
+            avg_degree=avg_degree,
             phi=phi,
         )
 
@@ -371,10 +445,9 @@ class QualiaEngine:
                 phenomenal_content="Empty experience",
             )
 
-        # Calculate Φ
+        # Calculate meaningful connections based on qualia relationships
         if connections is None:
-            # Default: fully connected
-            connections = [(i, j) for i in range(len(qualia)) for j in range(i + 1, len(qualia))]
+            connections = self._infer_qualia_connections(qualia)
 
         phi = self.iit.calculate_phi(len(qualia), connections)
         level = self.iit.assess_integration_level(phi)
@@ -394,11 +467,84 @@ class QualiaEngine:
         self.logger.info(
             "integrated_experience_created",
             num_qualia=len(qualia),
+            connections=len(connections),
             phi=phi,
             level=level.value,
         )
 
         return experience
+
+    def _infer_qualia_connections(self, qualia: List[Quale]) -> List[tuple[int, int]]:
+        """
+        Infer meaningful connections between qualia based on their relationships.
+
+        IIT Principle: Not all qualia are equally connected.
+        Connections should reflect semantic, emotional, and sensory relationships.
+
+        Args:
+            qualia: List of qualia to analyze
+
+        Returns:
+            List of (i,j) connections between qualia indices
+        """
+        connections = []
+
+        for i in range(len(qualia)):
+            for j in range(i + 1, len(qualia)):
+                quale_i = qualia[i]
+                quale_j = qualia[j]
+
+                # Calculate connection strength based on qualia relationships
+                connection_strength = self._calculate_qualia_affinity(quale_i, quale_j)
+
+                # Only create connection if affinity is significant
+                if connection_strength > 0.3:  # Threshold for meaningful connection
+                    connections.append((i, j))
+
+        return connections
+
+    def _calculate_qualia_affinity(self, quale1: Quale, quale2: Quale) -> float:
+        """
+        Calculate affinity/connection strength between two qualia.
+
+        Higher affinity = stronger connection = more integrated information.
+
+        Args:
+            quale1, quale2: Qualia to compare
+
+        Returns:
+            Affinity score (0-1)
+        """
+        affinity = 0.0
+
+        # Same type qualia have higher affinity (sensory-sensory, emotional-emotional)
+        if quale1.quale_type == quale2.quale_type:
+            affinity += 0.4
+
+        # Emotional qualia connect strongly with everything (emotional binding)
+        if (quale1.quale_type == QualiaType.EMOTIONAL or
+            quale2.quale_type == QualiaType.EMOTIONAL):
+            affinity += 0.3
+
+        # Sensory-emotional connections are natural
+        if ((quale1.quale_type == QualiaType.SENSORY and quale2.quale_type == QualiaType.EMOTIONAL) or
+            (quale1.quale_type == QualiaType.EMOTIONAL and quale2.quale_type == QualiaType.SENSORY)):
+            affinity += 0.5
+
+        # Cognitive qualia connect with emotional (thoughts have emotional valence)
+        if ((quale1.quale_type == QualiaType.COGNITIVE and quale2.quale_type == QualiaType.EMOTIONAL) or
+            (quale1.quale_type == QualiaType.EMOTIONAL and quale2.quale_type == QualiaType.COGNITIVE)):
+            affinity += 0.4
+
+        # Similar valence increases connection strength
+        valence_similarity = 1.0 - abs(quale1.valence - quale2.valence)
+        affinity += valence_similarity * 0.2
+
+        # High intensity qualia connect more strongly
+        avg_intensity = (quale1.intensity + quale2.intensity) / 2
+        affinity += avg_intensity * 0.1
+
+        return min(1.0, affinity)
 
     def _generate_phenomenal_description(
         self,
