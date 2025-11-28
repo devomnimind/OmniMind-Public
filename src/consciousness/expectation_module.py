@@ -24,6 +24,7 @@ logger = structlog.get_logger(__name__)
 @dataclass
 class ExpectationState:
     """Current expectation state."""
+
     predicted_embedding: np.ndarray
     confidence: float
     temporal_horizon: int
@@ -33,6 +34,7 @@ class ExpectationState:
 @dataclass
 class PredictionError:
     """Prediction error metrics."""
+
     mse_error: float
     temporal_consistency: float
     surprise_level: float
@@ -300,11 +302,11 @@ class ExpectationModule(nn.Module):
         if error > 0.1:  # High error
             # Increase learning rate temporarily
             for param_group in self.optimizer.param_groups:
-                param_group['lr'] = min(0.01, param_group['lr'] * 1.5)
+                param_group["lr"] = min(0.01, param_group["lr"] * 1.5)
         elif error < 0.01:  # Low error
             # Decrease learning rate (fine-tuning)
             for param_group in self.optimizer.param_groups:
-                param_group['lr'] = max(0.0001, param_group['lr'] * 0.95)
+                param_group["lr"] = max(0.0001, param_group["lr"] * 0.95)
 
     def _update_temporal_memory(self, embedding: np.ndarray) -> None:
         """Update temporal memory buffer."""
@@ -317,9 +319,11 @@ class ExpectationModule(nn.Module):
         return {
             "nachtraglichkeit_events": self.nachtraglichkeit_events,
             "temporal_memory_size": len(self.temporal_memory),
-            "avg_prediction_error": np.mean(self.prediction_errors) if self.prediction_errors else 0.0,
+            "avg_prediction_error": (
+                np.mean(self.prediction_errors) if self.prediction_errors else 0.0
+            ),
             "error_history_length": len(self.prediction_errors),
-            "learning_rate": self.optimizer.param_groups[0]['lr'],
+            "learning_rate": self.optimizer.param_groups[0]["lr"],
             "nachtraglichkeit_threshold": self.nachtraglichkeit_threshold,
         }
 

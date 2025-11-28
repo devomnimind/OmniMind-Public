@@ -126,6 +126,7 @@ class ModuleExecutor:
         # Special handling for expectation module
         if self.module_name == "expectation":
             from .expectation_module import predict_next_state
+
             if inputs:
                 # Use first input as current state for prediction
                 current_state = next(iter(inputs.values()))

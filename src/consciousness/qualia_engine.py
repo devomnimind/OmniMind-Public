@@ -362,8 +362,7 @@ class IntegratedInformationCalculator:
                 if len(component) > 1:
                     # Calculate intra-component connectivity
                     component_connections = [
-                        (i, j) for i, j in connections
-                        if i in component and j in component
+                        (i, j) for i, j in connections if i in component and j in component
                     ]
                     intra_phi = self.calculate_phi(len(component), component_connections)
                     max_intra_phi = max(max_intra_phi, intra_phi)
@@ -522,18 +521,23 @@ class QualiaEngine:
             affinity += 0.4
 
         # Emotional qualia connect strongly with everything (emotional binding)
-        if (quale1.quale_type == QualiaType.EMOTIONAL or
-            quale2.quale_type == QualiaType.EMOTIONAL):
+        if quale1.quale_type == QualiaType.EMOTIONAL or quale2.quale_type == QualiaType.EMOTIONAL:
             affinity += 0.3
 
         # Sensory-emotional connections are natural
-        if ((quale1.quale_type == QualiaType.SENSORY and quale2.quale_type == QualiaType.EMOTIONAL) or
-            (quale1.quale_type == QualiaType.EMOTIONAL and quale2.quale_type == QualiaType.SENSORY)):
+        if (
+            quale1.quale_type == QualiaType.SENSORY and quale2.quale_type == QualiaType.EMOTIONAL
+        ) or (
+            quale1.quale_type == QualiaType.EMOTIONAL and quale2.quale_type == QualiaType.SENSORY
+        ):
             affinity += 0.5
 
         # Cognitive qualia connect with emotional (thoughts have emotional valence)
-        if ((quale1.quale_type == QualiaType.COGNITIVE and quale2.quale_type == QualiaType.EMOTIONAL) or
-            (quale1.quale_type == QualiaType.EMOTIONAL and quale2.quale_type == QualiaType.COGNITIVE)):
+        if (
+            quale1.quale_type == QualiaType.COGNITIVE and quale2.quale_type == QualiaType.EMOTIONAL
+        ) or (
+            quale1.quale_type == QualiaType.EMOTIONAL and quale2.quale_type == QualiaType.COGNITIVE
+        ):
             affinity += 0.4
 
         # Similar valence increases connection strength

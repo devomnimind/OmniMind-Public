@@ -391,8 +391,8 @@ class SharedWorkspace:
             train_target = np.delete(target_data, i, axis=0)
 
             # Dados de teste (apenas i)
-            test_source = source_data[i:i+1]
-            test_target = target_data[i:i+1]
+            test_source = source_data[i : i + 1]
+            test_target = target_data[i : i + 1]
 
             # Treinar modelo
             if train_source.shape[0] < 2:
@@ -484,7 +484,7 @@ class SharedWorkspace:
             # Com histórico curto, R² alto é muito suspeito
             history_length = min(
                 len(self.get_module_history(p.source_module)),
-                len(self.get_module_history(p.target_module))
+                len(self.get_module_history(p.target_module)),
             )
 
             if history_length < 10:
@@ -494,11 +494,15 @@ class SharedWorkspace:
                     r2 = r2 * 0.5  # Penalizar 50% para R² > 0.90
                 elif r2 > 0.80:
                     r2 = r2 * 0.7  # Penalizar 30% para R² > 0.80
-                logger.debug(f"IIT: Penalized overfitting {p.source_module}->{p.target_module}: {p.r_squared:.3f} -> {r2:.3f}")
+                logger.debug(
+                    f"IIT: Penalized overfitting {p.source_module}->{p.target_module}: {p.r_squared:.3f} -> {r2:.3f}"
+                )
             elif history_length < 20 and r2 > 0.95:
                 # Mesmo com histórico médio, R² muito alto é suspeito
                 r2 = r2 * 0.6  # Penalizar 40%
-                logger.debug(f"IIT: Penalized high R² {p.source_module}->{p.target_module}: {p.r_squared:.3f} -> {r2:.3f}")
+                logger.debug(
+                    f"IIT: Penalized high R² {p.source_module}->{p.target_module}: {p.r_squared:.3f} -> {r2:.3f}"
+                )
 
             r_squared_values.append(r2)
 
