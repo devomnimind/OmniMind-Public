@@ -14,7 +14,7 @@ Key Features:
 import numpy as np
 import torch
 import torch.nn as nn
-from typing import Dict, List, Optional, Tuple, Any
+from typing import Dict, List, Optional, Any  # Removed unused Tuple
 from dataclasses import dataclass
 import structlog
 
@@ -173,7 +173,7 @@ class ExpectationModule(nn.Module):
         temporal_consistency = self._compute_temporal_consistency(actual)
 
         # Surprise level (unexpectedness)
-        surprise_level = self._compute_surprise_level(mse_error, temporal_consistency)
+        surprise_level = self._compute_surprise_level(float(mse_error), temporal_consistency)
 
         # Nachträglichkeit trigger
         nachtraglichkeit_triggered = surprise_level > self.nachtraglichkeit_threshold
@@ -183,15 +183,15 @@ class ExpectationModule(nn.Module):
             self._perform_nachtraglichkeit(predicted, actual)
 
         # Store error for adaptation
-        self.prediction_errors.append(mse_error)
+        self.prediction_errors.append(float(mse_error))
         if len(self.prediction_errors) > 100:  # Keep last 100 errors
             self.prediction_errors.pop(0)
 
         # Adaptive learning
-        self._adapt_from_error(mse_error)
+        self._adapt_from_error(float(mse_error))
 
         error = PredictionError(
-            mse_error=mse_error,
+            mse_error=float(mse_error),
             temporal_consistency=temporal_consistency,
             surprise_level=surprise_level,
             nachtraglichkeit_triggered=nachtraglichkeit_triggered,
@@ -267,7 +267,7 @@ class ExpectationModule(nn.Module):
         elif prediction_magnitude < 0.1:  # Weak prediction
             confidence *= 0.8
 
-        return min(1.0, confidence)
+        return min(1.0, float(confidence))
 
     def _compute_temporal_consistency(self, actual: np.ndarray) -> float:
         """Compute how consistent actual state is with temporal history."""
@@ -280,7 +280,7 @@ class ExpectationModule(nn.Module):
             similarity = 1.0 - np.mean((past_state - actual) ** 2)
             similarities.append(max(0.0, similarity))  # Ensure non-negative
 
-        return np.mean(similarities)
+        return float(np.mean(similarities))
 
     def _compute_surprise_level(
         self,
