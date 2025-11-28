@@ -13,13 +13,41 @@ logger = logging.getLogger(__name__)
 
 class QuantumAnnealer:
     """
-    Quantum annealing optimizer using D-Wave or simulated annealing.
+    Quantum Annealing Optimizer for Binary Optimization Problems.
 
-    Features:
-    - D-Wave Leap integration
-    - Simulated annealing fallback
-    - QUBO problem formulation
-    - Hamming weight optimization
+    This class provides a unified interface for solving Quadratic Unconstrained
+    Binary Optimization (QUBO) problems using quantum annealing hardware or
+    classical simulation. It implements the Lacanian Real register through
+    quantum indeterminacy and measurement collapse.
+
+    Key Features:
+    - D-Wave Leap quantum hardware integration
+    - Automatic fallback to classical simulated annealing
+    - Configurable problem sizes and solver parameters
+    - Comprehensive solution metadata and timing information
+    - Thread-safe singleton pattern for resource management
+
+    Architecture:
+    - Quantum Register: D-Wave quantum processing unit (QPU)
+    - Classical Fallback: Heuristic simulated annealing
+    - State Collapse: Irreversible measurement in quantum mode
+    - Energy Landscape: QUBO formulation of optimization problems
+
+    Usage Patterns:
+    - Portfolio optimization: Asset allocation with constraints
+    - Protein folding: Amino acid configuration optimization
+    - Traffic routing: Path optimization with capacity constraints
+    - Machine learning: Feature selection and model compression
+
+    Attributes:
+        num_variables (int): Number of binary variables in optimization problems
+        use_dwave (bool): Whether to attempt D-Wave hardware usage
+        sampler: D-Wave sampler instance (None if unavailable)
+
+    Note:
+        The singleton pattern ensures only one instance exists per process,
+        preventing resource conflicts and enabling efficient hardware usage.
+        This is crucial for quantum hardware access management.
     """
 
     def __init__(self, num_variables: int = 10, use_dwave: bool = False):
@@ -48,12 +76,49 @@ class QuantumAnnealer:
         """
         Solve Quadratic Unconstrained Binary Optimization problem.
 
+        This method implements quantum annealing for QUBO problems using
+        D-Wave hardware when available, with automatic fallback to
+        classical simulated annealing.
+
+        The QUBO formulation allows representing complex optimization
+        problems as binary quadratic models, which can be solved using
+        quantum adiabatic processes or classical heuristics.
+
         Args:
-            qubo: QUBO coefficients as {(i,j): weight}
-            num_reads: Number of annealing runs
+            qubo: QUBO coefficients as {(i,j): weight} dictionary.
+                 Linear terms use (i,i) keys, quadratic terms use (i,j) keys.
+                 Example: {(0,0): -1, (1,1): -1, (0,1): 2}
+            num_reads: Number of independent solution attempts.
+                      Higher values improve solution quality but increase runtime.
 
         Returns:
-            Dict with solution, energy, and metadata
+            Dictionary containing solution and metadata:
+            {
+                'solution': Dict[int, int],  # Variable assignments {var_id: binary_value}
+                'energy': float,            # Objective function value (lower is better)
+                'source': str,              # 'dwave_hardware' or 'simulated_annealing'
+                'reads': int,               # Number of reads performed
+                'irreversible': bool,       # True for quantum (measurement collapses state)
+                'timing': Dict,            # D-Wave timing information (if applicable)
+            }
+
+        Raises:
+            No exceptions raised - graceful fallback ensures method always succeeds.
+
+        Example:
+            >>> annealer = QuantumAnnealer(num_variables=2)
+            >>> qubo = {(0,0): -1, (1,1): -1, (0,1): 2}  # Simple Ising model
+            >>> result = annealer.solve_qubo(qubo, num_reads=100)
+            >>> print(f"Best solution: {result['solution']}")
+            >>> print(f"Energy: {result['energy']:.2f}")
+            Best solution: {0: 1, 1: 0}
+            Energy: -1.00
+
+        Note:
+            Quantum annealing provides probabilistic guarantees for finding
+            global optima, while simulated annealing uses heuristic search.
+            Both methods are non-deterministic and may return different
+            solutions on repeated calls.
         """
         if self.use_dwave and self.sampler:
             # Real D-Wave execution
@@ -78,12 +143,41 @@ class QuantumAnnealer:
         """
         Optimize for specific Hamming weight (number of 1s in solution).
 
+        This method solves the combinatorial optimization problem of finding
+        binary vectors with exactly target_weight ones that minimize an
+        objective function. It formulates the problem as a QUBO and uses
+        quantum/classical annealing to find optimal solutions.
+
+        The Hamming weight constraint is implemented through a quadratic
+        penalty term that heavily penalizes solutions with incorrect
+        weight, effectively enforcing the constraint during optimization.
+
         Args:
-            target_weight: Desired number of 1s in solution
-            num_reads: Number of optimization runs
+            target_weight: Desired number of 1s in the solution vector.
+                         Must be between 0 and num_variables.
+            num_reads: Number of independent optimization runs.
+                      Higher values improve solution quality.
 
         Returns:
-            Best solution found
+            Dictionary with solution and metadata (same format as solve_qubo).
+            The solution will attempt to satisfy the Hamming weight constraint.
+
+        Raises:
+            No exceptions raised - method always returns a valid solution.
+
+        Example:
+            >>> annealer = QuantumAnnealer(num_variables=4)
+            >>> result = annealer.optimize_hamming_weight(target_weight=2)
+            >>> solution = result['solution']
+            >>> weight = sum(solution.values())
+            >>> print(f"Solution: {solution}, Weight: {weight}")
+            Solution: {0: 1, 1: 1, 2: 0, 3: 0}, Weight: 2
+
+        Note:
+            The constraint is implemented as a soft constraint through
+            quadratic penalties. Solutions may occasionally violate the
+            constraint due to optimization trade-offs. For hard constraints,
+            post-processing filtering may be necessary.
         """
         # Formulate as QUBO: minimize |sum(x_i) - target_weight|^2
         qubo = {}
