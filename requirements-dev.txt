@@ -1,4 +1,4 @@
-# Dependências de Desenvolvimento para OmniMind (updated 2025-11-24)
+# Dependências de Desenvolvimento para OmniMind (updated 2025-11-27)
 # Instalar com: pip install -r requirements-dev.txt
 
 # Type checking stubs (para desenvolvimento)
@@ -11,6 +11,9 @@ types-requests>=2.32.4
 pre-commit>=4.5.0
 ruff>=0.14.0
 isort>=7.0.0
+black>=25.0.0
+flake8>=7.0.0
+mypy>=1.15.0
 
 # Documentação
 mkdocs>=1.6.0
@@ -19,6 +22,7 @@ mkdocs-material>=9.7.0
 # Testes adicionais
 pytest-xdist>=3.8.0
 pytest-mock>=3.15.0
+pytest-asyncio>=0.25.0
 coverage>=7.12.0
 
 # Desenvolvimento web
@@ -30,6 +34,7 @@ snakeviz>=2.2.2
 
 # Jupyter para experimentação (opcional)
 jupyter>=1.1.0
-ipykernel>=7.0.0pandas>=2.2.0
+ipykernel>=7.0.0
+pandas>=2.2.0
 matplotlib>=3.8.0
 seaborn>=0.13.0

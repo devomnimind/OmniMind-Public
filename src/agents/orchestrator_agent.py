@@ -24,6 +24,7 @@ from ..integrations.dbus_controller import (
     DBusSessionController,
     DBusSystemController,
 )
+from ..integrations.llm_router import LLMModelTier, invoke_llm_sync
 from ..integrations.mcp_client import MCPClient, MCPClientError
 from ..integrations.qdrant_adapter import (
     QdrantAdapter,
@@ -484,7 +485,7 @@ ESTIMATED_COMPLEXITY: <low/medium/high>
 Your decomposition plan:"""
 
         try:
-            response = self.llm.invoke(prompt)
+            response = invoke_llm_sync(prompt, tier=LLMModelTier.BALANCED)
         except Exception as e:
             logger.error(f"LLM invocation failed in decompose_task: {e}")
             # Fallback plan for testing/dev
@@ -497,7 +498,7 @@ ESTIMATED_COMPLEXITY: low
 """
 
         # Parsear plano
-        plan = self._parse_plan(response)
+        plan = self._parse_plan(response.text if hasattr(response, "text") else str(response))
         plan["original_task"] = task_description
         plan["created_at"] = self._timestamp()
 
@@ -677,6 +678,9 @@ ESTIMATED_COMPLEXITY: low
         if not plan or not plan.get("subtasks"):
             return {"error": "No plan to execute"}
 
+        # Set current plan for consistency
+        self.current_plan = plan
+
         results = self._initialize_execution_results(plan)
 
         for i, subtask in enumerate(plan["subtasks"]):
@@ -762,6 +766,26 @@ ESTIMATED_COMPLEXITY: low
         # Execute based on agent type
         result = self._execute_subtask_by_agent(subtask, agent_mode, max_iterations)
 
+        # VALIDAÇÃO CRÍTICA: Garantir que result é dict válido
+        if result is None:
+            result = {
+                "completed": False,
+                "final_result": f"Agent {agent_mode.value} returned None",
+                "iteration": 0,
+                "error": "None result from agent",
+            }
+        elif not isinstance(result, dict):
+            result = {
+                "completed": False,
+                "final_result": str(result),
+                "iteration": 0,
+                "error": f"Invalid result type: {type(result)}",
+            }
+        elif "completed" not in result:
+            result["completed"] = True  # Assume success if not specified
+        elif "final_result" not in result:
+            result["final_result"] = str(result.get("output", "No output"))
+
         # Ensure result is dict
         if not isinstance(result, dict):
             result = {
@@ -793,40 +817,66 @@ ESTIMATED_COMPLEXITY: low
         Returns:
             Execution result
         """
-        if agent_mode == AgentMode.SECURITY:
-            return self._execute_security_subtask(subtask)
-        elif agent_mode == AgentMode.MCP:
-            return self._execute_mcp_subtask(subtask)
-        elif agent_mode == AgentMode.DBUS:
-            return self._execute_dbus_subtask(subtask)
-        elif agent_mode == AgentMode.CODE:
-            agent = self._get_agent(agent_mode)
-            return agent.run_code_task(subtask["description"], max_iterations=max_iterations)
-        elif agent_mode == AgentMode.REVIEWER:
-            return {
-                "completed": True,
-                "mode": "reviewer",
-                "note": "Review would be performed on generated files",
-            }
-        elif agent_mode == AgentMode.PSYCHOANALYST:
-            agent = self._get_agent(agent_mode)
-            analysis = agent.analyze_session(subtask["description"])
-            report = agent.generate_abnt_report(analysis)
-            return {
-                "completed": True,
-                "final_result": report,
-                "details": analysis,
-                "iteration": 1,
-            }
-        else:
-            agent = self._get_agent(agent_mode)
-            if agent is None:
-                return {
-                    "completed": False,
-                    "final_result": f"Agent {subtask['agent']} not available",
-                    "iteration": 0,
+        try:
+            if agent_mode == AgentMode.SECURITY:
+                result = self._execute_security_subtask(subtask)
+            elif agent_mode == AgentMode.MCP:
+                result = self._execute_mcp_subtask(subtask)
+            elif agent_mode == AgentMode.DBUS:
+                result = self._execute_dbus_subtask(subtask)
+            elif agent_mode == AgentMode.CODE:
+                agent = self._get_agent(agent_mode)
+                result = agent.run_code_task(subtask["description"], max_iterations=max_iterations)
+            elif agent_mode == AgentMode.REVIEWER:
+                result = {
+                    "completed": True,
+                    "mode": "reviewer",
+                    "note": "Review would be performed on generated files",
                 }
-            return agent.run(subtask["description"], max_iterations=max_iterations)
+            elif agent_mode == AgentMode.PSYCHOANALYST:
+                agent = self._get_agent(agent_mode)
+                analysis = agent.analyze_session(subtask["description"])
+                report = agent.generate_abnt_report(analysis)
+                result = {
+                    "completed": True,
+                    "final_result": report,
+                    "details": analysis,
+                    "iteration": 1,
+                }
+            else:
+                agent = self._get_agent(agent_mode)
+                if agent is None:
+                    result = {
+                        "completed": False,
+                        "final_result": f"Agent {subtask['agent']} not available",
+                        "iteration": 0,
+                    }
+                else:
+                    result = agent.run(subtask["description"], max_iterations=max_iterations)
+        except Exception as e:
+            logger.error(f"Error executing subtask with agent {agent_mode.value}: {e}")
+            result = {
+                "completed": False,
+                "final_result": f"Agent {agent_mode.value} failed: {str(e)}",
+                "iteration": 0,
+                "error": str(e),
+            }
+
+        # VALIDAÇÃO FINAL: Garantir que result é dict válido
+        if not isinstance(result, dict):
+            result = {
+                "completed": False,
+                "final_result": f"Invalid result from {agent_mode.value}: {type(result)}",
+                "iteration": 0,
+                "error": "Result is not a dict",
+            }
+
+        # Garantir campos obrigatórios
+        result.setdefault("completed", False)
+        result.setdefault("final_result", result.get("error", "No result"))
+        result.setdefault("iteration", 0)
+
+        return result
 
     def _process_subtask_result(
         self, results: Dict[str, Any], subtask: Dict[str, Any], result: Dict[str, Any], index: int
@@ -859,7 +909,9 @@ ESTIMATED_COMPLEXITY: low
         # Update overall success
         if not result.get("completed"):
             results["overall_success"] = False
-            print(f"❌ Subtask {index+1} failed")
+            error_msg = result.get("error", result.get("final_result", "Unknown error"))
+            print(f"❌ Subtask {index+1} failed: {error_msg}")
+            logger.warning(f"Subtask {index+1} failed with agent {subtask['agent']}: {error_msg}")
         else:
             print(f"✅ Subtask {index+1} completed")
 

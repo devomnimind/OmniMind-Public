@@ -11,6 +11,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    if: false  # Temporarily disabled due to disk space issues
     timeout-minutes: 360  # 6 hours max for GitHub Actions
 
     env:

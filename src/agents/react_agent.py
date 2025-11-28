@@ -14,6 +14,7 @@ import yaml
 from langchain_ollama import OllamaLLM
 from langgraph.graph import END, StateGraph
 
+from ..integrations.llm_router import get_llm_router, LLMModelTier, invoke_llm_sync
 from ..integrations.supabase_adapter import SupabaseConfig
 from ..memory import EpisodicMemory
 from ..onboarding import SupabaseMemoryOnboarding
@@ -63,11 +64,19 @@ class ReactAgent:
 
     def __init__(self, config_path: str):
         """Initialize agent with configuration."""
+        # Load environment variables from .env file
+        from dotenv import load_dotenv
+
+        load_dotenv()
+
         # Load configuration
         with open(config_path, "r") as f:
             self.config = yaml.safe_load(f)
 
-        # Initialize LLM
+        # Initialize LLM Router with fallback
+        self.llm_router = get_llm_router()
+
+        # Keep legacy OllamaLLM for compatibility (will be removed)
         model_config = self.config["model"]
         base_url = os.getenv(
             "OLLAMA_BASE_URL", model_config.get("base_url", "http://localhost:11434")
@@ -214,11 +223,12 @@ ARGS: <json dict of arguments>
 
 Your response:"""
 
-        # Generate reasoning
+        # Generate reasoning using LLM router with fallback
         try:
-            response = self.llm.invoke(prompt)
+            llm_response = invoke_llm_sync(prompt, tier=LLMModelTier.BALANCED)
+            response = llm_response.text
         except Exception as e:
-            logger.error(f"LLM invocation failed: {e}")
+            logger.error(f"LLM router invocation failed: {e}")
             # Fallback response for testing/dev when LLM is unavailable
             response = (
                 "REASONING: LLM is unavailable. I will return a dummy result.\n"
@@ -375,7 +385,21 @@ Your response:"""
             return cast(Dict[str, Any], final_state)
 
         except Exception as e:
-            return {"error": str(e), "completed": False, "final_result": None}
+            logger.error(f"Agent execution failed: {e}")
+            return {
+                "error": str(e),
+                "completed": False,
+                "final_result": f"Execution failed: {str(e)}",
+                "messages": [],
+                "current_task": task,
+                "reasoning_chain": [],
+                "actions_taken": [],
+                "observations": [],
+                "memory_context": [],
+                "system_status": {},
+                "iteration": 0,
+                "max_iterations": max_iterations,
+            }
 
     def _run_supabase_memory_onboarding(self) -> None:
         """Run Supabase memory onboarding in a background thread to avoid blocking startup."""

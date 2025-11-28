@@ -7,8 +7,6 @@ These tests validate the entire OmniMind system from UI to backend.
 import asyncio
 import json
 import os
-import re
-import subprocess
 import time
 from pathlib import Path
 from typing import Dict
@@ -18,7 +16,7 @@ import pytest
 
 # Check if playwright is installed
 try:
-    from playwright.async_api import Browser, Page, async_playwright, expect
+    from playwright.async_api import Page, async_playwright
 
     PLAYWRIGHT_AVAILABLE = True
 except ImportError:
@@ -39,9 +37,9 @@ def frontend_server():
 
     if not dist_dir.exists():
         print("Building frontend...")
-        import subprocess
+        import subprocess as sp
 
-        result = subprocess.run(
+        result = sp.run(
             ["npm", "run", "build"], cwd=str(frontend_dir), capture_output=True, text=True
         )
         if result.returncode != 0:
@@ -50,15 +48,15 @@ def frontend_server():
         print("Frontend built successfully")
 
     # Kill any existing process on port 3000
-    import subprocess
+    import subprocess as sp
 
     try:
         # Find and kill process on port 3000
-        result = subprocess.run(["lsof", "-ti:3000"], capture_output=True, text=True)
+        result = sp.run(["lsof", "-ti:3000"], capture_output=True, text=True)
         if result.returncode == 0 and result.stdout.strip():
             pids = result.stdout.strip().split("\n")
             for pid in pids:
-                subprocess.run(["kill", "-9", pid], capture_output=True)
+                sp.run(["kill", "-9", pid], capture_output=True)
             time.sleep(2)  # Wait for port to be freed
     except Exception as e:
         print(f"Warning: Could not kill existing process on port 3000: {e}")
@@ -67,11 +65,11 @@ def frontend_server():
     env = os.environ.copy()
     env["PORT"] = "3000"
 
-    server_process = subprocess.Popen(
+    server_process = sp.Popen(
         ["npx", "vite", "preview", "--port", "3000", "--host"],
         cwd=str(frontend_dir),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        stdout=sp.PIPE,
+        stderr=sp.PIPE,
         env=env,
     )
 
@@ -85,7 +83,7 @@ def frontend_server():
             if response.status_code == 200:
                 print("Frontend server started successfully")
                 break
-        except:
+        except Exception:
             pass
         time.sleep(2)
     else:

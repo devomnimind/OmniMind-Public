@@ -1,4 +1,4 @@
-# Runtime dependencies for OmniMind (updated 2025-11-24)
+# Runtime dependencies for OmniMind (updated 2025-11-27)
 # Core
 fastapi>=0.122.0
 uvicorn>=0.38.0
@@ -12,6 +12,11 @@ psutil>=7.0.0
 nvidia-ml-py>=12.560.30
 PyYAML>=6.0.3
 requests>=2.32.0
+# LLM Dependencies
+ollama>=0.6.0
+openai>=2.8.0
+sentence-transformers>=3.0.0
+langchain-ollama>=1.0.0
 # System
 dbus-python>=1.4.0
 cryptography>=46.0.0
