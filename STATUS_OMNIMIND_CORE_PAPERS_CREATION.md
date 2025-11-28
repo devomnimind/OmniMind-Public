@@ -32,11 +32,13 @@ Criar repositório público **OmniMind-Core-Papers** contendo APENAS o código n
   - ✅ src/distributed/ (rede)
 - [x] Copiada suite de testes (300+ testes)
 
-### Fase 3: Licença Híbrida ✅
-- [x] Criado `LICENSE.MIT` (consciousness, metacognition - máxima liberdade)
-- [x] Criado `LICENSE.AGPL-3.0` (audit, ethics - transparency obrigatória)
-- [x] Criado `DUAL-LICENSE.md` (explicação detalhada + casos de uso)
-- [x] Documentação clara de quando cada licença se aplica
+### Fase 3: Licença 3-Tier ✅
+- [x] Criado `LICENSE.MIT` (consciousness/, metacognition/ - máxima liberdade)
+- [x] Criado `LICENSE.CC-BY-4.0` (documentação: README, papers, docs)
+- [x] Criado `IP-PROTECTION.md` (estratégia clara de separação proprietary)
+- [x] Deletado `LICENSE.AGPL-3.0` (AGPL removido por clareza)
+- [x] Deletado `DUAL-LICENSE.md` (substituído por 3-tier approach)
+- [x] Documentação explícita do que é proprietary e não está no repo
 
 ### Fase 4: Documentação ✅
 - [x] Criado `README.md` (370+ linhas)
@@ -73,40 +75,42 @@ Criar repositório público **OmniMind-Core-Papers** contendo APENAS o código n
 
 ```
 /home/fahbrain/projects/OmniMind-Core-Papers/
-├── src/                                    # Código-fonte (7 módulos)
+├── src/                                    # Código-fonte (2 módulos MIT)
 │   ├── consciousness/                      ✅ MIT (expectation, qualia, sensory, narrative, etc.)
 │   ├── metacognition/                      ✅ MIT (IIT metrics, homeostasis)
-│   ├── audit/                              ✅ AGPL (imutable audit trail)
-│   ├── ethics/                             ✅ AGPL (ethical framework, GDPR)
-│   ├── agents/                             ✅ MIT+AGPL (base agents)
-│   ├── quantum_consciousness/              ✅ AGPL (quantum backend)
-│   └── distributed/                        ✅ AGPL (network modules)
+│   ├── audit/                              ⚠️  Proprietary (NOT in repo - see IP-PROTECTION.md)
+│   ├── ethics/                             ⚠️  Proprietary (NOT in repo)
+│   ├── agents/                             ⚠️  Proprietary advanced (NOT in repo)
+│   ├── quantum_consciousness/              ⚠️  Proprietary (NOT in repo)
+│   └── distributed/                        ⚠️  Proprietary (NOT in repo)
 │
 ├── tests/                                  # Suite de testes (300+)
 │   ├── consciousness/
 │   ├── metacognition/
-│   ├── ethics/
-│   ├── audit/
 │   └── conftest.py
 │
 ├── docs/
-│   └── PAPER_MODULE_COVERAGE.md           ✅ Matrix de cobertura
+│   └── PAPER_MODULE_COVERAGE.md           ✅ Matrix de cobertura (CC BY 4.0)
 │
 ├── scripts/
 │   └── run_experiments.sh                 ✅ Script interativo
 │
 ├── config/                                 (vazio - para configs futuras)
 │
-├── README.md                               ✅ Documentação principal (370+ linhas)
-├── DUAL-LICENSE.md                         ✅ Explicação de licença (200+ linhas)
-├── LICENSE.MIT                             ✅ MIT full text
-├── LICENSE.AGPL-3.0                        ✅ AGPL full text
+├── README.md                               ✅ Documentação principal (CC BY 4.0)
+├── IP-PROTECTION.md                        ✅ Estratégia de IP (CC BY 4.0)
+├── LICENSE.MIT                             ✅ MIT full text (code)
+├── LICENSE.CC-BY-4.0                       ✅ CC BY 4.0 full text (docs)
+├── LICENSE.AGPL-3.0                        ❌ DELETADO (AGPL removido)
+├── DUAL-LICENSE.md                         ❌ DELETADO (substituído por IP-PROTECTION.md)
 ├── conftest.py                             ✅ Pytest config
 ├── pytest.ini                              ✅ Pytest settings
 ├── pyproject.toml                          ✅ Project metadata
 ├── requirements-core.txt                   ✅ Core dependencies
 └── requirements-minimal.txt                ✅ Minimal dependencies
 ```
+
+⚠️ **IMPORTANT**: Módulos proprietários (audit, ethics, quantum, distributed, agentes avançados) NÃO estão neste repo. Ver [IP-PROTECTION.md](IP-PROTECTION.md) para detalhes.
 
 ---
 
