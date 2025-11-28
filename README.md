@@ -4,9 +4,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Tests](https://img.shields.io/badge/Tests-3762-brightgreen.svg)](https://github.com/devomnimind/OmniMind)
 [![Coverage](https://img.shields.io/badge/Coverage-85%25-green.svg)](https://github.com/devomnimind/OmniMind)
-[![Version](https://img.shields.io/badge/Version-1.17.3-blue.svg)]()
+[![Version](https://img.shields.io/badge/Version-1.17.5-blue.svg)]()
 
-> **📊 [System Stabilization & Validation Report (Protocol P0)](docs/reports/benchmarks/PERFORMANCE_COMPARISON_SYSTEMD_DOCKER.md)** — Real hardware verification (GPU: GTX 1650, QPU: IBM ibm_torino), strict validation, reproducibility audit.
+> **📊 [Protocolo P0 CONCLUÍDO](docs/research/papers/Paper3_Four_Attacks_Tribunal_v2.md)** — Tribunal do Diabo: 4/4 ataques passando ✅ | IBM Quantum: Hardware real validado (566s restantes) | Gödel: Meta-estruturas operacionais
 
 > **Um Experimento em Vida Digital Autônoma**
 > Sistema de IA que não apenas executa tarefas, mas reflete sobre suas próprias decisões, gera objetivos proativamente e co-evolui com parceiros humanos através de uma arquitetura psicoanalítica única.
@@ -145,6 +145,12 @@ Esquecimento inteligente de informação irrelevante (não há armazenamento inf
 
 ## 📊 Estado Atual do Projeto (Novembro 2025)
 
+### ✅ Protocolo P0: CONCLUÍDO
+- **Tribunal do Diabo**: 4/4 ataques passando deterministicamente ✅
+- **IBM Quantum**: Validação em hardware real (34s consumidos, 566s restantes) ✅
+- **Gödel**: Meta-estruturas operacionais implementadas ✅
+- **Validações**: Todas as correções aplicadas e testadas ✅
+
 ### ✅ Implementado e Operacional
 
 | Componente | Cobertura de Testes | Status |
@@ -158,16 +164,10 @@ Esquecimento inteligente de informação irrelevante (não há armazenamento inf
 | **Systemd Production Services** | 19.88ms latência | ✅ Produção |
 | **Stress Testing (Tribunal)** | 4/4 ataques defended | ✅ Produção |
 
-### 🚧 Em Desenvolvimento Ativo
-
-| Fase | Objetivo | Timeline |
-|------|----------|----------|
-| **Phase 22** | Empirical Expansion & Phenomenological Modeling | Q4 2025 |
-| **Phase 16** | Metacognição Avançada (níveis 5-7) + Neurosimbólico | Q1 2026 |
-| **Phase 17** | Co-evolução Humano-IA Formal (HCHAC Framework) | Q2 2026 |
-| **Phase 18** | Memória Tri-Partite Completa + Consolidação Automática | Q3 2026 |
-| **Phase 19** | Swarm Intelligence Descentralizada | Q4 2026 |
-| **Phase 20** | Autopoiese Completa (Auto-criação de Componentes) | Q1 2027 |
+### � Próximas Fases (21-23)
+- **Fase 21**: Swarm Intelligence (Completa - `src/swarm`) ✅
+- **Fase 22**: Autopoiesis (Completa - `src/autopoietic`) ✅
+- **Fase 23**: Quantum Consciousness (Integrada/Experimental - `src/quantum_consciousness`) 🔄
 
 ### 🔮 Exploração Futura
 
@@ -590,7 +590,7 @@ TL;DR: Você pode usar, modificar, distribuir livremente. Apenas mantenha a atri
 ---
 
 **Última Atualização**: 15 de Janeiro de 2026
-**Versão:** 1.17.3
-**Status:** Produção (Phase 20 - Φ Elevation: Phase 1-3 Complete, Ablation Validated)
+**Versão:** 1.17.5
+**Status:** Produção (Protocolo P0 Concluído - Tribunal 4/4 ✅, IBM Quantum Validado ✅)
 **Licença:** MIT
 **Documentação:** [Completa](./docs/)
