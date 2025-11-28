@@ -190,7 +190,9 @@ class QuantumMemoryCell:
                 raise ValueError(f"Unsupported data type for encoding: {type(self.data)}")
 
         except Exception as e:
-            logger.error("quantum_encoding_failed", error=str(e), data_type=type(self.data).__name__)
+            logger.error(
+                "quantum_encoding_failed", error=str(e), data_type=type(self.data).__name__
+            )
             # Fallback: keep original data
             return
 
@@ -247,7 +249,9 @@ class QuantumMemoryCell:
             # Return real part of measured amplitude
             measured_value = float(np.real(self.quantum_state[outcome_idx]))
 
-            logger.debug("quantum_measurement", outcome_idx=outcome_idx, measured_value=measured_value)
+            logger.debug(
+                "quantum_measurement", outcome_idx=outcome_idx, measured_value=measured_value
+            )
             return measured_value
         else:
             logger.warning("invalid_probability_distribution")
@@ -363,15 +367,24 @@ class QuantumMemoryCell:
         }
 
         if self.quantum_state is not None:
-            info.update({
-                "state_size": len(self.quantum_state),
-                "is_normalized": np.isclose(np.linalg.norm(self.quantum_state), 1.0),
-                "probabilities": np.abs(self.quantum_state)**2,
-                "purity": float(np.sum(np.abs(self.quantum_state)**4)),  # Tr(ρ²) for pure states
-                "entropy": float(-np.sum(np.abs(self.quantum_state)**2 * np.log2(np.abs(self.quantum_state)**2 + 1e-12))),
-                "max_probability": float(np.max(np.abs(self.quantum_state)**2)),
-                "dominant_basis": int(np.argmax(np.abs(self.quantum_state)**2)),
-            })
+            info.update(
+                {
+                    "state_size": len(self.quantum_state),
+                    "is_normalized": np.isclose(np.linalg.norm(self.quantum_state), 1.0),
+                    "probabilities": np.abs(self.quantum_state) ** 2,
+                    "purity": float(
+                        np.sum(np.abs(self.quantum_state) ** 4)
+                    ),  # Tr(ρ²) for pure states
+                    "entropy": float(
+                        -np.sum(
+                            np.abs(self.quantum_state) ** 2
+                            * np.log2(np.abs(self.quantum_state) ** 2 + 1e-12)
+                        )
+                    ),
+                    "max_probability": float(np.max(np.abs(self.quantum_state) ** 2)),
+                    "dominant_basis": int(np.argmax(np.abs(self.quantum_state) ** 2)),
+                }
+            )
 
         return info
 
@@ -695,11 +708,11 @@ class QuantumMemorySystem:
         cell = self.memory_cells[index]
 
         # Strengthen memory by increasing coherence time
-        cell.coherence_time *= (1 + strength)
+        cell.coherence_time *= 1 + strength
 
         # Strengthen dominant amplitudes (simplified consolidation)
         if cell.quantum_state is not None:
-            probs = np.abs(cell.quantum_state)**2
+            probs = np.abs(cell.quantum_state) ** 2
             max_prob_idx = np.argmax(probs)
             # Boost the dominant state
             boost_factor = 1 + strength * 0.5
@@ -709,7 +722,9 @@ class QuantumMemorySystem:
             norm = np.linalg.norm(cell.quantum_state)
             cell.quantum_state /= norm
 
-        logger.info("memory_consolidated", index=index, strength=strength, new_coherence=cell.coherence_time)
+        logger.info(
+            "memory_consolidated", index=index, strength=strength, new_coherence=cell.coherence_time
+        )
 
     def get_memory_stats(self) -> Dict[str, Any]:
         """
@@ -731,7 +746,10 @@ class QuantumMemorySystem:
             "num_qubits": self.num_qubits,
             "max_vector_size": 2**self.num_qubits,
             "qiskit_available": QISKIT_AVAILABLE,
-            "total_entanglements": sum(len(entangled) for entangled in self.entanglement_graph.values()) // 2,  # Divide by 2 for bidirectional
+            "total_entanglements": sum(
+                len(entangled) for entangled in self.entanglement_graph.values()
+            )
+            // 2,  # Divide by 2 for bidirectional
             "entangled_cells": len(self.entanglement_graph),
         }
 
@@ -740,13 +758,15 @@ class QuantumMemorySystem:
             coherence_times = [cell.coherence_time for cell in self.memory_cells]
             access_counts = [cell.access_count for cell in self.memory_cells]
 
-            stats.update({
-                "avg_coherence_time": float(np.mean(coherence_times)),
-                "max_coherence_time": float(np.max(coherence_times)),
-                "min_coherence_time": float(np.min(coherence_times)),
-                "total_accesses": sum(access_counts),
-                "avg_accesses_per_cell": float(np.mean(access_counts)),
-            })
+            stats.update(
+                {
+                    "avg_coherence_time": float(np.mean(coherence_times)),
+                    "max_coherence_time": float(np.max(coherence_times)),
+                    "min_coherence_time": float(np.min(coherence_times)),
+                    "total_accesses": sum(access_counts),
+                    "avg_accesses_per_cell": float(np.mean(access_counts)),
+                }
+            )
 
         # Calculate average fidelity between random pairs
         if len(self.memory_cells) >= 2:
@@ -783,7 +803,9 @@ class QuantumMemorySystem:
         self.memory_cells.clear()
         self.entanglement_graph.clear()
 
-        logger.info("quantum_memory_cleared", cells_cleared=num_cleared, entanglements_cleared=num_cleared)
+        logger.info(
+            "quantum_memory_cleared", cells_cleared=num_cleared, entanglements_cleared=num_cleared
+        )
 
     def encode(self) -> None:
         """
@@ -829,7 +851,9 @@ class QuantumMemorySystem:
                 raise ValueError(f"Unsupported data type for encoding: {type(self.data)}")
 
         except Exception as e:
-            logger.error("quantum_encoding_failed", error=str(e), data_type=type(self.data).__name__)
+            logger.error(
+                "quantum_encoding_failed", error=str(e), data_type=type(self.data).__name__
+            )
             # Fallback: keep original data
             return
 
@@ -875,7 +899,9 @@ class QuantumMemorySystem:
             # Return real part of measured amplitude
             measured_value = float(np.real(self.quantum_state[outcome_idx]))
 
-            logger.debug("quantum_measurement", outcome_idx=outcome_idx, measured_value=measured_value)
+            logger.debug(
+                "quantum_measurement", outcome_idx=outcome_idx, measured_value=measured_value
+            )
             return measured_value
         else:
             logger.warning("invalid_probability_distribution")
@@ -936,12 +962,16 @@ class QuantumMemorySystem:
         }
 
         if self.quantum_state is not None:
-            info.update({
-                "state_size": len(self.quantum_state),
-                "is_normalized": np.isclose(np.linalg.norm(self.quantum_state), 1.0),
-                "probabilities": np.abs(self.quantum_state)**2,
-                "purity": float(np.sum(np.abs(self.quantum_state)**4)),  # Tr(ρ²) for pure states
-            })
+            info.update(
+                {
+                    "state_size": len(self.quantum_state),
+                    "is_normalized": np.isclose(np.linalg.norm(self.quantum_state), 1.0),
+                    "probabilities": np.abs(self.quantum_state) ** 2,
+                    "purity": float(
+                        np.sum(np.abs(self.quantum_state) ** 4)
+                    ),  # Tr(ρ²) for pure states
+                }
+            )
 
         return info
 
@@ -1385,7 +1415,9 @@ class HybridQLearning:
                     best_q = q_val
                     action_idx = a
 
-            logger.debug("exploitation_best_action", state=state, action_idx=action_idx, q_value=best_q)
+            logger.debug(
+                "exploitation_best_action", state=state, action_idx=action_idx, q_value=best_q
+            )
 
         return f"action_{action_idx}"
 
@@ -1485,12 +1517,14 @@ class HybridQLearning:
 
         if self.q_table:
             q_values = list(self.q_table.values())
-            stats.update({
-                "avg_q_value": float(np.mean(q_values)),
-                "max_q_value": float(np.max(q_values)),
-                "min_q_value": float(np.min(q_values)),
-                "q_value_std": float(np.std(q_values)),
-            })
+            stats.update(
+                {
+                    "avg_q_value": float(np.mean(q_values)),
+                    "max_q_value": float(np.max(q_values)),
+                    "min_q_value": float(np.min(q_values)),
+                    "q_value_std": float(np.std(q_values)),
+                }
+            )
 
         return stats
 
@@ -1537,13 +1571,15 @@ class QuantumMemoryComparison:
         Returns:
             Multi-line string with formatted comparison results
         """
-        return "\n".join([
-            "Quantum vs Classical Memory Comparison:",
-            f"  Retrieval Time: {self.quantum_retrieval_time:.4f}s vs {self.classical_retrieval_time:.4f}s",
-            f"  Accuracy: {self.quantum_accuracy:.2%} vs {self.classical_accuracy:.2%}",
-            f"  Speedup: {self.quantum_speedup:.2f}x",
-            f"  Notes: {self.notes}",
-        ])
+        return "\n".join(
+            [
+                "Quantum vs Classical Memory Comparison:",
+                f"  Retrieval Time: {self.quantum_retrieval_time:.4f}s vs {self.classical_retrieval_time:.4f}s",
+                f"  Accuracy: {self.quantum_accuracy:.2%} vs {self.classical_accuracy:.2%}",
+                f"  Speedup: {self.quantum_speedup:.2f}x",
+                f"  Notes: {self.notes}",
+            ]
+        )
 
     def to_dict(self) -> Dict[str, Any]:
         """

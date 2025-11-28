@@ -105,6 +105,7 @@ class BackendType(Enum):
         IBMQ_CLOUD: IBM Quantum cloud service (real quantum hardware)
         GOOGLE_QUANTUM: Google Quantum AI service (future integration)
     """
+
     SIMULATOR_AER = "qiskit_aer"
     SIMULATOR_CIRQ = "cirq_simulator"
     IBMQ_CLOUD = "ibmq_cloud"
@@ -170,7 +171,7 @@ class BackendInfo:
         - Circuit depth within limits
         """
         try:
-            circuit_qubits = getattr(circuit, 'num_qubits', 0)
+            circuit_qubits = getattr(circuit, "num_qubits", 0)
             return circuit_qubits <= self.num_qubits
         except AttributeError:
             return False
@@ -192,7 +193,7 @@ class BackendInfo:
         - Circuit complexity: Depth and gate count
         """
         if not self.available:
-            return float('inf')
+            return float("inf")
 
         # Simulators are fast
         if self.backend_type in [BackendType.SIMULATOR_AER, BackendType.SIMULATOR_CIRQ]:
@@ -202,7 +203,7 @@ class BackendInfo:
         elif self.backend_type == BackendType.IBMQ_CLOUD:
             # Base queue time + execution time
             base_time = 300  # 5 minutes average queue
-            circuit_depth = getattr(circuit, 'depth', lambda: 10)()
+            circuit_depth = getattr(circuit, "depth", lambda: 10)()
             execution_time = circuit_depth * 0.01 * shots  # Rough estimate
             return base_time + execution_time
 
@@ -297,7 +298,7 @@ class QPUBackend(ABC):
         """
         errors = []
 
-        if hasattr(circuit, 'num_qubits'):
+        if hasattr(circuit, "num_qubits"):
             if circuit.num_qubits > self.get_info().num_qubits:
                 errors.append(
                     f"Circuit requires {circuit.num_qubits} qubits, "

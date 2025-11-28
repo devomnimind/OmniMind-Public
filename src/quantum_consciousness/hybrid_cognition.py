@@ -76,6 +76,7 @@ class OptimizationStrategy(Enum):
     - HYBRID: Combined approach using quantum exploration + classical refinement
     - AUTO: Automatic strategy selection based on problem characteristics
     """
+
     CLASSICAL = "classical"
     QUANTUM = "quantum"
     HYBRID = "hybrid"
@@ -158,20 +159,22 @@ class CognitionMetrics:
             Multi-line string with formatted metrics
         """
         speedup_note = ""
-        if hasattr(self, '_comparison_baseline'):
+        if hasattr(self, "_comparison_baseline"):
             speedup = self.speedup_vs(self._comparison_baseline)
             speedup_note = f" (Speedup: {speedup:.2f}x vs baseline)"
 
-        return "\n".join([
-            f"{self.strategy.value.upper()} Cognition Metrics:",
-            f"  Execution Time: {self.execution_time:.4f}s{speedup_note}",
-            f"  Accuracy: {self.accuracy:.2%}",
-            f"  Quality: {self.solution_quality:.2f}",
-            f"  Iterations: {self.num_iterations}",
-            f"  Energy: {self.energy_used:.2f} units",
-            f"  Efficiency: {self.efficiency_score():.4f}",
-            f"  {self.notes}",
-        ])
+        return "\n".join(
+            [
+                f"{self.strategy.value.upper()} Cognition Metrics:",
+                f"  Execution Time: {self.execution_time:.4f}s{speedup_note}",
+                f"  Accuracy: {self.accuracy:.2%}",
+                f"  Quality: {self.solution_quality:.2f}",
+                f"  Iterations: {self.num_iterations}",
+                f"  Energy: {self.energy_used:.2f} units",
+                f"  Efficiency: {self.efficiency_score():.4f}",
+                f"  {self.notes}",
+            ]
+        )
 
 
 @dataclass
@@ -319,7 +322,7 @@ class ClassicalQuantumBridge:
         return {
             "estimated_qubits": estimated_qubits,
             "encoding_method": self.encoding_method,
-            "data_size": len(data) if hasattr(data, '__len__') else 1,
+            "data_size": len(data) if hasattr(data, "__len__") else 1,
             "circuit_depth_estimate": estimated_qubits * 2,  # Rough estimate
         }
 
@@ -669,7 +672,7 @@ class HybridCognitionSystem:
 
         for _ in range(num_candidates):
             options = problem.get("options", ["opt_0", "opt_1"])
-            limited_options = options[:min(len(options), 2**self.num_qubits)]
+            limited_options = options[: min(len(options), 2**self.num_qubits)]
 
             if limited_options:
                 decision = self.quantum_decision_maker.make_decision(limited_options)
@@ -784,8 +787,11 @@ class HybridCognitionSystem:
             "consciousness_indicators": {
                 "adaptability": len(strategy_performance) / 3.0,  # Fraction of strategies used
                 "efficiency": np.mean([m.efficiency_score() for m in self.metrics_history]),
-                "stability": 1.0 / (1.0 + np.std([m.execution_time for m in self.metrics_history])),  # Lower variance = higher stability
-            }
+                "stability": 1.0
+                / (
+                    1.0 + np.std([m.execution_time for m in self.metrics_history])
+                ),  # Lower variance = higher stability
+            },
         }
 
     def get_metrics_summary(self) -> str:
@@ -825,13 +831,15 @@ class HybridCognitionSystem:
             count = len(metrics_list)
             avg_time = np.mean([m.execution_time for m in metrics_list])
             avg_quality = np.mean([m.solution_quality for m in metrics_list])
-            summary += f"  {strategy.value.upper()}: {count} runs, {avg_time:.4f}s, {avg_quality:.2%}\n"
+            summary += (
+                f"  {strategy.value.upper()}: {count} runs, {avg_time:.4f}s, {avg_quality:.2%}\n"
+            )
 
         # Consciousness metrics
         consciousness = self.get_consciousness_metrics()
         summary += "\nConsciousness Emergence Indicators:\n"
         summary += f"  Emergence Score: {consciousness['emergence_score']:.2%}\n"
-        indicators = consciousness['consciousness_indicators']
+        indicators = consciousness["consciousness_indicators"]
         summary += f"  Adaptability: {indicators['adaptability']:.2%}\n"
         summary += f"  Efficiency: {indicators['efficiency']:.4f}\n"
         summary += f"  Stability: {indicators['stability']:.4f}\n"

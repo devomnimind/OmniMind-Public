@@ -91,6 +91,7 @@ class QuantumGateType(Enum):
     - X|0⟩ = |1⟩, X|1⟩ = |0⟩ (Pauli-X)
     - CNOT|00⟩ = |00⟩, CNOT|01⟩ = |01⟩, CNOT|10⟩ = |11⟩, CNOT|11⟩ = |10⟩
     """
+
     HADAMARD = "h"
     PAULI_X = "x"
     PAULI_Y = "y"
@@ -649,7 +650,7 @@ class QuantumCognitionEngine:
         return qc
 
     def apply_quantum_interference(
-        self, circuit: QuantumCircuit, phase: float = np.pi/4
+        self, circuit: QuantumCircuit, phase: float = np.pi / 4
     ) -> QuantumCircuit:
         """
         Apply quantum phase interference to a circuit.
@@ -859,9 +860,7 @@ class QuantumDecisionMaker:
 
         return circuit, counts
 
-    def analyze_decision_patterns(
-        self, decisions: List[SuperpositionDecision]
-    ) -> Dict[str, Any]:
+    def analyze_decision_patterns(self, decisions: List[SuperpositionDecision]) -> Dict[str, Any]:
         """
         Analyze patterns in quantum decision making.
 

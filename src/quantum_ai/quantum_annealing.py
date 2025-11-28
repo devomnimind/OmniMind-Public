@@ -130,7 +130,7 @@ class QuantumAnnealer:
                       If False, uses classical simulated annealing fallback.
         """
         # Only initialize once due to singleton pattern
-        if not hasattr(self, 'initialized'):
+        if not hasattr(self, "initialized"):
             self.num_variables = num_variables
             self.use_dwave = use_dwave
             self.sampler = None
@@ -273,7 +273,7 @@ class QuantumAnnealer:
         self,
         cognitive_state: Dict[str, float],
         constraints: Optional[Dict[str, Any]] = None,
-        num_reads: int = 100
+        num_reads: int = 100,
     ) -> Dict:
         """
         Optimize consciousness state using quantum annealing.
@@ -317,22 +317,22 @@ class QuantumAnnealer:
             for var_name, constraint in constraints.items():
                 if var_name in var_mapping:
                     var_idx = var_mapping[var_name]
-                    if 'min' in constraint:
+                    if "min" in constraint:
                         # Penalty for going below minimum
-                        qubo[(var_idx, var_idx)] = constraint['min'] * -2
-                    if 'max' in constraint:
+                        qubo[(var_idx, var_idx)] = constraint["min"] * -2
+                    if "max" in constraint:
                         # Penalty for going above maximum
-                        qubo[(var_idx, var_idx)] = constraint['max'] * 2
+                        qubo[(var_idx, var_idx)] = constraint["max"] * 2
 
         result = self.solve_qubo(qubo, num_reads)
 
         # Map back to cognitive dimensions
         optimized_state = {}
         for var_name, var_idx in var_mapping.items():
-            optimized_state[var_name] = result['solution'].get(var_idx, 0)
+            optimized_state[var_name] = result["solution"].get(var_idx, 0)
 
-        result['cognitive_state'] = optimized_state
-        result['coherence'] = self._calculate_coherence(optimized_state)
+        result["cognitive_state"] = optimized_state
+        result["coherence"] = self._calculate_coherence(optimized_state)
 
         logger.info(f"Consciousness state optimized with coherence: {result['coherence']:.3f}")
 
@@ -356,7 +356,7 @@ class QuantumAnnealer:
 
         # Coherence as inverse of coefficient of variation
         variance = sum((v - mean_val) ** 2 for v in values) / len(values)
-        std_dev = variance ** 0.5
+        std_dev = variance**0.5
 
         if mean_val == 0:
             return 1.0 if std_dev == 0 else 0.0
