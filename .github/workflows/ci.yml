@@ -13,6 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 360  # 6 hours max for GitHub Actions
 
+    env:
+      OMNIMIND_QDRANT_CLOUD_URL: ${{ secrets.OMNIMIND_QDRANT_CLOUD_URL }}
+      OMNIMIND_QDRANT_API_KEY: ${{ secrets.OMNIMIND_QDRANT_API_KEY }}
+      OMNIMIND_QDRANT_COLLECTION: ${{ secrets.OMNIMIND_QDRANT_COLLECTION }}
+      OMNIMIND_QDRANT_VECTOR_SIZE: ${{ secrets.OMNIMIND_QDRANT_VECTOR_SIZE }}
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4

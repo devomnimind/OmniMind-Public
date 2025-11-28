@@ -20,7 +20,7 @@ database:
   url: "${OMNIMIND_QDRANT_URL}"
   api_key: "${OMNIMIND_QDRANT_API_KEY}"
   collection: "${OMNIMIND_QDRANT_COLLECTION}"
-  vector_size: 768
+  vector_size: 384
   distance_metric: "Cosine"
 
 # Supabase Configuration (for cloud features)
