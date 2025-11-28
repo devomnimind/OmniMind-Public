@@ -200,3 +200,16 @@ data/**/*.json
 # ------------------------------------------------------------------
 .scannerwork/
 
+
+# Execution logs
+data/long_term_logs/*.out
+logs/*.log
+
+# Build artifacts
+coverage.json
+gpu_llm_diagnosis.json
+orchestrator_audit.json
+current_packages.txt
+
+# Test screenshots
+test_sync_screenshot.png

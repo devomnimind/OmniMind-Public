@@ -76,12 +76,12 @@ class DependencyAnalyzer:
                 capture_output=True,
                 text=True,
                 check=True,
-                cwd=self.project_root
+                cwd=self.project_root,
             )
 
-            for line in result.stdout.strip().split('\n'):
-                if '==' in line:
-                    name, version = line.split('==', 1)
+            for line in result.stdout.strip().split("\n"):
+                if "==" in line:
+                    name, version = line.split("==", 1)
                     self.installed_packages[name.lower()] = version
 
             logger.info("installed_packages_loaded", count=len(self.installed_packages))
@@ -101,12 +101,18 @@ class DependencyAnalyzer:
             if req_path.exists():
                 deps = set()
                 try:
-                    with open(req_path, 'r', encoding='utf-8') as f:
+                    with open(req_path, "r", encoding="utf-8") as f:
                         for line in f:
                             line = line.strip()
-                            if line and not line.startswith('#'):
+                            if line and not line.startswith("#"):
                                 # Extract package name (handle version specs)
-                                package = line.split()[0].split('>=')[0].split('==')[0].split('<')[0].split('>')[0]
+                                package = (
+                                    line.split()[0]
+                                    .split(">=")[0]
+                                    .split("==")[0]
+                                    .split("<")[0]
+                                    .split(">")[0]
+                                )
                                 deps.add(package.lower())
                 except Exception as e:
                     logger.warning("failed_to_parse_requirements", file=req_file, error=str(e))
@@ -168,10 +174,23 @@ class DependencyAnalyzer:
 
         # Common packages that might be runtime dependencies
         runtime_deps = {
-            'numpy', 'scipy', 'pandas', 'matplotlib', 'pillow',
-            'requests', 'urllib3', 'certifi', 'charset-normalizer',
-            'torch', 'torchvision', 'transformers', 'tokenizers',
-            'qiskit', 'qiskit-aer', 'structlog', 'pyyaml',
+            "numpy",
+            "scipy",
+            "pandas",
+            "matplotlib",
+            "pillow",
+            "requests",
+            "urllib3",
+            "certifi",
+            "charset-normalizer",
+            "torch",
+            "torchvision",
+            "transformers",
+            "tokenizers",
+            "qiskit",
+            "qiskit-aer",
+            "structlog",
+            "pyyaml",
         }
 
         unused: List[str] = []
@@ -257,7 +276,7 @@ class DependencyAnalyzer:
                 [sys.executable, "-m", "safety", "check", "--json"],
                 capture_output=True,
                 text=True,
-                cwd=self.project_root
+                cwd=self.project_root,
             )
 
             if result.returncode == 0:
@@ -274,11 +293,13 @@ class DependencyAnalyzer:
 
             for package in self.installed_packages:
                 if package in vulnerable_packages:
-                    vulnerabilities.append({
-                        "package": package,
-                        "vulnerability": vulnerable_packages[package],
-                        "severity": "high"
-                    })
+                    vulnerabilities.append(
+                        {
+                            "package": package,
+                            "vulnerability": vulnerable_packages[package],
+                            "severity": "high",
+                        }
+                    )
 
         return vulnerabilities
 
@@ -329,7 +350,7 @@ def main():
 
         # Output results
         if args.output:
-            with open(args.output, 'w', encoding='utf-8') as f:
+            with open(args.output, "w", encoding="utf-8") as f:
                 json.dump(results, f, indent=2, ensure_ascii=False)
             print(f"Results saved to {args.output}")
         else:

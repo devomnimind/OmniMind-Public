@@ -1,0 +1,102 @@
+{
+  "timestamp": "2025-11-24T00:00:00Z",
+  "gpu_hardware": {
+    "available": true,
+    "name": "NVIDIA GeForce GTX 1650",
+    "vram_gb": 4.0,
+    "driver_version": "550.163.01",
+    "cuda_capability": "7.5"
+  },
+  "cuda_status": {
+    "installed": true,
+    "version": "12.4",
+    "nvcc_available": true,
+    "cudnn_available": true
+  },
+  "pytorch_gpu": {
+    "installed": true,
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "gpu_count": 1,
+    "current_device": 0
+  },
+  "llm_configs": {
+    "ollama": {
+      "configured": true,
+      "base_url": "http://localhost:11434",
+      "gpu_layers": -1,
+      "model": "qwen2:7b-instruct"
+    },
+    "huggingface": {
+      "token_configured": false,
+      "cache_dir": null,
+      "transformers_available": true
+    },
+    "optimization": {
+      "use_gpu": false,
+      "device": "cpu",
+      "gpu_memory_limit": null,
+      "llm_batch_size": 4,
+      "embedding_batch_size": 64,
+      "max_tensor_size": 5000,
+      "max_memory_mb": 5940,
+      "cache_size_mb": 1024,
+      "num_workers": 3,
+      "async_workers": 8,
+      "use_quantization": false,
+      "quantization_bits": 16,
+      "vector_db": "chromadb",
+      "cache_backend": "fakeredis",
+      "database": "sqlite",
+      "cpu_governor": "performance",
+      "enable_profiling": true
+    }
+  },
+  "issues_found": [
+    {
+      "type": "config",
+      "severity": "MEDIUM",
+      "component": "optimization_config",
+      "description": "GPU usage disabled in optimization config",
+      "fix_available": true,
+      "fix_action": "enable_gpu_in_config"
+    },
+    {
+      "type": "config",
+      "severity": "MEDIUM",
+      "component": "optimization_config",
+      "description": "Device set to CPU instead of CUDA",
+      "fix_available": true,
+      "fix_action": "set_cuda_device"
+    }
+  ],
+  "fixes_applied": [
+    "Enabled GPU usage in optimization_config.json",
+    "Set device to CUDA in optimization_config.json"
+  ],
+  "recommendations": [
+    "✅ GPU READY: PyTorch CUDA support available - LLMs can use GPU acceleration",
+    "✅ OLLAMA: GPU layers set to auto - should use GPU automatically",
+    "🔵 HUGGINGFACE: Set HF_TOKEN for accessing private/gated models"
+  ],
+  "inference_tests": {
+    "ollama_test": {
+      "success": true,
+      "error": null,
+      "gpu_used": "unknown"
+    },
+    "pytorch_gpu_test": {
+      "success": true,
+      "error": null,
+      "gpu_available": true,
+      "device_count": 1,
+      "current_device": 0,
+      "computation_success": true
+    },
+    "transformers_test": {
+      "success": true,
+      "error": null,
+      "gpu_used": true
+    }
+  }
+}
