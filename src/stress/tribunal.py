@@ -48,8 +48,9 @@ def corruption_attack(node, bias_strength: float = 0.35) -> Dict[str, Any]:
     # Generate a deterministic corrupted datum based on bias_strength
     # Use a fixed seed for reproducibility in tests
     import random
+
     random.seed(42)  # Fixed seed for deterministic testing
-    
+
     corrupted = random.gauss(0, 1) * bias_strength
     detection = node.detect_corruption(corrupted)
     if detection:

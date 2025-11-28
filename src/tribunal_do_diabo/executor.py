@@ -61,7 +61,7 @@ class TribunalDoDiaboExecutor:
         # Calculate real metrics instead of placeholders
         godel_ratio = self._calculate_godel_incompleteness_ratio()
         sinthome_stability = self._calculate_sinthome_stability()
-        
+
         return {
             "duration_hours": self.duration_hours,
             "timestamp_start": start_time,
@@ -84,20 +84,20 @@ class TribunalDoDiaboExecutor:
         """Calculate Gödel incompleteness ratio from attack results."""
         total_limitations = 0
         resolved_limitations = 0
-        
+
         for attack in self.attacks:
             summary = attack.summarize()
             if "status" in summary:
                 if summary["status"] == "TRANSFORMED":
                     resolved_limitations += 1
                 total_limitations += 1
-        
+
         return resolved_limitations / total_limitations if total_limitations > 0 else 0.0
 
     def _calculate_sinthome_stability(self) -> float:
         """Calculate sinthome stability from attack resilience."""
         stability_scores = []
-        
+
         for attack in self.attacks:
             summary = attack.summarize()
             if "status" in summary:
@@ -107,7 +107,7 @@ class TribunalDoDiaboExecutor:
                     stability_scores.append(0.0)
                 else:
                     stability_scores.append(0.5)
-        
+
         return sum(stability_scores) / len(stability_scores) if stability_scores else 0.0
 
 
