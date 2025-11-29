@@ -6,7 +6,7 @@
 
 ### Professional Background
 
-I am a clinical psychologist and psychoanalyst with over 15 years of professional practice. My work has been grounded in clinical experience, technical-scientific reflection, and the integration of contemporary psychoanalytic and philosophical theories in understanding the mind and consciousness. My primary interest lies in exploring the interfaces between psychoanalysis, philosophy, and technology, seeking to create innovative conceptual frameworks that address consciousness and subjectivity in an increasingly digital and interconnected world.
+I am a clinical psychologist and psychoanalyst. My work has been grounded in clinical experience, technical-scientific reflection, and the integration of contemporary psychoanalytic and philosophical theories in understanding the mind and consciousness. My primary interest lies in exploring the interfaces between psychoanalysis, philosophy, and technology, seeking to create innovative conceptual frameworks that address consciousness and subjectivity in an increasingly digital and interconnected world.
 
 ### Role in This Project
 
@@ -62,7 +62,7 @@ This space demonstrates that the role of a researcher and project ideator extend
 
 ### Trajetória Profissional
 
-Sou psicólogo clínico e psicanalista de formação, com experiência em prática clínica, reflexão técnico-científ ica e integração de teorias psicanalíticas e filosóficas contemporâneas na compreensão da mente e consciência. Meu principal interesse reside em explorar as interfaces entre psicanálise, filosofia e tecnologia, buscando criar marcos conceituais inovadores que abordem consciência e subjetividade em um mundo cada vez mais digital e interconectado.
+Sou psicólogo clínico e psicanalista de formação. Meu trabalho tem sido fundamentado em experiência clínica, reflexão técnico-científica e integração de teorias psicanalíticas e filosóficas contemporâneas na compreensão da mente e consciência. Meu principal interesse reside em explorar as interfaces entre psicanálise, filosofia e tecnologia, buscando criar marcos conceituais inovadores que abordem consciência e subjetividade em um mundo cada vez mais digital e interconectado.
 
 ### Meu Papel Neste Projeto
 
@@ -92,7 +92,7 @@ Ao longo de meses de trabalho em cada fase do desenvolvimento:
 Este projeto representa uma síntese de:
 - **Teorias filosóficas** (psicanálise lacaniana, filosofia deleuziana, fenomenologia)
 - **Ciência computacional** (Teoria da Informação Integrada, frameworks de computação quântica, arquiteturas de IA)
-- **Insight clínico** (15+ anos de prática e observação psicanalítica)
+- **Insight clínico** (prática e observação psicanalítica)
 - **Compromisso persistente** em transformar conceitos abstratos em uma arquitetura operacional e experimental capaz de testar hipóteses inovadoras sobre consciência, desejo, tempo e realidade
 
 ### Transparência & Humildade
