@@ -1,0 +1,46 @@
+name: 🧪 Simple Test (No Secrets Required)
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+    - name: ✅ Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🐍 Set up Python 3.12
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements-core.txt
+        pip install pytest pytest-cov
+
+    - name: 🧪 Run pytest
+      run: |
+        pytest tests/ -v --tb=short --cov=src --cov-report=term-missing --maxfail=5 2>&1 | tee test_results.log
+
+    - name: 📊 Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: test_results.log
+
+    - name: 🎉 Test Summary
+      if: always()
+      run: |
+        echo "✅ Tests completed!"
+        echo "📊 See artifacts for detailed results"
