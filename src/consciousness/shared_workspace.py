@@ -248,8 +248,7 @@ class SharedWorkspace:
         # Precisa de pelo menos 2 pontos
         if len(source_history) < 2:
             logger.debug(
-                f"Cross-prediction skipped: insufficient history "
-                f"({len(source_history)} < 2)"
+                f"Cross-prediction skipped: insufficient history " f"({len(source_history)} < 2)"
             )
             return CrossPredictionMetrics(
                 source_module=source_module,
@@ -263,8 +262,7 @@ class SharedWorkspace:
         window = min(len(source_history) - 1, len(target_history) - 1)
         if window < 2:
             logger.debug(
-                f"Cross-prediction skipped: insufficient aligned history "
-                f"(window={window} < 2)"
+                f"Cross-prediction skipped: insufficient aligned history " f"(window={window} < 2)"
             )
             return CrossPredictionMetrics(
                 source_module=source_module,
@@ -282,8 +280,7 @@ class SharedWorkspace:
             # Verificar se dimensões são compatíveis
             if X.shape != Y.shape:
                 logger.debug(
-                    f"Cross-prediction skipped: dimension mismatch "
-                    f"{X.shape} vs {Y.shape}"
+                    f"Cross-prediction skipped: dimension mismatch " f"{X.shape} vs {Y.shape}"
                 )
                 return CrossPredictionMetrics(
                     source_module=source_module,
@@ -295,9 +292,7 @@ class SharedWorkspace:
 
             # Verificar se há dados suficientes para análise
             if X.shape[0] < 2 or X.shape[1] == 0:
-                logger.debug(
-                    f"Cross-prediction skipped: insufficient data dimensions {X.shape}"
-                )
+                logger.debug(f"Cross-prediction skipped: insufficient data dimensions {X.shape}")
                 return CrossPredictionMetrics(
                     source_module=source_module,
                     target_module=target_module,

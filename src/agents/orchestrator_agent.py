@@ -1039,14 +1039,12 @@ ESTIMATED_COMPLEXITY: low
             )
 
         synthesis = {
-            "summary": "\n".join(subtask_summaries) if subtask_summaries else "No subtasks executed",
+            "summary": (
+                "\n".join(subtask_summaries) if subtask_summaries else "No subtasks executed"
+            ),
             "total_subtasks": len(subtask_results),
-            "completed": sum(
-                1 for sr in subtask_results if sr.get("completed")
-            ),
-            "failed": sum(
-                1 for sr in subtask_results if not sr.get("completed")
-            ),
+            "completed": sum(1 for sr in subtask_results if sr.get("completed")),
+            "failed": sum(1 for sr in subtask_results if not sr.get("completed")),
             "overall_success": execution_result.get("overall_success", False),
         }
 

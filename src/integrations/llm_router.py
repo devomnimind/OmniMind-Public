@@ -343,6 +343,7 @@ class HuggingFaceSpaceProvider(LLMProviderInterface):
 
         try:
             import requests
+
             self._client = requests.Session()
             # Testa conectividade
             response = self._client.get(space_url, timeout=5)
@@ -399,16 +400,17 @@ class HuggingFaceSpaceProvider(LLMProviderInterface):
                     "max_new_tokens": config.max_tokens,
                     "temperature": config.temperature,
                     "do_sample": True,
-                }
+                },
             }
 
             # Faz request async
             import aiohttp
+
             async with aiohttp.ClientSession() as session:
                 async with session.post(
                     f"{space_url}/generate",  # Ajuste endpoint conforme Space
                     json=payload,
-                    timeout=aiohttp.ClientTimeout(total=config.timeout)
+                    timeout=aiohttp.ClientTimeout(total=config.timeout),
                 ) as response:
                     if response.status == 200:
                         result = await response.json()
@@ -416,14 +418,14 @@ class HuggingFaceSpaceProvider(LLMProviderInterface):
                         generated_text = result.get("generated_text", "")
                         if isinstance(generated_text, list) and generated_text:
                             generated_text = generated_text[0].get("generated_text", "")
-                        
+
                         # Garante que é string
                         if not isinstance(generated_text, str):
                             generated_text = str(generated_text)
-                        
+
                         # Remove prompt se presente
                         if generated_text.startswith(prompt):
-                            generated_text = generated_text[len(prompt):].strip()
+                            generated_text = generated_text[len(prompt) :].strip()
 
                         latency = int((time.time() - start_time) * 1000)
                         return LLMResponse(
