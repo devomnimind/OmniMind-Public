@@ -39,6 +39,18 @@ This project represents a synthesis of:
 - **Clinical insight** (psychoanalytic practice and observation)
 - **Persistent commitment** to transforming abstract concepts into an operational and experimental architecture capable of testing innovative hypotheses about consciousness, desire, time, and reality
 
+### About the Papers
+
+**Important Note on Publication Status**: The 4 papers referenced in this project (Computational Psychoanalysis, Quantum-Networked Consciousness, Racialized Body, Applied AI Ethics) are **research-in-progress documents currently under peer review**. They are **NOT yet officially published** in peer-reviewed journals.
+
+These papers are:
+- 🔄 Stored in the repository as living research documents
+- 📊 Updated with dynamically refreshed results as research progresses  
+- 💭 Shared for community engagement and expert feedback
+- ✅ Validated where applicable (e.g., real IBM QPU validation for Papers 2 & 3)
+
+**Distinction**: This PRIVATE repository contains the complete experimental work (~3912 tests, real hardware data, etc.). The PUBLIC repository (OmniMind-Core-Papers) contains ~55% of this work plus published validation reports explaining the research methodology and results.
+
 ### Transparency & Humility
 
 I maintain a position of radical transparency regarding:
