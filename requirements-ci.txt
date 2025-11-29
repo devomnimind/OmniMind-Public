@@ -22,9 +22,6 @@ psutil>=7.0.0
 PyYAML>=6.0.3
 requests>=2.32.0
 
-# System D-Bus (Linux)
-dbus-python>=1.4.0
-
 # Structured logging
 structlog>=25.0.0
 
