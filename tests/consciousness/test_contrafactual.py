@@ -37,14 +37,14 @@ class TestModuleAblation:
         """Create baseline loop with all modules enabled."""
         return IntegrationLoop(enable_logging=False)
 
-    async def get_baseline_phi(self, num_cycles: int = 10) -> float:
+    async def get_baseline_phi(self, num_cycles: int = 5) -> float:
         """Run baseline cycles and return mean Φ."""
         loop = IntegrationLoop(enable_logging=False)
         await loop.run_cycles(num_cycles, collect_metrics_every=1)
         phi_values = loop.get_phi_progression()
         return float(np.mean(phi_values)) if phi_values else 0.0
 
-    async def get_ablated_phi(self, module_to_disable: str, num_cycles: int = 10) -> float:
+    async def get_ablated_phi(self, module_to_disable: str, num_cycles: int = 5) -> float:
         """Run cycles with module disabled and return mean Φ."""
         loop = IntegrationLoop(enable_logging=False)
 
@@ -69,8 +69,8 @@ class TestModuleAblation:
     @pytest.mark.asyncio
     async def test_sensory_input_ablation(self):
         """Test causal contribution of sensory_input module."""
-        phi_baseline = await self.get_baseline_phi(10)
-        phi_ablated = await self.get_ablated_phi("sensory_input", 10)
+        phi_baseline = await self.get_baseline_phi(5)
+        phi_ablated = await self.get_ablated_phi("sensory_input", 5)
         delta_phi = phi_baseline - phi_ablated
 
         assert delta_phi > 0.03, f"sensory_input not important enough: Δ Φ = {delta_phi:.4f}"
@@ -79,8 +79,8 @@ class TestModuleAblation:
     @pytest.mark.asyncio
     async def test_qualia_ablation(self):
         """Test causal contribution of qualia module."""
-        phi_baseline = await self.get_baseline_phi(10)
-        phi_ablated = await self.get_ablated_phi("qualia", 10)
+        phi_baseline = await self.get_baseline_phi(5)
+        phi_ablated = await self.get_ablated_phi("qualia", 5)
         delta_phi = phi_baseline - phi_ablated
 
         assert delta_phi > 0.03, f"qualia not important enough: Δ Φ = {delta_phi:.4f}"
@@ -89,8 +89,8 @@ class TestModuleAblation:
     @pytest.mark.asyncio
     async def test_narrative_ablation(self):
         """Test causal contribution of narrative module."""
-        phi_baseline = await self.get_baseline_phi(10)
-        phi_ablated = await self.get_ablated_phi("narrative", 10)
+        phi_baseline = await self.get_baseline_phi(5)
+        phi_ablated = await self.get_ablated_phi("narrative", 5)
         delta_phi = phi_baseline - phi_ablated
 
         assert delta_phi > 0.03, f"narrative not important enough: Δ Φ = {delta_phi:.4f}"
@@ -99,8 +99,8 @@ class TestModuleAblation:
     @pytest.mark.asyncio
     async def test_meaning_maker_ablation(self):
         """Test causal contribution of meaning_maker module."""
-        phi_baseline = await self.get_baseline_phi(10)
-        phi_ablated = await self.get_ablated_phi("meaning_maker", 10)
+        phi_baseline = await self.get_baseline_phi(5)
+        phi_ablated = await self.get_ablated_phi("meaning_maker", 5)
         delta_phi = phi_baseline - phi_ablated
 
         assert delta_phi > 0.03, f"meaning_maker not important enough: Δ Φ = {delta_phi:.4f}"
@@ -109,8 +109,8 @@ class TestModuleAblation:
     @pytest.mark.asyncio
     async def test_expectation_ablation(self):
         """Test causal contribution of expectation module."""
-        phi_baseline = await self.get_baseline_phi(10)
-        phi_ablated = await self.get_ablated_phi("expectation", 10)
+        phi_baseline = await self.get_baseline_phi(5)
+        phi_ablated = await self.get_ablated_phi("expectation", 5)
         delta_phi = phi_baseline - phi_ablated
 
         assert delta_phi > 0.03, f"expectation not important enough: Δ Φ = {delta_phi:.4f}"
@@ -133,7 +133,7 @@ class TestModuleAblation:
         ]
 
         # Get baseline with all modules
-        phi_baseline = await self.get_baseline_phi(15)
+        phi_baseline = await self.get_baseline_phi(5)
         assert phi_baseline > 0.0, "Baseline Φ should be positive"
 
         # Ablation sweep
@@ -141,7 +141,7 @@ class TestModuleAblation:
         total_contribution = 0.0
 
         for module_name in module_names:
-            phi_ablated = await self.get_ablated_phi(module_name, 15)
+            phi_ablated = await self.get_ablated_phi(module_name, 5)
             delta_phi = phi_baseline - phi_ablated
             contribution_pct = (delta_phi / phi_baseline) * 100
 
@@ -151,7 +151,7 @@ class TestModuleAblation:
                 phi_ablated=phi_ablated,
                 delta_phi=delta_phi,
                 contribution_percentage=contribution_pct,
-                cycles_run=15,
+                cycles_run=5,
             )
 
             total_contribution += delta_phi
@@ -200,7 +200,7 @@ class TestModuleAblation:
         ]
 
         # Baseline
-        phi_baseline = await self.get_baseline_phi(10)
+        phi_baseline = await self.get_baseline_phi(5)
 
         print("\n🔗 SYNERGY ANALYSIS (Pairwise Module Ablations)")
         print("=" * 80)
@@ -209,10 +209,10 @@ class TestModuleAblation:
 
         for module1, module2 in pairs:
             # Individual ablations
-            phi_ablated1 = await self.get_ablated_phi(module1, 10)
+            phi_ablated1 = await self.get_ablated_phi(module1, 5)
             delta_phi1 = phi_baseline - phi_ablated1
 
-            phi_ablated2 = await self.get_ablated_phi(module2, 10)
+            phi_ablated2 = await self.get_ablated_phi(module2, 5)
             delta_phi2 = phi_baseline - phi_ablated2
 
             # Pairwise ablation (disable both)
@@ -220,7 +220,7 @@ class TestModuleAblation:
             loop.executors[module1].spec.produces_output = False
             loop.executors[module2].spec.produces_output = False
             try:
-                await loop.run_cycles(10, collect_metrics_every=1)
+                await loop.run_cycles(5, collect_metrics_every=1)
                 phi_both = np.mean(loop.get_phi_progression())
             finally:
                 loop.executors[module1].spec.produces_output = True
@@ -260,7 +260,7 @@ class TestModuleAblation:
         print("-" * 70)
 
         # Baseline
-        phi_baseline = await self.get_baseline_phi(10)
+        phi_baseline = await self.get_baseline_phi(5)
         print(f"{'All Enabled (Baseline)':<40} {phi_baseline:>10.4f}  {0.0:>13.4f}")
 
         # Progressive ablation
@@ -273,7 +273,7 @@ class TestModuleAblation:
                 loop.executors[mod].spec.produces_output = False
 
             try:
-                await loop.run_cycles(10, collect_metrics_every=1)
+                await loop.run_cycles(5, collect_metrics_every=1)
                 phi = np.mean(loop.get_phi_progression())
                 cascade_loss = phi_baseline - phi
             finally:

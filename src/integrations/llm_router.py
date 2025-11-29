@@ -43,6 +43,7 @@ class LLMProvider(Enum):
 
     OLLAMA = "ollama"
     HUGGINGFACE = "huggingface"
+    HUGGINGFACE_SPACE = "huggingface_space"
     OPENROUTER = "openrouter"
 
 
@@ -325,6 +326,146 @@ class HuggingFaceProvider(LLMProviderInterface):
         return 2000  # ~2s para modelos locais
 
 
+class HuggingFaceSpaceProvider(LLMProviderInterface):
+    """Provedor HuggingFace Space (inferência via API)."""
+
+    def __init__(self):
+        self._client = None
+        self._available = False
+        self._check_availability()
+
+    def _check_availability(self):
+        """Verifica disponibilidade do HuggingFace Space."""
+        space_url = os.getenv("HF_SPACE_URL")
+        if not space_url:
+            logger.warning("HF_SPACE_URL não encontrada")
+            return
+
+        try:
+            import requests
+            self._client = requests.Session()
+            # Testa conectividade
+            response = self._client.get(space_url, timeout=5)
+            if response.status_code == 200:
+                self._available = True
+            else:
+                logger.warning(f"Space não responde: {response.status_code}")
+        except ImportError:
+            logger.warning("requests não disponível para HF Space")
+            self._available = False
+        except Exception as e:
+            logger.warning(f"Erro na configuração HF Space: {e}")
+            self._available = False
+
+    async def invoke(self, prompt: str, config: LLMConfig) -> LLMResponse:
+        """Invoca HuggingFace Space."""
+        if not self.is_available():
+            return LLMResponse(
+                success=False,
+                text="",
+                provider=LLMProvider.HUGGINGFACE_SPACE,
+                model=config.model_name,
+                latency_ms=0,
+                error="HuggingFace Space não disponível",
+            )
+
+        space_url = os.getenv("HF_SPACE_URL")
+        if not space_url:
+            return LLMResponse(
+                success=False,
+                text="",
+                provider=LLMProvider.HUGGINGFACE_SPACE,
+                model=config.model_name,
+                latency_ms=0,
+                error="HF_SPACE_URL não configurada",
+            )
+
+        start_time = time.time()
+        try:
+            if self._client is None:
+                return LLMResponse(
+                    success=False,
+                    text="",
+                    provider=LLMProvider.HUGGINGFACE_SPACE,
+                    model=config.model_name,
+                    latency_ms=0,
+                    error="HF Space client not initialized",
+                )
+
+            # Payload para inferência (ajuste conforme o Space)
+            payload = {
+                "inputs": prompt,
+                "parameters": {
+                    "max_new_tokens": config.max_tokens,
+                    "temperature": config.temperature,
+                    "do_sample": True,
+                }
+            }
+
+            # Faz request async
+            import aiohttp
+            async with aiohttp.ClientSession() as session:
+                async with session.post(
+                    f"{space_url}/generate",  # Ajuste endpoint conforme Space
+                    json=payload,
+                    timeout=aiohttp.ClientTimeout(total=config.timeout)
+                ) as response:
+                    if response.status == 200:
+                        result = await response.json()
+                        # Extrai texto (ajuste conforme resposta do Space)
+                        generated_text = result.get("generated_text", "")
+                        if isinstance(generated_text, list) and generated_text:
+                            generated_text = generated_text[0].get("generated_text", "")
+                        
+                        # Garante que é string
+                        if not isinstance(generated_text, str):
+                            generated_text = str(generated_text)
+                        
+                        # Remove prompt se presente
+                        if generated_text.startswith(prompt):
+                            generated_text = generated_text[len(prompt):].strip()
+
+                        latency = int((time.time() - start_time) * 1000)
+                        return LLMResponse(
+                            success=True,
+                            text=generated_text,
+                            provider=LLMProvider.HUGGINGFACE_SPACE,
+                            model=config.model_name,
+                            latency_ms=latency,
+                        )
+                    else:
+                        error_text = await response.text()
+                        latency = int((time.time() - start_time) * 1000)
+                        return LLMResponse(
+                            success=False,
+                            text="",
+                            provider=LLMProvider.HUGGINGFACE_SPACE,
+                            model=config.model_name,
+                            latency_ms=latency,
+                            error=f"HTTP {response.status}: {error_text}",
+                        )
+
+        except Exception as e:
+            latency = int((time.time() - start_time) * 1000)
+            logger.error(f"Erro no HF Space: {e}")
+            return LLMResponse(
+                success=False,
+                text="",
+                provider=LLMProvider.HUGGINGFACE_SPACE,
+                model=config.model_name,
+                latency_ms=latency,
+                error=str(e),
+            )
+
+    def is_available(self) -> bool:
+        """Verifica se HuggingFace Space está disponível."""
+        return self._available
+
+    def get_latency_estimate(self) -> int:
+        """Estimativa de latência HF Space (cloud)."""
+        return 2500  # ~2.5s para Spaces
+
+
 class OpenRouterProvider(LLMProviderInterface):
     """Provedor OpenRouter (cloud com múltiplos modelos)."""
 
@@ -430,8 +571,9 @@ class LLMRouter:
 
     Estratégia de fallback:
     1. Ollama (local, mais rápido)
-    2. HuggingFace (local inference)
-    3. OpenRouter (cloud, múltiplos modelos)
+    2. HuggingFace Space (cloud inference)
+    3. HuggingFace (local inference)
+    4. OpenRouter (cloud, múltiplos modelos)
     """
 
     def __init__(self):
@@ -439,6 +581,7 @@ class LLMRouter:
         self.providers = {
             LLMProvider.OLLAMA: OllamaProvider(),
             LLMProvider.HUGGINGFACE: HuggingFaceProvider(),
+            LLMProvider.HUGGINGFACE_SPACE: HuggingFaceSpaceProvider(),
             LLMProvider.OPENROUTER: OpenRouterProvider(),
         }
 
@@ -490,8 +633,15 @@ class LLMRouter:
                     tier=LLMModelTier.BALANCED,
                 ),
                 LLMConfig(
+                    provider=LLMProvider.HUGGINGFACE_SPACE,
+                    model_name="fabricioslv-devbrain-inference",
+                    temperature=0.7,
+                    max_tokens=2048,
+                    tier=LLMModelTier.BALANCED,
+                ),
+                LLMConfig(
                     provider=LLMProvider.HUGGINGFACE,
-                    model_name="microsoft/DialoGPT-medium",
+                    model_name="microsoft/DialoGPT-small",
                     temperature=0.7,
                     max_tokens=2048,
                     tier=LLMModelTier.BALANCED,
@@ -521,7 +671,7 @@ class LLMRouter:
                 ),
                 LLMConfig(
                     provider=LLMProvider.HUGGINGFACE,
-                    model_name="microsoft/DialoGPT-large",
+                    model_name="microsoft/DialoGPT-small",
                     temperature=0.7,
                     max_tokens=4096,
                     tier=LLMModelTier.HIGH_QUALITY,

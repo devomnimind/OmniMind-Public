@@ -1021,23 +1021,33 @@ ESTIMATED_COMPLEXITY: low
 
     def _synthesize_results(self, execution_result: Dict[str, Any]) -> Dict[str, Any]:
         """Sintetiza resultados de múltiplos agentes"""
+        if "error" in execution_result:
+            return {
+                "summary": f"Execution failed: {execution_result['error']}",
+                "total_subtasks": 0,
+                "completed": 0,
+                "failed": 0,
+                "overall_success": False,
+            }
+
+        subtask_results = execution_result.get("subtask_results", [])
         subtask_summaries = []
-        for sr in execution_result["subtask_results"]:
+        for sr in subtask_results:
             subtask_summaries.append(
                 f"- {sr.get('agent', 'unknown')}: {sr.get('description', '')} → "
                 f"{'✅' if sr.get('completed') else '❌'}"
             )
 
         synthesis = {
-            "summary": "\n".join(subtask_summaries),
-            "total_subtasks": len(execution_result["subtask_results"]),
+            "summary": "\n".join(subtask_summaries) if subtask_summaries else "No subtasks executed",
+            "total_subtasks": len(subtask_results),
             "completed": sum(
-                1 for sr in execution_result["subtask_results"] if sr.get("completed")
+                1 for sr in subtask_results if sr.get("completed")
             ),
             "failed": sum(
-                1 for sr in execution_result["subtask_results"] if not sr.get("completed")
+                1 for sr in subtask_results if not sr.get("completed")
             ),
-            "overall_success": execution_result["overall_success"],
+            "overall_success": execution_result.get("overall_success", False),
         }
 
         return synthesis

@@ -151,22 +151,22 @@ class SecurityAgent(AuditedTool):
         return merged
 
     def _check_tools(self) -> Dict[str, bool]:
-        tools = [
-            "auditctl",
-            "aide",
-            "chkrootkit",
-            "rkhunter",
-            "lynis",
-            "clamdscan",
-            "ufw",
-            "ps",
-            "ss",
-            "lsof",
-        ]
+        commands = {
+            "auditctl": ["auditctl", "--version"],  # Requires root, will fail in test env
+            "aide": ["aide", "--version"],
+            "chkrootkit": ["chkrootkit", "-V"],
+            "rkhunter": ["rkhunter", "--version"],
+            "lynis": ["lynis", "--version"],
+            "clamdscan": ["clamdscan", "--version"],  # Needs config
+            "ufw": ["ufw", "--version"],
+            "ps": ["ps", "--version"],
+            "ss": ["ss", "--version"],
+            "lsof": ["lsof", "-v"],
+        }
         availability: Dict[str, bool] = {}
-        for tool in tools:
+        for tool, cmd in commands.items():
             try:
-                subprocess.run([tool, "--version"], capture_output=True, timeout=3)
+                subprocess.run(cmd, capture_output=True, timeout=3)
                 availability[tool] = True
             except Exception:  # pragma: no cover
                 availability[tool] = False

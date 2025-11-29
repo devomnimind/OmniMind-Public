@@ -375,7 +375,8 @@ class TestIntegrationLoopIntegration:
         """Test that Φ computation works across cycles."""
         loop = IntegrationLoop()
 
-        for _ in range(20):
+        # Limit to 5 cycles to prevent excessive logging
+        for _ in range(5):
             await loop.execute_cycle(collect_metrics=True)
 
         phi_values = loop.get_phi_progression()

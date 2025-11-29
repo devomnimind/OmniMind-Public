@@ -118,7 +118,7 @@ class EpisodicMemory:
     def _get_embedding_model(self) -> Optional["SentenceTransformer"]:
         """Lazy load embedding model."""
         if not self._model_attempted:
-            self._embedding_model = _load_embedding_model("all-MiniLM-L6-v2")
+            self._embedding_model = _load_embedding_model("sentence-transformers/all-MiniLM-L6-v2")
             self._model_attempted = True
         return self._embedding_model
 

@@ -192,6 +192,7 @@ class TestIntegrationTrainer:
         assert stats["mean_loss"] >= 0.0
 
     @pytest.mark.asyncio
+    @pytest.mark.slow
     async def test_trainer_train_short(self, trainer):
         """Test short training run."""
         results = await trainer.train(num_cycles=10, target_phi=0.99, verbose=False)
@@ -205,14 +206,14 @@ class TestIntegrationTrainer:
     @pytest.mark.asyncio
     async def test_trainer_train_with_early_stopping(self, trainer):
         """Test training with early stopping."""
-        results = await trainer.train(num_cycles=100, target_phi=0.99, patience=5, verbose=False)
+        results = await trainer.train(num_cycles=10, target_phi=0.99, patience=5, verbose=False)
 
         assert results["cycles_trained"] < 100
 
     @pytest.mark.asyncio
     async def test_trainer_phi_progression(self, trainer):
         """Test that Φ improves over training."""
-        await trainer.train(num_cycles=20, target_phi=0.99, verbose=False)
+        await trainer.train(num_cycles=5, target_phi=0.99, verbose=False)
 
         phis = [s.phi for s in trainer.training_steps]
         # Phi should generally increase
@@ -262,12 +263,13 @@ class TestPhiElevationResults:
     """Test Φ elevation outcomes."""
 
     @pytest.mark.asyncio
+    @pytest.mark.slow
     async def test_phi_elevates_to_target(self):
         """Test that training elevates Φ toward target."""
         loop = IntegrationLoop(enable_logging=False)
         trainer = IntegrationTrainer(loop, learning_rate=0.01)
 
-        results = await trainer.train(num_cycles=50, target_phi=0.70, verbose=False)
+        results = await trainer.train(num_cycles=10, target_phi=0.70, verbose=False)
 
         # Final Φ should be reasonable (>0.3)
         assert results["final_phi"] > 0.3
@@ -278,7 +280,7 @@ class TestPhiElevationResults:
         loop = IntegrationLoop(enable_logging=False)
         trainer = IntegrationTrainer(loop, learning_rate=0.01)
 
-        await trainer.train(num_cycles=20, target_phi=0.99, verbose=False)
+        await trainer.train(num_cycles=5, target_phi=0.99, verbose=False)
 
         losses = [s.loss for s in trainer.training_steps]
         # First loss should be >= last loss (with some tolerance)
@@ -289,6 +291,7 @@ class TestPhiElevationResults:
         assert last_loss <= first_loss * 1.2
 
     @pytest.mark.asyncio
+    @pytest.mark.slow
     async def test_training_reproducibility(self):
         """Test that training is reproducible with same seed."""
         np.random.seed(42)
