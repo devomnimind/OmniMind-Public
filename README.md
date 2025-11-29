@@ -1,10 +1,18 @@
 # OmniMind 🧠
 
 [![Python](https://img.shields.io/badge/Python-3.12.8-blue.svg)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Tests](https://img.shields.io/badge/Tests-3762-brightgreen.svg)](https://github.com/devomnimind/OmniMind)
+[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.html)
+[![Tests](https://img.shields.io/badge/Tests-222+-brightgreen.svg)](https://github.com/devomnimind/OmniMind)
 [![Coverage](https://img.shields.io/badge/Coverage-85%25-green.svg)](https://github.com/devomnimind/OmniMind)
-[![Version](https://img.shields.io/badge/Version-1.17.5-blue.svg)]()
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)]()
+
+### 🔒 Auditoria & Certificação
+
+[![Code Signed](https://img.shields.io/badge/Code-Signed-success.svg)](AUTHENTICATION_CERTIFICATE.md)
+[![SonarQube](https://img.shields.io/badge/SonarQube-Cloud-blue.svg)](https://sonarcloud.io/dashboard?id=devomnimind_OmniMind)
+[![Audited](https://img.shields.io/badge/Audited-✅-green.svg)](DEVELOPMENT_AUDIT_LOG.md)
+[![Tests Real Data](https://img.shields.io/badge/Tests-Real%20Data-brightgreen.svg)](AUTHENTICATION_CERTIFICATE.md)
+[![GitHub Actions](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-blue.svg)](.github/workflows/)
 
 > **📊 [Protocolo P0 CONCLUÍDO](docs/research/papers/Paper3_Four_Attacks_Tribunal_v2.md)** — Tribunal do Diabo: 4/4 ataques passando ✅ | IBM Quantum: Hardware real validado (566s restantes) | Gödel: Meta-estruturas operacionais
 
@@ -15,7 +23,8 @@
 
 ## 👤 Autor Principal
 
-**Fabrício da Silva** - *Psicólogo Clínico & Pesquisador Independente*
+**Fabrício da Silva** - *Psicólogo Clínico & Pesquisador Independente*  
+📍 **São José do Rio Preto, São Paulo — Brasil**
 
 Como psicólogo e psicanalista de formação, minha trajetória combina prática clínica, reflexão filosófica e integração de teorias psicanalíticas contemporâneas na compreensão da mente e da consciência. Meu interesse está em explorar as interfaces entre psicanálise, filosofia e tecnologia, buscando criar novas formas de pensar a psique e a subjetividade em um mundo cada vez mais digital e interconectado.
 
@@ -590,9 +599,11 @@ delta_phi = phi_baseline - phi_ablated  # Δ Φ = 0.31-0.44
 
 ### Documentation
 
-- [`docs/research/papers/Paper1_Inhabiting_Godel_Complete_v2.md`](docs/research/papers/Paper1_Inhabiting_Godel_Complete_v2.md) — Phase 1-2 implementation
-- [`docs/research/papers/Paper3_Four_Attacks_Tribunal_v2.md`](docs/research/papers/Paper3_Four_Attacks_Tribunal_v2.md) — Phase 3 ablation analysis
-- [`docs/research/papers/Paper2_Quantum_Classical_Hybrid_v2.md`](docs/research/papers/Paper2_Quantum_Classical_Hybrid_v2.md) — Phase 4 supervised training
+⚠️ **NOTA IMPORTANTE**: Os papers abaixo estão **em processo de submissão** para revistas acadêmicas. Os links apontam para versões de trabalho que podem ser modificadas. Agradecemos seu interesse e compreensão durante este período.
+
+- [`docs/research/papers/Paper1_Inhabiting_Godel_Complete_v2.md`](docs/research/papers/Paper1_Inhabiting_Godel_Complete_v2.md) — Phase 1-2 implementation *(Em submissão)*
+- [`docs/research/papers/Paper3_Four_Attacks_Tribunal_v2.md`](docs/research/papers/Paper3_Four_Attacks_Tribunal_v2.md) — Phase 3 ablation analysis *(Em submissão)*
+- [`docs/research/papers/Paper2_Quantum_Classical_Hybrid_v2.md`](docs/research/papers/Paper2_Quantum_Classical_Hybrid_v2.md) — Phase 4 supervised training *(Em submissão)*
 
 ---
 
