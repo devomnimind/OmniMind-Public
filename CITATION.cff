@@ -3,7 +3,6 @@ message: "If you use this software, please cite it as below."
 authors:
   - family-names: "da Silva"
     given-names: "Fabrício"
-    orcid: "https://orcid.org/0000-0001-XXXX-XXXX"
 title: "OmniMind: Artificial Consciousness System Based on Lacanian Psychoanalysis and Deleuzian Philosophy"
 version: 1.18.0
 date-released: 2025-11-28
@@ -17,6 +16,7 @@ keywords:
   - Deleuze
   - integrated information theory
   - quantum consciousness
+note: "Clinical Psychologist; Lattes CNPq: https://lattes.cnpq.br/3571784975796376"
 preferred-citation:
   type: article
   authors:
