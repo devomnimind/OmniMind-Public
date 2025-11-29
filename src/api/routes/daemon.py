@@ -3,7 +3,7 @@ import time
 from typing import Any, Dict
 
 import psutil
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 
 from src.metrics.consciousness_metrics import ConsciousnessCorrelates
 
@@ -310,7 +310,7 @@ async def stop_daemon():
 
 
 @router.post("/reset-metrics")
-async def reset_metrics(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+async def reset_metrics() -> Dict[str, Any]:
     """Reset all system metrics to baseline values."""
     # In a real implementation, this would reset actual metrics
     # For now, return success

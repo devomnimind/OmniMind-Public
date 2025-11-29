@@ -275,6 +275,15 @@ class RSIArchitecture(nn.Module):
             - remainder: O que não pode ser simbolizado (objeto a)
         """
         # Real → Symbolic (tentativa de simbolização)
+        # Ensure real_embedding is on correct device
+        # Use to_empty() if module is on meta device (placeholder)
+        device = real_data.device
+        if next(self.real_embedding.parameters(), None) is not None:
+            param_device = next(self.real_embedding.parameters()).device
+            if param_device.type == "meta":
+                self.real_embedding = self.real_embedding.to_empty(device=device)
+            else:
+                self.real_embedding = self.real_embedding.to(device)
         real_embedded = self.real_embedding(real_data)
         symbolic = self.symbolic_processor(real_embedded)
 

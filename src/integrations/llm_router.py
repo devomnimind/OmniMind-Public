@@ -65,7 +65,7 @@ class LLMConfig:
     api_key: Optional[str] = None
     temperature: float = 0.7
     max_tokens: int = 2048
-    timeout: int = 30
+    timeout: int = 120  # 2 minutos para modelos locais
     retry_attempts: int = 2
     tier: LLMModelTier = LLMModelTier.BALANCED
 
@@ -867,18 +867,41 @@ def invoke_llm_sync(prompt: str, **kwargs) -> LLMResponse:
     Função síncrona de compatibilidade para invocar LLM com fallback.
 
     Para uso em contextos síncronos como LangGraph nodes.
+    Evita deadlock com asyncio.run() dentro de loops já rodando.
     """
     try:
         # Verificar se estamos em um loop rodando
         asyncio.get_running_loop()
-        # Se estamos em um loop, usar ThreadPoolExecutor
-        import concurrent.futures
+        # Se estamos em um loop, usar thread com novo event loop
+        import threading
 
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future = executor.submit(asyncio.run, _invoke_async(prompt, **kwargs))
-            return future.result()
+        result_container = []
+        exception_container = []
+
+        def run_in_new_loop():
+            try:
+                new_loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(new_loop)
+                try:
+                    result = new_loop.run_until_complete(_invoke_async(prompt, **kwargs))
+                    result_container.append(result)
+                finally:
+                    new_loop.close()
+            except Exception as e:
+                exception_container.append(e)
+
+        thread = threading.Thread(target=run_in_new_loop, daemon=False)
+        thread.start()
+        thread.join(timeout=120)  # 2 minutos de timeout
+
+        if exception_container:
+            raise exception_container[0]
+        if not result_container:
+            raise TimeoutError("LLM invocation timed out after 120s")
+        return result_container[0]
+
     except RuntimeError:
-        # Não estamos em um loop, podemos usar asyncio.run()
+        # Não estamos em um loop, podemos usar asyncio.run() diretamente
         return asyncio.run(_invoke_async(prompt, **kwargs))
 
 

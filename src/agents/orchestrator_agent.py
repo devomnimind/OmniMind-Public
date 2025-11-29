@@ -25,6 +25,7 @@ from ..integrations.dbus_controller import (
     DBusSystemController,
 )
 from ..integrations.llm_router import LLMModelTier, invoke_llm_sync
+from ..integrations.orchestrator_llm import invoke_orchestrator_llm
 from ..integrations.mcp_client import MCPClient, MCPClientError
 from ..integrations.qdrant_adapter import (
     QdrantAdapter,
@@ -453,8 +454,13 @@ class OrchestratorAgent(ReactAgent):
 
         return self._agents[mode]
 
-    def decompose_task(self, task_description: str) -> Dict[str, Any]:
-        """Decompõe tarefa complexa em subtarefas delegáveis"""
+    def decompose_task(self, task_description: str, tier: LLMModelTier = LLMModelTier.BALANCED) -> Dict[str, Any]:
+        """Decompõe tarefa complexa em subtarefas delegáveis
+        
+        Usa estratégia LLM do Orchestrador:
+        - Modelo local com 240s timeout, 2 tentativas
+        - Fallback para APIs remotas se local falhar
+        """
         prompt = f"""You are OrchestratorAgent 🪃, a master coordinator of specialist agents.
 
 COMPLEX TASK: {task_description}
@@ -485,20 +491,19 @@ ESTIMATED_COMPLEXITY: <low/medium/high>
 Your decomposition plan:"""
 
         try:
-            response = invoke_llm_sync(prompt, tier=LLMModelTier.BALANCED)
+            # Usa estratégia LLM do Orchestrador (cérebro do projeto)
+            response = invoke_orchestrator_llm(prompt)
+            response_text = response.text
         except Exception as e:
-            logger.error(f"LLM invocation failed in decompose_task: {e}")
-            # Fallback plan for testing/dev
-            response = """
-ANALYSIS: LLM unavailable, using fallback plan.
+            logger.error(f"Orchestrator LLM invocation failed: {e}")
+            response_text = """ANALYSIS: LLM unavailable, using fallback plan.
 SUBTASKS:
 1. [CODE] Implement requested feature
 DEPENDENCIES:
-ESTIMATED_COMPLEXITY: low
-"""
+ESTIMATED_COMPLEXITY: low"""
 
         # Parsear plano
-        plan = self._parse_plan(response.text if hasattr(response, "text") else str(response))
+        plan = self._parse_plan(response_text if isinstance(response_text, str) else str(response_text))
         plan["original_task"] = task_description
         plan["created_at"] = self._timestamp()
 
@@ -676,7 +681,11 @@ ESTIMATED_COMPLEXITY: low
             plan = self.current_plan
 
         if not plan or not plan.get("subtasks"):
-            return {"error": "No plan to execute"}
+            return {
+                "error": "No plan to execute",
+                "overall_success": False,
+                "subtask_results": [],
+            }
 
         # Set current plan for consistency
         self.current_plan = plan
@@ -1191,7 +1200,11 @@ ESTIMATED_COMPLEXITY: low
 
         except Exception as e:
             logger.error(f"Failed to orchestrate tasks: {e}")
-            return {"error": str(e)}
+            return {
+                "error": str(e),
+                "overall_success": False,
+                "task": f"Execute the following tasks: {'; '.join(tasks)}",
+            }
 
     def switch_mode(self, mode: AgentMode) -> Optional[Dict[str, Any]]:
         """

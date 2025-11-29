@@ -58,14 +58,27 @@ class TestOrchestratorAgent:
 
     @patch("src.agents.orchestrator_agent.OmniMindCore")
     def test_orchestrate_workflow(self, mock_core: Mock) -> None:
-        """Testa orquestração de workflow."""
+        """Testa decomposição de tarefa pelo orchestrador (real LLM).
+        
+        Testa que o orchestrador consegue decompor uma tarefa complexa
+        em subtarefas usando o modelo Ollama local com fallback.
+        """
         agent = OrchestratorAgent(config_path="config/agent_config.yaml")
 
-        result = agent.orchestrate(
-            tasks=["task1", "task2"],
+        # Apenas testa decomposição (não executa as subtarefas)
+        plan = agent.decompose_task(
+            task_description="Implement a feature: add user authentication to the API"
         )
 
-        assert isinstance(result, (dict, list, str)) or result is None
+        assert isinstance(plan, dict)
+        assert "subtasks" in plan
+        assert "original_task" in plan
+        assert len(plan["subtasks"]) > 0
+        
+        # Verifica que subtarefas têm estrutura esperada
+        for subtask in plan["subtasks"]:
+            assert "agent" in subtask or "id" in subtask
+            assert "description" in subtask
 
     @patch("src.agents.orchestrator_agent.OmniMindCore")
     def test_handle_error_in_delegation(self, mock_core: Mock) -> None:

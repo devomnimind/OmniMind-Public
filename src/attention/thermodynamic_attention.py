@@ -155,6 +155,15 @@ class ThermodynamicAttention(nn.Module if TORCH_AVAILABLE else object):  # type:
         batch_size, seq_len, embed_dim = representations.shape
 
         # Project to entropy computation space
+        # Ensure entropy_projection is on correct device
+        # Use to_empty() if module is on meta device (placeholder)
+        device = representations.device
+        if next(self.entropy_projection.parameters(), None) is not None:
+            param_device = next(self.entropy_projection.parameters()).device
+            if param_device.type == "meta":
+                self.entropy_projection = self.entropy_projection.to_empty(device=device)
+            else:
+                self.entropy_projection = self.entropy_projection.to(device)
         projected = self.entropy_projection(representations)
 
         # Compute probability distribution per position
