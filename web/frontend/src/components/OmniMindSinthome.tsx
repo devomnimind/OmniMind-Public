@@ -581,8 +581,15 @@ export function OmniMindSinthome() {
       )}
 
       {/* PHENOMENOLOGY TAB */}
-      {activeTab === 'PHENOMENOLOGY' && qualia && (
+      {activeTab === 'PHENOMENOLOGY' && (
         <div className="glass-card p-4 mb-6 border-l-4 border-purple-500">
+            {!qualia ? (
+              <div className="text-center py-8">
+                <p className="text-gray-400 mb-2">⏳ Phenomenology Engine Initializing...</p>
+                <p className="text-xs text-gray-500">Generating subjective correlates...</p>
+              </div>
+            ) : (
+            <>
             <h3 className="text-sm font-semibold text-purple-400 mb-2 flex justify-between">
                 <span>🧠 Subjective Experience (Qualia)</span>
                 <span className="text-xs text-gray-500">Phi: {qualia.phi_proxy}</span>
@@ -673,6 +680,8 @@ export function OmniMindSinthome() {
                         "{state.consciousness.interpretation.message}" (Confidence: {state.consciousness.interpretation.confidence})
                     </div>
                 </div>
+            )}
+            </>
             )}
         </div>
       )}

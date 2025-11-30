@@ -223,15 +223,15 @@ export function ConsciousnessMetrics() {
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-400">Temporal Coherence:</span>
-              <span className="text-white">{(consciousnessMetrics.details?.ici_components?.temporal_coherence * 100)?.toFixed(1) || 0}%</span>
+              <span className="text-white">{((consciousnessMetrics.ici_components?.temporal_coherence || 0) * 100).toFixed(1)}%</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-400">Marker Integration:</span>
-              <span className="text-white">{(consciousnessMetrics.details?.ici_components?.marker_integration * 100)?.toFixed(1) || 0}%</span>
+              <span className="text-white">{((consciousnessMetrics.ici_components?.marker_integration || 0) * 100).toFixed(1)}%</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-400">Resonance:</span>
-              <span className="text-white">{(consciousnessMetrics.details?.ici_components?.resonance * 100)?.toFixed(1) || 0}%</span>
+              <span className="text-white">{((consciousnessMetrics.ici_components?.resonance || 0) * 100).toFixed(1)}%</span>
             </div>
           </div>
         </div>
@@ -241,11 +241,11 @@ export function ConsciousnessMetrics() {
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-400">Avg Micro Entropy:</span>
-              <span className="text-white">{(consciousnessMetrics.details?.prs_components?.avg_micro_entropy * 100)?.toFixed(1) || 0}%</span>
+              <span className="text-white">{((consciousnessMetrics.prs_components?.avg_micro_entropy || 0) * 100).toFixed(1)}%</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-400">Macro Entropy:</span>
-              <span className="text-white">{(consciousnessMetrics.details?.prs_components?.macro_entropy * 100)?.toFixed(1) || 0}%</span>
+              <span className="text-white">{((consciousnessMetrics.prs_components?.macro_entropy || 0) * 100).toFixed(1)}%</span>
             </div>
           </div>
         </div>

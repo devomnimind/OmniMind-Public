@@ -11,8 +11,23 @@ import time
 import uuid
 from base64 import b64encode
 
-# Add src to path for imports
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', 'src'))
+# Set up paths BEFORE any imports
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+src_path = os.path.join(project_root, 'src')
+web_path = os.path.join(project_root, 'web')
+
+# Add to sys.path only if not already there
+if src_path not in sys.path:
+    sys.path.insert(0, src_path)
+if web_path not in sys.path:
+    sys.path.insert(0, web_path)
+
+# Set PYTHONPATH environment variable if not set
+if 'PYTHONPATH' not in os.environ:
+    os.environ['PYTHONPATH'] = f"{src_path}:{web_path}"
+elif src_path not in os.environ['PYTHONPATH']:
+    os.environ['PYTHONPATH'] = f"{src_path}:{web_path}:{os.environ['PYTHONPATH']}"
+
 from contextlib import asynccontextmanager, suppress
 from pathlib import Path
 from typing import Any, Callable, Dict, Optional, Tuple
@@ -26,7 +41,6 @@ from secrets import compare_digest
 from starlette.status import HTTP_401_UNAUTHORIZED, WS_1008_POLICY_VIOLATION
 
 from src.agents.orchestrator_agent import OrchestratorAgent
-from src.metrics.real_consciousness_metrics import RealConsciousnessMetricsCollector
 from web.backend.websocket_manager import ws_manager
 from web.backend.routes import tasks, agents, security as security_router, metacognition, health
 
@@ -76,9 +90,6 @@ class AutonomyObservability:
 
 
 autonomy_observability = AutonomyObservability()
-
-# Global consciousness metrics collector
-consciousness_metrics_collector = RealConsciousnessMetricsCollector()
 
 logger = logging.getLogger("omnimind.backend")
 _AUTH_FILE = Path(
@@ -180,13 +191,6 @@ async def lifespan(app_instance: FastAPI):
         logger.warning("Realtime Analytics Broadcaster not available")
         realtime_analytics_broadcaster = None
 
-    # Initialize Consciousness Metrics Collector
-    try:
-        await consciousness_metrics_collector.initialize()
-        logger.info("Consciousness Metrics Collector initialized")
-    except Exception as e:
-        logger.warning(f"Failed to initialize Consciousness Metrics Collector: {e}")
-
     # Start WebSocket manager with timeout
     try:
         await asyncio.wait_for(ws_manager.start(), timeout=3.0)
@@ -260,10 +264,6 @@ async def lifespan(app_instance: FastAPI):
 
     # Start metrics reporter
     app_instance.state.metrics_task = asyncio.create_task(_metrics_reporter())
-    
-    # Start consciousness metrics collector
-    app_instance.state.consciousness_metrics_task = asyncio.create_task(_consciousness_metrics_collector())
-    
     try:
         yield
     finally:
@@ -282,13 +282,6 @@ async def lifespan(app_instance: FastAPI):
             task.cancel()
             with suppress(asyncio.CancelledError):
                 await task
-
-        # Stop consciousness metrics collector
-        consciousness_task = getattr(app_instance.state, "consciousness_metrics_task", None)
-        if consciousness_task:
-            consciousness_task.cancel()
-            with suppress(asyncio.CancelledError):
-                await consciousness_task
 
         # Stop Sinthome Broadcaster
         await sinthome_broadcaster.stop()
@@ -412,8 +405,16 @@ async def _async_init_orchestrator(app_instance: FastAPI):
     global _orchestrator_instance
     logger.info("Starting asynchronous Orchestrator initialization...")
     try:
+        # Check if config file exists
+        config_path = "config/agent_config.yaml"
+        if not Path(config_path).exists():
+            logger.warning(f"Config file {config_path} not found, skipping orchestrator initialization")
+            app_instance.state.orchestrator_ready = False
+            app_instance.state.orchestrator_error = f"Config file {config_path} not found"
+            return
+            
         # Run in thread pool to avoid blocking event loop
-        _orchestrator_instance = await asyncio.to_thread(OrchestratorAgent, "config/agent_config.yaml")
+        _orchestrator_instance = await asyncio.to_thread(OrchestratorAgent, config_path)
         app_instance.state.orchestrator_ready = True
         logger.info("Orchestrator initialized successfully")
 
@@ -520,22 +521,6 @@ async def _metrics_reporter() -> None:
             summary["errors"],
             orch_metrics,
         )
-
-
-async def _consciousness_metrics_collector() -> None:
-    """Background task that periodically collects consciousness metrics."""
-    logger.info("Starting consciousness metrics collection background task")
-    while True:
-        try:
-            await asyncio.sleep(5)  # Collect every 5 seconds
-            metrics = await consciousness_metrics_collector.collect_real_metrics()
-            logger.debug(f"Collected consciousness metrics: phi={metrics.phi:.4f}, anxiety={metrics.anxiety:.4f}")
-        except asyncio.CancelledError:
-            logger.info("Consciousness metrics collection task cancelled")
-            break
-        except Exception as e:
-            logger.error(f"Error collecting consciousness metrics: {e}")
-            await asyncio.sleep(5)  # Retry after error
 
 
 def _load_last_validation_entry() -> Dict[str, Any]:
@@ -789,53 +774,12 @@ def _get_daemon():
 
 
 @app.get("/daemon/status")
-def daemon_status(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
-    """Get current daemon status (O(1) from cache)."""
-    from src.services.daemon_monitor import get_cached_status
-
-    cache = get_cached_status()
-    task_info = cache.get("task_info", {})
-    system_metrics = cache.get("system_metrics", {})
-
-    # Collect real consciousness metrics (non-blocking, with fallback)
-    consciousness_metrics = None
-    try:
-        # Try to get cached metrics without blocking
-        if consciousness_metrics_collector.cached_metrics:
-            metrics = consciousness_metrics_collector.cached_metrics
-            consciousness_metrics = {
-                "phi": metrics.phi,
-                "ICI": metrics.ici,
-                "PRS": metrics.prs,
-                "anxiety": metrics.anxiety,
-                "flow": metrics.flow,
-                "entropy": metrics.entropy,
-                "ici_components": metrics.ici_components,
-                "prs_components": metrics.prs_components,
-                "interpretation": metrics.interpretation,
-                "history": metrics.history,
-            }
-    except Exception as e:
-        logger.debug(f"Could not get consciousness metrics: {e}")
-
-    return {
-        "running": True,
-        "uptime_seconds": int(time.time() % 86400),
-        "task_count": task_info.get("task_count", 0),
-        "completed_tasks": task_info.get("completed_tasks", 0),
-        "failed_tasks": task_info.get("failed_tasks", 0),
-        "cloud_connected": True,
-        "system_metrics": system_metrics if system_metrics else {
-            "cpu_percent": 0.0,
-            "memory_percent": 0.0,
-            "disk_percent": 0.0,
-            "is_user_active": True,
-            "idle_seconds": 0,
-            "is_sleep_hours": False,
-        },
-        "consciousness_metrics": consciousness_metrics,
-        "last_cache_update": cache.get("last_update", 0),
-    }
+async def daemon_status(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    """Get current daemon status with real metrics from actual system operations."""
+    from src.api.routes.daemon import get_daemon_status as get_real_daemon_status
+    
+    # Get real metrics from the updated daemon routes
+    return await get_real_daemon_status()
 
 
 @app.get("/daemon/tasks")
@@ -865,49 +809,6 @@ def daemon_tasks(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
         "total_tasks": len(tasks),
         "tasks": tasks,
     }
-
-
-@app.get("/daemon/agents")
-def daemon_agents(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
-    """List all active agents with real metrics."""
-    try:
-        orch = _get_orchestrator()
-        agents_list = []
-        
-        # Collect real agent data from orchestrator
-        if hasattr(orch, 'agents') and orch.agents:
-            for agent_id, agent in orch.agents.items():
-                agent_data = {
-                    "agent_id": agent_id,
-                    "name": getattr(agent, 'name', agent_id),
-                    "type": getattr(agent, 'agent_type', 'unknown'),
-                    "status": getattr(agent, 'status', 'offline'),
-                    "tasks_completed": getattr(agent, 'completed_tasks', 0),
-                    "tasks_failed": getattr(agent, 'failed_tasks', 0),
-                    "uptime_seconds": getattr(agent, 'uptime_seconds', 0),
-                    "last_active": getattr(agent, 'last_active', None),
-                    "current_task": getattr(agent, 'current_task', None),
-                    "metrics": {
-                        "avg_response_time_ms": getattr(agent, 'avg_response_time_ms', 0),
-                        "success_rate": getattr(agent, 'success_rate', 0.0),
-                        "memory_usage_mb": getattr(agent, 'memory_usage_mb', 0),
-                    }
-                }
-                agents_list.append(agent_data)
-        
-        return {
-            "agents": agents_list,
-            "total": len(agents_list),
-            "active": len([a for a in agents_list if a['status'] == 'working']),
-        }
-    except Exception as e:
-        logger.error(f"Error fetching agents: {e}")
-        return {
-            "agents": [],
-            "total": 0,
-            "active": 0,
-            "error": str(e)
-        }
 
 
 class DaemonTaskRequest(BaseModel):

@@ -22,32 +22,30 @@ export function WorkflowVisualization() {
   const [selectedWorkflow, setSelectedWorkflow] = useState<WorkflowData | null>(null);
 
   useEffect(() => {
-    if (lastMessage?.type === 'task_update' || lastMessage?.type === 'workflow_update') {
-      // Mock workflow data - in production, this would come from the backend
-      const data = lastMessage.data as { task_id?: string; name?: string } | undefined;
-      const mockWorkflow: WorkflowData = {
-        task_id: data?.task_id || 'task-1',
-        task_name: data?.name || 'Data Processing Pipeline',
-        nodes: [
-          { id: 'node-1', name: 'Initialize', status: 'completed', dependencies: [] },
-          { id: 'node-2', name: 'Load Data', status: 'completed', agent: 'DataAgent', dependencies: ['node-1'] },
-          { id: 'node-3', name: 'Process', status: 'running', agent: 'ProcessorAgent', dependencies: ['node-2'] },
-          { id: 'node-4', name: 'Analyze', status: 'pending', agent: 'AnalyzerAgent', dependencies: ['node-3'] },
-          { id: 'node-5', name: 'Generate Report', status: 'pending', agent: 'ReportAgent', dependencies: ['node-4'] },
-        ],
-        current_node: 'node-3',
-      };
+    // Only update workflows if WebSocket sends real task data
+    if (lastMessage?.type === 'task_update' && lastMessage.data) {
+      const data = lastMessage.data as { task_id?: string; name?: string; nodes?: any[] } | undefined;
+      
+      // Only create workflow if we have real task data with nodes
+      if (data?.task_id && data?.nodes && Array.isArray(data.nodes)) {
+        const workflow: WorkflowData = {
+          task_id: data.task_id,
+          task_name: data.name || 'Task',
+          nodes: data.nodes,
+          current_node: (data as any).current_node,
+        };
 
-      setWorkflows((prev) => {
-        const existing = prev.find((w) => w.task_id === mockWorkflow.task_id);
-        if (existing) {
-          return prev.map((w) => (w.task_id === mockWorkflow.task_id ? mockWorkflow : w));
+        setWorkflows((prev) => {
+          const existing = prev.find((w) => w.task_id === workflow.task_id);
+          if (existing) {
+            return prev.map((w) => (w.task_id === workflow.task_id ? workflow : w));
+          }
+          return [...prev, workflow];
+        });
+
+        if (!selectedWorkflow) {
+          setSelectedWorkflow(workflow);
         }
-        return [...prev, mockWorkflow];
-      });
-
-      if (!selectedWorkflow) {
-        setSelectedWorkflow(mockWorkflow);
       }
     }
   }, [lastMessage, selectedWorkflow]);

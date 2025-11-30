@@ -31,71 +31,29 @@ export function AgentStatus() {
   const setAgents = useDaemonStore((state) => state.setAgents);
 
   useEffect(() => {
-    // Initialize with mock agents for demonstration
-    // In production, this would fetch from API
-    if (agents.length === 0) {
-      setAgents([
-        {
-          agent_id: 'orchestrator_1',
-          name: 'Orchestrator Agent',
-          type: 'orchestrator',
-          status: 'idle',
-          tasks_completed: 42,
-          tasks_failed: 2,
-          uptime_seconds: 86400,
-          metrics: {
-            avg_response_time_ms: 250,
-            success_rate: 95.5,
-            memory_usage_mb: 512,
+    // Fetch real agent data from backend API
+    const fetchAgents = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/daemon/agents', {
+          headers: {
+            'Authorization': `Basic ${btoa('admin:omnimind2025!')}`,
           },
-        },
-        {
-          agent_id: 'code_1',
-          name: 'Code Agent',
-          type: 'code',
-          status: 'working',
-          current_task: 'Implementing feature #123',
-          tasks_completed: 28,
-          tasks_failed: 1,
-          uptime_seconds: 82800,
-          last_active: new Date().toISOString(),
-          metrics: {
-            avg_response_time_ms: 1850,
-            success_rate: 96.6,
-            memory_usage_mb: 768,
-          },
-        },
-        {
-          agent_id: 'architect_1',
-          name: 'Architect Agent',
-          type: 'architect',
-          status: 'idle',
-          tasks_completed: 15,
-          tasks_failed: 0,
-          uptime_seconds: 79200,
-          metrics: {
-            avg_response_time_ms: 420,
-            success_rate: 100,
-            memory_usage_mb: 384,
-          },
-        },
-        {
-          agent_id: 'reviewer_1',
-          name: 'Reviewer Agent',
-          type: 'reviewer',
-          status: 'idle',
-          tasks_completed: 35,
-          tasks_failed: 3,
-          uptime_seconds: 86400,
-          metrics: {
-            avg_response_time_ms: 650,
-            success_rate: 92.1,
-            memory_usage_mb: 448,
-          },
-        },
-      ]);
-    }
-  }, [agents.length, setAgents]);
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setAgents(data.agents || []);
+        }
+      } catch (error) {
+        console.error('Failed to fetch agents:', error);
+        // Fallback: empty list instead of mock data
+      }
+    };
+
+    // Fetch on component mount and refresh every 10 seconds
+    fetchAgents();
+    const interval = setInterval(fetchAgents, 10000);
+    return () => clearInterval(interval);
+  }, [setAgents]);
 
   const formatUptime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
