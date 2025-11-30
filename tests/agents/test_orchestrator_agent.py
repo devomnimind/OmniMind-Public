@@ -59,7 +59,7 @@ class TestOrchestratorAgent:
     @patch("src.agents.orchestrator_agent.OmniMindCore")
     def test_orchestrate_workflow(self, mock_core: Mock) -> None:
         """Testa decomposição de tarefa pelo orchestrador (real LLM).
-        
+
         Testa que o orchestrador consegue decompor uma tarefa complexa
         em subtarefas usando o modelo Ollama local com fallback.
         """
@@ -74,7 +74,7 @@ class TestOrchestratorAgent:
         assert "subtasks" in plan
         assert "original_task" in plan
         assert len(plan["subtasks"]) > 0
-        
+
         # Verifica que subtarefas têm estrutura esperada
         for subtask in plan["subtasks"]:
             assert "agent" in subtask or "id" in subtask

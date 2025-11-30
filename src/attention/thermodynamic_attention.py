@@ -300,6 +300,15 @@ class MultiHeadThermodynamicAttention(nn.Module if TORCH_AVAILABLE else object):
         """
         batch_size, seq_len, _ = query.shape
 
+        # Ensure all modules are on the same device as inputs
+        device = query.device
+        self.q_proj.to(device)
+        self.k_proj.to(device)
+        self.v_proj.to(device)
+        self.out_proj.to(device)
+        for head in self.attention_heads:
+            head.to(device)
+
         # Project Q, K, V
         Q = self.q_proj(query)
         K = self.k_proj(key)
