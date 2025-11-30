@@ -1,0 +1,16 @@
+# Core dependencies for OmniMind consciousness framework
+# Python 3.12.8
+
+# Numerical computing
+numpy>=1.26.0,<2.0
+scipy>=1.12.0,<2.0
+
+# Type hints & validation (if used in code)
+pydantic>=2.0.0,<3.0
+
+# Optional: visualization (for analysis)
+matplotlib>=3.8.0,<4.0
+
+# Optional: GPU (if available)
+# Uncomment if you have NVIDIA GPU:
+# cupy>=12.0.0  # GPU arrays
