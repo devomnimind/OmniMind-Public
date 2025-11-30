@@ -45,9 +45,12 @@ class RealSystemHealthAnalyzer:
 
         logger.info("RealSystemHealthAnalyzer initialized")
 
-    async def analyze_system_health(self, consciousness_metrics: Optional[Dict[str, Any]] = None,
-                                   module_activities: Optional[Dict[str, float]] = None,
-                                   error_rates: Optional[Dict[str, float]] = None) -> SystemHealthStatus:
+    async def analyze_system_health(
+        self,
+        consciousness_metrics: Optional[Dict[str, Any]] = None,
+        module_activities: Optional[Dict[str, float]] = None,
+        error_rates: Optional[Dict[str, float]] = None,
+    ) -> SystemHealthStatus:
         """Analisa saúde do sistema baseada em métricas reais."""
 
         current_time = datetime.now()
@@ -55,13 +58,13 @@ class RealSystemHealthAnalyzer:
         # Evita análises muito frequentes
         if (current_time - self.last_analysis).total_seconds() < self.analysis_interval:
             # Retorna status anterior se disponível
-            if hasattr(self, '_last_status'):
+            if hasattr(self, "_last_status"):
                 return self._last_status
 
         # Valores padrão se não fornecidos
-        phi = consciousness_metrics.get('phi', 0.0) if consciousness_metrics else 0.0
-        anxiety = consciousness_metrics.get('anxiety', 0.0) if consciousness_metrics else 0.0
-        flow = consciousness_metrics.get('flow', 0.0) if consciousness_metrics else 0.0
+        phi = consciousness_metrics.get("phi", 0.0) if consciousness_metrics else 0.0
+        anxiety = consciousness_metrics.get("anxiety", 0.0) if consciousness_metrics else 0.0
+        flow = consciousness_metrics.get("flow", 0.0) if consciousness_metrics else 0.0
 
         activities = module_activities or {}
         errors = error_rates or {}
@@ -82,13 +85,15 @@ class RealSystemHealthAnalyzer:
             flow=flow_status,
             audit=audit,
             details={
-                'phi_value': phi,
-                'anxiety_level': anxiety,
-                'flow_state': flow,
-                'avg_module_activity': sum(activities.values()) / len(activities) if activities else 0.0,
-                'total_errors': sum(errors.values()) if errors else 0.0
+                "phi_value": phi,
+                "anxiety_level": anxiety,
+                "flow_state": flow,
+                "avg_module_activity": (
+                    sum(activities.values()) / len(activities) if activities else 0.0
+                ),
+                "total_errors": sum(errors.values()) if errors else 0.0,
             },
-            timestamp=current_time
+            timestamp=current_time,
         )
 
         self._last_status = status
@@ -98,8 +103,14 @@ class RealSystemHealthAnalyzer:
 
         return status
 
-    def _analyze_overall_health(self, phi: float, anxiety: float, flow: float,
-                               activities: Dict[str, float], errors: Dict[str, float]) -> str:
+    def _analyze_overall_health(
+        self,
+        phi: float,
+        anxiety: float,
+        flow: float,
+        activities: Dict[str, float],
+        errors: Dict[str, float],
+    ) -> str:
         """Analisa saúde geral do sistema."""
 
         # Calcula score composto
@@ -138,7 +149,9 @@ class RealSystemHealthAnalyzer:
         # Verifica consistência da atividade entre módulos
         if activities:
             activity_values = list(activities.values())
-            activity_std = sum((x - sum(activity_values)/len(activity_values))**2 for x in activity_values) ** 0.5 / len(activity_values)
+            activity_std = sum(
+                (x - sum(activity_values) / len(activity_values)) ** 2 for x in activity_values
+            ) ** 0.5 / len(activity_values)
 
             if activity_std < 10:  # Atividades consistentes
                 return phi_integration
@@ -204,9 +217,7 @@ class RealSystemHealthAnalyzer:
         status_values = []
         for status in history[-10:]:  # Últimos 10
             # Converte status para valor numérico
-            status_map = {
-                "STABLE": 4, "MODERATE": 3, "WARNING": 2, "CRITICAL": 1
-            }
+            status_map = {"STABLE": 4, "MODERATE": 3, "WARNING": 2, "CRITICAL": 1}
             status_values.append(status_map.get(status.overall, 2))
 
         # Calcula tendência
@@ -225,7 +236,11 @@ class RealSystemHealthAnalyzer:
             "trend": trend_desc,
             "current_status": history[-1].overall if history else "unknown",
             "status_history": [h.overall for h in history[-10:]],
-            "avg_phi": sum(h.details.get('phi_value', 0) for h in history[-10:]) / len(history[-10:]) if history else 0.0
+            "avg_phi": (
+                sum(h.details.get("phi_value", 0) for h in history[-10:]) / len(history[-10:])
+                if history
+                else 0.0
+            ),
         }
 
 

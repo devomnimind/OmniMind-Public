@@ -17,6 +17,7 @@ router = APIRouter(prefix="/api/agents", tags=["agents"])
 # Import monitoring system
 try:
     from web.backend.monitoring.agent_monitor import agent_monitor
+
     MONITORING_ENABLED = True
 except ImportError as e:
     MONITORING_ENABLED = False
@@ -89,9 +90,7 @@ async def list_agents() -> List[AgentInfo]:
 
     # Update uptime for all agents
     for agent in _agents.values():
-        agent["uptime"] = current_time - (
-            agent.get("start_time", current_time - agent["uptime"])
-        )
+        agent["uptime"] = current_time - (agent.get("start_time", current_time - agent["uptime"]))
 
     return [AgentInfo(**agent) for agent in _agents.values()]
 
@@ -125,9 +124,7 @@ async def get_agent(agent_id: str) -> AgentInfo:
 
     agent = _agents[agent_id]
     current_time = time.time()
-    agent["uptime"] = current_time - (
-        agent.get("start_time", current_time - agent["uptime"])
-    )
+    agent["uptime"] = current_time - (agent.get("start_time", current_time - agent["uptime"]))
 
     return AgentInfo(**agent)
 
@@ -157,8 +154,7 @@ async def get_agent_metrics(agent_id: str) -> Dict[str, Any]:
         "tasks_completed": agent["tasks_completed"],
         "tasks_failed": agent["tasks_failed"],
         "success_rate": (
-            agent["tasks_completed"]
-            / (agent["tasks_completed"] + agent["tasks_failed"])
+            agent["tasks_completed"] / (agent["tasks_completed"] + agent["tasks_failed"])
             if (agent["tasks_completed"] + agent["tasks_failed"]) > 0
             else 0.0
         ),
@@ -411,9 +407,7 @@ async def analyze_code_structure(filepath: str) -> Dict[str, Any]:
     if not file_path.suffix == ".py":
         from fastapi import HTTPException
 
-        raise HTTPException(
-            status_code=400, detail="Only Python files (.py) can be analyzed"
-        )
+        raise HTTPException(status_code=400, detail="Only Python files (.py) can be analyzed")
 
     structure = parser.parse_file(str(file_path))
 

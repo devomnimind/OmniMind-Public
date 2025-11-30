@@ -12,14 +12,14 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 # Set up paths BEFORE any imports
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-src_path = os.path.join(project_root, 'src')
-web_path = os.path.join(project_root, 'web')
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+src_path = os.path.join(project_root, "src")
+web_path = os.path.join(project_root, "web")
 
 sys.path.insert(0, src_path)
 sys.path.insert(0, web_path)
 
-os.environ['PYTHONPATH'] = f"{src_path}:{web_path}"
+os.environ["PYTHONPATH"] = f"{src_path}:{web_path}"
 
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -71,6 +71,7 @@ def _verify_credentials(credentials: HTTPBasicCredentials = Depends(security)) -
 # ENDPOINTS
 # ============================================================================
 
+
 @app.get("/")
 async def read_root():
     """Root endpoint - confirm API is running."""
@@ -112,4 +113,5 @@ async def health():
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")

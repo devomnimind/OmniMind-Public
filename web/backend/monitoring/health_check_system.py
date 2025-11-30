@@ -201,9 +201,7 @@ class HealthCheckSystem:
                     device_name = torch.cuda.get_device_name(0)
                     memory_allocated = torch.cuda.memory_allocated(0) / 1024**3  # GB
                     memory_reserved = torch.cuda.memory_reserved(0) / 1024**3  # GB
-                    memory_total = (
-                        torch.cuda.get_device_properties(0).total_memory / 1024**3
-                    )
+                    memory_total = torch.cuda.get_device_properties(0).total_memory / 1024**3
 
                     status = HealthStatus.HEALTHY
                     details = {
@@ -213,9 +211,7 @@ class HealthCheckSystem:
                         "memory_allocated_gb": round(memory_allocated, 2),
                         "memory_reserved_gb": round(memory_reserved, 2),
                         "memory_total_gb": round(memory_total, 2),
-                        "memory_usage_percent": round(
-                            (memory_allocated / memory_total) * 100, 2
-                        ),
+                        "memory_usage_percent": round((memory_allocated / memory_total) * 100, 2),
                     }
                 else:
                     status = HealthStatus.DEGRADED
@@ -256,12 +252,12 @@ class HealthCheckSystem:
 
             if usage_percent > self.thresholds.disk_usage_critical:
                 status = HealthStatus.UNHEALTHY
-                suggestion = f"Disk usage critical ({usage_percent:.1f}%). Free up space immediately."
+                suggestion = (
+                    f"Disk usage critical ({usage_percent:.1f}%). Free up space immediately."
+                )
             elif usage_percent > self.thresholds.disk_usage_warning:
                 status = HealthStatus.DEGRADED
-                suggestion = (
-                    f"Disk usage high ({usage_percent:.1f}%). Consider cleanup."
-                )
+                suggestion = f"Disk usage high ({usage_percent:.1f}%). Consider cleanup."
             else:
                 status = HealthStatus.HEALTHY
                 suggestion = None
@@ -438,9 +434,7 @@ class HealthCheckSystem:
         else:
             return HealthStatus.UNKNOWN
 
-    def get_health_trends(
-        self, check_name: str, window_size: int = 10
-    ) -> Dict[str, Any]:
+    def get_health_trends(self, check_name: str, window_size: int = 10) -> Dict[str, Any]:
         """
         Analyze health trends for a specific check.
 
@@ -457,15 +451,9 @@ class HealthCheckSystem:
         recent_results = self._results[check_name][-window_size:]
 
         # Calculate trend
-        healthy_count = sum(
-            1 for r in recent_results if r.status == HealthStatus.HEALTHY
-        )
-        degraded_count = sum(
-            1 for r in recent_results if r.status == HealthStatus.DEGRADED
-        )
-        unhealthy_count = sum(
-            1 for r in recent_results if r.status == HealthStatus.UNHEALTHY
-        )
+        healthy_count = sum(1 for r in recent_results if r.status == HealthStatus.HEALTHY)
+        degraded_count = sum(1 for r in recent_results if r.status == HealthStatus.DEGRADED)
+        unhealthy_count = sum(1 for r in recent_results if r.status == HealthStatus.UNHEALTHY)
 
         total = len(recent_results)
         health_score = (
@@ -535,13 +523,9 @@ class HealthCheckSystem:
                             f"Health check {name} is UNHEALTHY: {result.error or 'threshold breached'}"
                         )
                         if result.remediation_suggestion:
-                            logger.warning(
-                                f"Suggestion: {result.remediation_suggestion}"
-                            )
+                            logger.warning(f"Suggestion: {result.remediation_suggestion}")
 
-                logger.debug(
-                    f"Health monitoring cycle complete. Overall status: {overall_status}"
-                )
+                logger.debug(f"Health monitoring cycle complete. Overall status: {overall_status}")
 
             except Exception as e:
                 logger.error(f"Error in health monitoring loop: {e}")
@@ -553,9 +537,7 @@ class HealthCheckSystem:
         summary = {
             "checks_registered": len(self._checks),
             "checks_with_history": len(self._results),
-            "total_checks_performed": sum(
-                len(results) for results in self._results.values()
-            ),
+            "total_checks_performed": sum(len(results) for results in self._results.values()),
         }
 
         # Get latest results

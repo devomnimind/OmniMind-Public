@@ -83,9 +83,7 @@ class PerformanceTracker:
         if len(self._completed_tasks) > self._max_completed:
             self._completed_tasks = self._completed_tasks[-self._max_completed :]
 
-        logger.debug(
-            f"Completed task {task_id} in {perf.duration:.2f}s with status {status}"
-        )
+        logger.debug(f"Completed task {task_id} in {perf.duration:.2f}s with status {status}")
 
     def add_checkpoint(
         self, task_id: str, name: str, data: Optional[Dict[str, Any]] = None
@@ -195,9 +193,7 @@ class PerformanceTracker:
         return {
             "active_tasks": len(self._task_performance),
             "completed_tasks": len(self._completed_tasks),
-            "avg_duration": (
-                round(sum(durations) / len(durations), 3) if durations else 0.0
-            ),
+            "avg_duration": (round(sum(durations) / len(durations), 3) if durations else 0.0),
             "min_duration": round(min(durations), 3) if durations else 0.0,
             "max_duration": round(max(durations), 3) if durations else 0.0,
             "success_rate": round(successful / len(self._completed_tasks) * 100, 2),

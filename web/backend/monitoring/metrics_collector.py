@@ -102,9 +102,7 @@ class MetricsCollector:
         if len(self._request_history) > self._max_history:
             self._request_history = self._request_history[-self._max_history :]
 
-    def get_endpoint_metrics(
-        self, path: str, method: str = "GET"
-    ) -> Optional[Dict[str, Any]]:
+    def get_endpoint_metrics(self, path: str, method: str = "GET") -> Optional[Dict[str, Any]]:
         """Get metrics for a specific endpoint."""
         key = f"{method}:{path}"
         if key not in self._endpoint_metrics:
@@ -112,9 +110,7 @@ class MetricsCollector:
 
         metrics = self._endpoint_metrics[key]
         avg_latency = (
-            metrics.total_latency / metrics.total_requests
-            if metrics.total_requests > 0
-            else 0.0
+            metrics.total_latency / metrics.total_requests if metrics.total_requests > 0 else 0.0
         )
         success_rate = (
             (metrics.successful_requests / metrics.total_requests * 100)
@@ -138,9 +134,7 @@ class MetricsCollector:
     def get_all_metrics(self) -> Dict[str, Any]:
         """Get aggregated metrics for all endpoints."""
         total_requests = sum(m.total_requests for m in self._endpoint_metrics.values())
-        total_successful = sum(
-            m.successful_requests for m in self._endpoint_metrics.values()
-        )
+        total_successful = sum(m.successful_requests for m in self._endpoint_metrics.values())
         total_failed = sum(m.failed_requests for m in self._endpoint_metrics.values())
 
         endpoints = []

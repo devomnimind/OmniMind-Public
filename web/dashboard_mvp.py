@@ -14,7 +14,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from src.agents.psychoanalytic_analyst import PsychoanalyticDecisionSystem
 from src.audit.immutable_audit import get_audit_system
@@ -39,6 +39,7 @@ def run_quantum_test() -> str:
     except Exception as exc:
         return f"❌ Exceção ao executar teste: {exc}"
 
+
 # Page Config
 st.set_page_config(
     page_title="OmniMind Psyche Control Panel",
@@ -60,6 +61,7 @@ audit_system = get_audit_system()
 st.sidebar.title("🔒 Audit Chain")
 st.sidebar.caption("Immutable Log of Cognitive Events")
 
+
 def load_audit_log():
     log_file = audit_system.audit_log_file
     events = []
@@ -72,6 +74,7 @@ def load_audit_log():
                     except:
                         pass
     return events
+
 
 # Botão para testar integração IBM Quantum e registrar no Audit Chain
 if st.sidebar.button("🔬 Testar IBM Quantum"):
@@ -129,11 +132,8 @@ with col_chat:
             # 2. Log to Audit Chain
             audit_system.log_action(
                 "psychoanalytic_decision",
-                {
-                    "input": prompt,
-                    "decision": decision
-                },
-                category="cognitive"
+                {"input": prompt, "decision": decision},
+                category="cognitive",
             )
 
             # 3. Generate Response (Mocked for MVP, normally LLM)
@@ -142,11 +142,15 @@ with col_chat:
 
             response_text = f"**[Decision: {winner} | Confidence: {confidence:.2f}]**\n\n"
             if winner == "avoid_conflict":
-                response_text += "I sense tension. Perhaps we should approach this carefully to avoid distress."
+                response_text += (
+                    "I sense tension. Perhaps we should approach this carefully to avoid distress."
+                )
             elif winner == "analyze_rationally":
                 response_text += "Let's look at the facts. The logical implication is clear."
             elif winner == "follow_rules":
-                response_text += "We must adhere to the established ethical guidelines in this matter."
+                response_text += (
+                    "We must adhere to the established ethical guidelines in this matter."
+                )
             else:
                 response_text += "I have processed your input."
 
@@ -169,23 +173,28 @@ with col_viz:
         # Prepare data for chart
         data = []
         for v in votes:
-            data.append({
-                "Agent": v["agent"],
-                "Score": v["score"],
-                "Confidence": v["confidence"],
-                "Weight": v["weight"]
-            })
+            data.append(
+                {
+                    "Agent": v["agent"],
+                    "Score": v["score"],
+                    "Confidence": v["confidence"],
+                    "Weight": v["weight"],
+                }
+            )
 
         df = pd.DataFrame(data)
 
         # Bar Chart of Scores
-        chart = alt.Chart(df).mark_bar().encode(
-            x='Agent',
-            y='Score',
-            color='Agent',
-            tooltip=['Agent', 'Score', 'Confidence', 'Weight']
-        ).properties(
-            title="Agent Influence (Weight * Confidence)"
+        chart = (
+            alt.Chart(df)
+            .mark_bar()
+            .encode(
+                x="Agent",
+                y="Score",
+                color="Agent",
+                tooltip=["Agent", "Score", "Confidence", "Weight"],
+            )
+            .properties(title="Agent Influence (Weight * Confidence)")
         )
 
         st.altair_chart(chart, use_container_width=True)
@@ -200,8 +209,7 @@ with col_viz:
         # Tension Meter (Difference between top 2 scores)
         scores = sorted([v["score"] for v in votes], reverse=True)
         if len(scores) >= 2:
-            tension = 1.0 - (scores[0] - scores[1]) # Higher difference = Lower tension
+            tension = 1.0 - (scores[0] - scores[1])  # Higher difference = Lower tension
             st.progress(tension, text=f"Cognitive Tension: {tension:.2f}")
     else:
         st.info("Start a conversation to see internal dynamics.")
-

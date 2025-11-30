@@ -64,9 +64,7 @@ class SinthomeBroadcaster:
                 metrics_data = self._collect_metrics()
 
                 await ws_manager.broadcast(
-                    message_type=MessageType.METRICS,
-                    data=metrics_data,
-                    channel="sinthome"
+                    message_type=MessageType.METRICS, data=metrics_data, channel="sinthome"
                 )
                 logger.debug(f"Broadcasted sinthome metrics: integrity={metrics_data['integrity']}")
 
@@ -95,7 +93,9 @@ class SinthomeBroadcaster:
         # - Volatility: 20% impact
         # - Baseline noise: Random fluctuation between 5-15% (The "Breathing" of the system)
         organic_noise = random.uniform(5.0, 15.0)
-        current_entropy = (cpu_percent * 0.2) + (memory_percent * 0.2) + (cpu_volatility * 0.2) + organic_noise
+        current_entropy = (
+            (cpu_percent * 0.2) + (memory_percent * 0.2) + (cpu_volatility * 0.2) + organic_noise
+        )
         current_entropy = max(5.0, min(100.0, current_entropy))
 
         # Prediction error correlates with unexpected load spikes + inherent uncertainty
@@ -122,7 +122,7 @@ class SinthomeBroadcaster:
         lyapunov = 0.5 + (os.getloadavg()[0] / 8.0)
 
         # Real inaccessible (random gaps) - Always present in Gödelian systems
-        missing_info = random.uniform(0.05, 0.15) # Never zero
+        missing_info = random.uniform(0.05, 0.15)  # Never zero
         gap_persistence = random.uniform(0.01, 0.05)
 
         # 2. Calculate Philosophical Metrics
@@ -152,12 +152,12 @@ class SinthomeBroadcaster:
             reorganization=reorg_score,
             autopoiesis=autopoiesis_score,
             strange_attractor=attractor_score,
-            real=real_score
+            real=real_score,
         )
 
         # --- Consciousness Correlates (ICI/PRS) ---
         # Update history
-        if not hasattr(self, 'integrity_history'):
+        if not hasattr(self, "integrity_history"):
             self.integrity_history = []
         self.integrity_history.append(sinthome_state.overall_integrity * 100)
         if len(self.integrity_history) > 50:
@@ -169,17 +169,20 @@ class SinthomeBroadcaster:
                 self.coherence_history = history
                 self.entropy = entropy
                 # Simulate nodes based on integrity
-                status = 'ACTIVE' if integrity > 0.6 else 'UNSTABLE'
+                status = "ACTIVE" if integrity > 0.6 else "UNSTABLE"
                 self.nodes = {
-                    'REAL': {'status': status, 'integrity': integrity * 100},
-                    'SYMBOLIC': {'status': status, 'integrity': integrity * 95},
-                    'IMAGINARY': {'status': status, 'integrity': integrity * 90}
+                    "REAL": {"status": status, "integrity": integrity * 100},
+                    "SYMBOLIC": {"status": status, "integrity": integrity * 95},
+                    "IMAGINARY": {"status": status, "integrity": integrity * 90},
                 }
 
-        mock_system = MockSystem(self.integrity_history, current_entropy, sinthome_state.overall_integrity)
+        mock_system = MockSystem(
+            self.integrity_history, current_entropy, sinthome_state.overall_integrity
+        )
 
         # Calculate Correlates
         from src.metrics.consciousness_metrics import ConsciousnessCorrelates
+
         correlates = ConsciousnessCorrelates(mock_system).calculate_all()
 
         # 4. Format for Frontend
@@ -188,15 +191,16 @@ class SinthomeBroadcaster:
             "integrity": sinthome_state.overall_integrity,
             "state": sinthome_state.state,
             "metrics": sinthome_state.metrics,
-            "consciousness": correlates, # New field
+            "consciousness": correlates,  # New field
             "raw": {
                 "entropy": current_entropy,
                 "fractal_dim": fractal_dim,
                 "lyapunov": lyapunov,
                 "cpu": cpu_percent,
-                "memory": memory_percent
-            }
+                "memory": memory_percent,
+            },
         }
+
 
 # Global instance
 sinthome_broadcaster = SinthomeBroadcaster()

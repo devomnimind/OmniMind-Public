@@ -77,9 +77,7 @@ class AgentMonitor:
                 status=status,
             )
             self._task_history[agent_id] = []
-            logger.info(
-                f"Registered agent for monitoring: {agent_id} ({agent_type.value})"
-            )
+            logger.info(f"Registered agent for monitoring: {agent_id} ({agent_type.value})")
 
     def update_agent_status(
         self, agent_id: str, status: AgentStatus, current_task: Optional[str] = None
@@ -90,9 +88,7 @@ class AgentMonitor:
             metrics.status = status
             metrics.last_active = time.time()
 
-    def record_task_completion(
-        self, agent_id: str, success: bool, duration: float
-    ) -> None:
+    def record_task_completion(self, agent_id: str, success: bool, duration: float) -> None:
         """Record task completion for metrics."""
         if agent_id not in self._agent_metrics:
             return
@@ -112,9 +108,7 @@ class AgentMonitor:
             ) / total_tasks
 
         # Update error rate
-        metrics.error_rate = (
-            metrics.tasks_failed / total_tasks * 100 if total_tasks > 0 else 0.0
-        )
+        metrics.error_rate = metrics.tasks_failed / total_tasks * 100 if total_tasks > 0 else 0.0
 
         # Record task in history
         if agent_id in self._task_history:
@@ -194,9 +188,7 @@ class AgentMonitor:
                         metrics.cpu_usage = process.cpu_percent(interval=0.1)
                         metrics.memory_usage = process.memory_percent()
                     except Exception as exc:
-                        logger.debug(
-                            f"Could not get system metrics for {agent_id}: {exc}"
-                        )
+                        logger.debug(f"Could not get system metrics for {agent_id}: {exc}")
 
                     # Calculate health score
                     metrics.health_score = self._calculate_health_score(agent_id)
@@ -259,9 +251,7 @@ class AgentMonitor:
 
     def get_all_metrics(self) -> List[Dict[str, Any]]:
         """Get metrics for all registered agents."""
-        return [
-            self.get_agent_metrics(agent_id) for agent_id in self._agent_metrics.keys()
-        ]
+        return [self.get_agent_metrics(agent_id) for agent_id in self._agent_metrics.keys()]
 
     def get_task_history(self, agent_id: str, limit: int = 50) -> List[Dict[str, Any]]:
         """Get task history for an agent."""

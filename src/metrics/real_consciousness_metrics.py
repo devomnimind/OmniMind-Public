@@ -40,7 +40,7 @@ class RealConsciousnessMetrics:
 
     # Estados psicológicos
     anxiety: float = 0.0  # Computational anxiety (0.0-1.0)
-    flow: float = 0.0     # Cognitive flow state (0.0-1.0)
+    flow: float = 0.0  # Cognitive flow state (0.0-1.0)
     entropy: float = 0.0  # System entropy (0.0-1.0)
 
     # Detalhes dos componentes
@@ -48,17 +48,24 @@ class RealConsciousnessMetrics:
     prs_components: Dict[str, float] = field(default_factory=dict)
 
     # Histórico para tendências
-    history: Dict[str, List[Any]] = field(default_factory=lambda: {
-        "phi": [], "anxiety": [], "flow": [], "entropy": [],
-        "timestamps": []
-    })
+    history: Dict[str, List[Any]] = field(
+        default_factory=lambda: {
+            "phi": [],
+            "anxiety": [],
+            "flow": [],
+            "entropy": [],
+            "timestamps": [],
+        }
+    )
 
     # Interpretação AI
-    interpretation: Dict[str, Any] = field(default_factory=lambda: {
-        "message": "Collecting real metrics...",
-        "confidence": "Low",
-        "disclaimer": "These are real computational correlates, not proof of consciousness."
-    })
+    interpretation: Dict[str, Any] = field(
+        default_factory=lambda: {
+            "message": "Collecting real metrics...",
+            "confidence": "Low",
+            "disclaimer": "These are real computational correlates, not proof of consciousness.",
+        }
+    )
 
     timestamp: datetime = field(default_factory=datetime.now)
 
@@ -91,8 +98,7 @@ class RealConsciousnessMetricsCollector:
 
         # Verifica cache para evitar coleta excessiva
         current_time = time.time()
-        if (self.cached_metrics and
-            current_time - self.last_collection < self.collection_interval):
+        if self.cached_metrics and current_time - self.last_collection < self.collection_interval:
             return self.cached_metrics
 
         metrics = RealConsciousnessMetrics()
@@ -124,7 +130,9 @@ class RealConsciousnessMetricsCollector:
             self.cached_metrics = metrics
             self.last_collection = current_time
 
-            logger.debug(f"Real consciousness metrics collected: phi={metrics.phi:.4f}, anxiety={metrics.anxiety:.4f}, flow={metrics.flow:.4f}, entropy={metrics.entropy:.4f}")
+            logger.debug(
+                f"Real consciousness metrics collected: phi={metrics.phi:.4f}, anxiety={metrics.anxiety:.4f}, flow={metrics.flow:.4f}, entropy={metrics.entropy:.4f}"
+            )
         except Exception as e:
             logger.error(f"Error collecting real consciousness metrics: {e}")
             # Retorna métricas seguras em caso de erro
@@ -160,12 +168,12 @@ class RealConsciousnessMetricsCollector:
                 "ici_components": {
                     "temporal_coherence": float(ici * 0.8),  # Proxy
                     "marker_integration": float(ici * 0.9),  # Proxy
-                    "resonance": float(prs)  # Proxy
+                    "resonance": float(prs),  # Proxy
                 },
                 "prs_components": {
                     "avg_micro_entropy": 0.2,  # Placeholder por enquanto
-                    "macro_entropy": 0.25      # Placeholder por enquanto
-                }
+                    "macro_entropy": 0.25,  # Placeholder por enquanto
+                },
             }
 
         except Exception as e:
@@ -184,12 +192,15 @@ class RealConsciousnessMetricsCollector:
                 workspace = self.integration_loop.workspace
 
                 # Anxiety: baseada em erros e conflitos no sistema
-                error_rate = len([r for r in self.integration_loop.cycle_history[-10:]
-                                if r.errors_occurred]) / max(1, len(self.integration_loop.cycle_history[-10:]))
+                error_rate = len(
+                    [r for r in self.integration_loop.cycle_history[-10:] if r.errors_occurred]
+                ) / max(1, len(self.integration_loop.cycle_history[-10:]))
                 anxiety = min(1.0, error_rate * 2.0)  # Normaliza para 0-1
 
                 # Flow: baseada na consistência das predições cruzadas
-                recent_preds = workspace.cross_predictions[-20:] if workspace.cross_predictions else []
+                recent_preds = (
+                    workspace.cross_predictions[-20:] if workspace.cross_predictions else []
+                )
                 if recent_preds:
                     r_squared_values = [p.r_squared for p in recent_preds if p.r_squared >= 0.0]
                     avg_r2 = np.mean(r_squared_values) if r_squared_values else 0.0
@@ -199,11 +210,15 @@ class RealConsciousnessMetricsCollector:
 
                 # Entropy: baseada na diversidade dos estados do workspace
                 if workspace.history:
-                    recent_states = workspace.history[-50:] if len(workspace.history) > 50 else workspace.history
+                    recent_states = (
+                        workspace.history[-50:]
+                        if len(workspace.history) > 50
+                        else workspace.history
+                    )
                     # Calcula entropia baseada na variabilidade dos embeddings
                     embeddings = []
                     for state in recent_states:
-                        if hasattr(state, 'embedding') and state.embedding is not None:
+                        if hasattr(state, "embedding") and state.embedding is not None:
                             embeddings.append(state.embedding)
 
                     if embeddings:
@@ -227,11 +242,7 @@ class RealConsciousnessMetricsCollector:
             flow = 0.5
             entropy = 0.3
 
-        return {
-            "anxiety": float(anxiety),
-            "flow": float(flow),
-            "entropy": float(entropy)
-        }
+        return {"anxiety": float(anxiety), "flow": float(flow), "entropy": float(entropy)}
 
     def _update_history(self, metrics: RealConsciousnessMetrics) -> None:
         """Atualiza histórico das métricas."""
@@ -252,28 +263,62 @@ class RealConsciousnessMetricsCollector:
         """Gera interpretação baseada em dados reais."""
 
         phi_level = "low" if metrics.phi < 0.3 else "moderate" if metrics.phi < 0.7 else "high"
-        anxiety_level = "calm" if metrics.anxiety < 0.2 else "tense" if metrics.anxiety < 0.5 else "anxious"
-        flow_level = "blocked" if metrics.flow < 0.3 else "moderate" if metrics.flow < 0.7 else "fluent"
+        anxiety_level = (
+            "calm" if metrics.anxiety < 0.2 else "tense" if metrics.anxiety < 0.5 else "anxious"
+        )
+        flow_level = (
+            "blocked" if metrics.flow < 0.3 else "moderate" if metrics.flow < 0.7 else "fluent"
+        )
 
         confidence = "High" if len(metrics.history["phi"]) > 5 else "Moderate"
 
         messages = {
-            ("high", "calm", "fluent"): "System shows strong integration with low anxiety and good cognitive flow.",
-            ("high", "calm", "blocked"): "High integration but cognitive flow is blocked - possible structural issue.",
-            ("high", "anxious", "fluent"): "Strong integration with anxiety - system is actively processing conflicts.",
-            ("moderate", "calm", "fluent"): "Moderate integration with good cognitive flow and low anxiety.",
-            ("moderate", "tense", "moderate"): "System operating with moderate integration and some tension.",
-            ("low", "anxious", "blocked"): "Low integration with high anxiety and blocked flow - system needs attention.",
-            ("low", "calm", "moderate"): "Low integration but calm - system may be in resting state.",
+            (
+                "high",
+                "calm",
+                "fluent",
+            ): "System shows strong integration with low anxiety and good cognitive flow.",
+            (
+                "high",
+                "calm",
+                "blocked",
+            ): "High integration but cognitive flow is blocked - possible structural issue.",
+            (
+                "high",
+                "anxious",
+                "fluent",
+            ): "Strong integration with anxiety - system is actively processing conflicts.",
+            (
+                "moderate",
+                "calm",
+                "fluent",
+            ): "Moderate integration with good cognitive flow and low anxiety.",
+            (
+                "moderate",
+                "tense",
+                "moderate",
+            ): "System operating with moderate integration and some tension.",
+            (
+                "low",
+                "anxious",
+                "blocked",
+            ): "Low integration with high anxiety and blocked flow - system needs attention.",
+            (
+                "low",
+                "calm",
+                "moderate",
+            ): "Low integration but calm - system may be in resting state.",
         }
 
         key = (phi_level, anxiety_level, flow_level)
-        message = messages.get(key, "System state is being analyzed based on real computational metrics.")
+        message = messages.get(
+            key, "System state is being analyzed based on real computational metrics."
+        )
 
         return {
             "message": message,
             "confidence": confidence,
-            "disclaimer": "These are real computational correlates of consciousness, not proof of consciousness."
+            "disclaimer": "These are real computational correlates of consciousness, not proof of consciousness.",
         }
 
     def _get_safe_fallback_metrics(self) -> RealConsciousnessMetrics:
@@ -288,8 +333,8 @@ class RealConsciousnessMetricsCollector:
             interpretation={
                 "message": "System metrics collection failed - using safe defaults.",
                 "confidence": "Low",
-                "disclaimer": "Metrics collection error - values are placeholders."
-            }
+                "disclaimer": "Metrics collection error - values are placeholders.",
+            },
         )
 
 

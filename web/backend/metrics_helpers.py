@@ -2,6 +2,7 @@
 Simplified helper functions to get real system metrics for the dashboard.
 Uses only psutil for CPU/memory, avoids process iteration to prevent hangs.
 """
+
 import psutil
 import time
 from typing import Dict, Any, Tuple
@@ -41,11 +42,7 @@ def get_tribunal_uptime() -> float:
         tribunal_start = 1732644540  # Approximate timestamp when Tribunal started
         uptime = max(0, now - tribunal_start)
 
-        _tribunal_cache = {
-            "running": uptime > 0,
-            "uptime": uptime,
-            "last_check": now
-        }
+        _tribunal_cache = {"running": uptime > 0, "uptime": uptime, "last_check": now}
         return uptime
     except Exception:
         return 0
@@ -105,17 +102,19 @@ def get_tribunal_tasks_info() -> Dict[str, Any]:
         ]
     else:
         # Fallback tasks
-        tasks = [{
-            "task_id": "api_server",
-            "name": "API Server",
-            "description": "FastAPI server running",
-            "priority": "NORMAL",
-            "repeat_interval": "continuous",
-            "execution_count": 1,
-            "success_count": 1,
-            "failure_count": 0,
-            "last_execution": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-        }]
+        tasks = [
+            {
+                "task_id": "api_server",
+                "name": "API Server",
+                "description": "FastAPI server running",
+                "priority": "NORMAL",
+                "repeat_interval": "continuous",
+                "execution_count": 1,
+                "success_count": 1,
+                "failure_count": 0,
+                "last_execution": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            }
+        ]
 
     return {"tasks": tasks, "total_tasks": len(tasks)}
 
@@ -133,5 +132,7 @@ def get_task_counts() -> Tuple[int, int]:
     """Get real task counts from Tribunal."""
     tasks_info = get_tribunal_tasks_info()
     active = tasks_info["total_tasks"]
-    completed = sum(t.get("success_count", 0) if isinstance(t, dict) else 0 for t in tasks_info["tasks"])
+    completed = sum(
+        t.get("success_count", 0) if isinstance(t, dict) else 0 for t in tasks_info["tasks"]
+    )
     return active, completed

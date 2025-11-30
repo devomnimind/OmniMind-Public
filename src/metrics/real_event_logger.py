@@ -59,7 +59,7 @@ class RealEventLogger:
             return
 
         try:
-            with open(self.log_file, 'r') as f:
+            with open(self.log_file, "r") as f:
                 for line in f:
                     line = line.strip()
                     if line:
@@ -69,7 +69,7 @@ class RealEventLogger:
 
             # Mantém apenas os eventos mais recentes
             if len(self.events) > self.max_events:
-                self.events = self.events[-self.max_events:]
+                self.events = self.events[-self.max_events :]
 
             logger.info(f"Loaded {len(self.events)} existing events")
 
@@ -152,14 +152,24 @@ class RealEventLogger:
         message = f"Error in {component}: {error_message}"
         self._add_event("ERROR", message, "error")
 
-    def log_performance_issue(self, component: str, metric: str, value: float, threshold: float) -> None:
+    def log_performance_issue(
+        self, component: str, metric: str, value: float, threshold: float
+    ) -> None:
         """Log problema de performance."""
-        message = f"Performance issue in {component}: {metric}={value:.2f} (threshold: {threshold:.2f})"
+        message = (
+            f"Performance issue in {component}: {metric}={value:.2f} (threshold: {threshold:.2f})"
+        )
         self._add_event("WARNING", message, "performance")
 
-    def _add_event(self, event_type: str, message: str, metric: str = "",
-                   old_value: Optional[float] = None, new_value: Optional[float] = None,
-                   details: Optional[Dict[str, Any]] = None) -> None:
+    def _add_event(
+        self,
+        event_type: str,
+        message: str,
+        metric: str = "",
+        old_value: Optional[float] = None,
+        new_value: Optional[float] = None,
+        details: Optional[Dict[str, Any]] = None,
+    ) -> None:
         """Adiciona evento ao log."""
 
         event = RealEvent(
@@ -169,14 +179,14 @@ class RealEventLogger:
             metric=metric,
             old_value=old_value,
             new_value=new_value,
-            details=details or {}
+            details=details or {},
         )
 
         self.events.append(event)
 
         # Mantém apenas os eventos mais recentes
         if len(self.events) > self.max_events:
-            self.events = self.events[-self.max_events:]
+            self.events = self.events[-self.max_events :]
 
         # Salva no arquivo
         self._save_event(event)
@@ -186,9 +196,9 @@ class RealEventLogger:
     def _save_event(self, event: RealEvent) -> None:
         """Salva evento no arquivo."""
         try:
-            with open(self.log_file, 'a') as f:
+            with open(self.log_file, "a") as f:
                 json.dump(event.__dict__, f)
-                f.write('\n')
+                f.write("\n")
         except Exception as e:
             logger.error(f"Error saving event to file: {e}")
 
@@ -228,7 +238,8 @@ class RealEventLogger:
         cutoff_time = time.time() - (days * 24 * 60 * 60)
 
         self.events = [
-            event for event in self.events
+            event
+            for event in self.events
             if datetime.fromisoformat(event.timestamp).timestamp() > cutoff_time
         ]
 

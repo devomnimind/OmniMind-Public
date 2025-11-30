@@ -62,7 +62,7 @@ class RealModuleActivityTracker:
             "memory",
             "audit",
             "autopoietic",
-            "ethics"
+            "ethics",
         ]
 
         for module_name in known_modules:
@@ -73,11 +73,12 @@ class RealModuleActivityTracker:
                 last_active=datetime.now(),
                 avg_response_time=0.0,
                 error_rate=0.0,
-                status="idle"
+                status="idle",
             )
 
-    def record_module_operation(self, module_name: str, operation_time_ms: float,
-                               success: bool = True) -> None:
+    def record_module_operation(
+        self, module_name: str, operation_time_ms: float, success: bool = True
+    ) -> None:
         """Registra uma operação de módulo."""
 
         if module_name not in self.modules:
@@ -88,7 +89,7 @@ class RealModuleActivityTracker:
                 last_active=datetime.now(),
                 avg_response_time=0.0,
                 error_rate=0.0,
-                status="idle"
+                status="idle",
             )
 
         module = self.modules[module_name]
@@ -107,8 +108,8 @@ class RealModuleActivityTracker:
         # Atualiza taxa de erro
         if not success:
             # Taxa de erro baseada nas últimas operações
-            recent_errors = getattr(module, '_recent_errors', 0)
-            recent_total = getattr(module, '_recent_total', 0)
+            recent_errors = getattr(module, "_recent_errors", 0)
+            recent_total = getattr(module, "_recent_total", 0)
 
             recent_errors += 1 if not success else 0
             recent_total += 1
@@ -118,8 +119,8 @@ class RealModuleActivityTracker:
                 recent_errors = 0
                 recent_total = 0
 
-            setattr(module, '_recent_errors', recent_errors)
-            setattr(module, '_recent_total', recent_total)
+            setattr(module, "_recent_errors", recent_errors)
+            setattr(module, "_recent_total", recent_total)
 
         # Atualiza status
         time_since_last = (datetime.now() - module.last_active).total_seconds()
@@ -186,7 +187,7 @@ class RealModuleActivityTracker:
             "last_active": module.last_active.isoformat(),
             "avg_response_time": module.avg_response_time,
             "error_rate": module.error_rate,
-            "status": module.status
+            "status": module.status,
         }
 
     def get_all_module_activities(self) -> Dict[str, float]:
@@ -194,10 +195,7 @@ class RealModuleActivityTracker:
 
         self.update_activity_levels()
 
-        return {
-            module_name: module.activity_level
-            for module_name, module in self.modules.items()
-        }
+        return {module_name: module.activity_level for module_name, module in self.modules.items()}
 
     def get_system_activity_summary(self) -> Dict[str, Any]:
         """Retorna resumo da atividade do sistema."""
@@ -211,7 +209,7 @@ class RealModuleActivityTracker:
                 "average_activity": 0.0,
                 "active_modules": 0,
                 "total_modules": 0,
-                "system_status": "unknown"
+                "system_status": "unknown",
             }
 
         avg_activity = sum(activities) / len(activities)
@@ -231,7 +229,7 @@ class RealModuleActivityTracker:
             "average_activity": avg_activity,
             "active_modules": active_modules,
             "total_modules": len(self.modules),
-            "system_status": system_status
+            "system_status": system_status,
         }
 
     def reset_module_stats(self, module_name: str) -> None:

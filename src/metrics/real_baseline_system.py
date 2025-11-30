@@ -70,11 +70,11 @@ class RealBaselineSystem:
             return
 
         try:
-            with open(self.baseline_file, 'r') as f:
+            with open(self.baseline_file, "r") as f:
                 data = json.load(f)
 
             for metric_name, stats_data in data.items():
-                stats_data['last_updated'] = datetime.fromisoformat(stats_data['last_updated'])
+                stats_data["last_updated"] = datetime.fromisoformat(stats_data["last_updated"])
                 self.baselines[metric_name] = BaselineStats(**stats_data)
 
             logger.info(f"Loaded baselines for {len(self.baselines)} metrics")
@@ -88,15 +88,15 @@ class RealBaselineSystem:
             data = {}
             for metric_name, stats in self.baselines.items():
                 data[metric_name] = {
-                    'mean': stats.mean,
-                    'std_dev': stats.std_dev,
-                    'min_value': stats.min_value,
-                    'max_value': stats.max_value,
-                    'sample_count': stats.sample_count,
-                    'last_updated': stats.last_updated.isoformat()
+                    "mean": stats.mean,
+                    "std_dev": stats.std_dev,
+                    "min_value": stats.min_value,
+                    "max_value": stats.max_value,
+                    "sample_count": stats.sample_count,
+                    "last_updated": stats.last_updated.isoformat(),
                 }
 
-            with open(self.baseline_file, 'w') as f:
+            with open(self.baseline_file, "w") as f:
                 json.dump(data, f, indent=2)
 
         except Exception as e:
@@ -113,15 +113,11 @@ class RealBaselineSystem:
     def _save_to_history(self, metric_name: str, value: float) -> None:
         """Salva medição no histórico."""
         try:
-            entry = {
-                'timestamp': datetime.now().isoformat(),
-                'metric': metric_name,
-                'value': value
-            }
+            entry = {"timestamp": datetime.now().isoformat(), "metric": metric_name, "value": value}
 
-            with open(self.history_file, 'a') as f:
+            with open(self.history_file, "a") as f:
                 json.dump(entry, f)
-                f.write('\n')
+                f.write("\n")
 
         except Exception as e:
             logger.error(f"Error saving to history: {e}")
@@ -135,7 +131,7 @@ class RealBaselineSystem:
             return
 
         # Calcula estatísticas
-        values = [entry['value'] for entry in history]
+        values = [entry["value"] for entry in history]
 
         try:
             mean = statistics.mean(values)
@@ -149,7 +145,7 @@ class RealBaselineSystem:
                 min_value=min_value,
                 max_value=max_value,
                 sample_count=len(values),
-                last_updated=datetime.now()
+                last_updated=datetime.now(),
             )
 
             # Salva baselines atualizadas
@@ -168,15 +164,14 @@ class RealBaselineSystem:
         cutoff_time = datetime.now() - timedelta(days=days)
 
         try:
-            with open(self.history_file, 'r') as f:
+            with open(self.history_file, "r") as f:
                 for line in f:
                     line = line.strip()
                     if line:
                         entry = json.loads(line)
-                        entry_time = datetime.fromisoformat(entry['timestamp'])
+                        entry_time = datetime.fromisoformat(entry["timestamp"])
 
-                        if (entry['metric'] == metric_name and
-                            entry_time > cutoff_time):
+                        if entry["metric"] == metric_name and entry_time > cutoff_time:
                             history.append(entry)
 
         except Exception as e:
@@ -195,7 +190,7 @@ class RealBaselineSystem:
                 baseline_value=current_value,  # Usa valor atual como baseline
                 change=0.0,
                 change_type="stable",
-                significance="low"
+                significance="low",
             )
 
         baseline = self.baselines[metric_name]
@@ -232,10 +227,12 @@ class RealBaselineSystem:
             baseline_value=baseline.mean,
             change=change,
             change_type=change_type,
-            significance=significance
+            significance=significance,
         )
 
-    def get_all_baseline_comparisons(self, current_metrics: Dict[str, float]) -> Dict[str, Dict[str, Any]]:
+    def get_all_baseline_comparisons(
+        self, current_metrics: Dict[str, float]
+    ) -> Dict[str, Dict[str, Any]]:
         """Retorna comparações de baseline para todas as métricas."""
 
         comparisons = {}
@@ -244,11 +241,11 @@ class RealBaselineSystem:
             comparison = self.compare_with_baseline(metric_name, current_value)
 
             comparisons[metric_name] = {
-                'current': comparison.current_value,
-                'baseline': comparison.baseline_value,
-                'change': comparison.change,
-                'change_type': comparison.change_type,
-                'significance': comparison.significance
+                "current": comparison.current_value,
+                "baseline": comparison.baseline_value,
+                "change": comparison.change,
+                "change_type": comparison.change_type,
+                "significance": comparison.significance,
             }
 
         return comparisons
@@ -262,12 +259,12 @@ class RealBaselineSystem:
         baseline = self.baselines[metric_name]
 
         return {
-            'mean': baseline.mean,
-            'std_dev': baseline.std_dev,
-            'min_value': baseline.min_value,
-            'max_value': baseline.max_value,
-            'sample_count': baseline.sample_count,
-            'last_updated': baseline.last_updated.isoformat()
+            "mean": baseline.mean,
+            "std_dev": baseline.std_dev,
+            "min_value": baseline.min_value,
+            "max_value": baseline.max_value,
+            "sample_count": baseline.sample_count,
+            "last_updated": baseline.last_updated.isoformat(),
         }
 
     def reset_baseline(self, metric_name: str) -> None:

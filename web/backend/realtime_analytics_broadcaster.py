@@ -35,6 +35,7 @@ class RealtimeAnalyticsBroadcaster:
 
         # Lazy import to avoid circular dependency
         from web.backend.websocket_manager import ws_manager, MessageType
+
         self._ws_manager = ws_manager
         self._message_type = MessageType.METRICS_UPDATE
 
@@ -71,10 +72,7 @@ class RealtimeAnalyticsBroadcaster:
 
                 # Non-blocking put with timeout
                 try:
-                    await asyncio.wait_for(
-                        self._metrics_queue.put(metrics_data),
-                        timeout=0.5
-                    )
+                    await asyncio.wait_for(self._metrics_queue.put(metrics_data), timeout=0.5)
                 except asyncio.TimeoutError:
                     # Queue full, skip this metric (prevents backpressure)
                     logger.debug("Metrics queue full, skipping update")
@@ -91,18 +89,16 @@ class RealtimeAnalyticsBroadcaster:
         while self.running:
             try:
                 # Wait for metrics with timeout
-                metrics_data = await asyncio.wait_for(
-                    self._metrics_queue.get(),
-                    timeout=2.0
-                )
+                metrics_data = await asyncio.wait_for(self._metrics_queue.get(), timeout=2.0)
 
                 # Broadcast to WebSocket clients
                 if self._ws_manager:
                     await self._ws_manager.broadcast(
-                        message_type=self._message_type,
-                        data=metrics_data
+                        message_type=self._message_type, data=metrics_data
                     )
-                    logger.debug(f"Broadcasted metrics: cpu={metrics_data.get('cpu_percent', 0):.1f}%")
+                    logger.debug(
+                        f"Broadcasted metrics: cpu={metrics_data.get('cpu_percent', 0):.1f}%"
+                    )
 
             except asyncio.TimeoutError:
                 # No metrics in queue, continue
@@ -131,6 +127,7 @@ class RealtimeAnalyticsBroadcaster:
             # Import task counting functions lazily
             if self._get_metrics_fn is None:
                 from web.backend.metrics_helpers import get_task_counts, count_active_agents
+
                 self._get_metrics_fn = (get_task_counts, count_active_agents)
 
             get_task_counts, count_active_agents = self._get_metrics_fn

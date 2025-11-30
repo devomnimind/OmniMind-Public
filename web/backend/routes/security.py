@@ -69,12 +69,8 @@ _security_metrics: Dict[str, Any] = {
 
 @router.get("/events", response_model=List[SecurityEvent])
 async def list_security_events(
-    event_type: Optional[SecurityEventType] = Query(
-        None, description="Filter by event type"
-    ),
-    severity: Optional[SecurityEventSeverity] = Query(
-        None, description="Filter by severity"
-    ),
+    event_type: Optional[SecurityEventType] = Query(None, description="Filter by event type"),
+    severity: Optional[SecurityEventSeverity] = Query(None, description="Filter by severity"),
     resolved: Optional[bool] = Query(None, description="Filter by resolution status"),
     limit: int = Query(100, ge=1, le=1000, description="Maximum results"),
 ) -> List[SecurityEvent]:
@@ -106,15 +102,9 @@ async def get_security_stats() -> Dict[str, Any]:
     unresolved = total - resolved
 
     # Count by severity
-    critical = sum(
-        1 for e in _security_events if e["severity"] == SecurityEventSeverity.CRITICAL
-    )
-    high = sum(
-        1 for e in _security_events if e["severity"] == SecurityEventSeverity.HIGH
-    )
-    medium = sum(
-        1 for e in _security_events if e["severity"] == SecurityEventSeverity.MEDIUM
-    )
+    critical = sum(1 for e in _security_events if e["severity"] == SecurityEventSeverity.CRITICAL)
+    high = sum(1 for e in _security_events if e["severity"] == SecurityEventSeverity.HIGH)
+    medium = sum(1 for e in _security_events if e["severity"] == SecurityEventSeverity.MEDIUM)
     low = sum(1 for e in _security_events if e["severity"] == SecurityEventSeverity.LOW)
 
     return {
@@ -155,9 +145,7 @@ async def get_security_event(event_id: str) -> SecurityEvent:
     if not event:
         from fastapi import HTTPException
 
-        raise HTTPException(
-            status_code=404, detail=f"Security event {event_id} not found"
-        )
+        raise HTTPException(status_code=404, detail=f"Security event {event_id} not found")
 
     return SecurityEvent(**event)
 
@@ -170,9 +158,7 @@ async def resolve_security_event(event_id: str, resolution: str) -> Dict[str, An
     if not event:
         from fastapi import HTTPException
 
-        raise HTTPException(
-            status_code=404, detail=f"Security event {event_id} not found"
-        )
+        raise HTTPException(status_code=404, detail=f"Security event {event_id} not found")
 
     event["resolved"] = True
     event["resolution"] = resolution
@@ -242,9 +228,7 @@ async def log_security_event(
     # Add to correlation if provided
     if correlation_id:
         _event_correlations[correlation_id].append(event_id)
-        related_ids = [
-            eid for eid in _event_correlations[correlation_id] if eid != event_id
-        ]
+        related_ids = [eid for eid in _event_correlations[correlation_id] if eid != event_id]
         event["related_events"] = related_ids
 
         # Update related_events for all other events in this correlation
@@ -259,9 +243,7 @@ async def log_security_event(
                     if eid != other_event["event_id"]
                 ]
 
-    logger.warning(
-        f"Security event logged: {event_type.value} ({severity.value}) - {description}"
-    )
+    logger.warning(f"Security event logged: {event_type.value} ({severity.value}) - {description}")
 
     # Broadcast new event via WebSocket
     from web.backend.websocket_manager import MessageType, ws_manager
@@ -293,9 +275,7 @@ async def get_security_analytics() -> Dict[str, Any]:
             response_time = event["resolved_at"] - event["timestamp"]
             response_times.append(response_time)
 
-    avg_response_time = (
-        sum(response_times) / len(response_times) if response_times else 0.0
-    )
+    avg_response_time = sum(response_times) / len(response_times) if response_times else 0.0
 
     # Get top sources
     top_sources = sorted(
@@ -370,9 +350,7 @@ async def correlate_event(event_id: str, correlation_id: str) -> Dict[str, Any]:
     if not event:
         from fastapi import HTTPException
 
-        raise HTTPException(
-            status_code=404, detail=f"Security event {event_id} not found"
-        )
+        raise HTTPException(status_code=404, detail=f"Security event {event_id} not found")
 
     # Add to correlation
     _event_correlations[correlation_id].append(event_id)
@@ -412,9 +390,7 @@ async def get_automated_responses() -> Dict[str, Any]:
 
     # Calculate response success rate
     successful = sum(1 for r in automated_responses if r["successful"])
-    success_rate = (
-        (successful / len(automated_responses) * 100) if automated_responses else 0.0
-    )
+    success_rate = (successful / len(automated_responses) * 100) if automated_responses else 0.0
 
     return {
         "total_responses": len(automated_responses),

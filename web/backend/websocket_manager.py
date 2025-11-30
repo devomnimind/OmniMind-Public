@@ -146,9 +146,7 @@ class WebSocketManager:
         while self._running:
             try:
                 # Get message from queue with timeout
-                message = await asyncio.wait_for(
-                    self._message_queue.get(), timeout=1.0
-                )
+                message = await asyncio.wait_for(self._message_queue.get(), timeout=1.0)
 
                 channel = message.get("channel", "all") if isinstance(message, dict) else "all"
 

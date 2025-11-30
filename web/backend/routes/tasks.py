@@ -48,9 +48,7 @@ class TaskCreate(BaseModel):
     """Request model for creating a task."""
 
     description: str = Field(..., description="Task description")
-    priority: TaskPriority = Field(
-        TaskPriority.MEDIUM, description="Task priority level"
-    )
+    priority: TaskPriority = Field(TaskPriority.MEDIUM, description="Task priority level")
     max_iterations: int = Field(3, ge=1, le=10, description="Maximum iterations")
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Task metadata")
 
@@ -182,9 +180,7 @@ async def get_task_progress(task_id: str) -> TaskProgressUpdate:
 
 
 @router.post("/{task_id}/progress")
-async def update_task_progress(
-    task_id: str, progress: TaskProgressUpdate
-) -> Dict[str, Any]:
+async def update_task_progress(task_id: str, progress: TaskProgressUpdate) -> Dict[str, Any]:
     """Update task progress (internal use)."""
     task = _get_task(task_id)
 
@@ -223,9 +219,7 @@ async def update_task_progress(
                 "status": progress.status.value,
                 "progress": progress.progress,
                 "duration": (
-                    task["completed_at"] - task["started_at"]
-                    if task["started_at"]
-                    else 0
+                    task["completed_at"] - task["started_at"] if task["started_at"] else 0
                 ),
             }
         )
@@ -268,9 +262,7 @@ async def cancel_task(task_id: str) -> Dict[str, Any]:
     task = _get_task(task_id)
 
     if task["status"] in (TaskStatus.COMPLETED, TaskStatus.FAILED):
-        raise HTTPException(
-            status_code=400, detail=f"Cannot cancel {task['status']} task"
-        )
+        raise HTTPException(status_code=400, detail=f"Cannot cancel {task['status']} task")
 
     task["status"] = TaskStatus.CANCELLED
     task["completed_at"] = time.time()
@@ -438,9 +430,7 @@ async def get_tasks_analytics_summary() -> Dict[str, Any]:
     pending = sum(1 for t in _tasks.values() if t["status"] == TaskStatus.PENDING)
 
     # Calculate average duration for completed tasks
-    completed_tasks = [
-        t for t in _tasks.values() if t["status"] == TaskStatus.COMPLETED
-    ]
+    completed_tasks = [t for t in _tasks.values() if t["status"] == TaskStatus.COMPLETED]
     avg_duration = 0.0
     if completed_tasks:
         durations = [

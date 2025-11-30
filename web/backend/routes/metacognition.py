@@ -16,9 +16,7 @@ router = APIRouter(prefix="/api/metacognition", tags=["metacognition"])
 class AnalysisRequest(BaseModel):
     """Request model for metacognition analysis."""
 
-    lookback_hours: int = Field(
-        24, ge=1, le=168, description="Hours of history to analyze"
-    )
+    lookback_hours: int = Field(24, ge=1, le=168, description="Hours of history to analyze")
 
 
 class HealthCheckResponse(BaseModel):
@@ -43,9 +41,7 @@ def set_orchestrator(orchestrator: Any) -> None:
 def _get_orchestrator() -> Any:
     """Get orchestrator instance or raise 503."""
     if _orchestrator_instance is None:
-        raise HTTPException(
-            status_code=503, detail="Orchestrator not available"
-        )
+        raise HTTPException(status_code=503, detail="Orchestrator not available")
     return _orchestrator_instance
 
 
@@ -59,9 +55,7 @@ async def run_analysis(request: AnalysisRequest) -> Dict[str, Any]:
     orch = _get_orchestrator()
 
     if not orch.metacognition_agent:
-        raise HTTPException(
-            status_code=503, detail="MetacognitionAgent not initialized"
-        )
+        raise HTTPException(status_code=503, detail="MetacognitionAgent not initialized")
 
     logger.info(f"Running metacognition analysis (lookback: {request.lookback_hours}h)")
 
@@ -112,9 +106,7 @@ async def get_suggestions(
     orch = _get_orchestrator()
 
     if not orch.metacognition_agent:
-        raise HTTPException(
-            status_code=503, detail="MetacognitionAgent not initialized"
-        )
+        raise HTTPException(status_code=503, detail="MetacognitionAgent not initialized")
 
     try:
         suggestions = orch.metacognition_agent.get_top_suggestions(limit)
@@ -131,9 +123,7 @@ async def get_stats() -> Dict[str, Any]:
     orch = _get_orchestrator()
 
     if not orch.metacognition_agent:
-        raise HTTPException(
-            status_code=503, detail="MetacognitionAgent not initialized"
-        )
+        raise HTTPException(status_code=503, detail="MetacognitionAgent not initialized")
 
     try:
         stats = orch.metacognition_agent.get_analysis_stats()
@@ -150,9 +140,7 @@ async def get_last_analysis() -> Dict[str, Any]:
     orch = _get_orchestrator()
 
     if not orch.last_metacognition_analysis:
-        raise HTTPException(
-            status_code=404, detail="No analysis has been run yet"
-        )
+        raise HTTPException(status_code=404, detail="No analysis has been run yet")
 
     return orch.last_metacognition_analysis
 
