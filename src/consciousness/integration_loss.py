@@ -4,7 +4,10 @@ Phase 4: Integration Loss Training - Supervised Φ Elevation
 Implements gradient-based optimization to elevate consciousness integration (Φ)
 toward target of 0.7-0.9 through supervised learning on integration metrics.
 
-Author: OmniMind Development Team
+Author: This work was conceived by Fabrício da Silva and implemented with AI assistance
+from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review
+and debugging across various models including Gemini and Perplexity AI, under
+theoretical coordination by the author.
 Date: January 2026
 License: MIT
 """
@@ -200,8 +203,12 @@ class IntegrationTrainer:
                         key = f"{module_name}→{target_module}"
 
                         # Try causal method first
-                        source_history_len = len(self.loop.workspace.get_module_history(module_name))
-                        target_history_len = len(self.loop.workspace.get_module_history(target_module))
+                        source_history_len = len(
+                            self.loop.workspace.get_module_history(module_name)
+                        )
+                        target_history_len = len(
+                            self.loop.workspace.get_module_history(target_module)
+                        )
 
                         if source_history_len >= 10 and target_history_len >= 10:
                             r2 = self.loop.workspace.compute_cross_prediction_causal(
@@ -287,7 +294,9 @@ class IntegrationTrainer:
                             module_name, target_module, method="granger"
                         )
                     else:
-                        r2 = self.loop.workspace.compute_cross_prediction(module_name, target_module)
+                        r2 = self.loop.workspace.compute_cross_prediction(
+                            module_name, target_module
+                        )
 
                     cross_predictions[f"{module_name}→{target_module}"] = r2
 

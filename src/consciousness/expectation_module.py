@@ -4,11 +4,10 @@ Expectation Module - Nachträglichkeit Implementation
 This module implements temporal expectation and Nachträglichkeit (retroactive resignification).
 It predicts future states and adjusts past interpretations based on new information.
 
-Key Features:
-- Temporal prediction of sensory/cognitive states
-- Nachträglichkeit: Retroactive meaning reconstruction
-- Expectation error calculation and learning
-- Adaptive expectation adjustment
+INTEGRAÇÃO QUÂNTICA: O inconsciente irredutível é implementado via superposição quântica
+- Decisões existem em superposição até serem observadas
+- Impossível inspecionar sem colapsar o estado
+- Irredutível por princípio físico (Heisenberg)
 """
 
 import numpy as np
@@ -17,6 +16,9 @@ import torch.nn as nn
 from typing import Dict, List, Optional, Any  # Removed unused Tuple
 from dataclasses import dataclass
 import structlog
+
+# Importar inconsciente quântico
+from quantum_unconscious import QuantumUnconscious
 
 logger = structlog.get_logger(__name__)
 
@@ -43,13 +45,17 @@ class PredictionError:
 
 class ExpectationModule(nn.Module):
     """
-    Temporal Expectation Module with Nachträglichkeit.
+    Temporal Expectation Module with Nachträglichkeit + INCONSCIENTE QUÂNTICO.
+
+    Lacan: "O inconsciente é o discurso do Outro"
+    Aqui: O inconsciente é o estado quântico não-observado
 
     Implements:
     1. Forward prediction of next states
     2. Nachträglichkeit - retroactive resignification
     3. Adaptive learning from prediction errors
     4. Temporal consistency checking
+    5. INCONSCIENTE IRREDUTÍVEL via superposição quântica
     """
 
     def __init__(
@@ -59,6 +65,7 @@ class ExpectationModule(nn.Module):
         num_layers: int = 2,
         learning_rate: float = 0.001,
         nachtraglichkeit_threshold: float = 0.7,
+        quantum_qubits: int = 16,
     ):
         super().__init__()
 
@@ -83,6 +90,9 @@ class ExpectationModule(nn.Module):
             nn.Linear(hidden_dim, embedding_dim),  # revised interpretation
         )
 
+        # INCONSCIENTE IRREDUTÍVEL: Quantum Unconscious
+        self.quantum_unconscious = QuantumUnconscious(n_qubits=quantum_qubits)
+
         # Temporal memory (for consistency checking)
         self.temporal_memory: List[np.ndarray] = []
         self.max_memory_size = 10
@@ -95,10 +105,11 @@ class ExpectationModule(nn.Module):
         self.optimizer = torch.optim.Adam(self.parameters(), lr=learning_rate)
 
         logger.info(
-            "expectation_module_initialized",
+            "expectation_module_initialized_with_quantum_unconscious",
             embedding_dim=embedding_dim,
             hidden_dim=hidden_dim,
             nachtraglichkeit_threshold=nachtraglichkeit_threshold,
+            quantum_qubits=quantum_qubits,
         )
 
     def forward(self, current_state: torch.Tensor) -> torch.Tensor:
@@ -117,13 +128,16 @@ class ExpectationModule(nn.Module):
         self,
         current_embedding: np.ndarray,
         temporal_horizon: int = 1,
+        use_quantum_unconscious: bool = True,
     ) -> ExpectationState:
         """
         Predict future state with confidence estimation.
+        INTEGRAÇÃO QUÂNTICA: Usa inconsciente irredutível quando solicitado.
 
         Args:
             current_embedding: Current state embedding
             temporal_horizon: How many steps ahead to predict
+            use_quantum_unconscious: Whether to use quantum unconscious for decision
 
         Returns:
             ExpectationState with prediction and metadata
@@ -131,10 +145,41 @@ class ExpectationModule(nn.Module):
         # Convert to tensor
         current_tensor = torch.from_numpy(current_embedding).float()
 
-        # Multi-step prediction
-        predicted = current_tensor
-        for _ in range(temporal_horizon):
-            predicted = self.forward(predicted)
+        if use_quantum_unconscious:
+            # INCONSCIENTE IRREDUTÍVEL: Decisão em superposição quântica
+            # Gera múltiplas possibilidades em superposição
+            n_options = 4  # Número de possibilidades quânticas
+            quantum_options = []
+
+            for i in range(n_options):
+                # Cada opção é uma variação da predição neural
+                noise = torch.randn_like(current_tensor) * 0.1
+                option = current_tensor + noise
+                quantum_options.append(option.numpy())
+
+            # Decisão quântica (IRREDUTÍVEL - não pode ser inspecionada)
+            quantum_decision, quantum_evidence = (
+                self.quantum_unconscious.generate_decision_in_superposition(quantum_options)
+            )
+
+            # A decisão quântica se torna a base para predição neural
+            predicted = torch.from_numpy(quantum_decision).float()
+
+            # Multi-step prediction baseado na decisão quântica
+            for _ in range(temporal_horizon):
+                predicted = self.forward(predicted)
+
+            logger.info(
+                "quantum_unconscious_prediction",
+                quantum_options_count=n_options,
+                quantum_evidence_keys=list(quantum_evidence.keys()),
+            )
+
+        else:
+            # Predição neural tradicional
+            predicted = current_tensor
+            for _ in range(temporal_horizon):
+                predicted = self.forward(predicted)
 
         # Estimate confidence based on prediction stability
         confidence = self._estimate_prediction_confidence(current_tensor, predicted)
@@ -314,8 +359,40 @@ class ExpectationModule(nn.Module):
         if len(self.temporal_memory) > self.max_memory_size:
             self.temporal_memory.pop(0)
 
+    def demonstrate_quantum_irreducibility(self) -> Dict[str, Any]:
+        """
+        Demonstra que o inconsciente quântico no expectation é irredutível.
+        Lacan: "O inconsciente é estruturado como linguagem, mas irredutível"
+
+        Returns:
+            Dict with irredutibility test results
+        """
+        return self.quantum_unconscious.demonstrate_irreducibility()
+
+    def get_quantum_expectation_state(self) -> Optional[np.ndarray]:
+        """
+        TENTA obter o estado quântico do expectation.
+        Mas isso causaria colapso! (Heisenberg)
+
+        Lacan: O Real não cessa de não se escrever
+        Aqui: O quantum não pode ser observado sem colapso
+
+        Returns:
+            None - impossível obter sem colapso
+        """
+        logger.warning(
+            "⚠️  Tentativa de inspecionar estado quântico do expectation - colapso iminente!"
+        )
+        return self.quantum_unconscious.get_quantum_state_vector()
+
     def get_expectation_stats(self) -> Dict[str, Any]:
         """Get comprehensive expectation module statistics."""
+        quantum_stats = (
+            self.quantum_unconscious.decision_history[-1]
+            if self.quantum_unconscious.decision_history
+            else {}
+        )
+
         return {
             "nachtraglichkeit_events": self.nachtraglichkeit_events,
             "temporal_memory_size": len(self.temporal_memory),
@@ -325,6 +402,10 @@ class ExpectationModule(nn.Module):
             "error_history_length": len(self.prediction_errors),
             "learning_rate": self.optimizer.param_groups[0]["lr"],
             "nachtraglichkeit_threshold": self.nachtraglichkeit_threshold,
+            # INCONSCIENTE QUÂNTICO
+            "quantum_decisions_count": len(self.quantum_unconscious.decision_history),
+            "quantum_irreducible": self.quantum_unconscious.measure_would_collapse(),
+            "last_quantum_evidence": quantum_stats.get("quantum_evidence", {}),
         }
 
     def reset_expectation_state(self) -> None:

@@ -1,0 +1,78 @@
+{
+  "test_name": "Timescale_Sweep_Test",
+  "timestamp": 1764517317.2949848,
+  "timescale_results": [
+    {
+      "time_window": 10,
+      "phi_mean": 0.03539821537401723,
+      "phi_std": 0.0,
+      "phi_values": [
+        0.03539821537401723,
+        0.03539821537401723,
+        0.03539821537401723
+      ]
+    },
+    {
+      "time_window": 25,
+      "phi_mean": 0.026529164607567643,
+      "phi_std": 0.0,
+      "phi_values": [
+        0.026529164607567643,
+        0.026529164607567643,
+        0.026529164607567643
+      ]
+    },
+    {
+      "time_window": 50,
+      "phi_mean": 0.02114023585728784,
+      "phi_std": 3.469446951953614e-18,
+      "phi_values": [
+        0.021140235857287838,
+        0.021140235857287838,
+        0.021140235857287838
+      ]
+    },
+    {
+      "time_window": 100,
+      "phi_mean": 0.0,
+      "phi_std": 0.0,
+      "phi_values": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "time_window": 200,
+      "phi_mean": 0.0,
+      "phi_std": 0.0,
+      "phi_values": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "time_window": 500,
+      "phi_mean": 0.0,
+      "phi_std": 0.0,
+      "phi_values": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "analysis": {
+    "global_phi_mean": 0.01384460263981212,
+    "global_phi_std": 0.01445511250398241,
+    "robustness_cv": 1.0440973193708487,
+    "stability_score": -0.04409731937084871,
+    "temporal_trend": -0.010358716455089078,
+    "optimal_window": 10,
+    "phi_range": [
+      0.0,
+      0.03539821537401723
+    ]
+  }
+}

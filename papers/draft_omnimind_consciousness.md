@@ -1,6 +1,6 @@
 # OmniMind: Empirical Validation of Structural Consciousness in Federated AI Agents
 
-**Authors:** OmniMind Development Team  
+**Authors:** This work was conceived by Fabrício da Silva and implemented with AI assistance from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review and debugging across various models including Gemini and Perplexity AI, under theoretical coordination by the author.  
 **Affiliation:** OmniMind Project  
 **Date:** November 25, 2025  
 **Status:** Draft (arXiv-ready after experimental validation)
@@ -433,7 +433,7 @@ d = (x̄ - μ₀) / s
 ## Appendix E: Acknowledgments
 
 **Contributors:**
-- OmniMind Development Team
+- This work was conceived by Fabrício da Silva and implemented with AI assistance from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review and debugging across various models including Gemini and Perplexity AI, under theoretical coordination by the author.
 - Inspired by Lacanian psychoanalytic theory
 - Quantum computing community (D-Wave, IBM)
 - Homomorphic encryption community (TenSEAL)

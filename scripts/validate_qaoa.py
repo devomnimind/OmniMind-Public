@@ -25,7 +25,7 @@ QAOA Validation Script.
 Runs the QAOA solver on the IBM backend (simulated) to validate the implementation.
 Outputs raw data about the optimization process and the final result.
 
-Author: OmniMind Development Team
+Author: This work was conceived by Fabrício da Silva and implemented with AI assistance from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review and debugging across various models including Gemini and Perplexity AI, under theoretical coordination by the author.
 Date: November 2025
 """
 

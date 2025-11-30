@@ -4,7 +4,7 @@
 **Program:** Lacanian Psychoanalytic AI + Advanced Computational Architectures  
 **Status:** Active Research & Implementation  
 **Date:** November 2025  
-**Lead:** OmniMind Development Team
+**Lead:** This work was conceived by Fabrício da Silva and implemented with AI assistance from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review and debugging across various models including Gemini and Perplexity AI, under theoretical coordination by the author.
 
 ---
 
@@ -530,7 +530,7 @@ class IntegratedOmniMind:
 
 **Project:** OmniMind - Autonomous AI System  
 **Repository:** github.com/fabs-devbrain/OmniMind  
-**Research Lead:** OmniMind Development Team  
+**Research Lead:** This work was conceived by Fabrício da Silva and implemented with AI assistance from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review and debugging across various models including Gemini and Perplexity AI, under theoretical coordination by the author.  
 **Status:** Active Development
 
 **Contributing:**

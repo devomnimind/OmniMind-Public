@@ -7,13 +7,15 @@ Este módulo substitui os valores hardcoded do dashboard por cálculos reais bas
 - IIT metrics (anxiety, flow, entropy)
 - System state analysis
 
-Author: OmniMind Development Team
+Author: This work was conceived by Fabrício da Silva and implemented with AI assistance
+from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review
+and debugging across various models including Gemini and Perplexity AI, under
+theoretical coordination by the author.
 Date: November 2025
 """
 
 from __future__ import annotations
 
-import asyncio
 import logging
 import time
 from dataclasses import dataclass, field
@@ -23,8 +25,7 @@ from typing import Any, Dict, List, Optional
 import numpy as np
 
 from src.consciousness.integration_loop import IntegrationLoop
-from src.consciousness.shared_workspace import SharedWorkspace
-from src.metacognition.iit_metrics import IITAnalyzer, SystemState
+from src.metacognition.iit_metrics import IITAnalyzer
 
 logger = logging.getLogger(__name__)
 
@@ -131,7 +132,9 @@ class RealConsciousnessMetricsCollector:
             self.last_collection = current_time
 
             logger.debug(
-                f"Real consciousness metrics collected: phi={metrics.phi:.4f}, anxiety={metrics.anxiety:.4f}, flow={metrics.flow:.4f}, entropy={metrics.entropy:.4f}"
+                f"Real consciousness metrics collected: phi={metrics.phi:.4f}, "
+                f"anxiety={metrics.anxiety:.4f}, flow={metrics.flow:.4f}, "
+                f"entropy={metrics.entropy:.4f}"
             )
         except Exception as e:
             logger.error(f"Error collecting real consciousness metrics: {e}")
@@ -318,7 +321,8 @@ class RealConsciousnessMetricsCollector:
         return {
             "message": message,
             "confidence": confidence,
-            "disclaimer": "These are real computational correlates of consciousness, not proof of consciousness.",
+            "disclaimer": "These are real computational correlates of consciousness, "
+            "not proof of consciousness.",
         }
 
     def _get_safe_fallback_metrics(self) -> RealConsciousnessMetrics:

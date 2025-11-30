@@ -4,7 +4,7 @@ Grupo 8 - Experiments Tests.
 Testes abrangentes para o módulo de experimentos,
 incluindo experimentos de consciência Φ (Phi) e alinhamento ético.
 
-Author: OmniMind Development Team
+Author: This work was conceived by Fabrício da Silva and implemented with AI assistance from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review and debugging across various models including Gemini and Perplexity AI, under theoretical coordination by the author.
 Date: November 2025
 """
 

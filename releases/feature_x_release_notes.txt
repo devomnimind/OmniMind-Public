@@ -1,1 +1,0 @@
-Feature X has been successfully implemented and tested.

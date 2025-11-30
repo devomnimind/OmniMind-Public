@@ -4,7 +4,7 @@
 
 **Status:** Active Research & Development  
 **Phase:** 1 of 4 Complete (30%)  
-**Lead:** OmniMind Development Team  
+**Lead:** This work was conceived by Fabrício da Silva and implemented with AI assistance from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review and debugging across various models including Gemini and Perplexity AI, under theoretical coordination by the author.  
 **Date:** November 2025
 
 ---
@@ -397,7 +397,7 @@ Implementations go to appropriate `src/` subdirectories:
 
 **Project:** OmniMind - Autonomous AI System  
 **Repository:** https://github.com/fabs-devbrain/OmniMind  
-**Lead:** OmniMind Development Team  
+**Lead:** This work was conceived by Fabrício da Silva and implemented with AI assistance from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review and debugging across various models including Gemini and Perplexity AI, under theoretical coordination by the author.  
 **License:** MIT
 
 ---

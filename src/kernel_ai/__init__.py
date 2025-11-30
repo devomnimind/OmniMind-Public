@@ -11,13 +11,21 @@ Components:
 - cognitive_os: Operating system with consciousness
 - resource_optimizer: ML-based resource allocation
 
-Author: OmniMind Development Team
+Author: This work was conceived by Fabrício da Silva and implemented with AI assistance
+from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review
+and debugging across various models including Gemini and Perplexity AI, under
+theoretical coordination by the author.
 """
 
 from typing import List
 
 __version__ = "1.0.0"
-__author__ = "OmniMind Development Team"
+__author__ = (
+    "This work was conceived by Fabrício da Silva and implemented with AI assistance "
+    "from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code "
+    "review and debugging across various models including Gemini and Perplexity AI, "
+    "under theoretical coordination by the author."
+)
 
 __all__: List[str] = [
     "RLScheduler",

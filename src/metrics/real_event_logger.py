@@ -7,7 +7,10 @@ Substitui os eventos hardcoded por logs reais do sistema baseados em:
 - Error conditions
 - Performance metrics
 
-Author: OmniMind Development Team
+Author: This work was conceived by Fabrício da Silva and implemented with AI assistance
+from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review
+and debugging across various models including Gemini and Perplexity AI, under
+theoretical coordination by the author.
 Date: November 2025
 """
 
@@ -122,7 +125,10 @@ class RealEventLogger:
         if success:
             if phi > 0.5:
                 event_type = "SUCCESS"
-                message = f"Integration cycle {cycle_number} completed with strong integration (Φ={phi:.3f})"
+                message = (
+                    f"Integration cycle {cycle_number} completed with "
+                    f"strong integration (Φ={phi:.3f})"
+                )
             else:
                 event_type = "INFO"
                 message = f"Integration cycle {cycle_number} completed (Φ={phi:.3f})"
@@ -157,7 +163,8 @@ class RealEventLogger:
     ) -> None:
         """Log problema de performance."""
         message = (
-            f"Performance issue in {component}: {metric}={value:.2f} (threshold: {threshold:.2f})"
+            f"Performance issue in {component}: {metric}={value:.2f} "
+            f"(threshold: {threshold:.2f})"
         )
         self._add_event("WARNING", message, "performance")
 

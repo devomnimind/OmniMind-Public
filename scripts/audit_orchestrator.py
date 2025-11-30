@@ -33,7 +33,7 @@ This script performs a comprehensive audit of the OrchestratorAgent to identify:
 Usage:
     python scripts/audit_orchestrator.py [--output report.json] [--verbose]
 
-Author: OmniMind Development Team
+Author: This work was conceived by Fabrício da Silva and implemented with AI assistance from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review and debugging across various models including Gemini and Perplexity AI, under theoretical coordination by the author.
 Date: 2025-11-24
 """
 

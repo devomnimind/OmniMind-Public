@@ -6,7 +6,10 @@ Substitui comparações hardcoded por análise real baseada em:
 - Estatísticas de referência
 - Tendências de longo prazo
 
-Author: OmniMind Development Team
+Author: This work was conceived by Fabrício da Silva and implemented with AI assistance
+from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review
+and debugging across various models including Gemini and Perplexity AI, under
+theoretical coordination by the author.
 Date: November 2025
 """
 
@@ -15,7 +18,7 @@ from __future__ import annotations
 import json
 import logging
 import statistics
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional

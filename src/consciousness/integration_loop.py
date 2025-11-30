@@ -49,6 +49,7 @@ class LoopCycleResult:
     cross_prediction_scores: Dict[str, Any] = field(default_factory=dict)
     phi_estimate: float = 0.0
     timestamp: datetime = field(default_factory=datetime.now)
+    complexity_metrics: Optional[Dict[str, Any]] = None  # NOVO: métricas de complexidade
 
     @property
     def success(self) -> bool:
@@ -261,7 +262,7 @@ class IntegrationLoop:
         self.expectation_silent: bool = False
 
     async def execute_cycle(self, collect_metrics: bool = True) -> LoopCycleResult:
-        """Execute one complete integration loop cycle.
+        """Execute one complete integration loop cycle com análise de complexidade.
 
         If expectation_silent=True, expectation module maintains history but
         blocks output flow (structural ablation: measures falta-a-ser gap).
@@ -277,7 +278,18 @@ class IntegrationLoop:
             errors_occurred=[],
             cross_prediction_scores={},
             phi_estimate=0.0,
+            complexity_metrics=None,  # Será preenchido
         )
+
+        # Estimar complexidade ANTES da execução
+        from src.consciousness.shared_workspace import ComplexityAnalyzer
+
+        theoretical_complexity = ComplexityAnalyzer.estimate_cycle_complexity(
+            n_modules=len(self.loop_sequence),
+            history_window=50,  # Assumindo janela padrão
+            embedding_dim=self.workspace.embedding_dim,
+        )
+        theoretical_complexity["total"] = sum(theoretical_complexity.values())
 
         # Advance workspace cycle
         self.workspace.advance_cycle()
@@ -294,7 +306,8 @@ class IntegrationLoop:
                     # Don't add to result.modules_executed to block information flow
                     if self.enable_logging:
                         logger.debug(
-                            f"Cycle {self.cycle_count}: {module_name} silenced (structural ablation)"
+                            f"Cycle {self.cycle_count}: {module_name} silenced "
+                            "(structural ablation)"
                         )
                 else:
                     await executor.execute(self.workspace)
@@ -307,6 +320,9 @@ class IntegrationLoop:
                 result.errors_occurred.append((module_name, str(e)))
                 logger.error(f"Cycle {self.cycle_count}: {module_name} failed - {e}")
 
+        # Medir tempo de execução até aqui (sem métricas)
+        execution_time_so_far = (datetime.now() - start_time).total_seconds() * 1000
+
         # Collect metrics if requested
         if collect_metrics and len(result.modules_executed) > 1:
             try:
@@ -316,8 +332,12 @@ class IntegrationLoop:
                         if source_module != target_module:
                             try:
                                 # Try causal method first (requires more history)
-                                source_history_len = len(self.workspace.get_module_history(source_module))
-                                target_history_len = len(self.workspace.get_module_history(target_module))
+                                source_history_len = len(
+                                    self.workspace.get_module_history(source_module)
+                                )
+                                target_history_len = len(
+                                    self.workspace.get_module_history(target_module)
+                                )
 
                                 if source_history_len >= 10 and target_history_len >= 10:
                                     # Use causal method
@@ -326,14 +346,19 @@ class IntegrationLoop:
                                         target_module=target_module,
                                         method="granger",  # Use Granger for now
                                     )
-                                    logger.debug(f"Used causal prediction: {source_module}->{target_module}")
+                                    logger.debug(
+                                        f"Used causal prediction: {source_module}->{target_module}"
+                                    )
                                 else:
                                     # Fall back to correlation-based method
                                     cross_pred = self.workspace.compute_cross_prediction(
                                         source_module=source_module,
                                         target_module=target_module,
                                     )
-                                    logger.debug(f"Used correlation prediction: {source_module}->{target_module}")
+                                    logger.debug(
+                                        f"Used correlation prediction: "
+                                        f"{source_module}->{target_module}"
+                                    )
 
                                 if source_module not in result.cross_prediction_scores:
                                     result.cross_prediction_scores[source_module] = {}
@@ -341,7 +366,9 @@ class IntegrationLoop:
                                     target_module
                                 ] = cross_pred.to_dict()
                             except Exception as e:
-                                logger.debug(f"Cross-prediction failed {source_module}->{target_module}: {e}")
+                                logger.debug(
+                                    f"Cross-prediction failed {source_module}->{target_module}: {e}"
+                                )
 
                 # Compute Φ from workspace state (which already has cross-predictions)
                 result.phi_estimate = self.workspace.compute_phi_from_integrations()
@@ -352,8 +379,34 @@ class IntegrationLoop:
             except Exception as e:
                 logger.error(f"Cycle {self.cycle_count}: Metrics failed - {e}")
 
+        # Finalizar medições de complexidade
+        actual_time_ms = (datetime.now() - start_time).total_seconds() * 1000
+
+        # Calcular métricas de eficiência
+        ops_per_ms = theoretical_complexity["total"] / max(actual_time_ms, 0.001)
+        efficiency_estimate = ops_per_ms / 1e6  # GOps/s como proxy de eficiência
+
+        result.complexity_metrics = {
+            "theoretical_ops": theoretical_complexity["total"],
+            "theoretical_time_ms": theoretical_complexity["total"] / 1e6,  # Estimativa grosseira
+            "actual_time_ms": actual_time_ms,
+            "execution_time_ms": execution_time_so_far,
+            "metrics_time_ms": actual_time_ms - execution_time_so_far,
+            "ops_per_ms": ops_per_ms,
+            "efficiency_estimate_gops": efficiency_estimate,
+            "breakdown": theoretical_complexity,
+        }
+
+        # Logging de complexidade
+        if self.enable_logging:
+            logger.info(
+                f"Cycle {self.cycle_count} Complexity: "
+                f"~{theoretical_complexity['total']/1e6:.1f}M ops in {actual_time_ms:.1f}ms "
+                f"({ops_per_ms/1e3:.1f}GOps/s)"
+            )
+
         # Finalize timing
-        result.cycle_duration_ms = (datetime.now() - start_time).total_seconds() * 1000
+        result.cycle_duration_ms = actual_time_ms
         self.cycle_history.append(result)
 
         return result

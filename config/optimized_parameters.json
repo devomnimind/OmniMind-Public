@@ -1,0 +1,23 @@
+{
+  "phi_baseline_range": [
+    0.01,
+    0.05
+  ],
+  "phi_perturbation_threshold": 0.1,
+  "anesthesia_levels": [
+    0.1,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+  ],
+  "anesthesia_decay_rate": 0.15,
+  "optimal_timescale_range": [
+    5,
+    50
+  ],
+  "timescale_resolution": 5,
+  "min_raters": 5,
+  "max_raters": 20,
+  "agreement_threshold": 0.75
+}

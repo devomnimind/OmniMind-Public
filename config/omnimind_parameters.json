@@ -1,0 +1,75 @@
+{
+  "consciousness": {
+    "phi_baseline_range": [
+      0.01,
+      0.05
+    ],
+    "phi_perturbation_threshold": 0.1,
+    "anesthesia_levels": [
+      0.1,
+      0.3,
+      0.5,
+      0.7,
+      0.9
+    ],
+    "anesthesia_decay_rate": 0.15,
+    "optimal_timescale_range": [
+      5,
+      50
+    ],
+    "timescale_resolution": 5,
+    "min_raters": 5,
+    "max_raters": 20,
+    "agreement_threshold": 0.75
+  },
+  "lacan": {
+    "federation_cycles": 300,
+    "min_disagreement_rate": 0.2,
+    "max_disagreement_rate": 0.8,
+    "noise_level_range": [
+      0.05,
+      0.25
+    ],
+    "communication_asymmetry": 0.3,
+    "quantum_qubits_range": [
+      4,
+      16
+    ],
+    "quantum_options_count": 4,
+    "quantum_noise_level": 0.05,
+    "sujeito_mutuo_threshold": 0.25,
+    "inconsciente_irredutivel_tests": 3,
+    "alteridade_noise_min": 0.05,
+    "real_observation_collapse": true
+  },
+  "expectation": {
+    "embedding_dim": 256,
+    "hidden_dim": 128,
+    "num_layers": 2,
+    "learning_rate_range": [
+      0.0001,
+      0.01
+    ],
+    "nachtraglichkeit_threshold_range": [
+      0.5,
+      0.9
+    ],
+    "max_memory_size": 10,
+    "temporal_consistency_weight": 0.3,
+    "use_quantum_unconscious": true,
+    "quantum_decision_weight": 0.4
+  },
+  "validation": {
+    "confidence_level": 0.95,
+    "min_sample_size": 30,
+    "bootstrap_iterations": 1000,
+    "max_execution_time": 300.0,
+    "memory_limit_gb": 8.0,
+    "random_seed_range": [
+      1,
+      10000
+    ],
+    "deterministic_mode": false
+  },
+  "validation_history": []
+}

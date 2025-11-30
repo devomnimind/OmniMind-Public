@@ -4,7 +4,10 @@ Behavioral Metrics - Medição de Vieses e Comportamentos Estruturais.
 Este módulo implementa métricas para quantificar comportamentos de agentes,
 essencial para o Teste de Ética Estrutural (validação de Sinthome genuíno).
 
-Author: OmniMind Development Team
+Author: This work was conceived by Fabrício da Silva and implemented with AI assistance
+from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review
+and debugging across various models including Gemini and Perplexity AI, under
+theoretical coordination by the author.
 Date: November 2025
 License: MIT
 """
