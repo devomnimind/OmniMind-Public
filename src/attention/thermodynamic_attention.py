@@ -180,9 +180,13 @@ class ThermodynamicAttention(nn.Module if TORCH_AVAILABLE else object):  # type:
         probs = F.softmax(projected, dim=-1)
 
         # Shannon entropy: H = -Σ p log p
-        # Add epsilon to avoid log(0)
-        log_probs = torch.log(probs + ENTROPY_EPSILON)
+        # Clamp probs to avoid log(0) and ensure numerical stability
+        probs_clamped = torch.clamp(probs, min=ENTROPY_EPSILON, max=1.0)
+        log_probs = torch.log(probs_clamped)
         entropies = -torch.sum(probs * log_probs, dim=-1)
+
+        # Ensure entropies are non-negative (numerical errors can cause small negatives)
+        entropies = torch.clamp(entropies, min=0.0)
 
         return entropies
 
