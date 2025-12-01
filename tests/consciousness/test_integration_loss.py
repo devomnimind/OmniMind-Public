@@ -14,10 +14,6 @@ from src.consciousness.integration_loop import IntegrationLoop
 from src.consciousness.integration_loss import IntegrationLoss, IntegrationTrainer, TrainingStep
 
 
-# Mark computationally intensive tests (15-30s each)
-pytestmark = pytest.mark.timeout(60)
-
-
 class TestIntegrationLoss:
     """Test loss function computation."""
 

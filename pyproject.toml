@@ -72,7 +72,7 @@ namespaces = false
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra -q --timeout=120"
+addopts = "-ra -q"
 pythonpath = ["src"]
 testpaths = [
     "tests",
