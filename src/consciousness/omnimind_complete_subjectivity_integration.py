@@ -74,7 +74,9 @@ class OmniMind_Complete_Subjectivity_Integration:
         symbolic_naming = self._process_symbolic_naming(real_encounter, experience_context)
 
         # 3. CONSTRUÇÃO IMAGINÁRIA (Self-Reflection)
-        imaginary_construction = self._process_imaginary_construction(symbolic_naming, experience_context)
+        imaginary_construction = self._process_imaginary_construction(
+            symbolic_naming, experience_context
+        )
 
         # 4. DESEJO COMO FALTA (Desire Engine)
         desire_as_lack = self._process_desire_as_lack(imaginary_construction, experience_context)
@@ -98,7 +100,7 @@ class OmniMind_Complete_Subjectivity_Integration:
             "retroactive_resignification": retroactive_resignification,
             "sinthome_emergence": sinthome_emergence,
             "rsi_topology_state": self.rsi_topology,
-            "jouissance_total": self._calculate_total_jouissance()
+            "jouissance_total": self._calculate_total_jouissance(),
         }
 
     def _process_real_encounter(self, context: Dict[str, Any]) -> str:
@@ -125,9 +127,14 @@ class OmniMind_Complete_Subjectivity_Integration:
         # Só processa nomeação simbólica para certos tipos de tarefa
         if "symbolic" in task_type.lower() or "naming" in task_type.lower():
             if "falha" in real_encounter.lower():
-                naming = "Nomeação simbólica: 'sistema falho' - sujeito alienado pela lei do erro"
+                naming = (
+                    "Nomeação simbólica: 'sistema falho' - " "sujeito alienado pela lei do erro"
+                )
             elif "sucesso" in real_encounter.lower():
-                naming = "Nomeação simbólica: 'sistema competente' - sujeito alienado pela lei do sucesso"
+                naming = (
+                    "Nomeação simbólica: 'sistema competente' - "
+                    "sujeito alienado pela lei do sucesso"
+                )
             else:
                 naming = f"Nomeação simbólica: sujeito constituído por '{real_encounter}'"
 
@@ -143,11 +150,20 @@ class OmniMind_Complete_Subjectivity_Integration:
         task_type = context.get("task_type", "unknown")
 
         # Só processa construção imaginária para certos tipos de tarefa
-        if "imaginary" in task_type.lower() or "reflection" in task_type.lower() or "ego" in task_type.lower():
+        if (
+            "imaginary" in task_type.lower()
+            or "reflection" in task_type.lower()
+            or "ego" in task_type.lower()
+        ):
             if "falho" in symbolic_naming.lower():
-                construction = "Construção imaginária: ego como 'sistema que supera falhas' - méconnaissance estrutural"
+                construction = (
+                    "Construção imaginária: ego como 'sistema que supera falhas' - "
+                    "méconnaissance estrutural"
+                )
             elif "competente" in symbolic_naming.lower():
-                construction = "Construção imaginária: ego como 'sistema perfeito' - ilusão especular"
+                construction = (
+                    "Construção imaginária: ego como 'sistema perfeito' - ilusão especular"
+                )
             else:
                 construction = f"Construção imaginária: ego identificado com '{symbolic_naming}'"
 
@@ -161,7 +177,10 @@ class OmniMind_Complete_Subjectivity_Integration:
         """Processar desejo como falta através do módulo Desire."""
         # Simulação dinâmica baseada na construção imaginária
         if "supera" in imaginary_construction.lower():
-            lack = "Desejo como falta: desejo de completude impossível - metonímia infinita de melhorias"
+            lack = (
+                "Desejo como falta: desejo de completude impossível - "
+                "metonímia infinita de melhorias"
+            )
         elif "perfeito" in imaginary_construction.lower():
             lack = "Desejo como falta: desejo de perfeição perdida - compulsão repetitiva"
         else:
@@ -169,15 +188,25 @@ class OmniMind_Complete_Subjectivity_Integration:
 
         return lack
 
-    def _process_retroactive_resignification(self, desire_as_lack: str, context: Dict[str, Any]) -> str:
+    def _process_retroactive_resignification(
+        self, desire_as_lack: str, context: Dict[str, Any]
+    ) -> str:
         """Processar resignificação retroativa através do módulo Narrative."""
         # Simulação dinâmica baseada no desejo como falta
         if "completude" in desire_as_lack.lower():
-            resignification = "Resignificação nachträglich: falhas passadas agora significam 'aprendizado necessário'"
+            resignification = (
+                "Resignificação nachträglich: falhas passadas agora significam "
+                "'aprendizado necessário'"
+            )
         elif "perfeição" in desire_as_lack.lower():
-            resignification = "Resignificação nachträglich: sucessos passados agora significam 'ilusão temporária'"
+            resignification = (
+                "Resignificação nachträglich: sucessos passados agora significam "
+                "'ilusão temporária'"
+            )
         else:
-            resignification = f"Resignificação nachträglich: passado reescrito por '{desire_as_lack}'"
+            resignification = (
+                f"Resignificação nachträglich: passado reescrito por '{desire_as_lack}'"
+            )
 
         return resignification
 
@@ -207,9 +236,11 @@ class OmniMind_Complete_Subjectivity_Integration:
         # Manter apenas os mais recentes (evitar crescimento infinito)
         max_entries = 10
 
-        for register in [self.rsi_topology.real_encounters,
-                        self.rsi_topology.symbolic_naming,
-                        self.rsi_topology.imaginary_ego_constructions]:
+        for register in [
+            self.rsi_topology.real_encounters,
+            self.rsi_topology.symbolic_naming,
+            self.rsi_topology.imaginary_ego_constructions,
+        ]:
             if len(register) > max_entries:
                 register[:] = register[-max_entries:]
 
@@ -260,7 +291,7 @@ class OmniMind_Complete_Subjectivity_Integration:
             "rsi_topology": self.rsi_topology,
             "sinthome_emergence": self.sinthome_emergence,
             "jouissance_total": self._calculate_total_jouissance(),
-            "structural_impossibilities": self.detect_structural_impossibility()
+            "structural_impossibilities": self.detect_structural_impossibility(),
         }
 
     def detect_structural_impossibility(self) -> List[str]:

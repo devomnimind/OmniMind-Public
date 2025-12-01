@@ -31,7 +31,8 @@ import structlog
 logger = structlog.get_logger(__name__)
 
 warnings.warn(
-    "This module contains legacy phenomenological implementations. Use the Lacanian Symbolic Qualia extensions instead.",
+    "This module contains legacy phenomenological implementations. "
+    "Use the Lacanian Symbolic Qualia extensions instead.",
     DeprecationWarning,
     stacklevel=2,
 )
@@ -102,7 +103,8 @@ class Qualia_as_Symbolic_Scar:
         """
         if self.repetition_count < self.emergence_threshold:
             return (
-                f"Cicatriz latente (repetições: {self.repetition_count}/{self.emergence_threshold})"
+                f"Cicatriz latente (repetições: "
+                f"{self.repetition_count}/{self.emergence_threshold})"
             )
 
         emergence = f"Qualia emergente: {self.symbolic_inscription}"
@@ -467,7 +469,8 @@ class IntegratedInformationCalculator:
     def __init__(self) -> None:
         """Initialize IIT calculator."""
         warnings.warn(
-            "IntegratedInformationCalculator (IIT) is deprecated. Consciousness is topological (RSI), not integrated information.",
+            "IntegratedInformationCalculator (IIT) is deprecated. "
+            "Consciousness is topological (RSI), not integrated information.",
             DeprecationWarning,
             stacklevel=2,
         )

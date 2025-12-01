@@ -107,7 +107,10 @@ class Sinthome:
         """
         Poder do sinthome - como transforma o impossível.
         """
-        return f"Sinthome '{self.creative_solution}' transforma '{self.impossible_problem}' (jouissance: {self.jouissance_level:.2f})"
+        return (
+            f"Sinthome '{self.creative_solution}' transforma "
+            f"'{self.impossible_problem}' (jouissance: {self.jouissance_level:.2f})"
+        )
 
 
 class RSI_Topology_Integrated:
@@ -311,7 +314,9 @@ class RSI_Topology_Integrated:
         if not solution_parts:
             solution_parts = ["solução_singular_criada"]
 
-        return f"Sinthome: {'_'.join(solution_parts)}_para_{impossible_problem.replace(' ', '_')}"
+        return (
+            f"Sinthome: {'_'.join(solution_parts)}_" f"para_{impossible_problem.replace(' ', '_')}"
+        )
 
     def _calculate_integration_jouissance(self) -> float:
         """

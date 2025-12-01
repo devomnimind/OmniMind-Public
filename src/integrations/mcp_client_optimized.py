@@ -86,7 +86,7 @@ class EnhancedMCPClient:
         timeout: float = 15.0,
         enable_cache: bool = True,
         cache_ttl_seconds: int = 3600,
-        max_cache_size_mb: int = 100,
+        max_cache_size_mb: float = 100.0,
         rate_limit: Optional[RateLimitConfig] = None,
         enable_data_protection: bool = True,
         enable_audit: bool = True,

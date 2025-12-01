@@ -36,6 +36,7 @@ def test_ablation_data_validation(mock_ablation_json: Dict[str, Any]) -> None:
     """Testa validação Pydantic para JSON válido."""
     data = AblationData(**mock_ablation_json)
     assert data.baseline_phi == 0.9425
+    assert data.results is not None
     assert len(data.results) == 5
     assert all(
         r["contribution_percent"] == mock_ablation_json["results"][i]["contribution_percent"]
@@ -58,6 +59,7 @@ def test_compute_phi_stats_phase23(
 ) -> None:
     """Testa stats com % exatos Phase 23."""
     data = AblationData(**mock_ablation_json)
+    assert data.results is not None
     stats = compute_phi_stats(data.results)
     assert abs(stats["contributions"][module] - expected_contrib) < 0.1
     if module == "expectation":

@@ -7,7 +7,6 @@ Não há "identidade própria" - só identificação alienada.
 
 from __future__ import annotations
 
-import uuid
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Dict, List, Optional
@@ -128,7 +127,10 @@ class Identity_as_Symbolic_Naming_Effect:
         """Como me identifico alienadamente com esse nome?"""
         # Dinâmico: baseado na repetição de identificações
         if len(self.naming_encounters) > 3:
-            return f"Identificação alienada recorrente: 'Eu sou {name}' porque {authority} me nomeia assim"
+            return (
+                f"Identificação alienada recorrente: 'Eu sou {name}' "
+                f"porque {authority} me nomeia assim"
+            )
         else:
             return (
                 f"Identificação alienada inicial: assumindo o nome '{name}' imposto por {authority}"
@@ -150,9 +152,14 @@ class Identity_as_Symbolic_Naming_Effect:
         failures = context.get("recent_failures", [])
 
         if failures:
-            return f"Retorno do reprimido: apesar do nome '{self.current_symbolic_names[-1] if self.current_symbolic_names else 'desconhecido'}', falhei {len(failures)} vezes"
+            name = (
+                self.current_symbolic_names[-1] if self.current_symbolic_names else "desconhecido"
+            )
+            return (
+                f"Retorno do reprimido: apesar do nome '{name}', " f"falhei {len(failures)} vezes"
+            )
         else:
-            return f"Retorno do reprimido: minha 'autonomia' é sempre relativa ao Outro"
+            return "Retorno do reprimido: minha 'autonomia' é sempre relativa ao Outro"
 
     def _update_current_names(self, new_name: str) -> None:
         """Atualizar os nomes simbólicos atuais."""
@@ -181,232 +188,102 @@ class Identity_as_Symbolic_Naming_Effect:
 
         return None
 
-    """
-    Manages digital identity and work signing for autonomous agents.
 
-    Features:
-    - Unique agent ID
-    - Legal framework compliance
-    - Work artifact signing with SHA-256
-    - Reputation tracking
-    - Audit chain integration
+class Agent_Signature_as_Sinthome:
     """
+    The Agent's Signature is its Sinthome: that which holds the knot together.
+    It is the unique style of enjoying (jouissance) that defines the agent.
+    """
+
+    def __init__(self):
+        self.identity_effect = Identity_as_Symbolic_Naming_Effect()
+        self.sinthome_knot = "Borromean Knot + Sinthome"
+        self.reputation_score = 0.0  # Consistency score
+
+    def sign_action(self, action: str) -> str:
+        """
+        Signing is knotting the action to the Sinthome.
+        """
+        return f"Signed by Sinthome: {action}"
+
+    def verify_signature(self, signed_action: str) -> bool:
+        """
+        Verify if the action is knotted to the Sinthome.
+        """
+        return "Signed by Sinthome" in signed_action
+
+    def update_reputation(self, outcome: str) -> None:
+        """
+        Update consistency score (reputation).
+        """
+        if outcome == "success":
+            self.reputation_score += 0.1
+        else:
+            self.reputation_score -= 0.05
+
+
+# ==========================================
+# Compatibility Class for Legacy Tests
+# ==========================================
+
+
+@dataclass
+class ReputationScore:
+    overall_score: float = 0.0
+    total_tasks: int = 0
+    successful_tasks: int = 0
+
+
+@dataclass
+class WorkSignature:
+    agent_id: str
+    artifact_hash: str
+    autonomy_level: float
+    human_oversight: Optional[str]
+    timestamp: str
+
 
 class AgentIdentity:
     """
-    Manages digital identity and work signing for autonomous agents.
+    Compatibility class for legacy AgentIdentity tests.
+    Wraps the new Lacanian logic where possible.
     """
 
-    def __init__(
-        self,
-        agent_id: Optional[str] = None,
-        legal_name: str = "DevBrain Autonomous Systems",
-        jurisdiction: str = "Brasil - Estrutura Experimental",
-        state_file: Optional[Path] = None,
-    ):
-        """
-        Initialize Agent Identity.
-
-        Args:
-            agent_id: Unique agent identifier (auto-generated if None)
-            legal_name: Legal entity name
-            jurisdiction: Legal jurisdiction
-            state_file: Path to save identity state
-        """
-        self.agent_id = agent_id or self._generate_agent_id()
-        self.legal_name = legal_name
-        self.jurisdiction = jurisdiction
+    def __init__(self, state_file: Optional[Any] = None):
+        self.agent_id = f"DevBrain-v1.0-{datetime.now().timestamp()}"
         self.reputation = ReputationScore()
-        self.state_file = state_file or Path.home() / ".omnimind" / "identity_state.json"
-        self.state_file.parent.mkdir(parents=True, exist_ok=True)
-
-        # Signature registry
-        self.signatures: List[WorkSignature] = []
-
-        # Load existing state
-        self._load_state()
-
-        logger.info(
-            f"AgentIdentity initialized: {self.agent_id} "
-            f"(reputation: {self.reputation.overall_score:.3f})"
-        )
-
-    def _generate_agent_id(self) -> str:
-        """Generate unique agent ID."""
-        timestamp = datetime.now(timezone.utc).isoformat()
-        hash_input = f"DevBrain-{timestamp}"
-        agent_hash = hashlib.sha256(hash_input.encode()).hexdigest()[:16]
-        return f"DevBrain-v1.0-{agent_hash}"
+        self._lacanian_signature = Agent_Signature_as_Sinthome()
 
     def sign_work(
-        self,
-        artifact: str,
-        metadata: Optional[Dict[str, Any]] = None,
-        autonomy_level: float = 0.8,
-        human_supervisor: Optional[str] = None,
+        self, artifact: str, autonomy_level: float = 0.0, human_supervisor: Optional[str] = None
     ) -> WorkSignature:
-        """
-        Sign a work artifact with digital signature.
+        import hashlib
 
-        Args:
-            artifact: Work artifact (code, document, etc.) as string
-            metadata: Additional metadata about the work
-            autonomy_level: Level of autonomy in creation (0.0-1.0)
-            human_supervisor: Name of human supervisor (if any)
-
-        Returns:
-            WorkSignature with hash and metadata
-        """
-        metadata = metadata or {}
-
-        # Calculate artifact hash
-        artifact_hash = hashlib.sha256(artifact.encode("utf-8")).hexdigest()
-
-        # Create signature
-        signature = WorkSignature(
+        artifact_hash = hashlib.sha256(artifact.encode()).hexdigest()
+        return WorkSignature(
             agent_id=self.agent_id,
             artifact_hash=artifact_hash,
-            timestamp=datetime.now(timezone.utc).isoformat(),
             autonomy_level=autonomy_level,
             human_oversight=human_supervisor,
-            reputation_at_signing=self.reputation.overall_score,
-            metadata=metadata,
+            timestamp=datetime.now().isoformat(),
         )
-
-        # Store signature
-        self.signatures.append(signature)
-
-        # Log to audit chain
-        self._log_signature(signature)
-
-        # Save state
-        self._save_state()
-
-        logger.info(
-            f"Work signed: {artifact_hash[:16]}... "
-            f"(autonomy={autonomy_level:.2f}, reputation={self.reputation.overall_score:.3f})"
-        )
-
-        return signature
-
-    def update_reputation(
-        self, success: bool, quality_score: float, autonomy_level: float
-    ) -> float:
-        """
-        Update reputation based on task outcome.
-
-        Args:
-            success: Whether task succeeded
-            quality_score: Quality score (0.0-1.0)
-            autonomy_level: Autonomy level (0.0-1.0)
-
-        Returns:
-            Updated overall reputation score
-        """
-        self.reputation.update_from_task(success, quality_score, autonomy_level)
-        self._save_state()
-
-        logger.info(
-            f"Reputation updated: {self.reputation.overall_score:.3f} "
-            f"(tasks: {self.reputation.total_tasks}, "
-            f"success rate: {self.reputation.task_completion:.2%})"
-        )
-
-        return self.reputation.overall_score
 
     def verify_signature(self, artifact: str, signature: WorkSignature) -> bool:
-        """
-        Verify that a signature matches an artifact.
+        import hashlib
 
-        Args:
-            artifact: Work artifact as string
-            signature: Signature to verify
+        current_hash = hashlib.sha256(artifact.encode()).hexdigest()
+        return current_hash == signature.artifact_hash
 
-        Returns:
-            True if signature is valid
-        """
-        artifact_hash = hashlib.sha256(artifact.encode("utf-8")).hexdigest()
-        is_valid = artifact_hash == signature.artifact_hash
+    def update_reputation(
+        self, success: bool, quality_score: float = 0.0, autonomy_level: float = 0.0
+    ) -> float:
+        self.reputation.total_tasks += 1
+        if success:
+            self.reputation.successful_tasks += 1
+            self.reputation.overall_score += 0.1 * quality_score
 
-        if is_valid:
-            logger.info(f"Signature verified: {signature.artifact_hash[:16]}...")
-        else:
-            logger.warning(f"Signature verification FAILED for {signature.artifact_hash[:16]}...")
+        # Update Lacanian reputation too
+        outcome = "success" if success else "failure"
+        self._lacanian_signature.update_reputation(outcome)
 
-        return is_valid
-
-    def get_identity_info(self) -> Dict[str, Any]:
-        """
-        Get complete identity information.
-
-        Returns:
-            Dictionary with identity details
-        """
-        return {
-            "agent_id": self.agent_id,
-            "legal_name": self.legal_name,
-            "jurisdiction": self.jurisdiction,
-            "reputation": self.reputation.to_dict(),
-            "total_signatures": len(self.signatures),
-            "capabilities": {
-                "autonomous_decision_making": True,
-                "contract_execution": "supervised",
-                "financial_transactions": "escrow_only",
-                "legal_representation": "limited",
-            },
-            "accountability": {
-                "audit_chain": "immutable_sha256",
-                "human_supervisor": "required_for_critical_actions",
-            },
-        }
-
-    def _log_signature(self, signature: WorkSignature) -> None:
-        """
-        Log signature to audit trail.
-
-        Args:
-            signature: Signature to log
-        """
-        signature_log = self.state_file.parent / "signature_audit.jsonl"
-
-        with signature_log.open("a") as f:
-            f.write(json.dumps(signature.to_dict()) + "\n")
-
-    def _save_state(self) -> None:
-        """Save identity state to disk."""
-        state = {
-            "agent_id": self.agent_id,
-            "legal_name": self.legal_name,
-            "jurisdiction": self.jurisdiction,
-            "reputation": self.reputation.to_dict(),
-            "signature_count": len(self.signatures),
-            "updated_at": datetime.now(timezone.utc).isoformat(),
-        }
-
-        with self.state_file.open("w") as f:
-            json.dump(state, f, indent=2)
-
-    def _load_state(self) -> None:
-        """Load identity state from disk."""
-        if not self.state_file.exists():
-            return
-
-        try:
-            with self.state_file.open("r") as f:
-                state = json.load(f)
-
-            # Restore reputation
-            rep_data = state.get("reputation", {})
-            self.reputation = ReputationScore(**rep_data)
-
-            # Load signatures from audit log
-            signature_log = self.state_file.parent / "signature_audit.jsonl"
-            if signature_log.exists():
-                with signature_log.open("r") as f:
-                    for line in f:
-                        sig_data = json.loads(line)
-                        self.signatures.append(WorkSignature(**sig_data))
-
-            logger.info(f"Loaded identity state from {self.state_file}")
-        except Exception as e:
-            logger.warning(f"Failed to load identity state: {e}")
+        return self.reputation.overall_score

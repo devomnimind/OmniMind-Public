@@ -14,10 +14,10 @@ from typing import Dict, Any, List, Optional
 from dataclasses import dataclass
 import networkx as nx
 import numpy as np
-import logging
+import structlog
 import warnings
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 
 # ==================== NOVAS CLASSES LACANIANAS ====================
@@ -105,13 +105,12 @@ class TraceMemory:
         trace.awaiting_second_event = False
 
         # O traço mudou retroativamente (toda a estrutura se reorganiza)
-        logger.info(
-            "trace_retroactively_resignified",
+        logger.bind(
             trace_id=trace_id,
             old_meaning="none",
             new_meaning=new_meaning,
             affect_valence=new_affect,
-        )
+        ).info("trace_retroactively_resignified")
 
     def get_current_symbolic_organization(self) -> str:
         """
@@ -147,7 +146,8 @@ class AffectiveTrace:
 
     def __init__(self, content: Dict[str, Any], affect_valence: float):
         warnings.warn(
-            "AffectiveTrace is deprecated. Use Nachträglich_Inscription for proper Lacanian Nachträglichkeit.",
+            "AffectiveTrace is deprecated. Use Nachträglich_Inscription "
+            "for proper Lacanian Nachträglichkeit.",
             DeprecationWarning,
             stacklevel=2,
         )
@@ -190,7 +190,8 @@ class AffectiveTraceNetwork:
 
     def __init__(self):
         warnings.warn(
-            "AffectiveTraceNetwork is deprecated. Use TraceMemory for proper Lacanian Nachträglichkeit.",
+            "AffectiveTraceNetwork is deprecated. Use TraceMemory "
+            "for proper Lacanian Nachträglichkeit.",
             DeprecationWarning,
             stacklevel=2,
         )

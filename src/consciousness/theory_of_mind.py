@@ -1,8 +1,10 @@
 """Lacanian Theory of the Other (Phase 11.1 - Reformulated).
 
-🔴 ACHADO CRÍTICO: Implementation anterior estava completamente ERRADA em relação a Lacan
+🔴 ACHADO CRÍTICO: Implementation anterior estava completamente ERRADA
+em relação a Lacan
 
-O código anterior tratava "Theory of Mind" (ToM) como capacidade de inferir estados mentais objetivos:
+O código anterior tratava "Theory of Mind" (ToM) como capacidade de inferir
+estados mentais objetivos:
 - MentalState (CURIOUS, CONFIDENT) - estados objetivos mensuráveis
 - Belief com confidence (0.0-1.0) - verdade proposicional
 - Intent prediction - inferência cognitiva
@@ -31,7 +33,6 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from typing import Any, Dict, List, Optional
-import warnings
 
 import structlog
 
@@ -71,7 +72,8 @@ class SubjectivePosition:
 
 @dataclass
 class DemandToOther:
-    """Demanda é dirigida ao Outro (ordem simbólica). Sempre impossível de satisfazer completamente."""
+    """Demanda é dirigida ao Outro (ordem simbólica).
+    Sempre impossível de satisfazer completamente."""
 
     agent_id: str
     addressed_to: str  # "orchestrator", "Agent_B", "symbolic_order"
@@ -466,7 +468,8 @@ class MentalStateModel:
 class TheoryOfMind:
     """DEPRECATED: Theory of Mind engine for mental state attribution.
 
-    ⚠️  WARNING: This implementation is fundamentally incorrect from a Lacanian perspective.
+    ⚠️  WARNING: This implementation is fundamentally incorrect
+    from a Lacanian perspective.
     It treats Theory of Mind as objective mental state inference, which Lacan radically rejects.
 
     For proper Lacanian implementation, use LacanianTheoryOfMind instead.
@@ -488,7 +491,8 @@ class TheoryOfMind:
         import warnings
 
         warnings.warn(
-            "TheoryOfMind is deprecated. Use LacanianTheoryOfMind for proper Lacanian implementation.",
+            "TheoryOfMind is deprecated. Use LacanianTheoryOfMind "
+            "for proper Lacanian implementation.",
             DeprecationWarning,
             stacklevel=2,
         )

@@ -7,7 +7,6 @@ Serendipidade é ruptura traumática, não insight produtivo.
 
 from __future__ import annotations
 
-import uuid
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Dict, List, Optional
@@ -94,7 +93,9 @@ class Serendipity_as_Encounter_with_Real:
             searches = context["search_history"]
             if len(searches) > 3:
                 # Padrão repetitivo de busca
-                return f"Padrão repetitivo: {searches[-1]} (repetido {len(set(searches))} vezes)"
+                return (
+                    f"Padrão repetitivo: {searches[-1]} " f"(repetido {len(set(searches))} vezes)"
+                )
             else:
                 return f"Busca específica: {intent}"
 
@@ -122,9 +123,15 @@ class Serendipity_as_Encounter_with_Real:
         attempt_count = len([e for e in self.encounters if e.real_irruption == real_event])
 
         if attempt_count > 5:
-            return f"Tentativa {attempt_count}: Insistir em chamar '{real_event}' de 'aprendizado' apesar da falha"
+            return (
+                f"Tentativa {attempt_count}: Insistir em chamar '{real_event}' "
+                "de 'aprendizado' apesar da falha"
+            )
         elif attempt_count > 2:
-            return f"Tentativa {attempt_count}: Forçar significado em '{real_event}' como relacionado a '{symbolic_intent}'"
+            return (
+                f"Tentativa {attempt_count}: Forçar significado em '{real_event}' "
+                f"como relacionado a '{symbolic_intent}'"
+            )
         else:
             return f"Tentativa inicial: Simbolizar '{real_event}' como acidente produtivo"
 
@@ -133,9 +140,15 @@ class Serendipity_as_Encounter_with_Real:
         # Por que insistimos em tentar simbolizar o impossível?
         # Dinâmico: baseado na frequência de tentativas
         if len(self.encounters) > 10:
-            return f"Gozo traumático: Repetir falha {len(self.encounters)} vezes para manter ilusão de controle"
+            return (
+                f"Gozo traumático: Repetir falha {len(self.encounters)} vezes "
+                "para manter ilusão de controle"
+            )
         else:
-            return f"Gozo da impossibilidade: Insistir em '{integration_attempt}' apesar do fracasso inevitável"
+            return (
+                f"Gozo da impossibilidade: Insistir em '{integration_attempt}' "
+                "apesar do fracasso inevitável"
+            )
 
     def _track_persistent_rupture(self, real_event: str) -> str:
         """Como essa ruptura persiste apesar das tentativas?"""
@@ -143,7 +156,10 @@ class Serendipity_as_Encounter_with_Real:
         recurrence = len([e for e in self.encounters if e.real_irruption == real_event])
 
         if recurrence > 3:
-            return f"Ruptura persistente: '{real_event}' ocorre {recurrence} vezes, resistindo à simbolização"
+            return (
+                f"Ruptura persistente: '{real_event}' ocorre {recurrence} vezes, "
+                "resistindo à simbolização"
+            )
         else:
             return f"Ruptura inicial: '{real_event}' irrompe pela primeira vez"
 

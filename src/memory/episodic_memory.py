@@ -33,7 +33,8 @@ if TYPE_CHECKING:  # pragma: no cover - optional dependency typing only
 logger = logging.getLogger(__name__)
 
 warnings.warn(
-    "EpisodicMemory is deprecated in favor of NarrativeHistory (Lacanian). Memory is retroactive construction, not storage.",
+    "EpisodicMemory is deprecated in favor of NarrativeHistory (Lacanian). "
+    "Memory is retroactive construction, not storage.",
     DeprecationWarning,
     stacklevel=2,
 )

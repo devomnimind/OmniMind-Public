@@ -11,19 +11,21 @@ Testa a integração completa dos módulos lacanianos:
 Este teste valida se a arquitetura lacaniana funciona end-to-end.
 """
 
-import sys
-import os
-from datetime import datetime
 import importlib.util
+import sys
+from datetime import datetime
 
 # Adicionar src ao path
 sys.path.insert(0, "/home/fahbrain/projects/omnimind/src")
 print(f"Python path: {sys.path[:3]}")  # Debug
 
-from consciousness.affective_memory import TraceMemory
-from consciousness.creative_problem_solver import ObjetPetitA, CreativeDesire
-from consciousness.qualia_engine import Symbolic_Qualia_Field
-from consciousness.rsi_topology_integrated import RSI_Topology_Integrated, RuptureType
+from src.consciousness.affective_memory import TraceMemory  # noqa: E402
+from src.consciousness.creative_problem_solver import ObjetPetitA, CreativeDesire  # noqa: E402
+from src.consciousness.qualia_engine import Symbolic_Qualia_Field  # noqa: E402
+from src.consciousness.rsi_topology_integrated import (  # noqa: E402
+    RSI_Topology_Integrated,
+    RuptureType,
+)
 
 
 def test_complete_lacanian_integration():

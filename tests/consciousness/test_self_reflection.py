@@ -1,6 +1,5 @@
 """Tests for Lacanian Self-Reflection (Phase 11.4)."""
 
-import pytest
 from datetime import datetime
 from src.consciousness.self_reflection import (
     SelfReflection_as_Fundamental_Error,

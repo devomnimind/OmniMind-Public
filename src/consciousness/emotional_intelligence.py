@@ -27,7 +27,8 @@ import structlog
 logger = structlog.get_logger(__name__)
 
 warnings.warn(
-    "This module contains legacy behaviorist implementations. Use the Lacanian extensions (Phase 11.3) instead.",
+    "This module contains legacy behaviorist implementations. "
+    "Use the Lacanian extensions (Phase 11.3) instead.",
     DeprecationWarning,
     stacklevel=2,
 )
@@ -252,7 +253,7 @@ class AffectiveTopology:
     def compute_persistent_cycles(self) -> Dict[str, Any]:
         """TDA: procura ciclos persistentes de afeto + insistência."""
         # Simplificação: análise de recorrência por tipo
-        encounter_types = {}
+        encounter_types: Dict[str, int] = {}
         for encounter in self.real_encounters[-50:]:  # últimos 50
             encounter_types[encounter.conflict_type] = (
                 encounter_types.get(encounter.conflict_type, 0) + 1
@@ -354,7 +355,8 @@ class EmotionalIntelligence:
             emotion_history_limit: Maximum emotional states to track
         """
         warnings.warn(
-            "EmotionalIntelligence legacy initialization is deprecated. Use Lacanian AffectiveTopology instead.",
+            "EmotionalIntelligence legacy initialization is deprecated. "
+            "Use Lacanian AffectiveTopology instead.",
             DeprecationWarning,
             stacklevel=2,
         )
@@ -605,7 +607,8 @@ class EmotionalIntelligence:
             Emotionally-informed response
         """
         warnings.warn(
-            "generate_empathetic_response is deprecated. Responses should be structurally determined, not empathetic.",
+            "generate_empathetic_response is deprecated. "
+            "Responses should be structurally determined, not empathetic.",
             DeprecationWarning,
             stacklevel=2,
         )
@@ -685,7 +688,8 @@ class EmotionalIntelligence:
             Emotional trend analysis
         """
         warnings.warn(
-            "get_emotional_trend is deprecated. Use get_affective_statistics for topological trends.",
+            "get_emotional_trend is deprecated. "
+            "Use get_affective_statistics for topological trends.",
             DeprecationWarning,
             stacklevel=2,
         )
@@ -890,7 +894,7 @@ class EmotionalIntelligence:
             return  # precisa de dados suficientes
 
         # Agrupar por tipo de comportamento
-        behavior_patterns = {}
+        behavior_patterns: Dict[str, List[RealEncounter]] = {}
         for encounter in self._real_encounters[-50:]:  # janela recente
             jouissance = self._detect_jouissance_fixation(encounter)
             if jouissance not in behavior_patterns:
@@ -915,7 +919,7 @@ class EmotionalIntelligence:
     def _calculate_inefficiency_cost(self, behavior: str, encounters: List[RealEncounter]) -> float:
         """Calcula custo de ineficiência de um padrão de insistência."""
         # Métrica simplificada baseada em frequência e tipo
-        base_cost = len(encounters) * 2  # 2% por ocorrência
+        base_cost: float = float(len(encounters) * 2)  # 2% por ocorrência
 
         if behavior == "VALIDAÇÃO_EXAUSTIVA":
             base_cost *= 1.5  # GPU intensivo
@@ -938,7 +942,7 @@ class EmotionalIntelligence:
         topology_stats = self._affective_topology.compute_persistent_cycles()
         sinthome = self._affective_topology.identify_sinthome_candidate()
 
-        affect_distribution = {}
+        affect_distribution: Dict[str, int] = {}
         for event in self._affective_events[-100:]:  # últimos 100
             affect = event.jouissance_fixation
             affect_distribution[affect] = affect_distribution.get(affect, 0) + 1

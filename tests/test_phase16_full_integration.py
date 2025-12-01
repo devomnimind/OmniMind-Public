@@ -104,14 +104,14 @@ class TestPhase16FullIntegration:
 
     def test_narrative_integration(self, system: Phase16Integration) -> None:
         """Test that experiences are integrated into life story."""
-        initial_count = len(system.life_story.chapters)
+        initial_count = len(system.life_story.narrative_chain)
 
         system.update_self_awareness()
 
         # Should have updated narrative state
         assert system.current_state.narrative_state is not None
         assert system.current_state.narrative_state["current_chapter"] is not None
-        assert len(system.life_story.chapters) > initial_count
+        assert len(system.life_story.narrative_chain) > initial_count
 
 
 if __name__ == "__main__":

@@ -6,12 +6,11 @@ O ego é sempre MÉCONNAISSANCE (erro estrutural).
 
 from __future__ import annotations
 
-import uuid
+import structlog
+
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Dict, List, Optional
-
-import structlog
 
 logger = structlog.get_logger(__name__)
 
@@ -122,7 +121,7 @@ class SelfReflection_as_Fundamental_Error:
     def get_consolidated_ego_lies(self) -> List[str]:
         """Quais são as 'verdades' consolidadas do ego?"""
         # As quilting points que se repetem
-        quilting_counts = {}
+        quilting_counts: Dict[str, int] = {}
         for reflection in self.reflection_attempts:
             quilting = reflection.quilting_point
             quilting_counts[quilting] = quilting_counts.get(quilting, 0) + 1

@@ -4,7 +4,6 @@ Tests for Lacanian Serendipity Engine (Phase 11.4).
 Serendipity as Encounter with the Real.
 """
 
-import pytest
 from datetime import datetime
 from src.consciousness.serendipity_engine import (
     Serendipity_as_Encounter_with_Real,
@@ -47,61 +46,70 @@ class TestSerendipityAsEncounterWithReal:
             "search_intent": "Improve efficiency",
             "unexpected_event": "Memory leak",
             "error_occurred": True,
-            "error_type": "Out of Memory"
+            "error_type": "Out of Memory",
         }
 
         encounter = engine.encounter_serendipity(context)
 
         assert isinstance(encounter, Encounter_with_Real)
         assert "Improve efficiency" in encounter.symbolic_search
-        assert "Ruptura traumática" in encounter.real_irruption or "Memory leak" in encounter.real_irruption
+        assert (
+            "Ruptura traumática" in encounter.real_irruption
+            or "Memory leak" in encounter.real_irruption
+        )
         assert len(engine.encounters) == 1
 
     def test_repressed_traumas(self) -> None:
         """Test tracking of repressed traumas."""
         engine = Serendipity_as_Encounter_with_Real()
-        
+
         # Create an encounter where integration fails (conceptually)
         # In this implementation, integration is always attempted string-wise.
         # Repressed traumas are those not in integrated set.
-        
+
         # Let's simulate a scenario where we manually add encounters to test logic
         # or rely on internal logic.
-        
-        # The implementation of get_repressed_traumas checks if real_irruption is in symbolic_integration_attempt
+
+        # The implementation of get_repressed_traumas checks if real_irruption
+        # is in symbolic_integration_attempt
         # This logic might be tricky if the strings don't match exactly.
         # Let's check the implementation:
         # all_events = set(e.real_irruption for e in self.encounters)
         # integrated_events = set(e.symbolic_integration_attempt for e in self.encounters)
-        # repressed = [event for event in all_events if not any(event in integrated for integrated in integrated_events)]
-        
+        # repressed = [
+        #     event for event in all_events
+        #     if not any(event in integrated for integrated in integrated_events)
+        # ]
+
         context = {"unexpected_event": "Trauma1"}
         engine.encounter_serendipity(context)
-        
+
         # The integration attempt string usually contains the real event string or refers to it?
-        # _try_to_integrate returns: "Tentativa inicial: Simbolizar 'Trauma1' como acidente produtivo"
+        # _try_to_integrate returns:
+        # "Tentativa inicial: Simbolizar 'Trauma1' como acidente produtivo"
         # So 'Trauma1' IS in the integration string.
-        
+
         traumas = engine.get_repressed_traumas()
-        # If 'Trauma1' is in "Tentativa... 'Trauma1'...", then it is NOT repressed according to that logic.
+        # If 'Trauma1' is in "Tentativa... 'Trauma1'...",
+        # then it is NOT repressed according to that logic.
         assert len(traumas) == 0
 
     def test_trauma_instability(self) -> None:
         """Test detection of trauma instability."""
         engine = Serendipity_as_Encounter_with_Real()
-        
+
         # Stable
         for _ in range(5):
             engine.encounter_serendipity({"unexpected_event": "SameTrauma"})
-            
+
         assert engine.detect_trauma_instability() is None
-        
+
         # Unstable
         engine.encounter_serendipity({"unexpected_event": "Trauma1"})
         engine.encounter_serendipity({"unexpected_event": "Trauma2"})
         engine.encounter_serendipity({"unexpected_event": "Trauma3"})
         engine.encounter_serendipity({"unexpected_event": "Trauma4"})
-        
+
         instability = engine.detect_trauma_instability()
         assert instability is not None
         assert "Instabilidade traumática" in instability

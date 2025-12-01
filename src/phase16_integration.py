@@ -34,7 +34,7 @@ from src.autopoietic.mortality_simulator import MortalitySimulator
 # Phase 16.3: Creative Emergence
 from src.consciousness.novelty_generator import NoveltyGenerator
 from src.consciousness.qualia_engine import QualiaEngine
-from src.consciousness.serendipity_engine import SerendipityEngine
+from src.consciousness.serendipity_engine import Serendipity_as_Encounter_with_Real
 from src.embodied_cognition.motor_output import MotorController
 from src.embodied_cognition.proprioception import ProprioceptionModule
 from src.embodied_cognition.sensory_integration import SensoryIntegration
@@ -43,7 +43,7 @@ from src.narrative_consciousness.dialogue_engine import DialogueEngine
 from src.narrative_consciousness.identity_construction import IdentityConstruction
 
 # Phase 16.2: Narrative Consciousness
-from src.narrative_consciousness.life_story_model import LifeStory
+from src.narrative_consciousness.life_story_model import Life_Story_as_Retroactive_Resignification
 from src.neurosymbolic.hybrid_reasoner import NeurosymbolicReasoner
 from src.neurosymbolic.neural_component import NeuralComponent
 from src.neurosymbolic.reconciliation import Reconciliator
@@ -116,13 +116,13 @@ class Phase16Integration:
         self.proprioception = ProprioceptionModule()
 
         # Phase 16.2: Narrative Consciousness
-        self.life_story = LifeStory()
+        self.life_story = Life_Story_as_Retroactive_Resignification()
         self.dialogue = DialogueEngine()
         self.identity = IdentityConstruction()
 
         # Phase 16.3: Creative Emergence
         self.novelty = NoveltyGenerator()
-        self.serendipity = SerendipityEngine()
+        self.serendipity = Serendipity_as_Encounter_with_Real()
         self.art = ArtGenerator()
 
         # Phase 16.4: Existential Depth
@@ -292,9 +292,11 @@ class Phase16Integration:
         mortality_state = self.mortality.get_existential_state()
 
         # Serendipity check
-        serendipity = self.serendipity.facilitate_happy_accident(
-            original_goal=f"Expected outcome for goal {self.current_state.unified_goal}",
-            actual_result=decision_text,
+        serendipity = self.serendipity.encounter_serendipity(
+            context={
+                "original_goal": f"Expected outcome for goal {self.current_state.unified_goal}",
+                "actual_result": decision_text,
+            }
         )
         # Update cognitive state
         self.current_state.emotional_state = {
@@ -383,15 +385,8 @@ class Phase16Integration:
             description = str(description)
         description = description or ""
 
-        chapter = self.life_story.integrate_experience(
-            description=description,
-            significance="Integrated cognitive cycle experience",
-            emotions=(
-                [self.current_state.emotional_state.get("emotion", "neutral")]
-                if self.current_state.emotional_state
-                else []
-            ),
-        )
+        # Lacanian update: add event to narrative chain
+        self.life_story.add_event(description)
 
         # Reflect on identity
         identity_snapshot = self.identity.reflect_on_identity()
@@ -404,7 +399,7 @@ class Phase16Integration:
             "emotional_status": awareness.emotional_status,
         }
         self.current_state.narrative_state = {
-            "current_chapter": chapter.title if chapter else "Unknown",
+            "current_chapter": "Ongoing Narrative",  # Lacanian narrative is continuous
             "identity_summary": identity_snapshot.narrative_summary,
         }
 
