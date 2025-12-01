@@ -67,6 +67,65 @@ _security_metrics: Dict[str, Any] = {
 }
 
 
+# ============================================================================
+# ROOT ENDPOINTS
+# ============================================================================
+
+
+@router.get("/", tags=["security"])
+async def get_security_overview() -> Dict[str, Any]:
+    """Get security overview and status."""
+    total = len(_security_events)
+    critical = sum(1 for e in _security_events if e["severity"] == SecurityEventSeverity.CRITICAL)
+    high = sum(1 for e in _security_events if e["severity"] == SecurityEventSeverity.HIGH)
+
+    return {
+        "status": "critical" if critical > 0 else ("high" if high > 0 else "normal"),
+        "total_events": total,
+        "critical_events": critical,
+        "high_priority_events": high,
+        "events_unresolved": sum(1 for e in _security_events if not e["resolved"]),
+        "timestamp": time.time(),
+        "links": {
+            "events": "/api/security/events",
+            "stats": "/api/security/events/stats",
+            "analytics": "/api/security/analytics",
+            "dashboard": "/api/security/monitoring/dashboard",
+        },
+    }
+
+
+@router.get("/status", tags=["security"])
+async def get_security_status() -> Dict[str, Any]:
+    """Get current security status."""
+    total = len(_security_events)
+    critical = sum(1 for e in _security_events if e["severity"] == SecurityEventSeverity.CRITICAL)
+    high = sum(1 for e in _security_events if e["severity"] == SecurityEventSeverity.HIGH)
+    medium = sum(1 for e in _security_events if e["severity"] == SecurityEventSeverity.MEDIUM)
+
+    if critical > 0:
+        status = "CRITICAL"
+    elif high > 0:
+        status = "HIGH"
+    elif medium > 0:
+        status = "MEDIUM"
+    else:
+        status = "NORMAL"
+
+    return {
+        "status": status,
+        "events_total": total,
+        "events_by_severity": {
+            "critical": critical,
+            "high": high,
+            "medium": medium,
+            "low": sum(1 for e in _security_events if e["severity"] == SecurityEventSeverity.LOW),
+        },
+        "events_unresolved": sum(1 for e in _security_events if not e["resolved"]),
+        "timestamp": time.time(),
+    }
+
+
 @router.get("/events", response_model=List[SecurityEvent])
 async def list_security_events(
     event_type: Optional[SecurityEventType] = Query(None, description="Filter by event type"),

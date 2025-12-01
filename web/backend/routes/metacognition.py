@@ -45,6 +45,81 @@ def _get_orchestrator() -> Any:
     return _orchestrator_instance
 
 
+# ============================================================================
+# ROOT ENDPOINTS
+# ============================================================================
+
+
+@router.get("/", tags=["metacognition"])
+async def get_metacognition_overview() -> Dict[str, Any]:
+    """Get metacognition system overview."""
+    try:
+        orch = _get_orchestrator()
+        health = orch.check_metacognition_health() if orch.metacognition_agent else {}
+
+        return {
+            "status": health.get("status", "unknown"),
+            "agent_available": orch.metacognition_agent is not None,
+            "timestamp": __import__("time").time(),
+            "links": {
+                "health": "/api/metacognition/health",
+                "analyze": "/api/metacognition/analyze",
+                "insights": "/api/metacognition/insights",
+                "suggestions": "/api/metacognition/suggestions",
+                "stats": "/api/metacognition/stats",
+                "goals": "/api/metacognition/goals/generate",
+                "homeostasis": "/api/metacognition/homeostasis/status",
+            },
+        }
+    except HTTPException as e:
+        raise e
+    except Exception as exc:
+        logger.exception(f"Overview failed: {exc}")
+        raise HTTPException(status_code=500, detail=str(exc))
+
+
+@router.get("/insights", tags=["metacognition"])
+async def get_metacognition_insights() -> Dict[str, Any]:
+    """Get key insights from metacognition analysis.
+
+    Returns high-level insights about system performance, decision patterns,
+    and recommendations.
+    """
+    try:
+        orch = _get_orchestrator()
+
+        if not orch.metacognition_agent:
+            raise HTTPException(status_code=503, detail="MetacognitionAgent not initialized")
+
+        # Get both suggestions and stats for comprehensive insights
+        suggestions = orch.get_suggestions() if hasattr(orch, "get_suggestions") else []
+        stats = orch.get_metacognition_stats() if hasattr(orch, "get_metacognition_stats") else {}
+        health = (
+            orch.check_metacognition_health() if hasattr(orch, "check_metacognition_health") else {}
+        )
+
+        return {
+            "health": health,
+            "suggestions": suggestions if isinstance(suggestions, list) else [suggestions],
+            "stats": stats,
+            "timestamp": __import__("time").time(),
+            "summary": {
+                "total_suggestions": len(suggestions) if isinstance(suggestions, list) else 1,
+                "system_status": health.get("status", "unknown"),
+                "performance_trend": (
+                    stats.get("performance_trend", "stable")
+                    if isinstance(stats, dict)
+                    else "unknown"
+                ),
+            },
+        }
+    except HTTPException as e:
+        raise e
+    except Exception as exc:
+        logger.exception(f"Insights retrieval failed: {exc}")
+        raise HTTPException(status_code=500, detail=str(exc))
+
+
 @router.post("/analyze")
 async def run_analysis(request: AnalysisRequest) -> Dict[str, Any]:
     """Run comprehensive metacognition analysis.

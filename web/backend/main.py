@@ -142,6 +142,7 @@ async def lifespan(app_instance: FastAPI):
     # Import monitoring systems
     try:
         from web.backend.monitoring import agent_monitor as am, metrics_collector as mc, performance_tracker as pt  # type: ignore
+
         agent_monitor = am
         metrics_collector = mc
         performance_tracker = pt
@@ -154,6 +155,7 @@ async def lifespan(app_instance: FastAPI):
     sinthome_broadcaster: Any = None
     try:
         from web.backend.sinthome_broadcaster import sinthome_broadcaster as sb
+
         sinthome_broadcaster = sb
     except ImportError:
         logger.warning("Sinthome Broadcaster not available")
@@ -162,6 +164,7 @@ async def lifespan(app_instance: FastAPI):
     daemon_monitor_loop: Any = None
     try:
         from src.services.daemon_monitor import daemon_monitor_loop as dml
+
         daemon_monitor_loop = dml
     except ImportError:
         logger.warning("Daemon Monitor not available")
@@ -170,6 +173,7 @@ async def lifespan(app_instance: FastAPI):
     realtime_analytics_broadcaster: Any = None
     try:
         from web.backend.realtime_analytics_broadcaster import realtime_analytics_broadcaster as rab
+
         realtime_analytics_broadcaster = rab
     except ImportError:
         logger.warning("Realtime Analytics Broadcaster not available")
@@ -1069,6 +1073,64 @@ async def websocket_endpoint(websocket: WebSocket):
 def websocket_stats(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
     """Get WebSocket connection statistics."""
     return ws_manager.get_stats()
+
+
+# ============================================================================
+# PUBLIC ENDPOINTS (NO AUTH)
+# ============================================================================
+
+
+@app.get("/api/metrics")
+def api_metrics() -> Dict[str, Any]:
+    """Get comprehensive system metrics (public endpoint)."""
+    backend_metrics = metrics_collector.summary()
+
+    # Collect real-time system metrics
+    system_metrics = _collect_system_metrics()
+
+    # Try to get enhanced metrics
+    try:
+        from web.backend.monitoring import metrics_collector as new_collector
+        from web.backend.monitoring import performance_tracker
+
+        return {
+            "backend": backend_metrics,
+            "api": new_collector.get_all_metrics(),
+            "performance": performance_tracker.get_performance_summary(),
+            "system": system_metrics,
+            "errors": new_collector.get_error_summary(),
+            "timestamp": time.time(),
+        }
+    except ImportError:
+        return {
+            "backend": backend_metrics,
+            "system": system_metrics,
+            "timestamp": time.time(),
+        }
+
+
+@app.get("/ws")
+def websocket_info() -> Dict[str, Any]:
+    """Get WebSocket connection information and available channels."""
+    return {
+        "status": "available",
+        "endpoint": "/ws",
+        "protocol": "websocket",
+        "description": "Real-time updates via WebSocket",
+        "available_channels": [
+            "tasks",
+            "agents",
+            "security",
+            "metacognition",
+            "health",
+            "system",
+        ],
+        "subscription_example": {"type": "subscribe", "channels": ["tasks", "agents"]},
+        "ping_example": {"type": "ping"},
+        "authentication": "Token-based",
+        "stats_endpoint": "/ws/stats",
+        "timestamp": time.time(),
+    }
 
 
 # ============================================================================
