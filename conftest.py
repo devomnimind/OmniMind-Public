@@ -9,9 +9,12 @@ os.environ["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "0"
 # Add src to path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
+# Import custom timeout retry plugin
+from pytest_timeout_retry import TimeoutRetryPlugin
+
 
 def pytest_configure(config):
-    """Register custom markers."""
+    """Register custom markers and plugin."""
     config.addinivalue_line(
         "markers", "computational: mark test as computationally intensive (GPU/Quantum/Consciousness)"
     )
@@ -24,6 +27,9 @@ def pytest_configure(config):
     config.addinivalue_line(
         "markers", "consciousness: mark test as consciousness computation"
     )
+    
+    # Register timeout retry plugin
+    config.pluginmanager.register(TimeoutRetryPlugin(), "timeout_retry")
 
 
 def pytest_collection_modifyitems(config, items):
