@@ -291,8 +291,10 @@ async def lifespan(app_instance: FastAPI):
         # Stop Daemon Monitor
         if hasattr(app_instance.state, "daemon_monitor_task"):
             app_instance.state.daemon_monitor_task.cancel()
-            with suppress(asyncio.CancelledError):
-                await app_instance.state.daemon_monitor_task
+            try:
+                await asyncio.wait_for(app_instance.state.daemon_monitor_task, timeout=5.0)
+            except (asyncio.CancelledError, asyncio.TimeoutError):
+                pass
 
         # Stop Realtime Analytics Broadcaster
         if realtime_analytics_broadcaster:

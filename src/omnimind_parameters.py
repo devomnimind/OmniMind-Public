@@ -145,10 +145,20 @@ class ParameterManager:
                 with open(self.config_file, "r") as f:
                     data = json.load(f)
 
+                # Validar que data é um dicionário
+                if not isinstance(data, dict):
+                    logger.warning(f"Configuração inválida: esperava dict, got {type(data).__name__}")
+                    logger.info("Usando parâmetros padrão")
+                    return
+
                 # Atualizar parâmetros se existirem no arquivo
                 for category, params in data.items():
                     if hasattr(self, category):
                         category_obj = getattr(self, category)
+                        # Validar que params é um dicionário
+                        if not isinstance(params, dict):
+                            logger.warning(f"Parâmetros de {category} inválidos: {type(params).__name__}")
+                            continue
                         for key, value in params.items():
                             if hasattr(category_obj, key):
                                 setattr(category_obj, key, value)
