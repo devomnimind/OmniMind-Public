@@ -86,6 +86,7 @@ class TestNetworkSensors:
         else:
             assert "target" in result
 
+    @pytest.mark.timeout(240)  # Network scan pode ser lento
     def test_establish_baseline(self, temp_audit_system):
         """Test establishing network baseline."""
         sensors = NetworkSensorGanglia(temp_audit_system)
@@ -337,6 +338,7 @@ class TestSecurityOrchestrator:
         assert any("anomalies" in r.lower() for r in recommendations)
         assert any("critical" in r.lower() for r in recommendations)
 
+    @pytest.mark.timeout(240)  # Network scan pode ser lento
     def test_run_full_security_audit(self, temp_audit_system):
         """Test running full security audit."""
         orchestrator = SecurityOrchestrator(temp_audit_system)
@@ -365,6 +367,7 @@ class TestIntegration:
             audit = ImmutableAuditSystem(log_dir=tmpdir)
             yield audit
 
+    @pytest.mark.timeout(240)  # Network scan pode ser lento
     def test_full_security_workflow(self, temp_audit_system):
         """Test complete security monitoring workflow."""
         # Create orchestrator

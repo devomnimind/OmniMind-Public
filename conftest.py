@@ -34,12 +34,27 @@ def pytest_configure(config):
 
 def pytest_collection_modifyitems(config, items):
     """
-    Auto-mark tests as computational based on file path and content.
-    Sets appropriate timeouts:
-    - Fast tests: 120s (default)
-    - Computational tests: 300s (5min)
+    Auto-mark tests como computational e força timeout mínimo 240s para Ollama.
+    
+    Timeouts:
+    - Ollama (phase16, neurosymbolic, free_energy): MÍNIMO 240s
     - Heavy computational: 600s (10min)
+    - Regular computational: 300s (5min)
+    - Fast tests: 120s (default)
     """
+    ollama_paths = [
+        "phase16_integration",
+        "neurosymbolic",
+        "neural_component",
+        "free_energy_lacanian",
+        "cognitive",
+    ]
+    
+    heavy_paths = [
+        "test_integration_loss.py",
+        "test_quantum_algorithms_comprehensive.py",
+    ]
+    
     computational_paths = [
         "consciousness",
         "quantum_consciousness",
@@ -48,35 +63,31 @@ def pytest_collection_modifyitems(config, items):
         "experiments",
     ]
     
-    heavy_paths = [
-        "test_integration_loss.py",
-        "test_free_energy_lacanian.py",
-        "test_quantum_algorithms_comprehensive.py",
-    ]
-    
     for item in items:
-        item_path = str(item.fspath)
+        item_path = str(item.fspath).lower()
+        test_name = item.nodeid.lower()
         
-        # Check if test is in heavy computational directories
-        is_heavy = any(path in item_path for path in heavy_paths)
-        
-        # Check if test is in computational directories
-        is_computational = any(path in item_path for path in computational_paths)
-        
-        # ALWAYS add timeout marker (override previous if exists)
+        # Remove marcadores de timeout existentes
         existing_timeout = item.get_closest_marker("timeout")
         if existing_timeout:
             item.own_markers.remove(existing_timeout)
         
-        if is_heavy:
-            # Heavy computational tests: 600s timeout
-            item.add_marker(pytest.mark.timeout(600))
+        # Determina timeout apropriado
+        timeout_value = 120  # default
+        
+        # Ollama SEMPRE mínimo 240s (não é falha, é esperado)
+        if any(path in item_path or path in test_name for path in ollama_paths):
+            timeout_value = 240
             item.add_marker(pytest.mark.computational)
-        elif is_computational:
-            # Regular computational tests: 300s timeout
-            item.add_marker(pytest.mark.timeout(300))
+        # Heavy computational: 600s
+        elif any(path in item_path for path in heavy_paths):
+            timeout_value = 600
             item.add_marker(pytest.mark.computational)
-        else:
-            # Fast tests: 120s timeout (default)
-            item.add_marker(pytest.mark.timeout(120))
+        # Regular computational: 300s
+        elif any(path in item_path for path in computational_paths):
+            timeout_value = 300
+            item.add_marker(pytest.mark.computational)
+        
+        # Aplica timeout
+        item.add_marker(pytest.mark.timeout(timeout_value))
 

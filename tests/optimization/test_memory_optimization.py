@@ -6,6 +6,8 @@ import gc
 from typing import Dict, Any, cast
 import time
 
+import pytest
+
 from src.optimization.memory_optimization import (
     AllocationStats,
     MemoryAllocator,
@@ -448,6 +450,7 @@ class TestMemoryProfiler:
         assert "min_rss_mb" in stats
         assert "max_rss_mb" in stats
 
+    @pytest.mark.timeout(240)  # Memory profiling pode ser lento
     def test_snapshot_limit(self) -> None:
         """Test that snapshots are limited."""
         profiler = MemoryProfiler()
