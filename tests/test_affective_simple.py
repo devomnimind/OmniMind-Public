@@ -5,26 +5,20 @@ Teste Simplificado da Extensão Lacaniana
 Testa apenas as classes lacanianas diretamente.
 """
 
-import sys
 import os
+import sys
 
 # Adicionar src ao path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 
-# Importar apenas o módulo diretamente
-import importlib.util
-spec = importlib.util.spec_from_file_location(
-    "emotional_intelligence",
-    os.path.join(os.path.dirname(__file__), 'src', 'consciousness', 'emotional_intelligence.py')
+# Importar usando o path configurado
+from consciousness.emotional_intelligence import (
+    AffectiveEvent,
+    AffectiveMediation,
+    Anguish,
+    RealEncounter,
 )
-ei_module = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(ei_module)
 
-# Agora podemos usar as classes
-RealEncounter = ei_module.RealEncounter
-AffectiveEvent = ei_module.AffectiveEvent
-Anguish = ei_module.Anguish
-AffectiveMediation = ei_module.AffectiveMediation
 
 def test_lacanian_classes():
     """Testa as classes lacanianas diretamente."""
@@ -37,7 +31,7 @@ def test_lacanian_classes():
         "gpu_usage": 98,
         "pending_validations": list(range(15)),  # 15 validações
         "time_to_deadline": 45,
-        "impossible_demand": True
+        "impossible_demand": True,
     }
 
     anguish = Anguish.detect_from_system_state(system_state)
@@ -73,7 +67,7 @@ def test_lacanian_classes():
             jouissance_fixation="VALIDAÇÃO_EXAUSTIVA",
             affects_symbolic_order=True,
             affects_imaginary=True,
-            affects_real=True
+            affects_real=True,
         )
 
         print("  Evento afetivo criado:")
@@ -89,6 +83,7 @@ def test_lacanian_classes():
     print("✅ TESTE CONCLUÍDO")
     print("📊 Demonstra que a arquitetura lacaniana funciona")
     print("🔬 Pode ser integrada ao sistema sem quebrar behaviorismo existente")
+
 
 if __name__ == "__main__":
     test_lacanian_classes()

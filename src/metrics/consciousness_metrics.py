@@ -1,5 +1,5 @@
-from typing import Any, Dict
 import logging
+from typing import Any, Dict
 
 logger = logging.getLogger(__name__)
 
@@ -50,6 +50,12 @@ class ConsciousnessCorrelates:
                 },
             }
 
+    def _get_attr(self, name: str, default: Any = None) -> Any:
+        """Helper to get attribute from object or key from dict."""
+        if isinstance(self.system, dict):
+            return self.system.get(name, default)
+        return getattr(self.system, name, default)
+
     def _calculate_ici(self) -> Dict[str, Any]:
         """
         Integrated Coherence Index (ICI).
@@ -58,7 +64,7 @@ class ConsciousnessCorrelates:
         """
         try:
             # 1. Temporal Coherence (Simulated: Stability of coherence over time)
-            history = getattr(self.system, "coherence_history", [])
+            history = self._get_attr("coherence_history", [])
             temporal_coh = 0.0
             if len(history) > 1:
                 changes = sum(abs(history[i] - history[i - 1]) for i in range(1, len(history)))
@@ -66,7 +72,7 @@ class ConsciousnessCorrelates:
                 temporal_coh = max(0.0, 1.0 - (avg_change / 50.0))
 
             # 2. Marker Integration (Simulated: Ratio of active/healthy nodes)
-            nodes = getattr(self.system, "nodes", {})
+            nodes = self._get_attr("nodes", {})
             total_nodes = len(nodes)
             healthy_nodes = sum(
                 1
@@ -111,14 +117,14 @@ class ConsciousnessCorrelates:
         """
         try:
             # Micro Entropy (Average of node loads/disorder)
-            nodes = getattr(self.system, "nodes", {})
+            nodes = self._get_attr("nodes", {})
             micro_entropies = [1.0 - (n.get("integrity", 100) / 100.0) for n in nodes.values()]
             avg_micro_entropy = (
                 sum(micro_entropies) / len(micro_entropies) if micro_entropies else 0
             )
 
             # Macro Entropy (System level)
-            macro_entropy = getattr(self.system, "entropy", 0) / 100.0
+            macro_entropy = self._get_attr("entropy", 0) / 100.0
 
             # Resonance: 1.0 - difference
             resonance = 1.0 - abs(avg_micro_entropy - macro_entropy)

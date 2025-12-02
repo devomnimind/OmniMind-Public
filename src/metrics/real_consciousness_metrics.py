@@ -90,6 +90,9 @@ class RealConsciousnessMetricsCollector:
 
     async def initialize(self) -> None:
         """Inicializa o coletor com IntegrationLoop real."""
+        if self.integration_loop is not None:
+            return
+
         try:
             self.integration_loop = IntegrationLoop(enable_logging=False)
             logger.info("IntegrationLoop initialized for real metrics collection")

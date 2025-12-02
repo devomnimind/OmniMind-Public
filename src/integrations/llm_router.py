@@ -22,13 +22,13 @@ Data: 2025-11-27
 """
 
 import asyncio
-import time
 import logging
+import os
+import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Any
 from enum import Enum
-import os
+from typing import Any, Dict, List, Optional
 
 # Carrega variáveis de ambiente do .env
 from dotenv import load_dotenv
@@ -206,8 +206,8 @@ class HuggingFaceLocalProvider(LLMProviderInterface):
         """Verifica disponibilidade do HuggingFace Local."""
         try:
             # Verifica se transformers está disponível
-            import transformers
             import torch
+            import transformers
 
             # Verifica se há GPU disponível
             if torch.cuda.is_available():
@@ -227,8 +227,8 @@ class HuggingFaceLocalProvider(LLMProviderInterface):
         """Carrega modelo se necessário."""
         if self._current_model != model_name or self._pipeline is None:
             try:
-                from transformers import pipeline
                 import torch
+                from transformers import pipeline
 
                 logger.info(f"Carregando modelo HuggingFace Local: {model_name}")
 
@@ -799,7 +799,7 @@ class LLMRouter:
                 ),
                 LLMConfig(
                     provider=LLMProvider.OPENROUTER,
-                    model_name="x-ai/grok-4.1-fast:free",  # Novo modelo gratuito e rápido
+                    model_name="z-ai/glm-4.5-air:free",  # GLM-4.5 Air - modelo gratuito rápido
                     temperature=0.7,
                     max_tokens=1024,
                     timeout=60,  # Timeout otimizado para API cloud
@@ -807,18 +807,26 @@ class LLMRouter:
                 ),
                 LLMConfig(
                     provider=LLMProvider.OPENROUTER,
-                    model_name="google/gemini-2.0-flash-exp:free",  # Novo modelo experimental gratuito
+                    model_name="openai/gpt-oss-20b:free",  # GPT-OSS-20B - modelo gratuito alternativo
                     temperature=0.7,
                     max_tokens=1024,
                     timeout=60,
                     tier=LLMModelTier.FAST,
                 ),
                 LLMConfig(
-                    provider=LLMProvider.HUGGINGFACE_LOCAL,
-                    model_name="gpt2",  # Modelo leve para inferência local
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="qwen/qwen3-4b:free",  # Qwen3-4B - modelo leve gratuito
                     temperature=0.7,
                     max_tokens=1024,
                     timeout=60,
+                    tier=LLMModelTier.FAST,
+                ),
+                LLMConfig(
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="nousresearch/hermes-3-llama-3.1-405b:free",  # Hermes-3 - modelo poderoso gratuito
+                    temperature=0.7,
+                    max_tokens=1024,
+                    timeout=90,
                     tier=LLMModelTier.FAST,
                 ),
             ],
@@ -833,49 +841,41 @@ class LLMRouter:
                 ),
                 LLMConfig(
                     provider=LLMProvider.OPENROUTER,
-                    model_name="x-ai/grok-4.1-fast:free",  # Prioridade para modelos gratuitos
-                    temperature=0.7,
-                    max_tokens=2048,
-                    timeout=90,
-                    tier=LLMModelTier.BALANCED,
-                ),
-                LLMConfig(
-                    provider=LLMProvider.OPENROUTER,
-                    model_name="google/gemini-2.0-flash-exp:free",
-                    temperature=0.7,
-                    max_tokens=2048,
-                    timeout=90,
-                    tier=LLMModelTier.BALANCED,
-                ),
-                LLMConfig(
-                    provider=LLMProvider.HUGGINGFACE_LOCAL,
-                    model_name="gpt2",  # Modelo leve compatível com GTX 1650
-                    temperature=0.7,
-                    max_tokens=2048,
-                    timeout=90,
-                    tier=LLMModelTier.BALANCED,
-                ),
-                LLMConfig(
-                    provider=LLMProvider.OPENROUTER,
-                    model_name="anthropic/claude-3-haiku",
+                    model_name="nousresearch/hermes-3-llama-3.1-405b:free",  # Hermes-3 - modelo poderoso gratuito
                     temperature=0.7,
                     max_tokens=2048,
                     timeout=120,
+                    tier=LLMModelTier.BALANCED,
+                ),
+                LLMConfig(
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="z-ai/glm-4.5-air:free",  # GLM-4.5 Air - modelo gratuito balanceado
+                    temperature=0.7,
+                    max_tokens=2048,
+                    timeout=90,
+                    tier=LLMModelTier.BALANCED,
+                ),
+                LLMConfig(
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="openai/gpt-oss-20b:free",  # GPT-OSS-20B - modelo gratuito alternativo
+                    temperature=0.7,
+                    max_tokens=2048,
+                    timeout=90,
+                    tier=LLMModelTier.BALANCED,
+                ),
+                LLMConfig(
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="qwen/qwen3-4b:free",  # Qwen3-4B - fallback rápido
+                    temperature=0.7,
+                    max_tokens=2048,
+                    timeout=60,
                     tier=LLMModelTier.BALANCED,
                 ),
             ],
             LLMModelTier.HIGH_QUALITY: [
                 LLMConfig(
-                    provider=LLMProvider.OLLAMA,
-                    model_name="qwen2:72b-instruct",  # Modelo grande se disponível
-                    temperature=0.7,
-                    max_tokens=4096,
-                    timeout=300,  # Timeout estendido para modelos grandes
-                    tier=LLMModelTier.HIGH_QUALITY,
-                ),
-                LLMConfig(
                     provider=LLMProvider.OPENROUTER,
-                    model_name="anthropic/claude-3-5-sonnet",
+                    model_name="nousresearch/hermes-3-llama-3.1-405b:free",  # Hermes-3 405B - modelo poderoso gratuito
                     temperature=0.7,
                     max_tokens=4096,
                     timeout=180,
@@ -883,7 +883,7 @@ class LLMRouter:
                 ),
                 LLMConfig(
                     provider=LLMProvider.OPENROUTER,
-                    model_name="openai/gpt-4o",
+                    model_name="z-ai/glm-4.5-air:free",  # GLM-4.5 Air - modelo gratuito de qualidade
                     temperature=0.7,
                     max_tokens=4096,
                     timeout=180,
@@ -891,18 +891,26 @@ class LLMRouter:
                 ),
                 LLMConfig(
                     provider=LLMProvider.OPENROUTER,
-                    model_name="google/gemini-pro-1.5",
+                    model_name="openai/gpt-oss-20b:free",  # GPT-OSS-20B - modelo gratuito alternativo
                     temperature=0.7,
                     max_tokens=4096,
                     timeout=180,
                     tier=LLMModelTier.HIGH_QUALITY,
                 ),
                 LLMConfig(
-                    provider=LLMProvider.HUGGINGFACE_LOCAL,
-                    model_name="gpt2",  # Modelo leve compatível com GTX 1650
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="qwen/qwen3-4b:free",  # Qwen3-4B - fallback gratuito
                     temperature=0.7,
                     max_tokens=4096,
                     timeout=120,
+                    tier=LLMModelTier.HIGH_QUALITY,
+                ),
+                LLMConfig(
+                    provider=LLMProvider.OLLAMA,
+                    model_name="qwen2:72b-instruct",  # Modelo grande se disponível localmente
+                    temperature=0.7,
+                    max_tokens=4096,
+                    timeout=300,  # Timeout estendido para modelos grandes
                     tier=LLMModelTier.HIGH_QUALITY,
                 ),
             ],

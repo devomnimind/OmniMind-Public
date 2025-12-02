@@ -27,7 +27,7 @@ pytest_plugins = ["asyncio"]
 
 
 @pytest.fixture
-async def integration_loop():
+def integration_loop():
     """Fixture para criar IntegrationLoop."""
     try:
         from src.consciousness.integration_loop import IntegrationLoop
@@ -39,7 +39,7 @@ async def integration_loop():
 
 
 @pytest.fixture
-async def integration_trainer(integration_loop):
+def integration_trainer(integration_loop):
     """Fixture para criar IntegrationTrainer."""
     try:
         from src.consciousness.integration_loss import IntegrationTrainer

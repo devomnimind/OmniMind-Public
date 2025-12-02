@@ -9,22 +9,21 @@ Expected results:
 - Enables interpretability analysis of module roles
 """
 
-import pytest
-import numpy as np
-import torch
 from dataclasses import dataclass
-from typing import Dict, Any
-
-from src.consciousness.integration_loop import IntegrationLoop
-
-
+from typing import Any, Dict
 from unittest.mock import patch
 
+import numpy as np
+import pytest
+import torch
+
+from src.consciousness.integration_loop import IntegrationLoop
 
 # Verificação de GPU para testes pesados
 if not torch.cuda.is_available():
     pytest.skip(
-        "GPU não disponível - testes de consciência requerem GPU para cálculos pesados de Φ"
+        "GPU não disponível - testes de consciência requerem GPU para cálculos pesados de Φ",
+        allow_module_level=True,
     )
 
 

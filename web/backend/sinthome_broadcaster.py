@@ -7,14 +7,15 @@ philosophical framework, and broadcasts them via WebSocket to the frontend.
 
 import asyncio
 import logging
+import os
 import random
 import time
-from typing import Dict, Any
+from typing import Any, Dict
+
 import psutil
-import os
 
 from src.metrics.sinthome_metrics import SinthomeMetrics
-from web.backend.websocket_manager import ws_manager, MessageType
+from web.backend.websocket_manager import MessageType, ws_manager
 
 logger = logging.getLogger(__name__)
 
@@ -61,7 +62,7 @@ class SinthomeBroadcaster:
         """Main loop for collecting and broadcasting metrics."""
         while self.running:
             try:
-                metrics_data = self._collect_metrics()
+                metrics_data = await self._collect_metrics()
 
                 await ws_manager.broadcast(
                     message_type=MessageType.METRICS, data=metrics_data, channel="sinthome"
@@ -73,7 +74,7 @@ class SinthomeBroadcaster:
                 logger.error(f"Error in Sinthome broadcast loop: {e}")
                 await asyncio.sleep(5.0)  # Backoff on error
 
-    def _collect_metrics(self) -> Dict[str, Any]:
+    async def _collect_metrics(self) -> Dict[str, Any]:
         """
         Collects REAL system data and calculates Sinthome metrics.
         """
@@ -163,27 +164,43 @@ class SinthomeBroadcaster:
         if len(self.integrity_history) > 50:
             self.integrity_history.pop(0)
 
-        # Create Mock System for Correlates
-        class MockSystem:
-            def __init__(self, history, entropy, integrity):
-                self.coherence_history = history
-                self.entropy = entropy
-                # Simulate nodes based on integrity
-                status = "ACTIVE" if integrity > 0.6 else "UNSTABLE"
-                self.nodes = {
-                    "REAL": {"status": status, "integrity": integrity * 100},
-                    "SYMBOLIC": {"status": status, "integrity": integrity * 95},
-                    "IMAGINARY": {"status": status, "integrity": integrity * 90},
-                }
+        # Use Real Metrics Collector
+        try:
+            from src.metrics.real_consciousness_metrics import collect_real_metrics
 
-        mock_system = MockSystem(
-            self.integrity_history, current_entropy, sinthome_state.overall_integrity
-        )
+            real_metrics = await collect_real_metrics()
 
-        # Calculate Correlates
-        from src.metrics.consciousness_metrics import ConsciousnessCorrelates
+            # Map real metrics to frontend format
+            correlates = {
+                "ICI": real_metrics.get("ici", 0.0),
+                "PRS": real_metrics.get("prs", 0.0),
+                "details": {
+                    "ici_components": real_metrics.get("ici_components", {}),
+                    "prs_components": real_metrics.get("prs_components", {}),
+                },
+                "interpretation": real_metrics.get("interpretation", {}),
+            }
+        except Exception as e:
+            logger.error(f"Failed to collect real consciousness metrics: {e}")
 
-        correlates = ConsciousnessCorrelates(mock_system).calculate_all()
+            # Fallback to mock if real collection fails
+            class MockSystem:
+                def __init__(self, history, entropy, integrity):
+                    self.coherence_history = history
+                    self.entropy = entropy
+                    status = "ACTIVE" if integrity > 0.6 else "UNSTABLE"
+                    self.nodes = {
+                        "REAL": {"status": status, "integrity": integrity * 100},
+                        "SYMBOLIC": {"status": status, "integrity": integrity * 95},
+                        "IMAGINARY": {"status": status, "integrity": integrity * 90},
+                    }
+
+            mock_system = MockSystem(
+                self.integrity_history, current_entropy, sinthome_state.overall_integrity
+            )
+            from src.metrics.consciousness_metrics import ConsciousnessCorrelates
+
+            correlates = ConsciousnessCorrelates(mock_system).calculate_all()
 
         # 4. Format for Frontend
         return {

@@ -246,7 +246,7 @@ class ConvergenceInvestigator:
             num_attractors=int(attractors.get("num_attractors", 0)),
             primary_attractor_basin=float(attractors.get("basin_size", 0.0)),
             attractor_stability=float(attractors.get("stability", 0.0)),
-            attractor_is_singular=bool(attractors.get("is_singular", False)),
+            attractor_is_singular=bool(attractors.get("attractor_is_singular", False)),
         )
 
         if self.verbose:
@@ -347,10 +347,15 @@ class ConvergenceInvestigator:
             np_sum(np_abs(correlation_matrix)) / (len(embeddings_array) ** 2)
         )  # noqa: F821
 
+        # Handle NaNs safely
+        dmn_integration = float(dmn_integration) if np.isfinite(dmn_integration) else 0.0  # type: ignore
+        dmn_self_referential = float(dmn_self_referential) if np.isfinite(dmn_self_referential) else 0.0  # type: ignore
+        dmn_connectivity = float(dmn_connectivity) if np.isfinite(dmn_connectivity) else 0.0  # type: ignore
+
         return {
-            "integration": np_clip(float(dmn_integration), 0.0, 1.0),  # noqa: F821
-            "self_referential": np_clip(float(dmn_self_referential), 0.0, 1.0),  # noqa: F821
-            "connectivity": np_clip(float(dmn_connectivity), 0.0, 1.0),  # noqa: F821
+            "integration": np_clip(dmn_integration, 0.0, 1.0),  # noqa: F821
+            "self_referential": np_clip(dmn_self_referential, 0.0, 1.0),  # noqa: F821
+            "connectivity": np_clip(dmn_connectivity, 0.0, 1.0),  # noqa: F821
         }
 
     def _correlate_dmn_iit(self, dmn_activity: Dict[str, float], iit_metrics: ITMMetrics) -> float:
@@ -388,7 +393,7 @@ class ConvergenceInvestigator:
                 "num_attractors": 0,
                 "basin_size": 0.0,
                 "stability": 0.0,
-                "is_singular": False,
+                "attractor_is_singular": False,
             }
 
         # Get first module's history
@@ -400,7 +405,7 @@ class ConvergenceInvestigator:
                 "num_attractors": 0,
                 "basin_size": 0.0,
                 "stability": 0.0,
-                "is_singular": False,
+                "attractor_is_singular": False,
             }
 
         trajectory_array = np.array(  # type: ignore[attr-defined]
@@ -457,14 +462,14 @@ class ConvergenceInvestigator:
                 "num_attractors": 0,
                 "basin_size": 0.0,
                 "stability": 0.0,
-                "is_singular": False,
+                "attractor_is_singular": False,
             }
 
         return {
             "num_attractors": int(num_attractors),
             "basin_size": float(basin_size),
             "stability": float(stability),
-            "is_singular": bool(is_singular),
+            "attractor_is_singular": bool(is_singular),
         }
 
     def _detect_q_singularity(self) -> QSingularityMetrics:

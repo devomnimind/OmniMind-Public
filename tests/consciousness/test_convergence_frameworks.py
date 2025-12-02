@@ -19,7 +19,7 @@ import pytest
 
 
 @pytest.fixture
-async def integration_trainer():
+def integration_trainer():
     """Fixture para criar IntegrationTrainer."""
     try:
         from src.consciousness.integration_loop import IntegrationLoop
@@ -33,7 +33,7 @@ async def integration_trainer():
 
 
 @pytest.fixture
-async def convergence_investigator(integration_trainer):
+def convergence_investigator(integration_trainer):
     """Fixture para criar ConvergenceInvestigator."""
     try:
         from src.consciousness.convergence_investigator import ConvergenceInvestigator
@@ -103,7 +103,7 @@ async def test_cyber_metrics_computed(convergence_investigator) -> None:
     attractors = convergence_investigator._identify_dynamical_attractors()
 
     assert "num_attractors" in attractors
-    assert "attractor_stability" in attractors
+    assert "stability" in attractors
     assert "attractor_is_singular" in attractors
 
     print(

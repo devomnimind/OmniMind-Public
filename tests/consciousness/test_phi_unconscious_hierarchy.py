@@ -324,7 +324,9 @@ async def test_integration_workflow_complete(integration_trainer) -> None:
 
     # Phase 3: Verify hierarchy
     print("\n[3/5] Verifying hierarchical structure...")
-    assert phi_ratio["phi_conscious"] + phi_ratio["phi_preconscious"] > 0 or True, "Should have integration"
+    assert (
+        phi_ratio["phi_conscious"] + phi_ratio["phi_preconscious"] > 0 or True
+    ), "Should have integration"
     print("  \u2713 Hierarchy valid (\u03a6_u >= \u03a6_c or both near 0)")
 
     # Phase 4: Detect Sinthome

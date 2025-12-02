@@ -5,6 +5,7 @@
 # IBM Qiskit (Primary)
 qiskit>=2.2.0
 qiskit-aer>=0.17.0
+qiskit-ibm-runtime>=0.24.0
 qiskit-algorithms>=0.3.0
 qiskit-optimization>=0.6.0
 

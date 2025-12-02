@@ -7,15 +7,16 @@ Test runner inteligente com GPU dinâmico
 - CPU para testes padrão
 """
 import os
-import sys
-import subprocess
 import re
+import subprocess
+import sys
 from datetime import datetime
 
 # Verificar GPU disponível
 CUDA_AVAILABLE = False
 try:
     import torch
+
     CUDA_AVAILABLE = torch.cuda.is_available()
     device_name = torch.cuda.get_device_name(0) if CUDA_AVAILABLE else "CPU"
 except Exception:
@@ -114,9 +115,7 @@ def run_tests(test_path: str = "tests/", device: str = "cpu"):
             if in_failure:
                 failure_lines.append(line)
                 log_and_print(line)
-                if line.startswith("=") and (
-                    "passed" in line.lower() or "failed" in line.lower()
-                ):
+                if line.startswith("=") and ("passed" in line.lower() or "failed" in line.lower()):
                     in_failure = False
             elif "passed" in line.lower() and "%" in line:
                 log_and_print(line)
@@ -140,7 +139,7 @@ def run_tests(test_path: str = "tests/", device: str = "cpu"):
 
 def main():
     global LOG_FILE
-    
+
     # Criar log file
     os.makedirs("data/test_reports", exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -159,19 +158,15 @@ def main():
     # Rodar testes
     exit_code, failed_test, _ = run_tests("tests/", default_device)
 
-    if exit_code != 0 and failed_test:
+    if exit_code != 0:
         log_and_print("\n" + "=" * 80)
-        log_and_print("REPRODUCING FAILURE...")
+        log_and_print("TESTS FAILED")
         log_and_print("=" * 80)
-        log_and_print(f"Failed test: {failed_test}")
-        log_and_print("")
+        if failed_test:
+            log_and_print(f"Failed test: {failed_test}")
 
-        # Tentar novamente
-        exit_code2, _, _ = run_tests("tests/", "cpu")
-        if exit_code2 != 0:
-            log_and_print("\nFailure reproduced consistently")
-        else:
-            log_and_print("\nFailure NOT reproduced on retry")
+        # Não reiniciar em CPU automaticamente
+        log_and_print("Skipping CPU retry as requested.")
 
     log_and_print("\n" + "=" * 80)
     log_and_print(f"Full log saved: {LOG_FILE}")

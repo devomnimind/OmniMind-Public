@@ -2,23 +2,23 @@
 Comprehensive tests for IntegrationLoop Phase 2.
 """
 
-import pytest
 import numpy as np
+import pytest
 import torch
 
-from src.consciousness.shared_workspace import SharedWorkspace
 from src.consciousness.integration_loop import (
-    ModuleInterfaceSpec,
+    IntegrationLoop,
     LoopCycleResult,
     ModuleExecutor,
-    IntegrationLoop,
+    ModuleInterfaceSpec,
 )
-
+from src.consciousness.shared_workspace import SharedWorkspace
 
 # Verificação de GPU para testes pesados
 if not torch.cuda.is_available():
     pytest.skip(
-        "GPU não disponível - testes de consciência requerem GPU para cálculos pesados de Φ"
+        "GPU não disponível - testes de consciência requerem GPU para cálculos pesados de Φ",
+        allow_module_level=True,
     )
 
 
