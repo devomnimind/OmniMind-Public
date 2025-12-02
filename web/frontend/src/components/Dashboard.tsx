@@ -5,6 +5,7 @@ import { apiService } from '../services/api';
 import { useWebSocket } from '../hooks/useWebSocket';
 import type { DaemonStatus as DaemonStatusType } from '../types/daemon';
 import { DaemonStatus } from './DaemonStatus';
+import { TribunalStatus } from './TribunalStatus';
 import { SystemMetrics } from './SystemMetrics';
 import { TaskList } from './TaskList';
 import { TaskForm } from './TaskForm';
@@ -198,6 +199,9 @@ export function Dashboard() {
           <div className="lg:col-span-2 space-y-6">
             <div className="animate-slide-up" style={{ animationDelay: '0.6s' }}>
               <DaemonStatus />
+            </div>
+            <div className="animate-slide-up" style={{ animationDelay: '0.62s' }}>
+              <TribunalStatus />
             </div>
             <div className="animate-slide-up" style={{ animationDelay: '0.65s' }}>
               <OmniMindSinthome />

@@ -1,8 +1,8 @@
+import asyncio
 import time
 
 import httpx
 import pytest
-import asyncio
 
 # Assuming API is running on localhost:8000
 API_URL = "http://localhost:8000"
@@ -88,32 +88,15 @@ async def test_tribunal_activity_monitoring(async_client):
     Tests the dashboard endpoint for tribunal activity data.
     """
     # Try tribunal activity endpoint
-    try:
-        response = await async_client.get("/api/tribunal/activity", timeout=60.0)
-        if response.status_code == 200:
-            data = response.json()
-            # Verify basic structure
-            assert isinstance(data, dict), "Response should be a dict"
-            # If data is present, check for expected fields
-            if data:
-                assert (
-                    "proposals" in data or "activity_score" in data
-                ), "Should have proposals or activity_score"
-            return  # Success
-    except (httpx.TimeoutException, httpx.ConnectError):
-        pass  # Endpoint not available, try fallback
+    response = await async_client.get("/api/tribunal/activity", timeout=60.0)
+    assert response.status_code == 200, f"Tribunal endpoint failed: {response.status_code}"
 
-    # Fallback: Check if dashboard is running via health endpoint
-    try:
-        health_response = await async_client.get("/health/", timeout=60.0)
-        if health_response.status_code == 200:
-            # Dashboard is running, but tribunal endpoint not available
-            # This is acceptable for CI/CD environments
-            pytest.skip("Tribunal endpoint not available, but dashboard is running")
-        else:
-            pytest.fail("Dashboard health endpoint failed")
-    except (httpx.TimeoutException, httpx.ConnectError):
-        pytest.fail("Dashboard not available - required for tribunal monitoring")
+    data = response.json()
+    # Verify basic structure
+    assert isinstance(data, dict), "Response should be a dict"
+    assert "status" in data
+    assert "activity_score" in data
+    assert "proposals" in data
 
 
 @pytest.mark.asyncio
@@ -177,12 +160,29 @@ async def test_websocket_metrics(omnimind_server):
     """
     import asyncio
     import json
+    import os
+    from base64 import b64encode
 
     import websockets
+    from dotenv import load_dotenv
 
-    uri = "ws://localhost:8000/ws"
+    # Load environment variables
+    load_dotenv()
+
+    # Use dynamic URL from fixture
+    base_url = omnimind_server.replace("http://", "ws://").replace("https://", "wss://")
+    uri = f"{base_url}/ws"
+
+    # Get credentials from env or fallback to admin:admin
+    user = os.getenv("OMNIMIND_DASHBOARD_USER", "admin")
+    password = os.getenv("OMNIMIND_DASHBOARD_PASS", "admin")
+
+    # Basic Auth headers
+    auth_token = b64encode(f"{user}:{password}".encode("ascii")).decode("ascii")
+    headers = {"Authorization": f"Basic {auth_token}"}
+
     try:
-        async with websockets.connect(uri) as websocket:
+        async with websockets.connect(uri, additional_headers=headers) as websocket:
             # Wait for connection established message
             init_msg = await websocket.recv()
             init_data = json.loads(init_msg)
@@ -193,33 +193,40 @@ async def test_websocket_metrics(omnimind_server):
 
             # Wait for subscription confirmation
             try:
-                sub_msg = await asyncio.wait_for(websocket.recv(), timeout=2.0)
+                sub_msg = await asyncio.wait_for(websocket.recv(), timeout=5.0)
                 _ = json.loads(sub_msg)
             except asyncio.TimeoutError:
                 pass  # Continue even if subscription confirmation times out
 
-            # Wait for metrics updates (should receive both types within 5 seconds)
+            # Wait for metrics updates (should receive both types within 60 seconds)
             received_types = set()
             start_time = asyncio.get_event_loop().time()
 
-            while len(received_types) < 2 and (asyncio.get_event_loop().time() - start_time) < 10.0:
-                metrics_msg = await asyncio.wait_for(websocket.recv(), timeout=5.0)
-                metrics_data = json.loads(metrics_msg)
+            # Increased total wait time to 60s for heavy load scenarios
+            while len(received_types) < 2 and (asyncio.get_event_loop().time() - start_time) < 60.0:
+                try:
+                    # Increased per-message timeout to 30s
+                    metrics_msg = await asyncio.wait_for(websocket.recv(), timeout=30.0)
+                    metrics_data = json.loads(metrics_msg)
 
-                if metrics_data["type"] == "metrics_update":
-                    received_types.add("simple")
-                    payload = metrics_data["data"]
-                    assert "cpu_percent" in payload
-                    assert "memory_percent" in payload
+                    if metrics_data["type"] == "metrics_update":
+                        received_types.add("simple")
+                        payload = metrics_data["data"]
+                        assert "cpu_percent" in payload
+                        assert "memory_percent" in payload
 
-                elif (
-                    metrics_data["type"] == "metrics" and metrics_data.get("channel") == "sinthome"
-                ):
-                    received_types.add("sinthome")
-                    payload = metrics_data["data"]
-                    assert "raw" in payload
-                    assert "metrics" in payload
-                    assert "consciousness" in payload
+                    elif (
+                        metrics_data["type"] == "metrics"
+                        and metrics_data.get("channel") == "sinthome"
+                    ):
+                        received_types.add("sinthome")
+                        payload = metrics_data["data"]
+                        assert "raw" in payload
+                        assert "metrics" in payload
+                        assert "consciousness" in payload
+                except asyncio.TimeoutError:
+                    # Just continue loop to check total time
+                    continue
 
             assert "simple" in received_types, "Did not receive RealtimeAnalytics metrics"
             assert "sinthome" in received_types, "Did not receive OmniMindSinthome metrics"

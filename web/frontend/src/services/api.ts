@@ -209,6 +209,10 @@ class ApiService {
   async getWebSocketInfo(): Promise<any> {
     return this.get('/ws');
   }
+
+  async getTribunalActivity(): Promise<any> {
+    return this.get('/api/tribunal/activity');
+  }
 }
 
 export const apiService = new ApiService();

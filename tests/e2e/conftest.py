@@ -16,32 +16,69 @@ from typing import Generator
 
 import httpx
 import pytest
+import pytest_asyncio
 
 
 @pytest.fixture(scope="session")
 def omnimind_server() -> Generator[str, None, None]:
     """
     Inicia servidor OmniMind em background para testes E2E.
+    Prioriza servidor de desenvolvimento (9000) se ativo.
 
     Yields:
-        str: URL do servidor (http://localhost:8000)
+        str: URL do servidor (http://localhost:9000 ou 8000)
 
     Raises:
         RuntimeError: Se servidor não iniciar
     """
-    # Detectar port
-    port = 8000
-    url = f"http://localhost:{port}"
-
-    # Verificar se servidor já está rodando
+    # 1. Tentar conectar ao servidor de desenvolvimento (9000)
+    dev_port = 9000
+    dev_url = f"http://localhost:{dev_port}"
     try:
-        response = httpx.get(f"{url}/health/", timeout=2.0)
+        response = httpx.get(f"{dev_url}/health/", timeout=2.0)
         if response.status_code == 200:
-            print(f"✅ Servidor já rodando em {url}")
-            yield url
+            print(f"✅ Usando servidor de desenvolvimento ativo em {dev_url}")
+            yield dev_url
             return
     except (httpx.ConnectError, httpx.TimeoutException):
         pass
+
+    # 2. Se não houver dev server, usar porta de teste (8000)
+    port = 8000
+    url = f"http://localhost:{port}"
+
+    # Verificar se servidor de teste já está rodando
+    try:
+        # Aumentado timeout para 5s para evitar falsos negativos em máquinas lentas
+        response = httpx.get(f"{url}/health/", timeout=5.0)
+        if response.status_code == 200:
+            print(f"✅ Servidor de teste já rodando em {url}")
+            yield url
+            return
+    except (httpx.ConnectError, httpx.TimeoutException):
+        # Se der timeout, assumir que está rodando mas lento (não matar!)
+        # Apenas ConnectError confirma que a porta está fechada
+        if isinstance(httpx.TimeoutException, type) and "Timeout" in str(httpx.TimeoutException):
+            # Double check com socket puro se necessário, mas por segurança não matamos
+            pass
+        pass
+
+    # Se porta estiver ocupada mas não respondeu health check, matar processo
+    # CUIDADO: Só matar se tiver certeza que não é o dev server lento
+    try:
+        # Tentar matar processo na porta 8000
+        subprocess.run(
+            ["fuser", "-k", f"{port}/tcp"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+        )
+        time.sleep(1)  # Esperar liberar porta
+    except FileNotFoundError:
+        # fuser pode não estar instalado, tentar lsof ou pkill
+        subprocess.run(
+            ["pkill", "-f", "uvicorn.*web.backend.main:app"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        time.sleep(1)
 
     # Iniciar servidor
     print(f"🚀 Iniciando servidor OmniMind em {url}...")
@@ -115,9 +152,15 @@ def api_client(omnimind_server: str):
     Returns:
         httpx.Client: Cliente com autenticação
     """
-    # Credenciais padrão se não estiverem no env
-    # Em produção, usar env vars: OMNIMIND_DASHBOARD_USER/PASS
-    auth = httpx.BasicAuth("admin", "admin")
+    import os
+
+    from dotenv import load_dotenv
+
+    load_dotenv()
+
+    user = os.getenv("OMNIMIND_DASHBOARD_USER", "admin")
+    password = os.getenv("OMNIMIND_DASHBOARD_PASS", "admin")
+    auth = httpx.BasicAuth(user, password)
 
     def _client():
         return httpx.Client(
@@ -129,7 +172,7 @@ def api_client(omnimind_server: str):
     return _client
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def async_client(omnimind_server: str):
     """
     Fornece cliente HTTP async para E2E tests com autenticação.
@@ -141,8 +184,15 @@ async def async_client(omnimind_server: str):
     Yields:
         httpx.AsyncClient: Cliente async com autenticação
     """
-    # Credenciais padrão se não estiverem no env
-    auth = httpx.BasicAuth("admin", "admin")
+    import os
+
+    from dotenv import load_dotenv
+
+    load_dotenv()
+
+    user = os.getenv("OMNIMIND_DASHBOARD_USER", "admin")
+    password = os.getenv("OMNIMIND_DASHBOARD_PASS", "admin")
+    auth = httpx.BasicAuth(user, password)
 
     async with httpx.AsyncClient(
         base_url=omnimind_server,

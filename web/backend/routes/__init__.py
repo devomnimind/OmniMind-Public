@@ -2,4 +2,4 @@
 
 from __future__ import annotations
 
-__all__ = ["tasks", "agents", "security", "metacognition"]
+__all__ = ["tasks", "agents", "security", "metacognition", "health", "omnimind", "tribunal"]

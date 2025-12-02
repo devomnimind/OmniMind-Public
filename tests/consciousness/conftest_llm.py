@@ -278,7 +278,7 @@ def llm_impact_metrics() -> LLMImpactMetrics:
 
 
 @pytest.fixture
-async def integration_loop() -> Any:
+def integration_loop() -> Any:
     """Fixture: Create IntegrationLoop for trainers."""
     try:
         from src.consciousness.integration_loop import IntegrationLoop
@@ -290,7 +290,7 @@ async def integration_loop() -> Any:
 
 
 @pytest.fixture
-async def integration_trainer_mock(integration_loop: Any) -> Any:
+def integration_trainer_mock(integration_loop: Any) -> Any:
     """
     Fixture: Integration trainer with MOCK LLM.
 
@@ -309,7 +309,7 @@ async def integration_trainer_mock(integration_loop: Any) -> Any:
 
 
 @pytest.fixture
-async def integration_trainer_real(integration_loop: Any) -> Any:
+def integration_trainer_real(integration_loop: Any) -> Any:
     """
     Fixture: Integration trainer with REAL LLM.
 

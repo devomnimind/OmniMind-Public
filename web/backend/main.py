@@ -4,8 +4,8 @@ import asyncio
 import json
 import logging
 import os
-import sys
 import secrets
+import sys
 import threading
 import time
 import uuid
@@ -15,20 +15,28 @@ from base64 import b64encode
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
 from contextlib import asynccontextmanager, suppress
 from pathlib import Path
+from secrets import compare_digest
 from typing import Any, Callable, Dict, Optional, Tuple
 
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
+from fastapi import (
+    Depends,
+    FastAPI,
+    HTTPException,
+    Request,
+    WebSocket,
+    WebSocketDisconnect,
+)
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pydantic import BaseModel
-from secrets import compare_digest
 from starlette.status import HTTP_401_UNAUTHORIZED, WS_1008_POLICY_VIOLATION
 
 from src.agents.orchestrator_agent import OrchestratorAgent
 from src.metrics.real_consciousness_metrics import RealConsciousnessMetricsCollector
+from web.backend.routes import agents, health, metacognition, omnimind, tasks, tribunal
+from web.backend.routes import security as security_router
 from web.backend.websocket_manager import ws_manager
-from web.backend.routes import tasks, agents, security as security_router, metacognition, health, omnimind
 
 # Load environment variables from .env file
 load_dotenv()
@@ -128,10 +136,9 @@ def _ensure_dashboard_credentials() -> Tuple[str, str]:
 @asynccontextmanager
 async def lifespan(app_instance: FastAPI):
     # Import WebSocket manager
-    from web.backend.websocket_manager import ws_manager
-
     # Import agent communication broadcaster
     from web.backend.agent_communication_ws import get_broadcaster
+    from web.backend.websocket_manager import ws_manager
 
     # Initialize monitoring variables
     agent_monitor = None
@@ -141,7 +148,9 @@ async def lifespan(app_instance: FastAPI):
 
     # Import monitoring systems
     try:
-        from web.backend.monitoring import agent_monitor as am, metrics_collector as mc, performance_tracker as pt  # type: ignore
+        from web.backend.monitoring import agent_monitor as am  # type: ignore
+        from web.backend.monitoring import metrics_collector as mc
+        from web.backend.monitoring import performance_tracker as pt
 
         agent_monitor = am
         metrics_collector = mc
@@ -172,7 +181,9 @@ async def lifespan(app_instance: FastAPI):
     # Import Realtime Analytics Broadcaster
     realtime_analytics_broadcaster: Any = None
     try:
-        from web.backend.realtime_analytics_broadcaster import realtime_analytics_broadcaster as rab
+        from web.backend.realtime_analytics_broadcaster import (
+            realtime_analytics_broadcaster as rab,
+        )
 
         realtime_analytics_broadcaster = rab
     except ImportError:
@@ -780,6 +791,7 @@ def _get_daemon():
     global _daemon_instance
     if _daemon_instance is None:
         from pathlib import Path
+
         from src.daemon import OmniMindDaemon, create_default_tasks
 
         workspace = Path(os.getenv("OMNIMIND_WORKSPACE", ".")).resolve()
@@ -936,6 +948,7 @@ def daemon_add_task(
 ) -> Dict[str, Any]:
     """Add a custom task to the daemon"""
     from datetime import timedelta
+
     from src.daemon import DaemonTask, TaskPriority
 
     daemon = _get_daemon()
@@ -1143,6 +1156,7 @@ app.include_router(security_router.router)
 app.include_router(metacognition.router)
 app.include_router(health.router)
 app.include_router(omnimind.router)
+app.include_router(tribunal.router, dependencies=[Depends(_verify_credentials)])
 
 # Set orchestrator for metacognition routes
 # This will be set when orchestrator is initialized
