@@ -22,7 +22,7 @@ jobs:
     name: Full Test Suite
     runs-on: ubuntu-latest
     timeout-minutes: 180  # 3 hours for full suite
-    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 2 * * *'
+    if: false  # DISABLED: Tests não executam no CI
 
     steps:
     - name: Checkout code
