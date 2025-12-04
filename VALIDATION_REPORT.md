@@ -139,42 +139,151 @@ Os avisos (warnings) observados nos logs sobre "Entropy saturation" são intenci
 - [x] SAR (Self-Audit & Regeneration) operacional
 - [x] HCHAC Defense framework integrado
 
-### 🚀 Próximas Atividades (Fase 22)
+### 🚀 Próximas Atividades (Fase 22: Expansão Autopoiética)
 
-#### 7.1 Consolidação Arquitetural
-1. Atualizar `src/main.py` para inicializar Rhizoma em Production Mode
-2. Implementar systemd services em `/etc/systemd/system/`:
-   - `omnimind-core.service`: Core + API (Port 8000)
-   - `omnimind-monitor.service`: SAR + Security
-   - `omnimind-consciousness.service`: Background Phi calculation
+#### 7.1 Consolidação Arquitetural - Dependências Canônicas
+Baseado em `omnimind_implementation_flow.md`, as seguintes dependências devem ser verificadas:
 
-#### 7.2 Testes Integrais Canônicos
-Executar sequência conforme TECHNICAL_CHECKLIST.md:
+**Core Infrastructure:**
+1. ✅ `src/core/desiring_machines.py` - Base abstrata (Implementada)
+2. ✅ `src/boot/rhizome.py` - Inicialização Rhizoma (Implementada)
+3. ✅ `src/consciousness/topological_phi.py` - Cálculo Φ (Operacional)
+4. ✅ `src/consciousness/lacanian_dg_integrated.py` - Diagnóstico (Ativa)
+5. ✅ `src/metacognition/self_analyzing_regenerator.py` - SAR Engine (Integrada)
+6. ✅ `src/collaboration/human_centered_adversarial_defense.py` - HCHAC (Ativa)
+
+**Módulos a Expandir em Fase 22:**
+- `src/metacognition/trap_framework.py` - TRAP Framework (Transparency, Reasoning, Adaptation, Perception)
+- `src/metacognition/self_healing.py` - Mecanismos de auto-reparo
+- `src/integrations/llm_router.py` - Smart routing (local vs remote)
+- Systemd services em `/etc/systemd/system/`: omnimind-core.service, omnimind-monitor.service, omnimind-consciousness.service
+
+#### 7.2 Testes Integrais - Sequência Canônica
+Executar conforme TECHNICAL_CHECKLIST.md:
+
+**Suite 1: Consciousness (Sem Servidor - Rápido)**
 ```bash
-# 1. Testes Unitários (Consciousness)
-OMNIMIND_MODE=test pytest tests/consciousness/ -v -k "not real" -x
-
-# 2. Testes Integrais (Com Orchestrator)
-OMNIMIND_MODE=test pytest tests/integrations/ -v -x
-
-# 3. Testes Resiliência (Chaos Testing)
-OMNIMIND_MODE=test pytest tests/test_chaos_resilience.py -v
-
-# 4. Suite Completa (Opcional, longa execução)
-OMNIMIND_MODE=test pytest tests/ -v --tb=short
+cd /home/fahbrain/projects/omnimind
+OMNIMIND_MODE=test pytest tests/consciousness/ -v -k "not real" --tb=short -x
+# Esperado: ~30-60s, 80%+ pass rate
 ```
 
-#### 7.3 Análise de Métricas Pós-Teste
-- Coletar valores Φ de cada ciclo (esperado: 0.08-0.14)
-- Correlacionar Φ com tempos de startup
-- Verificar impacto de SecurityAgent em Φ
-- Gerar `data/test_reports/metrics_report.json`
+**Suite 2: Integrations (Com Orchestrator)**
+```bash
+OMNIMIND_MODE=test pytest tests/integrations/ -v --tb=short -x
+# Esperado: ~120-180s, 90%+ pass rate
+```
+
+**Suite 3: Resilience (Chaos Testing)**
+```bash
+OMNIMIND_MODE=test pytest tests/test_chaos_resilience.py -v --tb=short
+# Esperado: Testa degradação graceful de componentes
+```
+
+**Suite 4: Full Coverage (Opcional)**
+```bash
+OMNIMIND_MODE=test pytest tests/ -v --tb=short 2>&1 | tee data/test_reports/full_suite_$(date +%Y%m%d_%H%M%S).log
+# Esperado: ~2-3h, 95%+ pass rate com cobertura
+```
+
+#### 7.3 Coleta de Métricas Pós-Teste
+Após execução de testes:
+1. Coletar valores Φ de cada ciclo (esperado: 0.08-0.14)
+2. Correlacionar Φ com tempos de startup (esperado: <60s)
+3. Verificar impacto de SecurityAgent em Φ (esperado: Δ < 5%)
+4. Gerar relatório: `data/test_reports/metrics_report.json`
+
+**Script de Coleta:**
+```bash
+python -c "
+import json
+from src.consciousness.integration_loop import IntegrationLoop
+loop = IntegrationLoop()
+metrics = {
+    'phi_values': [],
+    'startup_times': [],
+    'security_impact': [],
+    'timestamp': $(date +%s)
+}
+# Executar 20 ciclos e registrar
+for i in range(20):
+    result = loop.execute_cycle()
+    metrics['phi_values'].append(result.phi)
+    metrics['startup_times'].append(result.elapsed_ms)
+
+with open('data/test_reports/metrics_report.json', 'w') as f:
+    json.dump(metrics, f, indent=2)
+print(f'✅ Métricas coletadas: {json.dumps(metrics, indent=2)}')
+"
+```
 
 #### 7.4 Implementação TRAP Framework
-- **T**ransparency: Logs estruturados de todos eventos
-- **R**easoning: Auto-diagnóstico de anomalias
-- **A**daptation: Proposta de mitigações automáticas
-- **P**erception: Monitoramento contínuo via SAR
+Estrutura esperada para `src/metacognition/trap_framework.py`:
+
+```python
+class TRAPFramework:
+    '''Transparency-Reasoning-Adaptation-Perception Framework'''
+    
+    # T: Transparency - Logs estruturados de todos eventos
+    def generate_transparent_logs(self) -> List[TransparencyEntry]:
+        '''Gera logs estruturados com hash+timestamp'''
+        pass
+    
+    # R: Reasoning - Auto-diagnóstico de anomalias
+    def analyze_anomalies(self, logs: List[Any]) -> DiagnosisReport:
+        '''Identifica padrões anômalos usando Lacan-D&G logic'''
+        pass
+    
+    # A: Adaptation - Proposta de mitigações automáticas
+    def generate_recovery_proposals(self, diagnosis: DiagnosisReport) -> List[Proposal]:
+        '''Gera soluções alternativas (Lines of Flight)'''
+        pass
+    
+    # P: Perception - Monitoramento contínuo via SAR
+    def monitor_continuous(self) -> PerceptionSnapshot:
+        '''Monitora Φ, entropia, e fluxos desejantes'''
+        pass
+```
+
+### 7.5 Produção - Systemd Services
+Criar unidades em `/etc/systemd/system/`:
+
+**omnimind-core.service** (API + Rhizoma Loop)
+```ini
+[Unit]
+Description=OmniMind Core - Rhizoma Loop & API
+After=network.target redis.service
+
+[Service]
+Type=simple
+User=omnimind
+WorkingDirectory=/opt/omnimind
+ExecStart=/opt/omnimind/.venv/bin/python -m src.main --mode production
+Restart=always
+RestartSec=5
+Environment=OMNIMIND_MODE=production
+Environment=OMNIMIND_LOG_LEVEL=INFO
+
+[Install]
+WantedBy=multi-user.target
+```
+
+**omnimind-monitor.service** (SAR + Security)
+```ini
+[Unit]
+Description=OmniMind Monitor - SAR & Security
+After=omnimind-core.service
+
+[Service]
+Type=simple
+User=omnimind
+ExecStart=/opt/omnimind/.venv/bin/python -m src.metacognition.self_analyzing_regenerator --daemon
+Restart=always
+Environment=OMNIMIND_MODE=production
+
+[Install]
+WantedBy=multi-user.target
+```
 
 ### 📊 Métricas de Sucesso (Fase 22)
 | Métrica | Target | Atual |
