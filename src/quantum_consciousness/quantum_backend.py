@@ -22,31 +22,38 @@ import logging
 import os
 from typing import Any, Dict, Optional
 
-import torch
 from dotenv import load_dotenv
 
 load_dotenv()
-logger = logging.getLogger(__name__)
 
-# --- Try to fix CUDA initialization issues early ---
+# --- CRITICAL: Fix CUDA BEFORE importing torch ---
 try:
     from .cuda_init_fix import fix_cuda_init  # type: ignore[import-untyped]
 
     cuda_fixed, cuda_diagnostic = fix_cuda_init()
-    if cuda_fixed:
-        logger.info(f"CUDA initialization fixed: {cuda_diagnostic}")
-    else:
-        logger.warning(f"CUDA initialization issue: {cuda_diagnostic}")
 except ImportError:
-    logger.warning("cuda_init_fix module not available")
+    # Fallback: set minimum CUDA env vars
+    if "CUDA_HOME" not in os.environ:
+        os.environ["CUDA_HOME"] = "/usr/local/cuda-12.4"
+    if "CUDA_VISIBLE_DEVICES" not in os.environ:
+        os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+    cuda_fixed, cuda_diagnostic = False, "Manual CUDA env setup"
+
+# NOW import torch (after CUDA env is configured)
+import torch  # noqa: E402
+
+logger = logging.getLogger(__name__)
+
+if cuda_fixed:
+    logger.info(f"✅ CUDA initialization fixed: {cuda_diagnostic}")
+else:
+    logger.warning(f"⚠️ CUDA initialization fallback: {cuda_diagnostic}")
 
 # --- D-Wave Imports ---
 try:
     import dimod  # type: ignore[import-untyped]
-    from dwave.system import (
-        DWaveSampler,  # type: ignore[import-untyped,attr-defined]
-        EmbeddingComposite,  # type: ignore[import-untyped,attr-defined]
-    )
+    from dwave.system import DWaveSampler  # type: ignore[import-untyped,attr-defined]
+    from dwave.system import EmbeddingComposite  # type: ignore[import-untyped,attr-defined]
 
     DWAVE_AVAILABLE = True
 except ImportError:
@@ -63,31 +70,21 @@ except ImportError:
 # --- Qiskit Imports ---
 try:  # type: ignore[import-untyped]
     from qiskit_aer import AerSimulator  # type: ignore[import-untyped,attr-defined]
-    from qiskit_algorithms import (
-        AmplificationProblem,  # type: ignore[attr-defined]
-        Grover,  # type: ignore[attr-defined]
-    )
-    from qiskit_algorithms.optimizers import (
-        COBYLA,  # type: ignore[import-untyped,attr-defined]
-    )
+    from qiskit_algorithms import AmplificationProblem  # type: ignore[attr-defined]
+    from qiskit_algorithms import Grover  # type: ignore[attr-defined]
+    from qiskit_algorithms.optimizers import COBYLA  # type: ignore[import-untyped,attr-defined]
 
     try:
-        from qiskit.primitives import (
-            Sampler,  # type: ignore[import-untyped,attr-defined]
-        )
+        from qiskit.primitives import Sampler  # type: ignore[import-untyped,attr-defined]
     except ImportError:
         from qiskit.primitives import (
             StatevectorSampler as Sampler,  # type: ignore[import-untyped,attr-defined]
         )
-    from qiskit.circuit.library import (
-        PhaseOracle,  # type: ignore[import-untyped,attr-defined]
-    )
-    from qiskit_optimization import (
-        QuadraticProgram,  # type: ignore[import-untyped,attr-defined]
-    )
+    from qiskit.circuit.library import PhaseOracle  # type: ignore[import-untyped,attr-defined]
+    from qiskit_optimization import QuadraticProgram  # type: ignore[import-untyped,attr-defined]
     from qiskit_optimization.algorithms import (
-        MinimumEigenOptimizer,  # type: ignore[import-untyped,attr-defined]
-    )
+        MinimumEigenOptimizer,
+    )  # type: ignore[import-untyped,attr-defined]
 
     QISKIT_AVAILABLE = True
 except ImportError:

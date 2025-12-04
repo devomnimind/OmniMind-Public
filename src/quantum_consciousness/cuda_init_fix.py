@@ -16,6 +16,8 @@ def fix_cuda_init() -> Tuple[bool, str]:
     """
     Attempt to fix CUDA initialization for PyTorch.
 
+    IMPORTANT: This must be called BEFORE importing torch!
+
     Returns:
         Tuple[bool, str]: (success, diagnostic_message)
 
@@ -25,52 +27,62 @@ def fix_cuda_init() -> Tuple[bool, str]:
     diagnostic = []
 
     try:
-        # Ensure environment variables are set BEFORE importing torch
+        # ===== STEP 1: Set environment variables FIRST =====
+        # (BEFORE any torch import happens)
         if "CUDA_HOME" not in os.environ:
             os.environ["CUDA_HOME"] = "/usr/local/cuda-12.4"
-            diagnostic.append("Set CUDA_HOME=/usr/local/cuda-12.4")
+            diagnostic.append("✅ Set CUDA_HOME=/usr/local/cuda-12.4")
 
         if "CUDA_VISIBLE_DEVICES" not in os.environ:
             os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-            diagnostic.append("Set CUDA_VISIBLE_DEVICES=0")
+            diagnostic.append("✅ Set CUDA_VISIBLE_DEVICES=0")
 
         # Check if LD_LIBRARY_PATH has CUDA libs
         ld_lib_path = os.environ.get("LD_LIBRARY_PATH", "")
         cuda_lib = "/usr/local/cuda-12.4/lib64"
         if cuda_lib not in ld_lib_path:
             os.environ["LD_LIBRARY_PATH"] = f"{cuda_lib}:{ld_lib_path}"
-            diagnostic.append(f"Updated LD_LIBRARY_PATH with {cuda_lib}")
+            diagnostic.append(f"✅ Updated LD_LIBRARY_PATH with {cuda_lib}")
 
-        # Now import torch and check
-        import torch
+        # Ensure CUDA_PATH is set (some tools need it)
+        if "CUDA_PATH" not in os.environ:
+            os.environ["CUDA_PATH"] = "/usr/local/cuda-12.4"
+            diagnostic.append("✅ Set CUDA_PATH=/usr/local/cuda-12.4")
 
-        # Try device count first (works even if is_available fails)
+        # ===== STEP 2: NOW import torch (after env setup) =====
+        import torch  # noqa: E402
+
+        # ===== STEP 3: Check initialization =====
         device_count = torch.cuda.device_count()
-        diagnostic.append(f"torch.cuda.device_count() = {device_count}")
+        diagnostic.append(f"📊 torch.cuda.device_count() = {device_count}")
 
-        # Check is_available
         is_available = torch.cuda.is_available()
-        diagnostic.append(f"torch.cuda.is_available() = {is_available}")
+        diagnostic.append(f"📊 torch.cuda.is_available() = {is_available}")
 
-        if not is_available and device_count > 0:
-            # CUDA exists but initialization failed
-            # Try forcing reinitialization
-            diagnostic.append("Attempting forced CUDA reset...")
+        # If CUDA devices exist but is_available() fails, try forcing reset
+        if device_count > 0 and not is_available:
+            diagnostic.append(
+                "🔄 CUDA devices detected but initialization failed - forcing reset..."
+            )
             try:
                 torch.cuda.init()
                 is_available = torch.cuda.is_available()
-                diagnostic.append(f"After torch.cuda.init(): is_available() = {is_available}")
+                diagnostic.append(f"🔄 After torch.cuda.init(): is_available() = {is_available}")
+
+                if is_available:
+                    device_name = torch.cuda.get_device_name(0)
+                    diagnostic.append(f"✅ GPU Device: {device_name}")
             except Exception as e:
-                diagnostic.append(f"torch.cuda.init() failed: {e}")
+                diagnostic.append(f"❌ torch.cuda.init() failed: {e}")
 
         success = is_available or device_count > 0
         return success, " | ".join(diagnostic)
 
     except ImportError as e:
-        diagnostic.append(f"Failed to import torch: {e}")
+        diagnostic.append(f"❌ Failed to import torch: {e}")
         return False, " | ".join(diagnostic)
     except Exception as e:
-        diagnostic.append(f"Unexpected error: {type(e).__name__}: {e}")
+        diagnostic.append(f"❌ Unexpected error: {type(e).__name__}: {e}")
         return False, " | ".join(diagnostic)
 
 
