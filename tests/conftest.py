@@ -16,10 +16,23 @@ if not torch.cuda.is_available():
     os.environ["OMNIMIND_DISABLE_QUANTUM"] = "True"  # Sem GPU, quantum não funciona
 
 # FORÇA GPU/CUDA SE DISPONÍVEL
-if torch.cuda.is_available():
+# CRITICAL: Tentar device_count também mesmo se is_available() falhar
+cuda_available = torch.cuda.is_available()
+cuda_device_count = torch.cuda.device_count()
+
+if cuda_available or cuda_device_count > 0:
     os.environ["CUDA_VISIBLE_DEVICES"] = os.environ.get("CUDA_VISIBLE_DEVICES", "0")
-    torch.set_default_device("cuda")
-    print(f"✅ PyTorch CUDA forçado: {torch.cuda.get_device_name(0)}")
+    os.environ["OMNIMIND_FORCE_GPU"] = "true"
+    os.environ["PYTEST_FORCE_GPU"] = "true"
+
+    if cuda_available:
+        torch.set_default_device("cuda")
+        print(f"✅ PyTorch CUDA forçado (is_available=True): {torch.cuda.get_device_name(0)}")
+    else:
+        # Fallback: device detected but is_available() failed
+        print(
+            f"⚠️ PyTorch CUDA fallback (device_count={cuda_device_count}): GPU forcing ativado via OMNIMIND_FORCE_GPU=true"
+        )
 else:
     print("⚠️  CUDA não disponível - usando CPU")
 

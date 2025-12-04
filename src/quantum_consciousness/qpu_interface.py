@@ -69,10 +69,16 @@ from typing import Any, Dict, List, Optional
 
 import structlog
 
+# Retry mechanism with exponential backoff
+RETRY_BASE_DELAY = 1.0  # seconds
+RETRY_MAX_DELAY = 30.0  # seconds
+RETRY_MAX_ATTEMPTS = 5
+RETRY_JITTER_FACTOR = 0.1  # 10% random jitter to prevent thundering herd
+
 try:
     from qiskit import QuantumCircuit  # type: ignore[import-untyped]
-    from qiskit.transpiler.preset_passmanagers import (  # type: ignore[import-untyped]
-        generate_preset_pass_manager,
+    from qiskit.transpiler.preset_passmanagers import (
+        generate_preset_pass_manager,  # type: ignore[import-untyped]
     )
     from qiskit_aer import AerSimulator  # type: ignore[import-untyped]
 
@@ -92,6 +98,95 @@ except ImportError:
     cirq = None  # type: ignore[assignment]
 
 logger = structlog.get_logger(__name__)
+
+
+def retry_with_exponential_backoff(
+    func: Any,
+    *args: Any,
+    max_attempts: int = RETRY_MAX_ATTEMPTS,
+    base_delay: float = RETRY_BASE_DELAY,
+    max_delay: float = RETRY_MAX_DELAY,
+    **kwargs: Any,
+) -> Any:
+    """
+    Execute function with exponential backoff retry mechanism.
+
+    CRITICAL FIX: Implements exponential backoff for transient quantum
+    operation failures (connectivity, temporary unavailability, etc.).
+
+    Features:
+    - Exponential backoff: delay = min(base_delay * 2^attempt, max_delay)
+    - Jitter: Add random jitter to prevent thundering herd
+    - Logging: Track all retry attempts
+    - Type-aware: Works with any callable
+
+    Args:
+        func: Function/method to retry
+        *args: Positional arguments to pass to func
+        max_attempts: Maximum number of attempts (default 5)
+        base_delay: Initial delay in seconds (default 1.0)
+        max_delay: Maximum delay cap in seconds (default 30.0)
+        **kwargs: Keyword arguments to pass to func
+
+    Returns:
+        Result of successful function call
+
+    Raises:
+        Exception: Last exception if all attempts fail
+
+    Example:
+        result = retry_with_exponential_backoff(
+            qpu.execute,
+            circuit,
+            max_attempts=5,
+            base_delay=1.0,
+            max_delay=30.0
+        )
+    """
+    import random
+    import time
+
+    last_exception: Optional[Exception] = None
+
+    for attempt in range(max_attempts):
+        try:
+            logger.debug(
+                f"Attempting {func.__name__}",
+                attempt=attempt + 1,
+                max_attempts=max_attempts,
+            )
+            return func(*args, **kwargs)
+
+        except Exception as e:
+            last_exception = e
+            if attempt == max_attempts - 1:
+                # Last attempt failed
+                logger.error(
+                    f"All {max_attempts} attempts to {func.__name__} failed",
+                    last_error=str(e),
+                    error_type=type(e).__name__,
+                )
+                raise
+
+            # Calculate exponential backoff with jitter
+            delay = min(base_delay * (2**attempt), max_delay)
+            jitter = delay * RETRY_JITTER_FACTOR * random.random()
+            total_delay = delay + jitter
+
+            logger.warning(
+                f"{func.__name__} failed, retrying...",
+                attempt=attempt + 1,
+                max_attempts=max_attempts,
+                error=str(e),
+                next_retry_delay=f"{total_delay:.2f}s",
+            )
+
+            time.sleep(total_delay)
+
+    # Should never reach here, but handle just in case
+    if last_exception:
+        raise last_exception
+    raise RuntimeError(f"Failed to execute {func.__name__} after {max_attempts} attempts")
 
 
 class BackendType(Enum):
@@ -492,7 +587,9 @@ class IBMQBackend(QPUBackend):
         try:
             # Try new qiskit-ibm-runtime (Qiskit 1.0+)
             try:
-                from qiskit_ibm_runtime import QiskitRuntimeService  # type: ignore[import-untyped]
+                from qiskit_ibm_runtime import (
+                    QiskitRuntimeService,  # type: ignore[import-untyped]
+                )
 
                 # Use correct channel name for current qiskit-ibm-runtime version
                 # 'ibm_quantum' was deprecated, use 'ibm_cloud' or 'ibm_quantum_platform'

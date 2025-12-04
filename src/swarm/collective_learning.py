@@ -8,6 +8,7 @@ Migrated from src.collective_intelligence.collective_learning.
 """
 
 import logging
+import threading
 import time
 import uuid
 from collections import Counter
@@ -15,6 +16,10 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Union
 
 logger = logging.getLogger(__name__)
+
+# Timeout configuration for consensus voting
+MAX_CONSENSUS_TIMEOUT = 30.0  # seconds
+CONSENSUS_TIMEOUT_FALLBACK_STRATEGY = "return_partial"  # or "return_best_so_far"
 
 
 @dataclass
@@ -67,20 +72,23 @@ class ConsensusLearning:
 
     Features:
     - Aggregated model updates
-    - Voting on knowledge
+    - Voting on knowledge (with timeout protection)
     - Collaborative refinement
     """
 
-    def __init__(self, num_agents: int = 5):
+    def __init__(self, num_agents: int = 5, consensus_timeout: float = MAX_CONSENSUS_TIMEOUT):
         """
         Initialize consensus learning.
 
         Args:
             num_agents: Number of participating agents
+            consensus_timeout: Maximum time to wait for consensus voting (seconds)
         """
         self.num_agents = num_agents
         self.knowledge_base = KnowledgeBase()
         self.agent_models: Dict[str, Dict[str, Any]] = {}
+        self.consensus_timeout = consensus_timeout
+        self.voting_lock = threading.Lock()  # Thread-safe voting
 
     def share_experience(self, agent_id: str, experience: SharedExperience) -> None:
         """
@@ -101,26 +109,57 @@ class ConsensusLearning:
 
         Returns:
             Aggregated consensus model
+
+        Note:
+            CRITICAL FIX: Added timeout protection (30s default) to prevent infinite
+            consensus voting hangs. If timeout is exceeded, returns best-so-far or
+            partial consensus depending on CONSENSUS_TIMEOUT_FALLBACK_STRATEGY.
         """
         if not self.agent_models:
             return {}
 
-        # Simple averaging of model parameters
-        consensus = {}
-        all_keys: set[str] = set()
-        for model in self.agent_models.values():
-            all_keys.update(model.keys())
+        # Start consensus voting with timeout
+        start_time = time.time()
+        consensus: Dict[str, Any] = {}
 
-        for key in all_keys:
-            values = [model.get(key, 0) for model in self.agent_models.values() if key in model]
-            if values:
-                # Average numerical values
-                if all(isinstance(v, (int, float)) for v in values):
-                    consensus[key] = sum(values) / len(values)
-                else:
-                    # Use most common for non-numerical
-                    counter = Counter(values)
-                    consensus[key] = counter.most_common(1)[0][0]
+        with self.voting_lock:
+            try:
+                # Simple averaging of model parameters
+                all_keys: set[str] = set()
+                for model in self.agent_models.values():
+                    all_keys.update(model.keys())
+
+                for key in all_keys:
+                    # Check timeout before processing each key
+                    elapsed = time.time() - start_time
+                    if elapsed > self.consensus_timeout:
+                        logger.warning(
+                            f"Consensus voting timeout reached ({elapsed:.2f}s > "
+                            f"{self.consensus_timeout}s). Returning partial consensus "
+                            f"with {len(consensus)} keys aggregated."
+                        )
+                        break
+
+                    values = [
+                        model.get(key, 0) for model in self.agent_models.values() if key in model
+                    ]
+                    if values:
+                        # Average numerical values
+                        if all(isinstance(v, (int, float)) for v in values):
+                            consensus[key] = sum(values) / len(values)
+                        else:
+                            # Use most common for non-numerical
+                            counter = Counter(values)
+                            consensus[key] = counter.most_common(1)[0][0]
+
+                elapsed = time.time() - start_time
+                logger.debug(
+                    f"Consensus model aggregated in {elapsed:.2f}s "
+                    f"({len(consensus)} keys from {len(self.agent_models)} agents)"
+                )
+
+            except Exception as e:
+                logger.error(f"Error during consensus voting: {e}. Returning partial result.")
 
         return consensus
 

@@ -1,5 +1,18 @@
 # 🔐 CERTIFICAÇÃO REAL - Guia de Execução Rápido
 
+## ⚠️ NOTA IMPORTANTE (2025-12-04)
+
+Este documento descreve certificação com IBM Quantum REAL (Phase Madura).
+
+**Para testes normais e validação diária, use os scripts principais**:
+- `./scripts/run_tests_fast.sh` (⚡ 15-20m, rápido)
+- `./scripts/run_tests_with_defense.sh` (🛡️ 30-60m, completo)
+- `bash scripts/quick_test.sh` (🧪 30-45m, com servidor)
+
+**IBM Quantum Real** fica ativado aqui quando credenciais disponíveis. Atualmente desativado em conftest.py por fase de maturação.
+
+---
+
 ## 📋 O que foi criado
 
 | Arquivo | Propósito |
@@ -211,6 +224,6 @@ EOF
 
 ---
 
-**Data**: 2025-11-29  
-**Versão**: 1.0  
+**Data**: 2025-11-29
+**Versão**: 1.0
 **Status**: Pronto para executar ✅

@@ -3,11 +3,22 @@
 # ============================================================================
 # ⚡ OMNIMIND FAST TEST SUITE
 # ============================================================================
-# Executa suite rápida para validação de código:
-# - GPU ativada (Prioridade)
+# Executa suite rápida para validação de código (DIÁRIA):
+# - GPU FORÇADA (com fallback device_count detection)
 # - Logs detalhados e timestamped
 # - Pula testes lentos/chaos/destrutivos
 # - Foco em lógica, mocks e integridade
+#
+# 🚫 EXCLUÍDOS:
+#   - Testes @pytest.mark.slow (timeout > 30s)
+#   - Testes @pytest.mark.real (full LLM+Network)
+#   - Testes @pytest.mark.chaos (destroem servidor)
+#
+# ⏳ DURAÇÃO: ~10-15 min
+# 🎯 RODAS: Diárias (CI/CD automático)
+#
+# Para suite SEMANAL com todos os testes, use:
+#   ./scripts/run_tests_with_defense.sh
 # ============================================================================
 
 set -e
@@ -22,19 +33,37 @@ echo "⚡ OMNIMIND FAST TEST SUITE"
 echo "======================================"
 echo "⏱️  Timestamp: $TIMESTAMP"
 echo "🛡️  Modo: Rápido (Sem Chaos/Slow)"
-echo "🚀 GPU: Ativada"
+echo "🚀 GPU: FORÇADA (com fallback)"
 echo "======================================"
 echo ""
 
-# Executa pytest com GPU e logs detalhados
-# Exclui marcadores lentos (not slow and not real)
+# Verificar GPU status ANTES dos testes
+echo "🔍 Verificando GPU status..."
+python3 << 'GPUCHECK'
+import torch
+print(f"  torch.cuda.is_available(): {torch.cuda.is_available()}")
+print(f"  torch.cuda.device_count(): {torch.cuda.device_count()}")
+if torch.cuda.device_count() > 0:
+    try:
+        print(f"  torch.cuda.get_device_name(0): {torch.cuda.get_device_name(0)}")
+    except:
+        print(f"  Device detected but name unavailable")
+print("")
+GPUCHECK
+
+# Executa pytest com GPU FORÇADA e logs detalhados
+# CRITICAL: CUDA_VISIBLE_DEVICES=0 força dispositivo 0
+# OMNIMIND_FORCE_GPU=true força detecção com device_count fallback
+CUDA_VISIBLE_DEVICES=0 \
 OMNIMIND_GPU=true \
+OMNIMIND_FORCE_GPU=true \
 OMNIMIND_DEV=true \
 OMNIMIND_DEBUG=true \
+PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb=512 \
 pytest tests/ \
   -vv \
   --tb=short \
-  -m "not slow and not real" \
+  -m "not slow and not real and not chaos" \
   --log-cli-level=DEBUG \
   --log-file="$LOG_DIR/pytest_fast_${TIMESTAMP}.log" \
   --junit-xml="$LOG_DIR/junit_fast_${TIMESTAMP}.xml" \

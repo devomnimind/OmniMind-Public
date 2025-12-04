@@ -97,3 +97,26 @@ memory/
 **Última Atualização**: 2 de Dezembro de 2025
 **Autor**: Fabrício da Silva (Arquiteto do Sistema) & OmniMind Copilot
 **Status**: Operacional - Integrado ao Ciclo de Percepção
+
+
+---
+
+## 🔧 Recent Changes (2025-12-04)
+
+### Critical Fix: Episodic Memory Cap with LRU Eviction
+- **File**: `episodic_memory.py`
+- **Issue**: Episodic memory could grow unbounded
+- **Solution**:
+  - Added `MAX_EPISODIC_SIZE = 10000` episodes limit
+  - Implemented `_check_and_evict_lru()` automatic eviction
+  - Tracks access timestamps for LRU ordering
+  - Evicts 10% oldest when capacity reached
+  - Integrated in `store_episode()` and `search_similar()`
+
+**Example**:
+```python
+em = EpisodicMemory(max_size=10000)  # Auto-evicts oldest 10% when full
+em.store_episode('task', 'action', 'result', reward=0.9)
+```
+
+**Status**: ✅ Implemented and validated

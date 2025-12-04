@@ -32,6 +32,10 @@ if TYPE_CHECKING:  # pragma: no cover - optional dependency typing only
 
 logger = logging.getLogger(__name__)
 
+# Memory cap for episodic buffer
+MAX_EPISODIC_SIZE = 10000  # Maximum episodes to store
+EPISODIC_EVICTION_POLICY = "lru"  # Least Recently Used eviction
+
 warnings.warn(
     "EpisodicMemory is deprecated in favor of NarrativeHistory (Lacanian). "
     "Memory is retroactive construction, not storage.",
@@ -92,6 +96,9 @@ class EpisodicMemory:
     """
     Manages episodic memory using Qdrant vector database.
     Stores experiences as: (task, action, result, reward) tuples.
+
+    CRITICAL FIX: Implements memory cap (MAX_EPISODIC_SIZE=10000) with LRU
+    eviction to prevent unbounded memory growth.
     """
 
     def __init__(
@@ -99,6 +106,7 @@ class EpisodicMemory:
         qdrant_url: str = "http://localhost:6333",
         collection_name: str = "omnimind_episodes",
         embedding_dim: int = 384,
+        max_size: int = MAX_EPISODIC_SIZE,
     ) -> None:
         warnings.warn(
             "EpisodicMemory is deprecated. Use NarrativeHistory for Lacanian memory construction.",
@@ -110,6 +118,9 @@ class EpisodicMemory:
         self.embedding_dim = embedding_dim
         self._embedding_model: Optional["SentenceTransformer"] = None
         self._model_attempted = False
+        self.max_size = max_size
+        self._episode_count = 0  # Track total episodes stored (for LRU)
+        self._access_timestamps: Dict[str, float] = {}  # Track last access time for LRU
 
         # Initialize collection if it does not exist.
         self._ensure_collection()
@@ -170,6 +181,47 @@ class EpisodicMemory:
             embedding.append((byte_val / 255.0) * 2 - 1)
         return embedding
 
+    def _check_and_evict_lru(self) -> None:
+        """
+        Check memory size and evict least recently used episodes if exceeding limit.
+
+        CRITICAL FIX: Implements LRU eviction to prevent unbounded growth.
+        When max_size is exceeded, removes episodes with oldest access timestamps.
+        """
+        try:
+            # Get collection stats
+            collection_info = self.client.get_collection(self.collection_name)
+            current_size = collection_info.points_count or 0
+
+            if current_size >= self.max_size:
+                # Need to evict oldest episodes
+                num_to_evict = max(1, int(current_size * 0.1))  # Evict 10%
+                logger.warning(
+                    f"EpisodicMemory reaching capacity ({current_size}/{self.max_size}). "
+                    f"Evicting {num_to_evict} least recently used episodes."
+                )
+
+                # Sort by access timestamp and get IDs to evict
+                sorted_accesses = sorted(
+                    self._access_timestamps.items(), key=lambda x: x[1]
+                )  # Oldest first
+                ids_to_evict = [int(ep_id) for ep_id, _ in sorted_accesses[:num_to_evict]]
+
+                # Delete from Qdrant
+                if ids_to_evict:
+                    self.client.delete(
+                        collection_name=self.collection_name,
+                        points_selector=qmodels.PointIdsList(ids=ids_to_evict),
+                    )
+                    logger.info(f"Evicted {len(ids_to_evict)} episodes to maintain memory cap.")
+
+                    # Clean up tracking
+                    for ep_id in ids_to_evict:
+                        self._access_timestamps.pop(str(ep_id), None)
+
+        except Exception as e:
+            logger.error(f"Error during LRU eviction: {e}. Continuing without eviction.")
+
     def store_episode(
         self,
         task: str,
@@ -190,7 +242,14 @@ class EpisodicMemory:
 
         Returns:
             episode_id: Unique identifier for this episode
+
+        Note:
+            CRITICAL FIX: Memory capping implemented. If storing would exceed
+            MAX_EPISODIC_SIZE, least recently used episodes are evicted first.
         """
+        # Check and evict if necessary BEFORE storing new episode
+        self._check_and_evict_lru()
+
         timestamp = datetime.now(timezone.utc).isoformat()
 
         # Create episode text for embedding
@@ -201,11 +260,12 @@ class EpisodicMemory:
         hash_source = f"{timestamp}{task}{action}".encode()
         hash_hex = hashlib.sha256(hash_source).hexdigest()[:16]
         hash_int = int(hash_hex, 16)
+        episode_id_str = str(hash_int)
 
         # Prepare payload
         payload_metadata: Dict[str, Any] = dict(metadata) if metadata else {}
         payload: EpisodePayload = {
-            "episode_id": str(hash_int),
+            "episode_id": episode_id_str,
             "timestamp": timestamp,
             "task": task,
             "action": action,
@@ -223,7 +283,11 @@ class EpisodicMemory:
             ],
         )
 
-        return str(hash_int)
+        # Track access time for LRU
+        self._access_timestamps[episode_id_str] = datetime.now(timezone.utc).timestamp()
+        self._episode_count += 1
+
+        return episode_id_str
 
     def search_similar(
         self, query: str, top_k: int = 3, min_reward: Optional[float] = None
@@ -238,6 +302,9 @@ class EpisodicMemory:
 
         Returns:
             List of similar episodes with their scores
+
+        Note:
+            Updates access timestamps for LRU tracking of searched episodes.
         """
         query_embedding = self._generate_embedding(query)
 
@@ -258,15 +325,22 @@ class EpisodicMemory:
             with_vectors=False,
         ).points
 
-        # Format results
+        # Format results and update LRU access times
         results: List[SimilarEpisode] = []
         hits: Sequence[qmodels.ScoredPoint] = search_result or []
+        current_time = datetime.now(timezone.utc).timestamp()
+
         for hit in hits:
             payload = hit.payload or {}
+            episode_id = str(payload.get("episode_id", ""))
+
+            # Update access timestamp for LRU tracking
+            self._access_timestamps[episode_id] = current_time
+
             results.append(
                 SimilarEpisode(
                     score=float(hit.score),
-                    episode_id=str(payload.get("episode_id", "")),
+                    episode_id=episode_id,
                     task=str(payload.get("task", "")),
                     action=str(payload.get("action", "")),
                     result=str(payload.get("result", "")),

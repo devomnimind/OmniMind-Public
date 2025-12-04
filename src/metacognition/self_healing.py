@@ -10,13 +10,150 @@ This module provides automated recovery and self-repair capabilities:
 
 from __future__ import annotations
 
+import io
 import logging
+import os
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from typing import Any, Callable, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
+
+# Filesystem operations error handling
+FILESYSTEM_RETRY_ATTEMPTS = 3
+FILESYSTEM_OPERATION_TIMEOUT = 10.0  # seconds
+
+
+class IssueSeverity(str, Enum):
+    """Severity levels for detected issues."""
+
+    INFO = "info"
+    WARNING = "warning"
+    ERROR = "error"
+    CRITICAL = "critical"
+
+
+def safe_write_file(filepath: str, content: str, mode: str = "w") -> bool:
+    """
+    Safely write content to a file with error handling.
+
+    CRITICAL FIX: Wraps filesystem I/O with try/except for graceful recovery.
+    Handles permission errors, disk full, path issues, etc.
+
+    Args:
+        filepath: Path to file to write
+        content: Content to write
+        mode: File mode (default 'w' for write)
+
+    Returns:
+        True if write successful, False otherwise
+    """
+    for attempt in range(FILESYSTEM_RETRY_ATTEMPTS):
+        try:
+            # Ensure directory exists
+            directory = os.path.dirname(filepath)
+            if directory and not os.path.exists(directory):
+                os.makedirs(directory, exist_ok=True)
+
+            # Write file
+            with open(filepath, mode) as f:
+                f.write(content)
+
+            logger.debug(f"Successfully wrote file: {filepath}")
+            return True
+
+        except PermissionError as e:
+            logger.error(f"Permission denied writing {filepath}: {e}")
+            return False
+
+        except OSError as e:
+            if "No space left on device" in str(e):
+                logger.error(f"Disk full when writing {filepath}: {e}")
+                return False
+            elif attempt < FILESYSTEM_RETRY_ATTEMPTS - 1:
+                logger.warning(
+                    f"OSError writing {filepath} (attempt {attempt + 1}): {e}. Retrying..."
+                )
+                continue
+            else:
+                logger.error(
+                    f"Failed to write {filepath} after {FILESYSTEM_RETRY_ATTEMPTS} attempts: {e}"
+                )
+                return False
+
+        except Exception as e:
+            logger.error(f"Unexpected error writing {filepath}: {type(e).__name__}: {e}")
+            return False
+
+    return False
+
+
+def safe_read_file(filepath: str) -> Optional[str]:
+    """
+    Safely read content from a file with error handling.
+
+    CRITICAL FIX: Wraps filesystem I/O with try/except for graceful recovery.
+    Handles missing files, permission errors, encoding issues, etc.
+
+    Args:
+        filepath: Path to file to read
+
+    Returns:
+        File content if successful, None otherwise
+    """
+    try:
+        if not os.path.exists(filepath):
+            logger.warning(f"File not found: {filepath}")
+            return None
+
+        with open(filepath, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        logger.debug(f"Successfully read file: {filepath}")
+        return content
+
+    except PermissionError as e:
+        logger.error(f"Permission denied reading {filepath}: {e}")
+        return None
+
+    except UnicodeDecodeError as e:
+        logger.error(f"Encoding error reading {filepath}: {e}")
+        return None
+
+    except Exception as e:
+        logger.error(f"Unexpected error reading {filepath}: {type(e).__name__}: {e}")
+        return None
+
+
+def safe_delete_file(filepath: str) -> bool:
+    """
+    Safely delete a file with error handling.
+
+    CRITICAL FIX: Wraps filesystem I/O with try/except for graceful recovery.
+
+    Args:
+        filepath: Path to file to delete
+
+    Returns:
+        True if delete successful, False otherwise
+    """
+    try:
+        if os.path.exists(filepath):
+            os.remove(filepath)
+            logger.debug(f"Successfully deleted file: {filepath}")
+            return True
+        else:
+            logger.warning(f"File not found for deletion: {filepath}")
+            return False
+
+    except PermissionError as e:
+        logger.error(f"Permission denied deleting {filepath}: {e}")
+        return False
+
+    except Exception as e:
+        logger.error(f"Unexpected error deleting {filepath}: {type(e).__name__}: {e}")
+        return False
 
 
 class IssueType(str, Enum):
@@ -29,15 +166,7 @@ class IssueType(str, Enum):
     NETWORK_ISSUE = "network_issue"
     DISK_FULL = "disk_full"
     PROCESS_CRASH = "process_crash"
-
-
-class IssueSeverity(str, Enum):
-    """Severity levels for detected issues."""
-
-    INFO = "info"
-    WARNING = "warning"
-    ERROR = "error"
-    CRITICAL = "critical"
+    FILESYSTEM_ERROR = "filesystem_error"  # New: track filesystem issues
 
 
 @dataclass

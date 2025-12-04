@@ -120,10 +120,33 @@ class QuantumBackend:
         self.mode = "UNKNOWN"  # Will be: LOCAL_GPU, LOCAL_CPU, CLOUD, MOCK
 
         # Detect GPU availability (with fallback for CUDA init issues)
+        # CRITICAL: Check environment variables FIRST to allow forced GPU mode
+        force_gpu_env = os.getenv("OMNIMIND_FORCE_GPU", "").lower() in ("true", "1", "yes")
+        force_gpu_pytest = os.getenv("PYTEST_FORCE_GPU", "").lower() in ("true", "1", "yes")
+
         try:
             self.use_gpu = torch.cuda.is_available()
+
+            # Check for forced GPU mode via environment
+            if (force_gpu_env or force_gpu_pytest) and not self.use_gpu:
+                try:
+                    device_count = torch.cuda.device_count()
+                    if device_count > 0:
+                        logger.info(
+                            f"🚀 FORCED GPU MODE (env override): "
+                            f"OMNIMIND_FORCE_GPU={force_gpu_env}, "
+                            f"PYTEST_FORCE_GPU={force_gpu_pytest}. "
+                            f"device_count={device_count}. Will attempt GPU operations."
+                        )
+                        self.use_gpu = True
+                except Exception as device_count_error:
+                    logger.warning(
+                        f"Could not check device count (forced mode): {device_count_error}"
+                    )
+                    self.use_gpu = False
+
             # Fallback: if is_available() fails but device_count > 0, GPU is present
-            if not self.use_gpu:
+            elif not self.use_gpu:
                 try:
                     device_count = torch.cuda.device_count()
                     if device_count > 0:

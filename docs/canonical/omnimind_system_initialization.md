@@ -75,19 +75,95 @@ Environment=OMNIMIND_LOG_LEVEL=WARNING
 WantedBy=multi-user.target
 ```
 
-## 4. Development Initialization
+## 4. Development Test Scripts (2025-12-04)
 
-In development, we use the existing test infrastructure which closely mirrors production.
+In development, we use the following test scripts which mirror production workflows:
 
-### `scripts/run_tests_with_defense.sh`
-This script initializes the system, runs tests with the "Defense" layer active, and handles teardown.
+### `scripts/run_tests_fast.sh` ⚡ (RECOMMENDED FOR DAILY DEV)
+Fast test execution without slow tests or real integrations.
 
 ```bash
-# ... (Existing script content)
+# ... Environment setup (GPU FORCED)
+CUDA_VISIBLE_DEVICES=0 \
 OMNIMIND_GPU=true \
+OMNIMIND_FORCE_GPU=true \
+OMNIMIND_DEV=true \
+OMNIMIND_DEBUG=true \
+pytest tests/ \
+  -vv --tb=short \
+  -m "not slow and not real" \
+  ...
+```
+
+**Features**:
+- ⚡ ~15-20 minutes runtime
+- 🚀 GPU FORCED (device_count fallback if is_available() fails)
+- 🔍 Skips expensive tests (marked `slow` or `real`)
+- 📊 Perfect for rapid iteration in development
+
+### `scripts/run_tests_with_defense.sh` 🛡️ (WEEKLY VALIDATION)
+Complete test suite with Autodefense layer active.
+
+```bash
+# ... Environment setup (GPU FORCED)
+CUDA_VISIBLE_DEVICES=0 \
+OMNIMIND_GPU=true \
+OMNIMIND_FORCE_GPU=true \
 OMNIMIND_DEV=true \
 OMNIMIND_DEBUG=true \
 pytest tests/ ...
+```
+
+**Features**:
+- 📊 Full suite (~3952 tests)
+- 🛡️ Autodefense: Detects tests causing crashes (3+ crashes in 5min = "dangerous" label)
+- 🚀 GPU FORCED
+- ⏱️ 30-60+ minutes (varies based on crashes detected)
+- 📈 Generates danger report and metrics
+
+### `scripts/quick_test.sh` 🧪 (FULL INTEGRATION - ADVANCED)
+Starts backend server + runs full test suite with autodefesa.
+
+**Pre-requisite (ONE TIME)**:
+```bash
+bash scripts/configure_sudo_omnimind.sh  # Setup NOPASSWD sudo
+```
+
+**Then run**:
+```bash
+bash scripts/quick_test.sh
+```
+
+**Features**:
+- 🖥️ Starts backend server on localhost:8000
+- 📊 Full suite with autodefesa
+- 🚀 GPU FORCED
+- ⏱️ 30-45 minutes
+- 💾 Requires sudo (for server startup)
+- 🔗 Tests against real server (not isolated)
+
+### ⚠️ IBM QUANTUM REAL HARDWARE (PHASE MADURA - FUTURE)
+
+**Status**: ✅ Implemented but NOT in active test cycle
+- **Papers 2&3**: Validated on real IBM Quantum (ibm_fez 27Q, ibm_torino 84Q)
+- **Real execution times**: 30-120 seconds per job
+- **Constraint**: Limited free credits
+- **Plan**: Activate in Phase 23+ for regular certification
+
+IBM Cloud integration remains in code but disabled in test conftest:
+```python
+# tests/conftest.py
+os.environ["OMNIMIND_DISABLE_IBM"] = "True"  # IBM auth failing in sandbox
+```
+
+To enable IBM quantum testing:
+```python
+# Set IBM token in environment
+export IBM_QUANTUM_TOKEN="your_token_here"
+export OMNIMIND_DISABLE_IBM="False"
+
+# Then run tests
+./scripts/run_tests_with_defense.sh
 ```
 
 ## 5. Implementation Checklist

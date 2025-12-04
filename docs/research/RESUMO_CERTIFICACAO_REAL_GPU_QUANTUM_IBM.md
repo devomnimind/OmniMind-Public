@@ -1,5 +1,20 @@
 # 🔐 CERTIFICAÇÃO REAL - RESUMO COMPLETO (2025-11-29)
 
+## ⚠️ NOTA IMPORTANTE (2025-12-04)
+
+Este documento descreve certificação com IBM Quantum REAL (Phase Madura).
+
+**Status**: ✅ Implementado, ❌ Não em ciclo ativo atualmente
+
+**Para testes normais e validação diária, use**:
+- `./scripts/run_tests_fast.sh` (⚡ 15-20m, rápido)
+- `./scripts/run_tests_with_defense.sh` (🛡️ 30-60m, completo)
+- `bash scripts/quick_test.sh` (🧪 30-45m com servidor)
+
+IBM Quantum real será ativado em Phase 23+ (fase madura) quando créditos + validação permitirem.
+
+---
+
 ## 📌 Objetivo Alcançado
 
 Você pediu:
@@ -272,11 +287,11 @@ fi
 
 ## 🎯 Filosofia
 
-**Números REAIS (mesmo que 0.6) + timestamp imutável**  
->  
+**Números REAIS (mesmo que 0.6) + timestamp imutável**
+>
 **Números falsificados (0.9) sem prova**
 
-Se Φ=0.634521, você publica ISSO e explica por quê.  
+Se Φ=0.634521, você publica ISSO e explica por quê.
 Se depois alguém questiona, você mostra:
 - Timestamp: "Foi medido em 2025-11-29T22:07:57"
 - Hash: "SHA256 não foi alterado"
@@ -316,7 +331,7 @@ Se depois alguém questiona, você mostra:
 
 ---
 
-**Data**: 2025-11-29  
-**Hora**: 22:07:58 UTC  
-**Versão**: 1.0 COMPLETA  
+**Data**: 2025-11-29
+**Hora**: 22:07:58 UTC
+**Versão**: 1.0 COMPLETA
 **Próximo**: Executar `bash scripts/run_full_certification.sh`

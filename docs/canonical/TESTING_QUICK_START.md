@@ -1,32 +1,69 @@
 ## 🧠 OMNIMIND TEST SUITE - SETUP RÁPIDO
 
-### ✅ Passo 1: Configurar Sudo (UMA VEZ)
+### 🚀 SCRIPTS DE TESTE ATIVOS (2025-12-04)
 
+Há 3 scripts principais para diferentes cenários:
+
+| Script | Propósito | Tempo | GPU | Servidor |
+|--------|-----------|-------|-----|----------|
+| `run_tests_fast.sh` | ⚡ Testes rápidos (sem slow/real/chaos) | **60-90 min** | ✅ Forçada | ❌ Não |
+| `run_tests_with_defense.sh` | 🛡️ Suite completa com autodefesa | **120-240 min** | ✅ Forçada | ❌ Não |
+| `quick_test.sh` | 🧪 Testes + servidor backend | **30-45 min** | ✅ Forçada | ✅ Sim |
+
+> ⏱️ **Tempos variam com**: Servidor Qdrant, processos do sistema, carga de GPU/CPU
+
+### ✅ Opção 1: Testes Rápidos (RECOMENDADO PARA DEV)
+
+```bash
+./scripts/run_tests_fast.sh
+```
+
+**Características**:
+- ⚡ Pula testes lentos (`@pytest.mark.slow`), integrações reais (`@pytest.mark.real`), e chaos (`@pytest.mark.chaos`)
+- 🚀 GPU FORÇADA com `CUDA_VISIBLE_DEVICES=0` + `OMNIMIND_FORCE_GPU=true`
+- ⏱️ **60-90 minutos** (depende servidor Qdrant, carga do sistema)
+- 📁 Logs em `data/test_reports/`
+
+### 🛡️ Opção 2: Suite Completa com Autodefesa (SEMANAL)
+
+```bash
+./scripts/run_tests_with_defense.sh
+```
+
+**Características**:
+- 📊 Suite COMPLETA (~3952 testes, **SEM filtros**)
+- 🔴 **INCLUI testes chaos**: Testes que destroem servidor propositalmente
+- 🛡️ Autodefesa: detecta testes perigosos e padrões de crash
+- 🚀 GPU FORÇADA
+- ⏱️ **120-240 minutos** (depende servidor Qdrant, carga do sistema, crashes)
+- 🔍 Relatório de testes perigosos ao fim
+- ⚠️ **Use apenas em ambiente sandbox ou fora do horário de trabalho**
+
+### 🧪 Opção 3: Testes + Servidor Backend (FULL INTEGRATION)
+
+Pré-requisito UMA VEZ:
 ```bash
 bash scripts/configure_sudo_omnimind.sh
 ```
 
-Isso permite rodar scripts sem digitar senha (usando NOPASSWD no sudoers).
-
-### 🚀 Passo 2: Executar Testes com Autodefesa
-
+Depois:
 ```bash
 bash scripts/quick_test.sh
 ```
 
-Ou manualmente:
-
-```bash
-OMNIMIND_GPU=true OMNIMIND_DEV=true OMNIMIND_DEBUG=true \
-pytest tests/ -vv --tb=short --log-cli-level=DEBUG -s
-```
+**Características**:
+- 🖥️ Inicia servidor backend em localhost:8000
+- 📊 Suite completa com autodefesa
+- 🚀 GPU FORÇADA
+- ⏱️ ~30-45 minutos
+- 💾 Exige sudo configurado
 
 ### 📊 Informações da Suite
 
-- **Total de testes**: ~3952
-- **Modo**: Real (venv + sistem sudoers, não Docker isolado)
-- **Autodefesa**: ✅ ATIVADA
-  - Detecta testes que derrubam servidor
+- **Total de testes**: ~3952 (completa) ou ~400 (fast)
+- **Modo**: Real (venv + GPUforced, não Docker isolado)
+- **Autodefesa**: ✅ ATIVADA (em run_tests_with_defense.sh e quick_test.sh)
+  - Detecta testes que causam crashes
   - Marca padrões agressivos após 3 crashes em 5min
   - Gera relatório ao fim da execução
 

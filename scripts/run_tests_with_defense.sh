@@ -3,13 +3,25 @@
 # ============================================================================
 # 🧠 RUN TESTS WITH OMNIMIND AUTODEFENSE
 # ============================================================================
-# Executa suite completa com:
+# Executa suite COMPLETA COM TESTES DESTRUTIVOS (SEMANAL):
 # - GPU ativada
 # - Dev mode
 # - Debug ativo
 # - Timeouts adaptativos (220-800s)
 # - OmniMind TestDefense ativado (detecta testes perigosos)
 # - Logs profundos em arquivos com timestamp
+#
+# 📋 INCLUÍDOS:
+#   ✅ Testes normais (unit, integration)
+#   ✅ Testes @pytest.mark.slow (timeout > 30s)
+#   ✅ Testes @pytest.mark.real (full LLM+Network)
+#   ✅ Testes @pytest.mark.chaos (destroem servidor - CHAOS ENGINEERING)
+#
+# ⏳ DURAÇÃO: ~45-90 min (com chaos engineering)
+# 🎯 RODAS: Semanais (validação completa)
+#
+# Para suite RÁPIDA (diária) sem chaos, use:
+#   ./scripts/run_tests_fast.sh
 # ============================================================================
 
 set -e
@@ -25,13 +37,33 @@ echo "======================================"
 echo "⏱️  Timestamp: $TIMESTAMP"
 echo "📊 Testes esperados: ~3952"
 echo "🛡️  Modo: Autodefesa ativada"
+echo "🚀 GPU: FORÇADA (com fallback)"
 echo "======================================"
 echo ""
 
-# Comando completo com GPU + Dev + Debug
+# Verificar GPU status ANTES dos testes
+echo "🔍 Verificando GPU status..."
+python3 << 'GPUCHECK'
+import torch
+print(f"  torch.cuda.is_available(): {torch.cuda.is_available()}")
+print(f"  torch.cuda.device_count(): {torch.cuda.device_count()}")
+if torch.cuda.device_count() > 0:
+    try:
+        print(f"  torch.cuda.get_device_name(0): {torch.cuda.get_device_name(0)}")
+    except:
+        print(f"  Device detected but name unavailable")
+print("")
+GPUCHECK
+
+# Comando completo com GPU FORÇADA + Dev + Debug
+# CRITICAL: CUDA_VISIBLE_DEVICES=0 força dispositivo 0
+# OMNIMIND_FORCE_GPU=true força detecção com device_count fallback
+CUDA_VISIBLE_DEVICES=0 \
 OMNIMIND_GPU=true \
+OMNIMIND_FORCE_GPU=true \
 OMNIMIND_DEV=true \
 OMNIMIND_DEBUG=true \
+PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb=512 \
 pytest tests/ \
   -vv \
   --tb=short \

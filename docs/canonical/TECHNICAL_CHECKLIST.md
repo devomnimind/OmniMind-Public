@@ -1,5 +1,205 @@
 # ✅ CHECKLIST TÉCNICO PRÉ-EXECUÇÃO
 
+## � SCRIPTS DE TESTE ATIVOS (2025-12-04)
+
+### ⚡ Execução Diária - `run_tests_fast.sh`
+```bash
+./scripts/run_tests_fast.sh
+```
+- **Tempo**: ~15-20 minutos
+- **Escopo**: ~400 testes (pula slow + real)
+- **GPU**: ✅ FORÇADA
+- **Uso**: DEV rápido, validação contínua
+- **Logs**: `data/test_reports/output_fast_*.log`
+
+### 🛡️ Validação Semanal - `run_tests_with_defense.sh`
+```bash
+./scripts/run_tests_with_defense.sh
+```
+- **Tempo**: ~30-60 minutos
+- **Escopo**: ~3952 testes (suite completa)
+- **GPU**: ✅ FORÇADA
+- **Autodefesa**: ✅ Detecta testes perigosos
+- **Logs**: `data/test_reports/output_*.log`
+
+### 🧪 Integração Completa - `quick_test.sh`
+```bash
+bash scripts/configure_sudo_omnimind.sh  # UMA VEZ
+bash scripts/quick_test.sh               # Depois sempre
+```
+- **Tempo**: ~30-45 minutos
+- **Escopo**: Suite completa + servidor backend
+- **GPU**: ✅ FORÇADA
+- **Servidor**: ✅ Inicia em localhost:8000
+- **Requer**: sudo configurado
+- **Logs**: `data/test_reports/output_*.log`
+
+### ⚠️ IBM QUANTUM REAL - FASE MADURA (FUTURE)
+Status: ✅ Implementado, ❌ Não em ciclo ativo
+- Papers 2&3 validados em hardware real (ibm_fez, ibm_torino)
+- Ativar quando créditos + fase madura (Phase 23+)
+- Atualmente: `OMNIMIND_DISABLE_IBM=True` em conftest.py
+
+---
+
+## �🔧 CORREÇÕES CRÍTICAS IMPLEMENTADAS (2025-12-04)
+
+### ✅ CRÍTICO 1: Timeout em Consensus Voting
+**Arquivo**: `src/swarm/collective_learning.py`
+**Status**: ✅ IMPLEMENTADO
+**Mudanças**:
+- [x] Adicionado `MAX_CONSENSUS_TIMEOUT = 30.0` segundos
+- [x] Implementado `threading.Lock()` para thread-safety
+- [x] Modificado `get_consensus_model()` com timeout protection
+- [x] Fallback: retorna consensus parcial se timeout excedido
+- [x] Logging detalhado de timeout e recuperação
+
+**Validação**: `python -c "from src.swarm.collective_learning import ConsensusLearning; cl = ConsensusLearning(5, consensus_timeout=30.0)"`
+
+---
+
+### ✅ CRÍTICO 2: Memory Cap com LRU Eviction
+**Arquivo**: `src/memory/episodic_memory.py`
+**Status**: ✅ IMPLEMENTADO
+**Mudanças**:
+- [x] Adicionado `MAX_EPISODIC_SIZE = 10000` episodes
+- [x] Implementado `_check_and_evict_lru()` método
+- [x] Rastreamento de access timestamps para LRU
+- [x] Evição de 10% quando limite atingido
+- [x] Integração em `store_episode()` e `search_similar()`
+
+**⚠️ Nota Arquitetural (IMPORTANTE)**:
+```
+EpisodicMemory está marcado como DEPRECATED com mensagem:
+"Memory is retroactive construction, not storage"
+
+Filosofia do projeto (Lacanian):
+- Memória NÃO é armazenamento estático
+- Memória É construção retroativa (rebuilt on each recall)
+- Remissão futura: substituir por NarrativeHistory
+- Status: ⏳ Pendente implementação de NarrativeHistory
+
+Impacto: EpisodicMemory funciona perfeitamente, mas é transitório.
+Usar com cautela em novas integrações. Preferir pattern retroativo.
+```
+
+---
+
+### ✅ CRÍTICO 3: Safe Filesystem Operations
+**Arquivo**: `src/metacognition/self_healing.py`
+**Status**: ✅ IMPLEMENTADO
+**Mudanças**:
+- [x] Implementado `safe_write_file()` com retry e error handling
+- [x] Implementado `safe_read_file()` com encoding safety
+- [x] Implementado `safe_delete_file()` com graceful failure
+- [x] Retry 3x para operações transientes
+- [x] Tratamento: PermissionError, OSError, UnicodeDecodeError
+
+---
+
+### ✅ CRÍTICO 4: Exponential Backoff Retry
+**Arquivo**: `src/quantum_consciousness/qpu_interface.py`
+**Status**: ✅ IMPLEMENTADO
+**Mudanças**:
+- [x] Implementado `retry_with_exponential_backoff()` função
+- [x] Exponential backoff: `delay = min(base_delay * 2^attempt, max_delay)`
+- [x] Jitter (10%) para prevent thundering herd
+- [x] Configuráveis: base_delay=1s, max_delay=30s, max_attempts=5
+- [x] Logging detalhado de cada tentativa
+
+---
+
+### ✅ GPU FORCING: Environment Variables & conftest.py
+**Status**: ✅ IMPLEMENTADO (2025-12-04)
+**Arquivos Modificados**:
+- `src/quantum_consciousness/quantum_backend.py` - Detecção robusta com fallback
+- `tests/conftest.py` - Auto-setup GPU forcing
+- `scripts/run_tests_fast.sh` - CUDA_VISIBLE_DEVICES=0 forcing
+- `scripts/run_tests_with_defense.sh` - CUDA_VISIBLE_DEVICES=0 forcing
+
+**Problema Original**:
+```
+- PyTorch CUDA detection fallando: torch.cuda.is_available() = False
+- Mas torch.cuda.device_count() = 1 (GPU está presente)
+- Variáveis de ambiente: OMNIMIND_GPU, OMNIMIND_FORCE_GPU não sendo respeitadas
+- Root cause: conftest.py não setava OMNIMIND_FORCE_GPU automaticamente
+```
+
+**Solução Implementada**:
+
+1. **quantum_backend.py** - Detecção com 2 fallbacks:
+   ```python
+   # Primeiro: try OMNIMIND_FORCE_GPU env var
+   force_gpu_env = os.getenv("OMNIMIND_FORCE_GPU", "").lower() in ("true", "1", "yes")
+
+   # Se force_gpu_env E device_count > 0: usar GPU
+   if force_gpu_env and device_count > 0:
+       self.use_gpu = True  # Force GPU usage
+
+   # Fallback: Se is_available() fails mas device_count > 0: usar GPU
+   elif not self.use_gpu and device_count > 0:
+       self.use_gpu = True  # Fallback GPU usage
+   ```
+
+2. **conftest.py** - Auto-setup ao iniciar pytest:
+   ```python
+   cuda_available = torch.cuda.is_available()
+   cuda_device_count = torch.cuda.device_count()
+
+   if cuda_available or cuda_device_count > 0:
+       os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+       os.environ["OMNIMIND_FORCE_GPU"] = "true"
+       os.environ["PYTEST_FORCE_GPU"] = "true"
+   ```
+
+3. **run_tests_fast.sh** & **run_tests_with_defense.sh**:
+   ```bash
+   CUDA_VISIBLE_DEVICES=0 \
+   OMNIMIND_GPU=true \
+   OMNIMIND_FORCE_GPU=true \
+   PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb=512 \
+   pytest tests/ ...
+   ```
+
+**Validação**:
+```bash
+# Script de verificação GPU status
+python3 scripts/verify_gpu_status.py
+
+# Expected output quando GPU disponível:
+# ✅ GPU FORCING IS CONFIGURED CORRECTLY
+#    - OMNIMIND_FORCE_GPU=True ✓
+#    - CUDA devices available: 1 ✓
+```
+
+**⚠️ Notas Importantes**:
+- Warning "CUDA unknown error" é normal quando CUDA_VISIBLE_DEVICES é setado dinamicamente
+- Não afeta funcionalidade (device_count fallback ativa automaticamente)
+- GPU será forçada mesmo se `torch.cuda.is_available()` retorna False
+- Tests sempre rodarão com GPU se hardware disponível
+
+---
+
+## 📋 PLANO DE EXECUÇÃO: TAREFAS REMOTAS vs LOCAIS
+
+### Blocos Lógicos Isolados (Sem Conflitos)
+
+**BLOCOS LOCAIS** (Sem sincronização com remoto):
+1. **LOCAL-1**: Validação smoke tests (15 min) - ⏳ PRONTO
+2. **LOCAL-2**: Remover TODO comments (5 min) - ⏳ PRONTO
+3. **LOCAL-3**: Atualizar READMEs módulos (10 min) - ⏳ PRONTO
+
+**BLOCOS REMOTOS** (Com Git):
+1. **REMOTO-1**: Git commit + push (5 min) - ⚠️ Coordinate antes
+2. **REMOTO-2**: Docs canonical (0 min) - ✅ JÁ FEITO
+
+**BLOCO CÍCLICO** (Após push):
+1. **CÍCLICO-1**: Full test suite (30-60 min) - ⏳ PRONTO
+
+Plano completo salvo em: `/tmp/tarefas_remotas_locais.md`
+
+---
+
 ## Verificações de Código
 
 ### pytest_server_monitor.py

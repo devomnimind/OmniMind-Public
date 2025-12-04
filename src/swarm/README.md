@@ -953,3 +953,26 @@ Orquestra execução de PSO...
 - `utils.py`: Utilitários para módulo de Swarm Intelligence - Phase 19.
 
 F...
+
+
+---
+
+## 🔧 Recent Changes (2025-12-04)
+
+### Critical Fix: Consensus Voting Timeout Protection
+- **File**: `collective_learning.py`
+- **Issue**: Consensus voting could hang indefinitely
+- **Solution**:
+  - Added `MAX_CONSENSUS_TIMEOUT = 30.0` seconds
+  - Implemented thread-safe voting with `threading.Lock()`
+  - Modified `get_consensus_model()` with timeout protection
+  - Fallback: returns partial consensus if timeout exceeded
+  - Logging: detailed timeout and recovery reporting
+
+**Example**:
+```python
+cl = ConsensusLearning(5, consensus_timeout=30.0)
+model = cl.get_consensus_model()  # Returns in max 30s
+```
+
+**Status**: ✅ Implemented and validated
