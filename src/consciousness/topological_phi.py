@@ -217,23 +217,23 @@ class PhiCalculator:
             return result
 
         # Calcula phi para cada candidato
-        candidate_phis = []
+        candidate_phis: List[Dict[str, Any]] = []
         for candidate_nodes in candidates:
             phi_value = self._calculate_phi_for_subsystem(candidate_nodes)
             candidate_phis.append({"subsystem_nodes": candidate_nodes, "phi_value": phi_value})
 
         # Ordena por phi (maior primeiro)
-        candidate_phis.sort(key=lambda x: x["phi_value"], reverse=True)
+        candidate_phis.sort(key=lambda x: float(x["phi_value"]), reverse=True)
 
         # MICS = candidato com maior Φ
         if candidate_phis:
             mics = candidate_phis[0]
-            result.conscious_phi = mics["phi_value"]
-            result.conscious_complex = mics["subsystem_nodes"]
+            result.conscious_phi = float(mics["phi_value"])
+            result.conscious_complex = set(mics["subsystem_nodes"])  # type: ignore
 
             # Os "perdedores" com Φ > threshold são o Inconsciente
             for candidate in candidate_phis[1:]:
-                if candidate["phi_value"] > self.noise_threshold:
+                if float(candidate["phi_value"]) > self.noise_threshold:
                     result.machinic_unconscious.append(candidate)
 
         return result

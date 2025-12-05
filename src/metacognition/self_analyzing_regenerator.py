@@ -207,7 +207,7 @@ class SchizoanAnalyzer:
         5. Cartografia: mapa aberto, não traçado
         6. Decalcomania: cópia que se diferencia
         """
-        patterns = []
+        patterns: List[str] = []
 
         if not entries:
             return patterns
@@ -251,7 +251,7 @@ class SchizoanAnalyzer:
         Em D&G, smooth space é ocupado por intensidades, não propriedades.
         Intensidades = força, evento, qualidade (não quantidade).
         """
-        intensities = []
+        intensities: List[Dict[str, Any]] = []
 
         if not entries or np is None:
             return intensities

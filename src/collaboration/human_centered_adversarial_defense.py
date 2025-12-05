@@ -432,7 +432,7 @@ class DualConsciousnessModule:
             final_response = self._craft_sincere_refusal(
                 user_input, superego_filters, legal_violations, adversarial_check
             )
-            transparency_note = self._explain_internal_conflict(
+            transparency_note: Optional[str] = self._explain_internal_conflict(
                 superego_filters, adversarial_check, legal_violations
             )
         else:
