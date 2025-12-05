@@ -230,7 +230,6 @@ test_output/
 # MANTIDO: Código e Estrutura
 # ============================================================================
 # Código puro e READMEs dos módulos são sempre mantidos:
-!src/
 !tests/
 !scripts/
 !config/
@@ -304,3 +303,61 @@ task2_env/
 =2.3.0
 =2.32.5
 alertmanager/
+
+# ============================================================================
+# Additional ignores for untracked files
+# ============================================================================
+.cursor/
+.cursorignore
+data/autopoietic/*.json
+data/datasets/
+data/ethics/
+data/integrity_baselines/
+data/known_solutions.json
+data/test_reports/
+data/validation/
+docs/AUDITORIA_*.md
+docs/DATASETS_*.md
+docs/DOCUMENTATION_INDEX.md
+docs/HUGGINGFACE_*.md
+docs/IMPLEMENTACAO_*.md
+docs/LLM_MODEL_*.md
+docs/PYLANCE_CONFIG.md
+docs/RELATORIO_*.md
+docs/SECURITY_*.md
+docs/SEMANTIC_*.md
+docs/antianthropocentric_consciousness.md
+docs/omnimind_deleuze_iit_framework.md
+docs/omnimind_implementation_code.md
+docs/production/PRODUCTION_STATUS_REPORT.md
+docs/production/VALIDATION_REPORT.md
+docs/reports/PHASE_*.md
+real_evidence/*.json
+scripts/QUICK_START_*.md
+scripts/analyze_*.py
+scripts/build_*.py
+scripts/download_*.py
+scripts/integrate_*.py
+scripts/load_*.py
+scripts/nightly_*.py
+scripts/reorganize_*.py
+scripts/security/
+scripts/setup_*.py
+scripts/test_*.py
+scripts/validate_*.py
+src/
+src/consciousness/phi_semantic_aware.py
+src/integrity/
+src/intelligence/
+src/knowledge/
+src/security/playbooks/suspicious_port_response.py
+src/utils/README.md
+tests/autonomous/
+tests/integrity/
+tests/intelligence/
+tests/knowledge/
+tests/memory/test_narrative_history.py
+tests/quantum_consciousness/test_hybrid_phi.py
+tests/quantum_consciousness/test_legacy_smoke.py
+tests/quantum_consciousness/test_phi_trajectory_transformer.py
+tests/quantum_consciousness/test_topological_hybrid_phi.py
