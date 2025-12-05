@@ -1,0 +1,47 @@
+# CI/CD Dependencies - Minimal set for testing and linting (updated 2025-11-24)
+# Python 3.12.8 (compatible)
+
+# Testing and code quality
+#pytest>=9.0.0
+#pytest-cov>=7.0.0
+#pytest-asyncio>=1.3.0
+pylint>=4.0.0
+mypy>=1.18.0
+black>=25.0.0
+flake8>=7.0.0
+
+# Core framework (minimal)
+langchain>=1.1.0
+langchain-community>=0.4.0
+pydantic>=2.12.0
+python-dotenv>=1.2.0
+
+# Utilities
+rich>=14.0.0
+psutil>=7.0.0
+PyYAML>=6.0.3
+requests>=2.32.0
+
+# Structured logging
+structlog>=25.0.0
+
+# Performance analysis
+#memory-profiler>=0.61.0
+
+# Web dashboard (minimal)
+#fastapi>=0.122.0
+#uvicorn>=0.38.0
+
+# Basic vector database
+#qdrant-client>=1.16.0,<2.0.0
+
+# Observability (minimal)
+#opentelemetry-api>=1.38.0
+#prometheus-client>=0.23.0
+
+# Redis for testing
+#redis>=7.0.0
+#fakeredis>=2.32.0
+
+# Basic numpy for core functionality
+numpy>=2.2.0
