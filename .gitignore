@@ -345,7 +345,6 @@ scripts/security/
 scripts/setup_*.py
 scripts/test_*.py
 scripts/validate_*.py
-src/
 src/consciousness/phi_semantic_aware.py
 src/integrity/
 src/intelligence/
