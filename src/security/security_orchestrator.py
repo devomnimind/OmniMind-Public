@@ -186,7 +186,7 @@ class SecurityOrchestrator:
                     )
 
                     # Convert NetworkAnomaly to SecurityEvent and send to SecurityAgent
-                    # Only for HIGH/CRITICAL anomalies if SecurityAgent is available and auto_response is enabled
+                    # Only for HIGH/CRITICAL anomalies if auto_response enabled
                     if self.security_agent:
                         config = self.security_agent.config
                         auto_response = config.get("security_agent", {}).get("auto_response", False)
@@ -194,7 +194,10 @@ class SecurityOrchestrator:
                         if auto_response:
                             for anomaly in anomalies:
                                 # Only process HIGH/CRITICAL anomalies
-                                if anomaly.severity in [ThreatSeverity.HIGH, ThreatSeverity.CRITICAL]:
+                                if anomaly.severity in [
+                                    ThreatSeverity.HIGH,
+                                    ThreatSeverity.CRITICAL,
+                                ]:
                                     # Convert ThreatSeverity to ThreatLevel
                                     threat_level_map = {
                                         ThreatSeverity.LOW: ThreatLevel.LOW,
@@ -209,7 +212,9 @@ class SecurityOrchestrator:
                                         "suspicious_ports": "suspicious_port",
                                         "new_host_detected": "suspicious_network",
                                     }
-                                    event_type = event_type_map.get(anomaly.type, "suspicious_network")
+                                    event_type = event_type_map.get(
+                                        anomaly.type, "suspicious_network"
+                                    )
 
                                     # Create SecurityEvent
                                     security_event = SecurityEvent(

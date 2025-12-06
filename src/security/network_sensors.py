@@ -7,6 +7,7 @@ Based on: docs/Omni-Dev-Integrationforensis.md
 Legal Compliance: 100% legal when used on own systems (GPL v2 licenses)
 """
 
+import logging
 import re
 import subprocess
 from dataclasses import dataclass, field
@@ -16,6 +17,8 @@ from typing import Any, Dict, List, Optional
 
 from ..audit.alerting_system import AlertCategory, AlertingSystem, AlertSeverity
 from ..audit.immutable_audit import ImmutableAuditSystem, get_audit_system
+
+logger = logging.getLogger(__name__)
 
 
 class ThreatSeverity(Enum):
@@ -280,14 +283,12 @@ class NetworkSensorGanglia:
                 suspicious_ports = {4444, 5555, 6666, 7777, 8888, 31337}
                 suspicious_detected = new_ports & suspicious_ports
 
-                # Whitelist: Ignorar gateway/router (192.168.1.1) - portas podem ser serviços legítimos
+                # Whitelist: Ignorar gateway - portas podem ser legítimas
                 is_gateway = ip == "192.168.1.1" or ip.startswith("192.168.1.")
                 if is_gateway and 4444 in suspicious_detected:
                     # Gateway pode ter serviços legítimos na porta 4444 (ex: HTTPS alternativo)
                     # Apenas logar, não criar alerta crítico
-                    logger.debug(
-                        f"Porta 4444 detectada no gateway {ip} - ignorando (whitelist)"
-                    )
+                    logger.debug(f"Porta 4444 no gateway {ip} - ignorando")
                     suspicious_detected.discard(4444)
 
                 if suspicious_detected:
@@ -298,7 +299,9 @@ class NetworkSensorGanglia:
                     severity = ThreatSeverity.LOW
 
                 # Não criar alerta se for gateway e porta 4444 foi descartada
-                should_create_alert = new_ports and not (is_gateway and 4444 in new_ports and not suspicious_detected)
+                should_create_alert = new_ports and not (
+                    is_gateway and 4444 in new_ports and not suspicious_detected
+                )
 
                 if should_create_alert:
                     anomalies.append(
@@ -316,10 +319,7 @@ class NetworkSensorGanglia:
                     )
                 elif is_gateway and 4444 in new_ports:
                     # Log apenas, sem criar alerta
-                    logger.info(
-                        f"Porta 4444 detectada no gateway {ip} - ignorada (whitelist). "
-                        f"Outras portas: {list(new_ports - {4444})}"
-                    )
+                    logger.info(f"Porta 4444 no gateway {ip} - ignorada")
 
                 # Update baseline
                 self.baseline_ports[ip] = host.open_ports.copy()
