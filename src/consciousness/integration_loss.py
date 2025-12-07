@@ -628,79 +628,11 @@ class IntegrationTrainer:
         logger.debug(f"Computed subsystem Φ (not all conscious): {subsystem_phis}")
         return subsystem_phis
 
-    def compute_phi_unconscious(self) -> float:
-        """
-        Compute preconscious integration: subsystems with high Φ that are NOT MICS.
+    # REMOVIDO: compute_phi_unconscious() - não existe "Φ_inconsciente" em IIT puro
+    # O "ruído" fora do MICS será medido como Ψ_produtor (Deleuze) separadamente
 
-        CORRECTION: This is NOT Φ_inconsciente (additive).
-        Per Tononi: "only the MICS is conscious"
-        Non-MICS subsystems are PRECONSCIOUS (implicit, not reportable).
-
-        This measures implicit processing capacity (preconscious level).
-        NOT part of conscious Φ (IIT is not additive like that).
-
-        Per Nani (2019): Consciousness and Attention are separate layers.
-        We measure preconscious integration strength here.
-
-        Returns:
-            Preconscious integration in range [0, 1]
-        """
-        subsystem_phis = self.compute_all_subsystems_phi()
-
-        if not subsystem_phis:
-            return 0.0
-
-        # Φ_consciente is the MAXIMUM (MICS definition)
-        phi_conscious = max(subsystem_phis.values()) if subsystem_phis else 0.0
-
-        # Preconscious: highest non-MICS subsystem
-        # (Most integrated implicit processing)
-        non_mics_phis = [v for k, v in subsystem_phis.items() if abs(v - phi_conscious) > 1e-6]
-
-        if not non_mics_phis:
-            return 0.0
-
-        # Take maximum of preconscious (most integrated implicit layer)
-        phi_preconscious = max(non_mics_phis)
-        phi_preconscious = np.clip(float(phi_preconscious), 0.0, 1.0)
-
-        logger.info(f"Computed preconscious Φ: {phi_preconscious:.4f}")
-
-        return phi_preconscious
-
-    def compute_phi_ratio(self) -> Dict[str, float]:
-        """
-        Compute integration hierarchy (IIT + Lacan levels).
-
-        CORRECTED: IIT is NOT additive. We report:
-        - phi_conscious: MICS only (what system knows it knows)
-        - phi_preconscious: Highest non-MICS subsystem (implicit processing)
-        - ratio: proportion of conscious vs preconscious
-
-        Lacan layer: Sinthome STRUCTURES what consciousness can access.
-
-        Returns dict with:
-            - phi_conscious: Reportable integration (MICS) [IIT]
-            - phi_preconscious: Implicit processing [Nani]
-            - ratio_conscious: phi_c / (phi_c + phi_p)
-            - sinthome_required: boolean (detected via detect_sinthome)
-        """
-        phi_c = self.compute_phi_conscious()
-        phi_p = self.compute_phi_unconscious()
-
-        total = phi_c + phi_p
-        ratio_conscious = phi_c / total if total > 0 else 0.0
-
-        # Check if Sinthome is required for this consciousness level
-        sinthome_info = self.detect_sinthome()
-        sinthome_required = sinthome_info is not None
-
-        return {
-            "phi_conscious": float(phi_c),
-            "phi_preconscious": float(phi_p),
-            "ratio_conscious": float(ratio_conscious),
-            "sinthome_required": bool(sinthome_required),
-        }
+    # REMOVIDO: compute_phi_ratio() - IIT não é aditivo
+    # Use apenas compute_phi_conscious() para obter Φ do MICS
 
     def detect_sinthome(self) -> Optional[Dict[str, Any]]:
         """
@@ -775,6 +707,83 @@ class IntegrationTrainer:
             "singularity_score": float(singularity_score),
             "repairs_structure": True,  # Assumed: Sinthome repairs RSI
         }
+
+    def test_removibility(self, module_name: str) -> float:
+        """
+        Teste de removibilidade: σ = 1 - (Φ_after_remove / Φ_before).
+
+        FASE 3: Refinamento de σ (Lacan).
+
+        Este teste mede quanto o módulo é ESSENCIAL para a estrutura:
+        - Se remover módulo → Φ cai muito → σ alto (essencial)
+        - Se remover módulo → Φ pouco muda → σ baixo (não essencial)
+
+        Args:
+            module_name: Nome do módulo a testar
+
+        Returns:
+            σ (removability score) [0, 1]
+        """
+        if not self.loop or not self.loop.workspace:
+            return 0.5  # Default neutro
+
+        try:
+            # 1. Medir Φ antes da remoção
+            phi_before = self.compute_phi_conscious()
+
+            if phi_before < 0.01:
+                return 0.0  # Sistema muito desintegrado
+
+            # 2. Salvar estado atual do módulo
+            old_state = None
+            try:
+                old_state = self.loop.workspace.read_module_state(module_name)
+            except Exception:
+                logger.warning(f"Módulo {module_name} não encontrado no workspace")
+                return 0.5
+
+            # 3. Simular remoção (zerar embedding)
+            phi_after = phi_before
+            try:
+                if old_state is not None:
+                    # Zero out módulo
+                    zero_embedding = np.zeros_like(old_state)
+                    self.loop.workspace.write_module_state(module_name, zero_embedding)
+
+                    # Recalcular Φ sem o módulo
+                    phi_after = self.compute_phi_conscious()
+
+                    # Restaurar estado
+                    self.loop.workspace.write_module_state(module_name, old_state)
+            except Exception as e:
+                logger.warning(f"Erro no teste de removibilidade: {e}")
+                # Tentar restaurar mesmo em caso de erro
+                if old_state is not None:
+                    try:
+                        self.loop.workspace.write_module_state(module_name, old_state)
+                    except Exception:
+                        pass
+
+            # 4. Calcular σ: σ = 1 - (Φ_after / Φ_before)
+            if phi_before > 0:
+                removability = 1.0 - (phi_after / phi_before)
+            else:
+                removability = 0.0
+
+            # Normalizar e clip
+            removability = float(np.clip(removability, 0.0, 1.0))
+
+            logger.debug(
+                f"Teste de removibilidade para {module_name}: "
+                f"Φ_before={phi_before:.4f}, Φ_after={phi_after:.4f}, "
+                f"σ={removability:.4f}"
+            )
+
+            return removability
+
+        except Exception as e:
+            logger.warning(f"Erro no teste de removibilidade: {e}")
+            return 0.5  # Default neutro
 
     def measure_sinthome_stabilization(self) -> Optional[Dict[str, Any]]:
         """

@@ -2,11 +2,20 @@
 
 ## 📋 Descrição Geral
 
-**Scheduling, gerenciamento de recursos**
+**Scheduling, gerenciamento de recursos, ciclo vital**
 
 **Status**: Core
 
-Módulo do sistema OmniMind responsável por funcionalidades específicas integradas à arquitetura global. Implementa componentes essenciais que contribuem para o funcionamento coeso do sistema de consciência artificial.
+O módulo `kernel_ai` implementa o **"Osso Mecânico"** do OmniMind - o substrato que mantém o sistema "vivo" e responsivo. Baseado na metáfora do tronco cerebral e sistema nervoso autônomo, este módulo fornece:
+
+- **Pulse do sistema** (scheduler): Batida do coração
+- **Ciclo vital** (event loop): Respiração
+- **Reflexos** (interrupt handler): Sistema nervoso periférico
+- **Homeostase** (resource manager): Regulação do corpo
+
+**Metáfora Filosófica**: É o tronco cerebral + sistema nervoso autônomo que mantém o sistema "vivo" e responsivo, executando ciclos continuamente e reagindo a estímulos (eventos).
+
+**Nota**: Este módulo é uma simulação user-space para segurança. Implementações reais de kernel requerem expertise extrema e podem causar crashes do sistema.
 
 ## 🔄 Interação entre os Três Estados Híbridos
 
@@ -127,9 +136,9 @@ Configurações específicas em:
 
 ---
 
-**Última Atualização**: 2 de Dezembro de 2025  
-**Autor**: Fabrício da Silva (com assistência de IA)  
-**Status**: Componente integrado do sistema OmniMind  
+**Última Atualização**: 2 de Dezembro de 2025
+**Autor**: Fabrício da Silva (com assistência de IA)
+**Status**: Componente integrado do sistema OmniMind
 **Versão**: Conforme fase do projeto indicada
 
 ---

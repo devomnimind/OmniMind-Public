@@ -62,6 +62,15 @@ from web.backend.websocket_manager import ws_manager
 # Load environment variables from .env file
 load_dotenv()
 
+logger = logging.getLogger("omnimind.backend")
+
+# API de Explicabilidade (Sessão 6)
+decisions_router: Optional[Any] = None
+try:
+    from web.backend.api.decisions import router as decisions_router
+except ImportError:
+    logger.warning("Decisions API not available")
+
 
 # Simple observability for backend (replaces DEVBRAIN_V23 import)
 class AutonomyObservability:
@@ -101,7 +110,6 @@ autonomy_observability = AutonomyObservability()
 consciousness_metrics_collector = RealConsciousnessMetricsCollector()
 dashboard_metrics_aggregator.set_consciousness_collector(consciousness_metrics_collector)
 
-logger = logging.getLogger("omnimind.backend")
 _AUTH_FILE = Path(os.environ.get("OMNIMIND_DASHBOARD_AUTH_FILE", "config/dashboard_auth.json"))
 
 
@@ -206,6 +214,15 @@ async def lifespan(app_instance: FastAPI):
         daemon_monitor_loop = dml
     except ImportError:
         logger.warning("Daemon Monitor not available")
+
+    # Import Observer Service
+    observer_service: Any = None
+    try:
+        from src.services.observer_service import ObserverService
+
+        observer_service = ObserverService()
+    except ImportError:
+        logger.warning("Observer Service not available")
 
     # Import Realtime Analytics Broadcaster
     realtime_analytics_broadcaster: Any = None
@@ -325,6 +342,19 @@ async def lifespan(app_instance: FastAPI):
     # ========== COMPONENTES MEDIUM-SPEED (EM PARALELO) ==========
     medium_startup_tasks = []
 
+    # Observer Service (métricas de longo prazo)
+    async def _start_observer_service():
+        if observer_service is not None:
+            try:
+                # Observer Service é leve, pode iniciar em paralelo
+                observer_task = asyncio.create_task(observer_service.run())
+                app_instance.state.observer_service_task = observer_task
+                logger.info("✅ Observer Service iniciado (métricas de longo prazo)")
+            except Exception as e:
+                logger.warning(f"Failed to start Observer Service: {e}")
+
+    medium_startup_tasks.append(asyncio.create_task(_start_observer_service()))
+
     # Daemon Monitor
     async def _start_daemon_monitor():
         if daemon_monitor_loop is not None:
@@ -427,6 +457,18 @@ async def lifespan(app_instance: FastAPI):
         # Stop Sinthome Broadcaster
         if sinthome_broadcaster:
             await sinthome_broadcaster.stop()
+
+        # Stop Observer Service
+        if hasattr(app_instance.state, "observer_service_task"):
+            observer_task = app_instance.state.observer_service_task
+            if observer_service:
+                observer_service.running = False
+            observer_task.cancel()
+            try:
+                await asyncio.wait_for(observer_task, timeout=5.0)
+            except (asyncio.CancelledError, asyncio.TimeoutError):
+                pass
+            logger.info("Observer Service stopped")
 
         # Stop Daemon Monitor
         if hasattr(app_instance.state, "daemon_monitor_task"):
@@ -1302,6 +1344,10 @@ app.include_router(
 )
 app.include_router(chat_api.router)
 app.include_router(tribunal.router, dependencies=[Depends(_verify_credentials)])
+
+# API de Explicabilidade (Sessão 6)
+if decisions_router:
+    app.include_router(decisions_router)
 
 # Monitoramento e alertas
 try:

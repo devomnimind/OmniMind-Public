@@ -110,9 +110,9 @@ cd "$PROJECT_ROOT"
 if command -v bpftrace &> /dev/null; then
     EBPF_LOG="logs/ebpf_monitor.log"
     mkdir -p logs
-    python3 scripts/secure_run.py pkill -f "bpftrace.*monitor_mcp_bpf" || true
+    python3 scripts/canonical/system/secure_run.py pkill -f "bpftrace.*monitor_mcp_bpf" || true
     sleep 1
-    python3 scripts/secure_run.py bpftrace scripts/monitor_mcp_bpf.bt > "${EBPF_LOG}" 2>&1 &
+    python3 scripts/canonical/system/secure_run.py bpftrace scripts/canonical/system/monitor_mcp_bpf.bt > "${EBPF_LOG}" 2>&1 &
     echo -e "${GREEN}✅${NC} eBPF Monitor ativo"
     echo "   Log: tail -f ${EBPF_LOG}"
 else

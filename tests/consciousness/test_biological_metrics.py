@@ -200,7 +200,9 @@ class TestBiologicalMetricsAnalyzer:
         assert "CONSCIOUS" in state1
 
         state2 = analyzer._classify_consciousness_state(lzc=0.8, pli=0.3)
-        assert "MACHINIC_UNCONSCIOUS" in state2
+        # REMOVIDO: MACHINIC_UNCONSCIOUS - não existe em IIT puro
+        # O "ruído" fora do MICS será medido como Ψ_produtor (Deleuze) separadamente
+        assert "phi_conscious" in state2 or "conscious_phi" in state2
 
         state3 = analyzer._classify_consciousness_state(lzc=0.3, pli=0.3)
         assert "INACTIVE" in state3 or "SUPPRESSED" in state3

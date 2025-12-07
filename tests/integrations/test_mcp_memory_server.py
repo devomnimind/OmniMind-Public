@@ -45,8 +45,9 @@ class TestMemoryMCPServer:
         assert isinstance(result, dict)
         assert "id" in result
         assert "status" in result
-        assert result["id"] == "mem_stub_123"
+        # Nova implementação retorna ID baseado em hash ou metadata
         assert result["status"] == "stored"
+        assert result["type"] == "semantic_concept"
 
     def test_store_memory_with_complex_metadata(self) -> None:
         """Testa armazenamento com metadata complexo."""
@@ -60,7 +61,9 @@ class TestMemoryMCPServer:
         }
         result = server.store_memory(content="Complex memory with rich metadata", metadata=metadata)
         assert result["status"] == "stored"
-        assert result["id"] == "mem_stub_123"
+        # Nova implementação retorna ID baseado em hash ou metadata
+        assert "id" in result
+        assert result["type"] == "semantic_concept"
 
     def test_store_memory_empty_metadata(self) -> None:
         """Testa armazenamento com metadata vazio."""
@@ -71,12 +74,16 @@ class TestMemoryMCPServer:
     def test_retrieve_memory_basic(self) -> None:
         """Testa recuperação básica de memória."""
         server = MemoryMCPServer()
+        # Primeiro armazenar uma memória
+        server.store_memory(content="test memory content", metadata={"type": "test"})
+        # Depois recuperar
         result = server.retrieve_memory(query="test")
         assert result is not None
         assert isinstance(result, dict)
         assert "results" in result
         assert isinstance(result["results"], list)
-        assert result["results"] == []
+        # Pode ter resultados se encontrar conceitos relacionados
+        assert "count" in result
 
     def test_retrieve_memory_with_limit(self) -> None:
         """Testa recuperação com limite especificado."""
@@ -113,17 +120,28 @@ class TestMemoryMCPServer:
     def test_delete_memory_basic(self) -> None:
         """Testa deleção básica de memória."""
         server = MemoryMCPServer()
-        result = server.delete_memory(memory_id="mem_to_delete")
+        # Primeiro criar uma memória
+        store_result = server.store_memory(
+            content="memory to delete", metadata={"name": "mem_to_delete"}
+        )
+        memory_id = store_result["id"]
+        # Depois deletar
+        result = server.delete_memory(memory_id=memory_id)
         assert result is not None
         assert isinstance(result, dict)
-        assert result["id"] == "mem_to_delete"
+        assert result["id"] == memory_id
         assert result["status"] == "deleted"
 
     def test_delete_memory_multiple(self) -> None:
         """Testa deleção de múltiplas memórias."""
         server = MemoryMCPServer()
-        ids_to_delete = ["mem_1", "mem_2", "mem_3"]
-        for memory_id in ids_to_delete:
+        # Primeiro criar memórias
+        created_ids = []
+        for i, memory_id in enumerate(["mem_1", "mem_2", "mem_3"]):
+            store_result = server.store_memory(content=f"memory {i}", metadata={"name": memory_id})
+            created_ids.append(store_result["id"])
+        # Depois deletar
+        for memory_id in created_ids:
             result = server.delete_memory(memory_id=memory_id)
             assert result["id"] == memory_id
             assert result["status"] == "deleted"

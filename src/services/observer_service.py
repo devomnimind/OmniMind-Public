@@ -54,6 +54,7 @@ class ObserverService:
         # For simplicity, we'll just compress the current file if it exists and start new.
         # Ideally, we'd rename metrics.jsonl -> metrics_DATE.jsonl then compress.
 
+        should_rotate = False
         if os.path.exists(METRICS_FILE):
             # Check file creation time or size
             # For this MVP, let's rotate daily based on self.last_rotation logic
@@ -74,6 +75,22 @@ class ObserverService:
                 open(METRICS_FILE, "w").close()
                 print(f"Rotated logs to {archive_name}")
                 self.last_rotation = now
+                should_rotate = True
+
+        # Gerar relatório após rotação ou periodicamente (diário)
+        if should_rotate or (now.hour == 0 and now.minute < 5):  # Meia-noite
+            try:
+                from src.observability.module_reporter import get_module_reporter
+
+                reporter = get_module_reporter()
+                reporter.generate_module_report(
+                    module_name="observer_service",
+                    include_metrics=True,
+                    format="json",
+                )
+                print(f"[{now.isoformat()}] Relatório gerado para ObserverService")
+            except Exception as e:
+                print(f"[{now.isoformat()}] Erro ao gerar relatório: {e}")
 
     async def run(self):
         print("OmniMind Observer Service Started.")

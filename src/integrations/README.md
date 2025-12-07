@@ -407,15 +407,35 @@ Args:
     original_task: Tarefa original
     isol...
 
-### `MemoryMCPServer(MCPServer)`
+### `MemoryMCPServer(MCPServer)` ✅ ATUALIZADO (2025-12-06)
+
+Servidor MCP para sistemas de memória do OmniMind. Implementado com sistemas reais:
+- **SemanticMemory**: Armazenamento de conceitos semânticos
+- **ProceduralMemory**: Armazenamento de habilidades procedurais
+- Integração completa com sistemas de memória do OmniMind
 
 **Métodos principais:**
 
 - `store_memory(content: str, metadata: Dict[str, Any])` → `Dict[str, Any]`
+  > Armazena memória usando SemanticMemory (conceitos semânticos)
 - `retrieve_memory(query: str, limit: int)` → `Dict[str, Any]`
+  > Recupera memórias usando busca semântica
 - `update_memory(memory_id: str, content: str)` → `Dict[str, Any]`
+  > Atualiza memória existente
 - `delete_memory(memory_id: str)` → `Dict[str, Any]`
+  > Remove memória
 - `create_association(source_id: str, target_id: str, type: str)` → `Dict[str, Any]`
+  > Cria associação entre conceitos
+- `get_memory_graph()` → `Dict[str, Any]`
+  > Retorna grafo de memórias (conceitos e relações)
+- `store_concept(name: str, attributes: Dict[str, Any])` → `Dict[str, Any]`
+  > Armazena conceito semântico
+- `get_concept(name: str)` → `Dict[str, Any]`
+  > Recupera conceito semântico
+- `learn_skill(name: str, steps: list[str], parameters: Optional[Dict[str, Any]])` → `Dict[str, Any]`
+  > Aprende habilidade procedural
+- `get_skill(name: str)` → `Dict[str, Any]`
+  > Recupera habilidade procedural
 
 ### `PythonMCPServer(MCPServer)`
 

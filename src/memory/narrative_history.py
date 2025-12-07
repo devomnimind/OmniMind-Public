@@ -10,7 +10,9 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime, timezone
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
+
+import numpy as np
 
 from memory.episodic_memory import EpisodicMemory
 
@@ -34,6 +36,7 @@ class NarrativeHistory:
         collection_name: str = "omnimind_narratives",
         embedding_dim: int = 384,
         max_size: int = 10000,
+        systemic_memory: Optional[Any] = None,  # SystemicMemoryTrace opcional
     ):
         """Initialize narrative history
 
@@ -42,6 +45,7 @@ class NarrativeHistory:
             collection_name: Collection name
             embedding_dim: Embedding dimension
             max_size: Maximum narratives to store
+            systemic_memory: Instância opcional de SystemicMemoryTrace para reconstrução topológica
         """
         # Use EpisodicMemory as backend but with Lacanian semantics
         self.backend = EpisodicMemory(
@@ -54,7 +58,13 @@ class NarrativeHistory:
         # Track retroactive significations
         self.retroactive_significations: Dict[str, Dict[str, Any]] = {}
 
-        logger.info("NarrativeHistory initialized (Lacanian approach)")
+        # Memória sistemática para reconstrução topológica
+        self.systemic_memory = systemic_memory
+
+        logger.info(
+            "NarrativeHistory initialized (Lacanian approach, "
+            f"systemic_memory={'enabled' if systemic_memory else 'disabled'})"
+        )
 
     def inscribe_event(
         self,
@@ -175,6 +185,53 @@ class NarrativeHistory:
         }
 
         logger.info(f"✅ Retroactive signification: {event_id} → {new_meaning}")
+
+    def reconstruct_narrative(
+        self, query: str, use_systemic_memory: bool = True
+    ) -> List[Dict[str, Any]]:
+        """
+        Reconstrói narrativa retroativamente usando memória sistemática (topológica).
+
+        Se systemic_memory está disponível, tenta usar reconstrução topológica primeiro.
+        Fallback para backend (Qdrant) se não disponível ou falhar.
+
+        Args:
+            query: Query para reconstruir narrativa
+            use_systemic_memory: Se True, tenta usar memória sistemática primeiro
+
+        Returns:
+            Lista de eventos reconstruídos (não recuperados)
+        """
+        # NOVO: Tenta usar SystemicMemoryTrace primeiro (topológico)
+        if use_systemic_memory and self.systemic_memory is not None:
+            try:
+                # Converte query para embedding (simplificado)
+                # Em produção usaria modelo de embedding
+                # Por enquanto, cria embedding aleatório baseado em hash da query
+                query_hash = hash(query) % (2**31)
+                np.random.seed(query_hash)
+                query_embedding = np.random.randn(self.backend.embedding_dim).astype(np.float32)
+                # Normaliza
+                query_embedding = query_embedding / (np.linalg.norm(query_embedding) + 1e-10)
+
+                # Reconstrói narrativa retroativamente usando deformações topológicas
+                narrative = self.systemic_memory.reconstruct_narrative_retroactively(
+                    query_embedding, num_steps=10
+                )
+
+                if narrative:
+                    logger.debug(
+                        f"Narrativa reconstruída via memória sistemática: {len(narrative)} passos"
+                    )
+                    return narrative
+            except Exception as e:
+                logger.warning(
+                    f"Erro ao reconstruir narrativa via memória sistemática: {e}. "
+                    "Usando fallback para backend."
+                )
+
+        # Fallback para backend (Qdrant)
+        return self.construct_narrative(query, top_k=10).get("narrative", [])
 
     def construct_narrative(self, query: str, top_k: int = 10) -> Dict[str, Any]:
         """Construct narrative from events (not retrieve)

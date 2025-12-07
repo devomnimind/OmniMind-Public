@@ -50,6 +50,10 @@ class TestAgentState:
             "max_iterations": 10,
             "completed": False,
             "final_result": "",
+            "phi": 0.5,
+            "psi": 0.3,
+            "sigma": 0.2,
+            "quality_score": 0.8,
         }
 
         assert len(state["messages"]) == 2
@@ -148,6 +152,10 @@ system:
             "max_iterations": 10,
             "completed": False,
             "final_result": "",
+            "phi": 0.0,
+            "psi": 0.0,
+            "sigma": 0.0,
+            "quality_score": 0.0,
         }
 
         if hasattr(agent, "think"):
@@ -184,6 +192,10 @@ system:
             "max_iterations": 10,
             "completed": False,
             "final_result": "",
+            "phi": 0.0,
+            "psi": 0.0,
+            "sigma": 0.0,
+            "quality_score": 0.0,
         }
 
         if hasattr(agent, "act"):
@@ -220,6 +232,10 @@ system:
             "max_iterations": 10,
             "completed": False,
             "final_result": "",
+            "phi": 0.0,
+            "psi": 0.0,
+            "sigma": 0.0,
+            "quality_score": 0.0,
         }
 
         if hasattr(agent, "observe"):
@@ -284,6 +300,10 @@ system:
             "max_iterations": 10,
             "completed": False,
             "final_result": "",
+            "phi": 0.0,
+            "psi": 0.0,
+            "sigma": 0.0,
+            "quality_score": 0.0,
         }
 
         if hasattr(agent, "should_continue"):

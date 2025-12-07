@@ -3,7 +3,6 @@
 import asyncio
 import json
 import logging
-import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Set
@@ -51,6 +50,14 @@ class SuspiciousPortPlaybook:
                 "status": "skipped",
                 "reason": "No port found in event",
             }
+
+        # Verificar IP uma única vez no início
+        if not ip:
+            logger.error("IP não fornecido")
+            return {"status": "error", "reason": "IP não fornecido"}
+
+        # A partir daqui, ip é garantidamente str (type narrowing)
+        assert ip is not None  # Para ajudar o type checker
 
         # Step 1: Investigate port legitimacy
         investigation = await self._investigate_port_legitimacy(port, ip)
@@ -188,33 +195,89 @@ class SuspiciousPortPlaybook:
         logger.debug("   [2/5] Blocking port %d via iptables", port)
 
         if not command_available("iptables"):
-            return skipped_command("iptables", "tool unavailable")
+            skipped = skipped_command("iptables", "tool unavailable")
+            # Converter CommandResultWithStatus para dict
+            return {
+                "command": skipped["command"],
+                "returncode": skipped["returncode"],
+                "output": skipped["output"],
+                "status": skipped.get("status", "skipped"),
+                "reason": skipped.get("reason", "tool unavailable"),
+            }
 
         results = {}
 
         # Block TCP INPUT
-        cmd_tcp_input = ["sudo", "-n", "iptables", "-A", "INPUT", "-p", "tcp", "--dport", str(port), "-j", "DROP"]
+        cmd_tcp_input = [
+            "sudo",
+            "-n",
+            "iptables",
+            "-A",
+            "INPUT",
+            "-p",
+            "tcp",
+            "--dport",
+            str(port),
+            "-j",
+            "DROP",
+        ]
         if _is_command_safe(cmd_tcp_input):
             results["tcp_input"] = await run_command_async(cmd_tcp_input)
         else:
             results["tcp_input"] = skipped_command("iptables INPUT TCP", "command not safe")
 
         # Block TCP OUTPUT
-        cmd_tcp_output = ["sudo", "-n", "iptables", "-A", "OUTPUT", "-p", "tcp", "--dport", str(port), "-j", "DROP"]
+        cmd_tcp_output = [
+            "sudo",
+            "-n",
+            "iptables",
+            "-A",
+            "OUTPUT",
+            "-p",
+            "tcp",
+            "--dport",
+            str(port),
+            "-j",
+            "DROP",
+        ]
         if _is_command_safe(cmd_tcp_output):
             results["tcp_output"] = await run_command_async(cmd_tcp_output)
         else:
             results["tcp_output"] = skipped_command("iptables OUTPUT TCP", "command not safe")
 
         # Block UDP INPUT
-        cmd_udp_input = ["sudo", "-n", "iptables", "-A", "INPUT", "-p", "udp", "--dport", str(port), "-j", "DROP"]
+        cmd_udp_input = [
+            "sudo",
+            "-n",
+            "iptables",
+            "-A",
+            "INPUT",
+            "-p",
+            "udp",
+            "--dport",
+            str(port),
+            "-j",
+            "DROP",
+        ]
         if _is_command_safe(cmd_udp_input):
             results["udp_input"] = await run_command_async(cmd_udp_input)
         else:
             results["udp_input"] = skipped_command("iptables INPUT UDP", "command not safe")
 
         # Block UDP OUTPUT
-        cmd_udp_output = ["sudo", "-n", "iptables", "-A", "OUTPUT", "-p", "udp", "--dport", str(port), "-j", "DROP"]
+        cmd_udp_output = [
+            "sudo",
+            "-n",
+            "iptables",
+            "-A",
+            "OUTPUT",
+            "-p",
+            "udp",
+            "--dport",
+            str(port),
+            "-j",
+            "DROP",
+        ]
         if _is_command_safe(cmd_udp_output):
             results["udp_output"] = await run_command_async(cmd_udp_output)
         else:
@@ -222,7 +285,8 @@ class SuspiciousPortPlaybook:
 
         # Verify blocking
         verification = await self._verify_blocking(port)
-        results["verification"] = verification
+        # verification é dict, não CommandResult
+        results["verification"] = verification  # type: ignore[assignment]
 
         return results
 
@@ -237,7 +301,7 @@ class SuspiciousPortPlaybook:
             result = await run_command_async(["sudo", "-n", "iptables", "-L", "-n"])
             if result["returncode"] == 0:
                 # Check if port appears in iptables rules
-                rules = result["output"]
+                rules = result.get("output", "")
                 port_in_rules = str(port) in rules and "DROP" in rules
                 return {
                     "status": "verified" if port_in_rules else "not_found",
@@ -299,15 +363,44 @@ class SuspiciousPortPlaybook:
         """Notify user about security action."""
         logger.debug("   [5/5] Notifying user")
 
-        description = getattr(event, "description", f"Suspicious port {port} detected on {ip}")
-
         if block_result:
-            message = f"🔒 [AUTONOMOUS SECURITY] Port {port} on {ip} blocked automatically. Investigation: {investigation.get('is_legitimate', False)}"
+            message = (
+                f"🔒 [AUTONOMOUS SECURITY] Port {port} on {ip} blocked automatically. "
+                f"Investigation: {investigation.get('is_legitimate', False)}"
+            )
         else:
-            message = f"⚠️  [SECURITY ALERT] Port {port} on {ip} detected but not blocked (legitimate or whitelisted). Investigation: {investigation.get('is_legitimate', False)}"
+            is_legit = investigation.get("is_legitimate", False)
+            message = (
+                f"⚠️  [SECURITY ALERT] Port {port} on {ip} detected but not blocked "
+                f"(legitimate or whitelisted). Investigation: {is_legit}"
+            )
 
         logger.info(message)
-        return await run_command_async(["/bin/echo", message])
+        result = await run_command_async(["/bin/echo", message])  # noqa: E501
+        # Converter CommandResult para dict compatível
+        if isinstance(result, dict):
+            # Se já é dict, garantir que tem as chaves necessárias
+            if "command" in result and "returncode" in result and "output" in result:
+                return result  # type: ignore[return-value]
+            # Se não tem, criar CommandResult válido
+            return {
+                "command": "/bin/echo",
+                "returncode": result.get("returncode", 0),
+                "output": result.get("output", message),
+            }
+        # Se for objeto, converter
+        if hasattr(result, "command"):
+            return {
+                "command": result.command,
+                "returncode": result.returncode,
+                "output": result.output,
+            }
+        # Fallback
+        return {
+            "command": "/bin/echo",
+            "returncode": 0,
+            "output": message,
+        }
 
 
 def _is_command_safe(command: List[str]) -> bool:
@@ -315,4 +408,3 @@ def _is_command_safe(command: List[str]) -> bool:
     from .utils import is_command_safe as check_safe
 
     return check_safe(command)
-

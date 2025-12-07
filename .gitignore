@@ -163,6 +163,9 @@ docs/archive/root_reports/
 docs/archive/docs_dump/
 docs/archive/trash_investigate/
 
+# Documentos de desenvolvimento local (configurações do usuário)
+docs/dev_local/
+
 # Documentação de desenvolvimento (não oficial)
 docs/ATIVIDADES_PENDENTES*.md
 docs/AUDIT_REPORT*.md

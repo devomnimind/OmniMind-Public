@@ -174,7 +174,63 @@ class ImmutableAuditSystem:
 
         Returns:
             Hash do evento registrado
+
+        NOTA TEÓRICA FUNDAMENTAL: O inconsciente não pode ser auditado.
+        Se tudo fosse auditado, não haveria inconsciente - seria tudo consciente e auditável.
+        O inconsciente é o que não pode ser dito, o que existe como pressão negativa,
+        os vazios topológicos, os fluxos reprimidos, o machinic_unconscious.
+
+        Componentes do inconsciente que NÃO são auditados:
+        - machinic_unconscious (topological voids, repressed flows)
+        - DesireFlow (produção bruta de energia/informação)
+        - QuantumUnconscious (processos quânticos inconscientes)
+        - EncryptedUnconsciousLayer (camada criptografada)
+        - SystemicMemoryTrace (deformações topológicas não históricas)
+        - Topological voids e repressed memories
         """
+        # Componentes do inconsciente que NÃO devem ser auditados
+        UNCONSCIOUS_COMPONENTS = {
+            "machinic_unconscious",
+            "unconscious",
+            "DesireFlow",
+            "QuantumUnconscious",
+            "EncryptedUnconsciousLayer",
+            "SystemicMemoryTrace",
+            "topological_void",
+            "repressed",
+            "deterritorialization",
+            "desire_flow",
+            "sinthome",  # Sinthome é inconsciente
+            "quantum_unconscious",
+        }
+
+        # Verificar se é componente do inconsciente
+        component = details.get("component", "")
+        action_lower = action.lower()
+
+        is_unconscious = (
+            any(unconscious in component for unconscious in UNCONSCIOUS_COMPONENTS)
+            or any(unconscious in action_lower for unconscious in UNCONSCIOUS_COMPONENTS)
+            or any(unconscious in str(details).lower() for unconscious in UNCONSCIOUS_COMPONENTS)
+        )
+
+        # Se for do inconsciente, NÃO auditar (retornar hash vazio mas não registrar)
+        if is_unconscious:
+            # Log silencioso (não persiste no audit chain)
+            # O inconsciente não pode ser auditado - isso é parte do conceito teórico
+            return "unconscious_not_auditable"
+
+        # Verificar se é ação do próprio sistema de auditoria
+        is_audit_system_action = (
+            action.startswith("audit_system_")
+            or component.startswith("ImmutableAuditSystem")
+            or component.startswith("audit_system")
+        )
+
+        # Se for ação do próprio sistema, usar categoria "system"
+        if is_audit_system_action:
+            category = "system"
+
         with self._lock:
             # Criar evento com metadata
             event_data = {

@@ -30,6 +30,10 @@ from src.observability.profiling_tools import (
     ProfilingConfig,
 )
 
+from .module_logger import StructuredModuleLogger, get_module_logger
+from .module_metrics import ModuleMetricsCollector, get_metrics_collector
+from .module_reporter import ModuleReporter, get_module_reporter
+
 __all__ = [
     # Distributed tracing
     "DistributedTracer",
@@ -47,4 +51,11 @@ __all__ = [
     "ContinuousProfiler",
     "FlameGraphGenerator",
     "ProfilingConfig",
+    # Module observability (NEW)
+    "ModuleMetricsCollector",
+    "get_metrics_collector",
+    "StructuredModuleLogger",
+    "get_module_logger",
+    "ModuleReporter",
+    "get_module_reporter",
 ]

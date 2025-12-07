@@ -1,8 +1,9 @@
 [Unit]
-Description=OmniMind AI Agent System
+Description=OmniMind Essential Services - Backend + Orchestrator (Fase 1: Essenciais)
 Documentation=https://github.com/fabs-devbrain/OmniMind
-After=network-online.target
+After=network-online.target omnimind-qdrant.service
 Wants=network-online.target
+Before=omnimind-daemon.service omnimind-frontend.service omnimind-core.service
 
 [Service]
 Type=simple
@@ -15,18 +16,15 @@ Environment="PYTHONUNBUFFERED=1"
 Environment="OMNIMIND_WORKSPACE=/home/fahbrain/projects/omnimind"
 Environment="OMNIMIND_LOG_LEVEL=INFO"
 Environment="PYTHONPATH=/home/fahbrain/projects/omnimind"
-Environment="CUDA_HOME=/usr/local/cuda-12.4"
+Environment="CUDA_HOME=/usr"
 Environment="CUDA_VISIBLE_DEVICES=0"
-Environment="CUDA_PATH=/usr/local/cuda-12.4"
-# Nota: LD_LIBRARY_PATH geralmente não é expandido aqui, mas podemos tentar ou usar ExecStart wrapper
-Environment="LD_LIBRARY_PATH=/usr/local/cuda-12.4/lib64"
+Environment="CUDA_PATH=/usr"
+Environment="LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu"
 Environment="PYTORCH_CUDA_ALLOC_CONF=backend:cudaMallocAsync"
+Environment="OMNIMIND_MODE=production"
 
-# Virtual environment activation
-ExecStartPre=/bin/bash -c 'source /home/fahbrain/projects/omnimind/.venv/bin/activate'
-
-# Main service - Usando o wrapper script para garantir ambiente GPU
-ExecStart=/home/fahbrain/projects/omnimind/scripts/run_backend_gpu.sh
+# Executar script oficial de inicialização
+ExecStart=/bin/bash -c 'source /home/fahbrain/projects/omnimind/.venv/bin/activate && cd /home/fahbrain/projects/omnimind && ./scripts/canonical/system/start_omnimind_system.sh'
 
 # Restart policy
 Restart=on-failure

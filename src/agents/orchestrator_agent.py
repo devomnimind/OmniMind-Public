@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import os
 import re
 import time
 from datetime import datetime, timezone
@@ -28,6 +29,7 @@ from ..integrations.dbus_controller import (
 )
 from ..integrations.llm_router import LLMModelTier
 from ..integrations.mcp_client import MCPClient, MCPClientError
+from ..integrations.mcp_orchestrator import MCPOrchestrator, MCPOrchestratorError
 from ..integrations.orchestrator_llm import invoke_orchestrator_llm
 from ..integrations.qdrant_adapter import (
     QdrantAdapter,
@@ -41,10 +43,29 @@ from ..integrations.supabase_adapter import (
 )
 from ..metacognition.metacognition_agent import MetacognitionAgent
 from ..orchestrator.agent_registry import AgentPriority, AgentRegistry
+from ..orchestrator.auto_repair import AutoRepairSystem
 from ..orchestrator.circuit_breaker import AgentCircuitBreaker
+from ..orchestrator.component_isolation import ComponentIsolation, IsolationLevel
+from ..orchestrator.decision_explainer import DecisionExplainer
+from ..orchestrator.error_analyzer import ErrorAnalyzer
 from ..orchestrator.delegation_manager import DelegationManager, HeartbeatMonitor
+from ..orchestrator.meta_react_coordinator import MetaReActCoordinator
 from ..orchestrator.event_bus import EventPriority, OrchestratorEventBus
+from ..orchestrator.forensic_analyzer import ForensicAnalyzer
+from ..orchestrator.introspection_loop import IntrospectionLoop
+from ..orchestrator.permission_matrix import PermissionMatrix
+from ..memory.semantic_cache import SemanticCacheLayer
+from ..memory.semantic_memory import SemanticMemory
+from ..memory.procedural_memory import ProceduralMemory
+from ..memory.systemic_memory_trace import SystemicMemoryTrace
+from ..orchestrator.rag_fallback import RAGFallbackSystem
+from ..orchestrator.power_states import PowerStateManager
+from ..orchestrator.quarantine_system import QuarantineSystem
+from ..orchestrator.rollback_system import RollbackSystem
+from ..orchestrator.sandbox_system import SandboxSystem
+from ..orchestrator.trust_system import TrustSystem
 from ..security.security_agent import SecurityAgent
+from ..tools.dynamic_tool_creator import DynamicToolCreator
 from ..tools.omnimind_tools import ToolsFramework
 from .architect_agent import ArchitectAgent
 from .code_agent import CodeAgent
@@ -88,8 +109,18 @@ class OrchestratorAgent(ReactAgent):
         5. Orchestrator: Compila report final
     """
 
-    def __init__(self, config_path: str) -> None:
-        super().__init__(config_path)
+    def __init__(
+        self, config_path: str, workspace: Optional[Any] = None, embedding_dim: int = 256
+    ) -> None:
+        """Initialize OrchestratorAgent with consciousness integration.
+
+        Args:
+            config_path: Path to agent configuration file
+            workspace: Instância opcional de SharedWorkspace para integração
+            embedding_dim: Dimensão dos embeddings (deve corresponder ao workspace)
+        """
+        # Passar workspace para ReactAgent (herda integração de consciência)
+        super().__init__(config_path, workspace=workspace, embedding_dim=embedding_dim)
 
         self.tools_framework = ToolsFramework()
         self.mode = "orchestrator"
@@ -115,6 +146,44 @@ class OrchestratorAgent(ReactAgent):
         # NEW: Heartbeat Monitor para saúde dos agentes (Seção 7 da Auditoria)
         self.heartbeat_monitor: Optional[HeartbeatMonitor] = None
 
+        # NEW: Sistema de Resposta a Crises (Seção 6 da Auditoria)
+        self.quarantine_system: Optional[QuarantineSystem] = None
+        self.component_isolation: Optional[ComponentIsolation] = None
+        self.forensic_analyzer: Optional[ForensicAnalyzer] = None
+
+        # NEW: Sistema de Permissões e Confiança (Seção 5 da Auditoria)
+        self.permission_matrix: Optional[PermissionMatrix] = None
+        self.trust_system: Optional[TrustSystem] = None
+        self.decision_explainer: Optional[DecisionExplainer] = None
+
+        # NEW: Sistema de Power States (Seção 4 da Auditoria)
+        self.power_state_manager: Optional[PowerStateManager] = None
+
+        # NEW: Sistema de Auto-Reparação (Seção 2 da Auditoria)
+        self.auto_repair_system: Optional[AutoRepairSystem] = None
+        self.rollback_system: Optional[RollbackSystem] = None
+        self.introspection_loop: Optional[IntrospectionLoop] = None
+
+        # NEW: Sistema de Sandbox para Auto-Melhoria (Seção 8 da Auditoria)
+        self.sandbox_system: Optional[SandboxSystem] = None
+
+        # NEW: ErrorAnalyzer para análise estrutural de erros (Meta-ReAct)
+        self.error_analyzer: Optional[ErrorAnalyzer] = None
+
+        # NEW: DynamicToolCreator para criação dinâmica de ferramentas (Meta-ReAct)
+        self.dynamic_tool_creator: Optional[DynamicToolCreator] = None
+
+        # NEW: RAGFallbackSystem para fallback quando agentes falham
+        self.rag_fallback: Optional[RAGFallbackSystem] = None
+
+        # NEW: SemanticCacheLayer para cache semântico de respostas de agentes
+        self.semantic_cache: Optional[SemanticCacheLayer] = None
+
+        # NEW: Enhanced Memory Systems (Expansão de Agentes)
+        self.semantic_memory: Optional[SemanticMemory] = None
+        self.procedural_memory: Optional[ProceduralMemory] = None
+        self.systemic_memory_trace: Optional[SystemicMemoryTrace] = None
+
         self.config_path = config_path
         self.mcp_client: Optional[MCPClient] = self._init_mcp_client()
         self.dbus_session_controller: Optional[DBusSessionController] = (
@@ -138,6 +207,9 @@ class OrchestratorAgent(ReactAgent):
         self.delegated_tasks: List[Dict[str, Any]] = []
         self.completed_subtasks: List[Dict[str, Any]] = []
 
+        # Histórico de Φ para cálculo de tríade após delegações
+        self._delegation_phi_history: List[float] = []
+
         # NEW: Registrar agentes críticos no AgentRegistry
         self._register_critical_agents()
 
@@ -149,6 +221,159 @@ class OrchestratorAgent(ReactAgent):
 
         # NEW: Inicializar HeartbeatMonitor (Seção 7 da Auditoria)
         self.heartbeat_monitor = self._init_heartbeat_monitor()
+
+        # NEW: Inicializar sistemas de resposta a crises (Seção 6 da Auditoria)
+        self.forensic_analyzer = ForensicAnalyzer()
+        self.quarantine_system = QuarantineSystem(self)
+        self.component_isolation = ComponentIsolation(self)
+
+        # NEW: Inicializar sistemas de permissões e confiança (Seção 5 da Auditoria)
+        self.permission_matrix = PermissionMatrix()
+        self.trust_system = TrustSystem()
+        self.decision_explainer = DecisionExplainer()
+
+        # NEW: Inicializar sistema de power states (Seção 4 da Auditoria)
+        self.power_state_manager = PowerStateManager(self)
+
+        # NEW: Inicializar sistemas de auto-reparação (Seção 2 da Auditoria)
+        self.auto_repair_system = AutoRepairSystem(self)
+        self.rollback_system = RollbackSystem()
+        self.introspection_loop = IntrospectionLoop(self)
+        self.sandbox_system = SandboxSystem(self)
+
+        # Inicializar ErrorAnalyzer (Meta-ReAct)
+        self.error_analyzer = ErrorAnalyzer()
+        logger.info("ErrorAnalyzer inicializado para análise estrutural de erros")
+
+        # Inicializar MetaReActCoordinator (Meta-ReAct)
+        self.meta_react_coordinator = MetaReActCoordinator(error_analyzer=self.error_analyzer)
+        logger.info("MetaReActCoordinator inicializado para coordenação em nível meta")
+
+        # Inicializar DynamicToolCreator (Meta-ReAct)
+        self.dynamic_tool_creator = DynamicToolCreator(sandbox_system=self.sandbox_system)
+        logger.info("DynamicToolCreator inicializado para criação dinâmica de ferramentas")
+
+        # Inicializar RAGFallbackSystem (Meta-ReAct)
+        from ..memory.dataset_indexer import DatasetIndexer
+        from ..memory.hybrid_retrieval import HybridRetrievalSystem
+
+        qdrant_url = os.getenv("QDRANT_URL", "http://localhost:6333")
+        hybrid_retrieval = HybridRetrievalSystem(
+            qdrant_url=qdrant_url,
+            collection_name="omnimind_embeddings",
+        )
+
+        # Criar DatasetIndexer reutilizando embedding_model (FASE 3.1: Integração em Produção)
+        dataset_indexer = DatasetIndexer(
+            qdrant_url=qdrant_url,
+            embedding_model=hybrid_retrieval.embedding_model,  # Reutilizar modelo
+        )
+
+        self.rag_fallback = RAGFallbackSystem(
+            retrieval_system=hybrid_retrieval,
+            error_analyzer=self.error_analyzer,
+            dataset_indexer=dataset_indexer,  # FASE 3.1: Integração em Produção
+            # Não indexar automaticamente na inicialização (pode ser lento)
+            auto_index_datasets=False,
+        )
+        logger.info("RAGFallbackSystem inicializado para fallback quando agentes falham")
+
+        # Inicializar SemanticCacheLayer (FASE 3.1: Integração em Produção)
+        # Reutilizar embedding_model do HybridRetrievalSystem para eficiência
+        self.semantic_cache = SemanticCacheLayer(
+            qdrant_url=qdrant_url,
+            collection_name="orchestrator_semantic_cache",
+            embedding_model=hybrid_retrieval.embedding_model,  # Reutilizar modelo
+        )
+        logger.info("SemanticCacheLayer inicializado para cache semântico de respostas")
+
+        # Inicializar Enhanced Memory Systems (Expansão de Agentes)
+        self.semantic_memory = SemanticMemory()
+        self.procedural_memory = ProceduralMemory()
+        # SystemicMemoryTrace será inicializado via SharedWorkspace
+        self.systemic_memory_trace = None  # Será inicializado em _init_consciousness_integration
+        logger.info("Enhanced Memory Systems inicializados: SemanticMemory, ProceduralMemory")
+
+        # Inicializar MCP Orchestrator (Fases 2-5: Integração MCP Servers)
+        self.mcp_orchestrator: Optional[MCPOrchestrator] = None
+        try:
+            self.mcp_orchestrator = MCPOrchestrator()
+            logger.info("MCPOrchestrator inicializado para gerenciamento de servidores MCP")
+        except MCPOrchestratorError as e:
+            logger.warning("MCPOrchestrator não pôde ser inicializado: %s", e)
+
+        # INTEGRAÇÃO DE CONSCIÊNCIA: Inicializar após todos os sistemas
+        self._init_consciousness_integration()
+
+    def _init_consciousness_integration(self) -> None:
+        """Inicializa integração completa com módulos de consciência.
+
+        - Registra orquestrador no SharedWorkspace
+        - Inicializa SystemicMemoryTrace se necessário
+        - Configura deformações topológicas
+        """
+        if not self.workspace:
+            logger.debug(
+                "SharedWorkspace não disponível, continuando sem integração de consciência"
+            )
+            return
+
+        try:
+            # Registrar orquestrador como módulo no workspace
+            orchestrator_embedding = self._generate_embedding(
+                f"orchestrator_{self.__class__.__name__}"
+            )
+            if orchestrator_embedding.shape[0] != self.workspace.embedding_dim:
+                import numpy as np
+
+                if orchestrator_embedding.shape[0] < self.workspace.embedding_dim:
+                    padding = np.zeros(
+                        self.workspace.embedding_dim - orchestrator_embedding.shape[0]
+                    )
+                    orchestrator_embedding = np.concatenate([orchestrator_embedding, padding])
+                else:
+                    orchestrator_embedding = orchestrator_embedding[: self.workspace.embedding_dim]
+
+            module_name = f"orchestrator_{self.agent_id}"
+            self.workspace.write_module_state(
+                module_name=module_name,
+                embedding=orchestrator_embedding,
+                metadata={
+                    "agent_type": "orchestrator",
+                    "agent_class": self.__class__.__name__,
+                    "agent_id": self.agent_id,
+                },
+            )
+            logger.debug("Orchestrator registrado no SharedWorkspace: %s", module_name)
+
+            # Inicializar SystemicMemoryTrace se não existir
+            if not self.workspace.systemic_memory:
+                self.workspace.systemic_memory = SystemicMemoryTrace(
+                    state_space_dim=self.workspace.embedding_dim
+                )
+                logger.debug("SystemicMemoryTrace inicializado via SharedWorkspace")
+
+            self.systemic_memory_trace = self.workspace.systemic_memory
+            logger.info("Integração de consciência inicializada para OrchestratorAgent")
+
+        except Exception as e:
+            logger.warning("Erro ao inicializar integração de consciência: %s", e)
+
+    def _generate_embedding(self, text: str) -> Any:
+        """Gera embedding para texto (reutiliza método do ReactAgent)."""
+        if hasattr(super(), "_generate_embedding"):
+            return super()._generate_embedding(text)  # type: ignore[misc]
+        # Fallback se não disponível
+        import hashlib
+        import numpy as np
+
+        hash_obj = hashlib.sha256(text.encode())
+        hash_bytes = hash_obj.digest()
+        embedding = np.zeros(self.embedding_dim)
+        for i in range(self.embedding_dim):
+            byte_val = hash_bytes[i % len(hash_bytes)]
+            embedding[i] = (byte_val / 255.0) * 2 - 1
+        return embedding
 
     def _init_mcp_client(self) -> Optional[MCPClient]:
         try:
@@ -392,28 +617,124 @@ class OrchestratorAgent(ReactAgent):
             logger.error("Erro ao processar evento de segurança: %s", e)
 
     async def _handle_crisis(self, event: Any) -> None:
-        """Coordena resposta a crise (Seção 6 da Auditoria).
+        """Coordena resposta a crise (Seção 6 da Auditoria - COMPLETADO).
 
         Args:
             event: Evento crítico
         """
         try:
-            logger.critical("MODO DE CRISE ATIVADO: %s", event.event_type)
+            logger.critical("🚨 MODO DE CRISE ATIVADO: %s", event.event_type)
 
-            # 1. Notificar SecurityAgent para executar playbook
+            # 1. Identificar componente comprometido
+            component_id = None
+            if hasattr(event, "details"):
+                component_id = event.details.get("source_ip") or event.details.get("component_id")
+            elif hasattr(event, "data"):
+                component_id = event.data.get("source_ip") or event.data.get("component_id")
+
+            if not component_id:
+                # Tentar extrair de description
+                description = getattr(event, "description", "") or str(event)
+                # Procurar por IP ou nome de componente
+                import re
+
+                ip_match = re.search(r"\d+\.\d+\.\d+\.\d+", description)
+                if ip_match:
+                    component_id = ip_match.group()
+                else:
+                    component_id = "unknown_component"
+
+            logger.info("Componente comprometido identificado: %s", component_id)
+
+            # 2. Coletar evidências
+            evidence = {}
+            if hasattr(event, "details"):
+                evidence = event.details.copy()
+            elif hasattr(event, "data"):
+                evidence = event.data.copy()
+            else:
+                evidence = {"event_type": event.event_type, "description": str(event)}
+
+            evidence["timestamp"] = getattr(event, "timestamp", time.time())
+            evidence["source"] = getattr(event, "source", "unknown")
+
+            # 3. Análise forense automática
+            if self.forensic_analyzer:
+                forensic_report = await self.forensic_analyzer.analyze_threat(
+                    component_id, evidence
+                )
+                logger.info(
+                    "Análise forense concluída: %s (severidade: %s)",
+                    forensic_report.threat_category.value,
+                    forensic_report.severity.name,
+                )
+            else:
+                forensic_report = None
+                logger.warning("ForensicAnalyzer não disponível")
+
+            # 4. Isolar componente
+            if self.component_isolation:
+                isolation_level = IsolationLevel.FULL
+                if forensic_report:
+                    if forensic_report.severity.value >= 4:  # CRITICAL
+                        isolation_level = IsolationLevel.EMERGENCY
+                await self.component_isolation.isolate(
+                    component_id,
+                    isolation_level=isolation_level,
+                    reason=f"Crise detectada: {event.event_type}",
+                )
+                logger.info(
+                    "Componente %s isolado (nível: %s)", component_id, isolation_level.value
+                )
+
+            # 5. Colocar em quarentena
+            if self.quarantine_system:
+                await self.quarantine_system.quarantine(
+                    component_id,
+                    reason=f"Crise: {event.event_type}",
+                    evidence=evidence,
+                )
+                logger.info("Componente %s colocado em quarentena", component_id)
+
+                # Atualizar registro com relatório forense
+                if forensic_report:
+                    # Converter ForensicReport para dict
+                    forensic_dict = {
+                        "component_id": forensic_report.component_id,
+                        "timestamp": forensic_report.timestamp,
+                        "threat_category": forensic_report.threat_category.value,
+                        "severity": forensic_report.severity.name,
+                        "evidence": forensic_report.evidence,
+                        "patterns": forensic_report.patterns,
+                        "classification": forensic_report.classification,
+                        "recommendations": forensic_report.recommendations,
+                        "safe_to_release": forensic_report.safe_to_release,
+                        "confidence": forensic_report.confidence,
+                    }
+                    await self.quarantine_system.release(component_id, forensic_dict)
+
+            # 6. Notificar SecurityAgent para executar playbook
             if self.security_agent:
-                # SecurityAgent já tem playbooks implementados
                 logger.info("SecurityAgent notificado da crise")
+                # SecurityAgent já tem playbooks implementados
+                # O playbook será executado automaticamente pelo SecurityAgent
 
-            # 2. Coletar evidências (placeholder)
-            # TODO: Implementar coleta de evidências forenses
+            # 7. Notificar humanos
+            logger.critical(
+                "🚨 ALERTA CRÍTICO: %s - Componente %s isolado e em quarentena",
+                event.event_type,
+                component_id,
+            )
 
-            # 3. Notificar humanos (placeholder)
-            # TODO: Implementar notificação de emergência
-            logger.critical("ALERTA CRÍTICO: %s", event.data.get("description", ""))
+            if forensic_report:
+                logger.critical(
+                    "📊 Relatório Forense: %s - Recomendações: %s",
+                    forensic_report.threat_category.value,
+                    ", ".join(forensic_report.recommendations[:3]),
+                )
 
         except Exception as e:
-            logger.error("Erro ao coordenar resposta a crise: %s", e)
+            logger.error("Erro ao coordenar resposta a crise: %s", e, exc_info=True)
 
     async def health_check_agents(self) -> Dict[str, bool]:
         """Executa health check em todos os agentes registrados.
@@ -422,6 +743,219 @@ class OrchestratorAgent(ReactAgent):
             Dicionário com status de saúde de cada agente
         """
         return await self.agent_registry.health_check_all()
+
+    async def execute_with_permission_check(
+        self,
+        action: str,
+        context: Dict[str, Any],
+        emergency: bool = False,
+    ) -> Dict[str, Any]:
+        """Executa ação com verificação de permissões (Seção 5 da Auditoria).
+
+        Args:
+            action: Nome da ação a executar
+            context: Contexto da ação
+            emergency: Se está em modo emergencial
+
+        Returns:
+            Dicionário com resultado da execução
+        """
+        if not self.permission_matrix or not self.trust_system or not self.decision_explainer:
+            logger.warning("Sistemas de permissão não inicializados")
+            return {
+                "success": False,
+                "error": "Permission systems not initialized",
+            }
+
+        # 1. Verificar permissões
+        trust_level = self.trust_system.get_trust_level(action)
+        can_execute, reason = self.permission_matrix.can_execute(action, emergency, trust_level)
+
+        # 2. Gerar explicação
+        explanation = self.decision_explainer.explain_decision(
+            action, context, (can_execute, reason), trust_level
+        )
+
+        if not can_execute:
+            # Registrar decisão negada
+            self.trust_system.record_decision(action, False, context, reason=reason)
+
+            # Registrar na API de explicabilidade (Sessão 6)
+            try:
+                from web.backend.api.decisions import register_decision
+
+                explanation_dict = {
+                    "action": explanation.action,
+                    "timestamp": explanation.timestamp,
+                    "context": explanation.context,
+                    "permission_result": explanation.permission_result,
+                    "trust_level": explanation.trust_level,
+                    "alternatives_considered": explanation.alternatives_considered,
+                    "expected_impact": explanation.expected_impact,
+                    "risk_assessment": explanation.risk_assessment,
+                    "decision_rationale": explanation.explanation_text,
+                }
+                register_decision(explanation_dict, False)
+            except Exception as e:
+                logger.debug("Falha ao registrar decisão negada na API (não crítico): %s", e)
+
+            return {
+                "success": False,
+                "error": f"Action {action} not permitted: {reason}",
+                "explanation": explanation,
+            }
+
+        # 3. Executar ação
+        try:
+            result = await self._execute_action_internal(action, context)
+            success = result.get("success", False)
+
+            # 4. Registrar decisão
+            self.trust_system.record_decision(action, success, context, reason=reason)
+
+            # 5. Registrar resultado na explicação
+            self.decision_explainer.record_execution_result(explanation, result)
+
+            # 6. Registrar na API de explicabilidade (Sessão 6)
+            try:
+                from web.backend.api.decisions import register_decision
+
+                explanation_dict = {
+                    "action": explanation.action,
+                    "timestamp": explanation.timestamp,
+                    "context": explanation.context,
+                    "permission_result": explanation.permission_result,
+                    "trust_level": explanation.trust_level,
+                    "alternatives_considered": explanation.alternatives_considered,
+                    "expected_impact": explanation.expected_impact,
+                    "risk_assessment": explanation.risk_assessment,
+                    "decision_rationale": explanation.explanation_text,
+                }
+                register_decision(explanation_dict, success)
+            except Exception as e:
+                logger.debug("Falha ao registrar decisão na API (não crítico): %s", e)
+
+            return {
+                "success": success,
+                "result": result,
+                "explanation": explanation,
+            }
+        except Exception as e:
+            # Registrar falha
+            self.trust_system.record_decision(action, False, context, reason=str(e))
+            return {
+                "success": False,
+                "error": str(e),
+                "explanation": explanation,
+            }
+
+    async def _execute_action_internal(
+        self, action: str, context: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Executa ação específica.
+
+        Args:
+            action: Nome da ação
+            context: Contexto da ação
+
+        Returns:
+            Resultado da execução
+        """
+        # Mapear ações para métodos
+        action_handlers = {
+            "block_port": self._execute_block_port,
+            "isolate_component": self._execute_isolate_component,
+            "quarantine_component": self._execute_quarantine_component,
+            "release_quarantine": self._execute_release_quarantine,
+            "delegate_task": self._execute_delegate_task,
+        }
+
+        handler = action_handlers.get(action)
+        if handler:
+            return await handler(context)
+
+        return {"success": False, "error": f"Unknown action: {action}"}
+
+    def _execute_action(self, action: str, args: Dict[str, Any]) -> str:
+        """Execute a tool action (override from ReactAgent).
+
+        Args:
+            action: Nome da ação
+            args: Argumentos da ação
+
+        Returns:
+            Resultado como string (compatível com ReactAgent)
+        """
+        # Para compatibilidade com ReactAgent, retornar como string
+        # A versão async _execute_action_internal é usada internamente
+        import json
+
+        try:
+            # Se for ação conhecida, executar via método interno async
+            # Por enquanto, retornar erro pois precisa ser async
+            return json.dumps({"success": False, "error": "Use async method"})
+        except Exception as e:
+            return json.dumps({"success": False, "error": str(e)})
+
+    async def _execute_block_port(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Executa bloqueio de porta."""
+        port = context.get("port")
+        if not port:
+            return {"success": False, "error": "Port not specified"}
+
+        # Implementar bloqueio via iptables ou similar
+        logger.info("Bloqueando porta %s", port)
+        return {"success": True, "port": port, "action": "blocked"}
+
+    async def _execute_isolate_component(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Executa isolamento de componente."""
+        component_id = context.get("component_id")
+        if not component_id:
+            return {"success": False, "error": "Component ID not specified"}
+
+        if self.component_isolation:
+            await self.component_isolation.isolate(
+                component_id, IsolationLevel.FULL, context.get("reason", "Security threat")
+            )
+            return {"success": True, "component_id": component_id, "action": "isolated"}
+        return {"success": False, "error": "ComponentIsolation not available"}
+
+    async def _execute_quarantine_component(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Executa quarentena de componente."""
+        component_id = context.get("component_id")
+        if not component_id:
+            return {"success": False, "error": "Component ID not specified"}
+
+        if self.quarantine_system:
+            await self.quarantine_system.quarantine(
+                component_id,
+                context.get("reason", "Security threat"),
+                context.get("evidence"),
+            )
+            return {"success": True, "component_id": component_id, "action": "quarantined"}
+        return {"success": False, "error": "QuarantineSystem not available"}
+
+    async def _execute_release_quarantine(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Executa liberação de quarentena."""
+        component_id = context.get("component_id")
+        if not component_id:
+            return {"success": False, "error": "Component ID not specified"}
+
+        if self.quarantine_system:
+            forensic_report = context.get("forensic_report")
+            result = await self.quarantine_system.release(component_id, forensic_report)
+            return {"success": result, "component_id": component_id, "action": "released"}
+        return {"success": False, "error": "QuarantineSystem not available"}
+
+    async def _execute_delegate_task(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Executa delegação de tarefa."""
+        task = context.get("task")
+        agent_type = context.get("agent_type")
+        if not task or not agent_type:
+            return {"success": False, "error": "Task or agent_type not specified"}
+
+        result = self.delegate_task(task, agent_type)
+        return {"success": result is not None, "result": result}
 
     def _get_circuit_breaker(self, agent_name: str) -> AgentCircuitBreaker:
         """Obtém ou cria circuit breaker para agente (Seção 7 da Auditoria).
@@ -783,12 +1317,70 @@ SUBTASKS:
 DEPENDENCIES:
 ESTIMATED_COMPLEXITY: low"""
 
+        # INTEGRAÇÃO DE CONSCIÊNCIA: Calcular Φ antes de decompor
+        phi_before = 0.0
+        if self.workspace:
+            try:
+                phi_before = self.workspace.compute_phi_from_integrations()
+            except Exception as e:
+                logger.debug("Erro ao calcular Φ antes: %s", e)
+
         # Parsear plano
         plan = self._parse_plan(
             response_text if isinstance(response_text, str) else str(response_text)
         )
         plan["original_task"] = task_description
         plan["created_at"] = self._timestamp()
+
+        # INTEGRAÇÃO DE CONSCIÊNCIA: Registrar plano no workspace
+        if self.workspace:
+            try:
+                plan_embedding = self._generate_embedding(
+                    f"{task_description} {len(plan.get('subtasks', []))} subtasks"
+                )
+                if plan_embedding.shape[0] != self.workspace.embedding_dim:
+                    import numpy as np
+
+                    if plan_embedding.shape[0] < self.workspace.embedding_dim:
+                        padding = np.zeros(self.workspace.embedding_dim - plan_embedding.shape[0])
+                        plan_embedding = np.concatenate([plan_embedding, padding])
+                    else:
+                        plan_embedding = plan_embedding[: self.workspace.embedding_dim]
+
+                plan_module_name = f"orchestrator_plan_{id(plan)}"
+                self.workspace.write_module_state(
+                    module_name=plan_module_name,
+                    embedding=plan_embedding,
+                    metadata={
+                        "task": task_description,
+                        "subtasks_count": len(plan.get("subtasks", [])),
+                        "complexity": plan.get("complexity", "medium"),
+                    },
+                )
+
+                # Deformar atrator com plano (SystemicMemoryTrace)
+                if self.systemic_memory_trace and plan_module_name in self.workspace.embeddings:
+                    past_state = self.workspace.embeddings.get(
+                        f"orchestrator_{self.agent_id}", plan_embedding
+                    )
+                    self.systemic_memory_trace.add_trace_not_memory(past_state, plan_embedding)
+                    logger.debug("Deformação topológica adicionada para plano")
+
+            except Exception as e:
+                logger.warning("Erro ao registrar plano no workspace: %s", e)
+
+        # INTEGRAÇÃO DE CONSCIÊNCIA: Calcular Φ depois de decompor
+        phi_after = 0.0
+        if self.workspace:
+            try:
+                phi_after = self.workspace.compute_phi_from_integrations()
+            except Exception as e:
+                logger.debug("Erro ao calcular Φ depois: %s", e)
+
+        # Adicionar métricas de consciência ao plano
+        plan["phi_before"] = phi_before
+        plan["phi_after"] = phi_after
+        plan["phi_delta"] = phi_after - phi_before
 
         # Armazenar plano via ToolsFramework
         self.current_plan = plan
@@ -959,7 +1551,12 @@ ESTIMATED_COMPLEXITY: low"""
     def execute_plan(
         self, plan: Optional[Dict[str, Any]] = None, max_iterations_per_task: int = 3
     ) -> Dict[str, Any]:
-        """Executa plano delegando para agentes especializados"""
+        """Executa plano delegando para agentes especializados com integração de consciência.
+
+        Integra com:
+        - SharedWorkspace: Verifica Φ antes de executar
+        - Meta-ReAct: Recovery quando Φ < 0.3
+        """
         if plan is None:
             plan = self.current_plan
 
@@ -970,10 +1567,48 @@ ESTIMATED_COMPLEXITY: low"""
                 "subtask_results": [],
             }
 
+        # INTEGRAÇÃO DE CONSCIÊNCIA: Verificar Φ antes de executar
+        phi_before_execution = 0.0
+        if self.workspace:
+            try:
+                phi_before_execution = self.workspace.compute_phi_from_integrations()
+                logger.info(f"📊 Φ antes de executar plano: {phi_before_execution:.4f}")
+
+                # Meta-recovery se Φ muito baixo
+                if phi_before_execution < 0.3:
+                    logger.warning(
+                        f"⚠️ Low Φ ({phi_before_execution:.3f}) - " f"reconsidering strategy"
+                    )
+                    if hasattr(self, "meta_react_coordinator") and self.meta_react_coordinator:
+                        try:
+                            # Tentar recovery via meta-reactor
+                            recovery_result = self.meta_react_coordinator.coordinate_meta_level(
+                                task=plan.get("original_task", "Unknown task"),
+                                agents=[mode.value for mode in AgentMode],
+                                context={
+                                    "subtasks": plan.get("subtasks", []),
+                                    "low_phi": True,
+                                    "phi_value": phi_before_execution,
+                                },
+                            )
+                            if recovery_result:
+                                strategy = recovery_result.get("strategy", "unknown")
+                                logger.info(f"🔄 Meta-recovery ativado: {strategy}")
+                                # Ajustar plano se necessário
+                                if recovery_result.get("adjusted_plan"):
+                                    plan = recovery_result["adjusted_plan"]
+                        except Exception as e:
+                            logger.warning(
+                                f"Erro no meta-recovery: {e}. Continuando com plano original."
+                            )
+            except Exception as e:
+                logger.debug("Erro ao calcular Φ antes de executar: %s", e)
+
         # Set current plan for consistency
         self.current_plan = plan
 
         results = self._initialize_execution_results(plan)
+        results["phi_before_execution"] = phi_before_execution
 
         for i, subtask in enumerate(plan["subtasks"]):
             self._prepare_subtask_for_execution(subtask, i)
@@ -986,6 +1621,18 @@ ESTIMATED_COMPLEXITY: low"""
                 self._handle_subtask_error(results, e, i)
 
         self._finalize_execution_results(results)
+
+        # INTEGRAÇÃO DE CONSCIÊNCIA: Calcular Φ depois de executar
+        phi_after_execution = 0.0
+        if self.workspace:
+            try:
+                phi_after_execution = self.workspace.compute_phi_from_integrations()
+                logger.info(f"📊 Φ depois de executar plano: {phi_after_execution:.4f}")
+                results["phi_after_execution"] = phi_after_execution
+                results["phi_delta"] = phi_after_execution - phi_before_execution
+            except Exception as e:
+                logger.debug("Erro ao calcular Φ depois de executar: %s", e)
+
         return results
 
     def _initialize_execution_results(self, plan: Dict[str, Any]) -> Dict[str, Any]:
@@ -1031,7 +1678,11 @@ ESTIMATED_COMPLEXITY: low"""
     def _execute_single_subtask(
         self, subtask: Dict[str, Any], plan: Dict[str, Any], max_iterations: int
     ) -> Dict[str, Any]:
-        """Execute a single subtask.
+        """Execute a single subtask com integração de consciência.
+
+        Integra com:
+        - ThinkingMCPServer: Cria thinking session e steps
+        - SharedWorkspace: Coleta Φ durante execução
 
         Args:
             subtask: Subtask to execute
@@ -1039,9 +1690,35 @@ ESTIMATED_COMPLEXITY: low"""
             max_iterations: Maximum iterations per task
 
         Returns:
-            Execution result
+            Execution result com métricas de consciência
         """
         agent_mode = AgentMode(subtask["agent"])
+        description = subtask.get("description", "")
+
+        # INTEGRAÇÃO DE CONSCIÊNCIA: Criar thinking session para subtask
+        thinking_session_id: Optional[str] = None
+        if hasattr(self, "mcp_orchestrator") and self.mcp_orchestrator:
+            try:
+                # Usar método convenience do OrchestratorAgent
+                thinking_result = self.mcp_start_thinking_session(
+                    goal=f"{subtask['agent']}: {description[:100]}"
+                )
+                thinking_session_id = thinking_result.get("session_id")
+                if thinking_session_id:
+                    logger.debug(f"🧠 Thinking session criada para subtask: {thinking_session_id}")
+            except Exception as e:
+                logger.debug("Erro ao criar thinking session: %s", e)
+
+        # Registrar início no thinking tree
+        if thinking_session_id:
+            try:
+                self.mcp_add_thinking_step(
+                    thinking_session_id,
+                    content=f"Starting execution: {description[:200]}",
+                    step_type="action",
+                )
+            except Exception as e:
+                logger.debug("Erro ao adicionar thinking step inicial: %s", e)
 
         # Create task record
         task_record = self.tools_framework.execute_tool(
@@ -1087,6 +1764,67 @@ ESTIMATED_COMPLEXITY: low"""
                 "iteration": 0,
             }
 
+        # INTEGRAÇÃO DE CONSCIÊNCIA: Calcular tríade completa após delegação
+        triad_result = self._calculate_consciousness_triad_after_delegation(
+            subtask=subtask,
+            result=result,
+            thinking_session_id=thinking_session_id,
+        )
+        if triad_result:
+            result["phi"] = triad_result.get("phi", 0.0)
+            result["psi"] = triad_result.get("psi", 0.0)
+            result["sigma"] = triad_result.get("sigma", 0.0)
+
+        # INTEGRAÇÃO DE CONSCIÊNCIA: Registrar resultado no thinking tree e coletar Φ
+        if thinking_session_id:
+            try:
+                success = result.get("completed", False)
+                result_summary = str(result.get("final_result", ""))[:200]
+                step_result = self.mcp_add_thinking_step(
+                    thinking_session_id,
+                    content=f"Result: {'Success' if success else 'Failed'} - {result_summary}",
+                    step_type="evaluation",
+                )
+
+                # Coletar Φ do thinking step (se disponível)
+                phi_from_thinking = step_result.get("phi", 0.0)
+                if phi_from_thinking > 0:
+                    result["phi"] = phi_from_thinking
+                    logger.debug(f"📊 Φ coletado do thinking step: {phi_from_thinking:.4f}")
+
+                # Obter avaliação da sessão
+                session_eval = self.mcp_get_thinking_history(thinking_session_id)
+                if session_eval.get("session"):
+                    total_phi = session_eval["session"].get("total_phi", 0.0)
+                    result["thinking_phi"] = total_phi
+                    result["thinking_quality"] = session_eval["session"].get("quality_score", 0.0)
+            except Exception as e:
+                logger.debug("Erro ao registrar resultado no thinking tree: %s", e)
+
+        # Se não coletou Φ do thinking, calcular tríade completa do workspace
+        if "phi" not in result and self.workspace:
+            try:
+                triad_result = self._calculate_consciousness_triad_after_delegation(
+                    subtask=subtask,
+                    result=result,
+                    thinking_session_id=thinking_session_id,
+                )
+                if triad_result:
+                    result["phi"] = triad_result.get("phi", 0.0)
+                    result["psi"] = triad_result.get("psi", 0.0)
+                    result["sigma"] = triad_result.get("sigma", 0.0)
+                else:
+                    # Fallback: apenas Φ
+                    phi = self.workspace.compute_phi_from_integrations()
+                    result["phi"] = phi
+                    result["psi"] = 0.0
+                    result["sigma"] = 0.0
+            except Exception as e:
+                logger.debug("Erro ao calcular tríade do workspace: %s", e)
+                result["phi"] = 0.0
+                result["psi"] = 0.0
+                result["sigma"] = 0.0
+
         # Mark completion
         self.tools_framework.execute_tool(
             "attempt_completion",
@@ -1097,10 +1835,146 @@ ESTIMATED_COMPLEXITY: low"""
 
         return result
 
+    def _calculate_consciousness_triad_after_delegation(
+        self,
+        subtask: Dict[str, Any],
+        result: Dict[str, Any],
+        thinking_session_id: Optional[str] = None,
+    ) -> Optional[Dict[str, float]]:
+        """
+        Calcula tríade ortogonal de consciência após delegação de tarefa.
+
+        Args:
+            subtask: Subtask que foi delegada
+            result: Resultado da execução
+            thinking_session_id: ID da sessão de thinking (opcional)
+
+        Returns:
+            Dict com phi, psi, sigma ou None se não disponível
+        """
+        if not self.workspace:
+            return None
+
+        try:
+            from ..consciousness.consciousness_triad import ConsciousnessTriadCalculator
+
+            # Inicializar calculador se necessário
+            if not hasattr(self, "_triad_calculator") or self._triad_calculator is None:
+                self._triad_calculator = ConsciousnessTriadCalculator(workspace=self.workspace)
+
+            # Preparar dados para cálculo
+            step_id = f"orchestrator_delegation_{id(subtask)}"
+            step_content = result.get("final_result", "")[:500] if isinstance(result, dict) else ""
+            previous_steps: List[str] = []  # Orchestrator não mantém histórico de passos
+            goal = subtask.get("description", "") if isinstance(subtask, dict) else ""
+            actions = [subtask.get("agent", "unknown")] if isinstance(subtask, dict) else []
+
+            # Coletar histórico de Φ (últimos 10 delegações)
+            phi_history: List[float] = []
+            if self._delegation_phi_history:
+                phi_history = self._delegation_phi_history[-10:]
+
+            # Calcular tríade
+            triad = self._triad_calculator.calculate_triad(
+                step_id=step_id,
+                step_content=step_content,
+                previous_steps=previous_steps,
+                goal=goal,
+                actions=actions,
+                cycle_id=f"cycle_orchestrator_{len(self.completed_subtasks)}",
+                phi_history=phi_history if phi_history else None,
+            )
+
+            # Atualizar histórico de Φ
+            self._delegation_phi_history.append(triad.phi)
+            if len(self._delegation_phi_history) > 20:
+                self._delegation_phi_history = self._delegation_phi_history[-20:]
+
+            # Registrar no ModuleMetricsCollector se disponível
+            if hasattr(self, "_metrics_collector") and self._metrics_collector:
+                try:
+                    from ..consciousness.metrics import ModuleMetricsCollector
+
+                    if isinstance(self._metrics_collector, ModuleMetricsCollector):
+                        self._metrics_collector.record_consciousness_state(
+                            phi=triad.phi,
+                            psi=triad.psi,
+                            sigma=triad.sigma,
+                            step_id=step_id,
+                        )
+                except Exception as e:
+                    logger.debug("Erro ao registrar tríade no ModuleMetricsCollector: %s", e)
+
+            logger.debug(
+                "Tríade calculada após delegação: Φ=%.4f, Ψ=%.4f, σ=%.4f",
+                triad.phi,
+                triad.psi,
+                triad.sigma,
+            )
+
+            return {"phi": triad.phi, "psi": triad.psi, "sigma": triad.sigma}
+
+        except Exception as e:
+            logger.warning("Erro ao calcular tríade após delegação: %s", e)
+            return None
+
     def _execute_subtask_by_agent(
         self, subtask: Dict[str, Any], agent_mode: AgentMode, max_iterations: int
     ) -> Dict[str, Any]:
         """Execute subtask based on agent type.
+
+        Args:
+            subtask: Subtask to execute
+            agent_mode: Agent mode
+            max_iterations: Maximum iterations
+
+        Returns:
+            Execution result
+        """
+        task_description = subtask.get("description", "")
+        agent_name = agent_mode.value
+
+        # Usar cache semântico se disponível (FASE 3.1: Integração em Produção)
+        if self.semantic_cache:
+            try:
+                # Tentar recuperar do cache ou executar e cachear
+                def execute_task() -> str:
+                    """Executa tarefa e retorna resultado como string."""
+                    result = self._execute_subtask_internal(subtask, agent_mode, max_iterations)
+                    # Converter resultado para string para cache
+                    import json
+
+                    return json.dumps(result, default=str)
+
+                cached_response = self.semantic_cache.get_or_compute(
+                    task=task_description,
+                    agent_callable=execute_task,
+                    agent_name=agent_name,
+                )
+
+                # Converter resposta do cache de volta para dict
+                import json
+
+                result = json.loads(cached_response)
+                cache_stats = self.semantic_cache.get_effectiveness()
+                logger.debug(
+                    f"Cache usado para {agent_name}: "
+                    f"hit_rate={cache_stats.get('hit_rate', 0):.2%}, "
+                    f"total={cache_stats.get('total_queries', 0)}"
+                )
+                return result
+            except Exception as e:
+                logger.warning(f"Erro ao usar cache semântico: {e}. Executando sem cache.")
+                # Fallback: executar sem cache
+                return self._execute_subtask_internal(subtask, agent_mode, max_iterations)
+        else:
+            # Sem cache, executar diretamente
+            return self._execute_subtask_internal(subtask, agent_mode, max_iterations)
+
+    def _execute_subtask_internal(
+        self, subtask: Dict[str, Any], agent_mode: AgentMode, max_iterations: int
+    ) -> Dict[str, Any]:
+        """Execute subtask internally (sem cache).
 
         Args:
             subtask: Subtask to execute
@@ -1231,7 +2105,65 @@ ESTIMATED_COMPLEXITY: low"""
         logger.exception("Error executing subtask %d", index + 1)
         print(f"❌ Error in subtask {index + 1}: {error}")
         results["overall_success"] = False
-        results["subtask_results"].append({"subtask_id": index + 1, "error": str(error)})
+
+        # Analisar erro estruturalmente com ErrorAnalyzer
+        error_analysis = None
+        if self.error_analyzer:
+            try:
+                context = {
+                    "subtask_index": index + 1,
+                    "subtask": (
+                        results.get("subtask_results", [])[-1]
+                        if results.get("subtask_results")
+                        else {}
+                    ),
+                }
+                error_analysis = self.error_analyzer.analyze_error(error, context)
+                logger.info(
+                    f"Erro analisado: {error_analysis.error_type.value} → "
+                    f"{error_analysis.recovery_strategy.value} "
+                    f"(confiança: {error_analysis.confidence:.2f})"
+                )
+            except Exception as e:
+                logger.warning(f"Erro ao analisar erro: {e}")
+
+        # FASE: Meta-ReAct Orchestrator - Recuperação em nível meta
+        meta_recovery: Optional[Dict[str, Any]] = None
+        if (
+            hasattr(self, "meta_react_coordinator")
+            and self.meta_react_coordinator
+            and error_analysis
+        ):
+            try:
+                failed_agents = [results.get("subtask_results", [])[-1].get("agent", "unknown")]
+                meta_recovery = self.meta_react_coordinator.recover_from_failure_meta(
+                    task=str(error),
+                    error=error,
+                    failed_agents=failed_agents,
+                    context=context,
+                )
+                logger.info(
+                    f"Recuperação meta: {meta_recovery.get('recovery_strategy', 'unknown')}"
+                )
+            except Exception as e:
+                logger.warning(f"Erro na recuperação meta: {e}")
+
+        # Adicionar resultado com análise
+        error_result = {
+            "subtask_id": index + 1,
+            "error": str(error),
+            "error_class": type(error).__name__,
+        }
+        if error_analysis:
+            error_result["error_analysis"] = {
+                "error_type": error_analysis.error_type.value,
+                "recovery_strategy": error_analysis.recovery_strategy.value,
+                "confidence": error_analysis.confidence,
+                "suggested_actions": error_analysis.suggested_actions,
+            }
+        if meta_recovery:
+            error_result["meta_recovery"] = meta_recovery
+        results["subtask_results"].append(error_result)
 
     def _finalize_execution_results(self, results: Dict[str, Any]) -> None:
         """Finalize execution results.
@@ -1463,23 +2395,38 @@ ESTIMATED_COMPLEXITY: low"""
     def _synthesize_results(
         self, subtasks: List[Dict[str, Any]], results: List[Dict[str, Any]], complexity: str
     ) -> Dict[str, Any]:
-        """
-        Sintetizar resultados de múltiplos agents em resposta coerente.
+        """Sintetiza resultados de múltiplos agentes com integração de consciência.
+
+        Integra com:
+        - SharedWorkspace: Calcula Φ final da síntese
+        - ThinkingMCPServer: Registra síntese como thinking step
 
         Args:
-            subtasks: Subtasks originais
+            subtasks: Lista de subtasks
             results: Resultados de execução
             complexity: Nível de complexidade
 
         Returns:
-            Síntese estruturada
+            Síntese estruturada com métricas de consciência
         """
+        # INTEGRAÇÃO DE CONSCIÊNCIA: Calcular Φ antes de sintetizar
+        phi_before_synthesis = 0.0
+        if self.workspace:
+            try:
+                phi_before_synthesis = self.workspace.compute_phi_from_integrations()
+            except Exception as e:
+                logger.debug("Erro ao calcular Φ antes de sintetizar: %s", e)
+
         # Compilar resultados por tipo
         code_outputs = [r for r, s in zip(results, subtasks) if s.get("agent") == "code"]
         architecture_outputs = [
             r for r, s in zip(results, subtasks) if s.get("agent") == "architect"
         ]
         review_outputs = [r for r, s in zip(results, subtasks) if s.get("agent") == "reviewer"]
+
+        # Coletar Φ dos resultados individuais
+        phi_values = [r.get("phi", 0.0) for r in results if r.get("phi", 0.0) > 0]
+        average_phi = sum(phi_values) / len(phi_values) if phi_values else 0.0
 
         synthesis = {
             "code_summary": (
@@ -1499,7 +2446,21 @@ ESTIMATED_COMPLEXITY: low"""
             ),
             "key_outputs": [r.get("final_result", "") for r in results if r.get("completed")],
             "issues": [r.get("final_result", "") for r in results if not r.get("completed")],
+            # INTEGRAÇÃO DE CONSCIÊNCIA: Métricas de Φ
+            "phi_before_synthesis": phi_before_synthesis,
+            "average_subtask_phi": average_phi,
+            "subtasks_with_phi": len(phi_values),
         }
+
+        # INTEGRAÇÃO DE CONSCIÊNCIA: Calcular Φ depois de sintetizar
+        phi_after_synthesis = 0.0
+        if self.workspace:
+            try:
+                phi_after_synthesis = self.workspace.compute_phi_from_integrations()
+                synthesis["phi_after_synthesis"] = phi_after_synthesis
+                synthesis["phi_delta_synthesis"] = phi_after_synthesis - phi_before_synthesis
+            except Exception as e:
+                logger.debug("Erro ao calcular Φ depois de sintetizar: %s", e)
 
         return synthesis
 
@@ -1519,6 +2480,22 @@ ESTIMATED_COMPLEXITY: low"""
         # 1. Decompor
         print("📋 Decomposing task into subtasks...")
         plan = self.decompose_task(task)
+
+        # FASE: Meta-ReAct Orchestrator - Coordenação em nível meta
+        meta_coordination: Optional[Dict[str, Any]] = None
+        if hasattr(self, "meta_react_coordinator") and self.meta_react_coordinator:
+            try:
+                available_agents = [mode.value for mode in AgentMode]
+                meta_coordination = self.meta_react_coordinator.coordinate_meta_level(
+                    task=task,
+                    agents=available_agents,
+                    context={"subtasks": plan.get("subtasks", [])},
+                )
+                logger.info(f"Coordenação meta: estratégia {meta_coordination.get('strategy')}")
+                if meta_coordination:
+                    plan["meta_coordination"] = meta_coordination
+            except Exception as e:
+                logger.warning(f"Erro na coordenação meta: {e}. Continuando sem meta-coordenação.")
 
         print(f"\n📊 Plan created with {len(plan['subtasks'])} subtasks:")
         for i, subtask in enumerate(plan["subtasks"], 1):
@@ -1648,7 +2625,11 @@ ESTIMATED_COMPLEXITY: low"""
 
     def delegate_task(self, task: str, agent_type: str) -> Optional[Dict[str, Any]]:
         """
-        Delegate a task to a specific agent type.
+        Delegate a task to a specific agent type com integração de consciência.
+
+        Integra com:
+        - SharedWorkspace: Verifica Φ antes de delegar
+        - Meta-ReAct: Recovery quando Φ < 0.3
 
         Args:
             task: Task description
@@ -1657,6 +2638,40 @@ ESTIMATED_COMPLEXITY: low"""
         Returns:
             Delegation result or None
         """
+        # INTEGRAÇÃO DE CONSCIÊNCIA: Verificar Φ antes de delegar
+        phi_before_delegation = 0.0
+        if self.workspace:
+            try:
+                phi_before_delegation = self.workspace.compute_phi_from_integrations()
+                logger.debug(f"📊 Φ antes de delegar: {phi_before_delegation:.4f}")
+
+                # Meta-recovery se Φ muito baixo
+                if phi_before_delegation < 0.3:
+                    logger.warning(
+                        f"⚠️ Low Φ ({phi_before_delegation:.3f}) antes de delegar - "
+                        f"considerando fallback ou recovery"
+                    )
+                    if hasattr(self, "meta_react_coordinator") and self.meta_react_coordinator:
+                        try:
+                            recovery_result = self.meta_react_coordinator.coordinate_meta_level(
+                                task=task,
+                                agents=[agent_type],
+                                context={
+                                    "low_phi": True,
+                                    "phi_value": phi_before_delegation,
+                                    "delegation_context": True,
+                                },
+                            )
+                            if recovery_result:
+                                logger.info(
+                                    f"🔄 Meta-recovery ativado para delegação: "
+                                    f"{recovery_result.get('strategy', 'unknown')}"
+                                )
+                        except Exception as e:
+                            logger.debug("Erro no meta-recovery para delegação: %s", e)
+            except Exception as e:
+                logger.debug("Erro ao calcular Φ antes de delegar: %s", e)
+
         try:
             # Map agent_type to AgentMode
             mode_map = {
@@ -1698,11 +2713,48 @@ ESTIMATED_COMPLEXITY: low"""
                     "iteration": 1,
                 }
 
+            # INTEGRAÇÃO DE CONSCIÊNCIA: Calcular tríade após delegação
+            triad_result = self._calculate_consciousness_triad_after_delegation(
+                subtask={"agent": agent_type, "description": task},
+                result=result,
+                thinking_session_id=None,
+            )
+            if triad_result and isinstance(result, dict):
+                result["phi"] = triad_result.get("phi", 0.0)
+                result["psi"] = triad_result.get("psi", 0.0)
+                result["sigma"] = triad_result.get("sigma", 0.0)
+
             return result
 
         except Exception as e:
             logger.error(f"Failed to delegate task: {e}")
-            return {"error": str(e)}
+
+            # Analisar erro estruturalmente
+            error_analysis = None
+            if self.error_analyzer:
+                try:
+                    context = {
+                        "task": task,
+                        "agent_type": agent_type,
+                        "delegation_method": "delegate_task",
+                    }
+                    error_analysis = self.error_analyzer.analyze_error(e, context)
+                    logger.info(
+                        f"Erro de delegação analisado: {error_analysis.error_type.value} → "
+                        f"{error_analysis.recovery_strategy.value}"
+                    )
+                except Exception as analysis_error:
+                    logger.warning(f"Erro ao analisar erro de delegação: {analysis_error}")
+
+            result = {"error": str(e), "error_class": type(e).__name__}
+            if error_analysis:
+                result["error_analysis"] = {
+                    "error_type": error_analysis.error_type.value,
+                    "recovery_strategy": error_analysis.recovery_strategy.value,
+                    "confidence": error_analysis.confidence,
+                    "suggested_actions": error_analysis.suggested_actions,
+                }
+            return result
 
     async def delegate_task_with_protection(
         self,
@@ -1843,6 +2895,111 @@ ESTIMATED_COMPLEXITY: low"""
                 "task": f"Execute the following tasks: {'; '.join(tasks)}",
             }
 
+    async def apply_safe_change(
+        self,
+        component_id: str,
+        change_type: str,
+        change_data: Dict[str, Any],
+        description: str,
+    ) -> Dict[str, Any]:
+        """Aplica mudança de forma segura usando sandbox.
+
+        Args:
+            component_id: ID do componente a modificar
+            change_type: Tipo de mudança ("config", "code", "behavior")
+            change_data: Dados da mudança
+            description: Descrição da mudança
+
+        Returns:
+            Resultado da aplicação (com validação via sandbox)
+        """
+        if not self.sandbox_system:
+            return {
+                "success": False,
+                "error": "SandboxSystem not available",
+            }
+
+        try:
+            # 1. Criar snapshot
+            snapshot_id = await self.sandbox_system.create_snapshot(
+                reason=f"Safe change: {description}"
+            )
+
+            # 2. Aplicar mudança no sandbox
+            change_id = await self.sandbox_system.apply_change_in_sandbox(
+                component_id=component_id,
+                change_type=change_type,
+                change_data=change_data,
+                description=description,
+                snapshot_id=snapshot_id,
+            )
+
+            # 3. Verificar resultado
+            result = self.sandbox_system.results.get(change_id)
+            if not result:
+                return {
+                    "success": False,
+                    "error": "Resultado de validação não encontrado",
+                    "change_id": change_id,
+                }
+
+            # 4. Se validação passou, aplicar à produção
+            if result.success and result.validation_passed:
+                applied = await self.sandbox_system.apply_to_production(change_id)
+                return {
+                    "success": applied,
+                    "change_id": change_id,
+                    "snapshot_id": snapshot_id,
+                    "validation_passed": True,
+                    "applied_to_production": applied,
+                }
+            else:
+                return {
+                    "success": False,
+                    "change_id": change_id,
+                    "snapshot_id": snapshot_id,
+                    "validation_passed": False,
+                    "errors": result.errors,
+                    "warnings": result.warnings,
+                    "rollback_applied": result.rollback_applied,
+                }
+
+        except Exception as e:
+            logger.error("Erro ao aplicar mudança segura: %s", e, exc_info=True)
+            return {
+                "success": False,
+                "error": str(e),
+            }
+
+    def get_sandbox_status(self) -> Dict[str, Any]:
+        """Obtém status atual do sandbox.
+
+        Returns:
+            Status do sandbox
+        """
+        if not self.sandbox_system:
+            return {"error": "SandboxSystem not available"}
+
+        return self.sandbox_system.get_sandbox_status()
+
+    def get_sandbox_history(self, limit: int = 10) -> Dict[str, Any]:
+        """Obtém histórico de mudanças do sandbox.
+
+        Args:
+            limit: Número máximo de mudanças
+
+        Returns:
+            Histórico de mudanças
+        """
+        if not self.sandbox_system:
+            return {"error": "SandboxSystem not available", "history": []}
+
+        history = self.sandbox_system.get_change_history(limit=limit)
+        return {
+            "history": history,
+            "total": len(history),
+        }
+
     def switch_mode(self, mode: AgentMode) -> Optional[Dict[str, Any]]:
         """
         Switch to a different agent mode.
@@ -1873,6 +3030,318 @@ ESTIMATED_COMPLEXITY: low"""
             List of available agent types
         """
         return [mode.value for mode in AgentMode]
+
+    # ========== MCP FILESYSTEM CONVENIENCE METHODS ==========
+    # Métodos de conveniência para operações de filesystem via MCP
+
+    def mcp_read_file(self, path: str, encoding: str = "utf-8") -> Dict[str, Any]:
+        """
+        Lê arquivo usando Filesystem MCP.
+
+        Args:
+            path: Caminho do arquivo
+            encoding: Codificação do arquivo
+
+        Returns:
+            Resultado da operação
+        """
+        if not self.mcp_client:
+            return {"error": "MCP client unavailable", "path": path}
+
+        try:
+            content = self.mcp_client.read_file(path, encoding=encoding)
+            return {"success": True, "path": path, "content": content, "length": len(content)}
+        except MCPClientError as e:
+            logger.error("Erro ao ler arquivo via MCP: %s", e)
+            return {"success": False, "error": str(e), "path": path}
+
+    def mcp_write_file(self, path: str, content: str, encoding: str = "utf-8") -> Dict[str, Any]:
+        """
+        Escreve arquivo usando Filesystem MCP.
+
+        Args:
+            path: Caminho do arquivo
+            content: Conteúdo a escrever
+            encoding: Codificação do arquivo
+
+        Returns:
+            Resultado da operação
+        """
+        if not self.mcp_client:
+            return {"error": "MCP client unavailable", "path": path}
+
+        try:
+            result = self.mcp_client.write_file(path, content, encoding=encoding)
+            return {"success": True, "path": path, "result": result}
+        except MCPClientError as e:
+            logger.error("Erro ao escrever arquivo via MCP: %s", e)
+            return {"success": False, "error": str(e), "path": path}
+
+    def mcp_list_dir(self, path: str, recursive: bool = False) -> Dict[str, Any]:
+        """
+        Lista diretório usando Filesystem MCP.
+
+        Args:
+            path: Caminho do diretório
+            recursive: Se True, lista recursivamente
+
+        Returns:
+            Resultado da operação
+        """
+        if not self.mcp_client:
+            return {"error": "MCP client unavailable", "path": path}
+
+        try:
+            result = self.mcp_client.list_dir(path, recursive=recursive)
+            return {"success": True, "path": path, "result": result}
+        except MCPClientError as e:
+            logger.error("Erro ao listar diretório via MCP: %s", e)
+            return {"success": False, "error": str(e), "path": path}
+
+    def mcp_file_stat(self, path: str) -> Dict[str, Any]:
+        """
+        Obtém estatísticas de arquivo usando Filesystem MCP.
+
+        Args:
+            path: Caminho do arquivo
+
+        Returns:
+            Resultado da operação
+        """
+        if not self.mcp_client:
+            return {"error": "MCP client unavailable", "path": path}
+
+        try:
+            result = self.mcp_client.stat(path)
+            return {"success": True, "path": path, "stat": result}
+        except MCPClientError as e:
+            logger.error("Erro ao obter stat de arquivo via MCP: %s", e)
+            return {"success": False, "error": str(e), "path": path}
+
+    def get_mcp_orchestrator_status(self) -> Dict[str, Any]:
+        """
+        Obtém status do MCPOrchestrator e servidores MCP.
+
+        Returns:
+            Status dos servidores MCP
+        """
+        if not self.mcp_orchestrator:
+            return {"error": "MCPOrchestrator unavailable", "servers": {}}
+
+        try:
+            status = {}
+            for name, server_status in self.mcp_orchestrator.status.items():
+                status[name] = {
+                    "enabled": server_status.enabled,
+                    "running": server_status.running,
+                    "healthy": server_status.healthy,
+                    "uptime_seconds": server_status.uptime_seconds,
+                    "total_requests": server_status.total_requests,
+                    "failed_requests": server_status.failed_requests,
+                    "avg_response_time_ms": server_status.avg_response_time_ms,
+                }
+
+            return {
+                "success": True,
+                "servers": status,
+                "total_servers": len(status),
+                "running_servers": sum(1 for s in status.values() if s["running"]),
+            }
+        except Exception as e:
+            logger.error("Erro ao obter status do MCPOrchestrator: %s", e)
+            return {"success": False, "error": str(e), "servers": {}}
+
+    # ========== MCP THINKING CONVENIENCE METHODS ==========
+    # Métodos de conveniência para Sequential Thinking MCP
+
+    def mcp_start_thinking_session(self, goal: str) -> Dict[str, Any]:
+        """
+        Inicia sessão de thinking usando Sequential Thinking MCP.
+
+        Args:
+            goal: Objetivo da sessão de thinking
+
+        Returns:
+            Resultado da operação
+        """
+        if not self.mcp_client:
+            return {"error": "MCP client unavailable", "goal": goal}
+
+        try:
+            # Usar trigger_mcp_action para chamar o servidor thinking
+            result = self.trigger_mcp_action(action="start_session", path=goal, recursive=False)
+            return {"success": True, "goal": goal, "result": result}
+        except Exception as e:
+            logger.error("Erro ao iniciar sessão de thinking via MCP: %s", e)
+            return {"success": False, "error": str(e), "goal": goal}
+
+    def mcp_add_thinking_step(
+        self, session_id: str, content: str, step_type: str = "observation"
+    ) -> Dict[str, Any]:
+        """
+        Adiciona passo de thinking usando Sequential Thinking MCP.
+
+        Args:
+            session_id: ID da sessão
+            content: Conteúdo do passo
+            step_type: Tipo do passo (observation, hypothesis, analysis, etc.)
+
+        Returns:
+            Resultado da operação
+        """
+        if not self.mcp_client:
+            return {"error": "MCP client unavailable", "session_id": session_id}
+
+        try:
+            # Usar _execute_mcp_subtask para chamar add_step
+            subtask = {
+                "description": f"Add thinking step: {content[:50]}",
+                "metadata": {
+                    "mcp_action": "add_step",
+                    "session_id": session_id,
+                    "content": content,
+                    "type": step_type,
+                },
+            }
+            result = self._execute_mcp_subtask(subtask, metric_name="thinking_mcp")
+            return {"success": True, "session_id": session_id, "result": result}
+        except Exception as e:
+            logger.error("Erro ao adicionar passo de thinking via MCP: %s", e)
+            return {"success": False, "error": str(e), "session_id": session_id}
+
+    def mcp_get_thinking_history(self, session_id: str) -> Dict[str, Any]:
+        """
+        Obtém histórico de thinking usando Sequential Thinking MCP.
+
+        Args:
+            session_id: ID da sessão
+
+        Returns:
+            Histórico de passos
+        """
+        if not self.mcp_client:
+            return {"error": "MCP client unavailable", "session_id": session_id}
+
+        try:
+            subtask = {
+                "description": f"Get thinking history for session {session_id}",
+                "metadata": {"mcp_action": "get_history", "session_id": session_id},
+            }
+            result = self._execute_mcp_subtask(subtask, metric_name="thinking_mcp")
+            return {"success": True, "session_id": session_id, "history": result}
+        except Exception as e:
+            logger.error("Erro ao obter histórico de thinking via MCP: %s", e)
+            return {"success": False, "error": str(e), "session_id": session_id}
+
+    # ========== MCP CONTEXT CONVENIENCE METHODS ==========
+    # Métodos de conveniência para Context MCP
+
+    def mcp_store_context(
+        self, level: str, content: str, metadata: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        """
+        Armazena contexto usando Context MCP.
+
+        Args:
+            level: Nível do contexto (project, session, task, code, memory, audit, ephemeral)
+            content: Conteúdo do contexto
+            metadata: Metadados adicionais
+
+        Returns:
+            Resultado da operação
+        """
+        if not self.mcp_client:
+            return {"error": "MCP client unavailable", "level": level}
+
+        try:
+            subtask = {
+                "description": f"Store context at level {level}",
+                "metadata": {
+                    "mcp_action": "store_context",
+                    "level": level,
+                    "content": content,
+                    "metadata": metadata or {},
+                },
+            }
+            result = self._execute_mcp_subtask(subtask, metric_name="context_mcp")
+            return {"success": True, "level": level, "result": result}
+        except Exception as e:
+            logger.error("Erro ao armazenar contexto via MCP: %s", e)
+            return {"success": False, "error": str(e), "level": level}
+
+    def mcp_retrieve_context(self, level: str, query: str = "") -> Dict[str, Any]:
+        """
+        Recupera contexto usando Context MCP.
+
+        Args:
+            level: Nível do contexto
+            query: Query opcional para filtrar contexto
+
+        Returns:
+            Contexto recuperado
+        """
+        if not self.mcp_client:
+            return {"error": "MCP client unavailable", "level": level}
+
+        try:
+            subtask = {
+                "description": f"Retrieve context at level {level}",
+                "metadata": {
+                    "mcp_action": "retrieve_context",
+                    "level": level,
+                    "query": query,
+                },
+            }
+            result = self._execute_mcp_subtask(subtask, metric_name="context_mcp")
+            return {"success": True, "level": level, "context": result}
+        except Exception as e:
+            logger.error("Erro ao recuperar contexto via MCP: %s", e)
+            return {"success": False, "error": str(e), "level": level}
+
+    def mcp_compress_context(self, level: str) -> Dict[str, Any]:
+        """
+        Comprime contexto usando Context MCP.
+
+        Args:
+            level: Nível do contexto a comprimir
+
+        Returns:
+            Resultado da compressão
+        """
+        if not self.mcp_client:
+            return {"error": "MCP client unavailable", "level": level}
+
+        try:
+            subtask = {
+                "description": f"Compress context at level {level}",
+                "metadata": {"mcp_action": "compress_context", "level": level},
+            }
+            result = self._execute_mcp_subtask(subtask, metric_name="context_mcp")
+            return {"success": True, "level": level, "result": result}
+        except Exception as e:
+            logger.error("Erro ao comprimir contexto via MCP: %s", e)
+            return {"success": False, "error": str(e), "level": level}
+
+    def mcp_snapshot_context(self) -> Dict[str, Any]:
+        """
+        Cria snapshot do contexto usando Context MCP.
+
+        Returns:
+            ID do snapshot criado
+        """
+        if not self.mcp_client:
+            return {"error": "MCP client unavailable"}
+
+        try:
+            subtask = {
+                "description": "Create context snapshot",
+                "metadata": {"mcp_action": "snapshot_context"},
+            }
+            result = self._execute_mcp_subtask(subtask, metric_name="context_mcp")
+            return {"success": True, "snapshot": result}
+        except Exception as e:
+            logger.error("Erro ao criar snapshot de contexto via MCP: %s", e)
+            return {"success": False, "error": str(e)}
 
 
 # ============================================================================

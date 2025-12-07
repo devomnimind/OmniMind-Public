@@ -127,9 +127,9 @@ Configurações específicas em:
 
 ---
 
-**Última Atualização**: 2 de Dezembro de 2025  
-**Autor**: Fabrício da Silva (com assistência de IA)  
-**Status**: Componente integrado do sistema OmniMind  
+**Última Atualização**: 2 de Dezembro de 2025
+**Autor**: Fabrício da Silva (com assistência de IA)
+**Status**: Componente integrado do sistema OmniMind
 **Versão**: Conforme fase do projeto indicada
 
 ---
@@ -162,7 +162,12 @@ Configurações específicas em:
 - `update_heartbeat()` → `None`
   > Update the heartbeat file with current status....
 - `rotate_logs()` → `None`
-  > Compress logs older than ROTATION_AGE_HOURS....
+  > Compress logs older than ROTATION_AGE_HOURS. Gera relatórios via ModuleReporter após rotação ou diariamente (meia-noite).
+
+**Integração com ModuleReporter** (2025-12-07):
+- Relatórios gerados automaticamente após rotação de logs ou diariamente
+- Relatórios salvos em `data/reports/modules/observer_service_*.json`
+- Inclui métricas de longo prazo coletadas pelo serviço
 
 ### `SinthomaticCompression`
 

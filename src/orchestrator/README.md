@@ -30,6 +30,47 @@ Módulo implementa funcionalidades especializadas através de:
 
 *Funções detalhadas documentadas nos arquivos Python individuais do módulo.*
 
+### Novos Componentes (2025-12-06)
+
+**MetaReActCoordinator** (`meta_react_coordinator.py`):
+- Coordenação em nível meta para orquestração
+- Gerenciamento de mudanças de estratégia (SEQUENTIAL, PIPELINE, ADAPTIVE)
+- Recuperação de falhas em nível meta
+- Composição de agentes baseada em requisitos
+- Integração com ErrorAnalyzer para análise estrutural
+
+**ErrorAnalyzer** (`error_analyzer.py`):
+- Análise estrutural de erros
+- Classificação de tipos de erro (SYNTAX, DEPENDENCY, HALLUCINATION, etc.)
+- Sugestão de estratégias de recuperação
+- Aprendizado de padrões de erro
+- Integração com ModuleMetricsCollector e StructuredModuleLogger
+
+**RAGFallbackSystem** (`rag_fallback.py`):
+- Sistema de fallback inteligente quando agentes falham
+- Geração de queries de recuperação baseada em análise de erro
+- Integração com HybridRetrievalSystem e DatasetIndexer
+- Aumento de contexto para re-execução
+- Integração com ModuleMetricsCollector e StructuredModuleLogger
+
+**SandboxSystem** (`sandbox_system.py`) - ✅ COMPLETO (2025-12-06):
+- Sistema de sandbox para auto-melhoria segura
+- Criação de snapshots de estado antes de mudanças
+- Validação de mudanças antes de aplicar (RollbackSystem + validação de código Python)
+- Aplicação de mudanças em isolamento
+- Detecção automática de degradação
+- Rollback automático em caso de falha
+- Histórico completo de mudanças
+- Integração completa com OrchestratorAgent (métodos: `apply_safe_change`, `get_sandbox_status`, `get_sandbox_history`)
+- Testes: 11/11 passando
+
+**MCPOrchestrator Integration** - ✅ COMPLETO (2025-12-06):
+- Integração do MCPOrchestrator no OrchestratorAgent
+- Gerenciamento centralizado de servidores MCP
+- Health monitoring e lifecycle management
+- Métodos de conveniência para Filesystem MCP (`mcp_read_file`, `mcp_write_file`, `mcp_list_dir`, `mcp_file_stat`)
+- Status de servidores MCP (`get_mcp_orchestrator_status`)
+
 ## 📊 Estrutura do Código
 
 ```
@@ -127,9 +168,9 @@ Configurações específicas em:
 
 ---
 
-**Última Atualização**: 2 de Dezembro de 2025  
-**Autor**: Fabrício da Silva (com assistência de IA)  
-**Status**: Componente integrado do sistema OmniMind  
+**Última Atualização**: 2 de Dezembro de 2025
+**Autor**: Fabrício da Silva (com assistência de IA)
+**Status**: Componente integrado do sistema OmniMind
 **Versão**: Conforme fase do projeto indicada
 
 ---

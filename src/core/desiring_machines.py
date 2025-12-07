@@ -62,6 +62,11 @@ class DesiringMachine(ABC):
         self.state: dict[str, Any] = {}  # Estado interno da máquina
         self.production_history: list[dict[str, Any]] = []  # Log de produções
 
+        # Consciência local (Φ, Ψ, σ) - integração com Fase 2 e 3
+        self.local_phi_history: List[float] = []
+        self.local_psi_history: List[float] = []
+        self.local_sigma_history: List[float] = []
+
     async def produce(self, inputs: Any = None) -> Any:
         """
         PRODUZ desejo.
@@ -79,17 +84,116 @@ class DesiringMachine(ABC):
         for connection in self.outgoing_connections:
             await self._send_desire_flow(connection, output)
 
-        # 4. Registra no histórico (residue = BwO)
+        # 4. Computa consciência local (Φ, Ψ, σ) - integração com Fase 2 e 3
+        phi_local = await self._compute_local_phi(output, accumulated_flows)
+        psi_local = await self._compute_local_psi(output)
+        sigma_local = await self._compute_local_sigma()
+
+        # Registra histórico
+        self.local_phi_history.append(phi_local)
+        self.local_psi_history.append(psi_local)
+        self.local_sigma_history.append(sigma_local)
+
+        # 5. Registra no histórico (residue = BwO)
         self.production_history.append(
             {
                 "timestamp": datetime.now(),
                 "input": inputs,
                 "output": output,
                 "intensity": self.desire_intensity.value,
+                "phi_local": phi_local,
+                "psi_local": psi_local,
+                "sigma_local": sigma_local,
             }
         )
 
         return output
+
+    async def _compute_local_phi(self, output: Any, incoming_flows: Dict[str, Any]) -> float:
+        """
+        Φ_local = integração interna da máquina.
+
+        Heurística:
+        - Mais fluxos entrantes = mais integração
+        - Output bem-formado = mais integração
+        """
+        base_phi = 0.5  # Baseline
+
+        # Bonus por fluxos entrantes
+        num_flows = len(incoming_flows)
+        flow_bonus = min(0.3, num_flows * 0.05)
+
+        # Bonus por output
+        if output is not None:
+            output_bonus = 0.1
+        else:
+            output_bonus = -0.2
+
+        phi_local = min(1.0, max(0.0, base_phi + flow_bonus + output_bonus))
+
+        return float(phi_local)
+
+    async def _compute_local_psi(self, output: Any) -> float:
+        """
+        Ψ_local = criatividade/produção da máquina.
+
+        Heurística:
+        - Diversidade de outputs passados = alta Ψ
+        - Repetição = baixa Ψ
+        """
+        if len(self.production_history) < 2:
+            return 0.5  # Novo, não há histórico
+
+        # Coleta últimos outputs
+        recent_outputs = [record["output"] for record in self.production_history[-10:]]
+
+        # Computa entropia de outputs (diversidade)
+        # Simplificado: tipos diferentes = mais diversidade
+        output_types = [type(o).__name__ for o in recent_outputs]
+        unique_types = len(set(output_types))
+
+        psi_local = min(1.0, unique_types / 5.0)  # Normaliza
+
+        return float(psi_local)
+
+    async def _compute_local_sigma(self) -> float:
+        """
+        σ_local = coesão/estabilidade estrutural da máquina.
+
+        Heurística:
+        - Desire_intensity consistente = alta σ
+        - Fluxos instáveis = baixa σ
+        """
+        # Base: intensidade do desejo
+        sigma_base = self.desire_intensity.value
+
+        # Se histórico tem σ: valida continuidade
+        if len(self.local_sigma_history) > 5:
+            import numpy as np
+
+            sigma_variance = float(np.std(self.local_sigma_history[-5:]))
+            # Baixa variância = alta coesão
+            sigma_stability = 1.0 - min(1.0, sigma_variance)
+            sigma_local = (sigma_base + sigma_stability) / 2.0
+        else:
+            sigma_local = sigma_base
+
+        return float(min(1.0, max(0.0, sigma_local)))
+
+    def get_local_consciousness(self) -> Dict[str, Any]:
+        """Retorna estado de consciência local (Φ, Ψ, σ)."""
+        phi = self.local_phi_history[-1] if self.local_phi_history else 0.5
+        psi = self.local_psi_history[-1] if self.local_psi_history else 0.5
+        sigma = self.local_sigma_history[-1] if self.local_sigma_history else 0.5
+
+        return {
+            "machine_id": self.id,
+            "phi": phi,
+            "psi": psi,
+            "sigma": sigma,
+            "intensity": self.desire_intensity.value,
+            "production_count": len(self.production_history),
+        }
 
     def _accumulate_incoming_flows(self) -> Dict[str, Any]:
         """Acumula fluxos de máquinas conectadas."""

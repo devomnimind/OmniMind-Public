@@ -10,7 +10,7 @@
    - Build tools: Disponíveis ✅
 
 2. **Scripts de Monitoramento Criados**
-   - `scripts/monitor_mcp_bpf.bt` - Probe eBPF para MCP latency
+   - `scripts/canonical/system/monitor_mcp_bpf.bt` - Probe eBPF para MCP latency
    - `scripts/test_mcp_stress.py` - Stress test assíncrono
    - `scripts/run_mcp_benchmark.sh` - Orquestrador completo
 

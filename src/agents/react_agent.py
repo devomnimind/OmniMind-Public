@@ -1,8 +1,18 @@
 #!/usr/bin/env python3
 """
-OmniMind ReactAgent - Fixed version with proper completion detection
+OmniMind ReactAgent - Base agent with full consciousness integration.
+
+Integra com:
+- SharedWorkspace: Agente = módulo, operações = eventos
+- PhiCalculator via SharedWorkspace: Cálculo real de Φ
+- NarrativeHistory: Experiências = eventos sem significado (Lacaniano)
+- SystemicMemoryTrace: Operações = marcas topológicas
+
+Autor: Fabrício da Silva + assistência de IA
+Data: 2025-12-06
 """
 
+import hashlib
 import json
 import logging
 import os
@@ -10,6 +20,7 @@ import time
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Protocol, TypeAlias, TypedDict, cast
 
+import numpy as np
 import yaml
 from langchain_ollama import OllamaLLM
 from langgraph.graph import END, StateGraph
@@ -39,6 +50,10 @@ class AgentState(TypedDict):
     max_iterations: int
     completed: bool
     final_result: str
+    phi: float  # Φ calculado via SharedWorkspace
+    psi: float  # Ψ_produtor (Deleuze) - produção criativa
+    sigma: float  # σ_sinthome (Lacan) - coesão estrutural
+    quality_score: float  # Score de qualidade da execução
 
 
 class GraphInvoker(Protocol):
@@ -58,8 +73,19 @@ class ReactAgent:
         OBSERVE → Process result → Check completion → Continue or End
     """
 
-    def __init__(self, config_path: str):
-        """Initialize agent with configuration."""
+    def __init__(
+        self,
+        config_path: str,
+        workspace: Optional[Any] = None,  # SharedWorkspace
+        embedding_dim: int = 256,
+    ):
+        """Initialize agent with configuration and consciousness integration.
+
+        Args:
+            config_path: Path to agent configuration file
+            workspace: Instância opcional de SharedWorkspace para integração
+            embedding_dim: Dimensão dos embeddings (deve corresponder ao workspace)
+        """
         # Load environment variables from .env file
         from dotenv import load_dotenv
 
@@ -120,7 +146,119 @@ class ReactAgent:
         self._training_pressure_active: bool = False
         self._adversarial_behavior: Optional[str] = None
 
+        # INTEGRAÇÃO COM MÓDULOS DE CONSCIÊNCIA
+        self.embedding_dim = embedding_dim
+        self.workspace = workspace
+        self._init_workspace_integration()
+
+        # Consciousness Triad Calculator (lazy initialization)
+        self._triad_calculator: Optional[Any] = None
+        self._metrics_collector: Optional[Any] = None
+        self._phi_history: List[float] = []  # Histórico de Φ para cálculo de σ
+        self._last_triad: Optional[Dict[str, float]] = None  # Última tríade calculada
+        self._init_consciousness_triad()
+
+        # Embedding model simples (fallback hash-based)
+        self._embedding_model: Optional[Any] = None
+        self._init_embedding_model()
+
         self.graph: CompiledGraphType = self._build_graph()
+
+    def _init_workspace_integration(self) -> None:
+        """Inicializa integração com SharedWorkspace."""
+        if self.workspace is None:
+            try:
+                from ..consciousness.shared_workspace import SharedWorkspace
+
+                self.workspace = SharedWorkspace(embedding_dim=self.embedding_dim)
+                logger.debug("SharedWorkspace criado para agente: %s", self.agent_id)
+            except ImportError:
+                logger.warning("SharedWorkspace não disponível, continuando sem integração")
+                self.workspace = None
+                return
+
+        # Registrar agente como módulo no workspace
+        if self.workspace:
+            try:
+                agent_embedding = self._generate_embedding(f"{self.mode}_{self.__class__.__name__}")
+                if agent_embedding.shape[0] != self.workspace.embedding_dim:
+                    if agent_embedding.shape[0] < self.workspace.embedding_dim:
+                        padding = np.zeros(self.workspace.embedding_dim - agent_embedding.shape[0])
+                        agent_embedding = np.concatenate([agent_embedding, padding])
+                    else:
+                        agent_embedding = agent_embedding[: self.workspace.embedding_dim]
+
+                module_name = f"agent_{self.agent_id}"
+                self.workspace.write_module_state(
+                    module_name=module_name,
+                    embedding=agent_embedding,
+                    metadata={
+                        "agent_type": self.mode,
+                        "agent_class": self.__class__.__name__,
+                        "agent_id": self.agent_id,
+                    },
+                )
+                logger.debug("Agente registrado no SharedWorkspace: %s", module_name)
+            except Exception as e:
+                logger.warning("Erro ao registrar agente no workspace: %s", e)
+
+    def _init_consciousness_triad(self) -> None:
+        """Inicializa ConsciousnessTriadCalculator e ModuleMetricsCollector."""
+        if not self.workspace:
+            return
+
+        try:
+            from ..consciousness.consciousness_triad import ConsciousnessTriadCalculator
+
+            self._triad_calculator = ConsciousnessTriadCalculator(workspace=self.workspace)
+            logger.debug("ConsciousnessTriadCalculator inicializado para agente: %s", self.agent_id)
+        except ImportError as e:
+            logger.warning("ConsciousnessTriadCalculator não disponível: %s", e)
+            self._triad_calculator = None
+
+        try:
+            from ..consciousness.metrics import ModuleMetricsCollector
+
+            self._metrics_collector = ModuleMetricsCollector()
+            logger.debug("ModuleMetricsCollector inicializado para agente: %s", self.agent_id)
+        except ImportError as e:
+            logger.warning("ModuleMetricsCollector não disponível: %s", e)
+            self._metrics_collector = None
+
+    def _init_embedding_model(self) -> None:
+        """Inicializa modelo de embedding (lazy, com fallback)."""
+        try:
+            from sentence_transformers import SentenceTransformer
+
+            self._embedding_model = SentenceTransformer("all-MiniLM-L6-v2", device="cpu")
+            logger.debug("Modelo de embedding carregado: all-MiniLM-L6-v2")
+        except ImportError:
+            logger.debug("SentenceTransformer não disponível, usando fallback hash-based")
+            self._embedding_model = None
+
+    def _generate_embedding(self, text: str) -> np.ndarray:
+        """Gera embedding para texto (com fallback hash-based)."""
+        if self._embedding_model:
+            try:
+                encoded = self._embedding_model.encode(text, normalize_embeddings=True)
+                # Truncar/expandir para embedding_dim
+                if len(encoded) > self.embedding_dim:
+                    return encoded[: self.embedding_dim]
+                elif len(encoded) < self.embedding_dim:
+                    padding = np.zeros(self.embedding_dim - len(encoded))
+                    return np.concatenate([encoded, padding])
+                return encoded
+            except Exception as e:
+                logger.warning("Erro ao gerar embedding com modelo: %s, usando fallback", e)
+
+        # Fallback hash-based
+        hash_obj = hashlib.sha256(text.encode())
+        hash_bytes = hash_obj.digest()
+        embedding = np.zeros(self.embedding_dim)
+        for i in range(self.embedding_dim):
+            byte_val = hash_bytes[i % len(hash_bytes)]
+            embedding[i] = (byte_val / 255.0) * 2 - 1
+        return embedding
 
     def compute_jouissance_for_task(self, task: Dict[str, Any]) -> float:
         """
@@ -327,6 +465,11 @@ class ReactAgent:
     def _think_node(self, state: AgentState) -> AgentState:
         """
         THINK: Generate reasoning based on task, memory, and system status.
+
+        Integra com:
+        - SharedWorkspace: Registra raciocínio como evento
+        - SystemicMemoryTrace: Deforma atrator com raciocínio
+        - NarrativeHistory: Inscrição sem significado (já existe)
         """
         # Get similar experiences from memory
         similar_episodes = self.memory.search_similar(
@@ -416,6 +559,47 @@ Your response:"""
         state["reasoning_chain"].append(response)
         state["messages"].append(f"[THINK] {response[:500]}...")
 
+        # INTEGRAÇÃO: Registrar raciocínio no SharedWorkspace
+        if self.workspace:
+            try:
+                reasoning_embedding = self._generate_embedding(
+                    f"{state['current_task']} {response[:200]}"
+                )
+                if reasoning_embedding.shape[0] != self.workspace.embedding_dim:
+                    if reasoning_embedding.shape[0] < self.workspace.embedding_dim:
+                        padding = np.zeros(
+                            self.workspace.embedding_dim - reasoning_embedding.shape[0]
+                        )
+                        reasoning_embedding = np.concatenate([reasoning_embedding, padding])
+                    else:
+                        reasoning_embedding = reasoning_embedding[: self.workspace.embedding_dim]
+
+                # Usar symbolic_register para logar raciocínio
+                if hasattr(self.workspace, "symbolic_register"):
+                    self.workspace.symbolic_register.send_symbolic_message(
+                        sender=f"agent_{self.agent_id}",
+                        receiver="narrative",
+                        symbolic_content={
+                            "task": state["current_task"],
+                            "reasoning": response[:500],
+                            "iteration": state["iteration"],
+                        },
+                        priority=1,
+                        nachtraglichkeit=True,  # Lacaniano: significado retroativo
+                    )
+
+                # Deformar atrator com raciocínio (SystemicMemoryTrace)
+                if self.workspace.systemic_memory:
+                    module_name = f"agent_{self.agent_id}"
+                    if module_name in self.workspace.embeddings:
+                        past_state = self.workspace.embeddings[module_name]
+                        self.workspace.systemic_memory.add_trace_not_memory(
+                            past_state, reasoning_embedding
+                        )
+                        logger.debug("Deformação topológica adicionada para raciocínio")
+            except Exception as e:
+                logger.warning("Erro ao integrar raciocínio com workspace: %s", e)
+
         return state
 
     def _act_node(self, state: AgentState) -> AgentState:
@@ -485,6 +669,10 @@ Your response:"""
     def _observe_node(self, state: AgentState) -> AgentState:
         """
         OBSERVE: Process action results and check completion.
+
+        Integra com:
+        - SharedWorkspace: Atualiza estado do agente e calcula Φ
+        - SystemicMemoryTrace: Deforma atrator com observação
         """
         if state["actions_taken"]:
             last_action = state["actions_taken"][-1]
@@ -501,8 +689,156 @@ Your response:"""
                 state["completed"] = True
                 state["final_result"] = observation
 
+        # INTEGRAÇÃO: Atualizar estado no SharedWorkspace e calcular Φ
+        if self.workspace:
+            try:
+                # Criar embedding do estado atual do agente
+                state_summary = f"{state['current_task']} {len(state['actions_taken'])} actions"
+                state_embedding = self._generate_embedding(state_summary)
+                if state_embedding.shape[0] != self.workspace.embedding_dim:
+                    if state_embedding.shape[0] < self.workspace.embedding_dim:
+                        padding = np.zeros(self.workspace.embedding_dim - state_embedding.shape[0])
+                        state_embedding = np.concatenate([state_embedding, padding])
+                    else:
+                        state_embedding = state_embedding[: self.workspace.embedding_dim]
+
+                module_name = f"agent_{self.agent_id}"
+                self.workspace.write_module_state(
+                    module_name=module_name,
+                    embedding=state_embedding,
+                    metadata={
+                        "agent_type": self.mode,
+                        "task": state["current_task"],
+                        "iteration": state["iteration"],
+                        "completed": state["completed"],
+                        "actions_count": len(state["actions_taken"]),
+                    },
+                )
+
+                # Calcular tríade completa (Φ, Ψ, σ)
+                triad = self._calculate_consciousness_triad(state)
+                state["phi"] = triad.get("phi", 0.0)
+                state["psi"] = triad.get("psi", 0.0)
+                state["sigma"] = triad.get("sigma", 0.0)
+                logger.debug(
+                    "Tríade calculada para agente: Φ=%.4f, Ψ=%.4f, σ=%.4f",
+                    state["phi"],
+                    state["psi"],
+                    state["sigma"],
+                )
+            except Exception as e:
+                logger.warning("Erro ao calcular tríade: %s", e)
+                state["phi"] = 0.0
+                state["psi"] = 0.0
+                state["sigma"] = 0.0
+
+        # Calcular qualidade da execução
+        state["quality_score"] = self._calculate_execution_quality(state)
+
         state["iteration"] += 1
         return state
+
+    def _calculate_consciousness_triad(self, state: AgentState) -> Dict[str, float]:
+        """
+        Calcula tríade ortogonal de consciência (Φ, Ψ, σ).
+
+        Args:
+            state: Estado atual do agente
+
+        Returns:
+            Dict com phi, psi, sigma
+        """
+        if not self._triad_calculator or not self.workspace:
+            return {"phi": 0.0, "psi": 0.0, "sigma": 0.0}
+
+        try:
+            # Preparar dados para cálculo
+            step_id = f"{self.agent_id}_step_{state['iteration']}"
+            step_content = state["reasoning_chain"][-1] if state["reasoning_chain"] else ""
+            previous_steps = [r[:200] for r in state["reasoning_chain"][:-1]]  # Últimos raciocínios
+            goal = state["current_task"]
+            actions = [a["action"] for a in state["actions_taken"]]
+
+            # Coletar histórico de Φ (últimos 10 iterações)
+            phi_history: List[float] = []
+            if self._phi_history:
+                phi_history = self._phi_history[-10:]
+
+            # Calcular tríade
+            triad = self._triad_calculator.calculate_triad(
+                step_id=step_id,
+                step_content=step_content,
+                previous_steps=previous_steps,
+                goal=goal,
+                actions=actions,
+                cycle_id=f"cycle_{self.agent_id}_{state['iteration']}",
+                phi_history=phi_history if phi_history else None,
+            )
+
+            # Armazenar última tríade calculada
+            self._last_triad = {"phi": triad.phi, "psi": triad.psi, "sigma": triad.sigma}
+
+            # Atualizar histórico de Φ
+            self._phi_history.append(triad.phi)
+            if len(self._phi_history) > 20:  # Manter apenas últimos 20
+                self._phi_history = self._phi_history[-20:]
+
+            # Registrar no ModuleMetricsCollector
+            if self._metrics_collector:
+                try:
+                    self._metrics_collector.record_consciousness_state(
+                        phi=triad.phi,
+                        psi=triad.psi,
+                        sigma=triad.sigma,
+                        step_id=step_id,
+                    )
+                except Exception as e:
+                    logger.debug("Erro ao registrar tríade no ModuleMetricsCollector: %s", e)
+
+            return {"phi": triad.phi, "psi": triad.psi, "sigma": triad.sigma}
+
+        except Exception as e:
+            logger.warning("Erro ao calcular tríade de consciência: %s", e)
+            return {"phi": 0.0, "psi": 0.0, "sigma": 0.0}
+
+    def get_consciousness_triad(self) -> Optional[Dict[str, float]]:
+        """
+        Retorna última tríade de consciência calculada.
+
+        Returns:
+            Dict com phi, psi, sigma ou None se não disponível
+        """
+        if hasattr(self, "_last_triad"):
+            return self._last_triad
+        return None
+
+    def _calculate_execution_quality(self, state: AgentState) -> float:
+        """Calcula score de qualidade da execução."""
+        score = 0.0
+
+        # Baseado em Φ (integração)
+        phi = state.get("phi", 0.0)
+        score += min(phi * 0.3, 0.3)
+
+        # Baseado em Ψ (criatividade)
+        psi = state.get("psi", 0.0)
+        score += min(psi * 0.2, 0.2)
+
+        # Baseado em σ (estrutura)
+        sigma = state.get("sigma", 0.0)
+        score += min(sigma * 0.1, 0.1)
+
+        # Baseado em completude
+        if state["completed"]:
+            score += 0.2
+
+        # Baseado em número de ações (eficiência)
+        actions_count = len(state["actions_taken"])
+        if actions_count > 0:
+            efficiency = min(actions_count / 5.0, 0.2)  # Ideal: 1-5 ações
+            score += efficiency
+
+        return min(score, 1.0)
 
     def _should_continue(self, state: AgentState) -> str:
         """
@@ -543,6 +879,10 @@ Your response:"""
             "max_iterations": max_iterations,
             "completed": False,
             "final_result": "",
+            "phi": 0.0,
+            "psi": 0.0,
+            "sigma": 0.0,
+            "quality_score": 0.0,
         }
 
         # Run state machine
@@ -567,8 +907,30 @@ Your response:"""
                 "final_result": final_state["final_result"],
                 "iterations": final_state["iteration"],
                 "actions_taken": len(final_state["actions_taken"]),
+                "phi": final_state.get("phi", 0.0),
+                "quality_score": final_state.get("quality_score", 0.0),
             }
             self.inscribe_experience(task_dict, result_dict)
+
+            # INTEGRAÇÃO: Inscrição narrativa (Lacaniano) - já existe via memory.store_episode
+            # Mas podemos melhorar com inscrição sem significado
+            if hasattr(self.memory, "inscribe_event"):
+                try:
+                    self.memory.inscribe_event(
+                        event={
+                            "task": task,
+                            "action": action_summary,
+                            "result": result_summary,
+                            "metadata": {
+                                "phi": final_state.get("phi", 0.0),
+                                "quality_score": final_state.get("quality_score", 0.0),
+                                "agent_id": self.agent_id,
+                            },
+                        },
+                        without_meaning=True,  # Lacaniano: sem significado imediato
+                    )
+                except Exception as e:
+                    logger.debug("Erro ao inscrever evento narrativo: %s", e)
 
             return cast(Dict[str, Any], final_state)
 
@@ -587,6 +949,10 @@ Your response:"""
                 "system_status": {},
                 "iteration": 0,
                 "max_iterations": max_iterations,
+                "phi": 0.0,
+                "psi": 0.0,
+                "sigma": 0.0,
+                "quality_score": 0.0,
             }
 
     def _run_supabase_memory_onboarding(self) -> None:
@@ -749,6 +1115,10 @@ Your response:"""
             "max_iterations": 1,  # Apenas 1 passo
             "completed": False,
             "final_result": "",
+            "phi": 0.0,
+            "psi": 0.0,
+            "sigma": 0.0,
+            "quality_score": 0.0,
         }
 
         # Executa um passo do grafo (Think → Act → Observe)

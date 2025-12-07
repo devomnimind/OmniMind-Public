@@ -25,6 +25,7 @@ from src.metrics.real_baseline_system import RealBaselineSystem
 from src.metrics.real_consciousness_metrics import RealConsciousnessMetricsCollector
 from src.metrics.real_module_activity import RealModuleActivityTracker
 from src.metrics.real_system_health import RealSystemHealthAnalyzer, SystemHealthStatus
+from src.observability.module_metrics import ModuleMetricsCollector, get_metrics_collector
 
 try:
     import psutil
@@ -91,6 +92,7 @@ class DashboardMetricsAggregator:
         health_analyzer: Optional[RealSystemHealthAnalyzer] = None,
         baseline_system: Optional[RealBaselineSystem] = None,
         system_metrics_fn: Optional[SystemMetricsFn] = None,
+        module_metrics_collector: Optional[ModuleMetricsCollector] = None,
         cache_ttl_seconds: float = 2.0,
     ) -> None:
         self._consciousness_collector = consciousness_collector
@@ -98,12 +100,16 @@ class DashboardMetricsAggregator:
         self._health_analyzer = health_analyzer or RealSystemHealthAnalyzer()
         self._baseline_system = baseline_system or RealBaselineSystem()
         self._system_metrics_fn = system_metrics_fn or _collect_system_metrics_default
+        # FASE 3.2: Integração de ModuleMetricsCollector para métricas antes/depois
+        self._module_metrics_collector = module_metrics_collector or get_metrics_collector()
         self._cache_ttl = cache_ttl_seconds
 
         self._cache: Optional[Dict[str, Any]] = None
         self._cache_timestamp = 0.0
         self._lock = asyncio.Lock()
         self._persisted_metrics_file = Path("data/monitor/real_metrics.json")
+        # FASE 3.2: Arquivo para métricas antes/depois
+        self._before_after_metrics_file = Path("data/monitor/before_after_metrics.json")
 
     def set_consciousness_collector(self, collector: RealConsciousnessMetricsCollector) -> None:
         self._consciousness_collector = collector
@@ -162,6 +168,13 @@ class DashboardMetricsAggregator:
 
         module_activity = self._module_tracker.get_all_module_activities()
 
+        # FASE 3.2: Coletar métricas dos módulos integrados (SemanticCache, ModelOptimizer, etc.)
+        module_metrics_data: Optional[Dict[str, Any]] = None
+        try:
+            module_metrics_data = self._module_metrics_collector.get_all_metrics()
+        except Exception as exc:
+            logger.debug(f"Erro coletando métricas de módulos: {exc}")
+
         consciousness_metrics: Optional[Dict[str, Any]] = None
         baseline_comparison: Optional[Dict[str, Any]] = None
         persisted_metrics = self._load_persisted_metrics()
@@ -194,6 +207,11 @@ class DashboardMetricsAggregator:
         if include_baseline and consciousness_metrics:
             baseline_comparison = self._build_baseline_from_payload(consciousness_metrics)
 
+        # FASE 3.2: Comparação antes/depois das otimizações
+        before_after_comparison: Optional[Dict[str, Any]] = None
+        if module_metrics_data:
+            before_after_comparison = self._build_before_after_comparison(module_metrics_data)
+
         snapshot = {
             "timestamp": datetime.now(timezone.utc).isoformat() + "Z",
             "system_metrics": system_metrics,
@@ -201,6 +219,8 @@ class DashboardMetricsAggregator:
             "system_health": system_health,
             "consciousness_metrics": consciousness_metrics,
             "baseline_comparison": baseline_comparison,
+            "module_metrics": module_metrics_data,  # FASE 3.2: Métricas dos módulos
+            "before_after_comparison": before_after_comparison,  # FASE 3.2: Comparação antes/depois
             "errors": errors,
         }
 
@@ -363,6 +383,131 @@ class DashboardMetricsAggregator:
                 }
 
         return comparisons
+
+    def _build_before_after_comparison(self, module_metrics_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Constrói comparação antes/depois das otimizações (FASE 3.2).
+
+        Args:
+            module_metrics_data: Métricas dos módulos coletadas
+
+        Returns:
+            Dict com comparação antes/depois
+        """
+        try:
+            # Carregar métricas "antes" (baseline)
+            before_metrics = self._load_before_metrics()
+
+            # Módulos integrados na FASE 3.1
+            integrated_modules = [
+                "SemanticCacheLayer",
+                "ModelOptimizer",
+                "HybridRetrievalSystem",
+                "DatasetIndexer",
+                "RAGFallbackSystem",
+                "EnhancedCodeAgent",
+                "DynamicToolCreator",
+                "ErrorAnalyzer",
+            ]
+
+            comparison: Dict[str, Any] = {
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "modules": {},
+            }
+
+            current_modules = module_metrics_data.get("modules", {})
+
+            for module_name in integrated_modules:
+                current = current_modules.get(module_name, {})
+                before = before_metrics.get("modules", {}).get(module_name, {})
+
+                if not current and not before:
+                    continue
+
+                # Comparar métricas principais
+                module_comparison: Dict[str, Any] = {
+                    "current": current,
+                    "before": before,
+                    "has_data": bool(current or before),
+                }
+
+                # Comparar métricas específicas se disponíveis
+                if current and before:
+                    current_metrics = current.get("metrics", {})
+                    before_metrics_module = before.get("metrics", {})
+
+                    changes: Dict[str, Any] = {}
+                    for metric_name in set(
+                        list(current_metrics.keys()) + list(before_metrics_module.keys())
+                    ):
+                        current_val = current_metrics.get(metric_name, {}).get("value")
+                        before_val = before_metrics_module.get(metric_name, {}).get("value")
+
+                        if current_val is not None and before_val is not None:
+                            try:
+                                if isinstance(current_val, (int, float)) and isinstance(
+                                    before_val, (int, float)
+                                ):
+                                    change = current_val - before_val
+                                    change_pct = (
+                                        (change / before_val * 100) if before_val != 0 else 0.0
+                                    )
+                                    changes[metric_name] = {
+                                        "before": before_val,
+                                        "current": current_val,
+                                        "change": change,
+                                        "change_percent": change_pct,
+                                    }
+                            except (TypeError, ValueError):
+                                pass
+
+                    if changes:
+                        module_comparison["metric_changes"] = changes
+
+                comparison["modules"][module_name] = module_comparison
+
+            return comparison
+
+        except Exception as exc:
+            logger.error(f"Erro construindo comparação antes/depois: {exc}")
+            return {}
+
+    def _load_before_metrics(self) -> Dict[str, Any]:
+        """
+        Carrega métricas "antes" (baseline) das otimizações.
+
+        Returns:
+            Dict com métricas antes
+        """
+        try:
+            if self._before_after_metrics_file.exists():
+                with open(self._before_after_metrics_file, "r", encoding="utf-8") as f:
+                    return json.load(f)
+        except Exception as exc:
+            logger.debug(f"Erro ao carregar métricas antes: {exc}")
+
+        return {}
+
+    def save_before_metrics(self, metrics_data: Dict[str, Any]) -> None:
+        """
+        Salva métricas "antes" (baseline) para comparação futura (FASE 3.2).
+
+        Args:
+            metrics_data: Métricas a salvar como baseline
+        """
+        try:
+            baseline_data = {
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "description": "Métricas antes das otimizações FASE 3.1",
+                "modules": metrics_data.get("modules", {}),
+            }
+
+            with open(self._before_after_metrics_file, "w", encoding="utf-8") as f:
+                json.dump(baseline_data, f, indent=2, ensure_ascii=False)
+
+            logger.info(f"Métricas 'antes' salvas em {self._before_after_metrics_file}")
+        except Exception as exc:
+            logger.error(f"Erro ao salvar métricas antes: {exc}")
 
 
 # Instância global reutilizável em todo o backend

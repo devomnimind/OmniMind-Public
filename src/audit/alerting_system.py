@@ -12,10 +12,12 @@ Features:
 
 import asyncio
 import json
+import time
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
+from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Set
 
 from .immutable_audit import ImmutableAuditSystem, get_audit_system
@@ -38,6 +40,17 @@ class AlertCategory(Enum):
     SYSTEM = "system"
     AUDIT = "audit"
     PERFORMANCE = "performance"
+    # Tipos específicos do AlertSystem (monitor)
+    PERMISSION_ERROR = "permission_error"
+    RESOURCE_CRITICAL = "resource_critical"
+    RESOURCE_WARNING = "resource_warning"
+    SERVER_DOWN = "server_down"
+    SERVER_STARTING = "server_starting"
+    SERVER_SLOW = "server_slow"
+    SERVER_RECOVERED = "server_recovered"
+    TEST_TIMEOUT = "test_timeout"
+    TEST_FAILED = "test_failed"
+    TEST_PASSED = "test_passed"
 
 
 @dataclass
@@ -100,7 +113,7 @@ class AlertingSystem:
 
     def __init__(self, audit_system: Optional[ImmutableAuditSystem] = None):
         """
-        Initialize alerting system.
+        Initialize unified alerting system.
 
         Args:
             audit_system: Optional audit system instance
@@ -109,9 +122,19 @@ class AlertingSystem:
         self.alerts_dir = self.audit_system.log_dir / "alerts"
         self.alerts_dir.mkdir(parents=True, exist_ok=True)
 
+        # Arquivo principal (JSONL)
         self.alerts_file = self.alerts_dir / "alerts.jsonl"
+
+        # Diretório para alertas individuais (compatibilidade com AlertSystem)
+        self.data_alerts_dir = Path("data/alerts")
+        self.data_alerts_dir.mkdir(parents=True, exist_ok=True)
+
         self.active_alerts: Dict[str, Alert] = {}
         self.subscribers: Set[Callable[..., None]] = set()
+
+        # Rate limiting (do AlertSystem)
+        self.alert_cache: Dict[str, float] = {}
+        self.cache_ttl = 60.0  # 1 minuto
 
         # Alert statistics
         self.stats: Dict[str, Any] = {
@@ -122,6 +145,9 @@ class AlertingSystem:
 
         # Load existing alerts
         self._load_alerts()
+
+        # Migrar alertas antigos do AlertSystem se existirem
+        self._migrate_old_alerts()
 
     def _load_alerts(self) -> None:
         """Load existing alerts from file."""
@@ -145,9 +171,126 @@ class AlertingSystem:
             pass
 
     def _save_alert(self, alert: Alert) -> None:
-        """Save alert to file."""
+        """Save alert to file (JSONL principal + JSON individual para compatibilidade)."""
+        # Salvar no JSONL principal (audit)
         with open(self.alerts_file, "a") as f:
             f.write(json.dumps(alert.to_dict()) + "\n")
+
+        # Salvar também como JSON individual (compatibilidade com AlertSystem)
+        alert_file = self.data_alerts_dir / f"alert_{alert.id}.json"
+        with open(alert_file, "w") as f:
+            json.dump(alert.to_dict(), f, indent=2)
+
+        # Atualizar índice
+        self._update_alerts_index(alert)
+
+    def _update_alerts_index(self, alert: Alert) -> None:
+        """Atualiza índice de alertas (compatibilidade com AlertSystem)."""
+        index_file = self.data_alerts_dir / "alerts_index.json"
+        index = []
+        if index_file.exists():
+            try:
+                with open(index_file, "r") as f:
+                    index = json.load(f)
+            except Exception:
+                index = []
+
+        # Adicionar novo alerta ao índice
+        index.append(
+            {
+                "id": alert.id,
+                "type": alert.category.value,
+                "severity": alert.severity.value,
+                "timestamp": alert.timestamp,
+            }
+        )
+
+        # Manter apenas últimos 500 no índice
+        index = index[-500:]
+
+        with open(index_file, "w") as f:
+            json.dump(index, f, indent=2)
+
+    def _migrate_old_alerts(self) -> None:
+        """Migra alertas antigos do AlertSystem (data/alerts/) para o sistema unificado."""
+        if not self.data_alerts_dir.exists():
+            return
+
+        migrated_count = 0
+        try:
+            # Ler índice de alertas antigos
+            index_file = self.data_alerts_dir / "alerts_index.json"
+            if index_file.exists():
+                with open(index_file, "r") as f:
+                    old_index = json.load(f)
+
+                # Migrar cada alerta
+                for alert_entry in old_index:
+                    alert_id = alert_entry.get("id", "")
+                    if not alert_id:
+                        continue
+
+                    alert_file = self.data_alerts_dir / f"alert_{alert_id}.json"
+                    if alert_file.exists():
+                        try:
+                            with open(alert_file, "r") as f:
+                                old_alert_data = json.load(f)
+
+                            # Converter para formato Alert
+                            # Mapear severity e category
+                            severity_str = old_alert_data.get("severity", "info")
+                            category_str = old_alert_data.get("type", "system")
+
+                            try:
+                                severity = AlertSeverity(severity_str)
+                            except ValueError:
+                                severity = AlertSeverity.INFO
+
+                            try:
+                                category = AlertCategory(category_str)
+                            except ValueError:
+                                category = AlertCategory.SYSTEM
+
+                            # Criar alerta se não existir
+                            if alert_id not in self.active_alerts:
+                                alert = Alert(
+                                    id=alert_id,
+                                    timestamp=old_alert_data.get(
+                                        "datetime",
+                                        old_alert_data.get(
+                                            "timestamp", datetime.now(timezone.utc).isoformat()
+                                        ),
+                                    ),
+                                    severity=severity,
+                                    category=category,
+                                    title=old_alert_data.get("title", ""),
+                                    message=old_alert_data.get("message", ""),
+                                    details=old_alert_data.get("context", {}),
+                                    source=old_alert_data.get("source", "omnimind"),
+                                )
+                                self.active_alerts[alert.id] = alert
+                                migrated_count += 1
+                        except Exception:
+                            # Ignorar erros de migração
+                            pass
+        except Exception:
+            pass
+
+        if migrated_count > 0:
+            # Log da migração
+            self.audit_system.log_action(
+                "alerts_migrated",
+                {"count": migrated_count, "source": "AlertSystem"},
+                category="system",
+            )
+
+    def _find_cached_alert(self, cache_key: str) -> Optional[Alert]:
+        """Encontra alerta em cache (para rate limiting)."""
+        # Procurar em active_alerts por título similar
+        for alert in self.active_alerts.values():
+            if cache_key in alert.title.lower() or cache_key in alert.category.value:
+                return alert
+        return None
 
     def _update_stats(self, alert: Alert) -> None:
         """Update alert statistics."""
@@ -163,9 +306,10 @@ class AlertingSystem:
         message: str,
         details: Optional[Dict[str, Any]] = None,
         source: str = "omnimind",
+        skip_rate_limit: bool = False,
     ) -> Alert:
         """
-        Create and broadcast a new alert.
+        Create and broadcast a new alert (unified system with rate limiting).
 
         Args:
             severity: Alert severity level
@@ -174,10 +318,23 @@ class AlertingSystem:
             message: Alert message
             details: Optional additional details
             source: Alert source identifier
+            skip_rate_limit: Skip rate limiting (for critical alerts)
 
         Returns:
             Created Alert object
         """
+        # Rate limiting (do AlertSystem)
+        if not skip_rate_limit:
+            cache_key = f"{category.value}_{title}"
+            if cache_key in self.alert_cache:
+                if time.time() - self.alert_cache[cache_key] < self.cache_ttl:
+                    # Retornar alerta existente se ainda está no cache
+                    existing = self._find_cached_alert(cache_key)
+                    if existing:
+                        return existing
+
+            self.alert_cache[cache_key] = time.time()
+
         alert = Alert(
             severity=severity,
             category=category,

@@ -1,11 +1,14 @@
 [Unit]
-Description=OmniMind Core: Desiring-Machines & Consciousness Engine
-After=network.target syslog.target
+Description=OmniMind Core: Desiring-Machines & Consciousness Engine (Fase 2: Após 30s)
+After=network.target syslog.target omnimind.service
+Requires=omnimind.service
 
 [Service]
 Type=simple
 User=fahbrain
 WorkingDirectory=/home/fahbrain/projects/omnimind
+# Aguardar 30s após serviços essenciais iniciarem
+ExecStartPre=/bin/sleep 30
 ExecStart=/home/fahbrain/projects/omnimind/.venv/bin/python -m src.main
 Restart=always
 RestartSec=5

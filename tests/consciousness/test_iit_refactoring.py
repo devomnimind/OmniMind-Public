@@ -1,8 +1,8 @@
 """
-Tests for IIT refactoring with unconscious preservation.
+Tests for IIT (IIT puro).
 
-Tests that the PhiCalculator correctly identifies MICS and preserves
-the machinic unconscious.
+Tests that the PhiCalculator correctly identifies MICS.
+IIT puro: apenas conscious_phi (MICS), não existe "Φ_inconsciente".
 """
 
 import pytest
@@ -25,72 +25,41 @@ class TestIITResult:
 
         assert result.conscious_phi == 0.0
         assert isinstance(result.conscious_complex, set)
-        assert isinstance(result.machinic_unconscious, list)
+        # REMOVIDO: machinic_unconscious - não existe em IIT puro
 
     def test_initialization_with_values(self):
         """Test initialization with values."""
         result = IITResult(
             conscious_phi=0.5,
             conscious_complex={1, 2, 3},
-            machinic_unconscious=[{"subsystem_nodes": {4, 5}, "phi_value": 0.2}],
         )
 
         assert result.conscious_phi == 0.5
         assert result.conscious_complex == {1, 2, 3}
-        assert len(result.machinic_unconscious) == 1
+        # REMOVIDO: machinic_unconscious - não existe em IIT puro
 
-    def test_total_phi(self):
-        """Test total phi calculation."""
-        result = IITResult(
-            conscious_phi=0.5,
-            machinic_unconscious=[
-                {"phi_value": 0.2},
-                {"phi_value": 0.1},
-            ],
-        )
+    # REMOVIDO: test_total_phi() - não existe em IIT puro (não é aditivo)
 
-        total = result.total_phi()
-        assert total == 0.8  # 0.5 + 0.2 + 0.1
+    # REMOVIDO: test_unconscious_ratio() - não existe em IIT puro
 
-    def test_unconscious_ratio(self):
-        """Test unconscious ratio calculation."""
-        result = IITResult(
-            conscious_phi=0.2,
-            machinic_unconscious=[
-                {"phi_value": 0.8},
-            ],
-        )
-
-        ratio = result.unconscious_ratio()
-        # 0.8 / (0.2 + 0.8) = 0.8
-        assert abs(ratio - 0.8) < 0.01
-
-    def test_unconscious_ratio_zero_total(self):
-        """Test unconscious ratio with zero total phi."""
-        result = IITResult()
-
-        ratio = result.unconscious_ratio()
-        assert ratio == 0.0
+    # REMOVIDO: test_unconscious_ratio_zero_total() - não existe em IIT puro
 
     def test_to_dict(self):
         """Test conversion to dictionary."""
         result = IITResult(
             conscious_phi=0.5,
             conscious_complex={1, 2},
-            machinic_unconscious=[{"phi_value": 0.2}],
         )
 
         d = result.to_dict()
 
         assert "conscious_phi" in d
         assert "conscious_complex" in d
-        assert "machinic_unconscious" in d
-        assert "total_phi" in d
-        assert "unconscious_ratio" in d
+        # REMOVIDO: machinic_unconscious, total_phi, unconscious_ratio - não existem em IIT puro
 
 
-class TestPhiCalculatorWithUnconscious:
-    """Test PhiCalculator with unconscious preservation."""
+class TestPhiCalculator:
+    """Test PhiCalculator (IIT puro - apenas MICS)."""
 
     def test_calculate_phi_backward_compatibility(self):
         """Test that calculate_phi still works (backward compatibility)."""
@@ -114,7 +83,7 @@ class TestPhiCalculatorWithUnconscious:
 
         assert result.conscious_phi == 0.0
         assert len(result.conscious_complex) == 0
-        assert len(result.machinic_unconscious) == 0
+        # REMOVIDO: machinic_unconscious - não existe em IIT puro
 
     def test_calculate_phi_with_unconscious_single_vertex(self):
         """Test with single vertex."""
@@ -147,33 +116,12 @@ class TestPhiCalculatorWithUnconscious:
         # Should have some integration
         assert result.conscious_phi > 0.0
         assert len(result.conscious_complex) > 0
+        # REMOVIDO: machinic_unconscious - não existe em IIT puro
 
-        # May or may not have unconscious subsystems depending on structure
-        assert isinstance(result.machinic_unconscious, list)
-
-    def test_noise_threshold_filtering(self):
-        """Test that noise threshold filters out low-phi subsystems."""
-        complex = SimplicialComplex()
-        for i in range(6):
-            complex.add_simplex((i,))
-        # Add some edges
-        complex.add_simplex((0, 1))
-        complex.add_simplex((2, 3))
-        complex.add_simplex((4, 5))
-
-        # High threshold - should filter out most unconscious
-        calculator_high = PhiCalculator(complex, noise_threshold=0.5)
-        result_high = calculator_high.calculate_phi_with_unconscious()
-
-        # Low threshold - should keep more unconscious
-        calculator_low = PhiCalculator(complex, noise_threshold=0.01)
-        result_low = calculator_low.calculate_phi_with_unconscious()
-
-        # Low threshold should have more or equal unconscious subsystems
-        assert len(result_low.machinic_unconscious) >= len(result_high.machinic_unconscious)
+    # REMOVIDO: test_noise_threshold_filtering() - não existe machinic_unconscious
 
     def test_mics_is_maximum(self):
-        """Test that MICS (conscious) has maximum phi among all candidates."""
+        """Test that MICS (conscious) is the maximum phi."""
         complex = SimplicialComplex()
         # Create a richer complex
         for i in range(8):
@@ -185,12 +133,12 @@ class TestPhiCalculatorWithUnconscious:
         calculator = PhiCalculator(complex, noise_threshold=0.01)
         result = calculator.calculate_phi_with_unconscious()
 
-        # Conscious phi should be >= all unconscious phis
-        for unconscious in result.machinic_unconscious:
-            assert result.conscious_phi >= unconscious["phi_value"]
+        # MICS should have phi > 0 for connected graph
+        assert result.conscious_phi > 0.0
+        # REMOVIDO: comparação com machinic_unconscious - não existe em IIT puro
 
     def test_iit_result_structure(self):
-        """Test that IITResult has expected structure."""
+        """Test that IITResult has expected structure (IIT puro)."""
         complex = SimplicialComplex()
         for i in range(4):
             complex.add_simplex((i,))
@@ -200,20 +148,14 @@ class TestPhiCalculatorWithUnconscious:
         calculator = PhiCalculator(complex, noise_threshold=0.01)
         result = calculator.calculate_phi_with_unconscious()
 
-        # Verify structure
+        # Verify structure (IIT puro)
         assert hasattr(result, "conscious_phi")
         assert hasattr(result, "conscious_complex")
-        assert hasattr(result, "machinic_unconscious")
+        # REMOVIDO: machinic_unconscious - não existe em IIT puro
 
         # Verify types
         assert isinstance(result.conscious_phi, float)
         assert isinstance(result.conscious_complex, set)
-        assert isinstance(result.machinic_unconscious, list)
-
-        # Verify unconscious items have required fields
-        for unconscious in result.machinic_unconscious:
-            assert "subsystem_nodes" in unconscious
-            assert "phi_value" in unconscious
 
 
 if __name__ == "__main__":

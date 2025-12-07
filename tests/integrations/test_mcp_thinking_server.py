@@ -1,282 +1,326 @@
-"""Testes para ThinkingMCPServer (mcp_thinking_server.py).
+"""
+Testes para ThinkingMCPServer.
 
-Cobertura de:
-- Inicialização do servidor
-- Início de sessão (start_session)
-- Adição de passo (add_step)
-- Recuperação de histórico (get_history)
-- Ramificação de pensamento (branch_thinking)
-- Fusão de ramificações (merge_branches)
-- Avaliação de qualidade (evaluate_quality)
-- Exportação de cadeia (export_chain)
-- Retomada de sessão (resume_session)
+Autor: Fabrício da Silva + assistência de IA
+Data: 2025-12-06
 """
 
-from __future__ import annotations
+import pytest
 
 from src.integrations.mcp_thinking_server import ThinkingMCPServer
 
 
+@pytest.mark.asyncio
+@pytest.mark.real
 class TestThinkingMCPServer:
-    """Testes para o servidor MCP de thinking."""
+    """Testes para ThinkingMCPServer."""
 
-    def test_initialization(self) -> None:
-        """Testa inicialização do ThinkingMCPServer."""
-        server = ThinkingMCPServer()
-        assert server is not None
-        expected_methods = [
-            "start_session",
-            "add_step",
-            "get_history",
-            "branch_thinking",
-            "merge_branches",
-            "evaluate_quality",
-            "export_chain",
-            "resume_session",
-        ]
-        for method in expected_methods:
-            assert method in server._methods
+    def setup_method(self) -> None:
+        """Setup para cada teste."""
+        self.server = ThinkingMCPServer()
 
-    def test_start_session_basic(self) -> None:
-        """Testa início básico de sessão."""
-        server = ThinkingMCPServer()
-        result = server.start_session(goal="Solve problem X")
-        assert result is not None
-        assert isinstance(result, dict)
+    def test_start_session(self) -> None:
+        """Testa criação de sessão de pensamento."""
+        result = self.server.start_session("Resolver problema X")
+
         assert "session_id" in result
-        assert "goal" in result
-        assert result["session_id"] == "sess_stub_123"
-        assert result["goal"] == "Solve problem X"
+        assert result["goal"] == "Resolver problema X"
+        assert result["status"] == "active"
+        assert "created_at" in result
+        assert result["session_id"].startswith("think_")
 
-    def test_start_session_different_goals(self) -> None:
-        """Testa início de sessão com diferentes objetivos."""
-        server = ThinkingMCPServer()
-        goals = ["Analyze data", "Generate code", "Debug issue", "Plan architecture"]
-        for goal in goals:
-            result = server.start_session(goal=goal)
-            assert result["goal"] == goal
-            assert result["session_id"] == "sess_stub_123"
+    def test_start_session_with_metadata(self) -> None:
+        """Testa criação de sessão com metadados."""
+        metadata = {"priority": "high", "tags": ["urgent"]}
+        result = self.server.start_session("Teste com metadata", metadata=metadata)
 
-    def test_start_session_empty_goal(self) -> None:
-        """Testa início de sessão com objetivo vazio."""
-        server = ThinkingMCPServer()
-        result = server.start_session(goal="")
-        assert result is not None
-        assert result["goal"] == ""
+        assert result["session_id"] in self.server._sessions
+        session = self.server._sessions[result["session_id"]]
+        assert session.metadata == metadata
 
-    def test_add_step_basic(self) -> None:
-        """Testa adição básica de passo."""
-        server = ThinkingMCPServer()
-        result = server.add_step(
-            session_id="sess_123", content="First thinking step", type="reasoning"
+    def test_add_step(self) -> None:
+        """Testa adição de passo a sessão."""
+        session_result = self.server.start_session("Teste de passos")
+        session_id = session_result["session_id"]
+
+        step_result = self.server.add_step(
+            session_id=session_id,
+            content="Primeiro passo de pensamento",
+            step_type="thought",
         )
-        assert result is not None
-        assert isinstance(result, dict)
-        assert "step_id" in result
-        assert "session_id" in result
-        assert result["step_id"] == "step_stub_1"
-        assert result["session_id"] == "sess_123"
+
+        assert "step_id" in step_result
+        assert step_result["session_id"] == session_id
+        assert step_result["step_type"] == "thought"
+        assert step_result["step_index"] == 0
+
+        # Verificar que passo foi adicionado
+        session = self.server._sessions[session_id]
+        assert len(session.steps) == 1
+        assert session.steps[0].content == "Primeiro passo de pensamento"
 
     def test_add_step_different_types(self) -> None:
-        """Testa adição de passos com diferentes tipos."""
-        server = ThinkingMCPServer()
-        step_types = ["reasoning", "analysis", "synthesis", "evaluation", "decision"]
-        for step_type in step_types:
-            result = server.add_step(
-                session_id="sess_test",
-                content=f"Step of type {step_type}",
-                type=step_type,
+        """Testa adição de passos de diferentes tipos."""
+        session_result = self.server.start_session("Teste tipos")
+        session_id = session_result["session_id"]
+
+        types = ["observation", "thought", "action", "result"]
+        for step_type in types:
+            self.server.add_step(
+                session_id=session_id,
+                content=f"Passo do tipo {step_type}",
+                step_type=step_type,
             )
-            assert result["session_id"] == "sess_test"
-            assert result["step_id"] == "step_stub_1"
 
-    def test_add_step_multiple_to_session(self) -> None:
-        """Testa adição de múltiplos passos à mesma sessão."""
-        server = ThinkingMCPServer()
-        session_id = "sess_multi"
+        session = self.server._sessions[session_id]
+        assert len(session.steps) == 4
+        assert [s.step_type for s in session.steps] == types
+
+    def test_add_step_to_nonexistent_session(self) -> None:
+        """Testa erro ao adicionar passo a sessão inexistente."""
+        with pytest.raises(ValueError, match="Sessão não encontrada"):
+            self.server.add_step("nonexistent", "conteúdo", "thought")
+
+    def test_get_history(self) -> None:
+        """Testa recuperação de histórico."""
+        session_result = self.server.start_session("Teste histórico")
+        session_id = session_result["session_id"]
+
+        # Adicionar alguns passos
+        for i in range(3):
+            self.server.add_step(
+                session_id=session_id,
+                content=f"Passo {i+1}",
+                step_type="thought",
+            )
+
+        history = self.server.get_history(session_id)
+
+        assert history["session_id"] == session_id
+        assert history["goal"] == "Teste histórico"
+        assert history["total_steps"] == 3
+        assert len(history["steps"]) == 3
+        assert all("step_id" in step for step in history["steps"])
+        assert all("content" in step for step in history["steps"])
+
+    def test_get_history_with_limit(self) -> None:
+        """Testa histórico com limite."""
+        session_result = self.server.start_session("Teste limite")
+        session_id = session_result["session_id"]
+
+        # Adicionar 5 passos
         for i in range(5):
-            result = server.add_step(session_id=session_id, content=f"Step {i}", type="reasoning")
-            assert result["session_id"] == session_id
+            self.server.add_step(session_id, f"Passo {i+1}", "thought")
 
-    def test_get_history_basic(self) -> None:
-        """Testa recuperação básica de histórico."""
-        server = ThinkingMCPServer()
-        result = server.get_history(session_id="sess_123")
-        assert result is not None
-        assert isinstance(result, dict)
-        assert "steps" in result
-        assert isinstance(result["steps"], list)
-        assert result["steps"] == []
+        # Buscar apenas últimos 2
+        history = self.server.get_history(session_id, limit=2)
 
-    def test_get_history_different_sessions(self) -> None:
-        """Testa recuperação de histórico de diferentes sessões."""
-        server = ThinkingMCPServer()
-        session_ids = ["sess_1", "sess_2", "sess_3"]
-        for session_id in session_ids:
-            result = server.get_history(session_id=session_id)
-            assert result is not None
-            assert "steps" in result
+        assert len(history["steps"]) == 2
+        assert history["steps"][0]["content"] == "Passo 4"
+        assert history["steps"][1]["content"] == "Passo 5"
 
-    def test_branch_thinking_basic(self) -> None:
-        """Testa ramificação básica de pensamento."""
-        server = ThinkingMCPServer()
-        result = server.branch_thinking(session_id="sess_main", step_id="step_5")
-        assert result is not None
-        assert isinstance(result, dict)
-        assert "new_session_id" in result
-        assert "parent_session" in result
-        assert result["new_session_id"] == "sess_branch_123"
-        assert result["parent_session"] == "sess_main"
+    def test_branch_thinking(self) -> None:
+        """Testa criação de branch de pensamento."""
+        session_result = self.server.start_session("Sessão original")
+        session_id = session_result["session_id"]
 
-    def test_branch_thinking_different_points(self) -> None:
-        """Testa ramificação em diferentes pontos."""
-        server = ThinkingMCPServer()
-        step_ids = ["step_1", "step_2", "step_3"]
-        for step_id in step_ids:
-            result = server.branch_thinking(session_id="sess_parent", step_id=step_id)
-            assert result["parent_session"] == "sess_parent"
-            assert result["new_session_id"] == "sess_branch_123"
+        # Adicionar alguns passos
+        step1 = self.server.add_step(session_id, "Passo 1", "thought")
+        self.server.add_step(session_id, "Passo 2", "thought")
 
-    def test_merge_branches_basic(self) -> None:
-        """Testa fusão básica de ramificações."""
-        server = ThinkingMCPServer()
-        result = server.merge_branches(session_ids=["sess_1", "sess_2"])
-        assert result is not None
-        assert isinstance(result, dict)
-        assert "merged_session_id" in result
-        assert result["merged_session_id"] == "sess_merged_123"
-
-    def test_merge_branches_multiple(self) -> None:
-        """Testa fusão de múltiplas ramificações."""
-        server = ThinkingMCPServer()
-        session_lists = [
-            ["sess_a", "sess_b"],
-            ["sess_1", "sess_2", "sess_3"],
-            ["sess_x", "sess_y", "sess_z", "sess_w"],
-        ]
-        for sessions in session_lists:
-            result = server.merge_branches(session_ids=sessions)
-            assert result["merged_session_id"] == "sess_merged_123"
-
-    def test_merge_branches_single_session(self) -> None:
-        """Testa fusão com uma única sessão."""
-        server = ThinkingMCPServer()
-        result = server.merge_branches(session_ids=["sess_only"])
-        assert result["merged_session_id"] == "sess_merged_123"
-
-    def test_evaluate_quality_basic(self) -> None:
-        """Testa avaliação básica de qualidade."""
-        server = ThinkingMCPServer()
-        result = server.evaluate_quality(session_id="sess_test")
-        assert result is not None
-        assert isinstance(result, dict)
-        assert "score" in result
-        assert "feedback" in result
-        assert result["score"] == 0.8
-        assert result["feedback"] == "Good thinking"
-
-    def test_evaluate_quality_different_sessions(self) -> None:
-        """Testa avaliação de qualidade de diferentes sessões."""
-        server = ThinkingMCPServer()
-        session_ids = ["sess_eval_1", "sess_eval_2", "sess_eval_3"]
-        for session_id in session_ids:
-            result = server.evaluate_quality(session_id=session_id)
-            assert isinstance(result["score"], float)
-            assert isinstance(result["feedback"], str)
-            assert 0 <= result["score"] <= 1
-
-    def test_export_chain_basic(self) -> None:
-        """Testa exportação básica de cadeia."""
-        server = ThinkingMCPServer()
-        result = server.export_chain(session_id="sess_export")
-        assert result is not None
-        assert isinstance(result, dict)
-        assert "chain" in result
-        assert isinstance(result["chain"], list)
-        assert result["chain"] == []
-
-    def test_export_chain_different_sessions(self) -> None:
-        """Testa exportação de cadeias de diferentes sessões."""
-        server = ThinkingMCPServer()
-        session_ids = ["sess_exp_1", "sess_exp_2", "sess_exp_3"]
-        for session_id in session_ids:
-            result = server.export_chain(session_id=session_id)
-            assert "chain" in result
-            assert isinstance(result["chain"], list)
-
-    def test_resume_session_basic(self) -> None:
-        """Testa retomada básica de sessão."""
-        server = ThinkingMCPServer()
-        result = server.resume_session(session_id="sess_resume")
-        assert result is not None
-        assert isinstance(result, dict)
-        assert "status" in result
-        assert result["status"] == "resumed"
-
-    def test_resume_session_different_sessions(self) -> None:
-        """Testa retomada de diferentes sessões."""
-        server = ThinkingMCPServer()
-        session_ids = ["sess_res_1", "sess_res_2", "sess_res_3"]
-        for session_id in session_ids:
-            result = server.resume_session(session_id=session_id)
-            assert result["status"] == "resumed"
-
-    def test_methods_registered(self) -> None:
-        """Testa se todos os métodos estão registrados."""
-        server = ThinkingMCPServer()
-        expected_methods = [
-            "start_session",
-            "add_step",
-            "get_history",
-            "branch_thinking",
-            "merge_branches",
-            "evaluate_quality",
-            "export_chain",
-            "resume_session",
-            # Métodos herdados de MCPServer
-            "read_file",
-            "write_file",
-            "list_dir",
-            "stat",
-            "get_metrics",
-        ]
-        for method in expected_methods:
-            assert method in server._methods
-
-    def test_full_thinking_workflow(self) -> None:
-        """Testa fluxo completo de pensamento."""
-        server = ThinkingMCPServer()
-
-        # Inicia sessão
-        session = server.start_session(goal="Complete workflow test")
-        assert session["session_id"] == "sess_stub_123"
-
-        # Adiciona passos
-        step1 = server.add_step(
-            session_id=session["session_id"], content="First step", type="reasoning"
+        # Criar branch a partir do primeiro passo
+        branch_result = self.server.branch_thinking(
+            session_id=session_id,
+            step_id=step1["step_id"],
+            goal="Branch do passo 1",
         )
-        assert step1["step_id"] == "step_stub_1"
 
-        # Obtém histórico
-        history = server.get_history(session_id=session["session_id"])
-        assert "steps" in history
+        assert "new_session_id" in branch_result
+        assert branch_result["parent_session"] == session_id
+        assert branch_result["branch_from_step"] == step1["step_id"]
 
-        # Avalia qualidade
-        quality = server.evaluate_quality(session_id=session["session_id"])
-        assert quality["score"] == 0.8
+        # Verificar que branch foi criado
+        branch_id = branch_result["new_session_id"]
+        assert branch_id in self.server._sessions
 
-        # Exporta cadeia
-        chain = server.export_chain(session_id=session["session_id"])
-        assert "chain" in chain
+        branch_session = self.server._sessions[branch_id]
+        assert branch_session.parent_session_id == session_id
+        assert len(branch_session.steps) == 2  # Passo 1 + passo de branch
 
-    def test_branching_workflow(self) -> None:
-        """Testa fluxo de ramificação."""
-        server = ThinkingMCPServer()
+    def test_branch_thinking_nonexistent_session(self) -> None:
+        """Testa erro ao criar branch de sessão inexistente."""
+        with pytest.raises(ValueError, match="Sessão não encontrada"):
+            self.server.branch_thinking("nonexistent", "step_123")
 
-        # Cria ramificação
-        branch = server.branch_thinking(session_id="sess_main", step_id="step_3")
-        assert branch["new_session_id"] == "sess_branch_123"
+    def test_branch_thinking_nonexistent_step(self) -> None:
+        """Testa erro ao criar branch de passo inexistente."""
+        session_result = self.server.start_session("Teste")
+        session_id = session_result["session_id"]
 
-        # Mescla ramificações
-        merged = server.merge_branches(session_ids=["sess_main", branch["new_session_id"]])
-        assert merged["merged_session_id"] == "sess_merged_123"
+        with pytest.raises(ValueError, match="Passo não encontrado"):
+            self.server.branch_thinking(session_id, "nonexistent_step")
+
+    def test_merge_branches(self) -> None:
+        """Testa merge de múltiplas sessões."""
+        # Criar 2 sessões
+        session1 = self.server.start_session("Sessão 1")
+        session2 = self.server.start_session("Sessão 2")
+
+        # Adicionar passos a cada uma
+        self.server.add_step(session1["session_id"], "Passo 1.1", "thought")
+        self.server.add_step(session1["session_id"], "Passo 1.2", "thought")
+        self.server.add_step(session2["session_id"], "Passo 2.1", "thought")
+
+        # Mesclar
+        merge_result = self.server.merge_branches(
+            [session1["session_id"], session2["session_id"]],
+            merge_strategy="sequential",
+        )
+
+        assert "merged_session_id" in merge_result
+        assert len(merge_result["merged_from"]) == 2
+
+        merged_session = self.server._sessions[merge_result["merged_session_id"]]
+        assert len(merged_session.steps) == 3
+
+    def test_merge_branches_parallel_strategy(self) -> None:
+        """Testa merge com estratégia paralela."""
+        session1 = self.server.start_session("Sessão 1")
+        session2 = self.server.start_session("Sessão 2")
+
+        self.server.add_step(session1["session_id"], "Passo 1", "thought")
+        self.server.add_step(session2["session_id"], "Passo 2", "thought")
+
+        merge_result = self.server.merge_branches(
+            [session1["session_id"], session2["session_id"]],
+            merge_strategy="parallel",
+        )
+
+        merged_session = self.server._sessions[merge_result["merged_session_id"]]
+        assert len(merged_session.steps) == 2
+
+    def test_merge_branches_insufficient_sessions(self) -> None:
+        """Testa erro ao mesclar menos de 2 sessões."""
+        with pytest.raises(ValueError, match="Precisa de pelo menos 2 sessões"):
+            self.server.merge_branches(["session1"])
+
+    def test_evaluate_quality(self) -> None:
+        """Testa avaliação de qualidade."""
+        session_result = self.server.start_session("Teste qualidade")
+        session_id = session_result["session_id"]
+
+        # Adicionar passos diversos
+        self.server.add_step(session_id, "Observação inicial", "observation")
+        self.server.add_step(session_id, "Pensamento sobre o problema", "thought")
+        self.server.add_step(session_id, "Ação tomada", "action")
+        self.server.add_step(session_id, "Resultado obtido", "result")
+
+        evaluation = self.server.evaluate_quality(session_id)
+
+        assert "score" in evaluation
+        assert "feedback" in evaluation
+        assert "metrics" in evaluation
+        assert 0.0 <= evaluation["score"] <= 1.0
+        assert evaluation["metrics"]["total_steps"] == 4
+        assert evaluation["metrics"]["type_diversity"] > 0
+
+    def test_evaluate_quality_empty_session(self) -> None:
+        """Testa avaliação de sessão vazia."""
+        session_result = self.server.start_session("Sessão vazia")
+        session_id = session_result["session_id"]
+
+        evaluation = self.server.evaluate_quality(session_id)
+
+        assert evaluation["score"] == 0.0
+        assert evaluation["metrics"]["total_steps"] == 0
+
+    def test_export_chain_json(self) -> None:
+        """Testa exportação em formato JSON."""
+        session_result = self.server.start_session("Teste export")
+        session_id = session_result["session_id"]
+
+        self.server.add_step(session_id, "Passo 1", "thought")
+        self.server.add_step(session_id, "Passo 2", "action")
+
+        export = self.server.export_chain(session_id, format="json")
+
+        assert export["format"] == "json"
+        assert isinstance(export["chain"], dict)
+        assert export["chain"]["session_id"] == session_id
+        assert len(export["chain"]["steps"]) == 2
+
+    def test_export_chain_text(self) -> None:
+        """Testa exportação em formato texto."""
+        session_result = self.server.start_session("Teste export texto")
+        session_id = session_result["session_id"]
+
+        self.server.add_step(session_id, "Conteúdo do passo", "thought")
+
+        export = self.server.export_chain(session_id, format="text")
+
+        assert export["format"] == "text"
+        assert isinstance(export["chain"], str)
+        assert "Teste export texto" in export["chain"]
+        assert "Conteúdo do passo" in export["chain"]
+
+    def test_export_chain_markdown(self) -> None:
+        """Testa exportação em formato markdown."""
+        session_result = self.server.start_session("Teste export markdown")
+        session_id = session_result["session_id"]
+
+        self.server.add_step(session_id, "Conteúdo", "thought")
+
+        export = self.server.export_chain(session_id, format="markdown")
+
+        assert export["format"] == "markdown"
+        assert isinstance(export["chain"], str)
+        assert "# Teste export markdown" in export["chain"]
+        assert "## Step 1" in export["chain"]
+
+    def test_export_chain_invalid_format(self) -> None:
+        """Testa erro com formato inválido."""
+        session_result = self.server.start_session("Teste")
+        session_id = session_result["session_id"]
+
+        with pytest.raises(ValueError, match="Formato não suportado"):
+            self.server.export_chain(session_id, format="invalid")
+
+    def test_resume_session(self) -> None:
+        """Testa retomada de sessão."""
+        session_result = self.server.start_session("Teste resume")
+        session_id = session_result["session_id"]
+
+        # Pausar sessão manualmente
+        session = self.server._sessions[session_id]
+        session.status = "paused"
+
+        result = self.server.resume_session(session_id)
+
+        assert result["status"] == "resumed"
+        assert self.server._sessions[session_id].status == "active"
+
+    def test_resume_already_active_session(self) -> None:
+        """Testa retomada de sessão já ativa."""
+        session_result = self.server.start_session("Teste")
+        session_id = session_result["session_id"]
+
+        result = self.server.resume_session(session_id)
+
+        assert result["status"] == "already_active"
+
+    def test_resume_nonexistent_session(self) -> None:
+        """Testa erro ao retomar sessão inexistente."""
+        with pytest.raises(ValueError, match="Sessão não encontrada"):
+            self.server.resume_session("nonexistent")
+
+    def test_add_step_to_paused_session(self) -> None:
+        """Testa erro ao adicionar passo a sessão pausada."""
+        session_result = self.server.start_session("Teste")
+        session_id = session_result["session_id"]
+
+        # Pausar sessão
+        session = self.server._sessions[session_id]
+        session.status = "paused"
+
+        with pytest.raises(ValueError, match="Sessão não está ativa"):
+            self.server.add_step(session_id, "Conteúdo", "thought")

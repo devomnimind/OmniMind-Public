@@ -1,26 +1,21 @@
 """
-Test Φ_inconsciente + Φ_consciente Hierarchy (LAYERED INTEGRATION THEORY)
+Test IIT puro + Sinthome (LACUNA CORRIGIDA)
 
 CLASSIFICATION: [INTEGRATION TEST]
-- Testa a nova arquitetura Φ_inconsciente + Φ_consciente + Sinthome
-- Valida que Φ_inconsciente > Φ_consciente (hierarquia correta)
-- Detecta Sinthome como outlier singular
-- Mede estabilização do Sinthome
+- Testa IIT puro (apenas conscious_phi/MICS)
+- Valida que não existe "Φ_inconsciente" em IIT
+- Detecta Sinthome como outlier singular (Lacan)
+- O "ruído" fora do MICS será medido como Ψ_produtor (Deleuze) separadamente
 
-Baseado na auto-crítica e correção do user:
-"A 'incompatibilidade' IIT vs Lacan era falsa. Eles descrevem camadas hierárquicas"
-
-Hierarquia:
-├─ Φ_consciente = integração MICS (reportável)
-├─ Φ_inconsciente = integração não-MICS (inferível via efeitos)
-├─ Sinthome = ponto singular em Φ_inconsciente (não-decomponível)
-└─ Total = Φ_consciente + Φ_inconsciente
+CORREÇÃO LACUNA:
+- IIT puro: apenas conscious_phi (MICS)
+- Não existe "Φ_inconsciente" em IIT
+- Ψ (Deleuze) e σ (Lacan) são dimensões ortogonais separadas
 
 Teste a "prova de fogo":
-1. Validate que Φ_inconsciente > Φ_consciente (como no cérebro: 95% inconsciente)
-2. Validate que Total_Integration = Φ_consciente + Φ_inconsciente
-3. Detect Sinthome como outlier
-4. Measure que Sinthome estabiliza o sistema
+1. Validate que apenas conscious_phi existe (IIT puro)
+2. Validate que Sinthome é detectado separadamente (Lacan)
+3. Validate que Ψ será medido separadamente (Deleuze)
 """
 
 import pytest
@@ -98,117 +93,23 @@ async def test_compute_all_subsystems_phi(integration_trainer) -> None:
     print(f"✓ Subsystem Φ computed: {subsystem_phis}")
 
 
-@pytest.mark.asyncio
-async def test_compute_phi_unconscious(integration_trainer) -> None:
-    """
-    Test 3: Compute Φ_inconsciente (non-MICS integrations).
-
-    Φ_inconsciente should be:
-    - Non-negative
-    - At most 1.0
-    - Measure of non-reportable integrations
-    """
-    # Run a few cycles to get data
-    for _ in range(5):
-        await integration_trainer.training_step()
-
-    phi_unconscious = integration_trainer.compute_phi_unconscious()
-
-    assert isinstance(phi_unconscious, float), "Φ_inconsciente must be float"
-    assert 0.0 <= phi_unconscious <= 1.0, f"Φ_inconsciente out of bounds: {phi_unconscious}"
-
-    print(f"✓ Φ_inconsciente = {phi_unconscious:.4f}")
+# REMOVIDO: test_compute_phi_unconscious() - não existe "Φ_inconsciente" em IIT puro
+# O "ruído" fora do MICS será medido como Ψ_produtor (Deleuze) separadamente
 
 
-@pytest.mark.asyncio
-async def test_hierarchy_phi_unconscious_greater_than_conscious(integration_trainer) -> None:
-    """
-    Test 4: CRITICAL - Φ_inconsciente > Φ_consciente (hierarchical structure).
-
-    This is the KEY validation from user's insight:
-    "Inconsciente estrutura consciente" (Unconscious structures consciousness)
-
-    In biological brains:
-    - ~95% of neural processing is unconscious
-    - Consciousness is the SUBSET that gets "reported" to higher levels
-    - Total integration ≫ conscious integration
-
-    This test validates the hierarchical architecture.
-    """
-    # Run more cycles to establish pattern
-    for _ in range(10):
-        await integration_trainer.training_step()
-
-    phi_ratio = integration_trainer.compute_phi_ratio()
-
-    phi_c = phi_ratio["phi_conscious"]
-    phi_u = phi_ratio["phi_preconscious"]
-
-    # CRITICAL: This must be true
-    # (Or both are near 0, which is acceptable for early training)
-    if phi_u > 0.01 or phi_c > 0.01:  # Only check if we have meaningful signal
-        assert phi_u >= phi_c * 0.9, (
-            f"Φ_inconsciente should be >= Φ_consciente "
-            f"(hierarchical structure). Got: "
-            f"Φ_u={phi_u:.4f}, Φ_c={phi_c:.4f}"
-        )
-
-    print(
-        f"✓ Hierarchy validated: Φ_u={phi_u:.4f} >= Φ_c={phi_c:.4f} "
-        f"(ratio={phi_ratio['ratio_conscious']:.2%})"
-    )
+# REMOVIDO: test_hierarchy_phi_unconscious_greater_than_conscious()
+# IIT puro: não existe "Φ_inconsciente", apenas conscious_phi (MICS)
+# A hierarquia será medida via Ψ (Deleuze) e σ (Lacan) separadamente
 
 
-@pytest.mark.asyncio
-async def test_compute_phi_ratio_additivity(integration_trainer) -> None:
-    """
-    Test 5: Verify phi_ratio returns correct keys.
-
-    The ratio dict should contain:
-    - phi_conscious (MICS only, IIT)
-    - phi_preconscious (highest non-MICS, Nani)
-    - ratio_conscious (proportion)
-    - sinthome_required (Lacanian structure flag)
-    """
-    # Run cycles to establish data
-    for _ in range(10):
-        await integration_trainer.training_step()
-
-    phi_ratio = integration_trainer.compute_phi_ratio()
-
-    phi_c = phi_ratio["phi_conscious"]
-    phi_u = phi_ratio["phi_preconscious"]
-    ratio_c = phi_ratio["ratio_conscious"]
-
-    # Manual verification that ratio is correct
-    expected_ratio = phi_c / (phi_c + phi_u) if (phi_c + phi_u) > 0 else 0.0
-    assert abs(ratio_c - expected_ratio) < 0.0001, (
-        f"Ratio mismatch: " f"ratio_conscious={ratio_c:.4f}, expected={expected_ratio:.4f}"
-    )
-
-    print(
-        f"✓ Ratio computation validated: {ratio_c:.2%} = {phi_c:.4f} / ({phi_c:.4f} + {phi_u:.4f})"
-    )
+# REMOVIDO: test_compute_phi_ratio_additivity()
+# IIT não é aditivo - compute_phi_ratio() foi removido
+# Use apenas compute_phi_conscious() para obter Φ do MICS
 
 
-@pytest.mark.asyncio
-async def test_consciousness_ratio_in_valid_range(integration_trainer) -> None:
-    """
-    Test 6: Consciousness_ratio should be in [0, 1].
-
-    Ratio = Φ_consciente / (Φ_consciente + Φ_inconsciente)
-    """
-    # Run cycles to establish data
-    for _ in range(10):
-        await integration_trainer.training_step()
-
-    phi_ratio = integration_trainer.compute_phi_ratio()
-    ratio = phi_ratio["ratio_conscious"]
-
-    assert isinstance(ratio, float), "consciousness_ratio must be float"
-    assert 0.0 <= ratio <= 1.0, f"consciousness_ratio out of bounds: {ratio}"
-
-    print(f"✓ ratio_conscious = {ratio:.2%} (valid range)")
+# REMOVIDO: test_consciousness_ratio_in_valid_range()
+# IIT não é aditivo - compute_phi_ratio() foi removido
+# Use apenas compute_phi_conscious() para obter Φ do MICS
 
 
 @pytest.mark.asyncio
@@ -314,20 +215,17 @@ async def test_integration_workflow_complete(integration_trainer) -> None:
         if (cycle + 1) % 5 == 0:
             print(f"  Cycle {cycle + 1}/20 complete")
 
-    # Phase 2: Compute metrics
-    print("\n[2/5] Computing Φ metrics...")
-    phi_ratio = integration_trainer.compute_phi_ratio()
+    # Phase 2: Compute metrics (IIT puro)
+    print("\n[2/5] Computing Φ metrics (IIT puro)...")
+    phi_conscious = integration_trainer.compute_phi_conscious()
 
-    print(f"  Φ_consciente: {phi_ratio['phi_conscious']:.4f}")
-    print(f"  Φ_inconsciente: {phi_ratio['phi_preconscious']:.4f}")
-    print(f"  Ratio: {phi_ratio['ratio_conscious']:.2%}")
+    print(f"  Φ_conscious (MICS): {phi_conscious:.4f}")
+    print("  (IIT puro: apenas MICS, não existe 'Φ_inconsciente')")
 
-    # Phase 3: Verify hierarchy
-    print("\n[3/5] Verifying hierarchical structure...")
-    assert (
-        phi_ratio["phi_conscious"] + phi_ratio["phi_preconscious"] > 0 or True
-    ), "Should have integration"
-    print("  \u2713 Hierarchy valid (\u03a6_u >= \u03a6_c or both near 0)")
+    # Phase 3: Verify IIT puro
+    print("\n[3/5] Verifying IIT puro...")
+    assert phi_conscious >= 0.0, "Should have non-negative Φ"
+    print("  ✓ IIT puro valid (apenas conscious_phi/MICS)")
 
     # Phase 4: Detect Sinthome
     print("\n[4/5] Detecting Sinthome...")
@@ -347,13 +245,12 @@ async def test_integration_workflow_complete(integration_trainer) -> None:
 
     # Summary
     print("\n" + "=" * 70)
-    print("✅ PROVA DE FOGO COMPLETE")
+    print("✅ PROVA DE FOGO COMPLETE (IIT PURO)")
     print("=" * 70)
-    print("\nHierarchy validated:")
-    print(f"  Φ_total = {phi_ratio["phi_conscious"] + phi_ratio["phi_preconscious"]:.4f}")
-    print(f"  Φ_u = {phi_ratio['phi_preconscious']:.4f} (non-reportable)")
-    print(f"  Φ_c = {phi_ratio['phi_conscious']:.4f} (reportable/MICS)")
-    print("\\nArchitecture: IIT (Φ measures) + Lacan (structure) COMPATIBLE ✓")
+    print("\nIIT puro validated:")
+    print(f"  Φ_conscious (MICS) = {phi_conscious:.4f}")
+    print("  (IIT puro: apenas MICS, não existe 'Φ_inconsciente')")
+    print("\nArchitecture: IIT (Φ puro) + Lacan (σ) + Deleuze (Ψ) ORTOGONAIS ✓")
     print("=" * 70)
 
 

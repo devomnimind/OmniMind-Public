@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 """
-OmniMind Complete System Indexer
+OmniMind Development & System Critical Indexer
 
-Indexa TODA a máquina: arquivos, documentos, configurações, software, etc.
-Inclui HD externo e detecta automaticamente tipos de conteúdo.
+Indexa apenas ambientes de desenvolvimento, plataformas e arquivos críticos do sistema/kernel.
 
 Funcionalidades:
-- Indexação completa de disco (como chkdsk /f no Windows)
-- Detecção automática de tipos de arquivo
-- Suporte a HD externo
+- Indexação de projetos de desenvolvimento
+- Arquivos críticos do sistema e kernel
+- Configurações de plataformas
 - Estatísticas detalhadas
-- Busca semântica universal
+- Busca semântica focada
 """
 
 import os
@@ -19,6 +18,8 @@ import logging
 import hashlib
 import mimetypes
 import subprocess
+import glob
+import re
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Set
 from dataclasses import dataclass
@@ -72,15 +73,18 @@ class UniversalContentChunk:
 
 class UniversalEmbeddingsIndexer:
     """
-    Indexador universal que pode processar QUALQUER arquivo na máquina.
+    Indexador focado em ambientes de desenvolvimento e arquivos críticos do sistema.
 
-    Similar ao "chkdsk /f" do Windows, mas para embeddings semânticos.
+    Indexa apenas:
+    - Projetos de desenvolvimento (código, documentação)
+    - Arquivos críticos do sistema/kernel
+    - Configurações de plataformas
     """
 
     def __init__(
         self,
         qdrant_url: str = "http://localhost:6333",
-        collection_name: str = "universal_machine_embeddings",
+        collection_name: str = "development_system_embeddings",
         model_name: str = "all-MiniLM-L6-v2",
         max_file_size_mb: int = 10,  # Máximo 10MB por arquivo
         chunk_size: int = 1000,  # Caracteres por chunk
@@ -116,7 +120,7 @@ class UniversalEmbeddingsIndexer:
         # Cache de tipos MIME
         mimetypes.init()
 
-        logger.info("🤖 Universal Embeddings Indexer inicializado")
+        logger.info("🤖 Development & System Indexer inicializado")
         logger.info(f"📊 Modelo: {model_name} (dim={self.embedding_dim})")
         logger.info(f"🎯 Máximo por arquivo: {max_file_size_mb}MB")
         logger.info(f"⚡ Workers paralelos: {max_workers}")
@@ -134,7 +138,7 @@ class UniversalEmbeddingsIndexer:
                         size=self.embedding_dim, distance=qmodels.Distance.COSINE
                     ),
                 )
-                logger.info(f"📁 Coleção universal criada: {self.collection_name}")
+                logger.info(f"📁 Coleção criada: {self.collection_name}")
         except Exception as exc:
             logger.error(f"❌ Erro ao criar coleção: {exc}")
             raise
@@ -415,118 +419,325 @@ Localização: {path.parent}
 
         return 0
 
-    def get_mount_points(self) -> List[str]:
-        """Detecta todos os pontos de montagem (incluindo HD externo)."""
-        mount_points = []
+    def get_development_directories(self) -> List[str]:
+        """Retorna diretórios de desenvolvimento focados no projeto OmniMind."""
+        dev_dirs = []
 
-        try:
-            # Usar psutil para detectar partições
-            partitions = psutil.disk_partitions(all=True)
+        # Detectar raiz do projeto OmniMind (onde está o script)
+        script_path = Path(__file__).resolve()
+        project_root = script_path.parent.parent.parent.parent  # scripts/development/frontend -> root
 
-            for partition in partitions:
-                mount_point = partition.mountpoint
+        # Diretórios específicos do projeto OmniMind (PRIORIDADE)
+        omnimind_dirs = [
+            "src",
+            "tests",
+            "archive",
+            "config",
+            "data/datasets",
+            "deploy",
+            "scripts",
+            "docs",
+        ]
 
-                # Filtrar pontos de montagem relevantes
-                if (
-                    os.path.exists(mount_point)
-                    and os.access(mount_point, os.R_OK)
-                    and not any(skip in mount_point for skip in ["/proc", "/sys", "/dev", "/run"])
+        for dir_name in omnimind_dirs:
+            dir_path = project_root / dir_name
+            if dir_path.exists() and dir_path.is_dir():
+                dev_dirs.append(str(dir_path))
+                logger.info(f"✅ Diretório OmniMind encontrado: {dir_path}")
+
+        # Diretórios adicionais de desenvolvimento (opcional, apenas se existirem)
+        additional_paths = [
+            "/mnt/dev_brain_clean",  # HD externo detectado
+        ]
+
+        for path in additional_paths:
+            if os.path.exists(path) and os.access(path, os.R_OK):
+                # Verificar se é um diretório de projeto (não indexar tudo)
+                if any(
+                    os.path.exists(os.path.join(path, marker))
+                    for marker in [".git", "src", "package.json", "requirements.txt", "pyproject.toml"]
                 ):
-                    mount_points.append(mount_point)
+                    dev_dirs.append(path)
+                    logger.info(f"✅ Diretório adicional encontrado: {path}")
 
-        except Exception as e:
-            logger.warning(f"Erro ao detectar pontos de montagem: {e}")
-            # Fallback: pontos comuns
-            mount_points = ["/", "/home", "/mnt", "/media"]
+        return sorted(set(dev_dirs))
 
-        return sorted(set(mount_points))
+    def get_system_critical_files(self) -> List[str]:
+        """Retorna lista de arquivos críticos do sistema/kernel."""
+        critical_files = []
 
-    def index_entire_machine(self, exclude_patterns: Optional[List[str]] = None) -> Dict[str, Any]:
+        # Arquivos críticos do kernel e sistema
+        kernel_files = [
+            "/proc/version",
+            "/proc/cmdline",
+            "/proc/cpuinfo",
+            "/proc/meminfo",
+            "/proc/modules",
+            "/proc/loadavg",
+            "/proc/uptime",
+            "/proc/version_signature",
+            "/sys/kernel/version",
+            "/sys/kernel/mm/ksm",
+            "/boot/config-*",
+            "/boot/System.map-*",
+            "/usr/src/linux/.config",
+            "/etc/os-release",
+            "/etc/lsb-release",
+            "/etc/debian_version",
+            "/etc/redhat-release",
+            "/etc/fstab",
+            "/etc/hosts",
+            "/etc/hostname",
+            "/etc/resolv.conf",
+            "/etc/passwd",  # Apenas estrutura, não conteúdo sensível
+            "/etc/group",
+            "/etc/shells",
+            "/etc/environment",
+            "/etc/profile",
+            "/etc/bash.bashrc",
+            "/etc/sysctl.conf",
+            "/etc/modprobe.d/",
+            "/etc/default/",
+            "/var/log/dmesg",
+            "/var/log/kern.log",
+            "/var/log/syslog",
+        ]
+
+        # Arquivos de configuração de plataformas
+        platform_configs = [
+            "/etc/docker/daemon.json",
+            "/etc/docker/daemon.json.d/",
+            "/etc/containerd/config.toml",
+            "/etc/systemd/system/",
+            "/etc/systemd/user/",
+            "/usr/lib/systemd/system/",
+            "/etc/nginx/",
+            "/etc/apache2/",
+            "/etc/redis/",
+            "/etc/postgresql/",
+            "/etc/mysql/",
+            "/etc/mongodb/",
+            "/etc/qdrant/",
+        ]
+
+        all_critical = kernel_files + platform_configs
+
+        for pattern in all_critical:
+            if "*" in pattern:
+                # Expandir glob patterns
+                matches = glob.glob(pattern)
+                critical_files.extend(matches)
+            elif os.path.isfile(pattern):
+                critical_files.append(pattern)
+            elif os.path.isdir(pattern):
+                # Adicionar todos os arquivos de texto do diretório
+                try:
+                    for root, dirs, files in os.walk(pattern):
+                        for file in files:
+                            file_path = os.path.join(root, file)
+                            if self.can_process_file(file_path):
+                                ext = Path(file_path).suffix.lower()
+                                if ext in [".conf", ".cfg", ".ini", ".toml", ".yaml", ".yml", ".json", ".txt", ".sh"]:
+                                    critical_files.append(file_path)
+                except PermissionError:
+                    logger.debug(f"Sem permissão para acessar: {pattern}")
+
+        return sorted(set(critical_files))
+
+    def index_development_and_system(self, exclude_patterns: Optional[List[str]] = None) -> Dict[str, Any]:
         """
-        Indexa TODA a máquina - como "chkdsk /f" mas para embeddings.
+        Indexa apenas ambientes de desenvolvimento e arquivos críticos do sistema/kernel.
 
         Args:
             exclude_patterns: Padrões de caminho a excluir (regex)
         """
         if exclude_patterns is None:
             exclude_patterns = [
-                r"/proc/.*",
-                r"/sys/.*",
-                r"/dev/.*",
-                r"/run/.*",
-                r"/tmp/.*",
-                r"/var/tmp/.*",
                 r".*/\.git/.*",
                 r".*/node_modules/.*",
                 r".*/__pycache__/.*",
                 r".*/\.cache/.*",
+                r".*/\.venv/.*",
+                r".*/venv/.*",
+                r".*/env/.*",
                 r".*\.pyc$",
                 r".*\.pyo$",
+                r".*/build/.*",
+                r".*/dist/.*",
+                r".*/target/.*",
+                r".*/\.pytest_cache/.*",
+                r".*/\.mypy_cache/.*",
             ]
 
-        logger.info("🚀 Iniciando indexação COMPLETA da máquina")
-        logger.info("💡 Isso pode levar HORAS dependendo do tamanho dos discos")
+        logger.info("🚀 Iniciando indexação de DESENVOLVIMENTO e SISTEMA CRÍTICO")
+        logger.info("📁 Focando em: projeto OmniMind, código, kernel e configurações críticas")
 
-        # Detectar pontos de montagem
-        mount_points = self.get_mount_points()
-        logger.info(f"📍 Pontos de montagem detectados: {mount_points}")
-
-        total_files_found = 0
         total_chunks_created = 0
 
-        # Processar cada ponto de montagem
-        for mount_point in mount_points:
-            logger.info(f"🔍 Indexando: {mount_point}")
-            mount_chunks = self._index_mount_point(mount_point, exclude_patterns)
-            total_chunks_created += mount_chunks
+        # 1. Indexar diretórios do projeto OmniMind (PRIORIDADE)
+        logger.info("\n📂 Indexando diretórios do projeto OmniMind...")
+        dev_dirs = self.get_development_directories()
+        logger.info(f"📍 Diretórios encontrados: {len(dev_dirs)}")
+        for dev_dir in dev_dirs:
+            logger.info(f"   - {dev_dir}")
+
+        for dev_dir in dev_dirs:
+            logger.info(f"\n🔍 Indexando diretório: {dev_dir}")
+            try:
+                chunks = self._index_directory_focused(dev_dir, exclude_patterns)
+                total_chunks_created += chunks
+                logger.info(f"✅ {dev_dir}: {chunks} chunks criados")
+            except KeyboardInterrupt:
+                logger.warning(f"⏹️  Interrompido pelo usuário durante indexação de {dev_dir}")
+                raise
+            except MemoryError:
+                logger.error(f"❌ Erro de memória ao indexar {dev_dir}")
+                logger.info("💡 Tente reduzir max_workers ou processar diretórios separadamente")
+                raise
+            except Exception as e:
+                logger.error(f"❌ Erro ao indexar {dev_dir}: {e}")
+                import traceback
+                logger.error(traceback.format_exc())
+                logger.info("  Continuando com próximo diretório...")
+                continue
+
+        # 2. Indexar arquivos críticos do sistema/kernel (OPCIONAL - pode falhar por permissões)
+        logger.info("\n🔧 Indexando arquivos críticos do sistema/kernel...")
+        logger.info("⚠️  Nota: Alguns arquivos podem requerer permissões elevadas (sudo)")
+        try:
+            critical_files = self.get_system_critical_files()
+            logger.info(f"📍 Arquivos críticos encontrados: {len(critical_files)}")
+
+            indexed_count = 0
+            for critical_file in critical_files:
+                try:
+                    chunks = self.index_file(critical_file)
+                    total_chunks_created += chunks
+                    if chunks > 0:
+                        indexed_count += 1
+                        if indexed_count % 10 == 0:
+                            logger.info(f"  Progresso: {indexed_count}/{len(critical_files)} arquivos indexados")
+                except PermissionError:
+                    logger.debug(f"⚠️  Sem permissão para: {critical_file}")
+                except Exception as e:
+                    logger.debug(f"⚠️  Erro ao indexar {critical_file}: {e}")
+
+            logger.info(f"✅ Arquivos críticos indexados: {indexed_count}/{len(critical_files)}")
+        except Exception as e:
+            logger.warning(f"⚠️  Erro ao processar arquivos críticos do sistema: {e}")
+            logger.info("💡 Isso é normal se não tiver permissões sudo")
 
         # Estatísticas finais
         final_stats = self.get_stats()
-        logger.info("🎉 Indexação completa da máquina finalizada!")
+        logger.info("\n🎉 Indexação concluída!")
         logger.info(f"📊 Total processado: {final_stats['files_processed']} arquivos")
         logger.info(f"✅ Total indexado: {final_stats['files_indexed']} arquivos")
         logger.info(f"🧩 Total chunks: {final_stats['chunks_created']}")
-        logger.info(f"💾 Total bytes: {final_stats['bytes_processed'] / (1024**3):.2f} GB")
+        logger.info(f"💾 Total bytes: {final_stats['bytes_processed'] / (1024**2):.2f} MB")
 
         return final_stats
 
-    def _index_mount_point(self, mount_point: str, exclude_patterns: List[str]) -> int:
-        """Indexa um ponto de montagem específico."""
+    def _index_directory_focused(self, directory: str, exclude_patterns: List[str]) -> int:
+        """Indexa diretório focado em arquivos de desenvolvimento."""
         chunks_created = 0
 
+        # Extensões relevantes para desenvolvimento
+        relevant_extensions = {
+            ".py", ".js", ".ts", ".jsx", ".tsx", ".java", ".cpp", ".c", ".h", ".hpp",
+            ".go", ".rs", ".php", ".rb", ".swift", ".kt", ".scala", ".clj",
+            ".sh", ".bash", ".zsh", ".fish",
+            ".md", ".txt", ".rst", ".adoc",
+            ".yaml", ".yml", ".json", ".toml", ".ini", ".cfg", ".conf",
+            ".sql", ".graphql", ".gql",
+            ".dockerfile", ".dockerignore",
+            ".gitignore", ".gitattributes",
+            "Makefile", "CMakeLists.txt", "build.gradle", "pom.xml", "Cargo.toml",
+            "package.json", "requirements.txt", "Pipfile", "pyproject.toml",
+        }
+
         try:
-            # Coletar todos os arquivos
             all_files = []
-            for root, dirs, files in os.walk(mount_point):
+            for root, dirs, files in os.walk(directory):
                 # Aplicar exclusões
                 for pattern in exclude_patterns:
-                    import re
-
                     if re.search(pattern, root):
-                        dirs[:] = []  # Não entrar neste diretório
+                        dirs[:] = []
                         break
 
                 for file in files:
                     file_path = os.path.join(root, file)
-                    all_files.append(file_path)
+                    # Verificar se é arquivo relevante
+                    path_obj = Path(file_path)
+                    if (
+                        path_obj.suffix.lower() in relevant_extensions
+                        or path_obj.name in relevant_extensions
+                        or any(path_obj.name.startswith(ext) for ext in [".env", "Dockerfile", "Makefile"])
+                    ):
+                        all_files.append(file_path)
 
-            logger.info(f"📂 Encontrados {len(all_files)} arquivos em {mount_point}")
+            logger.info(f"📂 Encontrados {len(all_files)} arquivos relevantes em {directory}")
 
-            # Processar em paralelo
-            with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
-                futures = [executor.submit(self.index_file, file_path) for file_path in all_files]
+            # Processar em lotes para evitar sobrecarga de memória
+            batch_size = 500  # Processar 500 arquivos por vez
+            total_batches = (len(all_files) + batch_size - 1) // batch_size
+            logger.info(f"⚡ Processando {len(all_files)} arquivos em {total_batches} lotes de {batch_size}...")
 
-                for future in as_completed(futures):
-                    try:
-                        chunks = future.result()
-                        chunks_created += chunks
-                    except Exception as e:
-                        logger.debug(f"Erro em future: {e}")
+            processed = 0
+            for batch_num in range(total_batches):
+                start_idx = batch_num * batch_size
+                end_idx = min(start_idx + batch_size, len(all_files))
+                batch_files = all_files[start_idx:end_idx]
+
+                logger.info(f"  Lote {batch_num + 1}/{total_batches}: processando {len(batch_files)} arquivos...")
+                logger.info(f"    Primeiros arquivos do lote: {batch_files[:3] if len(batch_files) >= 3 else batch_files}")
+
+                try:
+                    with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
+                        futures = {executor.submit(self.index_file, file_path): file_path for file_path in batch_files}
+
+                        batch_processed = 0
+                        for future in as_completed(futures):
+                            processed += 1
+                            batch_processed += 1
+
+                            # Log de progresso mais frequente
+                            if batch_processed % 10 == 0 or batch_processed == len(batch_files):
+                                logger.info(f"    Lote {batch_num + 1}: {batch_processed}/{len(batch_files)} arquivos processados")
+
+                            if processed % 50 == 0:
+                                logger.info(f"    ⏳ Progresso geral: {processed}/{len(all_files)} arquivos processados ({processed*100//len(all_files)}%)")
+
+                            try:
+                                chunks = future.result(timeout=30)  # Timeout de 30s por arquivo
+                                chunks_created += chunks
+                                if chunks > 0 and batch_processed % 20 == 0:
+                                    logger.debug(f"    ✅ {batch_processed} arquivos indexados no lote atual")
+                            except TimeoutError:
+                                file_path = futures[future]
+                                logger.warning(f"⏱️  Timeout ao processar: {file_path}")
+                            except Exception as e:
+                                file_path = futures.get(future, "unknown")
+                                logger.warning(f"⚠️  Erro ao processar {file_path}: {e}")
+
+                    logger.info(f"  ✅ Lote {batch_num + 1}/{total_batches} concluído: {batch_processed} arquivos processados")
+
+                except Exception as e:
+                    logger.error(f"❌ Erro crítico no lote {batch_num + 1}: {e}")
+                    import traceback
+                    logger.error(traceback.format_exc())
+                    logger.info("  Continuando com próximo lote...")
+                    continue
+
+                # Pequena pausa entre lotes para evitar sobrecarga
+                import time
+                if batch_num < total_batches - 1:  # Não pausar no último lote
+                    time.sleep(0.5)
 
         except Exception as e:
-            logger.error(f"Erro ao indexar {mount_point}: {e}")
+            logger.error(f"Erro ao indexar {directory}: {e}")
 
         return chunks_created
+
 
     def search_universal(self, query: str, top_k: int = 10) -> List[Dict[str, Any]]:
         """Busca semântica universal em todo o conteúdo indexado."""
@@ -583,7 +794,7 @@ def main():
     """Função principal para indexação completa."""
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-    logger.info("🤖 OMNIMIND - Indexação Universal da Máquina")
+    logger.info("🤖 OMNIMIND - Indexação de Desenvolvimento e Sistema Crítico")
     logger.info("=" * 60)
 
     # Verificar dependências
@@ -610,12 +821,13 @@ def main():
     # Inicializar indexador universal
     indexer = UniversalEmbeddingsIndexer()
 
-    # Indexar máquina completa
+    # Indexar desenvolvimento e sistema crítico
     try:
-        logger.info("🚀 Iniciando indexação COMPLETA...")
-        logger.info("⚠️  Isso pode levar muito tempo!")
+        logger.info("🚀 Iniciando indexação de DESENVOLVIMENTO e SISTEMA...")
+        logger.info("📁 Focando em: projetos, código, kernel e configurações")
+        logger.info("💡 Dica: Se o script for interrompido, pode executar novamente - ele continua de onde parou")
 
-        stats = indexer.index_entire_machine()
+        stats = indexer.index_development_and_system()
 
         logger.info("\n🎉 Indexação concluída!")
         logger.info("📊 Estatísticas finais:")
@@ -628,12 +840,24 @@ def main():
                 logger.info(f"   {key}: {value}")
 
     except KeyboardInterrupt:
-        logger.info("\n⏹️  Indexação interrompida pelo usuário")
+        logger.info("\n⏹️  Indexação interrompida pelo usuário (Ctrl+C)")
         stats = indexer.get_stats()
         logger.info("📊 Estatísticas parciais salvas")
+        logger.info("💡 Execute novamente para continuar a indexação")
+
+    except MemoryError:
+        logger.error("\n❌ Erro de memória! Tente reduzir max_workers ou processar diretórios separadamente")
+        stats = indexer.get_stats()
+        logger.info("📊 Estatísticas parciais salvas")
+        sys.exit(1)
 
     except Exception as e:
-        logger.error(f"❌ Erro durante indexação: {e}")
+        logger.error(f"\n❌ Erro durante indexação: {e}")
+        import traceback
+        logger.debug(traceback.format_exc())
+        stats = indexer.get_stats()
+        logger.info("📊 Estatísticas parciais salvas")
+        logger.info("💡 Execute novamente para continuar")
         sys.exit(1)
 
     # Teste de busca
@@ -658,9 +882,9 @@ def main():
     except Exception as e:
         logger.error(f"❌ Erro no teste de busca: {e}")
 
-    logger.info("\n🎯 Sistema pronto para buscas semânticas universais!")
+    logger.info("\n🎯 Sistema pronto para buscas semânticas focadas!")
     logger.info("\n💡 Uso:")
-    logger.info("   from universal_indexer import UniversalEmbeddingsIndexer")
+    logger.info("   from universal_machine_indexer import UniversalEmbeddingsIndexer")
     logger.info("   indexer = UniversalEmbeddingsIndexer()")
     logger.info("   results = indexer.search_universal('sua consulta')")
 

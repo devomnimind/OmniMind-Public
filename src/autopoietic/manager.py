@@ -45,6 +45,7 @@ class AutopoieticManager:
         history_path: Optional[Path] = Path("data/autopoietic/cycle_history.jsonl"),
         synthesized_code_dir: Optional[Path] = Path("data/autopoietic/synthesized_code"),
         phi_threshold: float = PHI_THRESHOLD,
+        kernel_autopoiesis: Optional[Any] = None,  # KernelAutopoiesisMinimal opcional
     ) -> None:
         self._meta_architect = meta_architect or MetaArchitect()
         self._evolution_engine = evolution_engine or ArchitectureEvolution(self._meta_architect)
@@ -61,6 +62,11 @@ class AutopoieticManager:
         # Phase 22: Sistema de feedback adaptativo
         self._phi_history: List[float] = []
         self._strategy_preference: Optional[EvolutionStrategy] = None
+
+        # NOVO: Kernel autopoiesis para verificar O-CLOSURE
+        self.kernel_autopoiesis = kernel_autopoiesis
+        if self.kernel_autopoiesis is not None:
+            self._logger.info("KernelAutopoiesisMinimal integrado para verificação de O-CLOSURE")
 
     @property
     def specs(self) -> Dict[str, ComponentSpec]:
@@ -105,6 +111,18 @@ class AutopoieticManager:
         else:
             batch = self._evolution_engine.propose_evolution(self._specs, metrics)
         timestamp = time.time()
+
+        # NOVO: Verificar O-CLOSURE antes de aplicar mudanças
+        if self.kernel_autopoiesis is not None:
+            try:
+                closure_result = self.kernel_autopoiesis.organizational_closure()
+                if not closure_result.get("is_closed", False):
+                    self._logger.warning(
+                        "O-CLOSURE quebrado: %s. Continuando ciclo mas alertando.",
+                        closure_result.get("reason", "unknown"),
+                    )
+            except Exception as e:
+                self._logger.warning("Erro ao verificar O-CLOSURE: %s", e)
 
         # Validação de Φ antes de aplicar mudanças
         phi_before = self._get_current_phi()
@@ -187,6 +205,20 @@ class AutopoieticManager:
         )
         self._history.append(log)
         self._persist_log(log)
+
+        # Gerar relatório após cada ciclo autopoiético
+        try:
+            from src.observability.module_reporter import get_module_reporter
+
+            reporter = get_module_reporter()
+            reporter.generate_module_report(
+                module_name=f"autopoietic_cycle_{cycle_id}",
+                include_metrics=True,
+                format="json",
+            )
+            self._logger.debug(f"Relatório gerado para ciclo autopoiético {cycle_id}")
+        except Exception as e:
+            self._logger.debug(f"Erro ao gerar relatório autopoiético: {e}")
 
         self._logger.info(
             "Cycle %d completed: Φ %.3f -> %.3f, synthesized %d components",

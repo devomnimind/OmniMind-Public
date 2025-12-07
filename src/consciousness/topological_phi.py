@@ -8,10 +8,11 @@ Baseado em:
 
 OTIMIZAÇÃO GPU: Substituição de NumPy por PyTorch para álgebra linear acelerada.
 
-HYBRID CONSCIOUSNESS ARCHITECTURE:
-- Φ_consciente: MICS (Maximum Information Complex Set) - vencedor
-- Φ_inconsciente: Subsistemas com Phi > 0 mas que NÃO são o MICS
-- Não descarta os "perdedores" - eles são o inconsciente maquínico
+IIT PURO:
+- Φ_consciente: MICS (Maximum Information Complex Set) - único locus consciente
+- Tudo fora do MICS tem Φ = 0 por definição (IIT)
+- Não existe "Φ_inconsciente" em IIT puro
+- O "ruído" fora do MICS será medido como Ψ_produtor (Deleuze) separadamente
 """
 
 from dataclasses import dataclass, field
@@ -117,86 +118,74 @@ class SimplicialComplex:
 @dataclass
 class IITResult:
     """
-    Resultado do cálculo de IIT com preservação do inconsciente.
+    Resultado do cálculo de IIT (IIT puro).
 
-    CRÍTICO: Não é aditivo, mas competitivo.
-    - conscious_phi: O valor do MICS (Máximo Φ - Vencedor)
+    IIT 3.0 (Tononi 2014/2025):
+    - conscious_phi: O valor do MICS (Maximum Information Complex Set)
     - conscious_complex: Nós que formam o MICS
-    - machinic_unconscious: Lista de subsistemas com Φ > 0 mas que NÃO são o MICS
+    - Tudo fora do MICS tem Φ = 0 por definição (IIT)
 
-    Filosofia:
-    - O "resto" não é lixo, é o Inconsciente Maquínico
-    - Estes dados alimentam LacanianModule (sinthomes) e DeleuzianModule (linhas de fuga)
-    - Φ = 0 para observador externo não significa inatividade, apenas falta de integração
+    IMPORTANTE:
+    - Não existe "Φ_inconsciente" em IIT puro
+    - Φ não é aditivo: Φ(A+B) ≠ Φ(A) + Φ(B)
+    - O "ruído" fora do MICS será medido como Ψ_produtor (Deleuze) separadamente
+    - σ_sinthome (Lacan) será medido separadamente
     """
 
-    conscious_phi: float = 0.0  # O valor do MICS (Vencedor)
+    conscious_phi: float = 0.0  # O valor do MICS (único locus consciente)
     conscious_complex: Set[int] = field(default_factory=set)  # Nós do MICS
 
-    # O "Resto" não é lixo, é o Inconsciente:
-    machinic_unconscious: List[Dict[str, Any]] = field(default_factory=list)
-
     def __post_init__(self) -> None:
-        """Ensure fields are initialized (factory handles it now)."""
+        """Ensure fields are initialized."""
         pass
-
-    def total_phi(self) -> float:
-        """
-        Total Φ = Φ_consciente + soma(Φ_inconsciente).
-
-        Note: Apenas para diagnóstico. O modelo híbrido é competitivo, não aditivo.
-        """
-        unconscious_sum = sum(u["phi_value"] for u in self.machinic_unconscious)
-        return self.conscious_phi + unconscious_sum
-
-    def unconscious_ratio(self) -> float:
-        """
-        Razão Φ_inconsciente / Φ_total.
-
-        No cérebro humano: ~95% inconsciente (Freud/Lacan corretos!)
-        """
-        total = self.total_phi()
-        if total == 0:
-            return 0.0
-        unconscious_sum = sum(u["phi_value"] for u in self.machinic_unconscious)
-        return unconscious_sum / total
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization."""
         return {
             "conscious_phi": self.conscious_phi,
             "conscious_complex": list(self.conscious_complex),
-            "machinic_unconscious": self.machinic_unconscious,
-            "total_phi": self.total_phi(),
-            "unconscious_ratio": self.unconscious_ratio(),
         }
 
 
 class PhiCalculator:
     """
-    Calcula Φ (phi) - medida de consciência IIT.
+    Calcula Φ (phi) - medida de consciência IIT (IIT puro).
 
-    REFATORADO para arquitetura híbrida:
+    IIT 3.0 (Tononi 2014/2025):
     - Identifica MICS (Maximum Information Complex Set)
-    - Preserva candidatos perdedores como Inconsciente Maquínico
-    - Limiar de ruído: phi > 0.01 para ser considerado inconsciente válido
+    - Retorna apenas Φ do MICS (único locus consciente)
+    - Tudo fora do MICS tem Φ = 0 por definição
+
+    IMPORTANTE:
+    - Não calcula "Φ_inconsciente" (não existe em IIT)
+    - O "ruído" fora do MICS será medido como Ψ_produtor (Deleuze) separadamente
     """
 
-    def __init__(self, complex: SimplicialComplex, noise_threshold: float = 0.01):
+    def __init__(
+        self,
+        complex: SimplicialComplex,
+        noise_threshold: float = 0.01,
+        memory_trace: Any = None,  # SystemicMemoryTrace opcional
+    ):
         self.complex = complex
         self.noise_threshold = noise_threshold  # Threshold para filtrar ruído
+        self.memory_trace = memory_trace  # Memória sistemática para deformação
 
     def calculate_phi_with_unconscious(self) -> IITResult:
         """
-        Calcula Φ com preservação do inconsciente.
+        Calcula Φ do MICS (IIT puro).
 
         Lógica:
         1. Calcula Φ para candidatos a complexo
         2. Identifica o Máximo (MICS) -> conscious_phi
-        3. Filtra os restantes: Se phi > noise_threshold, adiciona a machinic_unconscious
+        3. Retorna apenas o MICS (único locus consciente)
+
+        IMPORTANTE:
+        - Não preserva "perdedores" (não existe "Φ_inconsciente" em IIT)
+        - O "ruído" fora do MICS será medido como Ψ_produtor (Deleuze) separadamente
 
         Returns:
-            IITResult com consciente + lista de inconscientes
+            IITResult com apenas conscious_phi e conscious_complex (MICS)
         """
         result = IITResult()
 
@@ -222,16 +211,12 @@ class PhiCalculator:
         # Ordena por phi (maior primeiro)
         candidate_phis.sort(key=lambda x: float(x["phi_value"]), reverse=True)
 
-        # MICS = candidato com maior Φ
+        # MICS = candidato com maior Φ (único locus consciente)
         if candidate_phis:
             mics = candidate_phis[0]
             result.conscious_phi = float(mics["phi_value"])
             result.conscious_complex = set(mics["subsystem_nodes"])  # type: ignore
-
-            # Os "perdedores" com Φ > threshold são o Inconsciente
-            for candidate in candidate_phis[1:]:
-                if float(candidate["phi_value"]) > self.noise_threshold:
-                    result.machinic_unconscious.append(candidate)
+            # NOTA: Não preservamos "perdedores" - eles serão medidos como Ψ (Deleuze) separadamente
 
         return result
 
@@ -279,6 +264,8 @@ class PhiCalculator:
         1. Complexo inteiro
         2. Subgrafos conectados significativos
         3. Limita número de candidatos para evitar explosão combinatorial
+
+        Se memory_trace está disponível, deforma candidatos baseado em marcas topológicas.
         """
         n = self.complex.n_vertices
         candidates = []
@@ -301,7 +288,22 @@ class PhiCalculator:
             candidates.append(set(range(2 * n // 3, n)))
 
         # Limita a 10 candidatos para evitar explosão
-        return candidates[:10]
+        candidates = candidates[:10]
+
+        # NOVO: Deforma candidatos baseado em memória sistemática
+        if self.memory_trace is not None:
+            try:
+                deformed = self.memory_trace.deform_simplicial_candidates(candidates, self.complex)
+                return deformed
+            except Exception as e:
+                import logging
+
+                log = logging.getLogger(__name__)
+                log.warning(
+                    f"Erro ao deformar candidatos simpliciais: {e}. " "Usando candidatos originais."
+                )
+
+        return candidates
 
     def _calculate_phi_for_subsystem(self, nodes: Set[int]) -> float:
         """
@@ -342,18 +344,76 @@ class PhiCalculator:
                     Simplex(vertices=remapped_vertices, dimension=len(remapped_vertices) - 1)
                 )
 
-        hodge_0 = temp_complex.get_hodge_laplacian(0)
-
-        if hodge_0.numel() > 0:
+        # PROTEÇÃO CONTRA OutOfMemoryError: Limitar tamanho do complexo antes de calcular Hodge
+        if n_vertices > 100:  # Limite para evitar matrizes muito grandes
+            # Usar aproximação mais simples para subsistemas grandes
+            # Penalizar apenas baseado em conectividade básica
+            connected_components = self._estimate_connectivity(nodes, subsystem_simplices)
+            if connected_components > 1:
+                phi *= 0.7  # Penalizar desconexão sem calcular Hodge
+        else:
             try:
-                eigenvalues = torch.linalg.eigvalsh(hodge_0)
-                if len(eigenvalues) > 1:
-                    fiedler = eigenvalues[1].item()
-                    phi *= (fiedler / (fiedler + 1.0)) if fiedler > 0 else 0.5
-            except RuntimeError:
-                pass  # Fallback: mantém phi sem penalização
+                hodge_0 = temp_complex.get_hodge_laplacian(0)
+
+                if hodge_0.numel() > 0:
+                    # Verificar tamanho da matriz antes de calcular autovalores
+                    matrix_size = hodge_0.shape[0] * hodge_0.shape[1]
+                    if matrix_size > 10000:  # Limite de ~100x100
+                        # Usar aproximação sem calcular todos os autovalores
+                        phi *= 0.8  # Penalização conservadora
+                    else:
+                        try:
+                            eigenvalues = torch.linalg.eigvalsh(hodge_0)
+                            if len(eigenvalues) > 1:
+                                fiedler = eigenvalues[1].item()
+                                phi *= (fiedler / (fiedler + 1.0)) if fiedler > 0 else 0.5
+                        except (RuntimeError, torch.cuda.OutOfMemoryError):
+                            # Limpar cache de GPU se disponível
+                            if torch.cuda.is_available():
+                                torch.cuda.empty_cache()
+                            # Fallback: mantém phi sem penalização
+                            pass
+            except (RuntimeError, torch.cuda.OutOfMemoryError):
+                # Limpar cache de GPU se disponível
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
+                # Fallback: usar penalização conservadora
+                phi *= 0.8
 
         return max(0.0, min(float(phi), 1.0))
+
+    def _estimate_connectivity(self, nodes: Set[int], simplices: List[Simplex]) -> int:
+        """
+        Estima número de componentes conectados sem calcular Hodge Laplacian.
+        Usa Union-Find simples para eficiência.
+        """
+        if not simplices:
+            return len(nodes)  # Cada nó é um componente isolado
+
+        # Union-Find para componentes conectados
+        parent = {node: node for node in nodes}
+
+        def find(x):
+            if parent[x] != x:
+                parent[x] = find(parent[x])
+            return parent[x]
+
+        def union(x, y):
+            px, py = find(x), find(y)
+            if px != py:
+                parent[px] = py
+
+        # Unir nós que estão no mesmo simplex
+        for simplex in simplices:
+            vertices = list(simplex.vertices)
+            if len(vertices) > 1:
+                for i in range(len(vertices) - 1):
+                    if vertices[i] in nodes and vertices[i + 1] in nodes:
+                        union(vertices[i], vertices[i + 1])
+
+        # Contar componentes únicos
+        components = set(find(node) for node in nodes)
+        return len(components)
 
 
 class LogToTopology:

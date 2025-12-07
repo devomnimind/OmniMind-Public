@@ -123,6 +123,10 @@ def test_react_agent_performs_file_and_shell_ops() -> None:
         "max_iterations": 5,
         "completed": False,
         "final_result": "",
+        "phi": 0.0,
+        "psi": 0.0,
+        "sigma": 0.0,
+        "quality_score": 0.0,
     }
 
     observed_state = agent._observe_node(state)

@@ -1062,6 +1062,23 @@ class ToolsFramework:
         """Retorna ferramentas de uma categoria"""
         return [name for name, tool in self.tools.items() if tool.category == category]
 
+    def register_dynamic_tool(self, name: str, tool: AuditedTool) -> bool:
+        """
+        Registra ferramenta dinâmica no framework.
+
+        Args:
+            name: Nome da ferramenta
+            tool: Instância de AuditedTool
+
+        Returns:
+            True se registrado com sucesso
+        """
+        if name in self.tools:
+            logger.warning(f"Ferramenta {name} já existe, substituindo")
+        self.tools[name] = tool
+        logger.info(f"Ferramenta dinâmica registrada: {name}")
+        return True
+
     def verify_audit_chain(self) -> bool:
         """Verifica integridade da cadeia de auditoria P0"""
         audit_log_path = Path.home() / ".omnimind" / "audit" / "tools.log"

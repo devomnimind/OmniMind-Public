@@ -12,6 +12,7 @@ Responsabilidades:
 import asyncio
 import json
 import logging
+import random
 import time
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -139,7 +140,12 @@ class DelegationManager:
                 record.status = DelegationStatus.FAILED
                 record.error_message = error_msg
                 self._record_delegation(record)
-                raise RuntimeError(error_msg)
+                return {
+                    "success": False,
+                    "error": error_msg,
+                    "delegation_id": delegation_id,
+                    "status": "failed",
+                }
 
             # 2. Executar com retry
             for attempt in range(max_retries):
@@ -185,14 +191,62 @@ class DelegationManager:
                     self._record_circuit_breaker_failure(agent_name)
 
                     if attempt < max_retries - 1:
-                        # Aguardar antes de retry
-                        await asyncio.sleep(1.0 * (attempt + 1))
+                        # Backoff exponencial com jitter
+                        base_delay = 1.0
+                        exponential_delay = base_delay * (2**attempt)
+                        jitter = random.uniform(0, exponential_delay * 0.1)  # 10% de jitter
+                        delay = exponential_delay + jitter
+                        logger.debug(
+                            f"Backoff exponencial: tentativa {attempt + 1}, "
+                            f"delay={delay:.2f}s (base={exponential_delay:.2f}s, "
+                            f"jitter={jitter:.2f}s)"
+                        )
+                        await asyncio.sleep(delay)
                         continue
                     else:
-                        raise
+                        # Última tentativa falhou, retornar erro
+                        record.completed_at = datetime.now().isoformat()
+                        record.duration_seconds = self._calculate_duration(record)
+                        self._record_delegation(record)
+                        self._update_metrics(record)
+                        return {
+                            "success": False,
+                            "error": "Task timeout",
+                            "delegation_id": delegation_id,
+                            "status": "timeout",
+                        }
 
                 except Exception as e:
                     logger.error(f"❌ Error in delegation {delegation_id}: {e}")
+
+                    # Analisar erro estruturalmente se ErrorAnalyzer disponível
+                    if (
+                        hasattr(self.orchestrator, "error_analyzer")
+                        and self.orchestrator.error_analyzer
+                    ):
+                        try:
+                            context = {
+                                "agent_name": agent_name,
+                                "task_description": task_description,
+                                "delegation_id": delegation_id,
+                                "retry_count": record.retry_count,
+                            }
+                            error_analysis = self.orchestrator.error_analyzer.analyze_error(
+                                e, context
+                            )
+                            logger.info(
+                                f"Erro de delegação analisado: "
+                                f"{error_analysis.error_type.value} → "
+                                f"{error_analysis.recovery_strategy.value} "
+                                f"(confiança: {error_analysis.confidence:.2f})"
+                            )
+
+                            # Aprender da solução se aplicável
+                            if record.retry_count < record.max_retries:
+                                # Tentar estratégia sugerida
+                                logger.debug(f"Ações sugeridas: {error_analysis.suggested_actions}")
+                        except Exception as analysis_error:
+                            logger.warning(f"Erro ao analisar erro de delegação: {analysis_error}")
                     record.status = DelegationStatus.FAILED
                     record.error_message = str(e)
 
@@ -200,10 +254,48 @@ class DelegationManager:
                     self._record_circuit_breaker_failure(agent_name)
 
                     if attempt < max_retries - 1:
-                        await asyncio.sleep(0.5 * (attempt + 1))
+                        # Backoff exponencial com jitter
+                        base_delay = 0.5
+                        exponential_delay = base_delay * (2**attempt)
+                        jitter = random.uniform(0, exponential_delay * 0.1)  # 10% de jitter
+                        delay = exponential_delay + jitter
+                        logger.debug(
+                            f"Backoff exponencial: tentativa {attempt + 1}, "
+                            f"delay={delay:.2f}s (base={exponential_delay:.2f}s, "
+                            f"jitter={jitter:.2f}s)"
+                        )
+                        await asyncio.sleep(delay)
                         continue
                     else:
-                        raise
+                        # Última tentativa falhou, retornar erro
+                        record.completed_at = datetime.now().isoformat()
+                        record.duration_seconds = self._calculate_duration(record)
+                        self._record_delegation(record)
+                        self._update_metrics(record)
+                        return {
+                            "success": False,
+                            "error": str(e),
+                            "delegation_id": delegation_id,
+                            "status": "failed",
+                        }
+
+            # Fallback: se loop terminou sem retornar (não deveria acontecer)
+            logger.error(
+                f"⚠️ Loop de retry terminou sem retorno para {delegation_id}. "
+                f"Isso não deveria acontecer."
+            )
+            record.status = DelegationStatus.FAILED
+            record.error_message = "All retry attempts exhausted without return"
+            record.completed_at = datetime.now().isoformat()
+            record.duration_seconds = self._calculate_duration(record)
+            self._record_delegation(record)
+            self._update_metrics(record)
+            return {
+                "success": False,
+                "error": "All retry attempts exhausted without return",
+                "delegation_id": delegation_id,
+                "status": "failed",
+            }
 
         except Exception as e:
             record.status = DelegationStatus.FAILED
@@ -212,7 +304,13 @@ class DelegationManager:
             record.duration_seconds = self._calculate_duration(record)
             self._record_delegation(record)
             self._update_metrics(record)
-            raise
+            # Retornar resultado de falha em vez de apenas raise
+            return {
+                "success": False,
+                "error": str(e),
+                "delegation_id": delegation_id,
+                "status": "failed",
+            }
 
     def _check_circuit_breaker(self, agent_name: str) -> bool:
         """Verifica se circuit breaker permite chamada."""

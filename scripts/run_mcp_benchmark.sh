@@ -29,7 +29,7 @@ if ! command -v bpftrace &> /dev/null; then
 fi
 
 # Verificar se script eBPF existe
-EBPF_SCRIPT="${PROJECT_ROOT}/scripts/monitor_mcp_bpf.bt"
+EBPF_SCRIPT="${PROJECT_ROOT}/scripts/canonical/system/monitor_mcp_bpf.bt"
 if [ ! -f "${EBPF_SCRIPT}" ]; then
     echo "❌ Script eBPF não encontrado: ${EBPF_SCRIPT}"
     exit 1

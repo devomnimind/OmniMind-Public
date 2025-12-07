@@ -46,25 +46,24 @@ async def test_llm_impact_on_phi_conscious(
         if (cycle + 1) % 10 == 0:
             logger.info(f"  ✓ Cycle {cycle + 1}/50 complete")
 
-    # Compute Φ metrics
-    logger.info("\n[2/3] Computing Φ metrics...")
-    phi_ratio = trainer.compute_phi_ratio()
-    phi_conscious = phi_ratio["phi_conscious"]
-    phi_preconscious = phi_ratio["phi_preconscious"]
+    # Compute Φ metrics (IIT puro)
+    logger.info("\n[2/3] Computing Φ metrics (IIT puro)...")
+    phi_conscious = trainer.compute_phi_conscious()
+    # REMOVIDO: compute_phi_ratio() - IIT não é aditivo
+    # REMOVIDO: phi_preconscious - não existe em IIT puro
 
-    logger.info(f"  Φ_conscious: {phi_conscious:.6f}")
-    logger.info(f"  Φ_preconscious: {phi_preconscious:.6f}")
-    logger.info(f"  ratio_conscious: {phi_ratio['ratio_conscious']:.2%}")
+    logger.info(f"  Φ_conscious (MICS): {phi_conscious:.6f}")
+    logger.info("  (IIT puro: apenas MICS, não existe 'Φ_inconsciente')")
 
-    # Record metrics
+    # Record metrics (apenas phi_conscious)
     if use_mock:
-        llm_impact_metrics.record_mock(phi_conscious, phi_preconscious)
+        llm_impact_metrics.record_mock(phi_conscious, 0.0)  # phi_preconscious = 0.0 (não existe)
     else:
-        llm_impact_metrics.record_real(phi_conscious, phi_preconscious)
+        llm_impact_metrics.record_real(phi_conscious, 0.0)  # phi_preconscious = 0.0 (não existe)
 
     # Basic assertions
     assert phi_conscious >= 0.0, "Φ_conscious must be non-negative"
-    assert phi_preconscious >= 0.0, "Φ_preconscious must be non-negative"
+    # REMOVIDO: assert phi_preconscious - não existe em IIT puro
     logger.info("\n[3/3] Assertions passed ✓")
 
 
@@ -101,12 +100,11 @@ async def test_llm_impact_comparison(
             print(f"  ✓ Cycle {cycle + 1}/50 (mock)")
             logger.info(f"  ✓ Cycle {cycle + 1}/50 (mock)")
 
-    phi_mock = integration_trainer_mock.compute_phi_ratio()
-    llm_impact_metrics.record_mock(phi_mock["phi_conscious"], phi_mock["phi_preconscious"])
-    print(f"  Mock Φ_conscious: {phi_mock['phi_conscious']:.6f}")
-    print(f"  Mock Φ_preconscious: {phi_mock['phi_preconscious']:.6f}")
-    logger.info(f"  Mock Φ_conscious: {phi_mock['phi_conscious']:.6f}")
-    logger.info(f"  Mock Φ_preconscious: {phi_mock['phi_preconscious']:.6f}")
+    phi_conscious_mock = integration_trainer_mock.compute_phi_conscious()
+    # REMOVIDO: compute_phi_ratio() - IIT não é aditivo
+    llm_impact_metrics.record_mock(phi_conscious_mock, 0.0)  # phi_preconscious = 0.0 (não existe)
+    print(f"  Mock Φ_conscious (MICS): {phi_conscious_mock:.6f}")
+    logger.info(f"  Mock Φ_conscious (MICS): {phi_conscious_mock:.6f}")
 
     # Run with REAL
     print("\n[2/4] Training with REAL LLM (50 cycles)...")
@@ -117,12 +115,11 @@ async def test_llm_impact_comparison(
             print(f"  ✓ Cycle {cycle + 1}/50 (real)")
             logger.info(f"  ✓ Cycle {cycle + 1}/50 (real)")
 
-    phi_real = integration_trainer_real.compute_phi_ratio()
-    llm_impact_metrics.record_real(phi_real["phi_conscious"], phi_real["phi_preconscious"])
-    print(f"  Real Φ_conscious: {phi_real['phi_conscious']:.6f}")
-    print(f"  Real Φ_preconscious: {phi_real['phi_preconscious']:.6f}")
-    logger.info(f"  Real Φ_conscious: {phi_real['phi_conscious']:.6f}")
-    logger.info(f"  Real Φ_preconscious: {phi_real['phi_preconscious']:.6f}")
+    phi_conscious_real = integration_trainer_real.compute_phi_conscious()
+    # REMOVIDO: compute_phi_ratio() - IIT não é aditivo
+    llm_impact_metrics.record_real(phi_conscious_real, 0.0)  # phi_preconscious = 0.0 (não existe)
+    print(f"  Real Φ_conscious (MICS): {phi_conscious_real:.6f}")
+    logger.info(f"  Real Φ_conscious (MICS): {phi_conscious_real:.6f}")
 
     # Compute differences
     print("\n[3/4] Computing impact metrics...")
@@ -146,9 +143,9 @@ async def test_llm_impact_comparison(
         print(msg)
         logger.info(msg)
 
-    # Assertions
-    assert phi_mock["phi_conscious"] >= 0.0
-    assert phi_real["phi_conscious"] >= 0.0
+    # Assertions (IIT puro)
+    assert phi_conscious_mock >= 0.0
+    assert phi_conscious_real >= 0.0
     print("\n✅ Comparison test complete!")
     logger.info("\n✅ Comparison test complete!")
 

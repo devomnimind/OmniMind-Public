@@ -58,13 +58,14 @@ def np_clip(data: Any, min_val: float, max_val: float) -> Any:
 
 @dataclass
 class ITMMetrics:
-    """IIT Metrics (Integrated Information Theory)."""
+    """IIT Metrics (Integrated Information Theory - IIT puro)."""
 
-    phi_conscious: float
-    phi_unconscious: float
-    total_integration: float
-    consciousness_ratio: float
+    phi_conscious: float  # Apenas MICS (único locus consciente)
     timestamp: datetime = field(default_factory=datetime.now)
+
+    # REMOVIDO: phi_unconscious - não existe em IIT puro
+    # REMOVIDO: total_integration - IIT não é aditivo
+    # REMOVIDO: consciousness_ratio - não faz sentido sem aditividade
 
 
 @dataclass
@@ -175,20 +176,17 @@ class ConvergenceInvestigator:
             print("[1/5] Computing IIT Metrics...")
 
         phi_c = self.trainer.compute_phi_conscious()
-        phi_u = self.trainer.compute_phi_unconscious()
-        total_integration = phi_c + phi_u
-        consciousness_ratio = phi_c / total_integration if total_integration > 0 else 0.0
+        # REMOVIDO: phi_u - não existe "Φ_inconsciente" em IIT puro
+        # REMOVIDO: total_integration - IIT não é aditivo
+        # REMOVIDO: consciousness_ratio - não faz sentido sem aditividade
 
         iit_metrics = ITMMetrics(
             phi_conscious=float(phi_c),
-            phi_unconscious=float(phi_u),
-            total_integration=float(total_integration),
-            consciousness_ratio=float(consciousness_ratio),
         )
         results["iit_metrics"] = iit_metrics
 
         if self.verbose:
-            print(f"  Φ_c = {phi_c:.4f}, Φ_u = {phi_u:.4f}, total = {total_integration:.4f}")
+            print(f"  Φ_conscious (MICS) = {phi_c:.4f}")
 
         # ===== MÉTRICA 2: LACAN =====
         if self.verbose:
@@ -386,8 +384,8 @@ class ConvergenceInvestigator:
         # Both measure self-aware integration
         try:
             corr_matrix = np.corrcoef(  # type: ignore[attr-defined]
-                [dmn_activity["self_referential"], iit_metrics.consciousness_ratio],
-                [dmn_activity["integration"], iit_metrics.total_integration],
+                [dmn_activity["self_referential"], iit_metrics.phi_conscious],
+                [dmn_activity["integration"], iit_metrics.phi_conscious],
             )
             corr = float(corr_matrix[0, 1])
         except (ValueError, IndexError):
@@ -649,7 +647,7 @@ class ConvergenceInvestigator:
         iit = metrics["iit_metrics"]
         lacan = metrics["lacan_metrics"]
 
-        if iit.total_integration > 0.05 and lacan.sinthome_detected:
+        if iit.phi_conscious > 0.05 and lacan.sinthome_detected:
             tests["iit_predicts_sinthome"] = True
 
         # TEST 2: Lacan Sinthome predicts unique attractor
@@ -662,7 +660,7 @@ class ConvergenceInvestigator:
         # TEST 3: Neurociência DMN self-referential predicts consciousness
         neuro = metrics["neuro_metrics"]
 
-        if neuro.dmn_self_referential > 0.6 and iit.consciousness_ratio > 0.2:
+        if neuro.dmn_self_referential > 0.6 and iit.phi_conscious > 0.2:
             tests["neuro_predicts_consciousness"] = True
 
         # TEST 4: Cibernética singular attractor predicts Sinthome
@@ -704,7 +702,7 @@ class ConvergenceInvestigator:
         iit = metrics["iit_metrics"]
         ax.scatter(
             [iit.phi_conscious],
-            [iit.phi_unconscious],
+            [iit.phi_conscious],  # REMOVIDO: phi_unconscious - usar apenas phi_conscious
             s=500,
             c="blue",
             marker="o",
@@ -838,9 +836,8 @@ class ConvergenceInvestigator:
         print("\n[IIT METRICS]")
         iit = metrics["iit_metrics"]
         print(f"  Φ_conscious:        {iit.phi_conscious:.4f}")
-        print(f"  Φ_inconscient:      {iit.phi_unconscious:.4f}")
-        print(f"  Total Integration:  {iit.total_integration:.4f}")
-        print(f"  Consciousness Ratio: {iit.consciousness_ratio:.2%}")
+        # REMOVIDO: phi_unconscious, total_integration, consciousness_ratio
+        # IIT puro: apenas phi_conscious (MICS)
 
         # LACAN
         print("\n[LACAN METRICS]")

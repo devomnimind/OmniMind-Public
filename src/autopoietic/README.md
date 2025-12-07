@@ -123,7 +123,8 @@ print(log.phi_after)               # 0.68 (Φ após a mudança)
 **Phase 22 Melhorias**:
 - ✅ **Persistência de Componentes**: Componentes sintetizados são salvos em `data/autopoietic/synthesized_code/` como arquivos Python.
 - ✅ **Validação de Φ**: Antes de aplicar mudanças, valida se Φ >= 0.3. Após aplicar, verifica se Φ não colapsou. Se colapsar, faz rollback automático.
-- ✅ **Integração ao Ciclo Principal**: Integrado ao `main.py`, executando ciclos autopoiéticos a cada 100 ciclos principais (~10 segundos).
+- ✅ **Integração ao Ciclo Principal**: Integrado ao `main.py`, executando ciclos autopoiéticos a cada 300 ciclos principais (~60 segundos).
+- ✅ **Relatórios Automáticos** (2025-12-07): Integrado com `ModuleReporter` para gerar relatórios após cada ciclo autopoiético, salvos em `data/reports/modules/autopoietic_cycle_*.json`.
 
 > Para ciclos reais, use `metrics_adapter.collect_metrics()` que combina métricas de consciência (`data/monitor/real_metrics.json`) e telemetria do sistema (psutil), retornando entradas normalizadas (`error_rate`, `cpu_usage`, `latency_ms`) para o `AutopoieticManager`.
 

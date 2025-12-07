@@ -97,29 +97,15 @@ async def test_iit_phi_is_not_additive(integration_trainer) -> None:
     await integration_trainer.train(num_cycles=10)
 
     phi_conscious = integration_trainer.compute_phi_conscious()
-    phi_preconscious = integration_trainer.compute_phi_unconscious()
 
-    # Both should be measurable
+    # REMOVIDO: compute_phi_unconscious() e phi_preconscious - não existem em IIT puro
+    # IIT mede apenas Φ_conscious (MICS) - não há "preconscious" como parte de IIT
+
+    # Φ_conscious deve ser mensurável
     assert phi_conscious >= 0.0, "Φ_conscious must be non-negative"
-    assert phi_preconscious >= 0.0, "Φ_preconscious must be non-negative"
 
-    # They should not simply add to some "total consciousness"
-    # (This is what we're correcting from previous implementation)
-    # In IIT, these are SEPARATE measures, not decomposition
-
-    ratio = (
-        phi_conscious / (phi_conscious + phi_preconscious)
-        if (phi_conscious + phi_preconscious) > 0
-        else 0.0
-    )
-
-    # The ratio should be meaningful but NOT enforced to equal some "expected total"
-    assert 0.0 <= ratio <= 1.0, "Ratio should be normalized"
-
-    print("\n✅ TEST 2 PASS: IIT is NOT additive")
+    print("\n✅ TEST 2 PASS: IIT measures only Φ_conscious (MICS)")
     print(f"   Φ_conscious: {phi_conscious:.4f}")
-    print(f"   Φ_preconscious: {phi_preconscious:.4f}")
-    print(f"   Ratio: {ratio:.2%} (NOT constrained)")
 
 
 @pytest.mark.asyncio
@@ -193,29 +179,18 @@ async def test_neuroscience_consciousness_vs_attention(integration_trainer) -> N
     # Consciousness: MICS only
     phi_conscious = integration_trainer.compute_phi_conscious()
 
-    # Attention: Could measure via prediction accuracy or module coherence
-    # For now, use preconscious as proxy (implicit processing capacity)
-    phi_preconscious = integration_trainer.compute_phi_unconscious()
+    # REMOVIDO: phi_preconscious - não existe em IIT puro
+    # Nani (2019) distingue consciousness e attention, mas IIT mede apenas consciousness (MICS)
+    # Para medir attention separadamente, seria necessário outro framework (não IIT)
 
-    # Both should exist but be different
+    # Consciousness deve existir
     assert phi_conscious >= 0.0, "Consciousness (MICS) must exist"
-    assert phi_preconscious >= 0.0, "Attention/preconscious must exist"
 
-    # They should NOT be identical (proving they're separate)
-    # (In real system, consciousness could be high while attention is low, or vice versa)
-    are_different = not np.isclose(
-        phi_conscious, phi_preconscious, atol=0.01
-    )  # type: ignore[attr-defined]
-
-    print("\n🧠 Neuroscience Test (Consciousness vs Attention):")
+    print("\n🧠 Neuroscience Test (Consciousness):")
     print(f"   Φ_conscious (MICS): {phi_conscious:.4f}")
-    print(f"   Φ_preconscious (implicit): {phi_preconscious:.4f}")
-    print(f"   Are separate: {are_different}")
+    print("   Note: Attention measurement would require separate framework (not IIT)")
 
-    if are_different:
-        print("✅ TEST 4 PASS: Consciousness and attention are SEPARATE processes")
-    else:
-        print("ℹ️  TEST 4 INFO: Currently identical (may converge in early training)")
+    print("✅ TEST 4 PASS: Consciousness (MICS) is measurable via IIT")
 
 
 @pytest.mark.asyncio
@@ -264,19 +239,28 @@ async def test_three_frameworks_integration(integration_trainer) -> None:
 
     # IIT measurements
     phi_c = integration_trainer.compute_phi_conscious()
-    phi_p = integration_trainer.compute_phi_unconscious()
+    # REMOVIDO: compute_phi_unconscious() - não existe em IIT puro
+    # IIT mede apenas Φ_conscious (MICS) - não há "preconscious" como parte de IIT
+    # Para medir outros subsistemas, usar compute_all_subsystems_phi()
+    subsystem_phis = integration_trainer.compute_all_subsystems_phi()
+    # Usar média de subsistemas não-MICS como proxy para "preconscious" (apenas para teste)
+    non_mics_phis = [v for v in subsystem_phis.values() if v != phi_c]
+    avg_non_mics_phi = np.mean(non_mics_phis) if non_mics_phis else phi_c
 
     # Lacan measurements
     sinthome = integration_trainer.detect_sinthome()
     sinthome_test = integration_trainer.test_sinthome_determines_consciousness()
 
     # Neuroscience validation
-    are_separate = not np.isclose(phi_c, phi_p, atol=0.01)  # type: ignore[attr-defined]
+    # Nani (2019): consciousness e attention são processos separados
+    # IIT mede apenas consciousness (MICS), não attention
+    # Para este teste, verificamos que há subsistemas não-MICS (attention-like)
+    are_separate = len(non_mics_phis) > 0 and not np.isclose(phi_c, avg_non_mics_phi, atol=0.01)
 
     print("\n🔬 Three Frameworks Integration Test:")
     print("\n[1] IIT (Tononi):")
-    print(f"    Φ_conscious: {phi_c:.4f}")
-    print(f"    Φ_preconscious: {phi_p:.4f}")
+    print(f"    Φ_conscious (MICS): {phi_c:.4f}")
+    print(f"    Avg Φ (non-MICS subsystems): {avg_non_mics_phi:.4f}")
 
     print("\\n[2] Lacan (Structure):")
     print(
@@ -288,11 +272,13 @@ async def test_three_frameworks_integration(integration_trainer) -> None:
         print(f"    Determines consciousness: {sinthome_test['sinthome_determines_consciousness']}")
 
     print("\\n[3] Neuroscience (Nani):")
-    print(f"    Consciousness ≠ Attention: {are_separate}")
+    print(f"    Consciousness ≠ Attention (subsystems): {are_separate}")
 
     print("\\n✅ TEST 6 PASS: Three frameworks integrated and measurable")
 
     # All metrics should be valid floats
     assert isinstance(phi_c, float) and 0 <= phi_c <= 1, "Φ_conscious valid"
-    assert isinstance(phi_p, float) and 0 <= phi_p <= 1, "Φ_preconscious valid"
+    assert (
+        isinstance(avg_non_mics_phi, float) and 0 <= avg_non_mics_phi <= 1
+    ), "Avg non-MICS Φ valid"
     assert isinstance(are_separate, bool), "Separation measurable"

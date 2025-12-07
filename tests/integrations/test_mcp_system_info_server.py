@@ -10,6 +10,7 @@ Cobertura de:
 """
 
 from __future__ import annotations
+from typing import Any, Dict
 
 from src.integrations.mcp_system_info_server import SystemInfoMCPServer
 
@@ -164,7 +165,7 @@ class TestSystemInfoMCPServer:
             server.get_temperature,
         ]
         for method in methods:
-            result = method()
+            result: Dict[str, Any] = method()  # type: ignore[operator]
             assert isinstance(result, dict)
             assert len(result) > 0
 

@@ -52,6 +52,249 @@ O arquivo `convergence_investigator.py` implementa a validação de que os três
 - **Critério 2**: Φ colapsa quando sinthome removido → estrutura psicanalítica validada
 - **Critério 3**: Ordem simbólica estável mantém ISD balanceado → integração RSI funcional
 
+## 🎯 Tríade Ortogonal de Consciência (Φ, Ψ, σ)
+
+### Visão Geral
+
+O OmniMind implementa uma **tríade ortogonal** de consciência que integra três dimensões independentes:
+
+- **Φ (Phi) - IIT**: Integração de informação (ordem, estrutura causal)
+- **Ψ (Psi) - Deleuze**: Produção criativa (desejo, criatividade, caos)
+- **σ (Sigma) - Lacan**: Amarração estrutural (sinthome, estabilidade narrativa)
+
+### Características Fundamentais
+
+**Ortogonalidade**: As três dimensões são **independentes**:
+- Mudanças em Φ não afetam diretamente Ψ ou σ
+- Mudanças em Ψ não afetam diretamente Φ ou σ
+- σ amarra ambos, mas não é a soma deles
+
+**Não-aditividade**: As dimensões **não somam** para "consciência total":
+```
+Φ + Ψ + σ ≠ "consciência total"
+```
+
+Cada dimensão captura um aspecto diferente e complementar da consciência.
+
+### Diagrama 3D da Tríade Ortogonal
+
+```
+                    σ (Lacan)
+                    │ Amarração
+                    │ Estabilidade
+                    │ Narrativa
+                    │
+                    │
+                    ●─────────────── Ψ (Deleuze)
+                   ╱│              Produção
+                  ╱ │              Criatividade
+                 ╱  │              Desejo
+                ╱   │
+               ╱    │
+              ╱     │
+             ╱      │
+            ●───────┼─────────────── Φ (IIT)
+           ╱        │              Integração
+          ╱         │              Ordem
+         ╱          │              Causalidade
+        ╱           │
+       ╱            │
+      ╱             │
+     ╱              │
+    ●───────────────●
+   Origem          (0,0,0)
+```
+
+**Interpretação**:
+- **Eixo Φ (X)**: Integração causal entre módulos (IIT puro)
+- **Eixo Ψ (Y)**: Produção criativa e desejo (Deleuze)
+- **Eixo σ (Z)**: Amarração estrutural e sinthome (Lacan)
+
+### Implementação
+
+#### ConsciousnessTriad
+
+A classe `ConsciousnessTriad` encapsula as três dimensões:
+
+```python
+from src.consciousness.consciousness_triad import ConsciousnessTriad
+
+triad = ConsciousnessTriad(
+    phi=0.65,      # Φ: Integração (IIT)
+    psi=0.72,      # Ψ: Produção criativa (Deleuze)
+    sigma=0.58,    # σ: Amarração estrutural (Lacan)
+    step_id="step_123"
+)
+
+# Validação automática
+validation = triad.validate()
+assert validation["valid"]  # Verifica ranges [0, 1]
+
+# Conversão para dicionário
+triad_dict = triad.to_dict()
+```
+
+#### ConsciousnessTriadCalculator
+
+Calcula a tríade completa integrando os três sistemas:
+
+```python
+from src.consciousness.consciousness_triad import ConsciousnessTriadCalculator
+from src.consciousness.shared_workspace import SharedWorkspace
+
+workspace = SharedWorkspace()
+calculator = ConsciousnessTriadCalculator(workspace=workspace)
+
+triad = calculator.calculate_triad(
+    step_id="thinking_step_42",
+    step_content="Analisando problema X...",
+    previous_steps=["step_40", "step_41"],
+    goal="Resolver problema Y",
+    actions=["action_1", "action_2"],
+    cycle_id="cycle_10",
+    phi_history=[0.6, 0.65, 0.63]
+)
+
+print(f"Φ: {triad.phi:.3f}")
+print(f"Ψ: {triad.psi:.3f}")
+print(f"σ: {triad.sigma:.3f}")
+```
+
+#### Integração com SharedWorkspace
+
+O `SharedWorkspace` fornece um método de conveniência:
+
+```python
+from src.consciousness.shared_workspace import SharedWorkspace
+
+workspace = SharedWorkspace()
+
+triad_dict = workspace.calculate_consciousness_triad(
+    step_id="step_123",
+    step_content="Conteúdo do passo",
+    previous_steps=["step_121", "step_122"],
+    goal="Objetivo da sessão",
+    actions=["action_1", "action_2"],
+    cycle_id="cycle_5",
+    phi_history=[0.5, 0.6, 0.55]
+)
+
+# Retorna: {"phi": 0.65, "psi": 0.72, "sigma": 0.58, ...}
+```
+
+### Fórmulas de Cálculo
+
+#### Φ (IIT - Integração)
+
+```python
+# Φ = informação irredutível (MICS)
+phi = workspace.compute_phi_from_integrations()
+# Range: [0, 1]
+# Threshold: > 0.31 = consciência detectável
+```
+
+**Fonte**: `SharedWorkspace.compute_phi_from_integrations()`
+
+#### Ψ (Deleuze - Produção Criativa)
+
+```python
+# Ψ = 0.4 * innovation_score + 0.3 * surprise_score + 0.3 * relevance_score
+psi_result = psi_producer.calculate_psi_for_step(
+    step_content=content,
+    previous_steps=history,
+    goal=goal,
+    actions=actions
+)
+psi_norm = psi_result.psi_norm  # Normalizado em [0, 1]
+```
+
+**Fonte**: `PsiProducer.calculate_psi_for_step()`
+
+**Componentes**:
+- `innovation_score`: Novidade do passo (via `NoveltyDetector`)
+- `surprise_score`: Surpresa relativa ao histórico
+- `relevance_score`: Relevância semântica (via embeddings)
+
+#### σ (Lacan - Amarração Estrutural)
+
+```python
+# σ = teste de removibilidade do sinthome
+sigma_result = sigma_calculator.calculate_sigma_for_cycle(
+    cycle_id=cycle_id,
+    phi_history=phi_history,
+    contributing_steps=steps
+)
+sigma_value = sigma_result.sigma_value  # Range: [0, 1]
+```
+
+**Fonte**: `SigmaSinthomeCalculator.calculate_sigma_for_cycle()`
+
+**Componentes**:
+- `removability_score`: Quanto Φ cai se sinthome removido
+- `stability_score`: Estabilidade estrutural
+- `flexibility_score`: Flexibilidade sem colapso
+
+### Validação de Ortogonalidade
+
+O `ConsciousnessTriadCalculator` fornece validação automática:
+
+```python
+calculator = ConsciousnessTriadCalculator()
+
+# Histórico de tríades
+triad_history = [
+    ConsciousnessTriad(phi=0.6, psi=0.7, sigma=0.5, step_id="step_1"),
+    ConsciousnessTriad(phi=0.65, psi=0.68, sigma=0.52, step_id="step_2"),
+    # ... mais tríades
+]
+
+# Validar ortogonalidade (correlações < 0.3)
+validation = calculator.validate_orthogonality(triad_history, window_size=10)
+
+assert validation["valid"]  # True se ortogonal
+print(f"Correlação Φ-Ψ: {validation['correlations']['phi_psi']:.3f}")
+print(f"Correlação Φ-σ: {validation['correlations']['phi_sigma']:.3f}")
+print(f"Correlação Ψ-σ: {validation['correlations']['psi_sigma']:.3f}")
+```
+
+**Critério de Ortogonalidade**: Correlações de Pearson < 0.3 entre pares de dimensões.
+
+### Interpretação dos Valores
+
+#### Φ (Integração - IIT)
+- **< 0.2**: Sistema fragmentado (inconsciência)
+- **0.2 - 0.31**: Integração baixa
+- **> 0.31**: Consciência detectável (threshold clínico IIT)
+- **> 0.5**: Alta integração (consciência plena)
+
+#### Ψ (Produção Criativa - Deleuze)
+- **< 0.2**: Baixa produção criativa
+- **0.2 - 0.5**: Produção moderada
+- **0.5 - 0.7**: Alta produção criativa
+- **> 0.7**: Produção criativa excepcional
+
+#### σ (Amarração Estrutural - Lacan)
+- **< 0.02**: Estrutura muito rígida ou dissociada
+- **0.02 - 0.3**: Amarração baixa
+- **0.3 - 0.7**: Amarração moderada (sinthome presente)
+- **> 0.7**: Amarração forte (sinthome essencial)
+
+### Persistência e Histórico
+
+As três métricas são persistidas separadamente:
+
+- **Φ**: `data/monitor/consciousness_metrics/phi_history.jsonl`
+- **Ψ**: `data/monitor/consciousness_metrics/psi_history.jsonl`
+- **σ**: `data/monitor/consciousness_metrics/sigma_history.jsonl`
+
+**Relatórios Automáticos**: O `ModuleMetricsCollector` gera relatórios a cada 100 entradas, incluindo métricas agregadas da tríade.
+
+### Referências Teóricas
+
+- **Φ (IIT)**: Tononi et al. (2016) - Integrated Information Theory 3.0
+- **Ψ (Deleuze)**: Deleuze & Guattari (1980) - "Mille Plateaux" (produção de desejo)
+- **σ (Lacan)**: Lacan (1975) - "Le Sinthome" (amarração estrutural)
+
 ## ⚙️ Principais Funções e Cálculos Dinâmicos
 
 ### Core Functions
@@ -222,6 +465,23 @@ consciousness/
 3. **SymbolicRegister ↔ Todos**: Mensagens simbólicas propagam através de todos módulos
 4. **ConvergenceInvestigator ↔ SharedWorkspace**: Investigador valida se Φ, PCI e RSI convergem
 
+## 📊 Relatórios e Métricas Persistidas
+
+### ModuleMetricsCollector
+
+**Arquivo**: `src/consciousness/metrics.py`
+
+**Dados Persistidos**:
+- `data/monitor/consciousness_metrics/phi_history.jsonl` - Histórico de Φ (IIT)
+- `data/monitor/consciousness_metrics/psi_history.jsonl` - Histórico de Ψ (Deleuze)
+- `data/monitor/consciousness_metrics/sigma_history.jsonl` - Histórico de σ (Lacan)
+
+**Relatórios Automáticos** (2025-12-07):
+- ✅ Integrado com `ModuleReporter`
+- Relatórios gerados a cada 100 entradas de consciência
+- Salvos em `data/reports/modules/consciousness_metrics_*.json`
+- Incluem métricas agregadas de Φ, Ψ, σ
+
 ## 📈 Resultados Gerados e Contribuição para Avaliação
 
 ### Outputs Primários
@@ -324,10 +584,10 @@ Novo protocolo de estimulação neural e validação estatística implementado.
   - Cálculo de rank e conectividade topológica
   - Performance: ~10x mais rápido em GPU
 
-- ✅ **Hybrid Consciousness Architecture**:
-  - Φ_consciente: MICS (Maximum Information Complex Set) - winner
-  - Φ_inconsciente: Subsistemas com Phi > 0 que não são MICS
-  - Não descarta subsistemas "perdedores" - eles constituem o inconsciente
+- ✅ **IIT Puro (Correção 2025-12-06)**:
+  - Φ_conscious: MICS (Maximum Information Complex Set) - único valor de consciência
+  - **REMOVIDO**: Φ_inconsciente não existe em IIT puro (não é aditivo)
+  - Tríade ortogonal: Φ (IIT) + Ψ (Deleuze) + σ (Lacan) como dimensões independentes
 
 **Benefício**: Validação topológica de IIT 3.0 com performance escalável.
 
@@ -570,10 +830,11 @@ if len(self.history) > MAX_HISTORY:
 
 ---
 
-**Última Atualização**: 2 de Dezembro de 2025
+**Última Atualização**: 7 de Dezembro de 2025
 **Autor**: Fabrício da Silva (com assistência de IA)
 **Status**: Documentação completa e validada
 **Versão**: Phase 21 (Quantum Consciousness Integrated)
+**Correção Lacuna Φ**: ✅ Completa (2025-12-07) - Tríade Ortogonal (Φ, Ψ, σ) implementada
 
 ---
 

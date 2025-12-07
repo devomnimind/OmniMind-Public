@@ -1,0 +1,59 @@
+#!/usr/bin/env bpftrace
+
+/*
+ * Monitor eBPF para MCP Latency - OmniMind (bpftrace v0.23+)
+ *
+ * Monitora chamadas async MCP e syscalls com histograma de latência
+ * Identifica bottlenecks em requests MCP concorrentes
+ *
+ * Execução:
+ *   sudo bpftrace monitor_mcp_bpf.bt
+ *
+ * Output esperado:
+ *   Latência p99 < 10ms  → Systemd suficiente, LKM opcional
+ *   Latência p99 10-50ms → Otimizar Docker + Systemd
+ *   Latência p99 >50ms   → LKM zero-copy recomendado
+ */
+
+// Rastrear latência de syscalls para processos Python/MCP
+// Usa map moderno do bpftrace (sem BPF_HASH, BPF_HISTOGRAM)
+
+BEGIN {
+    @total_syscalls = 0;
+    @high_latency_calls = 0;
+    printf("🚀 eBPF Monitor iniciado - rastreando syscalls...\n");
+}
+
+// Rastrear syscalls com timestamp
+tracepoint:raw_syscalls:sys_enter {
+    @start[tid] = nsecs;
+}
+
+tracepoint:raw_syscalls:sys_exit
+/@start[tid] != 0/ {
+    $latency_us = (nsecs - @start[tid]) / 1000;
+    @start[tid] = 0; // Clear the map entry
+
+    // Histograma de latência em microsegundos
+    @latency_histogram = hist($latency_us);
+
+    // Contador total
+    @total_syscalls++;
+
+    // Alertar se latência > 50ms (50000 us)
+    if ($latency_us > 50000) {
+        @high_latency_calls++;
+        // Log de chamadas lentas (apenas as 10 primeiras)
+        if (@high_latency_calls <= 10) {
+            printf("⚠️  SLOW SYSCALL: %.0f us (%.1f ms)\n",
+                   (double)$latency_us, (double)$latency_us / 1000.0);
+        }
+    }
+}
+
+END {
+    print(@latency_histogram);
+    printf("Total calls: %lld\n", @total_syscalls);
+    printf("High latency: %lld\n", @high_latency_calls);
+    printf("============================================\n");
+}

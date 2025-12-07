@@ -171,6 +171,7 @@ class SharedWorkspace:
         embedding_dim: int = 256,
         max_history_size: int = 10000,
         workspace_dir: Optional[Path] = None,
+        systemic_memory: Optional[Any] = None,  # SystemicMemoryTrace
     ):
         """
         Inicializa workspace compartilhado.
@@ -179,6 +180,7 @@ class SharedWorkspace:
             embedding_dim: Dimensão dos embeddings latentes
             max_history_size: Tamanho máximo do histórico antes de circular
             workspace_dir: Diretório para persistência de estados
+            systemic_memory: Instância opcional de SystemicMemoryTrace
         """
         self.embedding_dim = embedding_dim
         self.max_history_size = max_history_size
@@ -211,9 +213,24 @@ class SharedWorkspace:
         # Shared Symbolic Register - CRÍTICO PARA P0
         self.symbolic_register = SymbolicRegister(self, max_messages=1000)
 
+        # Memória Sistemática (deformação topológica)
+        self.systemic_memory = systemic_memory
+        if self.systemic_memory is None:
+            # Inicializa se não fornecido
+            try:
+                from src.memory.systemic_memory_trace import SystemicMemoryTrace
+
+                self.systemic_memory = SystemicMemoryTrace(state_space_dim=embedding_dim)
+            except ImportError:
+                logger.warning(
+                    "SystemicMemoryTrace não disponível, continuando sem memória sistemática"
+                )
+                self.systemic_memory = None
+
         logger.info(
             f"Shared Workspace initialized: embedding_dim={embedding_dim}, "
-            f"max_history={max_history_size}, dir={self.workspace_dir}"
+            f"max_history={max_history_size}, dir={self.workspace_dir}, "
+            f"systemic_memory={'enabled' if self.systemic_memory else 'disabled'}"
         )
 
     def write_module_state(
@@ -238,6 +255,13 @@ class SharedWorkspace:
                 f"Embedding for {module_name} has wrong shape: "
                 f"{embedding.shape} != ({self.embedding_dim},)"
             )
+
+        # NOVO: Rastrear deformação topológica (antes de atualizar)
+        if self.systemic_memory is not None:
+            past_embedding = self.embeddings.get(module_name)
+            if past_embedding is not None:
+                # Rastreia deformação com threshold baixo para mudanças granulares
+                self.systemic_memory.add_trace_not_memory(past_embedding, embedding.copy())
 
         # Armazena embedding atual
         self.embeddings[module_name] = embedding.copy()
@@ -1110,7 +1134,19 @@ class SharedWorkspace:
         phi_harmonic = n / sum_reciprocals if sum_reciprocals > 0 else 0.0
 
         # IIT: Φ deve ser normalizado ao range [0-1]
-        phi = max(0.0, min(1.0, phi_harmonic))
+        phi_standard = max(0.0, min(1.0, phi_harmonic))
+
+        # NOVO: Aplica deformações topológicas da memória sistemática
+        if self.systemic_memory is not None:
+            result = self.systemic_memory.affect_phi_calculation(
+                phi_standard, self._get_partition_function_for_phi()
+            )
+            phi = result["phi_with_memory"]
+            logger.debug(
+                f"IIT Φ com memória sistemática: {phi:.4f} (delta: {result['delta']:+.4f})"
+            )
+        else:
+            phi = phi_standard
 
         logger.info(
             f"IIT Φ calculated (corrected harmonic mean): {phi:.4f} "
@@ -1119,6 +1155,237 @@ class SharedWorkspace:
         )
 
         return phi
+
+    def calculate_psi_from_creativity(
+        self,
+        step_content: str,
+        previous_steps: List[str],
+        goal: str,
+        actions: List[str],
+        step_id: str = "",
+    ) -> Dict[str, Any]:
+        """
+        Calcula Ψ_produtor (produção criativa - Deleuze) via PsiProducer.
+
+        Ψ é ortogonal a Φ (IIT):
+        - Φ mede integração (ordem)
+        - Ψ mede produção (criatividade/caos)
+
+        Args:
+            step_content: Conteúdo do passo atual
+            previous_steps: Lista de passos anteriores (para contexto)
+            goal: Objetivo da sessão (para relevância)
+            actions: Lista de ações tomadas (para entropia)
+            step_id: ID único do passo
+
+        Returns:
+            Dict com psi_raw, psi_norm, components
+        """
+        try:
+            from src.consciousness.psi_producer import PsiProducer
+            from src.embeddings.code_embeddings import OmniMindEmbeddings
+
+            # Criar PsiProducer (lazy initialization)
+            if not hasattr(self, "_psi_producer") or getattr(self, "_psi_producer", None) is None:
+                # Tentar criar OmniMindEmbeddings se possível
+                embedding_model = None
+                try:
+                    embedding_model = OmniMindEmbeddings()
+                except Exception:
+                    pass
+
+                self._psi_producer = PsiProducer(embedding_model=embedding_model)
+
+            # Calcular Ψ
+            psi_result = self._psi_producer.calculate_psi_for_step(
+                step_content=step_content,
+                previous_steps=previous_steps,
+                goal=goal,
+                actions=actions,
+                step_id=step_id,
+            )
+
+            return {
+                "psi_raw": psi_result.psi_raw,
+                "psi_norm": psi_result.psi_norm,
+                "components": {
+                    "innovation_score": psi_result.components.innovation_score,
+                    "surprise_score": psi_result.components.surprise_score,
+                    "relevance_score": psi_result.components.relevance_score,
+                    "entropy_of_actions": psi_result.components.entropy_of_actions,
+                },
+            }
+        except ImportError:
+            logger.warning("PsiProducer não disponível, retornando valores padrão")
+            return {
+                "psi_raw": 0.0,
+                "psi_norm": 0.0,
+                "components": {
+                    "innovation_score": 0.0,
+                    "surprise_score": 0.0,
+                    "relevance_score": 0.0,
+                    "entropy_of_actions": 0.0,
+                },
+            }
+        except Exception as e:
+            logger.warning("Erro ao calcular Ψ: %s", e)
+            return {
+                "psi_raw": 0.0,
+                "psi_norm": 0.0,
+                "components": {
+                    "innovation_score": 0.0,
+                    "surprise_score": 0.0,
+                    "relevance_score": 0.0,
+                    "entropy_of_actions": 0.0,
+                },
+            }
+
+    def calculate_sigma_sinthome(
+        self,
+        cycle_id: str,
+        integration_trainer: Optional[Any] = None,
+        phi_history: Optional[List[float]] = None,
+        contributing_steps: Optional[List[str]] = None,
+    ) -> Dict[str, Any]:
+        """
+        Calcula σ_sinthome (coesão estrutural - Lacan) via SigmaSinthomeCalculator.
+
+        σ é ortogonal a Φ (IIT) e Ψ (Deleuze):
+        - Φ mede integração (ordem)
+        - Ψ mede produção (criatividade/caos)
+        - σ mede amarração (estrutura/estabilidade)
+
+        Args:
+            cycle_id: ID único do ciclo
+            integration_trainer: Instância opcional de IntegrationTrainer
+            phi_history: Histórico de Φ (para calcular flexibilidade)
+            contributing_steps: Lista de passos que contribuíram
+
+        Returns:
+            Dict com sigma_value, components, sinthome_module
+        """
+        try:
+            from src.consciousness.sigma_sinthome import SigmaSinthomeCalculator
+
+            # Criar calculador (lazy initialization)
+            if (
+                not hasattr(self, "_sigma_calculator")
+                or getattr(self, "_sigma_calculator", None) is None
+            ):
+                self._sigma_calculator = SigmaSinthomeCalculator(
+                    integration_trainer=integration_trainer, workspace=self
+                )
+
+            # Atualizar integration_trainer se fornecido
+            if integration_trainer is not None:
+                self._sigma_calculator.integration_trainer = integration_trainer
+
+            # Calcular σ
+            sigma_result = self._sigma_calculator.calculate_sigma_for_cycle(
+                cycle_id=cycle_id,
+                phi_history=phi_history,
+                contributing_steps=contributing_steps,
+            )
+
+            return {
+                "sigma_value": sigma_result.sigma_value,
+                "removability_score": sigma_result.components.removability_score,
+                "stability_score": sigma_result.components.stability_score,
+                "flexibility_score": sigma_result.components.flexibility_score,
+                "sinthome_detected": sigma_result.components.sinthome_detected,
+                "sinthome_module": sigma_result.sinthome_module,
+            }
+        except ImportError:
+            logger.warning("SigmaSinthomeCalculator não disponível, retornando valores padrão")
+            return {
+                "sigma_value": 0.5,
+                "removability_score": 0.5,
+                "stability_score": 0.5,
+                "flexibility_score": 0.5,
+                "sinthome_detected": False,
+                "sinthome_module": None,
+            }
+        except Exception as e:
+            logger.warning("Erro ao calcular σ: %s", e)
+            return {
+                "sigma_value": 0.5,
+                "removability_score": 0.5,
+                "stability_score": 0.5,
+                "flexibility_score": 0.5,
+                "sinthome_detected": False,
+                "sinthome_module": None,
+            }
+
+    def calculate_consciousness_triad(
+        self,
+        step_id: str,
+        step_content: Optional[str] = None,
+        previous_steps: Optional[List[str]] = None,
+        goal: Optional[str] = None,
+        actions: Optional[List[str]] = None,
+        cycle_id: Optional[str] = None,
+        phi_history: Optional[List[float]] = None,
+    ) -> Dict[str, Any]:
+        """
+        Calcula a tríade ortogonal de consciência (Φ, Ψ, σ) via ConsciousnessTriadCalculator.
+
+        Integra:
+        - Φ (IIT puro) via compute_phi_from_integrations()
+        - Ψ (Deleuze) via calculate_psi_from_creativity()
+        - σ (Lacan) via calculate_sigma_sinthome()
+
+        Args:
+            step_id: ID único do passo
+            step_content: Conteúdo do passo (para cálculo de Ψ)
+            previous_steps: Passos anteriores (para cálculo de Ψ)
+            goal: Objetivo da sessão (para cálculo de Ψ)
+            actions: Ações tomadas (para cálculo de Ψ)
+            cycle_id: ID do ciclo (para cálculo de σ)
+            phi_history: Histórico de Φ (para cálculo de σ)
+
+        Returns:
+            Dict com phi, psi, sigma, step_id, timestamp, metadata
+        """
+        try:
+            from src.consciousness.consciousness_triad import (
+                ConsciousnessTriadCalculator,
+            )
+
+            # Inicializar calculador da tríade
+            calculator = ConsciousnessTriadCalculator(workspace=self)
+
+            # Calcular tríade
+            triad = calculator.calculate_triad(
+                step_id=step_id,
+                step_content=step_content,
+                previous_steps=previous_steps,
+                goal=goal,
+                actions=actions,
+                cycle_id=cycle_id,
+                phi_history=phi_history,
+            )
+
+            return triad.to_dict()
+
+        except Exception as e:
+            logger.warning("Erro ao calcular tríade de consciência: %s", e)
+            return {
+                "phi": 0.5,
+                "psi": 0.5,
+                "sigma": 0.5,
+                "step_id": step_id,
+                "timestamp": __import__("time").time(),
+                "metadata": {"error": str(e)},
+            }
+
+    def _get_partition_function_for_phi(self) -> Any:
+        """
+        Retorna função de partição para cálculo de Φ.
+        Placeholder para integração futura com PhiCalculator.
+        """
+        # Por enquanto, retorna função identidade
+        # Em implementação completa, isso seria integrado com topological_phi.py
+        return lambda partitions: 0.0
 
     def advance_cycle(self) -> None:
         """Avança para o próximo ciclo."""

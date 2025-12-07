@@ -26,7 +26,15 @@ import os
 from pathlib import Path
 
 # Add project root to python path
-project_root = Path(__file__).resolve().parents[1]
+# Script está em scripts/canonical/system/, então project_root é 3 níveis acima
+script_path = Path(__file__).resolve()
+project_root = script_path.parents[3]  # scripts -> canonical -> system -> project_root
+if not (project_root / "src").exists():
+    # Fallback: tentar 2 níveis (se estiver em scripts/)
+    project_root = script_path.parents[2]
+if not (project_root / "src").exists():
+    # Fallback final: usar diretório atual
+    project_root = Path.cwd()
 sys.path.insert(0, str(project_root))
 os.chdir(project_root)
 

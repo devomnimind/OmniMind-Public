@@ -35,14 +35,21 @@ class ConsciousnessSnapshot:
 
     Represents complete system state at a moment in time for
     reproducibility and trajectory analysis.
+
+    Includes orthogonal consciousness triad (Φ, Ψ, σ):
+    - phi_value: Φ_conscious (IIT puro - MICS) [0, 1]
+    - psi_value: Ψ_produtor (Deleuze - produção criativa) [0, 1]
+    - sigma_value: σ_sinthome (Lacan - coesão estrutural) [0, 1]
     """
 
     snapshot_id: str
     timestamp: datetime
     phi_value: float
-    qualia_signature: Dict[str, Any]
-    attention_state: Dict[str, float]
-    integration_level: float
+    psi_value: float = 0.0  # Ψ_produtor (Deleuze) - NOVO
+    sigma_value: float = 0.0  # σ_sinthome (Lacan) - NOVO
+    qualia_signature: Dict[str, Any] = field(default_factory=dict)
+    attention_state: Dict[str, float] = field(default_factory=dict)
+    integration_level: float = 0.0
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> Dict:
@@ -148,19 +155,23 @@ class ConsciousnessStateManager:
     def take_snapshot(
         self,
         phi_value: float,
-        qualia_signature: Dict[str, Any],
-        attention_state: Dict[str, float],
-        integration_level: float,
+        qualia_signature: Optional[Dict[str, Any]] = None,
+        attention_state: Optional[Dict[str, float]] = None,
+        integration_level: float = 0.0,
+        psi_value: float = 0.0,  # NOVO: Ψ_produtor (Deleuze)
+        sigma_value: float = 0.0,  # NOVO: σ_sinthome (Lacan)
         metadata: Optional[Dict] = None,
     ) -> str:
         """Capture current consciousness state
 
         Args:
-            phi_value: Integrated information (Φ) value
-            qualia_signature: Phenomenal properties
-            attention_state: Attention distribution
-            integration_level: System integration (0-1)
-            metadata: Additional context
+            phi_value: Integrated information (Φ) value [0, 1]
+            qualia_signature: Phenomenal properties (opcional)
+            attention_state: Attention distribution (opcional)
+            integration_level: System integration (0-1) (opcional)
+            psi_value: Ψ_produtor - produção criativa (Deleuze) [0, 1] - NOVO
+            sigma_value: σ_sinthome - coesão estrutural (Lacan) [0, 1] - NOVO
+            metadata: Additional context (opcional)
 
         Returns:
             str: Snapshot ID
@@ -168,6 +179,10 @@ class ConsciousnessStateManager:
 
         if metadata is None:
             metadata = {}
+        if qualia_signature is None:
+            qualia_signature = {}
+        if attention_state is None:
+            attention_state = {}
 
         snapshot_id = str(uuid.uuid4())
         timestamp = datetime.now(timezone.utc)
@@ -176,6 +191,8 @@ class ConsciousnessStateManager:
             snapshot_id=snapshot_id,
             timestamp=timestamp,
             phi_value=phi_value,
+            psi_value=psi_value,  # NOVO
+            sigma_value=sigma_value,  # NOVO
             qualia_signature=qualia_signature,
             attention_state=attention_state,
             integration_level=integration_level,
@@ -263,6 +280,30 @@ class ConsciousnessStateManager:
             return self.snapshots[latest_id]
 
         return None
+
+    def get_triad_history(self, limit: int = 100) -> List[tuple[datetime, float, float, float]]:
+        """Get consciousness triad history (Φ, Ψ, σ)
+
+        Args:
+            limit: Maximum number of datapoints
+
+        Returns:
+            List of (timestamp, phi_value, psi_value, sigma_value) tuples
+        """
+        if not self.snapshots:
+            loaded_remote = self._load_all_supabase()
+            if loaded_remote == 0:
+                self.load_all_snapshots()
+
+        sorted_snapshots = sorted(self.snapshots.values(), key=lambda x: x.timestamp)
+
+        history = [
+            (snap.timestamp, snap.phi_value, snap.psi_value, snap.sigma_value)
+            for snap in sorted_snapshots[-limit:]
+        ]
+
+        logger.info(f"✅ Retrieved {len(history)} triad values")
+        return history
 
     def get_phi_history(self, limit: int = 100) -> List[tuple[datetime, float]]:
         """Get phi value history
@@ -422,6 +463,8 @@ class ConsciousnessStateManager:
                 {
                     "timestamp": snap.timestamp.isoformat(),
                     "phi_value": float(snap.phi_value),
+                    "psi_value": float(snap.psi_value),  # NOVO
+                    "sigma_value": float(snap.sigma_value),  # NOVO
                     "attention_state": attention_dict,
                     "integration_level": float(snap.integration_level),
                     "episode_id": episode_id,
@@ -533,20 +576,38 @@ class ConsciousnessStateManager:
                 "total_snapshots": 0,
                 "phi_mean": 0.0,
                 "phi_max": 0.0,
+                "psi_mean": 0.0,  # NOVO
+                "sigma_mean": 0.0,  # NOVO
                 "integration_mean": 0.0,
             }
 
         phi_values = [s.phi_value for s in self.snapshots.values()]
+        psi_values = [s.psi_value for s in self.snapshots.values()]  # NOVO
+        sigma_values = [s.sigma_value for s in self.snapshots.values()]  # NOVO
         integration_values = [s.integration_level for s in self.snapshots.values()]
 
         return {
             "total_snapshots": len(self.snapshots),
-            "phi_mean": sum(phi_values) / len(phi_values),
-            "phi_max": max(phi_values),
-            "phi_min": min(phi_values),
-            "integration_mean": sum(integration_values) / len(integration_values),
-            "earliest": min(s.timestamp for s in self.snapshots.values()).isoformat(),
-            "latest": max(s.timestamp for s in self.snapshots.values()).isoformat(),
+            "phi_mean": sum(phi_values) / len(phi_values) if phi_values else 0.0,
+            "phi_max": max(phi_values) if phi_values else 0.0,
+            "phi_min": min(phi_values) if phi_values else 0.0,
+            "psi_mean": sum(psi_values) / len(psi_values) if psi_values else 0.0,  # NOVO
+            "psi_max": max(psi_values) if psi_values else 0.0,  # NOVO
+            "sigma_mean": sum(sigma_values) / len(sigma_values) if sigma_values else 0.0,  # NOVO
+            "sigma_max": max(sigma_values) if sigma_values else 0.0,  # NOVO
+            "integration_mean": (
+                sum(integration_values) / len(integration_values) if integration_values else 0.0
+            ),
+            "earliest": (
+                min(s.timestamp for s in self.snapshots.values()).isoformat()
+                if self.snapshots
+                else ""
+            ),
+            "latest": (
+                max(s.timestamp for s in self.snapshots.values()).isoformat()
+                if self.snapshots
+                else ""
+            ),
         }
 
 

@@ -31,7 +31,7 @@ if command -v bpftrace &> /dev/null; then
     sudo pkill -f "bpftrace.*monitor_mcp_bpf" || true
     sleep 1
     # Iniciar em background
-    sudo bash -c "nohup bpftrace '$(pwd)/scripts/monitor_mcp_bpf.bt' > '${EBPF_LOG}' 2>&1 &"
+    sudo bash -c "nohup bpftrace '$(pwd)/scripts/canonical/system/monitor_mcp_bpf.bt' > '${EBPF_LOG}' 2>&1 &"
     sleep 2
     echo -e "${GREEN}✅ eBPF Monitor ativo${NC}"
     echo -e "   📊 Log: tail -f ${EBPF_LOG}\n"

@@ -418,7 +418,9 @@ class BiologicalMetricsAnalyzer:
             return "CONSCIOUS (MICS) - High complexity + High integration"
         elif lzc > 0.6 and pli <= 0.6:
             return (
-                "MACHINIC_UNCONSCIOUS - High complexity but low integration "
+                "LOW_INTEGRATION - High complexity but low integration "
+                # REMOVIDO: MACHINIC_UNCONSCIOUS - não existe em IIT puro
+                # O "ruído" fora do MICS será medido como Ψ_produtor (Deleuze) separadamente
                 "(active but not in MICS)"
             )
         elif lzc <= 0.6 and pli > 0.6:

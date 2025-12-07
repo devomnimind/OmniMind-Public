@@ -52,12 +52,12 @@ async def test_iit_metrics_computed(convergence_investigator) -> None:
         await convergence_investigator.trainer.training_step()
 
     phi_c = convergence_investigator.trainer.compute_phi_conscious()
-    phi_u = convergence_investigator.trainer.compute_phi_unconscious()
+    # REMOVIDO: compute_phi_unconscious() - não existe em IIT puro
+    phi_c = convergence_investigator.trainer.compute_phi_conscious()
 
     assert isinstance(phi_c, float) and 0 <= phi_c <= 1
-    assert isinstance(phi_u, float) and 0 <= phi_u <= 1
 
-    print(f"✓ IIT metrics: Φ_c={phi_c:.4f}, Φ_u={phi_u:.4f}")
+    print(f"✓ IIT metrics (puro): Φ_conscious={phi_c:.4f}")
 
 
 @pytest.mark.asyncio
@@ -172,7 +172,8 @@ async def test_iit_predicts_sinthome(convergence_investigator) -> None:
 
     # If IIT shows integration, Sinthome should be detectable
     print("\nTest: IIT predicts Sinthome")
-    print(f"  IIT total integration: {iit.total_integration:.4f}")
+    # REMOVIDO: total_integration - IIT não é aditivo
+    print(f"  IIT conscious_phi (MICS): {iit.phi_conscious:.4f}")
     print(f"  Sinthome detected: {lacan.sinthome_detected}")
     print(f"  Prediction result: {conv.iit_predicts_sinthome}")
 
@@ -205,13 +206,12 @@ async def test_neuro_predicts_consciousness(convergence_investigator) -> None:
 
     metrics = await convergence_investigator.measure_convergence_point()
 
-    iit = metrics["iit_metrics"]
     neuro = metrics["neuro_metrics"]
     conv = metrics["convergence_signal"]
 
     print("\nTest: Neuro predicts Consciousness")
     print(f"  DMN self-referential: {neuro.dmn_self_referential:.4f}")
-    print(f"  IIT consciousness ratio: {iit.consciousness_ratio:.2%}")
+    # REMOVIDO: consciousness_ratio - não existe em IIT puro
     print(f"  Prediction result: {conv.neuro_predicts_consciousness}")
 
 

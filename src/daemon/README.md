@@ -2,11 +2,18 @@
 
 ## 📋 Descrição Geral
 
-**Background services, workers persistentes**
+**Background services, workers persistentes, ciclo vital, autopoiesis**
 
 **Status**: Infraestrutura
 
-Módulo do sistema OmniMind responsável por funcionalidades específicas integradas à arquitetura global. Implementa componentes essenciais que contribuem para o funcionamento coeso do sistema de consciência artificial.
+O módulo `daemon` implementa o **ciclo vital** do OmniMind - processos em background que mantêm o sistema funcionando continuamente. Este módulo trabalha em conjunto com `kernel_ai` para fornecer:
+
+- **Ciclos de vida contínuos**: Mantém o sistema "vivo"
+- **Autorreplicação de processos**: Autopoiesis (auto-produção)
+- **Gerenciamento de tarefas**: Execução contínua de operações
+- **Estado persistente**: Manutenção de estado entre ciclos
+
+**Metáfora Filosófica**: É parte do "Osso Mecânico" que mantém o sistema "vivo" através de ciclos contínuos de produção e autorreplicação (autopoiesis). Trabalha em conjunto com `kernel_ai` para formar o substrato que mantém o sistema responsivo e autorreplicante.
 
 ## 🔄 Interação entre os Três Estados Híbridos
 
@@ -127,9 +134,9 @@ Configurações específicas em:
 
 ---
 
-**Última Atualização**: 2 de Dezembro de 2025  
-**Autor**: Fabrício da Silva (com assistência de IA)  
-**Status**: Componente integrado do sistema OmniMind  
+**Última Atualização**: 2 de Dezembro de 2025
+**Autor**: Fabrício da Silva (com assistência de IA)
+**Status**: Componente integrado do sistema OmniMind
 **Versão**: Conforme fase do projeto indicada
 
 ---

@@ -140,14 +140,20 @@ class SemanticMemoryLayer:
             logger.error(f"❌ Error generating embedding: {e}")
             embedding = [0.0] * (self.embedding_dim or 384)  # type: ignore[operator,assignment]
 
-        # Prepare payload
+        # Prepare payload com tríade completa (Φ, Ψ, σ)
         payload = {
             "episode_id_str": episode_id_str,
             "episode_text": episode_text,
             "timestamp": timestamp.isoformat(),
             "phi_value": float(episode_data.get("phi_value", 0.0)),
+            "psi_value": float(episode_data.get("psi_value", 0.0)),  # NOVO: Ψ_produtor
+            "sigma_value": float(episode_data.get("sigma_value", 0.0)),  # NOVO: σ_sinthome
             "qualia_signature": str(episode_data.get("qualia_signature", {})),
-            **{k: v for k, v in episode_data.items() if k not in ["phi_value", "qualia_signature"]},
+            **{
+                k: v
+                for k, v in episode_data.items()
+                if k not in ["phi_value", "psi_value", "sigma_value", "qualia_signature"]
+            },
         }
 
         # Create Qdrant point
@@ -300,6 +306,69 @@ class SemanticMemoryLayer:
 
         except Exception as e:
             logger.error(f"❌ Error searching by phi: {e}")
+            return []
+
+    def search_by_triad_range(
+        self,
+        min_phi: float = 0.0,
+        max_phi: float = 1.0,
+        min_psi: float = 0.0,
+        max_psi: float = 1.0,
+        min_sigma: float = 0.0,
+        max_sigma: float = 1.0,
+        top_k: int = 10,
+    ) -> List[Dict]:
+        """Search episodes by consciousness triad range (Φ, Ψ, σ)
+
+        Args:
+            min_phi: Minimum phi value
+            max_phi: Maximum phi value
+            min_psi: Minimum psi value
+            max_psi: Maximum psi value
+            min_sigma: Minimum sigma value
+            max_sigma: Maximum sigma value
+            top_k: Number of results
+
+        Returns:
+            Episodes within triad ranges
+        """
+        try:
+            points, _ = self.qdrant.client.scroll(
+                collection_name="omnimind_consciousness", limit=10000
+            )
+
+            filtered = [
+                {"id": point.id, "payload": point.payload}
+                for point in points
+                if (
+                    hasattr(point, "payload")
+                    and point.payload
+                    and min_phi <= float(point.payload.get("phi_value", 0.0)) <= max_phi
+                    and min_psi <= float(point.payload.get("psi_value", 0.0)) <= max_psi
+                    and min_sigma <= float(point.payload.get("sigma_value", 0.0)) <= max_sigma
+                )
+            ]
+
+            # Sort by magnitude of triad (norma euclidiana)
+            filtered.sort(
+                key=lambda x: (
+                    (
+                        float(x["payload"].get("phi_value", 0.0)) ** 2
+                        + float(x["payload"].get("psi_value", 0.0)) ** 2
+                        + float(x["payload"].get("sigma_value", 0.0)) ** 2
+                    )
+                    ** 0.5
+                    if isinstance(x["payload"], dict)
+                    else 0.0
+                ),
+                reverse=True,
+            )
+
+            logger.info(f"✅ {len(filtered[:top_k])} episodes in triad range")
+            return filtered[:top_k]
+
+        except Exception as e:
+            logger.error(f"❌ Error searching by triad: {e}")
             return []
 
     def get_stats(self) -> Optional[Dict]:

@@ -30,6 +30,34 @@ Módulo implementa funcionalidades especializadas através de:
 
 *Funções detalhadas documentadas nos arquivos Python individuais do módulo.*
 
+### Novos Componentes (2025-12-06)
+
+**ModuleMetricsCollector** (`module_metrics.py`):
+- Sistema de coleta e persistência de métricas por módulo
+- Integração com audit chain (exceto módulos excluídos)
+- Rotação automática de logs
+- Suporte a múltiplos módulos simultâneos
+
+**StructuredModuleLogger** (`module_logger.py`):
+- Logging estruturado em JSON por módulo
+- Integração com audit chain (exceto módulos excluídos)
+- Logs persistidos em arquivos dedicados por módulo
+- Suporte a contexto estruturado
+
+**ModuleReporter** (`module_reporter.py`):
+- Geração de relatórios persistidos por módulo
+- Formatos: JSON e Markdown
+- Integração com métricas e logs
+- Histórico de relatórios com rotação automática
+
+**Integrações Ativas** (2025-12-07):
+- ✅ `IntegrationLoop` - Relatórios após cada ciclo com métricas
+- ✅ `ObserverService` - Relatórios após rotação de logs ou diariamente
+- ✅ `ModuleMetricsCollector` - Relatórios a cada 100 entradas de consciência
+- ✅ `AutopoieticManager` - Relatórios após cada ciclo autopoiético
+
+**Nota Teórica**: O sistema de auditoria e componentes do inconsciente não são auditados, conforme fundamentação teórica do OmniMind.
+
 ## 📊 Estrutura do Código
 
 ```
@@ -127,9 +155,9 @@ Configurações específicas em:
 
 ---
 
-**Última Atualização**: 2 de Dezembro de 2025  
-**Autor**: Fabrício da Silva (com assistência de IA)  
-**Status**: Componente integrado do sistema OmniMind  
+**Última Atualização**: 2 de Dezembro de 2025
+**Autor**: Fabrício da Silva (com assistência de IA)
+**Status**: Componente integrado do sistema OmniMind
 **Versão**: Conforme fase do projeto indicada
 
 ---

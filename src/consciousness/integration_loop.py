@@ -294,6 +294,25 @@ class IntegrationLoop:
         # Advance workspace cycle
         self.workspace.advance_cycle()
 
+        # NOVO: Rastrear transição de ciclo na memória sistemática
+        if (
+            hasattr(self.workspace, "systemic_memory")
+            and self.workspace.systemic_memory is not None
+        ):
+            # Coleta estados de todos os módulos
+            cycle_states: Dict[str, np.ndarray] = {}
+            for module_name in self.loop_sequence:
+                try:
+                    state = self.workspace.read_module_state(module_name)
+                    if isinstance(state, np.ndarray):
+                        cycle_states[module_name] = state
+                except Exception:
+                    pass  # Ignora módulos sem estado
+
+            if cycle_states:
+                # Marca transição de ciclo com threshold normal
+                self.workspace.systemic_memory.mark_cycle_transition(cycle_states, threshold=0.01)
+
         # Execute modules in sequence
         for module_name in self.loop_sequence:
             try:
@@ -408,6 +427,22 @@ class IntegrationLoop:
         # Finalize timing
         result.cycle_duration_ms = actual_time_ms
         self.cycle_history.append(result)
+
+        # Gerar relatório do ciclo (ModuleReporter)
+        if collect_metrics:
+            try:
+                from src.observability.module_reporter import get_module_reporter
+
+                reporter = get_module_reporter()
+
+                # Salvar relatório do ciclo
+                reporter.generate_module_report(
+                    module_name=f"integration_loop_cycle_{self.cycle_count}",
+                    include_metrics=True,
+                    format="json",
+                )
+            except Exception as e:
+                logger.debug(f"Falha ao gerar relatório do ciclo: {e}")
 
         return result
 

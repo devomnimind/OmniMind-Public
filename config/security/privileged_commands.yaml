@@ -10,7 +10,7 @@ system_allowlist:
   # --- OBSERVABILITY & KERNEL ---
   - name: "eBPF Monitor"
     command: "/usr/bin/bpftrace"
-    args_regex: "^scripts/monitor_mcp_bpf\\.bt$"
+    args_regex: "^scripts/canonical/system/monitor_mcp_bpf\\.bt$"
     risk: "high"
     description: "Monitoramento de segurança do kernel via eBPF"
 

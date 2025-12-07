@@ -23,7 +23,7 @@ fi
 echo ""
 echo "✓ Checking scripts..."
 SCRIPTS=(
-    "scripts/monitor_mcp_bpf.bt"
+    "scripts/canonical/system/monitor_mcp_bpf.bt"
     "scripts/test_mcp_stress.py"
     "scripts/run_mcp_benchmark.sh"
 )

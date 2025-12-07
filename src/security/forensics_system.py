@@ -688,6 +688,21 @@ class ForensicsSystem:
         )
 
         self.logger.info(f"Created incident: {incident.id}")
+
+        # Gerar relatório via ModuleReporter
+        try:
+            from src.observability.module_reporter import get_module_reporter
+
+            reporter = get_module_reporter()
+            reporter.generate_module_report(
+                module_name=f"forensics_incident_{incident.id}",
+                include_metrics=True,
+                format="json",
+            )
+            self.logger.debug(f"Relatório gerado para incidente {incident.id}")
+        except Exception as e:
+            self.logger.debug(f"Erro ao gerar relatório de incidente: {e}")
+
         return incident
 
     def collect_evidence(self, incident_id: str, evidence_types: List[str]) -> List[EvidenceItem]:

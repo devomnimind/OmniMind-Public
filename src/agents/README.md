@@ -30,6 +30,28 @@ Módulo implementa funcionalidades especializadas através de:
 
 *Funções detalhadas documentadas nos arquivos Python individuais do módulo.*
 
+### Novos Componentes (2025-12-06)
+
+**Enhanced Memory Integration**:
+- **SemanticMemory**: Armazenamento de conceitos semânticos e relações
+- **ProceduralMemory**: Armazenamento de habilidades procedurais e sequências de ações
+- **SystemicMemoryTrace**: Rastreamento topológico de memória sistemática (lazy init)
+- Integração completa no OrchestratorAgent com métodos de acesso
+
+**MCP Orchestrator Integration**:
+- **MCPOrchestrator**: Gerenciamento centralizado de servidores MCP
+- **MemoryMCPServer**: Servidor MCP expondo SemanticMemory e ProceduralMemory
+- **Filesystem MCP**: Métodos de conveniência para operações de filesystem
+- **Thinking MCP**: Métodos de conveniência para Sequential Thinking (sessões, passos, histórico)
+- **Context MCP**: Métodos de conveniência para gerenciamento de contexto (store, retrieve, compress, snapshot)
+- Health monitoring e lifecycle management automático
+
+**Sandbox System Integration**:
+- Sistema de sandbox para auto-melhoria segura
+- Validação de mudanças antes de aplicar
+- Rollback automático em caso de degradação
+- Histórico completo de mudanças
+
 ## 📊 Estrutura do Código
 
 ```
@@ -166,6 +188,39 @@ Exemplo:
 - `trigger_mcp_action(action: str, path: str, recursive: bool)` → `Dict[str, Any]`
 - `trigger_dbus_action(flow: str, media_action: str)` → `Dict[str, Any]`
 - `refresh_dashboard_snapshot()` → `Dict[str, Any]`
+
+**Enhanced Memory Systems** ✅ INTEGRADO (2025-12-06):
+- `get_semantic_memory_stats()` → `Dict[str, Any]` - Estatísticas de SemanticMemory
+- `store_semantic_concept(name: str, attributes: Dict[str, Any])` → `Dict[str, Any]`
+- `associate_semantic_concepts(concept1: str, concept2: str, relation: str)` → `bool`
+- `retrieve_semantic_concepts(query: str, limit: int)` → `List[Dict[str, Any]]`
+- `learn_procedural_skill(name: str, steps: list[str], parameters: Optional[Dict])` → `Dict[str, Any]`
+- `execute_procedural_skill(name: str, context: Dict[str, Any])` → `Dict[str, Any]`
+- `get_procedural_skill(name: str)` → `Optional[Dict[str, Any]]`
+- `get_procedural_memory_stats()` → `Dict[str, Any]` - Estatísticas de ProceduralMemory
+
+**Sandbox System** ✅ INTEGRADO (2025-12-06):
+- `apply_safe_change(component_id: str, change_type: str, change_data: Dict, description: str)` → `Dict[str, Any]`
+- `get_sandbox_status()` → `Dict[str, Any]`
+- `get_sandbox_history(limit: int)` → `Dict[str, Any]`
+
+**MCP Filesystem Convenience Methods** ✅ INTEGRADO (2025-12-06):
+- `mcp_read_file(path: str, encoding: str)` → `Dict[str, Any]`
+- `mcp_write_file(path: str, content: str, encoding: str)` → `Dict[str, Any]`
+- `mcp_list_dir(path: str, recursive: bool)` → `Dict[str, Any]`
+- `mcp_file_stat(path: str)` → `Dict[str, Any]`
+- `get_mcp_orchestrator_status()` → `Dict[str, Any]` - Status de servidores MCP
+
+**MCP Thinking Convenience Methods** ✅ INTEGRADO (2025-12-06):
+- `mcp_start_thinking_session(goal: str)` → `Dict[str, Any]` - Inicia sessão de thinking
+- `mcp_add_thinking_step(session_id: str, content: str, step_type: str)` → `Dict[str, Any]` - Adiciona passo
+- `mcp_get_thinking_history(session_id: str)` → `Dict[str, Any]` - Obtém histórico
+
+**MCP Context Convenience Methods** ✅ INTEGRADO (2025-12-06):
+- `mcp_store_context(level: str, content: str, metadata: Optional[Dict])` → `Dict[str, Any]` - Armazena contexto
+- `mcp_retrieve_context(level: str, query: str)` → `Dict[str, Any]` - Recupera contexto
+- `mcp_compress_context(level: str)` → `Dict[str, Any]` - Comprime contexto
+- `mcp_snapshot_context()` → `Dict[str, Any]` - Cria snapshot do contexto
 
 ### `ReactAgent`
 

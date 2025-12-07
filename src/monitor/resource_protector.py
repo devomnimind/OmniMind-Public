@@ -172,14 +172,30 @@ class ResourceProtector:
                 try:
                     proc = psutil.Process(proc_info["pid"])
 
-                    # Se for nosso processo protegido, reduzir prioridade
+                    # Se for nosso processo protegido, reduzir prioridade (NUNCA matar)
                     if self._is_protected(proc_info["pid"]):
                         logger.info(
                             f"🔄 Reduzindo prioridade de {proc.name()} (PID {proc_info['pid']})"
                         )
                         proc.nice(19)  # Lowest priority
-                    # Se for outro processo, considerar matar
-                    elif proc_info["cpu_percent"] > 80:
+                        continue  # NUNCA matar processos protegidos
+
+                    # Verificar se é processo uvicorn do OmniMind (proteção adicional)
+                    cmdline = proc.cmdline()
+                    cmdline_str = " ".join(str(arg) for arg in cmdline) if cmdline else ""
+                    if any(
+                        pattern in cmdline_str.lower()
+                        for pattern in ["uvicorn", "web.backend", "omnimind"]
+                    ):
+                        logger.info(
+                            f"🛡️  Processo uvicorn/omnimind protegido: "
+                            f"{proc.name()} (PID {proc_info['pid']})"
+                        )
+                        proc.nice(19)  # Reduzir prioridade mas não matar
+                        continue
+
+                    # Se for outro processo, considerar matar apenas se CPU > 90% (mais conservador)
+                    elif proc_info["cpu_percent"] > 90:
                         cpu_pct = proc_info["cpu_percent"]
                         logger.warning(
                             f"⚠️  Matando processo pesado: {proc.name()} ({cpu_pct:.1f}%)"
@@ -272,14 +288,37 @@ class ResourceProtector:
         for proc in psutil.process_iter(["pid", "name", "cpu_percent", "cmdline"]):
             try:
                 if "python" in proc.name().lower():
-                    # Ignorar processos irmãos do OmniMind (evitar fogo amigo)
                     cmdline = proc.info.get("cmdline", [])
-                    if cmdline and any("web.backend.main" in str(arg) for arg in cmdline):
+                    cmdline_str = " ".join(str(arg) for arg in cmdline) if cmdline else ""
+
+                    # PROTEGER processos do próprio OmniMind (evitar fogo amigo)
+                    # Lista expandida de processos protegidos
+                    protected_patterns = [
+                        "web.backend.main",
+                        "uvicorn",
+                        "omnimind",
+                        "src.main",
+                        "run_cluster",
+                        "mcp_orchestrator",
+                        "main_cycle",
+                        "daemon",
+                        "observer_service",
+                    ]
+
+                    # Se for processo do OmniMind, NUNCA matar
+                    if any(
+                        pattern.lower() in cmdline_str.lower() for pattern in protected_patterns
+                    ):
+                        continue
+
+                    # Se for processo protegido explicitamente, ignorar
+                    if self._is_protected(proc.pid):
                         continue
 
                     # Pega CPU percent se não for None
                     cpu = proc.info.get("cpu_percent", 0) or 0
-                    if cpu > 50:
+                    # Aumentar threshold de 50% para 80% para ser menos agressivo
+                    if cpu > 80:
                         python_processes.append(
                             {
                                 "pid": proc.pid,
