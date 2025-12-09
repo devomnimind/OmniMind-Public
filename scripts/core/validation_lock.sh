@@ -152,7 +152,7 @@ HOOK_TYPE=${OMNIMIND_HOOK_TYPE:-"unknown"}
 # Ajustar nível de validação baseado no hook
 if [[ "$HOOK_TYPE" == "pre-commit" ]]; then
     # Pre-commit: sempre fazer pelo menos validações básicas, mas pode ser mais leve
-    
+
     # Se é ONLY docs ou scripts (reorganização/limpeza), pular testes completamente
     if [[ "$VALIDATION_LEVEL" == "DOCS_ONLY" ]] || [[ "$VALIDATION_LEVEL" == "CONFIG_ONLY" ]]; then
         info "Mudanças estruturais apenas (docs/scripts) - pulando testes"
@@ -237,7 +237,7 @@ if [[ "$VALIDATION_LEVEL" == "FULL" ]] || [[ "$VALIDATION_LEVEL" == "TESTS_ONLY"
         log "Executando testes completos (com timeout de 300s e maxfail=20)..."
         TEST_OUTPUT=$(timeout 300 python -m pytest tests/ -x --tb=short -q --maxfail=20 2>&1)
         TEST_EXIT_CODE=$?
-        
+
         # Verificar se foi timeout
         if [[ $TEST_EXIT_CODE -eq 124 ]]; then
             error "Testes excederam timeout de 300s. Interrompendo..."

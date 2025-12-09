@@ -121,19 +121,19 @@ pip install -r requirements.txt -U
 
 ## 7. FAQ
 
-**P: Preciso resolver esses conflitos?**  
+**P: Preciso resolver esses conflitos?**
 R: Não. A aplicação funciona normalmente.
 
-**P: Isso afeta testes?**  
+**P: Isso afeta testes?**
 R: Não. Todos os testes passam.
 
-**P: E em produção?**  
+**P: E em produção?**
 R: Considere usar containers com versões fixadas (Dockerfile).
 
-**P: Como ignoro esse warning?**  
+**P: Como ignoro esse warning?**
 R: Use `git commit --no-verify` (já configurado automaticamente para testes)
 
 ---
 
-**Última atualização:** 09/12/2025  
+**Última atualização:** 09/12/2025
 **Status:** ✅ Esperado e Documentado
