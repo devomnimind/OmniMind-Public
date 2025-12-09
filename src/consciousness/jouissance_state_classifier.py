@@ -210,7 +210,7 @@ class JouissanceStateClassifier:
                 confidence = 0.85
             elif phi < min_phi:
                 confidence = 0.60  # Possível transição para MORTE
-            return initial_state, confidence # type: ignore
+            return initial_state, confidence
 
         elif initial_state == ClinicalState.PRODUÇÃO:
             if phi > self.phi_producao_min:
