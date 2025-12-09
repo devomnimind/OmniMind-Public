@@ -3,31 +3,58 @@
 # Cores para output
 GREEN='\033[0;32m'
 RED='\033[0;31m'
+YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 echo -e "${GREEN}🚀 Iniciando Sistema OmniMind Completo...${NC}"
 
-# 🔧 CRÍTICO: Ativar venv ANTES de qualquer import Python
-# PROJECT_ROOT deve apontar para a raiz do projeto (1 nível acima de scripts/)
-# Se OMNIMIND_PROJECT_ROOT estiver definido (chamado via wrapper), usar ele
-# Caso contrário, calcular a partir de $0
+# 🔧 CRÍTICO: Calcular PROJECT_ROOT de forma robusta
+# O script pode ser chamado de vários contextos:
+# 1. Direto: ./scripts/canonical/system/start_omnimind_system.sh
+# 2. Via wrapper: ./start_omnimind_system.sh (que chama canonical/system/)
+# 3. Via chamada direta do diretório raiz
+
+# Se OMNIMIND_PROJECT_ROOT está definido (wrapper), usar ele
 if [ -n "${OMNIMIND_PROJECT_ROOT:-}" ]; then
     PROJECT_ROOT="$OMNIMIND_PROJECT_ROOT"
 else
-    # Calcular a partir de $0 (compatibilidade com execução direta)
-    # Se $0 está em canonical/system/, precisa subir 3 níveis
+    # Calcular PROJECT_ROOT procurando pelo arquivo de identidade do projeto
+    # Procurar por config/omnimind.yaml ou .env ou pyproject.toml (marcadores do projeto)
     SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-    if [[ "$SCRIPT_DIR" == */canonical/system ]]; then
-        PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-    else
-        PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+    # Subir até encontrar a raiz do projeto
+    while [ "$SCRIPT_DIR" != "/" ]; do
+        if [ -f "$SCRIPT_DIR/.env" ] || [ -f "$SCRIPT_DIR/pyproject.toml" ] || [ -f "$SCRIPT_DIR/config/omnimind.yaml" ]; then
+            PROJECT_ROOT="$SCRIPT_DIR"
+            break
+        fi
+        SCRIPT_DIR="$(dirname "$SCRIPT_DIR")"
+    done
+
+    # Se não encontrou, usar o padrão
+    if [ -z "$PROJECT_ROOT" ]; then
+        # Fallback: subir 3 níveis de scripts/canonical/system/
+        PROJECT_ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
     fi
 fi
+
+# Validar que encontrou a raiz do projeto
+if [ ! -f "$PROJECT_ROOT/config/omnimind.yaml" ] && [ ! -f "$PROJECT_ROOT/.env" ]; then
+    echo -e "${RED}❌ Não conseguiu encontrar raiz do projeto OmniMind${NC}"
+    echo "   Procurou por: config/omnimind.yaml ou .env"
+    echo "   PROJECT_ROOT calculado: $PROJECT_ROOT"
+    exit 1
+fi
+
+echo "✅ Raiz do projeto encontrada: $PROJECT_ROOT"
+
+# 🔧 CRÍTICO: Ativar venv ANTES de qualquer import Python
 if [ -f "$PROJECT_ROOT/.venv/bin/activate" ]; then
     source "$PROJECT_ROOT/.venv/bin/activate"
     echo "✅ Venv ativado: $VIRTUAL_ENV"
 else
     echo "⚠️  Venv não encontrado em $PROJECT_ROOT/.venv"
+    echo "   Tentando usar Python do sistema..."
 fi
 
 # 🔒 SEGURANÇA: Bloquear porta 4444 (comumente usada por malware)

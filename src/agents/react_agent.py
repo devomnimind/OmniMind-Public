@@ -159,8 +159,12 @@ class ReactAgent:
         self._init_consciousness_triad()
 
         # Embedding model simples (fallback hash-based)
+        # CRITICAL FIX (2025-12-09): LAZY LOAD instead of sync init
+        # Reason: SentenceTransformer.load("all-MiniLM-L6-v2") takes 10+ seconds and blocks startup
+        # This was causing orchestrator initialization to timeout at 30s
         self._embedding_model: Optional[Any] = None
-        self._init_embedding_model()
+        self._embedding_model_init_attempted: bool = False
+        # REMOVED: self._init_embedding_model()  # This was blocking startup!
 
         self.graph: CompiledGraphType = self._build_graph()
 
@@ -180,7 +184,12 @@ class ReactAgent:
         # Registrar agente como módulo no workspace
         if self.workspace:
             try:
-                # CRÍTICO: Garantir que _embedding_model existe antes de usar
+                # CRÍTICO: Garantir que _embedding_model_init_attempted existe
+                if not hasattr(self, "_embedding_model_init_attempted"):
+                    self._embedding_model_init_attempted = False
+                    self._embedding_model = None
+
+                # Garantir que _embedding_model existe antes de usar
                 if not hasattr(self, "_embedding_model") or self._embedding_model is None:
                     # Tentar inicializar novamente se falhou antes
                     self._init_embedding_model()
@@ -239,11 +248,11 @@ class ReactAgent:
         try:
             from sentence_transformers import SentenceTransformer
 
-            from src.utils.device_utils import (
-                get_sentence_transformer_device,
-                check_gpu_memory_available,
-            )
             from src.memory.gpu_memory_consolidator import get_gpu_consolidator
+            from src.utils.device_utils import (
+                check_gpu_memory_available,
+                get_sentence_transformer_device,
+            )
 
             # Verificar memória GPU disponível antes de escolher device
             # get_sentence_transformer_device() já verifica memória e retorna "cpu" se insuficiente
@@ -319,7 +328,16 @@ class ReactAgent:
                 self._embedding_model = None
 
     def _generate_embedding(self, text: str) -> np.ndarray:
-        """Gera embedding para texto (com fallback hash-based)."""
+        """Gera embedding para texto (com lazy load do modelo e fallback hash-based).
+
+        CRITICAL FIX (2025-12-09): Lazy load embedding model on first use
+        Reason: Prevents blocking startup when SentenceTransformer is slow to load
+        """
+        # Lazy load embedding model on first call (not during __init__)
+        if not self._embedding_model_init_attempted:
+            self._embedding_model_init_attempted = True
+            self._init_embedding_model()
+
         if self._embedding_model:
             try:
                 encoded = self._embedding_model.encode(text, normalize_embeddings=True)

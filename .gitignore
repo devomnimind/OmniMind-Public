@@ -1,17 +1,20 @@
 # ============================================================================
-# .gitignore - OmniMind (Versão Estrita)
+# .gitignore - OmniMind (Versão Otimizada com Documentação Organizada)
 # ============================================================================
-# Mantém apenas:
+# Mantém:
 # - Código puro (src/, tests/, scripts/)
-# - Documentação oficial (docs/canonical/, docs/guides/, docs/api/, docs/architecture/)
+# - Documentação oficial organizada (docs/history/, docs/analysis/, docs/theory/, etc.)
 # - READMEs dos módulos
 # - Dados de validação científica (real_evidence/, data/validation/, data/test_reports/)
 #
-# Exclui:
-# - Fases de desenvolvimento (PHASE_*, _PLAN, _ROADMAP, _STATUS)
-# - Papers e discussões de ideias (papers/, docs/papers/, docs/research/)
-# - Arquivos de sessão e discussões (docs/archive/sessions_*)
-# - Dados experimentais não oficiais (data/experiments/, ibm_results/)
+# NOVIDADE (Desde 2025-12-09):
+# - docs/history/ → Histórico oficializado
+# - docs/analysis/ → Análises e diagnósticos
+# - docs/theory/ → Teoria e filosofia
+# - docs/implementation/ → Implementação e roadmaps
+# - docs/methodology/ → Metodologia
+# - docs/reference/ → Índices e referências
+# - docs/METADATA/ → Metadados do projeto (estado, fases, timeline)
 # ============================================================================
 
 # ------------------------------------------------------------------
@@ -134,10 +137,10 @@ mnt/
 
 # ------------------------------------------------------------------
 # ============================================================================
-# EXCLUSÕES ESPECÍFICAS: Fases de Desenvolvimento e Discussões
+# EXCLUSÕES: Fases de Desenvolvimento (DEPRECATED)
+# Mantidas apenas por legado, novos documentos devem ir para docs/history/
 # ============================================================================
 
-# Fases de desenvolvimento (PHASE_*, _PLAN, _ROADMAP, _STATUS, _IMPLEMENTATION)
 docs/PHASE_*.md
 docs/*_PLAN.md
 docs/*_ROADMAP.md
@@ -152,37 +155,28 @@ docs/PHASE25_*.md
 docs/PHASE26*.md
 docs/NEXT_STEPS*.md
 
-# Papers e discussões de ideias (devem ir para outro repo)
-papers/
-docs/papers/
-docs/papersoficiais/
-docs/research/
-docs/archive/
-docs/archive/sessions_*/
-docs/archive/root_reports/
-docs/archive/docs_dump/
-docs/archive/trash_investigate/
+# ============================================================================
+# EXCLUSÕES: Papers e Discussões (ir para repositório separado)
+# ============================================================================
 
-# Documentos de desenvolvimento local (configurações do usuário)
+papers/
+docs/papersoficiais/
 docs/dev_local/
 
-# Documentação de desenvolvimento (não oficial)
+# Documentação de desenvolvimento (deprecated, ir para docs/analysis/)
 docs/ATIVIDADES_PENDENTES*.md
 docs/AUDIT_REPORT*.md
 docs/CORRECOES*.md
 docs/MIGRACAO*.md
 docs/CHANGELOG.md
 docs/REVISAO_DOCUMENTACAO*.md
-docs/ANALISE*.md
-docs/VERIFICACAO*.md
-docs/SCRIPTS_COMPARISON.md
 docs/executive_summary*.md
 docs/feature_urgent.md
 docs/scientific_gaps*.md
 docs/theoretical_bridge*.md
 docs/stimulation_interpretation*.md
 
-# Resultados experimentais não oficiais
+# Resultados experimentais não oficiais (ir para data/experiments/ se necessário)
 ibm_results/
 data/experiments/
 data/experiments/**/*_snapshot_*.json
@@ -190,8 +184,6 @@ data/experiments/**/*_report.json
 data/experiments/**/consolidated_report.json
 data/benchmarks/history/
 data/monitoring_24h/
-data/forensics/
-data/integrity_baselines/baseline_tmp_*.json
 
 # Notebooks e experimentos
 notebooks/
@@ -201,33 +193,74 @@ test_baseline/
 test_output/
 
 # ============================================================================
-# MANTIDO: Dados de Validação Científica Oficial
+# EXCLUSÕES: Archive Obsoleto
+# Manter apenas por referência histórica muito recente
 # ============================================================================
-# Estes são mantidos pois são resultados de validação científica oficial:
-!real_evidence/
-!data/validation/
-!data/test_reports/
-!data/behavioral_markers.json
-!datasets/behavioral_markers.json
-!data/datasets/
+
+docs/archive/
+docs/research/
 
 # ============================================================================
-# MANTIDO: Documentação Oficial
+# MANTIDO: Documentação Oficial Organizada (NOVO PADRÃO)
+# Estes são a nova estrutura oficial desde 2025-12-09
 # ============================================================================
-# Estes são mantidos pois são documentação oficial:
-!docs/canonical/
+
+# ✅ Histórico e Fases
+!docs/history/
+!docs/history/**
+
+# ✅ Análises e Diagnósticos
+!docs/analysis/
+!docs/analysis/**
+
+# ✅ Teoria e Filosofia
+!docs/theory/
+!docs/theory/**
+
+# ✅ Implementação e Roadmaps
+!docs/implementation/
+!docs/implementation/**
+
+# ✅ Metodologia
+!docs/methodology/
+!docs/methodology/**
+
+# ✅ Referência e Índices
+!docs/reference/
+!docs/reference/**
+
+# ✅ Metadados (NOVO - Estado, Timeline, Fases)
+!docs/METADATA/
+!docs/METADATA/**
+
+# ✅ Guias (já existente)
 !docs/guides/
+!docs/guides/**
+
+# ✅ Documentação técnica
+!docs/canonical/
+!docs/canonical/**
 !docs/api/
+!docs/api/**
 !docs/architecture/
+!docs/architecture/**
 !docs/testing/
+!docs/testing/**
 !docs/production/
+!docs/production/**
 !docs/setup/
+!docs/setup/**
 !docs/hardware/
+!docs/hardware/**
 !docs/infrastructure/
+!docs/infrastructure/**
+
+# ✅ READMEs principais
 !README.md
 !docs/README.md
 !docs/index.md
-!docs/DOCUMENTATION_INDEX.md
+!docs/INDEX.md
+!docs/INDICE_DOCUMENTACAO.md
 
 # ============================================================================
 # MANTIDO: Código e Estrutura
@@ -362,3 +395,25 @@ tests/quantum_consciousness/test_hybrid_phi.py
 tests/quantum_consciousness/test_legacy_smoke.py
 tests/quantum_consciousness/test_phi_trajectory_transformer.py
 tests/quantum_consciousness/test_topological_hybrid_phi.py
+
+# ============================================================================
+# COMENTÁRIO: Atualização 2025-12-09
+# ============================================================================
+# Nova estrutura de documentação implementada:
+# - Todas as análises organizadas em docs/analysis/
+# - Histórico centralizado em docs/history/
+# - Teoria e filosofia em docs/theory/
+# - Implementação e roadmaps em docs/implementation/
+# - Metodologia em docs/methodology/
+# - Metadados (estado, fases, timeline) em docs/METADATA/ ← NOVO
+# - Referências e índices em docs/reference/
+#
+# Benefícios:
+# ✅ Fácil localizar documentos por tema
+# ✅ Histórico completo versionado em git
+# ✅ Estado do projeto facilmente consultável (ESTADO_ATUAL.md)
+# ✅ Roadmap transparente para equipe (STATUS_FASES.md)
+# ✅ Timeline completa disponível (LINHAS_TEMPORAIS.md)
+# ✅ Redução de documentos "soltos"
+# ✅ Organização escalável para futuras expansões
+# ============================================================================

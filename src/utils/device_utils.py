@@ -149,6 +149,48 @@ def get_torch_device():
     return torch.device(device_str)
 
 
+def ensure_tensor_on_real_device(tensor_or_model) -> None:
+    """
+    Garante que tensor ou modelo não está em meta device.
+
+    Detecta se model/tensor está em meta device e migra para device real (cuda/cpu).
+    Meta device é um device virtual usado durante inicialização, não pode ter dados reais.
+
+    Args:
+        tensor_or_model: torch.Tensor, nn.Module, ou SentenceTransformer
+    """
+    try:
+        import torch
+
+        # Se for um módulo ou modelo
+        if hasattr(tensor_or_model, "device"):
+            # SentenceTransformer ou nn.Module
+            current_device = (
+                next(tensor_or_model.parameters()).device
+                if hasattr(tensor_or_model, "parameters")
+                else tensor_or_model.device
+            )
+        elif isinstance(tensor_or_model, torch.Tensor):
+            current_device = tensor_or_model.device
+        else:
+            return  # Não é tensor/modelo
+
+        # Verificar se está em meta device
+        if current_device.type == "meta":
+            logger.warning(f"⚠️ Detectado meta device! Migrando para device real...")
+            real_device = get_torch_device()
+
+            # Migrar para device real
+            if hasattr(tensor_or_model, "to"):
+                tensor_or_model.to(real_device)
+                logger.info(f"✅ Modelo migrado para {real_device}")
+            else:
+                raise RuntimeError(f"Não consigo migrar {type(tensor_or_model)} de meta device")
+
+    except Exception as e:
+        logger.debug(f"Erro ao checar/migrar meta device: {e}")
+
+
 def reset_device_cache() -> None:
     """Reseta cache de device (útil para testes)."""
     global _cached_device

@@ -22,7 +22,7 @@ from sentence_transformers import SentenceTransformer
 logger = logging.getLogger(__name__)
 
 try:
-    from datasets import load_from_disk, load_dataset  # type: ignore[attr-defined]
+    from datasets import load_dataset, load_from_disk  # type: ignore[attr-defined]
 
     DATASETS_AVAILABLE = True
 except ImportError:
@@ -83,17 +83,25 @@ class DatasetIndexer:
         # Inicializar modelo de embeddings
         if embedding_model is not None:
             self.embedding_model = embedding_model
-            self.embedding_dim = self.embedding_model.get_sentence_embedding_dimension()
         else:
-            from src.utils.device_utils import get_sentence_transformer_device
+            from src.utils.device_utils import (
+                ensure_tensor_on_real_device,
+                get_sentence_transformer_device,
+            )
 
             device = get_sentence_transformer_device()
             logger.info(
                 f"Carregando modelo de embeddings: {embedding_model_name} (device={device})"
             )
             self.embedding_model = SentenceTransformer(embedding_model_name, device=device)
-            self.embedding_dim = int(self.embedding_model.get_sentence_embedding_dimension() or 384)
-            logger.info(f"Modelo carregado. Dimensões: {self.embedding_dim}, Device: {device}")
+
+            # Garantir que modelo não está em meta device
+            ensure_tensor_on_real_device(self.embedding_model)
+
+            logger.info(f"Modelo carregado e validado no device correto")
+
+        self.embedding_dim = int(self.embedding_model.get_sentence_embedding_dimension() or 384)
+        logger.info(f"Dimensão do embedding: {self.embedding_dim}")
 
         # Inicializar Qdrant
         self.client = QdrantClient(url=qdrant_url)

@@ -403,17 +403,18 @@ async def lifespan(app_instance: FastAPI):
     # Aguarda componentes medium-speed em paralelo
     await asyncio.gather(*medium_startup_tasks, return_exceptions=True)
 
-    # ========== ORCHESTRATOR (PESADO - AGUARDA COM TIMEOUT MAIOR) ==========
+    # ========== ORCHESTRATOR (PESADO - INICIALIZAÇÃO NÃO BLOQUEADA) ==========
     # Orchestrator sempre ON para produção + testes (precisa de métricas PHI reais)
-    orchestrator_timeout = 120.0 if is_test_mode else 30.0  # Teste: 2 min, Produção: 30 seg
+    # CRITICAL FIX (2025-12-09): NÃO BLOQUEAR inicialização por timeout
+    # Uso de timeout = métrica científica, NÃO barreira bloqueante
+    # Sistema continua inicializando mesmo que exceda limites de tempo
+
+    logger.info("Starting Orchestrator initialization (without timeout blocking)...")
     try:
-        logger.info(f"Starting Orchestrator initialization (timeout={orchestrator_timeout}s)...")
-        await asyncio.wait_for(_async_init_orchestrator(app_instance), timeout=orchestrator_timeout)
-        logger.info("✅ Orchestrator initialized successfully")
-    except asyncio.TimeoutError:
-        logger.warning(f"Orchestrator initialization timed out after {orchestrator_timeout}s")
-        app_instance.state.orchestrator_error = "Initialization timeout"
-        app_instance.state.orchestrator_ready = False
+        # Inicializar orchestrator SEM wait_for (que bloquearia se excedesse tempo)
+        # O logging interno rastreará tempo de inicialização para análise científica
+        await _async_init_orchestrator(app_instance)
+        logger.info("✅ Orchestrator initialized")
     except Exception as e:
         logger.warning(f"Failed to initialize orchestrator: {e}")
         app_instance.state.orchestrator_error = str(e)
@@ -599,20 +600,48 @@ class DBusFlowRequest(BaseModel):
 
 
 async def _async_init_orchestrator(app_instance: FastAPI):
+    """Initialize OrchestratorAgent asynchronously with proper error handling.
+
+    FIXES (2025-12-09):
+    1. REMOVED timeout blocking - timeout is METRIC, not barrier
+    2. System continues initializing even if it takes >60 seconds
+    3. Detailed logging tracks initialization progress for analysis
+    4. Separates sync and async initialization phases
+    """
     global _orchestrator_instance
-    logger.info("Starting asynchronous Orchestrator initialization...")
+    start_time = time.time()
+    logger.info("Starting asynchronous Orchestrator initialization (PHASE 1/2: sync)...")
+
     try:
-        # Run in thread pool to avoid blocking event loop
+        # PHASE 1: Run __init__ in thread pool (handles config + basic setup)
+        # NO TIMEOUT - system continues initializing regardless of duration
+        logger.info("  → Loading configuration and basic components...")
+        phase1_start = time.time()
         _orchestrator_instance = await asyncio.to_thread(
             OrchestratorAgent, "config/agent_config.yaml"
         )
+        phase1_time = time.time() - phase1_start
+        logger.info(f"✅ Phase 1 complete ({phase1_time:.1f}s): Orchestrator initialized")
+
         app_instance.state.orchestrator_ready = True
-        logger.info("Orchestrator initialized successfully")
+
+        # PHASE 2: Async initialization tasks (dashboard refresh, etc)
+        logger.info("Starting asynchronous Orchestrator initialization (PHASE 2/2: async)...")
+        phase2_start = time.time()
+
+        try:
+            # Try to initialize dashboard snapshot asynchronously
+            if hasattr(_orchestrator_instance, "refresh_dashboard_snapshot"):
+                logger.info("  → Refreshing dashboard snapshot...")
+                # Run in thread to avoid blocking
+                await asyncio.to_thread(_orchestrator_instance.refresh_dashboard_snapshot)
+        except Exception as exc:
+            logger.warning(f"Failed to refresh dashboard during init: {exc}")
 
         # Connect metacognition routes
         try:
             metacognition.set_orchestrator(_orchestrator_instance)
-            logger.info("Metacognition routes connected to orchestrator")
+            logger.info("✅ Metacognition routes connected to orchestrator")
         except Exception as exc:
             logger.warning(f"Failed to connect metacognition routes: {exc}")
 
@@ -628,7 +657,7 @@ async def _async_init_orchestrator(app_instance: FastAPI):
                 asyncio.create_task(
                     _orchestrator_instance.security_agent.start_continuous_monitoring()
                 )
-                logger.info("SecurityAgent continuous monitoring started")
+                logger.info("✅ SecurityAgent continuous monitoring started")
             else:
                 logger.info("SecurityAgent initialized but monitoring disabled in config")
         else:
@@ -636,8 +665,19 @@ async def _async_init_orchestrator(app_instance: FastAPI):
                 "SecurityAgent initialized but continuous monitoring disabled in code (spam fix)"
             )
 
+        phase2_time = time.time() - phase2_start
+        total_time = time.time() - start_time
+        logger.info(f"✅ Phase 2 complete ({phase2_time:.1f}s)")
+        logger.info(
+            f"📊 Total Orchestrator initialization: {total_time:.1f}s (metrics for scientific analysis)"
+        )
+
+    except asyncio.CancelledError:
+        # This can happen during shutdown - don't log as error
+        logger.info("Orchestrator initialization cancelled (likely during shutdown)")
+        app_instance.state.orchestrator_error = "Initialization cancelled"
     except Exception as exc:
-        logger.error(f"Failed to initialize orchestrator asynchronously: {exc}")
+        logger.error(f"❌ Failed to initialize orchestrator asynchronously: {exc}", exc_info=True)
         app_instance.state.orchestrator_error = str(exc)
 
 
