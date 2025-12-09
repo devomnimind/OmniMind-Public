@@ -9,8 +9,9 @@ Data: 2025-12-09
 """
 
 import asyncio
-import pytest
+
 import numpy as np
+import pytest
 
 from src.consciousness.integration_loop import (
     IntegrationLoop,
@@ -126,17 +127,21 @@ class TestIntegrationLoopComposition:
         loop = IntegrationLoop(enable_logging=False)
 
         # Escrever alguns estados no workspace
+        # embedding_dim do workspace é 768
+        embedding_dim = loop.workspace.embedding_dim
         loop.workspace.write_module_state(
-            "sensory_input", np.random.randn(256).astype(np.float32), {}
+            "sensory_input", np.random.randn(embedding_dim).astype(np.float32), {}
         )
-        loop.workspace.write_module_state("qualia", np.random.randn(256).astype(np.float32), {})
+        loop.workspace.write_module_state(
+            "qualia", np.random.randn(embedding_dim).astype(np.float32), {}
+        )
 
         # Coletar estímulo
         stimulus = loop._collect_stimulus_from_modules()
 
         # Estímulo deve ter dimensão correta
         assert isinstance(stimulus, np.ndarray)
-        assert stimulus.shape == (256,)
+        assert stimulus.shape == (embedding_dim,)
 
     def test_rnn_integration_in_cycle(self):
         """

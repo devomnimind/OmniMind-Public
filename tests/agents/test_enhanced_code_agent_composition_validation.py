@@ -8,12 +8,13 @@ Autor: GitHub Copilot Agent
 Data: 2025-12-09
 """
 
-import pytest
-from unittest.mock import MagicMock, Mock
 from pathlib import Path
+from unittest.mock import MagicMock, Mock
 
-from src.agents.enhanced_code_agent import EnhancedCodeAgent, FailureRecord
+import pytest
+
 from src.agents.code_agent import CodeAgent
+from src.agents.enhanced_code_agent import EnhancedCodeAgent, FailureRecord
 from src.agents.react_agent import ReactAgent
 from src.orchestrator.error_analyzer import ErrorAnalyzer, ErrorType, RecoveryStrategy
 
@@ -27,16 +28,24 @@ class TestEnhancedCodeAgentComposition:
         config_file = tmp_path / "test_config.yaml"
         config_file.write_text(
             """
-llm:
-  provider: "mock"
-  model: "test-model"
+model:
+  name: "phi:latest"
+  provider: "ollama"
+  base_url: "http://localhost:11434"
   temperature: 0.7
   max_tokens: 2000
 
-react_agent:
-  max_iterations: 5
-  enable_embedding: false
-  enable_consciousness: false
+memory:
+  qdrant_url: "http://localhost:6333"
+  collection_name: "test_episodes"
+
+system:
+  mcp_allowed_dirs:
+    - "/tmp"
+  shell_whitelist:
+    - "ls"
+    - "pwd"
+  shell_timeout: 10
 """
         )
         return str(config_file)
@@ -200,16 +209,24 @@ class TestEnhancedCodeAgentSelfCorrection:
         config_file = tmp_path / "test_config.yaml"
         config_file.write_text(
             """
-llm:
-  provider: "mock"
-  model: "test-model"
+model:
+  name: "phi:latest"
+  provider: "ollama"
+  base_url: "http://localhost:11434"
   temperature: 0.7
   max_tokens: 2000
 
-react_agent:
-  max_iterations: 5
-  enable_embedding: false
-  enable_consciousness: false
+memory:
+  qdrant_url: "http://localhost:6333"
+  collection_name: "test_episodes"
+
+system:
+  mcp_allowed_dirs:
+    - "/tmp"
+  shell_whitelist:
+    - "ls"
+    - "pwd"
+  shell_timeout: 10
 """
         )
         return str(config_file)
@@ -340,10 +357,13 @@ react_agent:
         analysis = ErrorAnalysis(
             error_type=ErrorType.HALLUCINATION,
             error_message="Test error",
+            error_class="ValueError",
+            pattern="hallucination_pattern",
             recovery_strategy=RecoveryStrategy.CORRECT_REASONING,
             confidence=0.8,
-            pattern="hallucination_pattern",
-            metadata={},
+            context={},
+            suggested_actions=["Check facts", "Verify sources"],
+            alternative_strategies=[],
         )
 
         corrected = enhanced_agent._apply_recovery_strategy(
@@ -366,10 +386,13 @@ react_agent:
         analysis = ErrorAnalysis(
             error_type=ErrorType.SYNTAX_ERROR,
             error_message="Syntax error",
+            error_class="SyntaxError",
+            pattern="syntax_error_pattern",
             recovery_strategy=RecoveryStrategy.CORRECT_REASONING,
             confidence=0.9,
-            pattern="syntax_error_pattern",
-            metadata={},
+            context={},
+            suggested_actions=[],
+            alternative_strategies=[],
         )
 
         # Adicionar falha ao histórico
@@ -437,14 +460,24 @@ class TestEnhancedCodeAgentRefactoringValidation:
         config_file = tmp_path / "test_config.yaml"
         config_file.write_text(
             """
-llm:
-  provider: "mock"
-  model: "test-model"
+model:
+  name: "phi:latest"
+  provider: "ollama"
+  base_url: "http://localhost:11434"
+  temperature: 0.7
+  max_tokens: 2000
 
-react_agent:
-  max_iterations: 5
-  enable_embedding: false
-  enable_consciousness: false
+memory:
+  qdrant_url: "http://localhost:6333"
+  collection_name: "test_episodes"
+
+system:
+  mcp_allowed_dirs:
+    - "/tmp"
+  shell_whitelist:
+    - "ls"
+    - "pwd"
+  shell_timeout: 10
 """
         )
         return str(config_file)
