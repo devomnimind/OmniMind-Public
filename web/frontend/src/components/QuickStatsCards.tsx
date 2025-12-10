@@ -1,6 +1,7 @@
 import { useDaemonStore } from '../store/daemonStore';
 import { useState, useEffect, useCallback } from 'react';
 import { apiService } from '../services/api';
+import { useAuthStore } from '../store/authStore';
 
 interface AuditStats {
   total_events: number;
@@ -22,42 +23,81 @@ export function QuickStatsCards() {
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   const fetchAllMetrics = useCallback(async () => {
+    // CORREÇÃO CRÍTICA (2025-12-10): Verificar autenticação antes de fazer fetch
+    if (!useAuthStore.getState().isAuthenticated) {
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
       const [auditData, trainingData] = await Promise.all([
-        apiService.get('/audit/stats'),
-        apiService.get('/metrics/training'),
+        apiService.get('/audit/stats').catch((err) => {
+          // CORREÇÃO (2025-12-10): Não logar erro se não há autenticação ou timeout
+          const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+          if (errorMessage !== 'Not authenticated' && !errorMessage.includes('timeout')) {
+            console.error('Failed to fetch audit stats:', err);
+          }
+          return null;
+        }),
+        apiService.get('/metrics/training').catch((err) => {
+          // CORREÇÃO (2025-12-10): Não logar erro se não há autenticação ou timeout
+          const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+          if (errorMessage !== 'Not authenticated' && !errorMessage.includes('timeout')) {
+            console.error('Failed to fetch training metrics:', err);
+          }
+          return null;
+        }),
       ]);
 
-      setAuditStats({
-        total_events: auditData?.total_events ?? 0,
-        chain_integrity: Boolean(auditData?.chain_integrity),
-      });
+      if (auditData) {
+        setAuditStats({
+          total_events: auditData?.total_events ?? 0,
+          chain_integrity: Boolean(auditData?.chain_integrity),
+        });
+      }
 
-      setTrainingMetrics({
-        total_iterations: trainingData?.total_iterations ?? 0,
-        avg_conflict_quality: Math.round((trainingData?.avg_conflict_quality ?? 0) * 100),
-        repression_events: trainingData?.repression_events ?? 0,
-      });
+      if (trainingData) {
+        setTrainingMetrics({
+          total_iterations: trainingData?.total_iterations ?? 0,
+          avg_conflict_quality: Math.round((trainingData?.avg_conflict_quality ?? 0) * 100),
+          repression_events: trainingData?.repression_events ?? 0,
+        });
+      }
 
       setLastUpdated(new Date());
     } catch (err) {
-      console.error('Failed to fetch metrics:', err);
-      setAuditStats(null);
-      setTrainingMetrics(null);
-      setError('Não foi possível carregar as métricas em tempo real.');
+      // CORREÇÃO (2025-12-10): Não mostrar erro se não há autenticação ou timeout
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      if (errorMessage !== 'Not authenticated' && !errorMessage.includes('timeout')) {
+        console.error('Failed to fetch metrics:', err);
+        setError('Não foi possível carregar as métricas em tempo real.');
+      }
+      // Não limpar dados existentes em caso de erro temporário
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
+    // CORREÇÃO CRÍTICA (2025-12-10): Verificar autenticação antes de fazer fetch
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+    if (!isAuthenticated) {
+      setLoading(false);
+      return;
+    }
+
     fetchAllMetrics();
-    const interval = setInterval(fetchAllMetrics, 10000);
+    // CORREÇÃO (2025-12-09): Aumentar intervalo para 30s (métricas importantes)
+    const interval = setInterval(() => {
+      // Verificar autenticação antes de cada fetch
+      if (useAuthStore.getState().isAuthenticated) {
+        fetchAllMetrics();
+      }
+    }, 30000); // Atualizar a cada 30s
     return () => clearInterval(interval);
-  }, [fetchAllMetrics]);
+  }, [fetchAllMetrics]); // Dependência em fetchAllMetrics
 
   if (!status) return null;
 

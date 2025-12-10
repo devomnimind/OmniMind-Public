@@ -49,7 +49,9 @@ class HybridResourceManager:
 
     def get_system_status(self) -> Dict[str, float]:
         """Collects real-time system metrics."""
-        cpu_percent = psutil.cpu_percent(interval=None)
+        # CORREÇÃO (2025-12-09): interval=None retorna 0.0% na primeira chamada
+        # Usar interval=0.1 para leitura imediata precisa
+        cpu_percent = psutil.cpu_percent(interval=0.1)
         ram = psutil.virtual_memory()
         ram_percent = ram.percent
         swap = psutil.swap_memory()

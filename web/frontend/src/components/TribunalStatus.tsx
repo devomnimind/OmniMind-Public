@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { apiService } from '../services/api';
+import { useAuthStore } from '../store/authStore';
 
 interface TribunalData {
   status: string;
@@ -22,20 +23,38 @@ export function TribunalStatus() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // CORREÇÃO CRÍTICA (2025-12-10): Verificar autenticação antes de fazer fetch
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+    if (!isAuthenticated) {
+      setLoading(false);
+      return;
+    }
+
     const fetchTribunal = async () => {
+      // Verificar autenticação antes de cada fetch
+      if (!useAuthStore.getState().isAuthenticated) {
+        return;
+      }
+
       try {
         const result = await apiService.getTribunalActivity();
         setData(result);
+        setError(null);
       } catch (err) {
-        setError('Failed to load Tribunal status');
-        console.error(err);
+        // CORREÇÃO (2025-12-10): Não mostrar erro se não há autenticação
+        const errorMessage = err instanceof Error ? err.message : 'Failed to load Tribunal status';
+        if (errorMessage !== 'Not authenticated') {
+          setError('Failed to load Tribunal status');
+          console.error(err);
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchTribunal();
-    const interval = setInterval(fetchTribunal, 10000);
+    // CORREÇÃO (2025-12-09): Aumentar intervalo para 30s (métricas importantes)
+    const interval = setInterval(fetchTribunal, 30000); // Atualizar a cada 30s
     return () => clearInterval(interval);
   }, []);
 

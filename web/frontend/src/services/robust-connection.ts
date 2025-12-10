@@ -203,13 +203,44 @@ class RobustConnectionService {
     this.isConnected = false;
     this.totalConnectionTime += Date.now() - this.connectionStartTime;
 
+    // CORREÇÃO CRÍTICA (2025-12-09): Não tentar reconectar se já está em polling
+    // Evita loops infinitos de reconexão
+    if (this.currentMode === 'polling') {
+      console.log('[Connection] Já em polling, não tentando reconectar WebSocket');
+      return;
+    }
+
+    // Se já tentou muitas vezes, mudar para polling imediatamente
+    if (this.reconnectAttempts >= this.maxReconnectAttempts) {
+      console.log('[Connection] Máximo de tentativas atingido, mudando para polling');
+      this.switchToPolling();
+      return;
+    }
+
     this.attemptReconnect();
   }
 
   private onWebSocketError(error: Event) {
-    console.error('[Connection] WebSocket error:', error);
-    this.recordFailure('WebSocket error');
-    this.metrics.last_error = 'WebSocket error';
+    // Log detalhado para debug
+    const errorDetails = {
+      type: error.type,
+      target: error.target instanceof WebSocket ? {
+        readyState: error.target.readyState,
+        url: error.target.url,
+        protocol: error.target.protocol,
+      } : null,
+      timeStamp: error.timeStamp,
+    };
+    console.error('[Connection] WebSocket error detalhado:', errorDetails);
+
+    this.recordFailure(`WebSocket error: ${error.type}`);
+    this.metrics.last_error = `WebSocket error: ${error.type}`;
+
+    // Se erro persistente, mudar para polling mais rápido
+    if (this.failureCount >= 3) {
+      console.warn('[Connection] Muitas falhas WebSocket, usando HTTP polling');
+      this.switchToPolling();
+    }
   }
 
   private onWebSocketMessage(event: MessageEvent) {
@@ -235,6 +266,8 @@ class RobustConnectionService {
       clearInterval(this.pollingInterval);
     }
 
+    // CORREÇÃO (2025-12-09): Aumentar delay de polling para reduzir carga
+    this.pollDelay = 5000; // 5 segundos em vez de 2 segundos
     this.pollingInterval = window.setInterval(() => {
       this.pollBackend();
     }, this.pollDelay);
@@ -274,6 +307,7 @@ class RobustConnectionService {
   // ============ RETRY & RECONNECT ============
 
   private attemptReconnect() {
+    // CORREÇÃO CRÍTICA (2025-12-09): Verificações mais rigorosas para evitar loops
     if (this.currentMode === 'polling') {
       // Se já está em polling, não precisa fazer mais
       return;
@@ -285,21 +319,36 @@ class RobustConnectionService {
       return;
     }
 
-    if (this.reconnectTimeout) {
-      clearTimeout(this.reconnectTimeout);
+    // CORREÇÃO: Se circuit breaker está aberto, não tentar reconectar
+    if (this.circuitBreakerOpen) {
+      console.log('[Connection] Circuit breaker aberto, mudando para polling');
+      this.switchToPolling();
+      return;
     }
 
-    // Exponential backoff com jitter
+    if (this.reconnectTimeout) {
+      clearTimeout(this.reconnectTimeout);
+      this.reconnectTimeout = null;
+    }
+
+    // Exponential backoff com jitter (aumentado para reduzir tentativas)
     const delay = Math.min(
-      this.reconnectDelay * Math.pow(1.5, this.reconnectAttempts),
+      this.reconnectDelay * Math.pow(2.0, this.reconnectAttempts), // Aumentado de 1.5 para 2.0
       this.maxReconnectDelay
-    ) + Math.random() * 1000;
+    ) + Math.random() * 2000; // Aumentado de 1000 para 2000
 
     console.log(`[Connection] Reconnecting in ${delay.toFixed(0)}ms (attempt ${this.reconnectAttempts + 1}/${this.maxReconnectAttempts})`);
 
     this.reconnectTimeout = window.setTimeout(() => {
       this.reconnectAttempts++;
       this.metrics.reconnect_attempts = this.reconnectAttempts;
+
+      // Verificar novamente antes de conectar
+      if (this.currentMode === 'polling' || this.circuitBreakerOpen) {
+        console.log('[Connection] Cancelando reconexão - já em polling ou circuit breaker aberto');
+        return;
+      }
+
       this.connectWebSocket();
     }, delay);
   }

@@ -5,10 +5,9 @@ from __future__ import annotations
 import json
 import logging
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from fastapi import APIRouter, Depends, HTTPException
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 from web.backend.auth import verify_credentials
 
@@ -275,6 +274,142 @@ async def autopoietic_health(
         "recent_rollbacks": recent_rollbacks,
         "recent_rejected": recent_rejected,
     }
+
+
+@router.get("/extended/metrics")
+async def get_extended_metrics(
+    user: str = Depends(verify_credentials),
+) -> Dict[str, Any]:
+    """
+    Retorna métricas completas de consciência: Phi, Psi, Sigma, Gozo, Delta.
+
+    Acessa IntegrationLoop global para obter métricas estendidas do último ciclo.
+    """
+    try:
+        from src.consciousness.integration_loop import IntegrationLoop
+        from src.metrics.real_consciousness_metrics import real_metrics_collector
+
+        # Inicializar collector se necessário
+        await real_metrics_collector.initialize()
+
+        # Acessar IntegrationLoop do collector
+        loop = real_metrics_collector.integration_loop
+
+        # Se não houver loop ou não tiver extended results habilitado, criar novo
+        if not loop or not loop.enable_extended_results:
+            # Tentar criar novo loop com extended results
+            try:
+                loop = IntegrationLoop(enable_logging=False, enable_extended_results=True)
+                # Atualizar collector com novo loop
+                real_metrics_collector.integration_loop = loop
+            except Exception as e:
+                logger.warning(f"Erro ao criar IntegrationLoop com extended results: {e}")
+
+        if not loop or not loop.cycle_history:
+            # Se não houver histórico, retornar valores padrão
+            return {
+                "phi": 0.0,
+                "psi": None,
+                "sigma": None,
+                "gozo": None,
+                "delta": None,
+                "triad": None,
+                "history": {
+                    "phi": [],
+                    "psi": [],
+                    "sigma": [],
+                    "gozo": [],
+                    "delta": [],
+                    "timestamps": [],
+                },
+                "last_cycle": None,
+                "message": "No cycle history available",
+            }
+
+        # Obter último ciclo com métricas estendidas
+        last_cycle = loop.cycle_history[-1]
+
+        # Extrair métricas do último ciclo
+        phi = getattr(last_cycle, 'phi_estimate', 0.0)
+        psi = getattr(last_cycle, 'psi', None)
+        sigma = getattr(last_cycle, 'sigma', None)
+        gozo = getattr(last_cycle, 'gozo', None)
+        delta = getattr(last_cycle, 'delta', None)
+        triad = getattr(last_cycle, 'triad', None)
+
+        # Construir histórico das últimas 50 métricas
+        history_size = min(50, len(loop.cycle_history))
+        recent_cycles = loop.cycle_history[-history_size:]
+
+        history = {
+            "phi": [getattr(c, 'phi_estimate', 0.0) for c in recent_cycles],
+            "psi": [getattr(c, 'psi', None) for c in recent_cycles],
+            "sigma": [getattr(c, 'sigma', None) for c in recent_cycles],
+            "gozo": [getattr(c, 'gozo', None) for c in recent_cycles],
+            "delta": [getattr(c, 'delta', None) for c in recent_cycles],
+            "timestamps": [
+                (
+                    timestamp.isoformat()
+                    if (timestamp := getattr(c, 'timestamp', None)) is not None
+                    and hasattr(timestamp, 'isoformat')
+                    else None
+                )
+                for c in recent_cycles
+            ],
+        }
+
+        # Formatar tríade se disponível
+        triad_data = None
+        if triad:
+            triad_data = {
+                "phi": getattr(triad, 'phi', 0.0),
+                "psi": getattr(triad, 'psi', 0.0),
+                "sigma": getattr(triad, 'sigma', 0.0),
+                "step_id": getattr(triad, 'step_id', None),
+                "metadata": getattr(triad, 'metadata', {}),
+            }
+
+        return {
+            "phi": phi,
+            "psi": psi,
+            "sigma": sigma,
+            "gozo": gozo,
+            "delta": delta,
+            "triad": triad_data,
+            "history": history,
+            "last_cycle": {
+                "cycle_number": getattr(last_cycle, 'cycle_number', 0),
+                "timestamp": (
+                    timestamp.isoformat()
+                    if (timestamp := getattr(last_cycle, 'timestamp', None)) is not None
+                    and hasattr(timestamp, 'isoformat')
+                    else None
+                ),
+                "success": getattr(last_cycle, 'success', False),
+            },
+            "total_cycles": len(loop.cycle_history),
+        }
+
+    except Exception as e:
+        logger.error(f"Erro ao coletar métricas estendidas: {e}", exc_info=True)
+        return {
+            "phi": 0.0,
+            "psi": None,
+            "sigma": None,
+            "gozo": None,
+            "delta": None,
+            "triad": None,
+            "history": {
+                "phi": [],
+                "psi": [],
+                "sigma": [],
+                "gozo": [],
+                "delta": [],
+                "timestamps": [],
+            },
+            "error": str(e),
+            "message": "Error collecting extended metrics",
+        }
 
 
 @router.get("/consciousness/metrics")

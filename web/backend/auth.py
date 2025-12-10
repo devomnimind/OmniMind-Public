@@ -7,7 +7,7 @@ import logging
 import os
 from pathlib import Path
 from secrets import compare_digest
-from typing import Optional, Tuple
+from typing import Tuple
 
 from dotenv import load_dotenv
 from fastapi import Depends, HTTPException
@@ -32,7 +32,7 @@ def _get_dashboard_credentials() -> Tuple[str, str]:
     env_pass = os.getenv("OMNIMIND_DASHBOARD_PASS") or os.getenv("DASHBOARD_PASS")
 
     if env_user and env_pass:
-        logger.debug(f"Using credentials from environment variables")
+        logger.debug("Using credentials from environment variables")
         return env_user, env_pass
 
     # 2. Try JSON file (Source of Truth for Local Sovereignty)

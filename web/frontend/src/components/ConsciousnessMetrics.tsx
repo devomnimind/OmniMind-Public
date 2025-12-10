@@ -1,6 +1,7 @@
 import { useDaemonStore } from '../store/daemonStore';
 import { useState, useEffect } from 'react';
 import { apiService } from '../services/api';
+import { useAuthStore } from '../store/authStore';
 
 interface StatusThreshold {
   green: { min: number; max: number; label: string };
@@ -91,7 +92,9 @@ export function ConsciousnessMetrics() {
       try {
         // Se não tiver token, nem tenta buscar
         if (!apiService.getAuthToken()) {
-           return;
+          console.warn('[ConsciousnessMetrics] Sem autenticação, pulando fetch');
+          setLoading(false);
+          return;
         }
 
         // Garantir que credenciais estão configuradas
@@ -100,23 +103,44 @@ export function ConsciousnessMetrics() {
         }
 
         const data = await apiService.getConsciousnessMetrics(true);
-        setMetrics(data);
+        if (data && (data.phi !== undefined || data.history)) {
+          setMetrics(data);
+        } else {
+          console.warn('[ConsciousnessMetrics] Dados inválidos recebidos:', data);
+          // Tentar fallback para dados do store
+          const storeMetrics = status?.consciousness_metrics;
+          if (storeMetrics) {
+            setMetrics(storeMetrics as any);
+          }
+        }
       } catch (error) {
-        console.error('Erro ao buscar métricas de consciência:', error);
+        console.error('[ConsciousnessMetrics] Erro ao buscar métricas:', error);
         // Tentar fallback para dados do store
         const storeMetrics = status?.consciousness_metrics;
         if (storeMetrics) {
+          console.log('[ConsciousnessMetrics] Usando dados do store como fallback');
           setMetrics(storeMetrics as any);
+        } else {
+          // Se não houver dados, mostrar mensagem de erro
+          setMetrics(null);
         }
       } finally {
         setLoading(false);
       }
     };
 
+    // Verificar se está autenticado antes de fazer fetch
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+    if (!isAuthenticated) {
+      setLoading(false);
+      return;
+    }
+
     fetchMetrics();
-    const interval = setInterval(fetchMetrics, 10000); // Atualizar a cada 10s
+    // CORREÇÃO (2025-12-09): Aumentar intervalo para 30s (métricas importantes mas não críticas)
+    const interval = setInterval(fetchMetrics, 30000); // Atualizar a cada 30s
     return () => clearInterval(interval);
-  }, [status]);
+  }, []); // CORREÇÃO: Remover 'status' da dependência para evitar re-renders infinitos
 
   // Fallback para dados do store se API falhar
   const consciousnessMetrics = metrics || (status?.consciousness_metrics as any);

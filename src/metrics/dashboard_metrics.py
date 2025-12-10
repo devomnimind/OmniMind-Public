@@ -43,7 +43,9 @@ def _collect_system_metrics_default() -> Dict[str, Any]:
     if psutil is None:
         raise RuntimeError("psutil não disponível para coleta de métricas do sistema.")
 
-    cpu_percent = psutil.cpu_percent(interval=None)
+    # CORREÇÃO (2025-12-09): interval=None retorna 0.0% na primeira chamada
+    # Usar interval=0.1 para leitura imediata precisa
+    cpu_percent = psutil.cpu_percent(interval=0.1)
     memory = psutil.virtual_memory()
     disk = psutil.disk_usage("/")
 

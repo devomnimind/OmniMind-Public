@@ -1,6 +1,6 @@
 /**
  * Health Dashboard Widget for OmniMind
- * 
+ *
  * Displays real-time health status for all system dependencies with:
  * - Visual status indicators (healthy/degraded/unhealthy)
  * - Response time metrics
@@ -77,7 +77,8 @@ export function HealthDashboard() {
 
   useEffect(() => {
     fetchHealth();
-    const interval = setInterval(fetchHealth, 10000); // Refresh every 10s
+    // CORREÇÃO (2025-12-09): Aumentar intervalo para 30s (métricas importantes)
+    const interval = setInterval(fetchHealth, 30000); // Atualizar a cada 30s
     return () => clearInterval(interval);
   }, []);
 
@@ -92,11 +93,11 @@ export function HealthDashboard() {
       const response = await fetch('/api/v1/health/', {
         headers: apiService.getHeaders(),
       });
-      
+
       if (!response.ok) {
         throw new Error(`Health check failed: ${response.statusText}`);
       }
-      
+
       const data = await response.json();
       setHealth(data);
       setError(null);
@@ -113,11 +114,11 @@ export function HealthDashboard() {
       const response = await fetch(`/api/v1/health/${checkName}/trend`, {
         headers: apiService.getHeaders(),
       });
-      
+
       if (!response.ok) {
         throw new Error(`Trend fetch failed: ${response.statusText}`);
       }
-      
+
       const data = await response.json();
       setTrend(data);
     } catch (err) {

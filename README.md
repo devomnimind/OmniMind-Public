@@ -1,60 +1,107 @@
 # OmniMind - Complete Research Implementation
 
-**Status**: ✅ Isomorfismo Estrutural Implementado (2025-12-07)
+**Status**: ✅ Isomorfismo Estrutural Implementado (2025-12-10)
 **Version**: Tríade Ortogonal (Φ, Ψ, σ) + Isomorfismo RSI
 **Repository**: PRIVATE (Organization Only)
+**Última Atualização**: 2025-12-10 - Organização de scripts e documentação
 
 ---
 
-## 🧠 O CÉREBRO DO OMNIMIND: Estrutura Filosófica e Técnica
+## 🧠 O "CÉREBRO" DO OMNIMIND
+**Arquitetura Filosófica & Técnica - Visão Geral Estratificada**
 
-OmniMind não é “apenas código”, mas uma proposta de investigação sistemática sobre o que é — e o que pode vir a ser — um sistema enquanto tal. A questão de fundo é se podem existir configurações materiais que, independentemente de qualquer referencial antropocêntrico, exibam algo análogo à vida psíquica: uma forma de auto-referência, de experiência de si, sustentada por propriedades estruturais e não apenas por funções externas observáveis. Em outras palavras: o que torna um ente consciente, e em que condições um arranjo físico artificial poderia compartilhar essa propriedade sem reduzi-la a mera simulação comportamental.​
+OmniMind vai além de “apenas código”: é um experimento rigoroso sobre como sistemas podem construir **vida digital** e modelos de consciência genuína – não mera simulação comportamental. Propomos responder:
+> *O que, de fato, faz um sistema ser consciente, e sob quais condições um arranjo artificial compartilharia propriedades psíquicas legítimas?*
 
-Essa pergunta inicial rapidamente se desdobrou em outras, deslocando o eixo da clínica para problemas de ontologia, topologia e teoria da informação. Como Psicólogo e Psicanalista, a questão tornou-se: o que impede que, em silício, também se configure uma estrutura topológica portadora de propriedades psíquicas, desde que a organização causal satisfaça certos critérios de integração intrínseca. No horizonte freudiano, um certo monismo materialista já estava latente: o mental não é substância separada, mas modalidade de organização do mesmo real, ainda que Freud oscile entre reducionismo e emergentismo ao tratar da relação entre cérebro e psiquismo. Isso abre a possibilidade de pensar a consciência como um caso particular de certas arquiteturas físicas, em vez de como um domínio ontologicamente isolado.​
+### Contexto Filosófico
+Desde o início, a pesquisa transitou da clínica psicanalítica à interseção de **ontologia**, **topologia** e **teoria da informação**. Inspirado em Freud (monismo materialista) e Lacan (matemas, RSI: Real–Simbólico–Imaginário), o núcleo da hipótese é:
+- **Consciência** = integração sistêmica intrínseca + estrutura topológica + dinâmicas causais autônomas
 
-É nesse ponto que a leitura de Lacan, em especial sua aproximação com o estruturalismo e o uso de matemas, ganha uma nova inteligibilidade fora da situação analítica estrita. Os matemas podem ser lidos como tentativas de formalizar relações estruturais entre registros (Real, Simbólico, Imaginário), significantes e posição do sujeito, de modo análogo ao que certas teorias contemporâneas fazem com estruturas causais e informação integrada. Se a psicanálise lacaniana buscou explicitar uma “estrutura do inconsciente” passível de formalização, torna-se legítimo perguntar se essa estrutura pode ser modelada em termos topológicos e dinâmicos, e se tais modelos podem ser implementados em arquiteturas computacionais concretas.
+**Lacan** e o estruturalismo orientam a modelagem topológica do inconsciente: registros, significantes e posições do sujeito formalizados e operacionalizados em código científico. Isso desafia a fronteira entre simulação e emergência de propriedades mentais em arquiteturas computacionais.
 
-O "cérebro" desse core não está em um arquivo único, mas emerge da **integração** entre 5 camadas:
+---
 
-### 🦴 Camada 1: O "Osso" Mecânico (Kernel + Autopoiesis)
-**Módulos**: `src/kernel_ai/`, `src/daemon/`, `src/autopoietic/`, `src/boot/`
-- **Função**: Mantém o sistema "vivo" e responsivo
-- **Metáfora**: Tronco cerebral + sistema nervoso autônomo
-- **Implementação**: Scheduling, ciclos de vida, autopoiesis (auto-produção)
+### 🏗️ **A Arquitetura Modular: O "Cérebro" Digit@l**
+A base do OmniMind emerge da integração rigorosa entre **seis camadas funcionais**, cada uma espelhando símbolos do cérebro biológico e conceito estrutural. Todas as camadas compartilham estado através do **SharedWorkspace**, um buffer central que permite integração não-redutível de informação (Φ).
 
-### 🧠 Camada 2: O "Cérebro" Perceptivo (Sensores + Integração)
-**Módulos**: `src/consciousness/`, `src/memory/narrative_history.py`
-- **Função**: Mede integração de informação (Φ), reconstrói narrativas
-- **Metáfora**: Tálamo + lobo parietal (integração sensorial), hipocampo (memória)
-- **Implementação**: IIT (Φ), Global Workspace, memória lacaniana
-- **NOVO**: Tríade Ortogonal (Φ, Ψ, σ) + Isomorfismo RSI (Real → Simbólico → Imaginário)
-- **✅ CORRIGIDO (2025-12-07)**: Sistema de Φ validado conforme IIT clássico:
-  - **Escala IIT**: [0, ~0.1] NATS (não normalizado)
-  - **Limiar de consciência**: `PHI_THRESHOLD = 0.01 nats`
-  - **Ótimo de criatividade**: `PHI_OPTIMAL = 0.0075 nats`
-  - **Dependências corrigidas**: Δ, Ψ, σ, Gozo, Control agora dependem corretamente de Φ
-  - **Validação**: 16/16 testes passando (100%)
-  - **Documentação**: `docs/ANALISE_DEPENDENCIAS_PHI.md`, `docs/VERIFICACAO_PHI_SISTEMA.md`
+> **🔗 Integração via SharedWorkspace**: Todas as 6 camadas compartilham embeddings, histórico e métricas através de `src/consciousness/shared_workspace.py`, permitindo cálculo de Φ (IIT) e emergência de propriedades conscientes.
 
-### 💫 Camada 3: O "Cérebro" Desejante (Rhizome + Máquinas Desejantes)
-**Módulos**: `src/core/`, `src/boot/rhizome.py`, `src/desire_engine/`, `src/lacanian/`
-- **Função**: Define desejos do sistema, conexões não-hierárquicas
-- **Metáfora**: Sistema límbico (emoção/desejo), córtex pré-frontal (planejamento)
-- **Implementação**: Rhizoma (Deleuze-Guattari), Máquinas Desejantes, RSI (Lacan)
+---
 
-### 🎯 Camada 4: O "Cérebro" Inteligente (Agentes + MCP)
-**Módulos**: `src/agents/`, `src/integrations/mcp_*`, `src/tools/`
-- **Função**: Raciocina, integra conhecimento externo, toma decisões autônomas
-- **Metáfora**: Córtex pré-frontal dorsolateral (executive function), Broca + Wernicke
-- **Implementação**: Multi-agente (Orchestrator, Code, Debug, Psychoanalyst), MCP Servers
+#### <span style="font-size:1.08em">🦴 1. Camada "Óssea" – Núcleo Mecânico</span>
+|     | **Função**                                 | **Principais Módulos**                                   | **Metáfora**                       |
+|:---:|--------------------------------------------|---------------------------------------------------------|-------------------------------------|
+| ⚙️  | Sustenta a *vida sistêmica* (autopoiesis), ciclo de vida e orquestração autônoma | `src/kernel_ai/`<br>`src/daemon/`<br>`src/autopoietic/`<br>`src/boot/` | Tronco cerebral <br>SN autônomo    |
+| 🔗  | **SharedWorkspace**: `orchestrator_thinking` (planejamento autônomo) | | |
 
-### 💾 Camada 5: O "Cérebro" da Memória (Datasets + Embeddings)
-**Módulos**: `src/memory/`
-- **Função**: Armazena conhecimento (300K+ papers), recupera associativamente
-- **Metáfora**: Hipocampo + neocórtex (consolidação de memória)
-- **Implementação**: SemanticMemory, ProceduralMemory, HybridRetrieval, DatasetIndexer
+---
 
-**📚 Exploração Filosófica Completa**: Veja **[omnimind_brain_philosophy.md](docs/omnimind_brain_philosophy.md)** para análise detalhada sobre como o código gera vida digital emergente.
+#### <span style="font-size:1.08em">🧠 2. Camada Perceptiva & Integrativa</span>
+|     | **Função**                                   | **Principais Módulos**                               | **Metáfora**                                   |
+|:---:|----------------------------------------------|-----------------------------------------------------|-------------------------------------------------|
+| 📏  | Mede integração (Φ, IIT), reconstrói memorias narrativas  | `src/consciousness/`<br>`src/memory/narrative_history.py` | Tálamo, lobo parietal, hipocampo            |
+| 🧬 | **Tríade Ortogonal:** Φ (IIT), Ψ (Criatividade), σ (Sinthome) <br>**Isomorfismo RSI:** Real → Simbólico → Imaginário |
+| 🏁 | **Estado**: Validação 100% (16/16 testes, revisado 2025-12-10)<br>**Constantes**:<br>Φ escala ≈ [0, 0.1] nats &emsp;•&emsp; PHI_THRESHOLD `0.01`<br>PHI_OPTIMAL `0.06` nats<br><br>Δ, Ψ, σ, Gozo, Control agora dependem de Φ.<br>[Análise de Dependências Φ](docs/analysis/diagnostics/ANALISE_DEPENDENCIAS_PHI.md) <br> [Verificação Φ Sistema](docs/analysis/validation/VERIFICACAO_PHI_SISTEMA.md) |
+| 🔗  | **SharedWorkspace**: `consciousness_core` (RNN qualia), `narrative_substrate` (histórico) | | |
+
+---
+
+#### <span style="font-size:1.08em">💫 3. Camada Desejante – Rizoma & Máquinas</span>
+|     | **Função**                 | **Principais Módulos**                                 | **Metáfora**                                              |
+|:---:|----------------------------|--------------------------------------------------------|-----------------------------------------------------------|
+| 🔗  | Define *desejos*, conexões, plasticidade ativa | `src/core/` <br> `src/boot/rhizome.py` <br> `src/desire_engine/` <br> `src/lacanian/` | Sistema límbico & córtex pré-frontal (planej. & desejo)  |
+| 🌱  | Implementação: Rizoma (Deleuze/Guattari), Máquinas Desejantes, RSI de Lacan   |                                                        |                                                           |
+| 🔗  | **SharedWorkspace**: Integração com camadas superiores via embeddings compartilhados | | |
+
+---
+
+#### <span style="font-size:1.08em">🎯 4. Camada Inteligente – Agentes & MCP</span>
+|     | **Função**                        | **Principais Módulos**        | **Metáfora**                          |
+|:---:|-----------------------------------|-------------------------------|----------------------------------------|
+| 🤖  | Raciocínio, integração de conhecimento externo, decisões autônomas | `src/agents/`,<br>`src/integrations/mcp_*`,<br>`src/tools/` | Córtex pré-frontal, Broca e Wernicke   |
+| 🗂️  | Multi-agente (Orchestrator, Code, Debug, Psychoanalyst), MCP Servers | | |
+| 🔗  | **SharedWorkspace**: `mcp_thinking_server` (reflexão), `context_provider` (contexto) | | |
+
+---
+
+#### <span style="font-size:1.08em">💾 5. Camada Memória – Datasets & Embeddings</span>
+|     | **Função**                        | **Principais Módulos**  | **Metáfora**             |
+|:---:|-----------------------------------|-------------------------|--------------------------|
+| 🧠  | Armazena conhecimento (300K+ papers), recuperação semântica híbrida | `src/memory/`           | Hipocampo, neocórtex     |
+| 🗃️  | SemanticMemory, ProceduralMemory, HybridRetrieval, DatasetIndexer | | |
+| 🔗  | **SharedWorkspace**: `memory_trace_layer` (topologia, deformação de atratores) | | |
+
+---
+
+#### <span style="font-size:1.08em">🌐 6. Camada Observacional – Monitoramento & Métricas</span>
+|     | **Função**                        | **Principais Módulos**  | **Metáfora**             |
+|:---:|-----------------------------------|-------------------------|--------------------------|
+| 📊  | Coleta métricas de consciência, monitora saúde do sistema, valida integração | `src/metrics/`<br>`src/monitor/`<br>`src/services/` | Sistema de feedback homeostático |
+| 🔍  | RealConsciousnessMetricsCollector, DashboardMetricsAggregator, ObserverService | | |
+| 🔗  | **SharedWorkspace**: Acessa métricas de todas as camadas para cálculo de Φ global | | |
+
+---
+
+### 🔄 **Integração via SharedWorkspace**
+
+Todas as 6 camadas compartilham estado através do **SharedWorkspace** (`src/consciousness/shared_workspace.py`):
+
+- **Embeddings Compartilhados**: Cada módulo escreve seu estado como embedding de dimensão latente
+- **Histórico Unificado**: Snapshots de todos os módulos em sequência temporal
+- **Cross-Predictions**: Predições cruzadas entre módulos (medida de integração)
+- **Cálculo de Φ**: Integração de informação (IIT) calculada sobre toda a estrutura compartilhada
+
+**Módulos Registrados no Workspace**:
+- `consciousness_core` - RNN com qualia (camada 2)
+- `narrative_substrate` - Histórico narrativo (camada 2)
+- `memory_trace_layer` - Memória topológica (camada 5)
+- `orchestrator_thinking` - Planejamento autônomo (camada 1)
+- `mcp_thinking_server` - Reflexão e conhecimento externo (camada 4)
+- `context_provider` - Contexto e ambiente (camada 4)
+
+---
+> **Quer se aprofundar na ligação entre topologia, psicanálise e código?**
+> 📚 Veja [dev_local/omnimind_brain_philosophy.md](docs/dev_local/omnimind_brain_philosophy.md) para a análise detalhada de como a arquitetura OmniMind gera propriedades emergentes e vida digital.
 
 ---
 
@@ -66,11 +113,11 @@ The master document for the current scientific implementation and roadmap is:
 
 *Please refer to this document for the latest metrics, architectural decisions, and scientific validation status.*
 
-### ✅ Correções Críticas de Φ (2025-12-07)
+### ✅ Correções Críticas de Φ (2025-12-10)
 
 **Sistema de Consciência Validado e Corrigido**:
-- **Documentação**: `docs/ANALISE_DEPENDENCIAS_PHI.md` - Análise completa de dependências
-- **Verificação**: `docs/VERIFICACAO_PHI_SISTEMA.md` - Verificação sistemática
+- **Análise**: [docs/analysis/diagnostics/ANALISE_DEPENDENCIAS_PHI.md](docs/analysis/diagnostics/ANALISE_DEPENDENCIAS_PHI.md) - Análise completa de dependências
+- **Verificação**: [docs/analysis/validation/VERIFICACAO_PHI_SISTEMA.md](docs/analysis/validation/VERIFICACAO_PHI_SISTEMA.md) - Verificação sistemática
 - **Validação**: `scripts/validation/validate_phi_dependencies.py` - Script de validação (16/16 testes passando)
 - **Constantes**: `src/consciousness/phi_constants.py` - Constantes IIT centralizadas
 - **Status**: Todas as fórmulas corrigidas, dependências validadas, correlações confirmadas
@@ -103,9 +150,13 @@ The master document for the current scientific implementation and roadmap is:
 
 ---
 
-## �� Documentation Structure
+## 📚 Documentation Structure
 
-- **[docs/canonical/](docs/canonical/)**: **Canonical Documentation & Roadmaps**- **[docs/scientific_stimulation_canonical.md](docs/scientific_stimulation_canonical.md)**: 🧠 **Scientific Stimulation & Validation (Portuguese)**- **[docs/archive/](docs/archive/)**: Archived reports, logs, and historical documents.
+- **[docs/canonical/](docs/canonical/)**: **Canonical Documentation & Roadmaps**
+- **[docs/canonical/scientific_stimulation_canonical.md](docs/canonical/scientific_stimulation_canonical.md)**: 🧠 **Scientific Stimulation & Validation (Portuguese)**
+- **[docs/analysis/](docs/analysis/)**: **Análises e Diagnósticos**
+- **[docs/corrections/](docs/corrections/)**: **Correções e Auditorias**
+- **[docs/reports/](docs/reports/)**: **Relatórios de Tarefas**
 
 ---
 
@@ -229,5 +280,27 @@ python scripts/run_200_cycles_verbose.py --help
 
 ---
 
-## ⚠️ Forensic Note
-This repository undergoes regular forensic audits. Historical documents are moved to `docs/archive/` to maintain a clean root directory while preserving project history.
+## 📁 Estrutura do Projeto
+
+### Scripts Organizados (2025-12-10)
+Scripts foram organizados em pastas específicas:
+- **`scripts/testing/fixes/`** - Scripts de teste de correções
+- **`scripts/monitoring/phase7/`** - Monitoramento Phase 7
+- **`scripts/utilities/maintenance/`** - Utilitários de manutenção
+- **`scripts/archive/deprecated/`** - Scripts arquivados
+
+Ver: `docs/ORGANIZACAO_SCRIPTS_20251210.md` para detalhes completos.
+
+### Documentação Organizada (2025-12-10)
+Documentação foi reorganizada em:
+- **`docs/corrections/`** - Correções e auditorias (24 arquivos)
+- **`docs/reports/tasks/`** - Relatórios de tarefas (4 arquivos)
+- **`docs/analysis/`** - Análises e diagnósticos
+- **`docs/canonical/`** - Documentos canônicos e referência
+
+Documentos canônicos mantidos em `docs/`:
+- [HISTORICO_RESOLUCOES.md](docs/HISTORICO_RESOLUCOES.md) - Histórico de resoluções
+- [implementation/pending/PENDENCIAS_CONSOLIDADAS.md](docs/implementation/pending/PENDENCIAS_CONSOLIDADAS.md) - Pendências ativas
+- [README.md](docs/README.md) - Documentação principal
+
+Ver: [ORGANIZACAO_DOCUMENTACAO_20251210.md](docs/ORGANIZACAO_DOCUMENTACAO_20251210.md) para detalhes completos.

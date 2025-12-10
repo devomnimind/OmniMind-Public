@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDaemonStore } from '../store/daemonStore';
 import { apiService } from '../services/api';
 import { useBackendHealth } from '../hooks/useBackendHealth';
+import { useAuthStore } from '../store/authStore';
 
 const AGENT_TYPE_ICONS = {
   orchestrator: '🪃',
@@ -34,30 +35,47 @@ export function AgentStatus() {
   const { isOnline, consecutiveFailures } = useBackendHealth();
 
   useEffect(() => {
+    // CORREÇÃO CRÍTICA (2025-12-10): Verificar autenticação antes de fazer fetch
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+    if (!isAuthenticated) {
+      console.log('[AgentStatus] Sem autenticação, pausando polling');
+      return;
+    }
+
     // Não fazer polling se backend está offline
     if (!isOnline) {
       console.log('[AgentStatus] Backend offline, pausando polling');
       return;
     }
 
-    // Fetch real agent data from backend API
+    // CORREÇÃO CRÍTICA (2025-12-09): Função estável dentro do useEffect para evitar loop
     const fetchAgents = async () => {
+      // Verificar autenticação antes de cada fetch
+      if (!useAuthStore.getState().isAuthenticated) {
+        return;
+      }
+
       try {
         const data = await apiService.getAgents();
         if (data && data.agents) {
           setAgents(data.agents);
         }
       } catch (error) {
-        console.error('Failed to fetch agents:', error);
+        // CORREÇÃO (2025-12-10): Não logar erro se não há autenticação
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        if (errorMessage !== 'Not authenticated') {
+          console.error('Failed to fetch agents:', error);
+        }
         // Fallback: empty list instead of mock data
       }
     };
 
-    // Fetch on component mount and refresh every 10 seconds (apenas se online)
+    // Fetch on component mount and refresh every 30 seconds (apenas se online)
     fetchAgents();
-    const interval = setInterval(fetchAgents, 10000);
+    // CORREÇÃO (2025-12-09): Aumentar intervalo para 30s (métricas importantes)
+    const interval = setInterval(fetchAgents, 30000); // Atualizar a cada 30s
     return () => clearInterval(interval);
-  }, [setAgents, isOnline]);
+  }, [isOnline]); // CORREÇÃO: Remover setAgents (função estável do zustand) e usar apenas isOnline
 
   const formatUptime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);

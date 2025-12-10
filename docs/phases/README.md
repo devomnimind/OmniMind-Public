@@ -45,10 +45,4 @@
 
 ---
 
-## Archive
-Older/reference documents from initial analysis:
-- See individual phase folders for session-specific history if needed
-
----
-
 **Structure Principle**: One document per major topic, organized by phase in `docs/phases/`

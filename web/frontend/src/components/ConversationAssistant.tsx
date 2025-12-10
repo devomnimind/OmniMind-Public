@@ -200,6 +200,19 @@ export function ConversationAssistant() {
     );
   };
 
+  // Não renderizar se fechado
+  if (!state.isOpen) {
+    return (
+      <button
+        onClick={() => setState(prev => ({ ...prev, isOpen: true }))}
+        className="fixed bottom-4 right-4 w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white rounded-full shadow-2xl z-40 flex items-center justify-center text-2xl transition-all hover:scale-110"
+        title="Abrir Assistente OmniMind"
+      >
+        💬
+      </button>
+    );
+  }
+
   return (
     <div className="fixed bottom-4 right-4 w-96 h-[600px] flex flex-col bg-gray-800 rounded-lg border border-gray-700 shadow-2xl z-40">
       {/* Header */}
@@ -208,12 +221,22 @@ export function ConversationAssistant() {
           <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
           <h3 className="text-white font-semibold">🤖 Assistente OmniMind</h3>
         </div>
-        <button
-          onClick={() => setState(prev => ({ ...prev, isOpen: !prev.isOpen }))}
-          className="text-gray-400 hover:text-gray-200 transition-colors"
-        >
-          {state.isOpen ? '−' : '×'}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setState(prev => ({ ...prev, isOpen: !prev.isOpen }))}
+            className="text-gray-400 hover:text-gray-200 transition-colors px-2 py-1 rounded hover:bg-gray-700"
+            title={state.isOpen ? 'Minimizar' : 'Expandir'}
+          >
+            {state.isOpen ? '−' : '+'}
+          </button>
+          <button
+            onClick={() => setState(prev => ({ ...prev, isOpen: false }))}
+            className="text-gray-400 hover:text-red-400 transition-colors px-2 py-1 rounded hover:bg-gray-700"
+            title="Fechar"
+          >
+            ×
+          </button>
+        </div>
       </div>
 
       {/* Messages Container */}

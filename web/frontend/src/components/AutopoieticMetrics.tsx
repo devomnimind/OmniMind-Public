@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { apiService } from '../services/api';
+import { useAuthStore } from '../store/authStore';
 import {
   LineChart,
   Line,
@@ -67,15 +68,27 @@ export function AutopoieticMetrics() {
       // Usar apiService que já tem autenticação configurada
       const [statusData, cyclesData, statsData] = await Promise.all([
         apiService.getAutopoieticStatus().catch((err) => {
-          console.error('Erro ao buscar status:', err);
+          // CORREÇÃO (2025-12-10): Não logar erro se não há autenticação
+          const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+          if (errorMessage !== 'Not authenticated') {
+            console.error('Erro ao buscar status:', err);
+          }
           return null;
         }),
         apiService.getAutopoieticCycles(50).catch((err) => {
-          console.error('Erro ao buscar ciclos:', err);
+          // CORREÇÃO (2025-12-10): Não logar erro se não há autenticação
+          const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+          if (errorMessage !== 'Not authenticated') {
+            console.error('Erro ao buscar ciclos:', err);
+          }
           return { cycles: [], total: 0 };
         }),
         apiService.getAutopoieticCycleStats().catch((err) => {
-          console.error('Erro ao buscar stats:', err);
+          // CORREÇÃO (2025-12-10): Não logar erro se não há autenticação
+          const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+          if (errorMessage !== 'Not authenticated') {
+            console.error('Erro ao buscar stats:', err);
+          }
           return null;
         }),
       ]);
@@ -121,15 +134,28 @@ export function AutopoieticMetrics() {
   };
 
   useEffect(() => {
+    // Verificar autenticação antes de fazer fetch
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+    if (!isAuthenticated) {
+      setLoading(false);
+      return;
+    }
+
     fetchData();
-    const interval = setInterval(fetchData, 30000); // Atualizar a cada 30s
+    // CORREÇÃO (2025-12-09): Manter 30s (métricas importantes mas não críticas)
+    const interval = setInterval(() => {
+      // Verificar autenticação antes de cada fetch
+      if (useAuthStore.getState().isAuthenticated) {
+        fetchData();
+      }
+    }, 30000); // Atualizar a cada 30s (métricas importantes)
     return () => clearInterval(interval);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
     return (
-      <div className="p-6 bg-white rounded-lg shadow">
-        <div className="animate-pulse">Carregando métricas autopoiéticas...</div>
+      <div className="glass-card p-6">
+        <div className="text-gray-300 animate-pulse">Carregando métricas autopoiéticas...</div>
       </div>
     );
   }
@@ -137,8 +163,8 @@ export function AutopoieticMetrics() {
   // Verificar se status está disponível
   if (!status) {
     return (
-      <div className="p-6 bg-white rounded-lg shadow">
-        <h2 className="text-2xl font-bold mb-4">🔄 Status do Ciclo Autopoiético</h2>
+      <div className="glass-card p-6">
+        <h2 className="text-2xl font-bold mb-4 text-white">🔄 Status do Ciclo Autopoiético</h2>
         <div className="text-gray-400 text-center py-8">
           Status não disponível. Verificando conexão com backend...
         </div>
@@ -175,38 +201,38 @@ export function AutopoieticMetrics() {
   return (
     <div className="space-y-6">
       {/* Status Card */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-2xl font-bold mb-4">🔄 Status do Ciclo Autopoiético</h2>
+      <div className="glass-card p-6">
+        <h2 className="text-2xl font-bold mb-4 text-white">🔄 Status do Ciclo Autopoiético</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div>
-            <div className="text-sm text-gray-600">Status</div>
-            <div className="text-xl font-semibold">
+            <div className="text-sm text-gray-400">Status</div>
+            <div className="text-xl font-semibold text-white">
               {status?.running ? (
-                <span className="text-green-600">● Rodando</span>
+                <span className="text-green-400">● Rodando</span>
               ) : (
-                <span className="text-red-600">● Parado</span>
+                <span className="text-red-400">● Parado</span>
               )}
             </div>
           </div>
           <div>
-            <div className="text-sm text-gray-600">Total de Ciclos</div>
-            <div className="text-xl font-semibold">{status?.cycle_count || 0}</div>
+            <div className="text-sm text-gray-400">Total de Ciclos</div>
+            <div className="text-xl font-semibold text-white">{status?.cycle_count || 0}</div>
           </div>
           <div>
-            <div className="text-sm text-gray-600">Componentes</div>
-            <div className="text-xl font-semibold">{status?.component_count || 0}</div>
+            <div className="text-sm text-gray-400">Componentes</div>
+            <div className="text-xl font-semibold text-white">{status?.component_count || 0}</div>
           </div>
           <div>
-            <div className="text-sm text-gray-600">Φ Atual</div>
-            <div className="text-xl font-semibold">
+            <div className="text-sm text-gray-400">Φ Atual</div>
+            <div className="text-xl font-semibold text-white">
               {status && status.current_phi !== null && status.current_phi !== undefined
                 ? status.current_phi.toFixed(4)
                 : 'N/A'}
               {status && status.current_phi !== null && status.current_phi !== undefined &&
                 (status.current_phi < (status.phi_threshold || 0.3) ? (
-                  <span className="text-red-600 ml-2">⚠️</span>
+                  <span className="text-red-400 ml-2">⚠️</span>
                 ) : (
-                  <span className="text-green-600 ml-2">✓</span>
+                  <span className="text-green-400 ml-2">✓</span>
                 ))}
             </div>
           </div>
@@ -215,45 +241,45 @@ export function AutopoieticMetrics() {
 
       {/* Estatísticas Gerais */}
       {stats && (
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-2xl font-bold mb-4">📊 Estatísticas Gerais</h2>
+        <div className="glass-card p-6">
+          <h2 className="text-2xl font-bold mb-4 text-white">📊 Estatísticas Gerais</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div>
-              <div className="text-sm text-gray-600">Total de Ciclos</div>
-              <div className="text-2xl font-bold">{stats.total_cycles}</div>
+              <div className="text-sm text-gray-400">Total de Ciclos</div>
+              <div className="text-2xl font-bold text-white">{stats.total_cycles}</div>
             </div>
             <div>
-              <div className="text-sm text-gray-600">Sínteses Bem-sucedidas</div>
-              <div className="text-2xl font-bold text-green-600">
+              <div className="text-sm text-gray-400">Sínteses Bem-sucedidas</div>
+              <div className="text-2xl font-bold text-green-400">
                 {stats.successful_syntheses}
               </div>
             </div>
             <div>
-              <div className="text-sm text-gray-600">Rejeitados (Φ baixo)</div>
-              <div className="text-2xl font-bold text-yellow-600">
+              <div className="text-sm text-gray-400">Rejeitados (Φ baixo)</div>
+              <div className="text-2xl font-bold text-yellow-400">
                 {stats.rejected_before}
               </div>
             </div>
             <div>
-              <div className="text-sm text-gray-600">Rollbacks</div>
-              <div className="text-2xl font-bold text-red-600">{stats.rolled_back}</div>
+              <div className="text-sm text-gray-400">Rollbacks</div>
+              <div className="text-2xl font-bold text-red-400">{stats.rolled_back}</div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <div className="text-sm text-gray-600">Φ Médio (Antes)</div>
-              <div className="text-xl font-semibold">{stats.phi_before_avg.toFixed(4)}</div>
+              <div className="text-sm text-gray-400">Φ Médio (Antes)</div>
+              <div className="text-xl font-semibold text-white">{stats.phi_before_avg.toFixed(4)}</div>
             </div>
             <div>
-              <div className="text-sm text-gray-600">Φ Médio (Depois)</div>
-              <div className="text-xl font-semibold">{stats.phi_after_avg.toFixed(4)}</div>
+              <div className="text-sm text-gray-400">Φ Médio (Depois)</div>
+              <div className="text-xl font-semibold text-white">{stats.phi_after_avg.toFixed(4)}</div>
             </div>
             <div>
-              <div className="text-sm text-gray-600">ΔΦ Médio</div>
+              <div className="text-sm text-gray-400">ΔΦ Médio</div>
               <div
                 className={`text-xl font-semibold ${
-                  stats.phi_delta_avg >= 0 ? 'text-green-600' : 'text-red-600'
+                  stats.phi_delta_avg >= 0 ? 'text-green-400' : 'text-red-400'
                 }`}
               >
                 {stats.phi_delta_avg >= 0 ? '+' : ''}
@@ -268,15 +294,15 @@ export function AutopoieticMetrics() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Histórico de Φ */}
         {phiHistory.length > 0 && (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-xl font-bold mb-4">📈 Histórico de Φ (Últimos 30 ciclos)</h3>
+          <div className="glass-card p-6">
+            <h3 className="text-xl font-bold mb-4 text-white">📈 Histórico de Φ (Últimos 30 ciclos)</h3>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={phiHistory}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="cycle" />
-                <YAxis domain={[0, 1]} />
-                <Tooltip />
-                <Legend />
+                <CartesianGrid strokeDasharray="3 3" stroke="#4b5563" />
+                <XAxis dataKey="cycle" stroke="#9ca3af" tick={{ fill: '#9ca3af' }} />
+                <YAxis domain={[0, 1]} stroke="#9ca3af" tick={{ fill: '#9ca3af' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #4b5563', color: '#f3f4f6' }} />
+                <Legend wrapperStyle={{ color: '#f3f4f6' }} />
                 <Line
                   type="monotone"
                   dataKey="phiBefore"
@@ -306,8 +332,8 @@ export function AutopoieticMetrics() {
 
         {/* Distribuição de Estratégias */}
         {strategyData.length > 0 && (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-xl font-bold mb-4">🔧 Distribuição de Estratégias</h3>
+          <div className="glass-card p-6">
+            <h3 className="text-xl font-bold mb-4 text-white">🔧 Distribuição de Estratégias</h3>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -319,12 +345,13 @@ export function AutopoieticMetrics() {
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
+                  style={{ fontSize: '12px', fill: '#f3f4f6' }}
                 >
                   {strategyData.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #4b5563', color: '#f3f4f6' }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -332,14 +359,14 @@ export function AutopoieticMetrics() {
 
         {/* Resultados dos Ciclos */}
         {outcomeData.length > 0 && (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-xl font-bold mb-4">📊 Resultados dos Ciclos</h3>
+          <div className="glass-card p-6">
+            <h3 className="text-xl font-bold mb-4 text-white">📊 Resultados dos Ciclos</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={outcomeData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
+                <CartesianGrid strokeDasharray="3 3" stroke="#4b5563" />
+                <XAxis dataKey="name" stroke="#9ca3af" tick={{ fill: '#9ca3af' }} />
+                <YAxis stroke="#9ca3af" tick={{ fill: '#9ca3af' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #4b5563', color: '#f3f4f6' }} />
                 <Bar dataKey="value" fill="#8884d8">
                   {outcomeData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />

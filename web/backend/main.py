@@ -21,7 +21,6 @@ from base64 import b64encode
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
 from contextlib import asynccontextmanager, suppress
 from pathlib import Path
-from secrets import compare_digest
 from typing import Any, Callable, Dict, Optional, Tuple
 
 from dotenv import load_dotenv
@@ -34,9 +33,9 @@ from fastapi import (
     WebSocketDisconnect,
 )
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi.security import HTTPBasic
 from pydantic import BaseModel
-from starlette.status import HTTP_401_UNAUTHORIZED, WS_1008_POLICY_VIOLATION
+from starlette.status import WS_1008_POLICY_VIOLATION
 
 from src.agents.orchestrator_agent import OrchestratorAgent
 from src.metrics.dashboard_metrics import (

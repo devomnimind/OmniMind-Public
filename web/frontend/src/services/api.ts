@@ -62,8 +62,14 @@ class ApiService {
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     // Garantir que credenciais estão configuradas
+    // CORREÇÃO CRÍTICA (2025-12-10): Verificar autenticação antes de fazer request
     if (!this.getAuthToken()) {
+      // Tentar usar credenciais padrão primeiro
       this.setDefaultCredentials();
+      // Se ainda não tiver token após setDefaultCredentials, lançar erro
+      if (!this.getAuthToken()) {
+        throw new Error('Not authenticated');
+      }
     }
 
     const headers = {
@@ -72,10 +78,18 @@ class ApiService {
       ...options.headers,
     };
 
-    // CORREÇÃO (2025-12-08): Adicionar timeout para evitar esperas longas
-    // Evita sobrecarga quando backend está offline
+    // CORREÇÃO CRÍTICA (2025-12-10): Timeout adaptativo aumentado
+    // Backend pode estar sobrecarregado, aumentar timeouts significativamente
+    const criticalEndpoints = ['/daemon/status', '/api/v1/autopoietic/consciousness/metrics'];
+    const slowEndpoints = ['/api/v1/autopoietic/status', '/api/v1/autopoietic/cycles', '/api/tribunal', '/api/metacognition'];
+    const isCritical = criticalEndpoints.some(ep => endpoint.includes(ep));
+    const isSlow = slowEndpoints.some(ep => endpoint.includes(ep));
+
+    // Timeouts aumentados: 30s críticos, 20s lentos, 15s normais
+    const timeoutMs = isCritical ? 30000 : (isSlow ? 20000 : 15000);
+
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
     try {
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -285,6 +299,12 @@ class ApiService {
     // Backend endpoint: GET /api/v1/autopoietic/consciousness/metrics?include_raw=...
     // Returns: φ (Phi), anxiety, flow, entropy, ICI, PRS + history + interpretations
     return this.get(`/api/v1/autopoietic/consciousness/metrics?include_raw=${includeRaw}`);
+  }
+
+  async getExtendedMetrics(): Promise<any> {
+    // Backend endpoint: GET /api/v1/autopoietic/extended/metrics
+    // Returns: Phi, Psi, Sigma, Gozo, Delta + history + triad
+    return this.get('/api/v1/autopoietic/extended/metrics');
   }
 
   // Metacognition endpoints with full support

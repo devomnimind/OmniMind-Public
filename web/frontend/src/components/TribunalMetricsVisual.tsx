@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { apiService } from '../services/api';
+import { useAuthStore } from '../store/authStore';
 
 interface MetricsData {
   raw_metrics: {
@@ -36,14 +37,30 @@ export function TribunalMetricsVisual() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // CORREÇÃO CRÍTICA (2025-12-10): Verificar autenticação antes de fazer fetch
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+    if (!isAuthenticated) {
+      setLoading(false);
+      return;
+    }
+
     const fetchMetrics = async () => {
+      // Verificar autenticação antes de cada fetch
+      if (!useAuthStore.getState().isAuthenticated) {
+        return;
+      }
+
       try {
         const result = await apiService.getTribunalMetrics();
         setData(result);
         setError(null);
       } catch (err) {
-        setError('Failed to load Tribunal metrics');
-        console.error(err);
+        // CORREÇÃO (2025-12-10): Não mostrar erro se não há autenticação
+        const errorMessage = err instanceof Error ? err.message : 'Failed to load Tribunal metrics';
+        if (errorMessage !== 'Not authenticated' && !errorMessage.includes('Failed to fetch')) {
+          setError('Failed to load Tribunal metrics');
+          console.error(err);
+        }
       } finally {
         setLoading(false);
       }
@@ -58,11 +75,24 @@ export function TribunalMetricsVisual() {
   if (error) return <div className="glass-card p-6 text-red-500">{error}</div>;
   if (!data) return null;
 
+  // CORREÇÃO (2025-12-10): Tratar dados ausentes ou incompletos
   const { raw_metrics, interpretations, visualization } = data;
+  if (!visualization || !visualization.status_indicators) {
+    return (
+      <div className="glass-card p-6">
+        <div className="text-yellow-500">⚠️ Tribunal data incomplete. Waiting for report...</div>
+      </div>
+    );
+  }
+
   const { summary_metrics, status_indicators } = visualization;
-  const threatIndicator = status_indicators.threat_level;
-  const perfIndicator = status_indicators.performance;
-  const consIndicator = status_indicators.consciousness_compatibility;
+  const threatIndicator = status_indicators.threat_level || { value: "unknown", color: "#888", icon: "❓" };
+  const perfIndicator = status_indicators.performance || { value: "unknown", color: "#888", icon: "❓" };
+  const consIndicator = status_indicators.consciousness_compatibility || { 
+    value: "Unknown", 
+    color: "#888", 
+    icon: "❓" 
+  };
 
   return (
     <div className="space-y-4">

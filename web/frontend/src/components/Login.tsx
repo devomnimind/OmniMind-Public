@@ -37,13 +37,44 @@ export function Login() {
     e.preventDefault();
     setError('');
 
+    // Validação básica
+    if (!username || !password) {
+      setError('Por favor, preencha usuário e senha');
+      return;
+    }
+
     try {
+      // Configurar credenciais antes de testar
       apiService.setCredentials(username, password);
-      // Test credentials by fetching daemon status
-      await apiService.getDaemonStatus();
-      login(username, password);
+
+      // Testar conexão com backend primeiro (endpoint público)
+      try {
+        const healthCheck = await fetch(`${API_BASE_URL}/health/`);
+        if (!healthCheck.ok) {
+          throw new Error('Backend não está respondendo');
+        }
+      } catch (healthErr) {
+        setError('Backend não está disponível. Verifique se o servidor está rodando.');
+        console.error('Health check failed:', healthErr);
+        return;
+      }
+
+      // Testar autenticação com endpoint protegido
+      try {
+        await apiService.getDaemonStatus();
+        // Se chegou aqui, autenticação funcionou
+        login(username, password);
+      } catch (authErr) {
+        // Erro específico de autenticação
+        if (authErr instanceof Error && authErr.message.includes('401')) {
+          setError('Credenciais inválidas. Verifique usuário e senha.');
+        } else {
+          setError(`Erro de autenticação: ${authErr instanceof Error ? authErr.message : 'Erro desconhecido'}`);
+        }
+        console.error('Authentication error:', authErr);
+      }
     } catch (err) {
-      setError('Invalid credentials or server unavailable');
+      setError(`Erro ao fazer login: ${err instanceof Error ? err.message : 'Erro desconhecido'}`);
       console.error('Login error:', err);
     }
   };

@@ -13,7 +13,8 @@ interface AnalyticsData {
 
 export function RealtimeAnalytics() {
   const { lastMessage } = useWebSocket();
-  const uptimeSeconds = useDaemonStore((state) => state.status?.uptime_seconds ?? 0);
+  const status = useDaemonStore((state) => state.status);
+  const uptimeSeconds = status?.uptime_seconds ?? 0;
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData[]>([]);
   const [currentMetrics, setCurrentMetrics] = useState({
     cpu: 0,
@@ -22,27 +23,90 @@ export function RealtimeAnalytics() {
     agents: 0,
   });
 
+  // CORREÇÃO CRÍTICA (2025-12-09): Fallback para dados do daemonStore quando WebSocket não tem dados
   useEffect(() => {
-    if (lastMessage?.type === 'metrics_update') {
-      const data = lastMessage.data as any;
-      const newDataPoint: AnalyticsData = {
-        timestamp: new Date().toISOString(),
-        cpu_usage: data.cpu_percent || 0,
-        memory_usage: data.memory_percent || 0,
-        active_tasks: data.active_tasks || 0,
-        completed_tasks: data.completed_tasks || 0,
-        agent_activity: data.agent_count || 0,
-      };
+    if (!status?.system_metrics) return;
 
-      setAnalyticsData((prev) => [...prev.slice(-29), newDataPoint]);
-      setCurrentMetrics({
+    const systemMetrics = status.system_metrics;
+    const fallbackMetrics = {
+      cpu: systemMetrics.cpu_percent || 0,
+      memory: systemMetrics.memory_percent || 0,
+      tasks: status.task_count || 0,
+      agents: status.agents?.length || 0,
+    };
+
+    // Só atualizar se valores são diferentes e não temos dados WebSocket recentes
+    setCurrentMetrics((prev) => {
+      // Se temos dados WebSocket recentes (últimos 5 segundos), não usar fallback
+      const hasRecentWebSocketData = analyticsData.length > 0 &&
+        (Date.now() - new Date(analyticsData[analyticsData.length - 1].timestamp).getTime()) < 5000;
+
+      if (hasRecentWebSocketData) {
+        return prev; // Manter dados WebSocket
+      }
+
+      // Usar fallback apenas se valores são diferentes
+      if (
+        prev.cpu !== fallbackMetrics.cpu ||
+        prev.memory !== fallbackMetrics.memory ||
+        prev.tasks !== fallbackMetrics.tasks ||
+        prev.agents !== fallbackMetrics.agents
+      ) {
+        return fallbackMetrics;
+      }
+
+      return prev;
+    });
+  }, [status?.system_metrics?.cpu_percent, status?.system_metrics?.memory_percent, status?.task_count, status?.agents?.length, analyticsData.length]); // CORREÇÃO: Depender apenas de valores primitivos
+
+  useEffect(() => {
+    // CORREÇÃO CRÍTICA (2025-12-09): Depender apenas de campos estáveis para evitar re-renders constantes
+    if (!lastMessage || lastMessage.type !== 'metrics_update') return;
+
+    // CORREÇÃO: Usar useRef para evitar atualizações se os dados não mudaram
+    const data = lastMessage.data as any;
+    const messageId = lastMessage.id || `${lastMessage.type}-${Date.now()}`;
+
+    // Verificar se já processamos esta mensagem
+    const newDataPoint: AnalyticsData = {
+      timestamp: new Date().toISOString(),
+      cpu_usage: data.cpu_percent || 0,
+      memory_usage: data.memory_percent || 0,
+      active_tasks: data.active_tasks || 0,
+      completed_tasks: data.completed_tasks || 0,
+      agent_activity: data.agent_count || 0,
+    };
+
+    setAnalyticsData((prev) => {
+      // Evitar duplicatas
+      const lastPoint = prev[prev.length - 1];
+      if (lastPoint && lastPoint.timestamp === newDataPoint.timestamp) {
+        return prev; // Não atualizar se timestamp é o mesmo
+      }
+      return [...prev.slice(-29), newDataPoint];
+    });
+
+    setCurrentMetrics((prev) => {
+      // Só atualizar se valores realmente mudaram
+      const newMetrics = {
         cpu: data.cpu_percent || 0,
         memory: data.memory_percent || 0,
         tasks: data.active_tasks || 0,
         agents: data.agent_count || 0,
-      });
-    }
-  }, [lastMessage]);
+      };
+
+      if (
+        prev.cpu === newMetrics.cpu &&
+        prev.memory === newMetrics.memory &&
+        prev.tasks === newMetrics.tasks &&
+        prev.agents === newMetrics.agents
+      ) {
+        return prev; // Não atualizar se valores são iguais
+      }
+
+      return newMetrics;
+    });
+  }, [lastMessage?.type, lastMessage?.id]); // CORREÇÃO: Depender apenas de campos estáveis
 
   const getStatusColor = (value: number, thresholds: { warning: number; danger: number }) => {
     if (value >= thresholds.danger) return 'text-neon-red';

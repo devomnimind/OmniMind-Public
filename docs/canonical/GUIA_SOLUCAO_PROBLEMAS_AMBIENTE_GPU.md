@@ -1,6 +1,6 @@
 # Guia de Solução de Problemas: Ambiente e GPU (OmniMind)
 
-**Última Atualização**: 08 de Dezembro de 2025
+**Última Atualização**: 10 de Dezembro de 2025
 **Status**: ✅ Documentação Técnica Ativa
 
 Este documento cataloga erros conhecidos, scripts de correção e procedimentos para manutenção do ambiente de desenvolvimento OmniMind, com foco específico em problemas de GPU/CUDA no Linux (Kali/Debian).
@@ -40,6 +40,78 @@ Forçar o carregamento síncrono ou desativar o carregamento preguiçoso para de
 export CUDA_MODULE_LOADING=LAZY  # Ou "STD" se LAZY falhar
 export CUDA_LAUNCH_BLOCKING=1
 ```
+
+### 4. CUDA Error: Unknown Error (Após Refatoração Async→Sync)
+**Data Identificado:** 2025-12-10
+**Sintoma:**
+- Erro `CUDA error: unknown error` durante execução do `ExpectationModule`
+- `Memory allocation failure` mesmo com GPU tendo memória livre (3.4GB/3.81GB)
+- Script morre nos primeiros ciclos (1-7) com execução assíncrona
+
+**Causa Raiz Identificada:**
+A refatoração do `IntegrationLoop` de **async → síncrono** (2025-12-08) para garantir **causalidade determinística** mudou o comportamento de alocação CUDA:
+
+1. **Execução Assíncrona (CUDA_LAUNCH_BLOCKING=0)**:
+   - Operações CUDA executam de forma assíncrona
+   - Erros aparecem depois como "unknown error"
+   - Fragmentação de memória GPU não é detectada imediatamente
+   - Qiskit Aer GPU cria buffers temporários que não são liberados corretamente
+
+2. **Execução Síncrona (CUDA_LAUNCH_BLOCKING=1)**:
+   - Operações CUDA executam de forma síncrona
+   - Erros aparecem imediatamente com detalhes completos
+   - Fragmentação é detectada e tratada corretamente
+   - Sistema funciona normalmente sem erros
+
+**Contexto da Mudança:**
+- **Refatoração:** `IntegrationLoop.execute_cycle()` async → `execute_cycle_sync()` síncrono
+- **Motivo:** Garantir causalidade determinística (requisito para Φ válido em IIT)
+- **Documentação:** `docs/history/timeline/REFATORACOES_CONCLUIDAS_2025-12-08.md`
+- **Impacto:** Mudança de execução assíncrona para síncrona afetou comportamento CUDA
+
+**Solução:**
+
+⚠️ **CRÍTICO**: Variáveis de ambiente CUDA precisam ser exportadas **ANTES** do Python iniciar, não dentro do script Python!
+
+**Opção 1 (RECOMENDADO): Usar wrapper script:**
+```bash
+./scripts/run_500_cycles_scientific_validation.sh
+```
+O wrapper script exporta todas as variáveis necessárias ANTES de executar Python.
+
+**Opção 2: Exportar variáveis antes de executar Python:**
+```bash
+# Para debug/validação científica (RECOMENDADO)
+export CUDA_LAUNCH_BLOCKING=1
+export PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:128
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+python scripts/run_500_cycles_scientific_validation.py
+
+# Para produção (mais rápido, mas requer limpeza CUDA agressiva)
+export CUDA_LAUNCH_BLOCKING=0
+export PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:128
+python scripts/run_500_cycles_scientific_validation.py
+```
+
+**Opção 3: Executar Python diretamente (NÃO RECOMENDADO):**
+```bash
+python scripts/run_500_cycles_scientific_validation.py
+```
+⚠️ **ATENÇÃO**: O script define variáveis internamente, mas CUDA pode não funcionar corretamente porque precisa das variáveis ANTES de inicializar.
+
+**Validação:**
+- ✅ Com `CUDA_LAUNCH_BLOCKING=1` (exportado antes): Script executou até ciclo 23+ sem erros
+- ❌ Com `CUDA_LAUNCH_BLOCKING=0`: Script morria no ciclo 1-7 com "unknown error"
+- ❌ Com variáveis setadas apenas no Python: CUDA pode não funcionar corretamente
+
+**Trade-off:**
+- `CUDA_LAUNCH_BLOCKING=1`: Mais lento (execução síncrona), mas mais seguro e permite capturar erros reais
+- `CUDA_LAUNCH_BLOCKING=0`: Mais rápido (execução assíncrona), mas pode ter erros silenciosos
+
+**Recomendação:**
+Para validação científica e execuções longas (500+ ciclos), usar o wrapper script `run_500_cycles_scientific_validation.sh` que garante que todas as variáveis sejam exportadas ANTES do Python iniciar.
 
 ---
 

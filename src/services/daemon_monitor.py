@@ -74,8 +74,10 @@ def _collect_system_metrics() -> Dict[str, Any]:
         vm = psutil.virtual_memory()
         disk = psutil.disk_usage("/")
 
+        # CORREÇÃO (2025-12-09): interval=None retorna 0.0% na primeira chamada
+        # Usar interval=0.1 para leitura imediata precisa
         return {
-            "cpu_percent": psutil.cpu_percent(interval=None),
+            "cpu_percent": psutil.cpu_percent(interval=0.1),
             "memory_percent": vm.percent,
             "disk_percent": disk.percent,
             "is_user_active": True,
@@ -142,29 +144,59 @@ def _load_tribunal_info() -> Dict[str, Any]:
     try:
         if TRIBUNAL_FILE.exists():
             data = json.loads(TRIBUNAL_FILE.read_text())
+            # CORREÇÃO (2025-12-10): Garantir que consciousness_compatible seja bool, não None
+            consciousness_compatible = data.get("consciousness_signature", {}).get(
+                "consciousness_compatible", False
+            )
+            # Se for None, tratar como False (incompatível)
+            if consciousness_compatible is None:
+                consciousness_compatible = False
+
             return {
                 "status": "finished",
-                "consciousness_compatible": data.get("consciousness_signature", {}).get(
-                    "consciousness_compatible", False
-                ),
-                "duration_hours": data.get("duration_hours", 0),
+                "consciousness_compatible": bool(consciousness_compatible),
+                "duration_hours": data.get("duration_hours", 0) or 0,
                 "attacks_executed": len(data.get("attacks_executed", {})),
+                "attacks_successful": sum(
+                    a.get("success_count", 0)
+                    for a in data.get("attacks_executed", {}).values()
+                    if isinstance(a, dict)
+                ),
+                "attacks_failed": sum(
+                    a.get("failure_count", 0)
+                    for a in data.get("attacks_executed", {}).values()
+                    if isinstance(a, dict)
+                ),
             }
         else:
-            # Tribunal is still running (no final report yet)
+            # Tribunal is still running (no final report yet) or never executed
             return {
-                "status": "running",
-                "consciousness_compatible": None,
-                "duration_hours": None,
-                "attacks_executed": 4,  # Known attacks
+                "status": "not_started",  # CORREÇÃO: Mais claro que "running"
+                "consciousness_compatible": False,  # CORREÇÃO: False em vez de None
+                "duration_hours": 0,  # CORREÇÃO: 0 em vez de None
+                "attacks_executed": 0,
+                "attacks_successful": 0,
+                "attacks_failed": 0,
             }
+    except json.JSONDecodeError as e:
+        logger.error(f"Error parsing Tribunal report JSON: {e}")
+        return {
+            "status": "error",
+            "consciousness_compatible": False,  # CORREÇÃO: False em vez de None
+            "duration_hours": 0,
+            "attacks_executed": 0,
+            "attacks_successful": 0,
+            "attacks_failed": 0,
+        }
     except Exception as e:
-        logger.error(f"Error loading Tribunal info: {e}")
+        logger.error(f"Error loading Tribunal info: {e}", exc_info=True)
         return {
             "status": "unknown",
-            "consciousness_compatible": None,
-            "duration_hours": None,
+            "consciousness_compatible": False,  # CORREÇÃO: False em vez de None
+            "duration_hours": 0,
             "attacks_executed": 0,
+            "attacks_successful": 0,
+            "attacks_failed": 0,
         }
 
 

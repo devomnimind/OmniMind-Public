@@ -15,18 +15,22 @@ Example:
     >>> webp_bytes = optimizer.to_webp(jpeg_bytes, quality=90)
 """
 
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Any, TYPE_CHECKING
 import io
 import logging
 
 # PIL is optional for local-first operation
-try:
+if TYPE_CHECKING:
     from PIL import Image
-
     PIL_AVAILABLE = True
-except ImportError:
-    PIL_AVAILABLE = False
-    Image = None
+else:
+    try:
+        from PIL import Image
+
+        PIL_AVAILABLE = True
+    except ImportError:
+        PIL_AVAILABLE = False
+        Image = None  # type: ignore[assignment, misc]
 
 logger = logging.getLogger(__name__)
 
@@ -110,16 +114,16 @@ class ImageOptimizer:
                 # Preserve transparency for WebP
                 pass
             elif img.mode != "RGB":
-                img = img.convert("RGB")
+                img = img.convert("RGB")  # type: ignore[assignment]
 
             # Resize if requested
             if resize:
-                img = img.resize(resize, Image.Resampling.LANCZOS)
+                img = img.resize(resize, Image.Resampling.LANCZOS)  # type: ignore[assignment]
 
             # Convert to WebP
             output = io.BytesIO()
 
-            save_kwargs = {
+            save_kwargs: dict[str, Any] = {
                 "format": "WEBP",
                 "quality": quality,
                 "method": 6,  # Best compression (slowest)
@@ -129,7 +133,7 @@ class ImageOptimizer:
                 save_kwargs["lossless"] = True
                 save_kwargs.pop("quality")
 
-            img.save(output, **save_kwargs)
+            img.save(output, format=save_kwargs.pop("format", "WEBP"), **save_kwargs)
 
             webp_bytes = output.getvalue()
 
@@ -172,7 +176,7 @@ class ImageOptimizer:
 
             # Convert to RGB if needed
             if img.mode != "RGB":
-                img = img.convert("RGB")
+                img = img.convert("RGB")  # type: ignore[assignment]
 
             output = io.BytesIO()
 

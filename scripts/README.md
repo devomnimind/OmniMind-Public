@@ -211,16 +211,36 @@ scripts/
 ├── utilities/ - Utilitários
 │   ├── maintenance/
 │   └── analysis/
-└── .archive/deprecated/ - Scripts arquivados
+├── testing/ ⭐ NOVO (2025-12-10)
+│   └── fixes/ - Scripts de teste de correções
+│       ├── test_decisions_fix.sh
+│       ├── test_full_fix.sh
+│       └── test_tribunal_fix.sh
+├── monitoring/ ⭐ NOVO (2025-12-10)
+│   └── phase7/ - Monitoramento Phase 7
+│       └── monitor_phase7.sh
+└── archive/deprecated/ ⭐ NOVO (2025-12-10)
+    └── deprecated/ - Scripts arquivados
+        └── TRIBUNAL_FIX_VISUAL.sh
 ```
+
+**Nota**: Scripts da raiz foram movidos para pastas apropriadas em 2025-12-10.
+Ver: `docs/ORGANIZACAO_SCRIPTS_20251210.md` para detalhes.
 
 ## ⚠️ Scripts Deprecated
 
-Scripts antigos e não utilizados foram arquivados em `.archive/deprecated/`:
+Scripts antigos e não utilizados foram arquivados em `scripts/archive/deprecated/`:
 - Scripts duplicados
 - Scripts experimentais não funcionais
 - Scripts de versões antigas
 - Scripts não mantidos
+- Scripts de documentação visual (ex: `TRIBUNAL_FIX_VISUAL.sh`)
+
+**Organização Recente (2025-12-10)**:
+- Scripts de teste de correções movidos para `testing/fixes/`
+- Scripts de monitoramento movidos para `monitoring/phase7/`
+- Scripts de manutenção movidos para `utilities/maintenance/`
+- Scripts arquivados movidos para `archive/deprecated/`
 
 ## 🚀 Uso Rápido
 

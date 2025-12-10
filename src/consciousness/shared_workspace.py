@@ -272,11 +272,26 @@ class SharedWorkspace:
             logger.debug(f"HybridTopologicalEngine não disponível: {e}")
             self.hybrid_topological_engine = None
 
+        # Sistema de proteção de memória crítica (integração com SystemdMemoryManager)
+        self._memory_protection_enabled = False
+        self._protected_memory_mb = 0.0
+        try:
+            from src.monitor.systemd_memory_manager import memory_manager
+
+            # Registrar este workspace para proteção automática
+            self._memory_manager = memory_manager
+            self._memory_protection_enabled = True
+            logger.info("Proteção de memória crítica habilitada (SystemdMemoryManager)")
+        except ImportError:
+            self._memory_manager = None
+            logger.debug("SystemdMemoryManager não disponível - proteção de memória desabilitada")
+
         logger.info(
             f"Shared Workspace initialized: embedding_dim={embedding_dim}, "
             f"max_history={max_history_size}, dir={self.workspace_dir}, "
             f"systemic_memory={'enabled' if self.systemic_memory else 'disabled'}, "
-            f"hybrid_topological={'enabled' if self.hybrid_topological_engine else 'disabled'}"
+            f"hybrid_topological={'enabled' if self.hybrid_topological_engine else 'disabled'}, "
+            f"memory_protection={'enabled' if self._memory_protection_enabled else 'disabled'}"
         )
 
     def write_module_state(
@@ -373,6 +388,10 @@ class SharedWorkspace:
         if len(self.history) > self.max_history_size:
             self.history.pop(0)
 
+        # Proteger memória crítica de ir para swap
+        if self._memory_protection_enabled and self._memory_manager:
+            self._protect_critical_memory()
+
         logger.debug(
             f"Workspace: wrote {module_name} (cycle={self.cycle_count}, "
             f"embedding_norm={np.linalg.norm(embedding):.3f})"
@@ -448,6 +467,67 @@ class SharedWorkspace:
     def get_all_modules(self) -> List[str]:
         """Lista nomes de todos os módulos que escreveram."""
         return list(self.embeddings.keys())
+
+    def _protect_critical_memory(self) -> None:
+        """
+        Protege memória crítica (embeddings ativos) de ir para swap.
+
+        Calcula tamanho aproximado da memória crítica e solicita proteção
+        via SystemdMemoryManager.
+        """
+        if not self._memory_protection_enabled or not self._memory_manager:
+            return
+
+        try:
+            import os
+
+            # Estimar memória crítica:
+            # 1. Embeddings ativos (todos os módulos)
+            # 2. Histórico recente (últimos N ciclos necessários para cálculos)
+            # 3. Cross-predictions cache
+
+            # Embeddings ativos
+            embeddings_size_mb = sum(emb.nbytes / (1024 * 1024) for emb in self.embeddings.values())
+
+            # Histórico recente (últimos 100 ciclos - necessário para cálculos)
+            recent_history_size = min(100, len(self.history))
+            history_size_mb = sum(
+                state.embedding.nbytes / (1024 * 1024)
+                for state in self.history[-recent_history_size:]
+            )
+
+            # Cross-predictions cache (estimativa)
+            cross_predictions_size_mb = len(self.cross_predictions) * 0.001  # ~1KB por métrica
+
+            total_critical_mb = embeddings_size_mb + history_size_mb + cross_predictions_size_mb
+
+            # Atualizar memória protegida
+            if total_critical_mb > 0:
+                self._protected_memory_mb = total_critical_mb
+
+                # Solicitar proteção via memory manager
+                pid = os.getpid()
+                if pid:
+                    # Proteger memória crítica
+                    # Nota: Proteção real requer privilégios (configurar no systemd)
+                    self._memory_manager.protect_memory_from_swap(pid, total_critical_mb)
+
+                    logger.debug(
+                        f"🔒 Memória crítica protegida: {total_critical_mb:.1f}MB "
+                        f"(embeddings: {embeddings_size_mb:.1f}MB, "
+                        f"histórico: {history_size_mb:.1f}MB)"
+                    )
+        except Exception as e:
+            logger.debug(f"Erro ao proteger memória crítica: {e}")
+
+    def get_critical_memory_size_mb(self) -> float:
+        """
+        Retorna tamanho estimado da memória crítica (embeddings + histórico recente).
+
+        Returns:
+            Tamanho em MB da memória crítica
+        """
+        return self._protected_memory_mb
 
     def get_module_history(self, module_name: str, last_n: int = 100) -> List[ModuleState]:
         """

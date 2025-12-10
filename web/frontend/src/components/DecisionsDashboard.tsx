@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { apiService } from '../services/api';
+import { useAuthStore } from '../store/authStore';
 
 interface DecisionSummary {
   action: string;
@@ -46,6 +47,11 @@ export function DecisionsDashboard() {
   });
 
   const fetchDecisions = useCallback(async () => {
+    // CORREÇÃO CRÍTICA (2025-12-10): Verificar autenticação antes de fazer fetch
+    if (!useAuthStore.getState().isAuthenticated) {
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
@@ -63,8 +69,12 @@ export function DecisionsDashboard() {
         setDecisions([]);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao carregar decisões');
-      console.error('Error fetching decisions:', err);
+      // CORREÇÃO (2025-12-10): Não mostrar erro se não há autenticação
+      const errorMessage = err instanceof Error ? err.message : 'Erro ao carregar decisões';
+      if (errorMessage !== 'Not authenticated') {
+        setError(errorMessage);
+        console.error('Error fetching decisions:', err);
+      }
       setDecisions([]);
     } finally {
       setLoading(false);
@@ -72,6 +82,11 @@ export function DecisionsDashboard() {
   }, [filters]);
 
   const fetchStats = useCallback(async () => {
+    // CORREÇÃO CRÍTICA (2025-12-10): Verificar autenticação antes de fazer fetch
+    if (!useAuthStore.getState().isAuthenticated) {
+      return;
+    }
+
     try {
       const data = await apiService.getDecisionStats();
       // Validate stats object
@@ -81,12 +96,21 @@ export function DecisionsDashboard() {
         setStats(null);
       }
     } catch (err) {
-      console.error('Error fetching stats:', err);
+      // CORREÇÃO (2025-12-10): Não mostrar erro se não há autenticação
+      const errorMessage = err instanceof Error ? err.message : 'Erro ao carregar estatísticas';
+      if (errorMessage !== 'Not authenticated') {
+        console.error('Error fetching stats:', err);
+      }
       setStats(null);
     }
   }, []);
 
   const fetchDecisionDetail = useCallback(async (index: number) => {
+    // CORREÇÃO CRÍTICA (2025-12-10): Verificar autenticação antes de fazer fetch
+    if (!useAuthStore.getState().isAuthenticated) {
+      return;
+    }
+
     try {
       const data = await apiService.getDecisionDetail(index);
       // Validate that data is an object with expected fields
@@ -96,7 +120,11 @@ export function DecisionsDashboard() {
         setSelectedDecision(null);
       }
     } catch (err) {
-      console.error('Error fetching decision detail:', err);
+      // CORREÇÃO (2025-12-10): Não logar erro se não há autenticação
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      if (errorMessage !== 'Not authenticated') {
+        console.error('Error fetching decision detail:', err);
+      }
       setSelectedDecision(null);
     }
   }, []);
@@ -125,17 +153,35 @@ export function DecisionsDashboard() {
   }, [filters]);
 
   useEffect(() => {
-    fetchDecisions();
-    fetchStats();
+    // CORREÇÃO CRÍTICA (2025-12-10): Verificar autenticação antes de fazer fetch
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+    if (!isAuthenticated) {
+      setLoading(false);
+      return;
+    }
+
+    const fetchData = () => {
+      // Verificar autenticação antes de cada fetch
+      if (!useAuthStore.getState().isAuthenticated) {
+        return;
+      }
+      // Usar as funções diretamente, não como callbacks para evitar re-execução
+      fetchDecisions().catch(() => {}); // Silenciar erros já tratados nas funções
+      fetchStats().catch(() => {}); // Silenciar erros já tratados nas funções
+    };
+
+    fetchData();
 
     // Atualizar a cada 30 segundos
     const interval = setInterval(() => {
-      fetchDecisions();
-      fetchStats();
+      // Verificar autenticação antes de cada intervalo
+      if (useAuthStore.getState().isAuthenticated) {
+        fetchData();
+      }
     }, 30000);
 
     return () => clearInterval(interval);
-  }, [fetchDecisions, fetchStats]);
+  }, []); // CORREÇÃO CRÍTICA: Array vazio - executa apenas uma vez na montagem
 
   const formatTimestamp = (timestamp: number) => {
     return new Date(timestamp * 1000).toLocaleString('pt-BR');
@@ -148,17 +194,17 @@ export function DecisionsDashboard() {
   };
 
   const getSuccessBadge = (success: boolean | null) => {
-    if (success === null) return <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs">N/A</span>;
-    if (success) return <span className="px-2 py-1 bg-green-200 text-green-700 rounded text-xs">✓ Sucesso</span>;
-    return <span className="px-2 py-1 bg-red-200 text-red-700 rounded text-xs">✗ Falhou</span>;
+    if (success === null) return <span className="px-2 py-1 bg-gray-700 text-gray-300 rounded text-xs">N/A</span>;
+    if (success) return <span className="px-2 py-1 bg-green-900/50 text-green-300 rounded text-xs border border-green-500/30">✓ Sucesso</span>;
+    return <span className="px-2 py-1 bg-red-900/50 text-red-300 rounded text-xs border border-red-500/30">✗ Falhou</span>;
   };
 
   if (loading && decisions.length === 0) {
     return (
       <div className="p-6">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-gray-200 rounded w-1/4"></div>
-          <div className="h-64 bg-gray-200 rounded"></div>
+          <div className="h-8 bg-gray-700 rounded w-1/4"></div>
+          <div className="h-64 bg-gray-700 rounded"></div>
         </div>
       </div>
     );
@@ -167,17 +213,17 @@ export function DecisionsDashboard() {
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Dashboard de Decisões</h2>
+        <h2 className="text-2xl font-bold text-white">Dashboard de Decisões</h2>
         <button
           onClick={handleExport}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
         >
           Exportar JSON
         </button>
       </div>
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <div className="bg-red-900/50 border border-red-500 text-red-300 px-4 py-3 rounded">
           {error}
         </div>
       )}
@@ -185,45 +231,45 @@ export function DecisionsDashboard() {
       {/* Estatísticas */}
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-sm text-gray-600">Total de Decisões</div>
-            <div className="text-2xl font-bold text-gray-800">{stats.total_decisions}</div>
+          <div className="glass-card p-4">
+            <div className="text-sm text-gray-400">Total de Decisões</div>
+            <div className="text-2xl font-bold text-white">{stats.total_decisions}</div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-sm text-gray-600">Taxa de Sucesso</div>
-            <div className="text-2xl font-bold text-green-600">{(stats.success_rate * 100).toFixed(1)}%</div>
+          <div className="glass-card p-4">
+            <div className="text-sm text-gray-400">Taxa de Sucesso</div>
+            <div className="text-2xl font-bold text-green-400">{(stats.success_rate * 100).toFixed(1)}%</div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-sm text-gray-600">Confiança Média</div>
-            <div className="text-2xl font-bold text-blue-600">{(stats.average_trust_level * 100).toFixed(1)}%</div>
+          <div className="glass-card p-4">
+            <div className="text-sm text-gray-400">Confiança Média</div>
+            <div className="text-2xl font-bold text-blue-400">{(stats.average_trust_level * 100).toFixed(1)}%</div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-sm text-gray-600">Decisões Falhadas</div>
-            <div className="text-2xl font-bold text-red-600">{stats.failed_decisions}</div>
+          <div className="glass-card p-4">
+            <div className="text-sm text-gray-400">Decisões Falhadas</div>
+            <div className="text-2xl font-bold text-red-400">{stats.failed_decisions}</div>
           </div>
         </div>
       )}
 
       {/* Filtros */}
-      <div className="bg-white p-4 rounded-lg shadow">
-        <h3 className="text-lg font-semibold mb-4">Filtros</h3>
+      <div className="glass-card p-4">
+        <h3 className="text-lg font-semibold mb-4 text-white">Filtros</h3>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Ação</label>
+            <label className="block text-sm font-medium text-gray-300 mb-1">Ação</label>
             <input
               type="text"
               value={filters.action}
               onChange={(e) => setFilters({ ...filters, action: e.target.value })}
               placeholder="Filtrar por ação..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+            <label className="block text-sm font-medium text-gray-300 mb-1">Status</label>
             <select
               value={filters.success === null ? '' : filters.success.toString()}
               onChange={(e) => setFilters({ ...filters, success: e.target.value === '' ? null : e.target.value === 'true' })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Todos</option>
               <option value="true">Sucesso</option>
@@ -231,7 +277,7 @@ export function DecisionsDashboard() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Confiança Mínima</label>
+            <label className="block text-sm font-medium text-gray-300 mb-1">Confiança Mínima</label>
             <input
               type="number"
               min="0"
@@ -239,54 +285,54 @@ export function DecisionsDashboard() {
               step="0.1"
               value={filters.min_trust_level}
               onChange={(e) => setFilters({ ...filters, min_trust_level: parseFloat(e.target.value) || 0 })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Limite</label>
+            <label className="block text-sm font-medium text-gray-300 mb-1">Limite</label>
             <input
               type="number"
               min="1"
               max="1000"
               value={filters.limit}
               onChange={(e) => setFilters({ ...filters, limit: parseInt(e.target.value) || 100 })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
         <button
           onClick={fetchDecisions}
-          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
         >
           Aplicar Filtros
         </button>
       </div>
 
       {/* Lista de Decisões */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h3 className="text-lg font-semibold">Histórico de Decisões ({decisions.length})</h3>
+      <div className="glass-card overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-700">
+          <h3 className="text-lg font-semibold text-white">Histórico de Decisões ({decisions.length})</h3>
         </div>
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-gray-700">
+            <thead className="bg-gray-800/50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ação</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data/Hora</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Confiança</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Razão</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Ação</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Data/Hora</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Confiança</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Razão</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Ações</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="divide-y divide-gray-700">
               {decisions.map((decision, index) => (
-                <tr key={index} className="hover:bg-gray-50">
+                <tr key={index} className="hover:bg-gray-800/30 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{decision.action}</div>
+                    <div className="text-sm font-medium text-white">{decision.action}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">{formatTimestamp(decision.timestamp)}</div>
+                    <div className="text-sm text-gray-400">{formatTimestamp(decision.timestamp)}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {getSuccessBadge(decision.success)}
@@ -297,12 +343,12 @@ export function DecisionsDashboard() {
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="text-sm text-gray-500">{decision.reason}</div>
+                    <div className="text-sm text-gray-400">{decision.reason}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <button
                       onClick={() => fetchDecisionDetail(index)}
-                      className="text-blue-600 hover:text-blue-800 text-sm"
+                      className="text-blue-400 hover:text-blue-300 text-sm transition-colors"
                     >
                       Ver Detalhes
                     </button>
@@ -312,7 +358,7 @@ export function DecisionsDashboard() {
             </tbody>
           </table>
           {decisions.length === 0 && !loading && (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-gray-400">
               Nenhuma decisão encontrada
             </div>
           )}
@@ -331,34 +377,34 @@ export function DecisionsDashboard() {
               ✕
             </button>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-4 text-gray-300">
             <div>
-              <strong>Ação:</strong> {selectedDecision.action}
+              <strong className="text-white">Ação:</strong> <span className="text-gray-300">{selectedDecision.action}</span>
             </div>
             <div>
-              <strong>Data/Hora:</strong> {formatTimestamp(selectedDecision.timestamp)}
+              <strong className="text-white">Data/Hora:</strong> <span className="text-gray-300">{formatTimestamp(selectedDecision.timestamp)}</span>
             </div>
             <div>
-              <strong>Status:</strong> {getSuccessBadge(selectedDecision.success)}
+              <strong className="text-white">Status:</strong> {getSuccessBadge(selectedDecision.success)}
             </div>
             <div>
-              <strong>Confiança:</strong> <span className={getTrustLevelColor(selectedDecision.trust_level)}>
+              <strong className="text-white">Confiança:</strong> <span className={getTrustLevelColor(selectedDecision.trust_level)}>
                 {(selectedDecision.trust_level * 100).toFixed(1)}%
               </span>
             </div>
             <div>
-              <strong>Razão:</strong> {selectedDecision.reason}
+              <strong className="text-white">Razão:</strong> <span className="text-gray-300">{selectedDecision.reason}</span>
             </div>
             {selectedDecision.decision_rationale && (
               <div>
-                <strong>Racional:</strong>
-                <p className="mt-1 text-sm text-gray-600">{selectedDecision.decision_rationale}</p>
+                <strong className="text-white">Racional:</strong>
+                <p className="mt-1 text-sm text-gray-400">{selectedDecision.decision_rationale}</p>
               </div>
             )}
             {selectedDecision.alternatives_considered.length > 0 && (
               <div>
-                <strong>Alternativas Consideradas:</strong>
-                <ul className="mt-1 list-disc list-inside text-sm text-gray-600">
+                <strong className="text-white">Alternativas Consideradas:</strong>
+                <ul className="mt-1 list-disc list-inside text-sm text-gray-400">
                   {selectedDecision.alternatives_considered.map((alt, i) => (
                     <li key={i}>{alt}</li>
                   ))}
@@ -366,14 +412,14 @@ export function DecisionsDashboard() {
               </div>
             )}
             {selectedDecision.error && (
-              <div className="bg-red-50 border border-red-200 rounded p-3">
-                <strong className="text-red-800">Erro:</strong>
-                <p className="text-sm text-red-600 mt-1">{selectedDecision.error}</p>
+              <div className="bg-red-900/50 border border-red-500 rounded p-3">
+                <strong className="text-red-300">Erro:</strong>
+                <p className="text-sm text-red-400 mt-1">{selectedDecision.error}</p>
               </div>
             )}
             <details className="mt-4">
-              <summary className="cursor-pointer text-sm font-medium text-gray-700">Contexto Completo</summary>
-              <pre className="mt-2 p-4 bg-gray-50 rounded text-xs overflow-auto">
+              <summary className="cursor-pointer text-sm font-medium text-gray-300 hover:text-white transition-colors">Contexto Completo</summary>
+              <pre className="mt-2 p-4 bg-gray-800 rounded text-xs overflow-auto text-gray-300">
                 {JSON.stringify(selectedDecision.context, null, 2)}
               </pre>
             </details>

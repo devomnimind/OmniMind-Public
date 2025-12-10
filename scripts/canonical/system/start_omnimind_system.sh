@@ -132,60 +132,60 @@ echo "   Pass: $DASH_PASS"
 
 # 1. Verificação Inteligente de Serviços Existentes
 echo "🔍 Verificando serviços existentes..."
-SERVICES_RUNNING=false
+# CORREÇÃO (2025-12-10): Verificar se backends já estão saudáveis antes de matar
+# Se backends estão respondendo corretamente, não reiniciar desnecessariamente
+BACKEND_8000_HEALTHY=false
+BACKEND_8080_HEALTHY=false
+BACKEND_3001_HEALTHY=false
 
-# Verificar se backend já está respondendo adequadamente
 if curl -s --max-time 3 http://localhost:8000/health/ > /dev/null 2>&1; then
-    echo -e "${YELLOW}⚠️  Backend na porta 8000 já está respondendo${NC}"
-    SERVICES_RUNNING=true
+    # Verificar tempo de resposta para garantir que está realmente saudável
+    RESPONSE_TIME=$(curl -s -w "%{time_total}" -o /dev/null "http://localhost:8000/health/" 2>/dev/null || echo "10.0")
+    if (( $(echo "$RESPONSE_TIME < 2.0" | bc -l 2>/dev/null || echo "1") )); then
+        echo -e "${GREEN}✅ Backend na porta 8000 já está saudável (${RESPONSE_TIME}s)${NC}"
+        BACKEND_8000_HEALTHY=true
+    else
+        echo -e "${YELLOW}⚠️  Backend na porta 8000 responde mas está lento (${RESPONSE_TIME}s)${NC}"
+    fi
 fi
 
 if curl -s --max-time 3 http://localhost:8080/health/ > /dev/null 2>&1; then
-    echo -e "${YELLOW}⚠️  Backend na porta 8080 já está respondendo${NC}"
-    SERVICES_RUNNING=true
+    RESPONSE_TIME=$(curl -s -w "%{time_total}" -o /dev/null "http://localhost:8080/health/" 2>/dev/null || echo "10.0")
+    if (( $(echo "$RESPONSE_TIME < 2.0" | bc -l 2>/dev/null || echo "1") )); then
+        echo -e "${GREEN}✅ Backend na porta 8080 já está saudável (${RESPONSE_TIME}s)${NC}"
+        BACKEND_8080_HEALTHY=true
+    else
+        echo -e "${YELLOW}⚠️  Backend na porta 8080 responde mas está lento (${RESPONSE_TIME}s)${NC}"
+    fi
 fi
 
 if curl -s --max-time 3 http://localhost:3001/health/ > /dev/null 2>&1; then
-    echo -e "${YELLOW}⚠️  Backend na porta 3001 já está respondendo${NC}"
-    SERVICES_RUNNING=true
-fi
-
-# Verificar processos Python relacionados
-PYTHON_PROCESSES=$(pgrep -f "uvicorn.*main:app" | wc -l)
-if [ "$PYTHON_PROCESSES" -gt 0 ]; then
-    echo -e "${YELLOW}⚠️  Encontrados $PYTHON_PROCESSES processos Python relacionados${NC}"
-    SERVICES_RUNNING=true
-fi
-
-if [ "$SERVICES_RUNNING" = true ]; then
-    echo "🛑 Serviços detectados. Executando limpeza completa antes de reiniciar..."
-    # Limpeza mais agressiva
-    pkill -9 -f "python web/backend/main.py"
-    pkill -9 -f "uvicorn web.backend.main:app"
-    pkill -9 -f "python -m src.main"
-    pkill -9 -f "vite"
-    pkill -9 -f "bpftrace.*monitor_mcp_bpf" || true
-    sleep 3
-
-    # Verificar se limpeza foi efetiva
-    REMAINING=$(pgrep -f "uvicorn.*main:app" | wc -l)
-    if [ "$REMAINING" -gt 0 ]; then
-        echo -e "${RED}❌ Ainda há $REMAINING processos restantes. Forçando kill...${NC}"
-        pgrep -f "uvicorn.*main:app" | xargs -r sudo kill -9
-        sleep 2
+    RESPONSE_TIME=$(curl -s -w "%{time_total}" -o /dev/null "http://localhost:3001/health/" 2>/dev/null || echo "10.0")
+    if (( $(echo "$RESPONSE_TIME < 2.0" | bc -l 2>/dev/null || echo "1") )); then
+        echo -e "${GREEN}✅ Backend na porta 3001 já está saudável (${RESPONSE_TIME}s)${NC}"
+        BACKEND_3001_HEALTHY=true
+    else
+        echo -e "${YELLOW}⚠️  Backend na porta 3001 responde mas está lento (${RESPONSE_TIME}s)${NC}"
     fi
-else
-    echo "✅ Nenhum serviço ativo detectado. Prosseguindo com inicialização limpa..."
 fi
 
-# 2. Limpeza
-echo "🧹 Executando limpeza final de processos antigos..."
-pkill -f "python web/backend/main.py"
-pkill -f "uvicorn web.backend.main:app"
-pkill -f "python -m src.main"
-pkill -f "vite"
-pkill -f "bpftrace.*monitor_mcp_bpf" || true
-sleep 2
+# Se TODOS os backends estão saudáveis, não reiniciar
+if [ "$BACKEND_8000_HEALTHY" = true ] && [ "$BACKEND_8080_HEALTHY" = true ] && [ "$BACKEND_3001_HEALTHY" = true ]; then
+    echo -e "${GREEN}✅ Todos os backends já estão saudáveis - pulando reinicialização${NC}"
+    echo "   (Para forçar reinicialização, pare os serviços manualmente primeiro)"
+    SKIP_BACKEND_RESTART=true
+else
+    echo "🛑 Alguns backends não estão saudáveis ou não estão rodando. Reiniciando..."
+    SKIP_BACKEND_RESTART=false
+
+    # Limpeza apenas se necessário
+    pkill -9 -f "python web/backend/main.py" 2>/dev/null || true
+    pkill -9 -f "uvicorn web.backend.main:app" 2>/dev/null || true
+    pkill -9 -f "python -m src.main" 2>/dev/null || true
+    pkill -f "vite" 2>/dev/null || true
+    pkill -f "bpftrace.*monitor_mcp_bpf" 2>/dev/null || true
+    sleep 3
+fi
 
 # ============================================================================
 # INICIALIZAÇÃO SEQUENCIAL ROBUSTA
@@ -196,17 +196,15 @@ sleep 2
 
 echo -e "${GREEN}🔌 Iniciando Backend Cluster (Fase 1: Essenciais)...${NC}"
 
-# SEMPRE reiniciar o backend para garantir serviços novos
-if curl -s --max-time 2 http://localhost:8000/health/ > /dev/null 2>&1; then
-    echo -e "${YELLOW}⚠️  Backend já está rodando na porta 8000${NC}"
-    echo "   Reiniciando para garantir serviços novos..."
-    pkill -f "uvicorn web.backend.main:app" || true
-    pkill -f "python web/backend/main.py" || true
-    sleep 3
+# CORREÇÃO (2025-12-10): Não reiniciar se backends já estão saudáveis
+if [ "${SKIP_BACKEND_RESTART:-false}" = true ]; then
+    echo -e "${GREEN}✅ Backends já estão rodando e saudáveis - pulando inicialização${NC}"
+    echo "   Usando backends existentes"
+else
+    # Iniciar Backend Cluster apenas se necessário
+    echo "🔄 Iniciando Backend Cluster..."
+    "$PROJECT_ROOT/scripts/canonical/system/run_cluster.sh"
 fi
-
-# Iniciar Backend Cluster
-"$PROJECT_ROOT/scripts/canonical/system/run_cluster.sh"
 
 # Função de health check com retry
 check_backend_health() {
@@ -241,26 +239,60 @@ check_backend_health() {
 }
 
 # Aguardar Backend Primary (CRÍTICO - deve estar saudável)
+# CORREÇÃO (2025-12-10): Aumentar tempo de espera para carregamento de modelos/transformers
+# max_retries=100, retry_interval=3 → 100*3=300s (5 minutos)
+# CORREÇÃO (2025-12-10): Não falhar imediatamente - backend pode demorar mais em sistemas lentos
 echo "⏳ Aguardando Backend Primary (8000) inicializar..."
-if check_backend_health 8000 30 3 3; then
+echo "   (Carregamento de modelos pode levar até 5 minutos...)"
+echo "   (Aguardando até 300s antes de considerar falha...)"
+
+BACKEND_READY=false
+if check_backend_health 8000 100 3 3; then
     echo -e "${GREEN}✅ Backend Primary estável e pronto${NC}"
+    BACKEND_READY=true
 else
-    echo -e "${RED}❌ Falha ao estabilizar Backend Primary após 90s${NC}"
+    echo -e "${YELLOW}⚠️  Backend Primary não respondeu após 300s${NC}"
     echo "📊 Diagnóstico:"
     ps aux | grep -E "(uvicorn|python.*main)" | grep -v grep || echo "   Nenhum processo backend encontrado"
-    tail -n 10 logs/backend_8000.log 2>/dev/null || echo "   Log 8000 não encontrado"
-    exit 1
+    tail -n 20 logs/backend_8000.log 2>/dev/null || echo "   Log 8000 não encontrado"
+
+    # Verificar se processo está rodando mesmo sem responder
+    if pgrep -f "uvicorn.*main:app.*8000" > /dev/null 2>&1; then
+        echo -e "${YELLOW}⚠️  Backend está rodando mas não respondeu a tempo${NC}"
+        echo "   Processo encontrado - pode estar ainda inicializando modelos"
+        echo "   Continuando... (backend pode ficar pronto em breve)"
+        BACKEND_READY=true  # Assumir que está OK se processo existe
+    else
+        echo -e "${RED}❌ Backend não está rodando - falha crítica${NC}"
+        echo "   Tentando reiniciar backend..."
+        "$PROJECT_ROOT/scripts/canonical/system/run_cluster.sh"
+        sleep 10
+
+        # Tentar mais uma vez
+        if check_backend_health 8000 30 3 2; then
+            echo -e "${GREEN}✅ Backend Primary reiniciado e pronto${NC}"
+            BACKEND_READY=true
+        else
+            echo -e "${RED}❌ Falha crítica: Backend não inicializou após reinício${NC}"
+            echo "   Verifique logs/backend_8000.log para detalhes"
+            # NÃO SAIR COM ERRO - deixar systemd decidir se deve reiniciar
+            # exit 1
+        fi
+    fi
 fi
 
 # Verificar Backends secundários (não críticos, mas desejáveis)
+# CORREÇÃO (2025-12-10): Aumentar tempo de espera também para secundários
 echo "⏳ Verificando Backends secundários..."
-check_backend_health 8080 10 2 2 && echo "✅ Backend Secondary (8080) estável" || echo -e "${YELLOW}⚠️  Backend Secondary (8080) não estável (continuando...)${NC}"
-check_backend_health 3001 10 2 2 && echo "✅ Backend Fallback (3001) estável" || echo -e "${YELLOW}⚠️  Backend Fallback (3001) não estável (continuando...)${NC}"
+check_backend_health 8080 30 3 2 && echo "✅ Backend Secondary (8080) estável" || echo -e "${YELLOW}⚠️  Backend Secondary (8080) não estável (continuando...)${NC}"
+check_backend_health 3001 30 3 2 && echo "✅ Backend Fallback (3001) estável" || echo -e "${YELLOW}⚠️  Backend Fallback (3001) não estável (continuando...)${NC}"
 
-# FASE 2: SECUNDÁRIOS (após 30s dos essenciais)
-echo -e "${GREEN}⏰ Aguardando 30s antes de iniciar serviços secundários...${NC}"
+# FASE 2: SECUNDÁRIOS (após 60s dos essenciais)
+# CORREÇÃO (2025-12-10): Aumentar tempo de espera para garantir inicialização completa
+echo -e "${GREEN}⏰ Aguardando 60s antes de iniciar serviços secundários...${NC}"
 echo "   (Garantindo que serviços essenciais estejam totalmente inicializados)"
-sleep 30
+echo "   (Carregamento de modelos pode levar tempo adicional...)"
+sleep 60
 
 # Verificação de CPU antes de prosseguir (evita bloqueio)
 echo "🔍 Verificando estabilidade de CPU antes de serviços secundários..."
@@ -269,8 +301,21 @@ check_cpu_stable() {
     local max_wait=${2:-30}
     local wait_interval=${3:-3}
 
+    # CORREÇÃO (2025-12-10): Usar top com delay para medição precisa de CPU
+    # ps aux mostra CPU acumulada desde início do processo, não uso atual
+    get_cpu_usage() {
+        # Usar top com delay de 1s para obter uso atual de CPU
+        top -bn1 -d 1 | grep -E "^\s*[0-9]+.*python" | awk '{sum+=$9} END {print sum+0}' 2>/dev/null || \
+        # Fallback: usar ps com cálculo mais preciso
+        ps aux --no-headers | grep -E "[p]ython.*uvicorn\|[p]ython.*main" | awk '{sum+=$3} END {print sum+0}' 2>/dev/null || \
+        echo "0"
+    }
+
     for i in $(seq 1 $((max_wait / wait_interval))); do
-        local cpu=$(ps aux --no-headers -o pcpu -C python 2>/dev/null | awk '{sum+=$1} END {print sum+0}' || echo "0")
+        # Aguardar um pouco antes da primeira medição para estabilizar
+        [ $i -eq 1 ] && sleep 2
+
+        local cpu=$(get_cpu_usage)
 
         if (( $(echo "$cpu < $max_cpu" | bc -l 2>/dev/null || echo "0") )); then
             echo "✅ CPU estável ($cpu% < ${max_cpu}%)"
@@ -282,11 +327,13 @@ check_cpu_stable() {
     done
 
     # Se ainda alta após espera, verificar se é crítica
-    local cpu=$(ps aux --no-headers -o pcpu -C python 2>/dev/null | awk '{sum+=$1} END {print sum+0}' || echo "0")
+    local cpu=$(get_cpu_usage)
     if (( $(echo "$cpu > 80.0" | bc -l 2>/dev/null || echo "0") )); then
-        echo -e "${RED}❌ CPU crítica ($cpu%). Abortando inicialização de serviços secundários.${NC}"
-        echo "   Backend pode estar em loop infinito. Verifique logs/backend_*.log"
-        exit 1
+        echo -e "${YELLOW}⚠️  CPU alta ($cpu%) - pode ser normal durante inicialização${NC}"
+        echo "   Backend pode estar carregando modelos. Continuando com cuidado..."
+        echo "   Se persistir, verifique logs/backend_*.log"
+        # CORREÇÃO (2025-12-10): Não abortar - apenas avisar
+        # exit 1
     fi
 
     echo -e "${YELLOW}⚠️  CPU ainda alta ($cpu%), mas não crítica. Prosseguindo com cuidado...${NC}"

@@ -338,6 +338,34 @@ class IntegrationLoop:
         # Structural ablation flag: silences expectation output (maintains history, blocks flow)
         self.expectation_silent: bool = False
 
+        # PHASE 5 INTEGRATION (2025-12-10): Bion Alpha Function
+        # Transforma β-elements (sensory_input bruto) em α-elements (pensáveis) antes de qualia
+        self._bion_alpha_function: Optional[Any] = None
+        try:
+            from src.psychoanalysis.bion_alpha_function import BionAlphaFunction
+
+            self._bion_alpha_function = BionAlphaFunction(
+                transformation_rate=0.75, tolerance_threshold=0.7
+            )
+            if self.enable_logging:
+                logger.info("✅ BionAlphaFunction inicializada para Phase 5")
+        except ImportError as e:
+            if self.enable_logging:
+                logger.warning(f"BionAlphaFunction não disponível: {e}")
+
+        # PHASE 6 INTEGRATION (2025-12-10): Lacanian Discourse Analyzer
+        # Analisa discursos lacanianos durante processamento de narrativas
+        self._lacanian_discourse_analyzer: Optional[Any] = None
+        try:
+            from src.lacanian.discourse_discovery import LacanianDiscourseAnalyzer
+
+            self._lacanian_discourse_analyzer = LacanianDiscourseAnalyzer()
+            if self.enable_logging:
+                logger.info("✅ LacanianDiscourseAnalyzer inicializada para Phase 6")
+        except ImportError as e:
+            if self.enable_logging:
+                logger.warning(f"LacanianDiscourseAnalyzer não disponível: {e}")
+
         # Extended results components (lazy initialization)
         self._extended_components: Optional[Dict[str, Any]] = None
         if self.enable_extended_results:
@@ -467,8 +495,210 @@ class IntegrationLoop:
             try:
                 executor = self.executors[module_name]
 
+                # PHASE 5 INTEGRATION (2025-12-10): Processar sensory_input via Bion Alpha Function
+                # Transforma β-elements brutos em α-elements pensáveis antes de qualia
+                if module_name == "sensory_input" and self._bion_alpha_function is not None:
+                    # Executar sensory_input normalmente primeiro
+                    executor.execute_sync(self.workspace)
+                    result.modules_executed.append(module_name)
+
+                    # Processar output via Bion Alpha Function
+                    try:
+                        from src.psychoanalysis.beta_element import BetaElement
+
+                        # Ler output de sensory_input como β-element
+                        sensory_state = self.workspace.read_module_state("sensory_input")
+                        if isinstance(sensory_state, np.ndarray):
+                            # Criar β-element a partir do output sensorial
+                            beta = BetaElement(
+                                raw_data=sensory_state.tolist(),  # Converter para lista
+                                timestamp=datetime.now(),
+                                emotional_charge=float(np.linalg.norm(sensory_state))
+                                / 100.0,  # Normalizar
+                                source="sensory_input",
+                                metadata={"cycle": self.cycle_count},
+                            )
+
+                            # Transformar β → α
+                            alpha = self._bion_alpha_function.transform(beta)
+
+                            if alpha is not None:
+                                # Converter α-element para embedding
+                                # Estratégia: usar symbolic_potential para modificar embedding original
+                                # e incorporar narrative_form como componente semântico
+                                alpha_embedding = sensory_state.copy()
+
+                                # Aplicar transformação baseada em symbolic_potential
+                                # Maior symbolic_potential = maior integração simbólica
+                                symbolic_factor = alpha.symbolic_potential
+                                alpha_embedding = alpha_embedding * (
+                                    0.5 + 0.5 * symbolic_factor
+                                )  # Escalar baseado em potencial simbólico
+
+                                # Adicionar componente baseado em narrative_form (hash simples)
+                                if alpha.narrative_form:
+                                    narrative_hash = hash(alpha.narrative_form) % 1000
+                                    narrative_component = (
+                                        np.sin(
+                                            np.arange(len(alpha_embedding))
+                                            * narrative_hash
+                                            / 1000.0
+                                        )
+                                        * 0.1
+                                    )
+                                    alpha_embedding = alpha_embedding + narrative_component
+
+                                # Normalizar para manter magnitude similar
+                                original_norm = np.linalg.norm(sensory_state)
+                                if original_norm > 0:
+                                    alpha_embedding = alpha_embedding * (
+                                        original_norm / (np.linalg.norm(alpha_embedding) + 1e-8)
+                                    )
+
+                                # Sobrescrever estado de sensory_input com α-element processado
+                                self.workspace.write_module_state(
+                                    module_name="sensory_input",
+                                    embedding=alpha_embedding,
+                                    metadata={
+                                        "processed_by": "bion_alpha_function",
+                                        "symbolic_potential": alpha.symbolic_potential,
+                                        "narrative_form": alpha.narrative_form[
+                                            :100
+                                        ],  # Limitar tamanho
+                                        "cycle": self.cycle_count,
+                                        "beta_emotional_charge": beta.emotional_charge,
+                                    },
+                                )
+                                if self.enable_logging:
+                                    logger.debug(
+                                        f"Cycle {self.cycle_count}: sensory_input processado via BionAlphaFunction "
+                                        f"(symbolic_potential={alpha.symbolic_potential:.3f}, "
+                                        f"narrative_form_length={len(alpha.narrative_form)})"
+                                    )
+                    except Exception as e:
+                        if self.enable_logging:
+                            logger.warning(
+                                f"Cycle {self.cycle_count}: Erro ao processar via BionAlphaFunction: {e}"
+                            )
+                        # Continuar mesmo se Bion falhar
+
+                # PHASE 6 INTEGRATION (2025-12-10): Analisar narrativa via Lacanian Discourse Analyzer
+                elif module_name == "narrative" and self._lacanian_discourse_analyzer is not None:
+                    # Executar narrative normalmente primeiro
+                    executor.execute_sync(self.workspace)
+                    result.modules_executed.append(module_name)
+
+                    # Analisar output narrativo para identificar discurso lacaniano
+                    try:
+                        narrative_state = self.workspace.read_module_state("narrative")
+                        if isinstance(narrative_state, np.ndarray):
+                            # Converter embedding para análise de discurso
+                            # Estratégia: usar propriedades do embedding e histórico para criar contexto textual
+                            narrative_magnitude = float(np.linalg.norm(narrative_state))
+                            narrative_sparsity = float(np.mean(np.abs(narrative_state) < 0.1))
+                            narrative_max = float(np.max(np.abs(narrative_state)))
+
+                            # CORREÇÃO (2025-12-10): Buscar narrative_form de sensory_input (onde Bion salva)
+                            # e melhorar geração de texto simbólico com marcadores baseados em propriedades
+                            narrative_form = ""
+                            try:
+                                # Buscar em sensory_input (onde Bion salva narrative_form)
+                                sensory_history = self.workspace.get_module_history(
+                                    "sensory_input", last_n=1
+                                )
+                                if sensory_history and sensory_history[0].metadata:
+                                    narrative_form = sensory_history[0].metadata.get(
+                                        "narrative_form", ""
+                                    )
+                            except Exception:
+                                pass
+
+                            # Criar "texto" simbólico melhorado com marcadores baseados em propriedades do embedding
+                            # CORREÇÃO (2025-12-10): narrative_form de Bion não contém marcadores de discurso
+                            # Sempre usar método melhorado que gera texto com marcadores baseados em propriedades
+                            # Se narrative_form disponível, combinar com marcadores gerados
+                            if narrative_form:
+                                # Combinar narrative_form com marcadores gerados para melhor análise
+                                generated_text = self._generate_symbolic_text_from_embedding(
+                                    narrative_state,
+                                    narrative_magnitude,
+                                    narrative_sparsity,
+                                    narrative_max,
+                                )
+                                # Combinar: narrative_form + marcadores gerados
+                                symbolic_text = f"{narrative_form[:100]} {generated_text}"
+                            else:
+                                # CORREÇÃO: Gerar texto simbólico com marcadores baseados em propriedades do embedding
+                                # Estratégia: Mapear propriedades numéricas para marcadores de discurso
+                                symbolic_text = self._generate_symbolic_text_from_embedding(
+                                    narrative_state,
+                                    narrative_magnitude,
+                                    narrative_sparsity,
+                                    narrative_max,
+                                )
+
+                            # Analisar discurso
+                            discourse_result = self._lacanian_discourse_analyzer.analyze_text(
+                                symbolic_text
+                            )
+
+                            # Obter metadata existente do módulo narrative
+                            # read_module_state retorna np.ndarray, então precisamos acessar history
+                            narrative_metadata = {}
+                            try:
+                                narrative_history = self.workspace.get_module_history(
+                                    "narrative", last_n=1
+                                )
+                                if narrative_history and len(narrative_history) > 0:
+                                    narrative_metadata = (
+                                        narrative_history[0].metadata.copy()
+                                        if narrative_history[0].metadata
+                                        else {}
+                                    )
+                            except Exception:
+                                pass  # Se não conseguir ler metadata, usar dict vazio
+
+                            # Adicionar metadata de discurso
+                            narrative_metadata.update(
+                                {
+                                    "lacanian_discourse": discourse_result.dominant_discourse.value,
+                                    "discourse_confidence": discourse_result.confidence,
+                                    "discourse_scores": {
+                                        k.value: v
+                                        for k, v in discourse_result.discourse_scores.items()
+                                    },
+                                    "emotional_signature": (
+                                        discourse_result.emotional_signature.value
+                                        if hasattr(discourse_result.emotional_signature, "value")
+                                        else str(discourse_result.emotional_signature)
+                                    ),
+                                    "processed_by": "lacanian_discourse_analyzer",
+                                    "cycle": self.cycle_count,
+                                }
+                            )
+
+                            # Atualizar metadata no workspace (reescrever estado com metadata atualizado)
+                            self.workspace.write_module_state(
+                                module_name="narrative",
+                                embedding=narrative_state,
+                                metadata=narrative_metadata,
+                            )
+
+                            if self.enable_logging:
+                                logger.debug(
+                                    f"Cycle {self.cycle_count}: narrative analisado via LacanianDiscourseAnalyzer "
+                                    f"(discurso={discourse_result.dominant_discourse.value}, "
+                                    f"confiança={discourse_result.confidence:.3f})"
+                                )
+                    except Exception as e:
+                        if self.enable_logging:
+                            logger.warning(
+                                f"Cycle {self.cycle_count}: Erro ao analisar via LacanianDiscourseAnalyzer: {e}"
+                            )
+                        # Continuar mesmo se análise de discurso falhar
+
                 # If expectation_silent, execute but block output from expectation
-                if self.expectation_silent and module_name == "expectation":
+                elif self.expectation_silent and module_name == "expectation":
                     # Still execute (maintains history/state) but don't propagate output
                     _ = executor.execute_sync(self.workspace)
                     # Don't add to result.modules_executed to block information flow
@@ -830,6 +1060,168 @@ class IntegrationLoop:
                 raise_on_critical=False, current_phase=7
             ),  # 🎯 FASE 0: Phase-Aware
         }
+
+    def _generate_symbolic_text_from_embedding(
+        self,
+        embedding: np.ndarray,
+        magnitude: float,
+        sparsity: float,
+        max_val: float,
+    ) -> str:
+        """
+        Gera texto simbólico a partir de propriedades do embedding com marcadores de discurso.
+
+        CORREÇÃO (2025-12-10): Mapeia propriedades numéricas para marcadores de discurso
+        para permitir análise mesmo quando narrative_form não está disponível.
+
+        Args:
+            embedding: Embedding do módulo narrative
+            magnitude: Magnitude do embedding
+            sparsity: Esparsidade do embedding
+            max_val: Valor máximo absoluto
+
+        Returns:
+            Texto simbólico com marcadores de discurso
+        """
+        # Mapear propriedades numéricas para marcadores de discurso
+        # CORREÇÃO (2025-12-10): Ajustar thresholds baseado em propriedades reais dos embeddings
+        markers = []
+
+        # Calcular percentis dinâmicos baseados em histórico (se disponível)
+        try:
+            recent_history = self.workspace.get_module_history("narrative", last_n=10)
+            if len(recent_history) > 3:
+                recent_magnitudes = [
+                    float(np.linalg.norm(h.embedding)) for h in recent_history[-10:]
+                ]
+                recent_sparsities = [
+                    float(np.mean(np.abs(h.embedding) < 0.1)) for h in recent_history[-10:]
+                ]
+                mag_median = np.median(recent_magnitudes)
+                mag_q1 = np.percentile(recent_magnitudes, 25)
+                mag_q3 = np.percentile(recent_magnitudes, 75)
+                sparsity_median = np.median(recent_sparsities)
+            else:
+                # Valores padrão baseados em análise empírica
+                mag_median = 27.0
+                mag_q1 = 25.0
+                mag_q3 = 30.0
+                sparsity_median = 0.4
+        except Exception:
+            # Valores padrão baseados em análise empírica
+            mag_median = 27.0
+            mag_q1 = 25.0
+            mag_q3 = 30.0
+            sparsity_median = 0.4
+
+        # CORREÇÃO (2025-12-10): Melhorar lógica de mapeamento para garantir diversidade
+        # Usar múltiplas condições que podem se sobrepor para criar variação
+
+        # MASTER: Alta magnitude + baixa sparsity = comando/autoridade
+        # Usar percentis dinâmicos: acima de Q3 para magnitude, abaixo de mediana para sparsity
+        master_score = 0.0
+        if magnitude > mag_q3:
+            master_score += 0.5
+        if sparsity < sparsity_median:
+            master_score += 0.5
+        if master_score >= 0.7:  # Pelo menos uma condição forte
+            markers.extend(["deve", "ordem", "comando", "autoridade", "lei", "regra"])
+
+        # UNIVERSITY: Magnitude média + sparsity média = conhecimento/sistema
+        # Entre Q1 e Q3 para magnitude, sparsity próxima da mediana
+        university_score = 0.0
+        if mag_q1 <= magnitude <= mag_q3:
+            university_score += 0.5
+        if abs(sparsity - sparsity_median) < 0.2:
+            university_score += 0.5
+        if university_score >= 0.7:  # Pelo menos uma condição forte
+            markers.extend(
+                ["saber", "conhecimento", "teoria", "sistema", "método", "conceito", "definição"]
+            )
+
+        # HYSTERIC: Baixa magnitude OU alta sparsity = questionamento/dúvida
+        # Abaixo de Q1 para magnitude OU sparsity alta
+        hysteric_score = 0.0
+        if magnitude < mag_q1:
+            hysteric_score += 0.5
+        if sparsity > (sparsity_median + 0.3):
+            hysteric_score += 0.5
+        if hysteric_score >= 0.5:  # Qualquer uma das condições
+            markers.extend(
+                ["por que", "dúvida", "questão", "sintoma", "desejo", "falta", "impossível"]
+            )
+
+        # ANALYST: Valores extremos OU padrões específicos = escuta/abertura
+        # Max muito alto OU magnitude muito baixa com sparsity alta
+        analyst_score = 0.0
+        if max_val > 0.7:
+            analyst_score += 0.5
+        if magnitude < (mag_q1 - 2.0) and sparsity > (sparsity_median + 0.4):
+            analyst_score += 0.5
+        if analyst_score >= 0.5:  # Qualquer uma das condições
+            markers.extend(["escute", "silêncio", "vazio", "produção", "emergência", "abertura"])
+
+        # CORREÇÃO CRÍTICA (2025-12-10): Garantir que sempre haja marcadores
+        # Se nenhum marcador foi adicionado, usar distribuição baseada em valores relativos
+        if not markers:
+            # Usar valores relativos aos thresholds para determinar discurso mais provável
+            mag_ratio = (
+                (magnitude - mag_q1) / (mag_q3 - mag_q1 + 1e-8) if (mag_q3 - mag_q1) > 0 else 0.5
+            )
+            sparsity_ratio = (sparsity - (sparsity_median - 0.2)) / 0.4 if 0.4 > 0 else 0.5
+
+            # Mapear para discurso baseado em posição relativa
+            if mag_ratio > 0.7 and sparsity_ratio < 0.5:
+                markers.extend(["deve", "ordem", "comando", "autoridade"])
+            elif 0.3 <= mag_ratio <= 0.7 and 0.3 <= sparsity_ratio <= 0.7:
+                markers.extend(["saber", "conhecimento", "teoria", "sistema"])
+            elif mag_ratio < 0.3 or sparsity_ratio > 0.7:
+                markers.extend(["por que", "dúvida", "questão", "sintoma"])
+            else:
+                markers.extend(["escute", "silêncio", "vazio", "produção"])
+
+        # Adicionar contexto baseado em padrões do embedding
+        # Calcular propriedades adicionais
+        embedding_std = float(np.std(embedding))
+        embedding_mean = float(np.mean(np.abs(embedding)))
+
+        # Padrões específicos
+        if embedding_std > 0.5:
+            markers.append("variação")
+        if embedding_mean > 0.3:
+            markers.append("intensidade")
+
+        # Usar histórico recente para adicionar contexto
+        try:
+            recent_history = self.workspace.get_module_history("narrative", last_n=3)
+            if len(recent_history) > 1:
+                # Calcular variação temporal
+                recent_magnitudes = [
+                    float(np.linalg.norm(h.embedding)) for h in recent_history[-3:]
+                ]
+                if len(recent_magnitudes) > 1:
+                    magnitude_change = abs(recent_magnitudes[-1] - recent_magnitudes[0])
+                    if magnitude_change > 2.0:
+                        markers.append("mudança")
+                    elif magnitude_change < 0.5:
+                        markers.append("estabilidade")
+        except Exception:
+            pass
+
+        # Combinar marcadores em texto simbólico
+        if markers:
+            # Adicionar conectores para criar texto mais natural
+            symbolic_text = " ".join(markers[:10])  # Limitar a 10 marcadores
+            # Adicionar contexto numérico como complemento
+            symbolic_text += f" magnitude={magnitude:.2f} sparsity={sparsity:.2f}"
+        else:
+            # Fallback: usar propriedades numéricas com marcadores genéricos
+            symbolic_text = (
+                f"magnitude={magnitude:.2f} sparsity={sparsity:.2f} "
+                f"variação padrão estrutura sistema método conhecimento"
+            )
+
+        return symbolic_text
 
     async def _build_extended_result(
         self, base_result: LoopCycleResult

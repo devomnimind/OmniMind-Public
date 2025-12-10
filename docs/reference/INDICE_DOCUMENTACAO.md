@@ -1,6 +1,6 @@
 # 📚 ÍNDICE COMPLETO DE DOCUMENTAÇÃO - OmniMind
 
-**Última Atualização**: 2025-12-08
+**Última Atualização**: 2025-12-10
 **Autor**: Fabrício da Silva + assistência de IA
 
 ---
@@ -8,27 +8,23 @@
 ## 📋 DOCUMENTOS PRINCIPAIS
 
 ### Status e Pendências
-- **[PENDENCIAS_CONSOLIDADAS.md](PENDENCIAS_CONSOLIDADAS.md)** - Pendências consolidadas (histórico)
-- **[PENDENCIAS_ATIVAS.md](PENDENCIAS_ATIVAS.md)** - Pendências ativas (canônico)
-- **[REFATORACOES_CONCLUIDAS_2025-12-08.md](REFATORACOES_CONCLUIDAS_2025-12-08.md)** - Refatorações concluídas
-- **[ANALISES_CONSOLIDADAS.md](ANALISES_CONSOLIDADAS.md)** - Análises consolidadas (2025-12-08)
+- **[PENDENCIAS_CONSOLIDADAS.md](../implementation/pending/PENDENCIAS_CONSOLIDADAS.md)** - Pendências consolidadas
+- **[HISTORICO_RESOLUCOES.md](../HISTORICO_RESOLUCOES.md)** - Histórico de resoluções completadas
+- **[ESTADO_ATUAL.md](../METADATA/ESTADO_ATUAL.md)** - Estado atual do sistema
 
-### Correções Críticas de Φ (2025-12-07)
-- **[ANÁLISE DE DEPENDÊNCIAS Φ](archive/docs/analises_varreduras_2025-12-07/ANALISE_DEPENDENCIAS_PHI.md)** ⭐ **DOCUMENTO ARQUIVADO** - Análise completa de dependências e propagação de métricas
-- **[VERIFICAÇÃO Φ SISTEMA](archive/docs/resolvidos_2025-12-07/VERIFICACAO_PHI_SISTEMA.md)** - Verificação sistemática de Φ e dependências
-- **[SNAPSHOT_PHI_EXPLICACAO.md](archive/docs/analises_varreduras_2025-12-07/SNAPSHOT_PHI_EXPLICACAO.md)** - Explicação de PHI=0 em snapshots
+### Correções Críticas de Φ (2025-12-10)
+- **[ANÁLISE DE DEPENDÊNCIAS Φ](../analysis/diagnostics/ANALISE_DEPENDENCIAS_PHI.md)** - Análise completa de dependências e propagação de métricas
+- **[VERIFICAÇÃO Φ SISTEMA](../analysis/validation/VERIFICACAO_PHI_SISTEMA.md)** - Verificação sistemática de Φ e dependências
 
 ### Implementações Recentes
-- **[IMPLEMENTAÇÃO ISOMORFISMO COMPLETA](archive/docs/analises_varreduras_2025-12-07/IMPLEMENTACAO_ISOMORFISMO_COMPLETA.md)** - Isomorfismo estrutural (RSI)
-- **[ANÁLISE ISOMORFISMO ESTRUTURAL](archive/docs/analises_varreduras_2025-12-07/ANALISE_ISOMORFISMO_ESTRUTURAL.md)** - Análise do isomorfismo
-- **[ANALISE_200_CICLOS_PRODUCAO.md](ANALISE_200_CICLOS_PRODUCAO.md)** - Análise de 200 ciclos em produção
+- **Isomorfismo Estrutural**: Implementado e validado (ver [canonical/Modelos_Neuronais_Comparativo.md](../canonical/Modelos_Neuronais_Comparativo.md))
+- **Tríade Ortogonal**: Φ, Ψ, σ completamente integrados
+- **Análises de Produção**: Ver [analysis/](../analysis/) para análises detalhadas
 
-### Backup e Recuperação
-- **[BACKUP_AUTOMATICO_SETUP.md](BACKUP_AUTOMATICO_SETUP.md)** - Setup de backup automático
-
-### Análises e Consolidações
-- **[ANALISES_CONSOLIDADAS.md](ANALISES_CONSOLIDADAS.md)** - Análises consolidadas (2025-12-08)
-- **[PROPOSICOES_IMPLICITAS_PROJETO.md](PROPOSICOES_IMPLICITAS_PROJETO.md)** - Proposições teóricas do projeto
+### Análises e Diagnósticos
+- **[analysis/diagnostics/](../analysis/diagnostics/)** - Diagnósticos e investigações
+- **[analysis/validation/](../analysis/validation/)** - Validações e verificações
+- **[analysis/performance/](../analysis/performance/)** - Análises de performance
 
 ---
 
@@ -204,20 +200,20 @@ docs/
 ├── hardware/ (hardware)
 ├── infrastructure/ (infraestrutura)
 ├── setup/ (setup)
-└── archive/ (documentação arquivada)
+└── implementation/ (documentação de implementação)
 ```
 
 ---
 
 ## 🔗 LINKS RÁPIDOS
 
-- **Status Atual**: [STATUS_ATUAL.md](STATUS_ATUAL.md)
-- **Pendências**: [PENDENCIAS_CONSOLIDADAS.md](PENDENCIAS_CONSOLIDADAS.md)
-- **Correções de Φ**: [ANÁLISE DE DEPENDÊNCIAS Φ](archive/docs/analises_varreduras_2025-12-07/ANALISE_DEPENDENCIAS_PHI.md)
-- **Quick Start**: [canonical/QUICK_START.md](canonical/QUICK_START.md)
-- **Source of Truth**: [canonical/Modelos_Neuronais_Comparativo.md](canonical/Modelos_Neuronais_Comparativo.md)
+- **Status Atual**: [../METADATA/ESTADO_ATUAL.md](../METADATA/ESTADO_ATUAL.md)
+- **Pendências**: [../implementation/pending/PENDENCIAS_CONSOLIDADAS.md](../implementation/pending/PENDENCIAS_CONSOLIDADAS.md)
+- **Correções de Φ**: [../analysis/diagnostics/ANALISE_DEPENDENCIAS_PHI.md](../analysis/diagnostics/ANALISE_DEPENDENCIAS_PHI.md)
+- **Quick Start**: [../canonical/QUICK_START.md](../canonical/QUICK_START.md)
+- **Source of Truth**: [../canonical/Modelos_Neuronais_Comparativo.md](../canonical/Modelos_Neuronais_Comparativo.md)
 
 ---
 
-**Última atualização**: 2025-12-07
+**Última atualização**: 2025-12-10
 

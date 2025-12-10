@@ -2,16 +2,23 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
 
 from src.services.daemon_monitor import get_cached_status
+from web.backend.auth import verify_credentials
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/tribunal", tags=["tribunal"])
+
+# CORREÇÃO (2025-12-10): Instância global do Tribunal executor
+_tribunal_executor_task: Optional[asyncio.Task] = None
+_tribunal_executor_instance: Any = None
 
 
 def _interpret_metrics(metrics: Dict[str, Any]) -> Dict[str, Any]:
@@ -21,7 +28,7 @@ def _interpret_metrics(metrics: Dict[str, Any]) -> Dict[str, Any]:
     Returns visual interpretations and recommendations.
     """
     attacks_count = metrics.get("attacks_count", 0)
-    duration_hours = metrics.get("duration_hours", 0)
+    duration_hours = metrics.get("duration_hours", 0) or 0  # CORREÇÃO (2025-12-10): Garantir que não seja None
     success_rate = metrics.get("success_rate", 0.0)
 
     # Visual interpretations
@@ -67,7 +74,8 @@ def _interpret_metrics(metrics: Dict[str, Any]) -> Dict[str, Any]:
         recommendations.append("Sistema funcionando normalmente")
 
     # Duration assessment
-    if duration_hours > 72:
+    # CORREÇÃO (2025-12-10): Verificar se duration_hours não é None antes de comparar
+    if duration_hours and duration_hours > 72:
         recommendations.append(
             "Tribunal em execução prolongada - verificar para bloqueios"
         )
@@ -103,8 +111,20 @@ async def get_activity() -> Dict[str, Any]:
                 "severity": "info",
             }
         )
+    elif status == "not_started":
+        proposals.append(
+            {
+                "id": "start_tribunal",
+                "title": "Iniciar Tribunal",
+                "description": "O Tribunal ainda não foi executado. Execute para validar consciência.",
+                "severity": "info",
+            }
+        )
     elif status == "finished":
-        compatible = tribunal_info.get("consciousness_compatible", False)
+        compatible = tribunal_info.get("consciousness_compatible")
+        # CORREÇÃO (2025-12-10): Tratar None como False (incompatível)
+        if compatible is None:
+            compatible = False
         if compatible:
             proposals.append(
                 {
@@ -148,12 +168,18 @@ async def get_metrics() -> Dict[str, Any]:
     tribunal_info = cache.get("tribunal_info", {})
 
     # Raw metrics
+    # CORREÇÃO (2025-12-10): Tratar consciousness_compatible quando é None
+    consciousness_compatible = tribunal_info.get("consciousness_compatible")
+    if consciousness_compatible is None:
+        # Tribunal ainda não finalizou ou não foi executado
+        consciousness_compatible = False  # Default seguro
+
     metrics = {
         "attacks_count": tribunal_info.get("attacks_executed", 0),
         "attacks_successful": tribunal_info.get("attacks_successful", 0),
         "attacks_failed": tribunal_info.get("attacks_failed", 0),
-        "duration_hours": tribunal_info.get("duration_hours", 0),
-        "consciousness_compatible": tribunal_info.get("consciousness_compatible", False),
+        "duration_hours": tribunal_info.get("duration_hours", 0) or 0,
+        "consciousness_compatible": bool(consciousness_compatible),
         "status": tribunal_info.get("status") or "unknown",
         "last_attack_type": tribunal_info.get("last_attack_type", "none"),
         "error_count": tribunal_info.get("error_count", 0),
@@ -224,3 +250,148 @@ async def get_metrics() -> Dict[str, Any]:
         "visualization": visualization,
         "timestamp": tribunal_info.get("last_update", ""),
     }
+
+
+# CORREÇÃO (2025-12-10): Endpoint para iniciar Tribunal
+class TribunalStartRequest(BaseModel):
+    """Request to start Tribunal execution."""
+    duration_hours: float = 4.0
+    save_periodic: bool = True
+    periodic_interval: int = 300  # 5 minutes
+
+
+@router.post("/start")
+async def start_tribunal(
+    request: TribunalStartRequest = TribunalStartRequest(),
+    user: str = Depends(verify_credentials),
+) -> Dict[str, Any]:
+    """
+    Start Tribunal execution.
+
+    Args:
+        request: Tribunal start configuration
+        user: Authenticated user
+
+    Returns:
+        Status of Tribunal start
+    """
+    global _tribunal_executor_task, _tribunal_executor_instance
+
+    # Check if Tribunal is already running
+    if _tribunal_executor_task and not _tribunal_executor_task.done():
+        return {
+            "status": "already_running",
+            "message": "Tribunal is already running",
+            "task_id": id(_tribunal_executor_task),
+        }
+
+    try:
+        from src.tribunal_do_diabo.executor import TribunalDoDiaboExecutor
+
+        # Create executor instance
+        _tribunal_executor_instance = TribunalDoDiaboExecutor(
+            duration_hours=request.duration_hours,
+            save_periodic=request.save_periodic,
+            periodic_interval=request.periodic_interval,
+        )
+
+        # Start execution in background task
+        _tribunal_executor_task = asyncio.create_task(_tribunal_executor_instance.run())
+
+        logger.info(
+            f"Tribunal started via API: duration={request.duration_hours}h, "
+            f"periodic_save={request.save_periodic}, interval={request.periodic_interval}s"
+        )
+
+        return {
+            "status": "started",
+            "message": f"Tribunal started successfully (duration: {request.duration_hours}h)",
+            "duration_hours": request.duration_hours,
+            "save_periodic": request.save_periodic,
+            "periodic_interval": request.periodic_interval,
+            "task_id": id(_tribunal_executor_task),
+        }
+    except Exception as e:
+        logger.error(f"Error starting Tribunal: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to start Tribunal: {e}")
+
+
+@router.post("/stop")
+async def stop_tribunal(
+    user: str = Depends(verify_credentials),
+) -> Dict[str, Any]:
+    """
+    Stop Tribunal execution.
+
+    Args:
+        user: Authenticated user
+
+    Returns:
+        Status of Tribunal stop
+    """
+    global _tribunal_executor_task, _tribunal_executor_instance
+
+    if not _tribunal_executor_task or _tribunal_executor_task.done():
+        return {
+            "status": "not_running",
+            "message": "Tribunal is not running",
+        }
+
+    try:
+        # Stop executor
+        if _tribunal_executor_instance:
+            _tribunal_executor_instance.running = False
+
+        # Cancel task
+        _tribunal_executor_task.cancel()
+        try:
+            await _tribunal_executor_task
+        except asyncio.CancelledError:
+            pass
+
+        logger.info("Tribunal stopped via API")
+
+        return {
+            "status": "stopped",
+            "message": "Tribunal stopped successfully",
+        }
+    except Exception as e:
+        logger.error(f"Error stopping Tribunal: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to stop Tribunal: {e}")
+
+
+@router.get("/history")
+async def get_tribunal_history(
+    user: str = Depends(verify_credentials),
+) -> Dict[str, Any]:
+    """
+    Get Tribunal metrics history.
+
+    Args:
+        user: Authenticated user
+
+    Returns:
+        Tribunal metrics history
+    """
+    from pathlib import Path
+
+    history_file = Path("data/long_term_logs/tribunal_metrics_history.json")
+
+    if not history_file.exists():
+        return {
+            "cycles": [],
+            "last_update": None,
+            "message": "No history available",
+        }
+
+    try:
+        import json
+        history = json.loads(history_file.read_text())
+        return {
+            "cycles": history.get("cycles", []),
+            "last_update": history.get("last_update"),
+            "total_cycles": len(history.get("cycles", [])),
+        }
+    except Exception as e:
+        logger.error(f"Error loading Tribunal history: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to load history: {e}")

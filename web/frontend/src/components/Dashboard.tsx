@@ -45,12 +45,25 @@ export function Dashboard() {
     setLoading(true);
     setError(null);
     try {
-      const [status, tasks] = await Promise.all([
-        apiService.getDaemonStatus(),
-        apiService.getDaemonTasks(),
+      // CORREÇÃO (2025-12-09): Timeout individual para cada request
+      const [status, tasks] = await Promise.allSettled([
+        apiService.getDaemonStatus().catch(err => {
+          console.error('[Dashboard] Erro ao buscar status:', err);
+          return null; // Retornar null em caso de erro
+        }),
+        apiService.getDaemonTasks().catch(err => {
+          console.error('[Dashboard] Erro ao buscar tarefas:', err);
+          return null; // Retornar null em caso de erro
+        }),
       ]);
-      setStatus(status);
-      setTasks(tasks);
+
+      // Processar resultados
+      if (status.status === 'fulfilled' && status.value) {
+        setStatus(status.value);
+      }
+      if (tasks.status === 'fulfilled' && tasks.value) {
+        setTasks(tasks.value);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch data');
       console.error('Fetch error:', err);
@@ -63,34 +76,96 @@ export function Dashboard() {
   useEffect(() => {
     if (!lastMessage) return;
 
-    switch (lastMessage.type) {
+    // CORREÇÃO CRÍTICA (2025-12-09): Depender apenas de campos estáveis da mensagem
+    // lastMessage muda constantemente, causando loop infinito
+    const messageType = lastMessage.type;
+    const messageData = lastMessage.data;
+
+    switch (messageType) {
       case 'daemon_status':
-        setStatus(lastMessage.data as DaemonStatusType);
+        setStatus(messageData as DaemonStatusType);
         break;
       case 'task_update':
-        // Refresh tasks when update received
-        fetchData();
+        // Refresh tasks when update received (sem chamar fetchData para evitar loop)
+        // Os componentes individuais já fazem polling
         break;
       case 'agent_update':
         // Agent updates handled by AgentStatus component
         break;
       case 'metrics_update':
-        // Metrics updates handled automatically
+        // Metrics updates handled automatically by RealtimeAnalytics
+        // Não atualizar status aqui para evitar loops - RealtimeAnalytics já processa
         break;
       default:
-        console.log('Unhandled WebSocket message:', lastMessage.type);
+        // Ignorar mensagens desconhecidas silenciosamente
+        break;
     }
-  }, [lastMessage, setStatus, fetchData]);
+  }, [lastMessage?.type, lastMessage?.id]); // CORREÇÃO: Remover setStatus (função estável do zustand)
 
   useEffect(() => {
-    fetchData();
-    // Refresh every 5 seconds to keep dashboard alive
+    // Verificar autenticação antes de fazer fetch
+    if (!useAuthStore.getState().isAuthenticated) {
+      return;
+    }
+
+    // CORREÇÃO CRÍTICA (2025-12-09): Usar função estável para evitar loop infinito
+    // fetchData é recriado a cada render, causando loop infinito
+    const fetchDataStable = async () => {
+      if (!useAuthStore.getState().isAuthenticated) {
+        return;
+      }
+
+      setLoading(true);
+      setError(null);
+      try {
+        const [status, tasks] = await Promise.allSettled([
+          apiService.getDaemonStatus().catch(err => {
+            // CORREÇÃO (2025-12-10): Não logar erro se não há autenticação
+            const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+            if (errorMessage !== 'Not authenticated') {
+              console.error('[Dashboard] Erro ao buscar status:', err);
+            }
+            return null;
+          }),
+          apiService.getDaemonTasks().catch(err => {
+            // CORREÇÃO (2025-12-10): Não logar erro se não há autenticação
+            const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+            if (errorMessage !== 'Not authenticated') {
+              console.error('[Dashboard] Erro ao buscar tarefas:', err);
+            }
+            return null;
+          }),
+        ]);
+
+        if (status.status === 'fulfilled' && status.value) {
+          setStatus(status.value);
+        }
+        if (tasks.status === 'fulfilled' && tasks.value) {
+          setTasks(tasks.value);
+        }
+      } catch (err) {
+        // CORREÇÃO (2025-12-10): Não mostrar erro se não há autenticação
+        const errorMessage = err instanceof Error ? err.message : 'Failed to fetch data';
+        if (errorMessage !== 'Not authenticated') {
+          setError(errorMessage);
+          console.error('Fetch error:', err);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDataStable();
+    // CORREÇÃO (2025-12-09): Aumentar intervalo para 15s (métricas críticas mas não precisa ser tão frequente)
+    // Dashboard precisa estar atualizado mas não precisa sobrecarregar servidor
     const interval = setInterval(() => {
-      // Always refresh to maintain heartbeat
-      fetchData();
-    }, 5000);
+      // Verificar autenticação antes de cada fetch
+      if (useAuthStore.getState().isAuthenticated) {
+        fetchDataStable();
+      }
+    }, 15000); // Atualizar a cada 15s (métricas críticas)
     return () => clearInterval(interval);
-  }, [fetchData]);
+  }, []); // CORREÇÃO CRÍTICA: Array vazio - executa apenas uma vez na montagem
 
   // Show loading skeleton on initial load
   if (loading && !useDaemonStore.getState().status) {

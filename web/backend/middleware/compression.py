@@ -164,8 +164,16 @@ class CompressionMiddleware(BaseHTTPMiddleware):
         try:
             # Get response body
             body = b""
-            async for chunk in response.body_iterator:
-                body += chunk
+            # Check if response has body attribute (simple response)
+            if hasattr(response, "body"):
+                body = response.body  # type: ignore[attr-defined]
+            # Otherwise, iterate over body iterator if available
+            elif hasattr(response, "body_iterator"):
+                async for chunk in response.body_iterator:  # type: ignore[attr-defined]
+                    body += chunk
+            else:
+                # Try to get body from response directly
+                body = getattr(response, "body", b"")
 
             # Skip if empty
             if not body:
@@ -206,8 +214,16 @@ class CompressionMiddleware(BaseHTTPMiddleware):
         try:
             # Get response body
             body = b""
-            async for chunk in response.body_iterator:
-                body += chunk
+            # Check if response has body attribute (simple response)
+            if hasattr(response, "body"):
+                body = response.body  # type: ignore[attr-defined]
+            # Otherwise, iterate over body iterator if available
+            elif hasattr(response, "body_iterator"):
+                async for chunk in response.body_iterator:  # type: ignore[attr-defined]
+                    body += chunk
+            else:
+                # Try to get body from response directly
+                body = getattr(response, "body", b"")
 
             # Skip if empty
             if not body:

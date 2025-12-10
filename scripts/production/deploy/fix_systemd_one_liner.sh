@@ -1,0 +1,6 @@
+#!/bin/bash
+# Comando único para corrigir serviços systemd OmniMind
+# Execute: sudo bash scripts/production/deploy/fix_systemd_one_liner.sh
+
+sudo bash -c 'PROJECT_ROOT="/home/fahbrain/projects/omnimind"; OMNIMIND_USER="fahbrain"; SYSTEMD_DIR="/etc/systemd/system"; DAEMON_SERVICE="${SYSTEMD_DIR}/omnimind-daemon.service"; OMNIMIND_SERVICE="${SYSTEMD_DIR}/omnimind.service"; echo "🔧 Corrigindo serviços systemd..."; if [ -f "$DAEMON_SERVICE" ]; then echo "   🔄 Corrigindo omnimind-daemon.service..."; sed -i "s|__OMNIMIND_USER__|${OMNIMIND_USER}|g" "$DAEMON_SERVICE"; sed -i "s|__PROJECT_ROOT__|${PROJECT_ROOT}|g" "$DAEMON_SERVICE"; echo "   ✅ Placeholders substituídos"; fi; if [ -f "$OMNIMIND_SERVICE" ]; then echo "   🔄 Corrigindo omnimind.service..."; if ! grep -q "TimeoutStartSec" "$OMNIMIND_SERVICE"; then sed -i "/\[Service\]/a TimeoutStartSec=300s" "$OMNIMIND_SERVICE"; echo "   ✅ TimeoutStartSec=300s adicionado"; fi; if ! grep -q "TimeoutStopSec" "$OMNIMIND_SERVICE"; then sed -i "/TimeoutStartSec/a TimeoutStopSec=60s" "$OMNIMIND_SERVICE"; echo "   ✅ TimeoutStopSec=60s adicionado"; fi; fi; echo "   🔄 Recarregando daemon..."; systemctl daemon-reload; echo "   ✅ Daemon recarregado"; echo ""; echo "✅ Correção completa!"; echo ""; echo "📊 Verificando status:"; systemctl status omnimind.service --no-pager -l | head -10 || true'
+

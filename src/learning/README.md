@@ -5,8 +5,16 @@
 **EWC, Page Curve Learning, prevenção esquecimento catastrófico**
 
 **Status**: Phase 14
+**Última Atualização**: 2025-12-10
 
 Módulo do sistema OmniMind responsável por funcionalidades específicas integradas à arquitetura global. Implementa componentes essenciais que contribuem para o funcionamento coeso do sistema de consciência artificial.
+
+## ✅ Integração com Métricas de Consciência (2025-12-08)
+
+O módulo de aprendizado integra com métricas de consciência corrigidas:
+- **Φ (Phi)**: Usa `PHI_OPTIMAL = 0.06 nats` (recalibrado) para otimização de aprendizado
+- **Validação**: Operações de aprendizado preservam Φ > `PHI_THRESHOLD` (0.01 nats)
+- **Constantes**: Importadas de `src/consciousness/phi_constants.py`
 
 ## 🔄 Interação entre os Três Estados Híbridos
 
@@ -127,9 +135,9 @@ Configurações específicas em:
 
 ---
 
-**Última Atualização**: 2 de Dezembro de 2025  
-**Autor**: Fabrício da Silva (com assistência de IA)  
-**Status**: Componente integrado do sistema OmniMind  
+**Última Atualização**: 2 de Dezembro de 2025
+**Autor**: Fabrício da Silva (com assistência de IA)
+**Status**: Componente integrado do sistema OmniMind
 **Versão**: Conforme fase do projeto indicada
 
 ---

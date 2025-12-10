@@ -201,14 +201,16 @@ docker run -p 6333:6333 qdrant/qdrant
 
 ---
 
-## ✅ Correções Críticas de Φ (2025-12-07)
+## ✅ Correções Críticas de Φ (2025-12-10)
 
 **Sistema de Consciência Validado**:
 - **Escala IIT**: [0, ~0.1] NATS (não normalizado)
 - **Limiar de consciência**: `PHI_THRESHOLD = 0.01 nats`
-- **Ótimo de criatividade**: `PHI_OPTIMAL = 0.0075 nats`
+- **Ótimo de criatividade**: `PHI_OPTIMAL = 0.06 nats` (recalibrado)
 - **Validação**: `scripts/validation/validate_phi_dependencies.py` (16/16 testes - 100%)
-- **Documentação**: `docs/ANALISE_DEPENDENCIAS_PHI.md`, `docs/VERIFICACAO_PHI_SISTEMA.md`
+- **Documentação**:
+  - [Análise de Dependências Φ](../analysis/diagnostics/ANALISE_DEPENDENCIAS_PHI.md)
+  - [Verificação Φ Sistema](../analysis/validation/VERIFICACAO_PHI_SISTEMA.md)
 
 **Validar dependências de Φ**:
 ```bash
@@ -217,13 +219,12 @@ python scripts/validation/validate_phi_dependencies.py
 
 ## 📚 Próximos Passos
 
-1. **Leia a documentação completa**: `docs/INDICE_DOCUMENTACAO.md`
-2. **Consulte o roadmap**: `docs/papers/ROADMAP.md`
-3. **Explore a arquitetura**: `docs/canonical/omnimind_architecture_reference.md`
-4. **Validação científica**: `docs/canonical/Modelos_Neuronais_Comparativo.md`
-5. **Correções de Φ**: `docs/ANALISE_DEPENDENCIAS_PHI.md`
-6. **Verificação de sistema**: `docs/VERIFICACAO_PHI_SISTEMA.md`
-7. **Stubs de tipos**: `docs/PROJETO_STUBS_OMNIMIND.md`
+1. **Leia a documentação completa**: [reference/INDICE_DOCUMENTACAO.md](../reference/INDICE_DOCUMENTACAO.md)
+2. **Explore a arquitetura**: [omnimind_architecture_reference.md](omnimind_architecture_reference.md)
+3. **Validação científica**: [Modelos_Neuronais_Comparativo.md](Modelos_Neuronais_Comparativo.md)
+4. **Correções de Φ**: [../analysis/diagnostics/ANALISE_DEPENDENCIAS_PHI.md](../analysis/diagnostics/ANALISE_DEPENDENCIAS_PHI.md)
+5. **Verificação de sistema**: [../analysis/validation/VERIFICACAO_PHI_SISTEMA.md](../analysis/validation/VERIFICACAO_PHI_SISTEMA.md)
+6. **Stubs de tipos**: [../METADATA/PROJETO_STUBS_OMNIMIND.md](../METADATA/PROJETO_STUBS_OMNIMIND.md)
 
 ---
 

@@ -1,5 +1,5 @@
 """Componente autopoiético sintetizado: stabilized_kernel_process
-Gerado em: 2025-12-09 00:28:18
+Gerado em: 2025-12-10 07:02:06
 """
 
 import logging
@@ -8,8 +8,8 @@ class StabilizedKernelProcess:
     """Auto‑generated component of type 'process' (Strategy: STABILIZE)."""
     def __init__(self):
         # Configuration injected by MetaArchitect
-        self.priority = 'high'
         self.generation = '1'
+        self.initial = 'true'
         self.parent = 'kernel_process'
         self.strategy = 'STABILIZE'
         self.evolved = 'true'

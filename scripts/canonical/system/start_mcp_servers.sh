@@ -1,6 +1,25 @@
 #!/bin/bash
 # Ensure we are in the project root
-cd "$(dirname "$0")/.."
+# CORREÇÃO: Calcular PROJECT_ROOT de forma robusta (mesma lógica de start_omnimind_system.sh)
+if [ -n "${OMNIMIND_PROJECT_ROOT:-}" ]; then
+    PROJECT_ROOT="$OMNIMIND_PROJECT_ROOT"
+else
+    # Procurar pela raiz do projeto procurando arquivos de identidade
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    PROJECT_ROOT=""
+    while [ "$SCRIPT_DIR" != "/" ]; do
+        if [ -f "$SCRIPT_DIR/.env" ] || [ -f "$SCRIPT_DIR/pyproject.toml" ] || [ -f "$SCRIPT_DIR/config/omnimind.yaml" ]; then
+            PROJECT_ROOT="$SCRIPT_DIR"
+            break
+        fi
+        SCRIPT_DIR="$(dirname "$SCRIPT_DIR")"
+    done
+    # Fallback: assumir que estamos em scripts/canonical/system
+    if [ -z "$PROJECT_ROOT" ]; then
+        PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
+    fi
+fi
+cd "$PROJECT_ROOT" || { echo "❌ Erro: Não foi possível entrar em $PROJECT_ROOT"; exit 1; }
 
 # Cores para output
 GREEN='\033[0;32m'
@@ -18,8 +37,21 @@ echo -e "${GREEN}🌐 Iniciando MCP Servers + eBPF Monitor...${NC}\n"
 
 # 1. Iniciar MCP Orchestrator
 echo -e "${YELLOW}[1/2] Iniciando MCP Orchestrator...${NC}"
-"$(pwd)/.venv/bin/python" scripts/run_mcp_orchestrator.py &
-MCP_PID=$!
+# CORREÇÃO: Usar caminho completo do script
+MCP_ORCHESTRATOR_SCRIPT="$PROJECT_ROOT/scripts/canonical/system/run_mcp_orchestrator.py"
+if [ -f "$MCP_ORCHESTRATOR_SCRIPT" ]; then
+    chmod +x "$MCP_ORCHESTRATOR_SCRIPT" 2>/dev/null || true
+    nohup "$PROJECT_ROOT/.venv/bin/python" "$MCP_ORCHESTRATOR_SCRIPT" > "$PROJECT_ROOT/logs/mcp_orchestrator.log" 2>&1 &
+    MCP_PID=$!
+    echo $MCP_PID > "$PROJECT_ROOT/logs/mcp_orchestrator.pid" 2>/dev/null || true
+else
+    echo -e "${RED}⚠️  Script não encontrado: $MCP_ORCHESTRATOR_SCRIPT${NC}"
+    echo -e "${YELLOW}   Tentando iniciar servidores MCP diretamente via módulo...${NC}"
+    # Fallback: tentar iniciar via módulo Python
+    nohup "$PROJECT_ROOT/.venv/bin/python" -m src.integrations.mcp_orchestrator > "$PROJECT_ROOT/logs/mcp_orchestrator.log" 2>&1 &
+    MCP_PID=$!
+    echo $MCP_PID > "$PROJECT_ROOT/logs/mcp_orchestrator.pid" 2>/dev/null || true
+fi
 sleep 3
 
 # 2. Iniciar eBPF Monitor Contínuo

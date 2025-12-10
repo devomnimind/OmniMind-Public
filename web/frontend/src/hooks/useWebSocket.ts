@@ -27,11 +27,20 @@ export function useWebSocket() {
 
   // Handle incoming messages
   useEffect(() => {
+    // CORREÇÃO (2025-12-09): Usar função estável para evitar re-subscriptions
+    let isMounted = true;
+
     const unsubscribe = connectionService.subscribe((message: WebSocketMessage) => {
-      setLastMessage(message);
+      // Só atualizar se componente ainda estiver montado
+      if (isMounted) {
+        setLastMessage(message);
+      }
     });
 
-    return unsubscribe;
+    return () => {
+      isMounted = false;
+      unsubscribe();
+    };
   }, []);
 
   // Note: We do NOT auto-connect/disconnect here anymore because connectionService is a Singleton

@@ -69,6 +69,19 @@ Duas refatorações críticas foram implementadas e validadas:
 - ✅ `execute_cycle_sync()` criado: método síncrono para causalidade determinística
 - ✅ Integração RNN: `ConsciousSystem.step()` chamado antes de executar módulos
 - ✅ Wrapper async mantido: `execute_cycle()` async delega para `execute_cycle_sync()`
+
+### Impacto em GPU/CUDA (Identificado 2025-12-10)
+
+**Problema Descoberto:**
+Após a refatoração async→sync, execução CUDA assíncrona (`CUDA_LAUNCH_BLOCKING=0`) começou a causar erros "unknown error" e "memory allocation failure" mesmo com GPU tendo memória livre.
+
+**Causa:**
+A mudança de execução assíncrona para síncrona no Python mudou o comportamento de alocação CUDA. Com execução assíncrona, erros CUDA aparecem depois como "unknown error" e fragmentação não é detectada.
+
+**Solução:**
+Configurar `CUDA_LAUNCH_BLOCKING=1` como padrão para validação científica. Isso força execução síncrona CUDA, permitindo capturar erros reais e evitar fragmentação.
+
+**Documentação:** `docs/canonical/GUIA_SOLUCAO_PROBLEMAS_AMBIENTE_GPU.md` seção 4
 - ✅ `ModuleExecutor.execute_sync()`: versão síncrona criada
 - ✅ `_collect_stimulus_from_modules()`: coleta estímulo dos módulos para RNN
 

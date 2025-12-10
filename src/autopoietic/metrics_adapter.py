@@ -63,7 +63,9 @@ class MetricsAdapter:
         latency_ms = max(50.0, (1.2 - flow) * 400.0 + entropy * 150.0)
 
         try:
-            cpu_usage = float(psutil.cpu_percent(interval=None) or 0.0)
+            # CORREÇÃO (2025-12-09): interval=None retorna 0.0% na primeira chamada
+            # Usar interval=0.1 para leitura imediata precisa
+            cpu_usage = float(psutil.cpu_percent(interval=0.1) or 0.0)
         except Exception as exc:
             logger.warning("psutil.cpu_percent failed: %s", exc)
             cpu_usage = 50.0 + (anxiety * 30.0)

@@ -29,8 +29,8 @@ if ws.conscious_system:
     print("\n📈 Calculando métricas topológicas...")
     metrics = ws.compute_hybrid_topological_metrics()
     if metrics:
-        omega = metrics.get('omega', 0)
-        sigma = metrics.get('sigma', 0)
+        omega = metrics.get("omega", 0)
+        sigma = metrics.get("sigma", 0)
         print(f"  ✅ Métricas calculadas: omega={omega:.4f}, sigma={sigma:.4f}")
     else:
         print("  ❌ Métricas não calculadas")

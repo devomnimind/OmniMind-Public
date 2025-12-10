@@ -1,6 +1,6 @@
 # 📚 Documentação OmniMind
 
-**Última Atualização**: 2025-12-07
+**Última Atualização**: 2025-12-10
 
 ---
 
@@ -24,13 +24,14 @@
 ## 📋 DOCUMENTOS CANÔNICOS
 
 ### Pendências e Projetos
-- **[PENDENCIAS_CONSOLIDADAS.md](PENDENCIAS_CONSOLIDADAS.md)** - Pendências ativas do sistema
-- **[PROJETO_STUBS_OMNIMIND.md](PROJETO_STUBS_OMNIMIND.md)** - Stubs de tipos para bibliotecas externas
+- **[PENDENCIAS_CONSOLIDADAS.md](implementation/pending/PENDENCIAS_CONSOLIDADAS.md)** - Pendências ativas do sistema
+- **[PROJETO_STUBS_OMNIMIND.md](METADATA/PROJETO_STUBS_OMNIMIND.md)** - Stubs de tipos para bibliotecas externas
+- **[HISTORICO_RESOLUCOES.md](HISTORICO_RESOLUCOES.md)** - Histórico de resoluções completadas
 
 ### Implementações Recentes
-- **[IMPLEMENTAÇÃO ISOMORFISMO COMPLETA](archive/docs/analises_varreduras_2025-12-07/IMPLEMENTACAO_ISOMORFISMO_COMPLETA.md)** - Isomorfismo estrutural (RSI)
-- **[ANÁLISE ISOMORFISMO ESTRUTURAL](archive/docs/analises_varreduras_2025-12-07/ANALISE_ISOMORFISMO_ESTRUTURAL.md)** - Análise do isomorfismo
-- **[ANÁLISE 200 CICLOS PRODUÇÃO](archive/docs/analises_varreduras_2025-12-07/ANALISE_200_CICLOS_PRODUCAO.md)** - Análise de 200 ciclos em produção
+- **Isomorfismo Estrutural**: Implementado e validado (ver [canonical/Modelos_Neuronais_Comparativo.md](canonical/Modelos_Neuronais_Comparativo.md))
+- **Tríade Ortogonal**: Φ, Ψ, σ completamente integrados
+- **Análises de Produção**: Ver [analysis/](analysis/) para análises detalhadas
 
 ---
 
@@ -72,23 +73,41 @@ Documentação de testes:
 
 ---
 
-## 📁 ARQUIVO
+## 📁 ORGANIZAÇÃO (2025-12-10)
 
-Documentação antiga e fases concluídas estão em:
-- **[archive/docs/](archive/docs/)** - Documentação arquivada
+### Estrutura Principal
+- **`canonical/`** - Documentos canônicos e referência científica
+- **`analysis/`** - Análises, diagnósticos e validações
+- **`corrections/`** - Correções e auditorias (24 arquivos)
+- **`reports/`** - Relatórios de tarefas e execuções
+- **`implementation/`** - Documentação de implementação
+- **`guides/`** - Guias consolidados
+- **`architecture/`** - Documentação arquitetural
+- **`api/`** - Documentação de APIs
+
+### Documentos Canônicos (Raiz `docs/`)
+- [HISTORICO_RESOLUCOES.md](HISTORICO_RESOLUCOES.md) - Histórico de resoluções
+- [README.md](README.md) - Este arquivo
+- [QUICK_NAVIGATION.md](QUICK_NAVIGATION.md) - Navegação rápida
+- [ORGANIZACAO_DOCUMENTACAO_20251210.md](ORGANIZACAO_DOCUMENTACAO_20251210.md) - Organização de documentação
+- [ORGANIZACAO_SCRIPTS_20251210.md](ORGANIZACAO_SCRIPTS_20251210.md) - Organização de scripts
+
+Ver: [ORGANIZACAO_DOCUMENTACAO_20251210.md](ORGANIZACAO_DOCUMENTACAO_20251210.md) para detalhes completos.
 
 ---
 
 ## 📑 ÍNDICES
 
-- **[INDICE_DOCUMENTACAO.md](INDICE_DOCUMENTACAO.md)** ⭐ **NOVO** - Índice completo de documentação
-- **[INDICE_SCRIPTS_RELATORIOS.md](INDICE_SCRIPTS_RELATORIOS.md)** ⭐ **NOVO** - Índice de scripts, relatórios e pastas
+- **[INDICE_DOCUMENTACAO.md](reference/INDICE_DOCUMENTACAO.md)** ⭐ - Índice completo de documentação
+- **[INDICE_SCRIPTS_RELATORIOS.md](reference/INDICE_SCRIPTS_RELATORIOS.md)** ⭐ - Índice de scripts, relatórios e pastas
 
 ## 🔗 LINKS RÁPIDOS
 
-- **Status Atual**: [STATUS_ATUAL.md](STATUS_ATUAL.md)
-- **Pendências**: [PENDENCIAS_CONSOLIDADAS.md](PENDENCIAS_CONSOLIDADAS.md)
-- **Correções de Φ**: [ANÁLISE DE DEPENDÊNCIAS Φ](archive/docs/analises_varreduras_2025-12-07/ANALISE_DEPENDENCIAS_PHI.md)
-- **Isomorfismo**: [IMPLEMENTAÇÃO ISOMORFISMO COMPLETA](archive/docs/analises_varreduras_2025-12-07/IMPLEMENTACAO_ISOMORFISMO_COMPLETA.md)
+- **Status Atual**: [METADATA/ESTADO_ATUAL.md](METADATA/ESTADO_ATUAL.md)
+- **Pendências**: [implementation/pending/PENDENCIAS_CONSOLIDADAS.md](implementation/pending/PENDENCIAS_CONSOLIDADAS.md)
+- **Histórico**: [HISTORICO_RESOLUCOES.md](HISTORICO_RESOLUCOES.md)
+- **Organização**: [ORGANIZACAO_DOCUMENTACAO_20251210.md](ORGANIZACAO_DOCUMENTACAO_20251210.md)
+- **Scripts**: [ORGANIZACAO_SCRIPTS_20251210.md](ORGANIZACAO_SCRIPTS_20251210.md)
 - **Quick Start**: [canonical/QUICK_START.md](canonical/QUICK_START.md)
+- **Navegação**: [QUICK_NAVIGATION.md](QUICK_NAVIGATION.md)
 

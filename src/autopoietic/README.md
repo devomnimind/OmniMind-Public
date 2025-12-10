@@ -26,13 +26,14 @@ O módulo `autopoietic` implementa a capacidade de **auto-criação e auto-regen
 - **Cálculo dinâmico**:
   ```python
   # Meta-arquiteto valida preservação de consciência
-  from src.consciousness.phi_constants import PHI_THRESHOLD  # 0.01 nats
+  from src.consciousness.phi_constants import PHI_THRESHOLD, PHI_OPTIMAL  # 0.01 nats, 0.06 nats
 
   phi_before = consciousness.compute_phi()
   apply_architecture_change(proposed_spec)
   phi_after = consciousness.compute_phi()
   if phi_after < PHI_THRESHOLD:  # PHI_THRESHOLD = 0.01 nats (IIT clássico)
       rollback_change()
+  # Otimização: preferir mudanças que aproximam Φ de PHI_OPTIMAL (0.06 nats)
   ```
 
 ### 3. **Estado Psicanalítico (Sinthome como Boundary)**
@@ -587,7 +588,7 @@ def synthesize_with_llm(spec: ComponentSpec) -> str:
 
 ---
 
-**Última Atualização**: 2 de Dezembro de 2025
+**Última Atualização**: 10 de Dezembro de 2025
 **Autor**: Fabrício da Silva
 **Status**: Phase 22 In Progress - Persistência e Validação de Φ Implementadas
 **Versão**: Production Ready

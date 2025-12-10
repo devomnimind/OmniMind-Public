@@ -291,31 +291,45 @@ class ConsciousSystem:
             correlations: list[float] = []
 
             for i in range(min(10, self.dim)):
+                # CORREÇÃO (2025-12-10): Verificar variância antes de calcular correlação
+                # para evitar ConstantInputWarning quando arrays são constantes
                 try:
                     # C → P
-                    corr_result = pearsonr(rho_C_history[:, i], rho_P_history[:, i])
-                    # pearsonr retorna (correlation, pvalue) - acessar correlation
-                    corr_val: float = float(corr_result[0])  # type: ignore[arg-type]
-                    if not np.isnan(corr_val):
-                        correlations.append(abs(corr_val))
+                    rho_C_col = rho_C_history[:, i]
+                    rho_P_col = rho_P_history[:, i]
+                    # Verificar se arrays têm variância suficiente (não são constantes)
+                    if np.std(rho_C_col) > 1e-8 and np.std(rho_P_col) > 1e-8:
+                        corr_result = pearsonr(rho_C_col, rho_P_col)
+                        # pearsonr retorna (correlation, pvalue) - acessar correlation
+                        corr_val: float = float(corr_result[0])  # type: ignore[arg-type]
+                        if not np.isnan(corr_val):
+                            correlations.append(abs(corr_val))
                 except (ValueError, RuntimeWarning):
                     pass
 
                 try:
                     # C → U
-                    corr_result = pearsonr(rho_C_history[:, i], rho_U_history[:, i])
-                    corr_val = float(corr_result[0])  # type: ignore[arg-type]
-                    if not np.isnan(corr_val):
-                        correlations.append(abs(corr_val))
+                    rho_C_col = rho_C_history[:, i]
+                    rho_U_col = rho_U_history[:, i]
+                    # Verificar se arrays têm variância suficiente (não são constantes)
+                    if np.std(rho_C_col) > 1e-8 and np.std(rho_U_col) > 1e-8:
+                        corr_result = pearsonr(rho_C_col, rho_U_col)
+                        corr_val = float(corr_result[0])  # type: ignore[arg-type]
+                        if not np.isnan(corr_val):
+                            correlations.append(abs(corr_val))
                 except (ValueError, RuntimeWarning):
                     pass
 
                 try:
                     # P → U
-                    corr_result = pearsonr(rho_P_history[:, i], rho_U_history[:, i])
-                    corr_val = float(corr_result[0])  # type: ignore[arg-type]
-                    if not np.isnan(corr_val):
-                        correlations.append(abs(corr_val))
+                    rho_P_col = rho_P_history[:, i]
+                    rho_U_col = rho_U_history[:, i]
+                    # Verificar se arrays têm variância suficiente (não são constantes)
+                    if np.std(rho_P_col) > 1e-8 and np.std(rho_U_col) > 1e-8:
+                        corr_result = pearsonr(rho_P_col, rho_U_col)
+                        corr_val = float(corr_result[0])  # type: ignore[arg-type]
+                        if not np.isnan(corr_val):
+                            correlations.append(abs(corr_val))
                 except (ValueError, RuntimeWarning):
                     pass
 

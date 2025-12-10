@@ -1,5 +1,5 @@
 # 🗺️ GUIA RÁPIDO DE NAVEGAÇÃO - Documentação OmniMind
-**Última Atualização**: 2025-12-09
+**Última Atualização**: 2025-12-10
 
 ---
 
