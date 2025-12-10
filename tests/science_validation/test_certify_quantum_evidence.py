@@ -1,14 +1,12 @@
 import json
 from pathlib import Path
-from unittest.mock import patch, mock_open
+from typing import Any
+from unittest.mock import mock_open, patch
 
 import pytest
-
-from scripts.science_validation.certify_quantum_evidence import QuantumCertifier, main
 from _pytest.monkeypatch import MonkeyPatch
 
-
-from typing import Any
+from scripts.science_validation.certify_quantum_evidence import QuantumCertifier, main
 
 
 def test_load_usage_success() -> None:

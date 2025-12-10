@@ -17,10 +17,10 @@ from typing import List, Optional
 
 import numpy as np
 
+from src.consciousness.adaptive_weights import PrecisionWeighter
 from src.consciousness.biological_metrics import LempelZivComplexity
 from src.consciousness.embedding_narrative import EmbeddingNarrative
 from src.consciousness.phi_constants import calculate_psi_gaussian
-from src.consciousness.adaptive_weights import PrecisionWeighter
 
 logger = logging.getLogger(__name__)
 
@@ -172,7 +172,11 @@ class PsiProducerAdapter:
         if phi_raw is not None:
             # Alpha dinâmico usando constantes empíricas
             # Range (0.3, 0.7) garante mínimo de cada componente
-            from src.consciousness.phi_constants import normalize_phi, PSI_ALPHA_MIN, PSI_ALPHA_MAX
+            from src.consciousness.phi_constants import (
+                PSI_ALPHA_MAX,
+                PSI_ALPHA_MIN,
+                normalize_phi,
+            )
 
             # Normalizar phi_raw para [0, 1] se necessário
             phi_norm = (

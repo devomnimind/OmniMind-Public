@@ -11,8 +11,9 @@ Data: 2025-12-06
 """
 
 import os
-import pytest
 from unittest.mock import patch
+
+import pytest
 
 from src.agents.orchestrator_agent import OrchestratorAgent
 from src.memory.hybrid_retrieval import HybridRetrievalSystem

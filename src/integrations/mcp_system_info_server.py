@@ -124,7 +124,7 @@ class SystemInfoMCPServer(MCPServer):
                 "model": platform.processor() or "Unknown",
                 "cores_physical": psutil.cpu_count(logical=False) or psutil.cpu_count(),
                 "cores_logical": psutil.cpu_count(logical=True),
-                "frequency_mhz": psutil.cpu_freq().current if psutil.cpu_freq() else None,
+                "frequency_mhz": (psutil.cpu_freq().current if psutil.cpu_freq() else None),
                 "usage_percent": psutil.cpu_percent(interval=0.1),
                 "usage_per_core": psutil.cpu_percent(interval=0.1, percpu=True),
                 "load_average": (
@@ -231,7 +231,11 @@ class SystemInfoMCPServer(MCPServer):
                 import subprocess
 
                 result = subprocess.run(
-                    ["nvidia-smi", "--query-gpu=temperature.gpu", "--format=csv,noheader,nounits"],
+                    [
+                        "nvidia-smi",
+                        "--query-gpu=temperature.gpu",
+                        "--format=csv,noheader,nounits",
+                    ],
                     capture_output=True,
                     text=True,
                     timeout=5.0,

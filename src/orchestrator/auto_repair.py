@@ -346,7 +346,7 @@ class AutoRepairSystem:
             "total_repairs": total_repairs,
             "successful_repairs": successful_repairs,
             "failed_repairs": failed_repairs,
-            "success_rate": successful_repairs / total_repairs if total_repairs > 0 else 0.0,
+            "success_rate": (successful_repairs / total_repairs if total_repairs > 0 else 0.0),
             "components_with_failures": len(self.failure_counts),
             "failure_counts": self.failure_counts.copy(),
         }

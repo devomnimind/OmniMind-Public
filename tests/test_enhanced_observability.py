@@ -4,7 +4,6 @@ Tests OpenTelemetry integration, performance analyzer, and enhanced features.
 """
 
 import time
-
 from pathlib import Path
 
 import pytest

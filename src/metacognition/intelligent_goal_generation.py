@@ -305,7 +305,10 @@ class ImpactPredictor:
             setattr(impact, attr, value)
 
     def _adjust_for_repository_state(
-        self, impact: ImpactMetrics, goal_description: str, repository_analysis: RepositoryAnalysis
+        self,
+        impact: ImpactMetrics,
+        goal_description: str,
+        repository_analysis: RepositoryAnalysis,
     ) -> None:
         """Adjust impact based on current repository state."""
         desc_lower = goal_description.lower()

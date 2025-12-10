@@ -168,7 +168,10 @@ class AgentLLMStrategy:
         return os.getenv(key, default)
 
     async def invoke(
-        self, prompt: str, tier: AgentTier = AgentTier.BALANCED, agent_name: str = "agent"
+        self,
+        prompt: str,
+        tier: AgentTier = AgentTier.BALANCED,
+        agent_name: str = "agent",
     ) -> AgentLLMResponse:
         """
         Invocar LLM para agent de forma segura.

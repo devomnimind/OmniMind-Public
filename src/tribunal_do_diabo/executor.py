@@ -6,7 +6,7 @@ import os
 import sys
 import time
 from pathlib import Path
-from typing import Dict, List, Union
+from typing import Any, Dict, List, Union
 
 from src.tribunal_do_diabo.attacks.bifurcation import BifurcationAttack
 from src.tribunal_do_diabo.attacks.corruption import CorruptionAttack
@@ -41,7 +41,10 @@ AttackType = Union[LatencyAttack, CorruptionAttack, BifurcationAttack, Exhaustio
 
 class TribunalDoDiaboExecutor:
     def __init__(
-        self, duration_hours: float = 4.0, save_periodic: bool = True, periodic_interval: int = 300
+        self,
+        duration_hours: float = 4.0,
+        save_periodic: bool = True,
+        periodic_interval: int = 300,
     ):
         """
         Initialize Tribunal executor.
@@ -163,7 +166,7 @@ class TribunalDoDiaboExecutor:
         """Save metrics to history file."""
         try:
             # Load existing history
-            history = {"cycles": [], "last_update": time.time()}
+            history: Dict[str, Any] = {"cycles": [], "last_update": time.time()}
             if TRIBUNAL_METRICS_HISTORY_FILE.exists():
                 try:
                     history = json.loads(TRIBUNAL_METRICS_HISTORY_FILE.read_text())

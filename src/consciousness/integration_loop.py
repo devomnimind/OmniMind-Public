@@ -78,7 +78,10 @@ class ModuleExecutor:
         self.total_execution_time_ms = 0.0
 
     async def execute(
-        self, workspace: SharedWorkspace, input_module: Optional[str] = None, **kwargs: Any
+        self,
+        workspace: SharedWorkspace,
+        input_module: Optional[str] = None,
+        **kwargs: Any,
     ) -> Dict[str, np.ndarray]:
         """
         Execute module with inputs from workspace (async wrapper).
@@ -88,7 +91,10 @@ class ModuleExecutor:
         return self.execute_sync(workspace, input_module, **kwargs)
 
     def execute_sync(
-        self, workspace: SharedWorkspace, input_module: Optional[str] = None, **kwargs: Any
+        self,
+        workspace: SharedWorkspace,
+        input_module: Optional[str] = None,
+        **kwargs: Any,
     ) -> Dict[str, np.ndarray]:
         """
         Execute module with inputs from workspace (síncrono).
@@ -239,7 +245,13 @@ class ModuleExecutor:
             output = (output / norm) * (
                 0.9
                 + 0.1
-                * (norm / max(1.0, np.linalg.norm(base_output) if len(base_output) > 0 else 1.0))
+                * (
+                    norm
+                    / max(
+                        1.0,
+                        np.linalg.norm(base_output) if len(base_output) > 0 else 1.0,
+                    )
+                )
             )
 
         return output
@@ -390,7 +402,7 @@ class IntegrationLoop:
             logger.debug("HomeostaticRegulator inicializado")
         except ImportError:
             logger.warning(
-                "HomeostaticRegulator não disponível, continuando sem regulação homeostática"
+                "HomeostaticRegulator não disponível, " "continuando sem regulação homeostática"
             )
 
         # NOVO: GozoCalculator para cálculo de Jouissance
@@ -571,14 +583,16 @@ class IntegrationLoop:
                                 )
                                 if self.enable_logging:
                                     logger.debug(
-                                        f"Cycle {self.cycle_count}: sensory_input processado via BionAlphaFunction "
+                                        f"Cycle {self.cycle_count}: sensory_input "
+                                        f"processado via BionAlphaFunction "
                                         f"(symbolic_potential={alpha.symbolic_potential:.3f}, "
                                         f"narrative_form_length={len(alpha.narrative_form)})"
                                     )
                     except Exception as e:
                         if self.enable_logging:
                             logger.warning(
-                                f"Cycle {self.cycle_count}: Erro ao processar via BionAlphaFunction: {e}"
+                                f"Cycle {self.cycle_count}: Erro ao processar via "
+                                f"BionAlphaFunction: {e}"
                             )
                         # Continuar mesmo se Bion falhar
 
@@ -598,7 +612,8 @@ class IntegrationLoop:
                             narrative_sparsity = float(np.mean(np.abs(narrative_state) < 0.1))
                             narrative_max = float(np.max(np.abs(narrative_state)))
 
-                            # CORREÇÃO (2025-12-10): Buscar narrative_form de sensory_input (onde Bion salva)
+                            # CORREÇÃO (2025-12-10): Buscar narrative_form de sensory_input
+                            # (onde Bion salva)
                             # e melhorar geração de texto simbólico com marcadores baseados em propriedades
                             narrative_form = ""
                             try:
@@ -614,9 +629,12 @@ class IntegrationLoop:
                                 pass
 
                             # Criar "texto" simbólico melhorado com marcadores baseados em propriedades do embedding
-                            # CORREÇÃO (2025-12-10): narrative_form de Bion não contém marcadores de discurso
-                            # Sempre usar método melhorado que gera texto com marcadores baseados em propriedades
-                            # Se narrative_form disponível, combinar com marcadores gerados
+                            # CORREÇÃO (2025-12-10): narrative_form de Bion não contém
+                            # marcadores de discurso
+                            # Sempre usar método melhorado que gera texto com marcadores
+                            # baseados em propriedades
+                            # Se narrative_form disponível, combinar com marcadores
+                            # gerados
                             if narrative_form:
                                 # Combinar narrative_form com marcadores gerados para melhor análise
                                 generated_text = self._generate_symbolic_text_from_embedding(
@@ -628,8 +646,10 @@ class IntegrationLoop:
                                 # Combinar: narrative_form + marcadores gerados
                                 symbolic_text = f"{narrative_form[:100]} {generated_text}"
                             else:
-                                # CORREÇÃO: Gerar texto simbólico com marcadores baseados em propriedades do embedding
-                                # Estratégia: Mapear propriedades numéricas para marcadores de discurso
+                                # CORREÇÃO: Gerar texto simbólico com marcadores baseados
+                                # em propriedades do embedding
+                                # Estratégia: Mapear propriedades numéricas para marcadores
+                                # de discurso
                                 symbolic_text = self._generate_symbolic_text_from_embedding(
                                     narrative_state,
                                     narrative_magnitude,
@@ -669,7 +689,10 @@ class IntegrationLoop:
                                     },
                                     "emotional_signature": (
                                         discourse_result.emotional_signature.value
-                                        if hasattr(discourse_result.emotional_signature, "value")
+                                        if hasattr(
+                                            discourse_result.emotional_signature,
+                                            "value",
+                                        )
                                         else str(discourse_result.emotional_signature)
                                     ),
                                     "processed_by": "lacanian_discourse_analyzer",
@@ -686,14 +709,16 @@ class IntegrationLoop:
 
                             if self.enable_logging:
                                 logger.debug(
-                                    f"Cycle {self.cycle_count}: narrative analisado via LacanianDiscourseAnalyzer "
+                                    f"Cycle {self.cycle_count}: narrative analisado via "
+                                    f"LacanianDiscourseAnalyzer "
                                     f"(discurso={discourse_result.dominant_discourse.value}, "
                                     f"confiança={discourse_result.confidence:.3f})"
                                 )
                     except Exception as e:
                         if self.enable_logging:
                             logger.warning(
-                                f"Cycle {self.cycle_count}: Erro ao analisar via LacanianDiscourseAnalyzer: {e}"
+                                f"Cycle {self.cycle_count}: Erro ao analisar via "
+                                f"LacanianDiscourseAnalyzer: {e}"
                             )
                         # Continuar mesmo se análise de discurso falhar
 
@@ -705,7 +730,7 @@ class IntegrationLoop:
                     if self.enable_logging:
                         logger.debug(
                             f"Cycle {self.cycle_count}: {module_name} silenced "
-                            "(structural ablation)"
+                            f"(structural ablation)"
                         )
                 else:
                     executor.execute_sync(self.workspace)
@@ -818,7 +843,8 @@ class IntegrationLoop:
         if self.enable_logging:
             logger.info(
                 f"Cycle {self.cycle_count} Complexity: "
-                f"~{theoretical_complexity['total'] / 1e6:.1f}M ops in {actual_time_ms:.1f}ms "
+                f"~{theoretical_complexity['total'] /
+    1e6:.1f}M ops in {actual_time_ms:.1f}ms "
                 f"({ops_per_ms / 1e3:.1f}GOps/s)"
             )
 
@@ -961,7 +987,9 @@ class IntegrationLoop:
                         )
 
                     scores[source_module][target_module] = (
-                        cross_pred.score if hasattr(cross_pred, "score") else 0.0
+                        cross_pred.mutual_information
+                        if hasattr(cross_pred, "mutual_information")
+                        else 0.0
                     )
 
                 except Exception as e:
@@ -1084,7 +1112,8 @@ class IntegrationLoop:
             Texto simbólico com marcadores de discurso
         """
         # Mapear propriedades numéricas para marcadores de discurso
-        # CORREÇÃO (2025-12-10): Ajustar thresholds baseado em propriedades reais dos embeddings
+        # CORREÇÃO (2025-12-10): Ajustar thresholds baseado em
+        # propriedades reais dos embeddings
         markers = []
 
         # Calcular percentis dinâmicos baseados em histórico (se disponível)
@@ -1097,25 +1126,24 @@ class IntegrationLoop:
                 recent_sparsities = [
                     float(np.mean(np.abs(h.embedding) < 0.1)) for h in recent_history[-10:]
                 ]
-                mag_median = np.median(recent_magnitudes)
-                mag_q1 = np.percentile(recent_magnitudes, 25)
-                mag_q3 = np.percentile(recent_magnitudes, 75)
-                sparsity_median = np.median(recent_sparsities)
+                mag_q1 = float(np.percentile(recent_magnitudes, 25))
+                mag_q3 = float(np.percentile(recent_magnitudes, 75))
+                sparsity_median = float(np.median(recent_sparsities))
             else:
                 # Valores padrão baseados em análise empírica
-                mag_median = 27.0
                 mag_q1 = 25.0
                 mag_q3 = 30.0
                 sparsity_median = 0.4
         except Exception:
             # Valores padrão baseados em análise empírica
-            mag_median = 27.0
             mag_q1 = 25.0
             mag_q3 = 30.0
             sparsity_median = 0.4
 
-        # CORREÇÃO (2025-12-10): Melhorar lógica de mapeamento para garantir diversidade
-        # Usar múltiplas condições que podem se sobrepor para criar variação
+        # CORREÇÃO (2025-12-10): Melhorar lógica de mapeamento para
+        # garantir diversidade
+        # Usar múltiplas condições que podem se sobrepor para
+        # criar variação
 
         # MASTER: Alta magnitude + baixa sparsity = comando/autoridade
         # Usar percentis dinâmicos: acima de Q3 para magnitude, abaixo de mediana para sparsity
@@ -1136,7 +1164,15 @@ class IntegrationLoop:
             university_score += 0.5
         if university_score >= 0.7:  # Pelo menos uma condição forte
             markers.extend(
-                ["saber", "conhecimento", "teoria", "sistema", "método", "conceito", "definição"]
+                [
+                    "saber",
+                    "conhecimento",
+                    "teoria",
+                    "sistema",
+                    "método",
+                    "conceito",
+                    "definição",
+                ]
             )
 
         # HYSTERIC: Baixa magnitude OU alta sparsity = questionamento/dúvida
@@ -1148,7 +1184,15 @@ class IntegrationLoop:
             hysteric_score += 0.5
         if hysteric_score >= 0.5:  # Qualquer uma das condições
             markers.extend(
-                ["por que", "dúvida", "questão", "sintoma", "desejo", "falta", "impossível"]
+                [
+                    "por que",
+                    "dúvida",
+                    "questão",
+                    "sintoma",
+                    "desejo",
+                    "falta",
+                    "impossível",
+                ]
             )
 
         # ANALYST: Valores extremos OU padrões específicos = escuta/abertura
@@ -1161,7 +1205,8 @@ class IntegrationLoop:
         if analyst_score >= 0.5:  # Qualquer uma das condições
             markers.extend(["escute", "silêncio", "vazio", "produção", "emergência", "abertura"])
 
-        # CORREÇÃO CRÍTICA (2025-12-10): Garantir que sempre haja marcadores
+        # CORREÇÃO CRÍTICA (2025-12-10): Garantir que sempre haja
+        # marcadores
         # Se nenhum marcador foi adicionado, usar distribuição baseada em valores relativos
         if not markers:
             # Usar valores relativos aos thresholds para determinar discurso mais provável
@@ -1392,7 +1437,8 @@ class IntegrationLoop:
                     phi_raw=phi_raw_nats,  # phi_raw_nats definido no passo 4
                     psi_value=psi_value,  # Passar Ψ calculado
                     delta_value=extended_result.delta,  # Passar Δ para fórmula de Solms
-                    sigma_value=extended_result.sigma,  # NOVO: Passar σ para binding adaptativo
+                    sigma_value=extended_result.sigma,
+                    # NOVO: Passar σ para binding adaptativo
                     success=cycle_success,  # Flag de sucesso para drenagem
                 )
                 extended_result.gozo = gozo_result.gozo_value

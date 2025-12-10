@@ -219,9 +219,10 @@ class TestBiologicalMetricsHybridTopological:
 
     def test_biological_metrics_with_topological_context(self):
         """Testa que métricas biológicas podem ser usadas com contexto topológico."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)

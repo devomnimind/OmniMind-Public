@@ -368,8 +368,8 @@ class TestIntegrationLossHybridTopological:
     @pytest.mark.asyncio
     async def test_trainer_with_topological_metrics(self):
         """Testa que IntegrationTrainer pode trabalhar com métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
         from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace real com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)
@@ -398,8 +398,8 @@ class TestIntegrationLossHybridTopological:
     @pytest.mark.asyncio
     async def test_loss_computation_with_topological_context(self):
         """Testa que loss pode ser calculado com contexto topológico."""
-        from src.consciousness.shared_workspace import SharedWorkspace
         from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         workspace = SharedWorkspace(embedding_dim=256)
         workspace.hybrid_topological_engine = HybridTopologicalEngine()

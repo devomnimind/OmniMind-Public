@@ -150,8 +150,9 @@ def test_real_data_causality():
 
 def test_real_causality_with_topological_metrics():
     """Testa causalidade real com métricas topológicas."""
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     print("🧠 TESTE: Causalidade Real + Topological Metrics")
     print("=" * 60)

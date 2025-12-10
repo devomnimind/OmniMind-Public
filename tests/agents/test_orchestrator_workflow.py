@@ -8,8 +8,9 @@ Testa:
 - Result synthesis
 """
 
-import pytest
 from unittest.mock import patch
+
+import pytest
 
 from src.agents.orchestrator_agent import OrchestratorAgent
 

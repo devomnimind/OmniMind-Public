@@ -45,8 +45,9 @@ async def test_complexity():
 
 async def test_complexity_with_topological_metrics():
     """Testa análise de complexidade Phase 2 com métricas topológicas."""
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     print("⚡ TESTE PHASE 2: Complexidade + Topological Metrics")
     print("=" * 50)

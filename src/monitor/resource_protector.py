@@ -375,7 +375,7 @@ class ResourceProtector:
                 "status": (
                     "🔴 CRÍTICO"
                     if cpu_percent > self.limits.cpu_percent
-                    else "⚠️  ELEVADO" if cpu_percent > self.limits.cpu_percent * 0.8 else "✅ OK"
+                    else ("⚠️  ELEVADO" if cpu_percent > self.limits.cpu_percent * 0.8 else "✅ OK")
                 ),
             },
             "memory": {

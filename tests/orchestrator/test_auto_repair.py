@@ -102,8 +102,9 @@ async def test_determine_repair_strategy(auto_repair_system):
 def test_get_repair_history(auto_repair_system):
     """Testa obtenção de histórico de reparos."""
     # Adicionar alguns reparos simulados
-    from src.orchestrator.auto_repair import RepairAction
     import time
+
+    from src.orchestrator.auto_repair import RepairAction
 
     auto_repair_system.repair_history.append(
         RepairAction("comp1", RepairStrategy.RESTART, time.time(), "Test", True)
@@ -139,8 +140,9 @@ def test_reset_failure_count(auto_repair_system):
 
 def test_get_repair_summary(auto_repair_system):
     """Testa obtenção de resumo de reparos."""
-    from src.orchestrator.auto_repair import RepairAction
     import time
+
+    from src.orchestrator.auto_repair import RepairAction
 
     auto_repair_system.repair_history.append(
         RepairAction("comp1", RepairStrategy.RESTART, time.time(), "Test", True)

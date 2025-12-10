@@ -18,7 +18,6 @@ from typing import Any, Dict, List, Optional
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, PointStruct, VectorParams
 
-
 logger = logging.getLogger(__name__)
 
 

@@ -2,8 +2,9 @@
 Tests for Freudian Metapsychology module.
 """
 
-import pytest
 from typing import Any, Dict
+
+import pytest
 
 from src.lacanian.freudian_metapsychology import (
     Action,

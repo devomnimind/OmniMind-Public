@@ -418,8 +418,10 @@ class PythonMCPServer(MCPServer):
                                         {
                                             "message": parts[3].strip(),
                                             "severity": "error",
-                                            "line": int(parts[1]) if parts[1].isdigit() else None,
-                                            "column": int(parts[2]) if parts[2].isdigit() else None,
+                                            "line": (int(parts[1]) if parts[1].isdigit() else None),
+                                            "column": (
+                                                int(parts[2]) if parts[2].isdigit() else None
+                                            ),
                                         }
                                     )
                         return {"issues": issues}

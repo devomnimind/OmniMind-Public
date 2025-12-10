@@ -225,7 +225,10 @@ class ReactAgent:
             from ..consciousness.consciousness_triad import ConsciousnessTriadCalculator
 
             self._triad_calculator = ConsciousnessTriadCalculator(workspace=self.workspace)
-            logger.debug("ConsciousnessTriadCalculator inicializado para agente: %s", self.agent_id)
+            logger.debug(
+                "ConsciousnessTriadCalculator inicializado para agente: %s",
+                self.agent_id,
+            )
         except ImportError as e:
             logger.warning("ConsciousnessTriadCalculator não disponível: %s", e)
             self._triad_calculator = None
@@ -287,8 +290,6 @@ class ReactAgent:
                 # especificamos device diretamente, causando "Cannot copy out of meta tensor"
                 if model_path:
                     # Tentar carregar do cache local SEM verificar API
-                    import os
-
                     # Forçar modo offline para evitar requests de rede
                     os.environ["HF_HUB_OFFLINE"] = "1"
                     os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
@@ -965,7 +966,11 @@ Your response:"""
             )
 
             # Armazenar última tríade calculada
-            self._last_triad = {"phi": triad.phi, "psi": triad.psi, "sigma": triad.sigma}
+            self._last_triad = {
+                "phi": triad.phi,
+                "psi": triad.psi,
+                "sigma": triad.sigma,
+            }
 
             # Atualizar histórico de Φ
             self._phi_history.append(triad.phi)

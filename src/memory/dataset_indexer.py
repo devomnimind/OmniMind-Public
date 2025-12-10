@@ -323,7 +323,10 @@ class DatasetIndexer:
                     logger.error(
                         f"Dataset HuggingFace requer biblioteca 'datasets': {dataset_path}"
                     )
-                    return {"status": "error", "error": "datasets library not available"}
+                    return {
+                        "status": "error",
+                        "error": "datasets library not available",
+                    }
 
                 try:
                     dataset = load_from_disk(str(dataset_path_obj))
@@ -369,7 +372,10 @@ class DatasetIndexer:
                         f"Arquivo .arrow requer biblioteca 'datasets': {dataset_path}. "
                         f"Pulando..."
                     )
-                    return {"status": "error", "error": "datasets library not available"}
+                    return {
+                        "status": "error",
+                        "error": "datasets library not available",
+                    }
                 try:
                     # Tentar carregar como dataset do HuggingFace
                     dataset = load_from_disk(str(dataset_path_obj.parent))
@@ -493,7 +499,11 @@ class DatasetIndexer:
                 else:
                     # Buscar arquivos dentro do diretório
                     for subitem in item.rglob("*"):
-                        if subitem.is_file() and subitem.suffix in [".json", ".txt", ".arrow"]:
+                        if subitem.is_file() and subitem.suffix in [
+                            ".json",
+                            ".txt",
+                            ".arrow",
+                        ]:
                             # Evitar processar arquivos .arrow dentro de datasets HuggingFace
                             # já processados
                             parent_dir = subitem.parent

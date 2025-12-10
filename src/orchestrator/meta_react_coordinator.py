@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
-from .error_analyzer import ErrorAnalyzer, ErrorAnalysis, RecoveryStrategy
+from .error_analyzer import ErrorAnalysis, ErrorAnalyzer, RecoveryStrategy
 
 logger = logging.getLogger(__name__)
 

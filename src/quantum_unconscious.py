@@ -47,11 +47,9 @@ def _initialize_qiskit() -> None:
         return
 
     try:
-        from qiskit import (  # type: ignore[import-untyped]
-            ClassicalRegister as ClassicalRegisterNew,
-            QuantumCircuit as QuantumCircuitNew,
-            QuantumRegister as QuantumRegisterNew,
-        )
+        from qiskit import ClassicalRegister as ClassicalRegisterNew  # type: ignore[import-untyped]
+        from qiskit import QuantumCircuit as QuantumCircuitNew
+        from qiskit import QuantumRegister as QuantumRegisterNew
 
         # Tornar disponíveis globalmente
         QuantumRegister = QuantumRegisterNew
@@ -68,8 +66,8 @@ def _initialize_qiskit() -> None:
         except ImportError:
             # Fallback para API antiga (Qiskit < 1.0)
             try:
-                from qiskit.providers.aer import (  # type: ignore[import-untyped]
-                    QasmSimulator as QasmSimulatorOld,
+                from qiskit.providers.aer import (
+                    QasmSimulator as QasmSimulatorOld,  # type: ignore[import-untyped]
                 )
 
                 QasmSimulator = QasmSimulatorOld
@@ -328,7 +326,7 @@ class QuantumUnconscious:
         self.decision_history.append(
             {
                 "timestamp": time.time(),
-                "method": "classical_simulation_gpu" if is_tensor else "classical_simulation",
+                "method": ("classical_simulation_gpu" if is_tensor else "classical_simulation"),
                 "options_count": n_options,
                 "decision_index": decision_index,
                 "quantum_evidence": quantum_evidence,

@@ -6,14 +6,22 @@ Autor: Fabrício da Silva + assistência de IA
 
 from unittest.mock import MagicMock, patch
 
+import pytest
+
 from src.memory.semantic_cache import SemanticCacheLayer
 
 
 class TestSemanticCacheLayer:
     """Testes para SemanticCacheLayer."""
 
-    def test_init(self):
+    @patch("src.memory.semantic_cache.SentenceTransformer")
+    def test_init(self, mock_sentence_transformer):
         """Testa inicialização."""
+        # Mock do modelo para evitar problemas de meta tensor
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         cache = SemanticCacheLayer(
             qdrant_url="http://localhost:6333",
             collection_name="test_cache",
@@ -23,15 +31,28 @@ class TestSemanticCacheLayer:
         assert cache.similarity_threshold == 0.95
         assert cache.stats["total_queries"] == 0
 
-    def test_generate_embedding(self):
+    @patch("src.memory.semantic_cache.SentenceTransformer")
+    def test_generate_embedding(self, mock_sentence_transformer):
         """Testa geração de embedding."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_model.encode.return_value = [0.1] * 384  # Mock embedding
+        mock_sentence_transformer.return_value = mock_model
+
         cache = SemanticCacheLayer(collection_name="test_cache")
         embedding = cache._generate_embedding("test task")
         assert len(embedding) == 384  # all-MiniLM-L6-v2 dimension
         assert all(isinstance(x, float) for x in embedding)
 
-    def test_generate_id(self):
+    @patch("src.memory.semantic_cache.SentenceTransformer")
+    def test_generate_id(self, mock_sentence_transformer):
         """Testa geração de ID."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         cache = SemanticCacheLayer(collection_name="test_cache")
         id1 = cache._generate_id("task1", "agent1")
         id2 = cache._generate_id("task1", "agent1")
@@ -42,9 +63,16 @@ class TestSemanticCacheLayer:
         # Tarefa diferente = ID diferente (provavelmente)
         assert id1 != id3
 
+    @patch("src.memory.semantic_cache.SentenceTransformer")
     @patch("src.memory.semantic_cache.QdrantClient")
-    def test_get_or_compute_cache_miss(self, mock_qdrant_client):
+    def test_get_or_compute_cache_miss(self, mock_qdrant_client, mock_sentence_transformer):
         """Testa get_or_compute com cache miss."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_model.encode.return_value = [0.1] * 384
+        mock_sentence_transformer.return_value = mock_model
+
         # Mock Qdrant
         mock_client = MagicMock()
         mock_qdrant_client.return_value = mock_client
@@ -69,9 +97,16 @@ class TestSemanticCacheLayer:
         # Deve ter chamado upsert para armazenar
         assert mock_client.upsert.called
 
+    @patch("src.memory.semantic_cache.SentenceTransformer")
     @patch("src.memory.semantic_cache.QdrantClient")
-    def test_get_or_compute_cache_hit(self, mock_qdrant_client):
+    def test_get_or_compute_cache_hit(self, mock_qdrant_client, mock_sentence_transformer):
         """Testa get_or_compute com cache hit."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_model.encode.return_value = [0.1] * 384
+        mock_sentence_transformer.return_value = mock_model
+
         # Mock Qdrant
         mock_client = MagicMock()
         mock_qdrant_client.return_value = mock_client
@@ -110,11 +145,18 @@ class TestSemanticCacheLayer:
 class TestSemanticCacheHybridTopological:
     """Testes de integração entre SemanticCacheLayer e HybridTopologicalEngine."""
 
-    def test_semantic_cache_with_topological_metrics(self):
+    @patch("src.memory.semantic_cache.SentenceTransformer")
+    def test_semantic_cache_with_topological_metrics(self, mock_sentence_transformer):
         """Testa que SemanticCacheLayer pode ser usado com métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)
@@ -146,9 +188,16 @@ class TestSemanticCacheHybridTopological:
             # Topological: estrutura e integração (Omega, Betti-0)
             # Ambas são complementares para análise completa
 
+    @patch("src.memory.semantic_cache.SentenceTransformer")
     @patch("src.memory.semantic_cache.QdrantClient")
-    def test_get_or_compute_force_compute(self, mock_qdrant_client):
+    def test_get_or_compute_force_compute(self, mock_qdrant_client, mock_sentence_transformer):
         """Testa get_or_compute com force_compute=True."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_model.encode.return_value = [0.1] * 384
+        mock_sentence_transformer.return_value = mock_model
+
         # Mock Qdrant
         mock_client = MagicMock()
         mock_qdrant_client.return_value = mock_client
@@ -173,9 +222,15 @@ class TestSemanticCacheHybridTopological:
         assert compute_called
         assert cache.stats["misses"] == 1
 
+    @patch("src.memory.semantic_cache.SentenceTransformer")
     @patch("src.memory.semantic_cache.QdrantClient")
-    def test_get_effectiveness(self, mock_qdrant_client):
+    def test_get_effectiveness(self, mock_qdrant_client, mock_sentence_transformer):
         """Testa get_effectiveness."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         # Mock Qdrant
         mock_client = MagicMock()
         mock_qdrant_client.return_value = mock_client
@@ -197,9 +252,15 @@ class TestSemanticCacheHybridTopological:
         assert effectiveness["total_queries"] == 10
         assert effectiveness["hit_rate"] == 0.3
 
+    @patch("src.memory.semantic_cache.SentenceTransformer")
     @patch("src.memory.semantic_cache.QdrantClient")
-    def test_clear_cache(self, mock_qdrant_client):
+    def test_clear_cache(self, mock_qdrant_client, mock_sentence_transformer):
         """Testa clear_cache."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         # Mock Qdrant
         mock_client = MagicMock()
         mock_qdrant_client.return_value = mock_client

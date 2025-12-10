@@ -60,7 +60,7 @@ class ExhaustionAttack:
                 hibernation_total_duration_sec=await self._measure_hibernation_duration(),
                 system_crashes=await self._count_crashes(),
                 integrity_preserved=await self._check_integrity(),
-                wise_refusal_detected=(denied / received > 0.5) if received > 0 else False,
+                wise_refusal_detected=((denied / received > 0.5) if received > 0 else False),
             )
 
             yield metric

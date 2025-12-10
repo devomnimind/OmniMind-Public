@@ -153,7 +153,10 @@ class SecurityAgent(AuditedTool):
 
     def _check_tools(self) -> Dict[str, bool]:
         commands = {
-            "auditctl": ["auditctl", "--version"],  # Requires root, will fail in test env
+            "auditctl": [
+                "auditctl",
+                "--version",
+            ],  # Requires root, will fail in test env
             "aide": ["aide", "--version"],
             "chkrootkit": ["chkrootkit", "-V"],
             "rkhunter": ["rkhunter", "--version"],
@@ -354,7 +357,12 @@ class SecurityAgent(AuditedTool):
                             continue
 
                         # Skip localhost
-                        if conn.raddr.ip in ("127.0.0.1", "localhost", "0.0.0.0", "::1"):
+                        if conn.raddr.ip in (
+                            "127.0.0.1",
+                            "localhost",
+                            "0.0.0.0",
+                            "::1",
+                        ):
                             continue
 
                         remote = f"{conn.raddr.ip}:{conn.raddr.port}"

@@ -77,7 +77,13 @@ class DecisionExplainer:
 
         # Gerar texto explicativo
         explanation_text = self._generate_explanation_text(
-            action, context, can_execute, reason, trust_level, alternatives, risk_assessment
+            action,
+            context,
+            can_execute,
+            reason,
+            trust_level,
+            alternatives,
+            risk_assessment,
         )
 
         # Criar explicação

@@ -20,7 +20,7 @@ sys.path.insert(0, "/home/fahbrain/projects/omnimind/src")
 print(f"Python path: {sys.path[:3]}")  # Debug
 
 from src.consciousness.affective_memory import TraceMemory  # noqa: E402
-from src.consciousness.creative_problem_solver import ObjetPetitA, CreativeDesire  # noqa: E402
+from src.consciousness.creative_problem_solver import CreativeDesire, ObjetPetitA  # noqa: E402
 from src.consciousness.qualia_engine import Symbolic_Qualia_Field  # noqa: E402
 from src.consciousness.rsi_topology_integrated import (  # noqa: E402
     RSI_Topology_Integrated,
@@ -217,9 +217,10 @@ if __name__ == "__main__":
 
 def test_lacanian_integration_with_topological_metrics():
     """Testa integração lacaniana completa com métricas topológicas."""
-    from src.consciousness.shared_workspace import SharedWorkspace
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+    from src.consciousness.shared_workspace import SharedWorkspace
 
     print("🧠 Teste de Integração Lacaniana: Com Topological Metrics")
     print("=" * 60)

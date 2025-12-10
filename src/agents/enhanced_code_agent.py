@@ -20,7 +20,12 @@ from typing import Any, Dict, List, Optional
 from ..agents.code_agent import CodeAgent
 from ..observability.module_logger import get_module_logger
 from ..observability.module_metrics import get_metrics_collector
-from ..orchestrator.error_analyzer import ErrorAnalyzer, ErrorAnalysis, ErrorType, RecoveryStrategy
+from ..orchestrator.error_analyzer import (
+    ErrorAnalysis,
+    ErrorAnalyzer,
+    ErrorType,
+    RecoveryStrategy,
+)
 from ..tools.dynamic_tool_creator import DynamicToolCreator
 from ..tools.tool_composer import ToolComposer
 
@@ -114,7 +119,10 @@ class EnhancedCodeAgent(CodeAgent):
             "EnhancedCodeAgent",
             "initialized",
             1,
-            {"orchestrator_available": orchestrator is not None, "composition_mode": True},
+            {
+                "orchestrator_available": orchestrator is not None,
+                "composition_mode": True,
+            },
         )
 
     def post_init(self) -> None:
@@ -246,8 +254,8 @@ class EnhancedCodeAgent(CodeAgent):
             "error": str(last_error) if last_error else "Unknown error",
             "error_analysis": (
                 {
-                    "error_type": error_analysis.error_type.value if error_analysis else None,
-                    "error_message": error_analysis.error_message if error_analysis else None,
+                    "error_type": (error_analysis.error_type.value if error_analysis else None),
+                    "error_message": (error_analysis.error_message if error_analysis else None),
                     "recovery_strategy": (
                         error_analysis.recovery_strategy.value if error_analysis else None
                     ),

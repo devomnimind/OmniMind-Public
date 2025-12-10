@@ -16,14 +16,15 @@ Autor: Fabrício da Silva + assistência de IA
 Data: 2025-12-06
 """
 
-import numpy as np
-from pathlib import Path
 import tempfile
+from pathlib import Path
 
-from src.memory.systemic_memory_trace import SystemicMemoryTrace
+import numpy as np
+
 from src.consciousness.shared_workspace import SharedWorkspace
 from src.consciousness.topological_phi import PhiCalculator, SimplicialComplex
 from src.memory.narrative_history import NarrativeHistory
+from src.memory.systemic_memory_trace import SystemicMemoryTrace
 
 
 # Testes de integração são unitários (não requerem recursos reais)
@@ -268,8 +269,9 @@ class TestSystemicMemoryIntegrationHybridTopological:
 
     def test_systemic_memory_with_workspace_topological_integration(self):
         """Testa integração completa: SystemicMemoryTrace + SharedWorkspace + HybridTopologicalEngine."""  # noqa: E501
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
         # Criar SystemicMemoryTrace
         systemic_memory = SystemicMemoryTrace(state_space_dim=256, deformation_threshold=0.01)
@@ -313,8 +315,9 @@ class TestSystemicMemoryIntegrationHybridTopological:
 
     def test_systemic_memory_affects_phi_and_topological_metrics(self):
         """Testa que SystemicMemoryTrace afeta Φ e métricas topológicas são complementares."""
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
         systemic_memory = SystemicMemoryTrace(state_space_dim=256, deformation_threshold=0.01)
 

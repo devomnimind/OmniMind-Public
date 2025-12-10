@@ -395,9 +395,10 @@ class TestHolographicMemoryHybridTopological:
 
     def test_holographic_memory_with_topological_metrics(self):
         """Testa que HolographicMemory pode ser usado com métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)

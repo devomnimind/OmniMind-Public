@@ -378,8 +378,9 @@ class TestContrafactualHybridTopological:
     @pytest.mark.asyncio
     async def test_ablation_with_topological_metrics(self):
         """Testa que ablação de módulos pode ser analisada com métricas topológicas."""
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
         # Criar loop
         loop = IntegrationLoop(enable_logging=False)

@@ -9,12 +9,13 @@ por diferentes "observadores" (execuções independentes com seeds diferentes).
 Baseado em: Estudos de confiabilidade inter-avaliador em psicologia/cognição
 """
 
-import numpy as np
 import json
+import logging
 import time
 from pathlib import Path
-from typing import List, Dict, Any
-import logging
+from typing import Any, Dict, List
+
+import numpy as np
 from scipy import stats
 
 from src.consciousness.shared_workspace import SharedWorkspace
@@ -245,8 +246,9 @@ def main():
 
 def test_inter_rater_with_topological_metrics():
     """Testa inter-rater agreement com métricas topológicas."""
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     logger.info("🧠 TESTE INTER-RATER: Com Topological Metrics")
     logger.info("=" * 60)

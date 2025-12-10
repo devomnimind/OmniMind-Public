@@ -27,8 +27,8 @@ src_path = project_root / "src"
 sys.path.insert(0, str(src_path))
 
 try:
-    from src.consciousness.shared_workspace import SharedWorkspace
     from omnimind_parameters import get_parameter_manager  # type: ignore[import-untyped]
+    from src.consciousness.shared_workspace import SharedWorkspace
 except ImportError as e:
     logger.error(f"Failed to import: {e}")
     raise
@@ -287,8 +287,9 @@ def main():
 
 def test_do_calculus_with_topological_metrics():
     """Testa Do-Calculus com métricas topológicas."""
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     logger.info("🔬 TESTE DO-CALCULUS: Com Topological Metrics")
     logger.info("=" * 60)

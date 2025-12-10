@@ -294,9 +294,10 @@ class TestConsciousnessMetricsHybridTopological:
 
     def test_metrics_can_complement_with_topological(self):
         """Testa que ConsciousnessMetrics pode ser complementado com métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar métricas legadas
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -342,9 +343,10 @@ class TestConsciousnessMetricsHybridTopological:
 
     def test_metrics_and_topological_complementary_analysis(self):
         """Testa análise complementar entre métricas legadas e topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         with tempfile.TemporaryDirectory() as tmpdir:
             metrics = ConsciousnessMetrics(metrics_dir=Path(tmpdir) / "consciousness")
@@ -404,9 +406,10 @@ class TestConsciousnessMetricsHybridTopological:
 
     def test_metrics_snapshot_with_topological_context(self):
         """Testa que snapshot de métricas pode incluir contexto topológico."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         with tempfile.TemporaryDirectory() as tmpdir:
             metrics = ConsciousnessMetrics(metrics_dir=Path(tmpdir) / "consciousness")

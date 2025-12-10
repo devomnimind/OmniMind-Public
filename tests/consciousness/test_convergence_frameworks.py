@@ -295,8 +295,9 @@ async def test_all_frameworks_converge(convergence_investigator) -> None:
 @pytest.mark.asyncio
 async def test_convergence_with_topological_metrics(convergence_investigator) -> None:
     """Test 5: Convergence investigation with topological metrics."""
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     # Run cycles
     for _ in range(10):

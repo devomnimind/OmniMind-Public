@@ -72,7 +72,11 @@ class GodelStructuralGap:
             self.gaps_discovered.append(gap)
             self.learning_rate_from_gaps += 0.15
 
-            return {"solved": False, "exception": True, "gap_id": len(self.gaps_discovered)}
+            return {
+                "solved": False,
+                "exception": True,
+                "gap_id": len(self.gaps_discovered),
+            }
 
     def get_incompleteness_signature(self) -> Dict[str, Any]:
         """

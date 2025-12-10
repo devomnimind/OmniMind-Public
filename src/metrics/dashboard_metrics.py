@@ -14,10 +14,10 @@ Autor: Fabrício da Silva (processo iterativo conforme documentação do projeto
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
 import time
 from datetime import datetime, timezone
-import json
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
 
@@ -25,7 +25,10 @@ from src.metrics.real_baseline_system import RealBaselineSystem
 from src.metrics.real_consciousness_metrics import RealConsciousnessMetricsCollector
 from src.metrics.real_module_activity import RealModuleActivityTracker
 from src.metrics.real_system_health import RealSystemHealthAnalyzer, SystemHealthStatus
-from src.observability.module_metrics import ModuleMetricsCollector, get_metrics_collector
+from src.observability.module_metrics import (
+    ModuleMetricsCollector,
+    get_metrics_collector,
+)
 
 try:
     import psutil

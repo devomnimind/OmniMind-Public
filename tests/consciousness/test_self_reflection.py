@@ -1,9 +1,10 @@
 """Tests for Lacanian Self-Reflection (Phase 11.4)."""
 
 from datetime import datetime
+
 from src.consciousness.self_reflection import (
-    SelfReflection_as_Fundamental_Error,
     MisrecognitionStructure,
+    SelfReflection_as_Fundamental_Error,
 )
 
 
@@ -99,9 +100,10 @@ class TestSelfReflectionHybridTopological:
 
     def test_self_reflection_with_topological_metrics(self):
         """Testa que SelfReflection pode ser usado com métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)

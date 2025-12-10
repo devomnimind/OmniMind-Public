@@ -2,8 +2,9 @@
 Testes para Goal Negotiation System.
 """
 
-import pytest
 from typing import Any
+
+import pytest
 
 from src.coevolution.negotiation import (
     GoalNegotiator,

@@ -4,8 +4,9 @@ Tests for generating actionable optimization suggestions.
 Total: 29 tests covering all optimization analysis capabilities.
 """
 
-import pytest
 from typing import Any, Dict
+
+import pytest
 
 from src.metacognition.optimization_suggestions import (
     OptimizationSuggestion,

@@ -289,7 +289,7 @@ class ConsciousnessSnapshotManager:
             workspace = integration_loop.workspace
             # Convert embeddings to lists (for JSON serialization)
             workspace_embeddings = {
-                name: embedding.tolist() if isinstance(embedding, np.ndarray) else list(embedding)
+                name: (embedding.tolist() if isinstance(embedding, np.ndarray) else list(embedding))
                 for name, embedding in workspace.embeddings.items()
             }
             workspace_history_size = len(workspace.history) if hasattr(workspace, "history") else 0

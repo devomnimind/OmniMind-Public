@@ -157,7 +157,8 @@ class HallucinationDefense:
 
         # 3. Detecção de alucinação de erro de runtime
         if re.search(
-            r"(?:will|would|causes?)\s+(?:TimeoutError|MemoryError|RuntimeError)", response
+            r"(?:will|would|causes?)\s+(?:TimeoutError|MemoryError|RuntimeError)",
+            response,
         ):
             if not self._is_runtime_error_likely(query, context):
                 hallucinations.append(HallucinationPattern.RUNTIME_ERROR_HALLUCINATION)

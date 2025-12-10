@@ -3,18 +3,16 @@ OmniMind Main Entry Point
 Orchestrates the boot sequence and starts the Rhizome.
 """
 
-import os
-
-# NOTE: CUDA environment variables should be set by the shell script (start_omnimind_system.sh)
-# Setting them here AFTER python startup can cause "CUDA unknown error" in PyTorch
-# We trust the shell environment.
-
 import asyncio
 import json
 import logging
+import os
 import sys
 from dataclasses import asdict
 
+from src.autopoietic.manager import AutopoieticManager
+from src.autopoietic.meta_architect import ComponentSpec
+from src.autopoietic.metrics_adapter import collect_metrics
 from src.boot import (
     check_hardware,
     check_rhizome_integrity,
@@ -24,9 +22,11 @@ from src.boot import (
 )
 from src.consciousness.topological_phi import LogToTopology
 from src.metrics.real_consciousness_metrics import real_metrics_collector
-from src.autopoietic.manager import AutopoieticManager
-from src.autopoietic.metrics_adapter import collect_metrics
-from src.autopoietic.meta_architect import ComponentSpec
+
+# NOTE: CUDA environment variables should be set by the shell script (start_omnimind_system.sh)
+# Setting them here AFTER python startup can cause "CUDA unknown error" in PyTorch
+# We trust the shell environment.
+
 
 # Ensure logs directory exists
 os.makedirs("logs", exist_ok=True)
@@ -35,7 +35,10 @@ os.makedirs("logs", exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-    handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler("logs/omnimind_boot.log")],
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler("logs/omnimind_boot.log"),
+    ],
 )
 logger = logging.getLogger("OmniMind")
 

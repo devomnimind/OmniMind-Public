@@ -90,7 +90,9 @@ class OrchestratorEventBus:
             last_time = self._debounce_cache[event_key]
             if now - last_time < self._debounce_window:
                 logger.debug(
-                    "Evento %s debounced (última ocorrência há %.2fs)", event_key, now - last_time
+                    "Evento %s debounced (última ocorrência há %.2fs)",
+                    event_key,
+                    now - last_time,
                 )
                 return True
 
@@ -111,7 +113,11 @@ class OrchestratorEventBus:
         queue = self._queues[event.priority]
         await queue.put((event.priority.value, event.timestamp, event))
 
-        logger.debug("Evento publicado: %s (prioridade: %s)", event.event_type, event.priority.name)
+        logger.debug(
+            "Evento publicado: %s (prioridade: %s)",
+            event.event_type,
+            event.priority.name,
+        )
 
     async def publish_security_event(
         self, security_event: SecurityEvent, priority: Optional[EventPriority] = None

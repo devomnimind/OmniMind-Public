@@ -34,10 +34,8 @@ logger = logging.getLogger(__name__)
 # --- D-Wave Imports ---
 try:
     import dimod  # type: ignore[import-untyped]
-    from dwave.system import (
-        DWaveSampler,  # type: ignore[import-untyped,attr-defined]
-        EmbeddingComposite,  # type: ignore[import-untyped,attr-defined]
-    )
+    from dwave.system import DWaveSampler  # type: ignore[import-untyped,attr-defined]
+    from dwave.system import EmbeddingComposite  # type: ignore[import-untyped,attr-defined]
 
     DWAVE_AVAILABLE = True
 except ImportError:
@@ -54,28 +52,18 @@ except ImportError:
 # --- Qiskit Imports ---
 try:  # type: ignore[import-untyped]
     from qiskit_aer import AerSimulator  # type: ignore[import-untyped,attr-defined]
-    from qiskit_algorithms import (
-        AmplificationProblem,  # type: ignore[attr-defined]
-        Grover,  # type: ignore[attr-defined]
-    )
-    from qiskit_algorithms.optimizers import (
-        COBYLA,  # type: ignore[import-untyped,attr-defined]
-    )
+    from qiskit_algorithms import AmplificationProblem  # type: ignore[attr-defined]
+    from qiskit_algorithms import Grover  # type: ignore[attr-defined]
+    from qiskit_algorithms.optimizers import COBYLA  # type: ignore[import-untyped,attr-defined]
 
     try:
-        from qiskit.primitives import (
-            Sampler,  # type: ignore[import-untyped,attr-defined]
-        )
+        from qiskit.primitives import Sampler  # type: ignore[import-untyped,attr-defined]
     except ImportError:
         from qiskit.primitives import (
             StatevectorSampler as Sampler,  # type: ignore[import-untyped,attr-defined]
         )
-    from qiskit.circuit.library import (
-        PhaseOracle,  # type: ignore[import-untyped,attr-defined]
-    )
-    from qiskit_optimization import (
-        QuadraticProgram,  # type: ignore[import-untyped,attr-defined]
-    )
+    from qiskit.circuit.library import PhaseOracle  # type: ignore[import-untyped,attr-defined]
+    from qiskit_optimization import QuadraticProgram  # type: ignore[import-untyped,attr-defined]
     from qiskit_optimization.algorithms import (  # type: ignore[import-untyped,attr-defined]
         MinimumEigenOptimizer,
     )
@@ -107,7 +95,10 @@ class QuantumBackend:
         return cls._instance
 
     def __init__(
-        self, provider: str = "auto", api_token: Optional[str] = None, prefer_local: bool = True
+        self,
+        provider: str = "auto",
+        api_token: Optional[str] = None,
+        prefer_local: bool = True,
     ):
         # Prevent re-initialization
         if self._initialized:
@@ -128,8 +119,16 @@ class QuantumBackend:
 
         # Detect GPU availability (with fallback for CUDA init issues)
         # CRITICAL: Check environment variables FIRST to allow forced GPU mode
-        force_gpu_env = os.getenv("OMNIMIND_FORCE_GPU", "").lower() in ("true", "1", "yes")
-        force_gpu_pytest = os.getenv("PYTEST_FORCE_GPU", "").lower() in ("true", "1", "yes")
+        force_gpu_env = os.getenv("OMNIMIND_FORCE_GPU", "").lower() in (
+            "true",
+            "1",
+            "yes",
+        )
+        force_gpu_pytest = os.getenv("PYTEST_FORCE_GPU", "").lower() in (
+            "true",
+            "1",
+            "yes",
+        )
 
         try:
             self.use_gpu = torch.cuda.is_available()
@@ -341,7 +340,7 @@ class QuantumBackend:
                 "target": target,
                 "target_binary": target_binary,
                 "found_state": result.top_measurement,
-                "iterations": result.iterations if hasattr(result, "iterations") else "N/A",
+                "iterations": (result.iterations if hasattr(result, "iterations") else "N/A"),
                 "success": result.top_measurement == target_binary,
                 "backend": self.mode,
             }

@@ -106,7 +106,9 @@ class ComponentIsolation:
         await self._notify_isolation(component_id, isolation_level, reason)
 
         logger.info(
-            "Componente %s isolado com sucesso (nível: %s)", component_id, isolation_level.value
+            "Componente %s isolado com sucesso (nível: %s)",
+            component_id,
+            isolation_level.value,
         )
 
     async def _block_all_communications(

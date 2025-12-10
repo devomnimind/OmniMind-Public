@@ -16,7 +16,11 @@ Protocolo: Livewire FASE 1
 from dataclasses import dataclass
 from typing import Optional
 
-from src.consciousness.phi_constants import PHI_THRESHOLD, normalize_phi, denormalize_phi
+from src.consciousness.phi_constants import (
+    PHI_THRESHOLD,
+    denormalize_phi,
+    normalize_phi,
+)
 
 
 @dataclass(frozen=True)
@@ -173,7 +177,8 @@ class PhiValue:
         if not isinstance(other, PhiValue):
             raise TypeError(f"Cannot subtract PhiValue with {type(other)}")
         return PhiValue(
-            nats=max(0.0, self.nats - other.nats), source=f"{self.source}-{other.source}"
+            nats=max(0.0, self.nats - other.nats),
+            source=f"{self.source}-{other.source}",
         )
 
     def __mul__(self, scalar: float) -> "PhiValue":

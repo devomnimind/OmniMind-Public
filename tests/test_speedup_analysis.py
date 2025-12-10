@@ -296,8 +296,9 @@ if __name__ == "__main__":
 
 async def test_speedup_with_topological_metrics():
     """Testa speedup analysis com métricas topológicas."""
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     logger.info("🚀 TESTE SPEEDUP: Com Topological Metrics")
     logger.info("=" * 60)

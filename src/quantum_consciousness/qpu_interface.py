@@ -597,9 +597,7 @@ class IBMQBackend(QPUBackend):
         try:
             # Try new qiskit-ibm-runtime (Qiskit 1.0+)
             try:
-                from qiskit_ibm_runtime import (
-                    QiskitRuntimeService,  # type: ignore[import-untyped]
-                )
+                from qiskit_ibm_runtime import QiskitRuntimeService  # type: ignore[import-untyped]
 
                 # Use correct channel name for current qiskit-ibm-runtime version
                 # 'ibm_quantum' was deprecated, use 'ibm_cloud' or 'ibm_quantum_platform'
@@ -908,7 +906,10 @@ class QPUInterface:
             backend = self.backends[backend_type]
 
         logger.info(
-            "executing_circuit", backend=backend.get_info().name, shots=shots, strict=strict_mode
+            "executing_circuit",
+            backend=backend.get_info().name,
+            shots=shots,
+            strict=strict_mode,
         )
 
         try:

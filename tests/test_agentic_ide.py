@@ -243,9 +243,10 @@ class TestAgenticIDEHybridTopological:
 
     def test_ide_tasks_with_topological_metrics(self, tmp_path: Path) -> None:
         """Testa que tarefas do IDE podem usar métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)
@@ -274,9 +275,10 @@ class TestAgenticIDEHybridTopological:
 
     def test_ide_artifacts_with_topological_validation(self, tmp_path: Path) -> None:
         """Testa que validação de artefatos pode usar métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         workspace = SharedWorkspace(embedding_dim=256)
         workspace.hybrid_topological_engine = HybridTopologicalEngine()

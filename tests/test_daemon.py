@@ -402,9 +402,10 @@ class TestDaemonHybridTopological:
 
     def test_daemon_can_monitor_topological_metrics(self) -> None:
         """Testa que daemon pode monitorar métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)

@@ -216,7 +216,10 @@ class BionianContainmentKernel:
             action = "Log for human review."
 
         return AlphaElement(
-            meaning=meaning, pattern=pattern, actionable_insight=action, timestamp=time.time()
+            meaning=meaning,
+            pattern=pattern,
+            actionable_insight=action,
+            timestamp=time.time(),
         )
 
 

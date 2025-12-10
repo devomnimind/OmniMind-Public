@@ -3,13 +3,13 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+from _pytest.monkeypatch import MonkeyPatch
 
 from scripts.science_validation.run_scientific_ablations import (
     IntegrationLoopSimulator,
-    save_results_to_json,
     main,
+    save_results_to_json,
 )
-from _pytest.monkeypatch import MonkeyPatch
 
 
 @pytest.fixture

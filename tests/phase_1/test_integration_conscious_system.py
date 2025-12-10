@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Teste rápido de integração ConsciousSystem + SharedWorkspace."""
 
-from src.consciousness.shared_workspace import SharedWorkspace
 import torch
+
+from src.consciousness.shared_workspace import SharedWorkspace
 
 print("✅ Teste de Integração ConsciousSystem + SharedWorkspace")
 print("=" * 60)

@@ -393,7 +393,8 @@ class JouissanceStateClassifier:
         }
 
         return interpretations.get(
-            state.state, f"DESCONHECIDO: {state_name} (confiança: {state.confidence:.2%})"
+            state.state,
+            f"DESCONHECIDO: {state_name} (confiança: {state.confidence:.2%})",
         )
 
     def get_recommended_action(self, state: JouissanceState) -> Dict[str, Any]:

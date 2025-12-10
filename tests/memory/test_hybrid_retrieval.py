@@ -6,14 +6,22 @@ Autor: Fabrício da Silva + assistência de IA
 
 from unittest.mock import MagicMock, patch
 
+import pytest
+
 from src.memory.hybrid_retrieval import HybridRetrievalSystem, RetrievalResult
 
 
 class TestHybridRetrievalSystem:
     """Testes para HybridRetrievalSystem."""
 
-    def test_init(self):
+    @patch("src.memory.hybrid_retrieval.SentenceTransformer")
+    def test_init(self, mock_sentence_transformer):
         """Testa inicialização."""
+        # Mock do modelo para evitar problemas de meta tensor
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         retrieval = HybridRetrievalSystem(
             qdrant_url="http://localhost:6333",
             collection_name="test_collection",
@@ -23,8 +31,14 @@ class TestHybridRetrievalSystem:
         assert retrieval.top_k_sparse == 20
         assert retrieval.top_k_final == 5
 
-    def test_tokenize(self):
+    @patch("src.memory.hybrid_retrieval.SentenceTransformer")
+    def test_tokenize(self, mock_sentence_transformer):
         """Testa tokenização."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         retrieval = HybridRetrievalSystem(collection_name="test")
         tokens = retrieval._tokenize("Hello world! This is a test.")
         assert "hello" in tokens
@@ -32,8 +46,14 @@ class TestHybridRetrievalSystem:
         assert "test" in tokens
         assert "!" not in tokens  # Pontuação removida
 
-    def test_build_bm25_index(self):
+    @patch("src.memory.hybrid_retrieval.SentenceTransformer")
+    def test_build_bm25_index(self, mock_sentence_transformer):
         """Testa construção de índice BM25."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         retrieval = HybridRetrievalSystem(collection_name="test")
         documents = [
             {"id": "doc1", "content": "hello world"},
@@ -45,8 +65,14 @@ class TestHybridRetrievalSystem:
         assert "term_doc_freq" in index
         assert index["total_docs"] == 2
 
-    def test_bm25_score(self):
+    @patch("src.memory.hybrid_retrieval.SentenceTransformer")
+    def test_bm25_score(self, mock_sentence_transformer):
         """Testa cálculo de score BM25."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         retrieval = HybridRetrievalSystem(collection_name="test")
         documents = [
             {"id": "doc1", "content": "hello world"},
@@ -56,8 +82,14 @@ class TestHybridRetrievalSystem:
         score = retrieval._bm25_score("hello", "doc1", index)
         assert score > 0
 
-    def test_sparse_search(self):
+    @patch("src.memory.hybrid_retrieval.SentenceTransformer")
+    def test_sparse_search(self, mock_sentence_transformer):
         """Testa busca esparsa."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         retrieval = HybridRetrievalSystem(collection_name="test")
         documents = [
             {"id": "doc1", "content": "hello world", "source": "test"},
@@ -68,9 +100,15 @@ class TestHybridRetrievalSystem:
         assert results[0].retrieval_method == "sparse"
         assert "hello" in results[0].content.lower()
 
+    @patch("src.memory.hybrid_retrieval.SentenceTransformer")
     @patch("src.memory.hybrid_retrieval.QdrantClient")
-    def test_dense_search(self, mock_qdrant_client):
+    def test_dense_search(self, mock_qdrant_client, mock_sentence_transformer):
         """Testa busca densa."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         # Mock Qdrant
         mock_client = MagicMock()
         mock_qdrant_client.return_value = mock_client
@@ -93,11 +131,18 @@ class TestHybridRetrievalSystem:
 class TestHybridRetrievalHybridTopological:
     """Testes de integração entre HybridRetrievalSystem e HybridTopologicalEngine."""
 
-    def test_hybrid_retrieval_with_topological_metrics(self):
+    @patch("src.memory.hybrid_retrieval.SentenceTransformer")
+    def test_hybrid_retrieval_with_topological_metrics(self, mock_sentence_transformer):
         """Testa que HybridRetrievalSystem pode ser usado com métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)
@@ -129,8 +174,14 @@ class TestHybridRetrievalHybridTopological:
             # Topological: estrutura e integração (Omega, Betti-0)
             # Ambas são complementares para análise completa
 
-    def test_rerank_without_model(self):
+    @patch("src.memory.hybrid_retrieval.SentenceTransformer")
+    def test_rerank_without_model(self, mock_sentence_transformer):
         """Testa reranking sem modelo (deve retornar top-K ordenado)."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         retrieval = HybridRetrievalSystem(collection_name="test")
         retrieval.reranker_model = None
 
@@ -144,8 +195,14 @@ class TestHybridRetrievalHybridTopological:
         assert len(reranked) == 2
         assert reranked[0].score >= reranked[1].score  # Ordenado
 
-    def test_retrieve_hybrid(self):
+    @patch("src.memory.hybrid_retrieval.SentenceTransformer")
+    def test_retrieve_hybrid(self, mock_sentence_transformer):
         """Testa retrieval híbrido completo."""
+        # Mock do modelo
+        mock_model = MagicMock()
+        mock_model.get_sentence_embedding_dimension.return_value = 384
+        mock_sentence_transformer.return_value = mock_model
+
         retrieval = HybridRetrievalSystem(collection_name="test")
 
         # Mock dense search

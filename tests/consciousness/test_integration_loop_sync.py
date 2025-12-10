@@ -5,9 +5,10 @@ Autor: Fabrício da Silva + assistência de IA
 Data: 2025-12-08
 """
 
-import pytest
-import numpy as np
 from unittest.mock import MagicMock
+
+import numpy as np
+import pytest
 
 from src.consciousness.integration_loop import IntegrationLoop
 from src.consciousness.shared_workspace import SharedWorkspace

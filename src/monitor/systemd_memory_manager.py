@@ -26,12 +26,11 @@ from __future__ import annotations
 
 import ctypes
 import logging
-import os
 import subprocess
 import time
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional
 
 import psutil
 
@@ -311,8 +310,6 @@ class SystemdMemoryManager:
         try:
             # Nota: mlock requer privilégios (CAP_IPC_LOCK ou root)
             # Em produção, isso deve ser configurado no systemd service
-            proc = psutil.Process(pid)
-            mem_info = proc.memory_info()
 
             # Tentar proteger páginas críticas
             # Nota: mlock real requer acesso direto à memória do processo

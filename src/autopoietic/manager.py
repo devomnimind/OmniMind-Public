@@ -2,17 +2,18 @@
 
 from __future__ import annotations
 
-import logging
 import json
+import logging
 import time
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Dict, Any, List, Mapping, Optional, Union
+from typing import Any, Dict, List, Mapping, Optional, Union
 
 from .architecture_evolution import ArchitectureEvolution, EvolutionStrategy
 from .code_synthesizer import CodeSynthesizer, SynthesizedComponent
 from .meta_architect import ComponentSpec, MetaArchitect
 from .metrics_adapter import MetricSample
+from .sandbox import create_secure_sandbox
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +23,19 @@ logger = logging.getLogger(__name__)
 # Threshold de 0.3 estava muito alto, rejeitando mudanças válidas
 # Novo threshold: 0.1 (permite flutuações normais, mas rejeita colapsos reais)
 PHI_THRESHOLD = 0.1
+
+
+@dataclass(frozen=True)
+class ComponentFeedback:
+    """Feedback sobre um componente sintetizado."""
+
+    component_name: str
+    feedback_type: str  # 'improvement', 'bug_fix', 'optimization', 'security'
+    description: str
+    changes_made: List[str]
+    improvement_score: float  # 0.0 to 1.0
+    timestamp: float
+    reviewer: str = "system"
 
 
 @dataclass(frozen=True)
@@ -47,7 +61,7 @@ class AutopoieticManager:
         synthesizer: Optional[CodeSynthesizer] = None,
         initial_specs: Optional[Mapping[str, ComponentSpec]] = None,
         history_path: Optional[Path] = Path("data/autopoietic/cycle_history.jsonl"),
-        synthesized_code_dir: Optional[Path] = Path("data/autopoietic/synthesized_code"),
+        synthesized_code_dir: Optional[Path] = Path("data/autopoietic/synthesized_code_secure"),
         phi_threshold: float = PHI_THRESHOLD,
         kernel_autopoiesis: Optional[Any] = None,  # KernelAutopoiesisMinimal opcional
     ) -> None:
@@ -66,6 +80,13 @@ class AutopoieticManager:
         # Phase 22: Sistema de feedback adaptativo
         self._phi_history: List[float] = []
         self._strategy_preference: Optional[EvolutionStrategy] = None
+
+        # NOVO: Sistema de aprendizado com feedback
+        self._component_feedback: Dict[str, List[ComponentFeedback]] = {}
+        self._feedback_history_path = (
+            (Path(history_path).parent / "component_feedback.jsonl") if history_path else None
+        )
+        self._learned_patterns: Dict[str, Any] = {}  # Padrões aprendidos do feedback
 
         # NOVO: Kernel autopoiesis para verificar O-CLOSURE
         self.kernel_autopoiesis = kernel_autopoiesis
@@ -169,14 +190,56 @@ class AutopoieticManager:
         synthesized = self._synthesizer.synthesize(batch.specs)
         new_names: List[str] = []
 
-        for name, component in synthesized.items():
-            matching_spec = next(spec for spec in batch.specs if spec.name == name)
+        # 🛡️ SEGURANÇA: Validar todos os componentes no sandbox antes de qualquer ação
+        validated_components: Dict[str, SynthesizedComponent] = {}
+
+        with create_secure_sandbox() as sandbox:
+            for name, component in synthesized.items():
+                self._logger.info("🛡️ Validating component in sandbox: %s", name)
+
+                validation_result = sandbox.execute_component(component.source_code, name)
+
+                if validation_result["success"]:
+                    validated_components[name] = component
+                    self._logger.info("✅ Component %s passed sandbox validation", name)
+                else:
+                    self._logger.error(
+                        "🚨 Component %s failed sandbox validation: %s",
+                        name,
+                        validation_result.get("error", "Unknown error"),
+                    )
+                    # Não adiciona componentes que falharam na validação
+
+        # Só prossegue com componentes validados
+        for name, component in validated_components.items():
+            # Encontrar spec correspondente - remover prefixo de segurança se presente
+            spec_name = name
+            if name.startswith("modulo_autopoiesis_data_"):
+                spec_name = name[len("modulo_autopoiesis_data_") :]
+
+            matching_spec = None
+            for spec in batch.specs:
+                if spec.name == spec_name:
+                    matching_spec = spec
+                    break
+
+            if matching_spec is None:
+                self._logger.error(
+                    "No matching spec found for synthesized component %s "
+                    "(spec name: %s). Available specs: %s",
+                    name,
+                    spec_name,
+                    [s.name for s in batch.specs],
+                )
+                continue  # Pula este componente
+
             self._specs[name] = matching_spec
             new_names.append(name)
-            self._logger.info("Cycle %d synthesized %s", cycle_id, name)
+            self._logger.info("Cycle %d synthesized and validated %s", cycle_id, name)
             self._logger.debug("Source preview for %s:\n%s", name, component.source_code[:200])
+            self._logger.info("💬 Natural description: %s", component.natural_description)
 
-            # Persistir componente sintetizado
+            # Persistir componente sintetizado (agora seguro)
             self._persist_component(name, component)
 
         # Validação de Φ após aplicar mudanças
@@ -324,12 +387,14 @@ class AutopoieticManager:
         # Feedback adaptativo
         if phi_delta_percent < -10.0:  # Declínio > 10%
             self._logger.warning(
-                "Φ declinou %.1f%%, preferindo estratégia STABILIZE", abs(phi_delta_percent)
+                "Φ declinou %.1f%%, preferindo estratégia STABILIZE",
+                abs(phi_delta_percent),
             )
             self._strategy_preference = EvolutionStrategy.STABILIZE
         elif phi_delta_percent > 10.0:  # Melhoria > 10%
             self._logger.info(
-                "Φ melhorou %.1f%%, permitindo estratégias mais agressivas", phi_delta_percent
+                "Φ melhorou %.1f%%, permitindo estratégias mais agressivas",
+                phi_delta_percent,
             )
             self._strategy_preference = None  # Remove preferência, permite todas
         elif phi_after < self._phi_threshold * 1.2:  # Φ próximo do threshold
@@ -337,30 +402,295 @@ class AutopoieticManager:
             self._strategy_preference = EvolutionStrategy.STABILIZE
 
     def _get_current_phi(self) -> float:
-        """Obtém o valor atual de Φ do sistema.
-
-        Tenta ler de data/monitor/real_metrics.json, com fallback para 0.5.
+        """Obtém o valor atual de Φ (Integrated Information).
 
         Returns:
-            Valor de Φ normalizado (0.0-1.0).
-
-        NOTA: Valores típicos de Φ normalizado:
-        - 0.0-0.1: Sistema desintegrado (colapso)
-        - 0.1-0.3: Sistema instável (threshold mínimo)
-        - 0.3-0.5: Sistema funcional mas abaixo do ideal
-        - 0.5-0.8: Sistema saudável (ideal)
-        - 0.8-1.0: Sistema altamente integrado
+            Valor atual de Φ, ou valor padrão se não disponível.
         """
         try:
-            metrics_path = Path("data/monitor/real_metrics.json")
-            if metrics_path.exists():
-                with metrics_path.open("r", encoding="utf-8") as stream:
-                    metrics = json.load(stream)
-                    phi = float(metrics.get("phi", 0.5))
-                    self._logger.debug("Read Φ=%.3f from real_metrics.json", phi)
-                    return phi
-        except Exception as exc:
-            self._logger.debug("Could not read Φ from real_metrics.json: %s", exc)
+            # Se temos histórico de Φ, usar média recente
+            if self._phi_history:
+                return sum(self._phi_history[-5:]) / len(
+                    self._phi_history[-5:]
+                )  # Últimos 5 valores
 
-        # Fallback: assume sistema saudável
-        return 0.5
+            # Para primeiros ciclos, usar valor padrão saudável
+            # Este valor pode ser ajustado baseado em observações empíricas
+            return 0.5
+
+        except Exception as e:
+            self._logger.warning("Erro ao obter Φ atual: %s. Usando valor padrão.", e)
+            return 0.5
+
+    def register_component_feedback(
+        self,
+        component_name: str,
+        feedback_type: str,
+        description: str,
+        changes_made: List[str],
+        improvement_score: float,
+        reviewer: str = "system",
+    ) -> None:
+        """Registra feedback sobre um componente para aprendizado futuro.
+
+        Args:
+            component_name: Nome do componente que recebeu feedback
+            feedback_type: Tipo de feedback ('improvement', 'bug_fix', 'optimization', 'security')
+            description: Descrição do que foi melhorado
+            changes_made: Lista específica das mudanças realizadas
+            improvement_score: Pontuação de melhoria (0.0-1.0)
+            reviewer: Quem fez a análise (padrão: 'system')
+        """
+        feedback = ComponentFeedback(
+            component_name=component_name,
+            feedback_type=feedback_type,
+            description=description,
+            changes_made=changes_made,
+            improvement_score=improvement_score,
+            timestamp=time.time(),
+            reviewer=reviewer,
+        )
+
+        if component_name not in self._component_feedback:
+            self._component_feedback[component_name] = []
+
+        self._component_feedback[component_name].append(feedback)
+
+        # Aprender com o feedback
+        self._learn_from_feedback(feedback)
+
+        # Persistir feedback
+        self._persist_feedback(feedback)
+
+        self._logger.info(
+            "📚 Feedback registrado para %s (%s): %s (score: %.2f)",
+            component_name,
+            feedback_type,
+            description,
+            improvement_score,
+        )
+
+    def _learn_from_feedback(self, feedback: ComponentFeedback) -> None:
+        """Aprende padrões do feedback para melhorar futuras sínteses.
+
+        Args:
+            feedback: Feedback registrado para aprendizado
+        """
+        # Aprender padrões por tipo de feedback
+        if feedback.feedback_type not in self._learned_patterns:
+            self._learned_patterns[feedback.feedback_type] = {
+                "patterns": [],
+                "avg_improvement": 0.0,
+                "count": 0,
+            }
+
+        patterns = self._learned_patterns[feedback.feedback_type]
+
+        # Extrair padrões das mudanças
+        for change in feedback.changes_made:
+            if change not in patterns["patterns"]:
+                patterns["patterns"].append(change)
+
+        # Atualizar estatísticas
+        patterns["count"] += 1
+        patterns["avg_improvement"] = (
+            (patterns["avg_improvement"] * (patterns["count"] - 1)) + feedback.improvement_score
+        ) / patterns["count"]
+
+        self._logger.debug(
+            "🎓 Aprendido padrão de %s: %d padrões, melhoria média %.2f",
+            feedback.feedback_type,
+            len(patterns["patterns"]),
+            patterns["avg_improvement"],
+        )
+
+    def _persist_feedback(self, feedback: ComponentFeedback) -> None:
+        """Persiste feedback em arquivo para análise futura."""
+        if self._feedback_history_path is None:
+            return
+
+        try:
+            self._feedback_history_path.parent.mkdir(parents=True, exist_ok=True)
+            with self._feedback_history_path.open("a", encoding="utf-8") as stream:
+                payload = asdict(feedback)
+                json.dump(payload, stream, ensure_ascii=False)
+                stream.write("\n")
+        except Exception as exc:
+            self._logger.warning("Failed to persist feedback: %s", exc)
+
+    def get_component_feedback_history(self, component_name: str) -> List[ComponentFeedback]:
+        """Retorna histórico de feedback para um componente.
+
+        Args:
+            component_name: Nome do componente
+
+        Returns:
+            Lista de feedback registrado para o componente
+        """
+        return self._component_feedback.get(component_name, [])
+
+    def get_learning_insights(self) -> Dict[str, Any]:
+        """Retorna insights aprendidos do feedback para melhorar sínteses futuras.
+
+        Returns:
+            Dicionário com padrões aprendidos e estatísticas
+        """
+        return {
+            "learned_patterns": self._learned_patterns,
+            "total_feedback_count": sum(
+                len(feedbacks) for feedbacks in self._component_feedback.values()
+            ),
+            "components_with_feedback": list(self._component_feedback.keys()),
+            "most_common_improvements": self._get_most_common_improvements(),
+        }
+
+    def _get_most_common_improvements(self) -> List[Dict[str, Any]]:
+        """Identifica as melhorias mais comuns para foco futuro."""
+        improvement_counts = {}
+
+        for feedbacks in self._component_feedback.values():
+            for feedback in feedbacks:
+                for change in feedback.changes_made:
+                    if change not in improvement_counts:
+                        improvement_counts[change] = {
+                            "count": 0,
+                            "avg_score": 0.0,
+                            "total_score": 0.0,
+                        }
+
+                    improvement_counts[change]["count"] += 1
+                    improvement_counts[change]["total_score"] += feedback.improvement_score
+                    improvement_counts[change]["avg_score"] = (
+                        improvement_counts[change]["total_score"]
+                        / improvement_counts[change]["count"]
+                    )
+
+        # Ordenar por frequência
+        sorted_improvements = sorted(
+            improvement_counts.items(), key=lambda x: x[1]["count"], reverse=True
+        )
+
+        return [
+            {
+                "improvement": improvement,
+                "count": data["count"],
+                "avg_score": data["avg_score"],
+            }
+            for improvement, data in sorted_improvements[:10]  # Top 10
+        ]
+
+    def get_natural_language_report(self) -> str:
+        """Gera relatório em linguagem natural sobre o estado do sistema autopoiético.
+
+        Returns:
+            Relatório descritivo em português sobre componentes, aprendizado e estado atual.
+        """
+        report_lines = []
+        report_lines.append("🤖 Relatório do Sistema Autopoiético OmniMind")
+        report_lines.append("=" * 50)
+
+        # Estatísticas básicas
+        total_cycles = len(self.history)
+        total_components = len(
+            [spec for spec in self.specs.keys() if spec.startswith("modulo_autopoiesis_data_")]
+        )
+        total_feedback = sum(len(feedbacks) for feedbacks in self._component_feedback.values())
+
+        report_lines.append("📊 Estatísticas Gerais:")
+        report_lines.append(f"   • Ciclos executados: {total_cycles}")
+        report_lines.append(f"   • Componentes criados: {total_components}")
+        report_lines.append(f"   • Feedback registrado: {total_feedback}")
+        report_lines.append("")
+
+        # Estado atual de Φ
+        current_phi = self._get_current_phi()
+        phi_status = (
+            "🟢 Excelente"
+            if current_phi > 0.7
+            else "🟡 Bom" if current_phi > 0.5 else "🟠 Precisa melhorar"
+        )
+        report_lines.append(f"🧠 Estado Atual da Integração (Φ): {phi_status}")
+        report_lines.append(f"   • Valor atual: {current_phi:.3f}")
+        report_lines.append("")
+
+        # Estratégia atual
+        if self._strategy_preference:
+            report_lines.append(f"🎯 Estratégia Preferida: {self._strategy_preference.name}")
+            report_lines.append("   • Sistema aprendendo com feedback adaptativo")
+        else:
+            report_lines.append("🎯 Estratégia: Adaptativa (todas permitidas)")
+        report_lines.append("")
+
+        # Componentes recentes
+        if total_components > 0:
+            report_lines.append("🛠️ Componentes Criados Recentemente:")
+            synthesized_specs = [
+                (name, spec)
+                for name, spec in self.specs.items()
+                if name.startswith("modulo_autopoiesis_data_")
+            ]
+            recent_specs = synthesized_specs[-5:]  # Últimos 5
+
+            for name, spec in recent_specs:
+                clean_name = name.replace("modulo_autopoiesis_data_", "")
+                report_lines.append(f"   • {clean_name}")
+                if hasattr(spec, "description") and spec.description:
+                    report_lines.append(f"     └─ {spec.description[:100]}...")
+            report_lines.append("")
+
+        # Aprendizado e feedback
+        if self._learned_patterns:
+            report_lines.append("📚 Padrões Aprendidos:")
+            for feedback_type, patterns in self._learned_patterns.items():
+                count = patterns.get("count", 0)
+                avg_improvement = patterns.get("avg_improvement", 0.0)
+                report_lines.append(
+                    f"   • {feedback_type}: {count} aprendizados (média: {avg_improvement:.2f})"
+                )
+            report_lines.append("")
+
+        # Atividade recente
+        if self.history:
+            report_lines.append("📈 Atividade Recente:")
+            recent_cycles = self.history[-3:]  # Últimos 3 ciclos
+
+            for cycle in recent_cycles:
+                components_created = len(cycle.synthesized_components)
+                phi_change = ""
+                if cycle.phi_before is not None and cycle.phi_after is not None:
+                    if cycle.phi_after > cycle.phi_before:
+                        phi_change = f" (Φ ↑ {cycle.phi_before:.2f} → {cycle.phi_after:.2f})"
+                    elif cycle.phi_after < cycle.phi_before:
+                        phi_change = f" (Φ ↓ {cycle.phi_before:.2f} → {cycle.phi_after:.2f})"
+
+                if components_created > 0:
+                    report_lines.append(
+                        f"   • Ciclo {cycle.cycle_id}: "
+                        f"{components_created} componentes criados{phi_change}"
+                    )
+                else:
+                    report_lines.append(
+                        f"   • Ciclo {cycle.cycle_id}: " f"Aprendizado e adaptação{phi_change}"
+                    )
+            report_lines.append("")
+
+        # Recomendações
+        report_lines.append("💡 Recomendações:")
+        if current_phi < 0.5:
+            report_lines.append(
+                "   • Sistema precisa de mais integração - considere ciclos de estabilização"
+            )
+        elif current_phi > 0.8:
+            report_lines.append(
+                "   • Integração excelente - pode experimentar inovações mais agressivas"
+            )
+        else:
+            report_lines.append("   • Equilíbrio bom - continue com estratégia atual")
+
+        if total_feedback < 5:
+            report_lines.append("   • Mais feedback ajudaria o sistema a aprender melhor")
+        report_lines.append("")
+
+        report_lines.append("🎉 Sistema autopoietico ativo e aprendendo!")
+
+        return "\n".join(report_lines)

@@ -11,10 +11,10 @@ Autor: Fabrício da Silva + assistência de IA
 Data: 2025-12-06
 """
 
-import pytest
 from unittest.mock import MagicMock
 
 import numpy as np
+import pytest
 
 from src.consciousness.consciousness_triad import (
     ConsciousnessTriad,
@@ -335,8 +335,8 @@ class TestConsciousnessTriadHybridTopologicalIntegration:
 
     def test_triad_with_hybrid_topological_metrics(self):
         """Testa que tríade pode ser calculada com métricas topológicas híbridas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
         from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)
@@ -379,8 +379,8 @@ class TestConsciousnessTriadHybridTopologicalIntegration:
 
     def test_triad_metadata_includes_topological_info(self):
         """Testa que metadata da tríade pode incluir informações topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
         from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         workspace = SharedWorkspace(embedding_dim=256)
         workspace.hybrid_topological_engine = HybridTopologicalEngine()

@@ -6,9 +6,9 @@ allowing them to sign their work, build reputation, and maintain verifiable iden
 """
 
 from .agent_signature import (
-    SymbolicAuthority,
-    AuthorityState,
     AgentIdentity,
+    AuthorityState,
+    SymbolicAuthority,
 )
 
 __all__ = [

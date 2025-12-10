@@ -87,7 +87,11 @@ class TraceMemory:
         return trace_id
 
     def trigger_retroactive_signification(
-        self, trace_id: str, retroactive_event: Dict[str, Any], new_meaning: str, new_affect: float
+        self,
+        trace_id: str,
+        retroactive_event: Dict[str, Any],
+        new_meaning: str,
+        new_affect: float,
     ):
         """
         Retroativamente resignificar um traço.

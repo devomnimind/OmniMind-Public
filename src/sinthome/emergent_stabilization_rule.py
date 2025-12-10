@@ -215,7 +215,11 @@ class SinthomeEmergence:
         Irreducível = não segue nenhuma regra lógica óbvia
         """
         # Padrões que são claramente rule-based
-        rule_based_patterns = {"symbolic_resolution", "logical_deduction", "ruleset_application"}
+        rule_based_patterns = {
+            "symbolic_resolution",
+            "logical_deduction",
+            "ruleset_application",
+        }
 
         return pattern_name not in rule_based_patterns
 

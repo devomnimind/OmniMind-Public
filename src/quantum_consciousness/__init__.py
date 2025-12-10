@@ -21,18 +21,18 @@ from .hybrid_cognition import (
     HybridCognitionSystem,
     OptimizationStrategy,
 )
+from .hybrid_phi_calculator import HybridPhiCalculator
+from .phi_trajectory_transformer import (
+    PhiTrajectoryPoint,
+    PhiTrajectoryTransformer,
+    QuantumInputFeatures,
+)
 from .qpu_interface import (
     BackendType,
     IBMQBackend,
     QPUBackend,
     QPUInterface,
     SimulatorBackend,
-)
-from .hybrid_phi_calculator import HybridPhiCalculator
-from .phi_trajectory_transformer import (
-    PhiTrajectoryPoint,
-    PhiTrajectoryTransformer,
-    QuantumInputFeatures,
 )
 from .quantum_backend import DWaveBackend, QuantumBackend
 from .quantum_cognition import (

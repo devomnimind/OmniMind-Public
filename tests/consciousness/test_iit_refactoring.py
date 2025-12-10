@@ -164,8 +164,8 @@ class TestIITRefactoringHybridTopological:
 
     def test_iit_phi_complementary_with_topological_metrics(self):
         """Testa que Φ do IIT puro e métricas topológicas são complementares."""
-        from src.consciousness.shared_workspace import SharedWorkspace
         from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)
@@ -209,8 +209,8 @@ class TestIITRefactoringHybridTopological:
 
     def test_phi_calculator_with_topological_context(self):
         """Testa que PhiCalculator pode ser usado com contexto topológico."""
-        from src.consciousness.shared_workspace import SharedWorkspace
         from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)

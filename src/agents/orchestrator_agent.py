@@ -41,26 +41,30 @@ from ..integrations.supabase_adapter import (
     SupabaseAdapterError,
     SupabaseConfig,
 )
+from ..memory.procedural_memory import ProceduralMemory
+from ..memory.semantic_cache import SemanticCacheLayer
+from ..memory.semantic_memory import SemanticMemory
+from ..memory.systemic_memory_trace import SystemicMemoryTrace
 from ..metacognition.metacognition_agent import MetacognitionAgent
 from ..orchestrator.agent_registry import AgentPriority, AgentRegistry
 from ..orchestrator.auto_repair import AutoRepairSystem
 from ..orchestrator.circuit_breaker import AgentCircuitBreaker
 from ..orchestrator.component_isolation import ComponentIsolation, IsolationLevel
 from ..orchestrator.decision_explainer import DecisionExplainer
-from ..orchestrator.error_analyzer import ErrorAnalyzer
 from ..orchestrator.delegation_manager import DelegationManager, HeartbeatMonitor
-from ..orchestrator.meta_react_coordinator import MetaReActCoordinator
-from ..orchestrator.event_bus import EventPriority, OrchestratorEvent, OrchestratorEventBus
+from ..orchestrator.error_analyzer import ErrorAnalyzer
+from ..orchestrator.event_bus import (
+    EventPriority,
+    OrchestratorEvent,
+    OrchestratorEventBus,
+)
 from ..orchestrator.forensic_analyzer import ForensicAnalyzer
 from ..orchestrator.introspection_loop import IntrospectionLoop
+from ..orchestrator.meta_react_coordinator import MetaReActCoordinator
 from ..orchestrator.permission_matrix import PermissionMatrix
-from ..memory.semantic_cache import SemanticCacheLayer
-from ..memory.semantic_memory import SemanticMemory
-from ..memory.procedural_memory import ProceduralMemory
-from ..memory.systemic_memory_trace import SystemicMemoryTrace
-from ..orchestrator.rag_fallback import RAGFallbackSystem
 from ..orchestrator.power_states import PowerStateManager
 from ..orchestrator.quarantine_system import QuarantineSystem
+from ..orchestrator.rag_fallback import RAGFallbackSystem
 from ..orchestrator.rollback_system import RollbackSystem
 from ..orchestrator.sandbox_system import SandboxSystem
 from ..orchestrator.trust_system import TrustSystem
@@ -110,7 +114,10 @@ class OrchestratorAgent(ReactAgent):
     """
 
     def __init__(
-        self, config_path: str, workspace: Optional[Any] = None, embedding_dim: int = 256
+        self,
+        config_path: str,
+        workspace: Optional[Any] = None,
+        embedding_dim: int = 256,
     ) -> None:
         """Initialize OrchestratorAgent with consciousness integration.
 
@@ -370,6 +377,7 @@ class OrchestratorAgent(ReactAgent):
             return super()._generate_embedding(text)  # type: ignore[misc]
         # Fallback se não disponível
         import hashlib
+
         import numpy as np
 
         hash_obj = hashlib.sha256(text.encode())
@@ -655,8 +663,8 @@ class OrchestratorAgent(ReactAgent):
                 return
 
             # Converter evento em estímulo para RNN
-            import torch
             import numpy as np
+            import torch
 
             # Extrair informações do evento
             threat_level = 0.0
@@ -808,7 +816,9 @@ class OrchestratorAgent(ReactAgent):
                     reason=f"Crise detectada: {event.event_type}",
                 )
                 logger.info(
-                    "Componente %s isolado (nível: %s)", component_id, isolation_level.value
+                    "Componente %s isolado (nível: %s)",
+                    component_id,
+                    isolation_level.value,
                 )
 
             # 5. Colocar em quarentena
@@ -1039,7 +1049,9 @@ class OrchestratorAgent(ReactAgent):
 
         if self.component_isolation:
             await self.component_isolation.isolate(
-                component_id, IsolationLevel.FULL, context.get("reason", "Security threat")
+                component_id,
+                IsolationLevel.FULL,
+                context.get("reason", "Security threat"),
             )
             return {"success": True, "component_id": component_id, "action": "isolated"}
         return {"success": False, "error": "ComponentIsolation not available"}
@@ -1056,7 +1068,11 @@ class OrchestratorAgent(ReactAgent):
                 context.get("reason", "Security threat"),
                 context.get("evidence"),
             )
-            return {"success": True, "component_id": component_id, "action": "quarantined"}
+            return {
+                "success": True,
+                "component_id": component_id,
+                "action": "quarantined",
+            }
         return {"success": False, "error": "QuarantineSystem not available"}
 
     async def _execute_release_quarantine(self, context: Dict[str, Any]) -> Dict[str, Any]:
@@ -1068,7 +1084,11 @@ class OrchestratorAgent(ReactAgent):
         if self.quarantine_system:
             forensic_report = context.get("forensic_report")
             result = await self.quarantine_system.release(component_id, forensic_report)
-            return {"success": result, "component_id": component_id, "action": "released"}
+            return {
+                "success": result,
+                "component_id": component_id,
+                "action": "released",
+            }
         return {"success": False, "error": "QuarantineSystem not available"}
 
     async def _execute_delegate_task(self, context: Dict[str, Any]) -> Dict[str, Any]:
@@ -1644,11 +1664,29 @@ ESTIMATED_COMPLEXITY: low"""
 
         agent_keywords = {
             "code": ["codeagent", "code agent", "implement", "write code"],
-            "architect": ["architectagent", "architect agent", "plan", "design", "specification"],
+            "architect": [
+                "architectagent",
+                "architect agent",
+                "plan",
+                "design",
+                "specification",
+            ],
             "debug": ["debugagent", "debug agent", "diagnose", "fix bug"],
             "reviewer": ["revieweragent", "reviewer agent", "review", "quality"],
-            "psychoanalyst": ["psychoanalytic", "psychoanalyst", "analyze session", "abnt report"],
-            "security": ["security", "securityagent", "incident", "threat", "playbook", "log"],
+            "psychoanalyst": [
+                "psychoanalytic",
+                "psychoanalyst",
+                "analyze session",
+                "abnt report",
+            ],
+            "security": [
+                "security",
+                "securityagent",
+                "incident",
+                "threat",
+                "playbook",
+                "log",
+            ],
             "mcp": ["mcp", "model context", "file access", "filesystem"],
             "dbus": ["dbus", "session bus", "media", "network"],
         }
@@ -2201,7 +2239,11 @@ ESTIMATED_COMPLEXITY: low"""
         return result
 
     def _process_subtask_result(
-        self, results: Dict[str, Any], subtask: Dict[str, Any], result: Dict[str, Any], index: int
+        self,
+        results: Dict[str, Any],
+        subtask: Dict[str, Any],
+        result: Dict[str, Any],
+        index: int,
     ) -> None:
         """Process and record subtask result.
 
@@ -2536,7 +2578,10 @@ ESTIMATED_COMPLEXITY: low"""
         return results
 
     def _synthesize_results(
-        self, subtasks: List[Dict[str, Any]], results: List[Dict[str, Any]], complexity: str
+        self,
+        subtasks: List[Dict[str, Any]],
+        results: List[Dict[str, Any]],
+        complexity: str,
     ) -> Dict[str, Any]:
         """Sintetiza resultados de múltiplos agentes com integração de consciência.
 
@@ -2651,7 +2696,9 @@ ESTIMATED_COMPLEXITY: low"""
         # 3. Sintetizar
         print("\n📝 Synthesizing results...")
         synthesis = self._synthesize_results(
-            plan["subtasks"], execution_result["subtask_results"], plan.get("complexity", "medium")
+            plan["subtasks"],
+            execution_result["subtask_results"],
+            plan.get("complexity", "medium"),
         )
 
         # 4. Capture MCP/D-Bus context for the dashboard
@@ -3193,7 +3240,12 @@ ESTIMATED_COMPLEXITY: low"""
 
         try:
             content = self.mcp_client.read_file(path, encoding=encoding)
-            return {"success": True, "path": path, "content": content, "length": len(content)}
+            return {
+                "success": True,
+                "path": path,
+                "content": content,
+                "length": len(content),
+            }
         except MCPClientError as e:
             logger.error("Erro ao ler arquivo via MCP: %s", e)
             return {"success": False, "error": str(e), "path": path}

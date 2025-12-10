@@ -258,7 +258,8 @@ class AlertingSystem:
                                     timestamp=old_alert_data.get(
                                         "datetime",
                                         old_alert_data.get(
-                                            "timestamp", datetime.now(timezone.utc).isoformat()
+                                            "timestamp",
+                                            datetime.now(timezone.utc).isoformat(),
                                         ),
                                     ),
                                     severity=severity,

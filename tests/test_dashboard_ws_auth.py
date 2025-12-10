@@ -34,6 +34,7 @@ def test_expected_ws_token_encodes_credentials(user: str, password: str) -> None
 )
 async def test_authorize_websocket_accepts_basic_header(header_value: str) -> None:
     from typing import cast
+
     from fastapi import WebSocket
 
     user = "admin"
@@ -49,6 +50,7 @@ async def test_authorize_websocket_accepts_basic_header(header_value: str) -> No
 @pytest.mark.asyncio
 async def test_authorize_websocket_accepts_query_param() -> None:
     from typing import cast
+
     from fastapi import WebSocket
 
     user = "agent"
@@ -64,6 +66,7 @@ async def test_authorize_websocket_accepts_query_param() -> None:
 @pytest.mark.asyncio
 async def test_authorize_websocket_rejects_missing_token() -> None:
     from typing import cast
+
     from fastapi import WebSocket
 
     main._dashboard_user = "admin"

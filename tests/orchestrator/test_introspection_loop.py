@@ -109,8 +109,9 @@ async def test_get_latest_metrics(introspection_loop):
 
 def test_get_metrics_history(introspection_loop):
     """Testa obtenção de histórico de métricas."""
-    from src.orchestrator.introspection_loop import IntrospectionMetrics
     import time
+
+    from src.orchestrator.introspection_loop import IntrospectionMetrics
 
     # Adicionar métricas simuladas
     for i in range(5):

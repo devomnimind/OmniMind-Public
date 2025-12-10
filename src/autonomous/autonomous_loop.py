@@ -65,7 +65,9 @@ class OmniMindAutonomousLoop:
                 # Tem problema
                 issue = issues[0]  # Mais crítico primeiro
                 logger.info(
-                    "\n[OMNIMIND] 🔍 Detectei problema: %s (%s)", issue.type, issue.severity
+                    "\n[OMNIMIND] 🔍 Detectei problema: %s (%s)",
+                    issue.type,
+                    issue.severity,
                 )
 
                 # 2. CLASSIFY
@@ -160,7 +162,10 @@ class OmniMindAutonomousLoop:
                 await asyncio.sleep(60)  # Aguardar mais em caso de erro
 
     def _calculate_improvement(
-        self, metrics_before: Dict[str, float], metrics_after: Dict[str, float], issue_type: str
+        self,
+        metrics_before: Dict[str, float],
+        metrics_after: Dict[str, float],
+        issue_type: str,
     ) -> float:
         """Calculate improvement percentage
 

@@ -83,7 +83,10 @@ class PowerStateManager:
         # Serviços em preheating
         self.preheating_services: Set[str] = set()
 
-        logger.info("PowerStateManager inicializado (estado inicial: %s)", self.current_state.value)
+        logger.info(
+            "PowerStateManager inicializado (estado inicial: %s)",
+            self.current_state.value,
+        )
 
     async def transition_to(self, new_state: PowerState, reason: str = "") -> None:
         """Transição suave entre estados.
@@ -142,7 +145,10 @@ class PowerStateManager:
         # Atualizar registro de serviços ativos
         self.active_services[PowerState.IDLE] = set(critical_services + essential_services)
 
-        logger.info("Estado IDLE: %d serviços ativos", len(self.active_services[PowerState.IDLE]))
+        logger.info(
+            "Estado IDLE: %d serviços ativos",
+            len(self.active_services[PowerState.IDLE]),
+        )
 
     async def _transition_to_standby(self) -> None:
         """Transição para STANDBY - preparado para ativação."""
@@ -192,7 +198,8 @@ class PowerStateManager:
         self.active_services[PowerState.ACTIVE] = set(all_services)
 
         logger.info(
-            "Estado ACTIVE: %d serviços ativos", len(self.active_services[PowerState.ACTIVE])
+            "Estado ACTIVE: %d serviços ativos",
+            len(self.active_services[PowerState.ACTIVE]),
         )
 
     async def _transition_to_critical(self) -> None:
@@ -310,7 +317,7 @@ class PowerStateManager:
         """
         return {
             "current_state": self.current_state.value,
-            "previous_state": self.previous_state.value if self.previous_state else None,
+            "previous_state": (self.previous_state.value if self.previous_state else None),
             "active_services": list(self.get_active_services()),
             "active_services_count": len(self.get_active_services()),
             "preheating_services": list(self.preheating_services),

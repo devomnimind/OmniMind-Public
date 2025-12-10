@@ -3,9 +3,9 @@ from unittest.mock import MagicMock
 import pytest
 
 from src.autopoietic.manager import AutopoieticManager
+from src.autopoietic.metrics_adapter import MetricsAdapter
 from src.consciousness.topological_phi import LogToTopology, PhiCalculator, SimplicialComplex
 from src.metrics.real_consciousness_metrics import RealConsciousnessMetricsCollector
-from src.autopoietic.metrics_adapter import MetricsAdapter
 
 
 @pytest.fixture(scope="function")
@@ -103,9 +103,10 @@ async def test_phi_stability_and_autopoietic_trigger(disable_monitor_for_test):
 @pytest.mark.asyncio
 async def test_autopoietic_with_topological_metrics(disable_monitor_for_test):
     """Test Autopoietic Manager with topological metrics integration."""
-    from src.consciousness.shared_workspace import SharedWorkspace
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+    from src.consciousness.shared_workspace import SharedWorkspace
 
     # Setup workspace with topological engine
     workspace = SharedWorkspace(embedding_dim=256)

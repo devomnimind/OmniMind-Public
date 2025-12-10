@@ -1,9 +1,9 @@
 import json
 from pathlib import Path
 
+from src.autopoietic.architecture_evolution import EvolutionStrategy
 from src.autopoietic.manager import AutopoieticManager
 from src.autopoietic.meta_architect import ComponentSpec
-from src.autopoietic.architecture_evolution import EvolutionStrategy
 
 
 def test_manager_runs_full_cycle(tmp_path):

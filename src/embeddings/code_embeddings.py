@@ -108,7 +108,8 @@ class OmniMindEmbeddings:
                 self.client.create_collection(
                     collection_name=self.collection_name,
                     vectors_config=qmodels.VectorParams(
-                        size=int(self.embedding_dim or 384), distance=qmodels.Distance.COSINE
+                        size=int(self.embedding_dim or 384),
+                        distance=qmodels.Distance.COSINE,
                     ),
                 )
                 logger.info(f"Coleção criada: {self.collection_name} (dim={self.embedding_dim})")
@@ -330,7 +331,12 @@ class OmniMindEmbeddings:
 
         # 4. Indexar configurações importantes
         logger.info("⚙️ Indexando configurações...")
-        config_files = ["pyproject.toml", "pytest.ini", "mypy.ini", "sonar-project.properties"]
+        config_files = [
+            "pyproject.toml",
+            "pytest.ini",
+            "mypy.ini",
+            "sonar-project.properties",
+        ]
         results["configs"] = {}
         for filename in config_files:
             file_path = project_path / filename
@@ -357,7 +363,10 @@ class OmniMindEmbeddings:
         return results
 
     def search(
-        self, query: str, top_k: int = 5, content_types: Optional[List[ContentType]] = None
+        self,
+        query: str,
+        top_k: int = 5,
+        content_types: Optional[List[ContentType]] = None,
     ) -> List[Dict[str, Any]]:
         """Busca semântica no conteúdo indexado."""
         # Gerar embedding da query

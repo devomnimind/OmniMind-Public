@@ -42,7 +42,10 @@ class RollbackSystem:
         logger.info("RollbackSystem inicializado (max_versions: %d)", max_versions)
 
     def create_snapshot(
-        self, component_id: str, state: Dict[str, Any], metadata: Optional[Dict[str, Any]] = None
+        self,
+        component_id: str,
+        state: Dict[str, Any],
+        metadata: Optional[Dict[str, Any]] = None,
     ) -> int:
         """Cria snapshot de estado de componente.
 

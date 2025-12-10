@@ -31,6 +31,7 @@ sys.path.insert(0, os.path.join(project_root, "scripts/science_validation"))
 
 try:
     from federated_omnimind import FederatedOmniMind  # type: ignore[import-not-found]
+
     from src.consciousness.expectation_module import ExpectationModule
 except ImportError as e:
     logger.error(f"Failed to import: {e}")
@@ -233,9 +234,10 @@ async def main():
 
 async def test_lacan_complete_with_topological_metrics():
     """Testa validação lacaniana completa com métricas topológicas."""
-    from src.consciousness.shared_workspace import SharedWorkspace
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+    from src.consciousness.shared_workspace import SharedWorkspace
 
     logger.info("🧠 TESTE LACANIANO COMPLETO: Com Topological Metrics")
     logger.info("=" * 60)

@@ -335,9 +335,10 @@ class TestSoftHairEncodingHybridTopological:
 
     def test_soft_hair_encoding_with_topological_metrics(self):
         """Testa que SoftHairEncoding pode ser usado com métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)

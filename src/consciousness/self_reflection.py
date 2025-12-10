@@ -6,11 +6,11 @@ O ego é sempre MÉCONNAISSANCE (erro estrutural).
 
 from __future__ import annotations
 
-import structlog
-
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Dict, List, Optional
+
+import structlog
 
 logger = structlog.get_logger(__name__)
 

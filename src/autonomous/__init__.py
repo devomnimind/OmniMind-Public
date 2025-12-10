@@ -9,12 +9,12 @@ License: MIT
 
 from __future__ import annotations
 
+from autonomous.auto_documentation_engine import AutoDocumentationEngine
+from autonomous.auto_validation_engine import AutoValidationEngine
+from autonomous.autonomous_loop import OmniMindAutonomousLoop
+from autonomous.dynamic_framework_adapter import DynamicFrameworkAdapter
 from autonomous.problem_detection_engine import ProblemDetectionEngine
 from autonomous.solution_lookup_engine import SolutionLookupEngine
-from autonomous.dynamic_framework_adapter import DynamicFrameworkAdapter
-from autonomous.auto_validation_engine import AutoValidationEngine
-from autonomous.auto_documentation_engine import AutoDocumentationEngine
-from autonomous.autonomous_loop import OmniMindAutonomousLoop
 
 __all__ = [
     "ProblemDetectionEngine",

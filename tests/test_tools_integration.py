@@ -78,9 +78,10 @@ class TestToolsFrameworkHybridTopological:
         self, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
     ) -> None:
         """Testa que ferramentas podem trabalhar com métricas de consciência."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         home = tmp_path / "fake_home"
         monkeypatch.setenv("HOME", str(home))

@@ -213,10 +213,18 @@ class MemoryMCPServer(MCPServer):
         """
         try:
             success = self.semantic_memory.associate_concepts(
-                concept1=source_id, concept2=target_id, relation=type, bidirectional=False
+                concept1=source_id,
+                concept2=target_id,
+                relation=type,
+                bidirectional=False,
             )
             if success:
-                return {"source": source_id, "target": target_id, "type": type, "status": "created"}
+                return {
+                    "source": source_id,
+                    "target": target_id,
+                    "type": type,
+                    "status": "created",
+                }
             else:
                 return {
                     "source": source_id,
@@ -301,7 +309,11 @@ class MemoryMCPServer(MCPServer):
             if format == "json":
                 return {"format": format, "data": graph}
             else:
-                return {"format": format, "data": graph, "note": "Apenas JSON suportado atualmente"}
+                return {
+                    "format": format,
+                    "data": graph,
+                    "note": "Apenas JSON suportado atualmente",
+                }
 
         except Exception as e:
             logger.error("Erro ao exportar grafo: %s", e, exc_info=True)

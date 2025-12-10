@@ -63,8 +63,8 @@ import structlog
 from src.monitor.resource_manager import resource_manager
 
 try:
+    from qiskit import ClassicalRegister  # type: ignore[import-untyped]
     from qiskit import (
-        ClassicalRegister,  # type: ignore[import-untyped]
         QuantumCircuit,
         QuantumRegister,
     )
@@ -433,7 +433,8 @@ class QuantumCognitionEngine:
                 try:
                     self.simulator = AerSimulator(method="statevector", device="GPU")
                     logger.info(
-                        "quantum_cognition_gpu_enabled", reason="resource_manager_allocation"
+                        "quantum_cognition_gpu_enabled",
+                        reason="resource_manager_allocation",
                     )
                 except Exception as e:
                     logger.error(f"quantum_cognition_gpu_failed: {e}")

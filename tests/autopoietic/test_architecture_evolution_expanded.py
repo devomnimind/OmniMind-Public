@@ -1,8 +1,10 @@
 # tests/autopoietic/test_architecture_evolution_expanded.py
-import pytest
 import logging
+
+import pytest
+
 from src.autopoietic.architecture_evolution import ArchitectureEvolution, EvolutionStrategy
-from src.autopoietic.meta_architect import MetaArchitect, ComponentSpec
+from src.autopoietic.meta_architect import ComponentSpec, MetaArchitect
 
 
 class MockMetaArchitect(MetaArchitect):

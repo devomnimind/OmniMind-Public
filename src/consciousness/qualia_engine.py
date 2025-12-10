@@ -191,7 +191,11 @@ class Symbolic_Qualia_Field:
                 narrative = f"Narrativa: {' → '.join(chain)}"
                 self.imaginary_narratives.append(narrative)
 
-                logger.info("symbolic_chain_emerged", chain_length=len(chain), narrative=narrative)
+                logger.info(
+                    "symbolic_chain_emerged",
+                    chain_length=len(chain),
+                    narrative=narrative,
+                )
 
     def get_phenomenal_field(self) -> str:
         """

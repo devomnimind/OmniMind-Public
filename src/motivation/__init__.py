@@ -23,9 +23,9 @@ from .hawking_motivation import (
 )
 from .intrinsic_rewards import (
     DesireEngine,
+    DriveCirculation,
     IntrinsicMotivationEngine,
     JouissanceTopology,
-    DriveCirculation,
 )
 
 __all__ = [

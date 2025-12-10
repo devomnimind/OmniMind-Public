@@ -488,9 +488,10 @@ class TestMetaLearningHybridTopological:
 
     def test_meta_learning_with_topological_metrics(self):
         """Testa que meta learning pode usar métricas topológicas para otimização."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)
@@ -521,9 +522,10 @@ class TestMetaLearningHybridTopological:
 
     def test_goal_generation_with_topological_context(self):
         """Testa que goal generation pode usar contexto topológico."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         workspace = SharedWorkspace(embedding_dim=256)
         workspace.hybrid_topological_engine = HybridTopologicalEngine()

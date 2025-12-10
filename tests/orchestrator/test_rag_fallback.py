@@ -10,8 +10,8 @@ import pytest
 
 from src.memory.hybrid_retrieval import HybridRetrievalSystem, RetrievalResult
 from src.orchestrator.error_analyzer import (
-    ErrorAnalyzer,
     ErrorAnalysis,
+    ErrorAnalyzer,
     ErrorType,
     RecoveryStrategy,
 )

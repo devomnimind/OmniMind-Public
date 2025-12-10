@@ -40,7 +40,11 @@ def get_compute_device() -> Literal["cuda", "cpu"]:
                 if device_count > 0:
                     # GPU hardware existe mas PyTorch init pode ter falhado
                     # Verificar variáveis de ambiente
-                    force_gpu = os.getenv("OMNIMIND_FORCE_GPU", "").lower() in ("true", "1", "yes")
+                    force_gpu = os.getenv("OMNIMIND_FORCE_GPU", "").lower() in (
+                        "true",
+                        "1",
+                        "yes",
+                    )
                     if force_gpu:
                         _cached_device = "cuda"
                         logger.warning(

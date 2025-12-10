@@ -352,7 +352,9 @@ class ContextMCPServer(MCPServer):
 
             # Ordenar e manter apenas top N
             entries_sorted = sorted(
-                entries, key=lambda e: e.metadata.get("_compress_score", 0.0), reverse=True
+                entries,
+                key=lambda e: e.metadata.get("_compress_score", 0.0),
+                reverse=True,
             )
             keep_count = max(1, int(len(entries) * ratio))
             entries_to_keep = entries_sorted[:keep_count]

@@ -5,8 +5,9 @@ Autor: Fabrício da Silva + assistência de IA
 Data: 2025-12-08
 """
 
-import pytest
 from unittest.mock import MagicMock, patch
+
+import pytest
 
 from src.agents.enhanced_code_agent import EnhancedCodeAgent
 
@@ -82,7 +83,7 @@ class TestEnhancedCodeAgentComposition:
     def test_delegation_analyze_code_structure(self, enhanced_agent):
         """Testa delegação de analyze_code_structure()."""
         # REFATORAÇÃO: Verificar que delegação funciona
-        from typing import Dict, List, Any
+        from typing import Any, Dict, List
 
         mock_analysis: Dict[str, List[Any]] = {"classes": [], "functions": []}
         enhanced_agent.code_agent.analyze_code_structure = MagicMock(return_value=mock_analysis)

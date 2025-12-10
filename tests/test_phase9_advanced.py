@@ -232,9 +232,10 @@ class TestPhase9HybridTopological:
 
     def test_metacognition_with_topological_metrics(self):
         """Testa metacognition com métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         workspace = SharedWorkspace(embedding_dim=256)
         workspace.hybrid_topological_engine = HybridTopologicalEngine()
@@ -262,9 +263,10 @@ class TestPhase9HybridTopological:
 
     def test_homeostasis_with_topological_metrics(self):
         """Testa homeostasis com métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         workspace = SharedWorkspace(embedding_dim=256)
         workspace.hybrid_topological_engine = HybridTopologicalEngine()

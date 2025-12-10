@@ -164,8 +164,8 @@ class TestSystemicMemoryTraceHybridTopological:
 
     def test_systemic_memory_with_shared_workspace_topological(self):
         """Testa que SystemicMemoryTrace pode ser usado com SharedWorkspace que tem HybridTopologicalEngine."""  # noqa: E501
-        from src.consciousness.shared_workspace import SharedWorkspace
         from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com SystemicMemoryTrace e HybridTopologicalEngine
         memory_trace = SystemicMemoryTrace(state_space_dim=256)
@@ -201,8 +201,8 @@ class TestSystemicMemoryTraceHybridTopological:
 
     def test_systemic_memory_affects_phi_with_topological_metrics(self):
         """Testa que SystemicMemoryTrace afeta Φ e métricas topológicas são complementares."""
-        from src.consciousness.shared_workspace import SharedWorkspace
         from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         memory_trace = SystemicMemoryTrace(state_space_dim=256)
         workspace = SharedWorkspace(

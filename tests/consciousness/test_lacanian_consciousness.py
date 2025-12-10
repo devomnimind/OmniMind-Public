@@ -293,8 +293,9 @@ async def test_lacanian_with_topological_metrics(integration_trainer) -> None:
     - Sinthome (σ) pode ser complementado com métricas topológicas
     - Ambas as métricas são complementares (não redundantes)
     """
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     # Treinar um pouco
     await integration_trainer.train(num_cycles=5)

@@ -9,8 +9,8 @@ import numpy as np
 import pytest
 
 from src.consciousness.delta_calculator import DeltaCalculator
-from src.consciousness.theoretical_consistency_guard import TheoreticalConsistencyGuard
 from src.consciousness.phi_value import PhiValue
+from src.consciousness.theoretical_consistency_guard import TheoreticalConsistencyGuard
 
 
 class TestDynamicTraumaThreshold:

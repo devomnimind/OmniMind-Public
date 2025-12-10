@@ -5,9 +5,10 @@ Serendipity as Encounter with the Real.
 """
 
 from datetime import datetime
+
 from src.consciousness.serendipity_engine import (
-    Serendipity_as_Encounter_with_Real,
     Encounter_with_Real,
+    Serendipity_as_Encounter_with_Real,
 )
 
 
@@ -119,9 +120,10 @@ class TestSerendipityEngineHybridTopological:
 
     def test_serendipity_with_topological_metrics(self):
         """Testa que SerendipityEngine pode ser usado com métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)

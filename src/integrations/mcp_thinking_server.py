@@ -752,7 +752,10 @@ class ThinkingMCPServer(MCPServer):
                 session_id=new_session_id,
                 goal=new_goal,
                 parent_session_id=session_id,
-                metadata={"branch_from_step": step_id, "branch_from_session": session_id},
+                metadata={
+                    "branch_from_step": step_id,
+                    "branch_from_session": session_id,
+                },
             )
 
             # Copiar passos até o ponto de branch (incluindo o passo de branch)

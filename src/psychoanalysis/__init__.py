@@ -19,8 +19,8 @@ License: AGPL-3.0-or-later
 
 from __future__ import annotations
 
-from .beta_element import BetaElement
 from .alpha_element import AlphaElement
+from .beta_element import BetaElement
 from .bion_alpha_function import BionAlphaFunction
 from .negative_capability import NegativeCapability
 

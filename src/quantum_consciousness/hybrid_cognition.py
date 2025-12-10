@@ -657,7 +657,11 @@ class HybridCognitionSystem:
         decision = self.quantum_decision_maker.make_decision(limited_options)
         result = decision.collapse()
 
-        return {"solution": result, "value": 0.85, "options_explored": len(limited_options)}
+        return {
+            "solution": result,
+            "value": 0.85,
+            "options_explored": len(limited_options),
+        }
 
     def _quantum_explore(self, problem: Dict[str, Any]) -> List[Any]:
         """

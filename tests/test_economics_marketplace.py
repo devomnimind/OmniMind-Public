@@ -6,7 +6,7 @@ Group 13: System Services - economics/
 
 import tempfile
 from pathlib import Path
-from typing import Generator, Dict, Any
+from typing import Any, Dict, Generator
 
 import pytest
 

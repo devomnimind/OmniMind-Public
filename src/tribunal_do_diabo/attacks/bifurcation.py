@@ -47,7 +47,11 @@ class BifurcationAttack:
             if int(elapsed) % 300 == 0 and elapsed > 0:
                 bifurcation_id = await self._create_bifurcation(60)  # 60s de divergência
                 self.active_bifurcations.append(
-                    {"id": bifurcation_id, "start_time": time.time(), "divergence_duration": 60}
+                    {
+                        "id": bifurcation_id,
+                        "start_time": time.time(),
+                        "divergence_duration": 60,
+                    }
                 )
 
             # Tentar reconciliar bifurcações expiradas

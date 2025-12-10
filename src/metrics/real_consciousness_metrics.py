@@ -290,7 +290,11 @@ class RealConsciousnessMetricsCollector:
             flow = 0.5
             entropy = 0.3
 
-        return {"anxiety": float(anxiety), "flow": float(flow), "entropy": float(entropy)}
+        return {
+            "anxiety": float(anxiety),
+            "flow": float(flow),
+            "entropy": float(entropy),
+        }
 
     def _update_history(self, metrics: RealConsciousnessMetrics) -> None:
         """Atualiza histórico das métricas."""

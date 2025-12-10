@@ -261,8 +261,9 @@ async def test_phi_hierarchy_with_topological_metrics(integration_trainer) -> No
 
     Valida que Φ consciente e métricas topológicas são complementares.
     """
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     # Run cycles
     for _ in range(5):

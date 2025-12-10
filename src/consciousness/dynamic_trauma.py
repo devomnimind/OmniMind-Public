@@ -25,9 +25,10 @@ Data: 2025-12-07
 import logging
 from dataclasses import dataclass
 
+import numpy as np
+
 # typing.Optional não usado (removido)
 
-import numpy as np
 
 logger = logging.getLogger(__name__)
 

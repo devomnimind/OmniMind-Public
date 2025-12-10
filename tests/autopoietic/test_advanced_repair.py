@@ -103,11 +103,12 @@ class TestAdvancedRepair:
         patches = repair.synthesize_patches([spec])
 
         assert isinstance(patches, dict)
-        assert "repair_test" in patches
+        signed_name = f"modulo_autopoiesis_data_{spec.name}"
+        assert signed_name in patches
 
-        synth = patches["repair_test"]
+        synth = patches[signed_name]
         assert isinstance(synth, SynthesizedComponent)
-        assert synth.name == "repair_test"
+        assert synth.name == signed_name
         assert isinstance(synth.source_code, str)
         assert len(synth.source_code) > 0
 
@@ -129,8 +130,10 @@ class TestAdvancedRepair:
         patches = repair.synthesize_patches(specs)
 
         assert len(patches) == 2
-        assert "repair_a" in patches
-        assert "repair_b" in patches
+        signed_a = f"modulo_autopoiesis_data_{specs[0].name}"
+        signed_b = f"modulo_autopoiesis_data_{specs[1].name}"
+        assert signed_a in patches
+        assert signed_b in patches
 
         for name, synth in patches.items():
             assert isinstance(synth, SynthesizedComponent)
@@ -147,39 +150,57 @@ class TestAdvancedRepair:
     def test_apply_patches_single(self) -> None:
         """Testa aplicação de um único patch."""
         repair = AdvancedRepair()
+        signed_name = "modulo_autopoiesis_data_repair_component"
         synth = SynthesizedComponent(
-            name="repair_component", source_code="class RepairComponent:\n    pass"
+            name=signed_name,
+            source_code="class RepairComponent:\n    pass",
+            natural_description="Test repair component",
         )
-        patches = {"repair_component": synth}
+        patches = {signed_name: synth}
 
         applied = repair.apply_patches(patches)
 
         assert isinstance(applied, dict)
         assert len(applied) == 1
 
-        expected_path = "src/autopoietic/repairs/repair_component.py"
+        expected_path = f"src/autopoietic/repairs/{signed_name}.py"
         assert expected_path in applied
         assert applied[expected_path] == synth.source_code
 
     def test_apply_patches_multiple(self) -> None:
         """Testa aplicação de múltiplos patches."""
         repair = AdvancedRepair()
+        signed_x = "modulo_autopoiesis_data_repair_x"
+        signed_y = "modulo_autopoiesis_data_repair_y"
+        signed_z = "modulo_autopoiesis_data_repair_z"
         patches = {
-            "repair_x": SynthesizedComponent(name="repair_x", source_code="# Repair X code"),
-            "repair_y": SynthesizedComponent(name="repair_y", source_code="# Repair Y code"),
-            "repair_z": SynthesizedComponent(name="repair_z", source_code="# Repair Z code"),
+            signed_x: SynthesizedComponent(
+                name=signed_x,
+                source_code="# Repair X code",
+                natural_description="Test repair component X",
+            ),
+            signed_y: SynthesizedComponent(
+                name=signed_y,
+                source_code="# Repair Y code",
+                natural_description="Test repair component Y",
+            ),
+            signed_z: SynthesizedComponent(
+                name=signed_z,
+                source_code="# Repair Z code",
+                natural_description="Test repair component Z",
+            ),
         }
 
         applied = repair.apply_patches(patches)
 
         assert len(applied) == 3
-        assert "src/autopoietic/repairs/repair_x.py" in applied
-        assert "src/autopoietic/repairs/repair_y.py" in applied
-        assert "src/autopoietic/repairs/repair_z.py" in applied
+        assert f"src/autopoietic/repairs/{signed_x}.py" in applied
+        assert f"src/autopoietic/repairs/{signed_y}.py" in applied
+        assert f"src/autopoietic/repairs/{signed_z}.py" in applied
 
-        assert applied["src/autopoietic/repairs/repair_x.py"] == "# Repair X code"
-        assert applied["src/autopoietic/repairs/repair_y.py"] == "# Repair Y code"
-        assert applied["src/autopoietic/repairs/repair_z.py"] == "# Repair Z code"
+        assert applied[f"src/autopoietic/repairs/{signed_x}.py"] == "# Repair X code"
+        assert applied[f"src/autopoietic/repairs/{signed_y}.py"] == "# Repair Y code"
+        assert applied[f"src/autopoietic/repairs/{signed_z}.py"] == "# Repair Z code"
 
     def test_apply_patches_preserves_source_code(self) -> None:
         """Testa que o código fonte é preservado corretamente."""
@@ -191,10 +212,15 @@ class TestAdvancedRepair:
     def repair(self):
         return True
 """
-        synth = SynthesizedComponent(name="my_repair", source_code=source)
-        applied = repair.apply_patches({"my_repair": synth})
+        signed_name = "modulo_autopoiesis_data_my_repair"
+        synth = SynthesizedComponent(
+            name=signed_name,
+            source_code=source,
+            natural_description="Test repair component with custom source code",
+        )
+        applied = repair.apply_patches({signed_name: synth})
 
-        path = "src/autopoietic/repairs/my_repair.py"
+        path = f"src/autopoietic/repairs/{signed_name}.py"
         assert applied[path] == source
 
     def test_full_repair_workflow(self) -> None:
@@ -212,14 +238,16 @@ class TestAdvancedRepair:
         # 2. Sintetiza patches
         patches = repair.synthesize_patches(specs)
         assert len(patches) == 2
-        assert "repair_broken_module" in patches
-        assert "repair_failing_component" in patches
+        signed_broken = "modulo_autopoiesis_data_repair_broken_module"
+        signed_failing = "modulo_autopoiesis_data_repair_failing_component"
+        assert signed_broken in patches
+        assert signed_failing in patches
 
         # 3. Aplica patches
         applied = repair.apply_patches(patches)
         assert len(applied) == 2
-        assert "src/autopoietic/repairs/repair_broken_module.py" in applied
-        assert "src/autopoietic/repairs/repair_failing_component.py" in applied
+        assert f"src/autopoietic/repairs/{signed_broken}.py" in applied
+        assert f"src/autopoietic/repairs/{signed_failing}.py" in applied
 
     def test_detect_failures_with_special_characters(self) -> None:
         """Testa detecção com nomes contendo caracteres especiais."""
@@ -253,6 +281,7 @@ class TestAdvancedRepair:
 
         # Verifica integração
         assert len(applied) == 1
-        path = "src/autopoietic/repairs/fix_a.py"
+        signed_name = "modulo_autopoiesis_data_fix_a"
+        path = f"src/autopoietic/repairs/{signed_name}.py"
         assert path in applied
         assert len(applied[path]) > 0

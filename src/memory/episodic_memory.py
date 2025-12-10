@@ -82,8 +82,8 @@ def _load_embedding_model(model_name: str) -> Optional["SentenceTransformer"]:
         return None
 
     try:
-        from src.utils.device_utils import get_sentence_transformer_device
         from src.memory.gpu_memory_consolidator import get_gpu_consolidator
+        from src.utils.device_utils import get_sentence_transformer_device
 
         # Pass HuggingFace token to access gated models
         hf_token: Optional[str] = os.getenv("HUGGING_FACE_HUB_TOKEN")

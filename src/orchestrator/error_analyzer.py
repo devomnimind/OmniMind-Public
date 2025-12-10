@@ -442,7 +442,11 @@ class ErrorAnalyzer:
         return alternatives
 
     def learn_from_solution(
-        self, pattern: str, strategy: RecoveryStrategy, success: bool, context: Dict[str, Any]
+        self,
+        pattern: str,
+        strategy: RecoveryStrategy,
+        success: bool,
+        context: Dict[str, Any],
     ) -> None:
         """
         Aprende de uma solução aplicada.
@@ -500,5 +504,5 @@ class ErrorAnalyzer:
             "total_errors": len(self.error_history),
             "by_type": error_types,
             "learned_patterns": len(self.learned_patterns),
-            "most_common": max(error_types.items(), key=lambda x: x[1]) if error_types else None,
+            "most_common": (max(error_types.items(), key=lambda x: x[1]) if error_types else None),
         }

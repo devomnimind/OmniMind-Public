@@ -735,7 +735,15 @@ class ConvergenceInvestigator:
         if lacan.sinthome_detected and lacan.sinthome_z_score is not None:
             z = lacan.sinthome_z_score
             stab = lacan.sinthome_stability_effect if lacan.sinthome_stability_effect else 0.0
-            ax.scatter([z], [stab], s=500, c="green", marker="s", label="Sinthome", linewidths=2)
+            ax.scatter(
+                [z],
+                [stab],
+                s=500,
+                c="green",
+                marker="s",
+                label="Sinthome",
+                linewidths=2,
+            )
             ax.scatter(
                 [2.5],
                 [0.4],

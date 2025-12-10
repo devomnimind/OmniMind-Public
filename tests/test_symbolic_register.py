@@ -86,8 +86,9 @@ def test_symbolic_register_basic():
 
 def test_symbolic_register_with_topological_metrics():
     """Test Symbolic Register with topological metrics integration."""
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     print("🧪 Testing Symbolic Register + Topological Metrics...")
 

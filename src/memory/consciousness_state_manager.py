@@ -591,9 +591,9 @@ class ConsciousnessStateManager:
             "phi_mean": sum(phi_values) / len(phi_values) if phi_values else 0.0,
             "phi_max": max(phi_values) if phi_values else 0.0,
             "phi_min": min(phi_values) if phi_values else 0.0,
-            "psi_mean": sum(psi_values) / len(psi_values) if psi_values else 0.0,  # NOVO
+            "psi_mean": (sum(psi_values) / len(psi_values) if psi_values else 0.0),  # NOVO
             "psi_max": max(psi_values) if psi_values else 0.0,  # NOVO
-            "sigma_mean": sum(sigma_values) / len(sigma_values) if sigma_values else 0.0,  # NOVO
+            "sigma_mean": (sum(sigma_values) / len(sigma_values) if sigma_values else 0.0),  # NOVO
             "sigma_max": max(sigma_values) if sigma_values else 0.0,  # NOVO
             "integration_mean": (
                 sum(integration_values) / len(integration_values) if integration_values else 0.0

@@ -190,7 +190,9 @@ class Anguish:
     """
 
     @staticmethod
-    def detect_from_system_state(system_state: Dict[str, Any]) -> Optional[RealEncounter]:
+    def detect_from_system_state(
+        system_state: Dict[str, Any],
+    ) -> Optional[RealEncounter]:
         """Detecta angústia quando nenhuma ordem resolve."""
         gpu_full = system_state.get("gpu_usage", 0) > 95
         validation_pending = len(system_state.get("pending_validations", [])) > 10

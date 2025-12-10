@@ -25,7 +25,11 @@ class ObserverService:
 
     def log_metric(self, metric_type: str, data: Dict[str, Any]):
         """Append a metric entry to the JSONL file."""
-        entry = {"timestamp": datetime.now().isoformat(), "type": metric_type, "data": data}
+        entry = {
+            "timestamp": datetime.now().isoformat(),
+            "type": metric_type,
+            "data": data,
+        }
         with open(METRICS_FILE, "a") as f:
             f.write(json.dumps(entry) + "\n")
 

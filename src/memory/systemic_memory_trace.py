@@ -379,7 +379,10 @@ class SystemicMemoryTrace:
         count = 0
 
         # Verifica se simplices relacionados têm deformações
-        for simplex_vertices, deformation_strength in self.simplicial_deformations.items():
+        for (
+            simplex_vertices,
+            deformation_strength,
+        ) in self.simplicial_deformations.items():
             simplex_set = set(simplex_vertices)
             # Se há sobreposição com candidato
             overlap = len(simplex_set & candidate)
@@ -411,7 +414,10 @@ class SystemicMemoryTrace:
         # Se atração alta, adiciona vértices próximos (se disponíveis)
         if attraction > 0.5 and self.simplicial_deformations:
             # Encontra simplices com alta deformação
-            for simplex_vertices, deformation_strength in self.simplicial_deformations.items():
+            for (
+                simplex_vertices,
+                deformation_strength,
+            ) in self.simplicial_deformations.items():
                 if deformation_strength > 0.5:
                     simplex_set = set(simplex_vertices)
                     # Adiciona vértices próximos que não estão no candidato

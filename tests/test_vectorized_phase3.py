@@ -20,7 +20,7 @@ import numpy as np
 import torch
 from sklearn.decomposition import PCA  # type: ignore[import-untyped]
 
-from src.consciousness.shared_workspace import SharedWorkspace, CrossPredictionMetrics
+from src.consciousness.shared_workspace import CrossPredictionMetrics, SharedWorkspace
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
@@ -405,8 +405,9 @@ async def test_vectorized_predictions():
 
 async def test_vectorized_with_topological_metrics():
     """Testa vetorização Phase 3 com métricas topológicas."""
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     logger.info("🚀 TESTE PHASE 3: Vetorização + Topological Metrics")
     logger.info("=" * 60)

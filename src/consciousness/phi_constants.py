@@ -177,7 +177,10 @@ PSI_ALPHA_MAX: float = 0.7  # Máximo de estrutura (Gaussian)
 # RECOMENDAÇÃO FUTURA: Calcular dinamicamente como μ+2σ ou μ+3σ da Δ_norm histórica
 # Um evento de 3 desvios padrão é estatisticamente extremo (≈0.3% dos casos)
 TRAUMA_THRESHOLD_STATIC: float = 0.7  # Valor estático atual (será substituído por cálculo dinâmico)
-TRAUMA_THRESHOLD_EMPIRICAL_RANGE: tuple[float, float] = (0.6, 0.8)  # Range empírico validado
+TRAUMA_THRESHOLD_EMPIRICAL_RANGE: tuple[float, float] = (
+    0.6,
+    0.8,
+)  # Range empírico validado
 
 # Fator de damping para instabilidade (redução de Ψ quando instável)
 # Baseado em: quando sistema detecta instabilidade, reduz Ψ em 20% para estabilizar

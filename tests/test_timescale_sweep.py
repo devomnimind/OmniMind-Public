@@ -5,12 +5,13 @@ Validação de Φ através de varredura de escalas temporais
 """
 
 import asyncio
+import json
 import logging
 import time
-from typing import Dict, List
-import numpy as np
 from pathlib import Path
-import json
+from typing import Dict, List
+
+import numpy as np
 
 from src.consciousness.shared_workspace import SharedWorkspace
 
@@ -158,8 +159,9 @@ async def main():
 
 async def test_timescale_with_topological_metrics():
     """Testa timescale sweep com métricas topológicas."""
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     logger.info("⏰ TESTE TIMESCALE: Com Topological Metrics")
     logger.info("=" * 60)

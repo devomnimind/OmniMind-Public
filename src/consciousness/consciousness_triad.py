@@ -106,8 +106,8 @@ class ConsciousnessTriad:
             PHI_MODERATE_THRESHOLD,
             PSI_HIGH_THRESHOLD,
             PSI_MODERATE_THRESHOLD,
-            SIGMA_MODERATE_THRESHOLD,
             SIGMA_LOW_THRESHOLD,
+            SIGMA_MODERATE_THRESHOLD,
         )
 
         # Interpretação de Φ
@@ -263,7 +263,7 @@ class ConsciousnessTriadCalculator:
             metadata={
                 "phi_source": "workspace" if self.workspace else "default",
                 "psi_source": "psi_producer" if self.psi_producer else "default",
-                "sigma_source": "sigma_calculator" if self.sigma_calculator else "default",
+                "sigma_source": ("sigma_calculator" if self.sigma_calculator else "default"),
                 "is_stable": validation_result["is_stable"],
                 "validation_status": validation_result["status_message"],
             },

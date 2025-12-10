@@ -17,8 +17,8 @@ project_root = Path(__file__).parent.parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-import numpy as np  # noqa: E402
 import networkx as nx  # noqa: E402
+import numpy as np  # noqa: E402
 
 from src.consciousness.hybrid_topological_engine import (  # noqa: E402
     HybridTopologicalEngine,

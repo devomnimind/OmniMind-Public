@@ -174,7 +174,10 @@ class SandboxSystem:
             ID da mudança aplicada
         """
         logger.info(
-            "Aplicando mudança no sandbox: %s em %s (%s)", change_type, component_id, description
+            "Aplicando mudança no sandbox: %s em %s (%s)",
+            change_type,
+            component_id,
+            description,
         )
 
         # 1. Criar snapshot se não fornecido
@@ -274,7 +277,8 @@ class SandboxSystem:
         # 2. Executar testes de validação
         try:
             validation_passed = await asyncio.wait_for(
-                self._run_validation_tests(change), timeout=self.config["validation_timeout"]
+                self._run_validation_tests(change),
+                timeout=self.config["validation_timeout"],
             )
         except asyncio.TimeoutError:
             logger.warning("Validação excedeu timeout para %s", change_id)

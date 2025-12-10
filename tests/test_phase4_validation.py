@@ -18,7 +18,7 @@ import logging
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any, Dict
 
 import numpy as np
 
@@ -597,8 +597,9 @@ async def main():
 
 async def test_phase4_with_topological_metrics():
     """Testa Phase 4 validation com métricas topológicas."""
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     logger.info("🚀 TESTE PHASE 4: Validação + Topological Metrics")
     logger.info("=" * 60)

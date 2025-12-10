@@ -80,7 +80,9 @@ class MetricsAdapter:
         )
 
 
-def collect_metrics(real_metrics_path: str = "data/monitor/real_metrics.json") -> MetricSample:
+def collect_metrics(
+    real_metrics_path: str = "data/monitor/real_metrics.json",
+) -> MetricSample:
     """Collect real metrics combining consciousness data and system telemetry."""
 
     timestamp = time.time()

@@ -32,8 +32,8 @@ async def test_topological_hybrid_validation_runs() -> None:
 @pytest.mark.asyncio
 async def test_topological_hybrid_phi_with_hybrid_topological_engine() -> None:
     """Testa que topological hybrid phi pode ser usado com HybridTopologicalEngine."""
-    from src.consciousness.shared_workspace import SharedWorkspace
     from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+    from src.consciousness.shared_workspace import SharedWorkspace
 
     # Criar workspace com engine topológico
     workspace = SharedWorkspace(embedding_dim=256)

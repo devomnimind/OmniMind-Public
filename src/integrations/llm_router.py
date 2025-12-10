@@ -170,7 +170,7 @@ class OllamaProvider(LLMProviderInterface):
                 provider=LLMProvider.OLLAMA,
                 model=config.model_name,
                 latency_ms=latency,
-                tokens_used=response.get("eval_count") if isinstance(response, dict) else None,
+                tokens_used=(response.get("eval_count") if isinstance(response, dict) else None),
             )
 
         except Exception as e:

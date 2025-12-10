@@ -24,19 +24,19 @@ Analogia Humana:
 - Ativação: Memórias pré-conscientes podem ser reativadas pelo Ego
 """
 
-import logging
 import hashlib
-from typing import Dict, List, Optional, Any
+import logging
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 import torch
 
+from ..monitor.resource_manager import HybridResourceManager
 from .freudian_topographical_memory import (
     FreudianTopographicalMemory,
 )
-from ..monitor.resource_manager import HybridResourceManager
 
 logger = logging.getLogger(__name__)
 

@@ -493,6 +493,7 @@ def consolidate_gpu_memory(request):
     consolida (comprime) e reprime para pré-consciente/inconsciente.
     """
     import gc
+
     from src.memory.gpu_memory_consolidator import get_gpu_consolidator
 
     consolidator = get_gpu_consolidator()
@@ -532,8 +533,9 @@ def _collect_active_gpu_memories() -> list:
     Returns:
         Lista de itens de memória com dados, tipo e metadados
     """
+    from typing import Any, Dict, List
+
     import torch
-    from typing import List, Dict, Any
 
     memory_items: List[Dict[str, Any]] = []
 

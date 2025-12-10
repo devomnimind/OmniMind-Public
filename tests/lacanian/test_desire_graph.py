@@ -9,8 +9,9 @@ Tests components:
 - DesireGraphArchitecture (full integration)
 """
 
-import pytest
 from typing import Any
+
+import pytest
 
 from src.lacanian.desire_graph import (
     DesireGraphArchitecture,

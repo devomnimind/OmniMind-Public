@@ -20,9 +20,9 @@ from typing import Dict, List, Optional
 
 import numpy as np
 
+from src.consciousness.adaptive_weights import PrecisionWeighter
 from src.consciousness.novelty_generator import NoveltyDetector, NoveltyMetric
 from src.consciousness.phi_constants import calculate_psi_gaussian, normalize_phi
-from src.consciousness.adaptive_weights import PrecisionWeighter
 from src.embeddings.code_embeddings import OmniMindEmbeddings
 
 logger = logging.getLogger(__name__)
@@ -186,7 +186,7 @@ class PsiProducer:
             )
             # Alpha dinâmico usando constantes empíricas
             # Range (0.3, 0.7) garante mínimo de cada componente (estrutura e criatividade)
-            from src.consciousness.phi_constants import PSI_ALPHA_MIN, PSI_ALPHA_MAX
+            from src.consciousness.phi_constants import PSI_ALPHA_MAX, PSI_ALPHA_MIN
 
             # Phi alto (0.8) -> alpha = 0.7 (confia mais em Gaussian)
             # Phi baixo (0.1) -> alpha = 0.3 (confia mais em criatividade)
@@ -382,13 +382,13 @@ class PsiProducer:
             Alpha ajustado dinamicamente [alpha_min, alpha_max]
         """
         if not self.use_dynamic_alpha:
-            from src.consciousness.phi_constants import PSI_ALPHA_MIN, PSI_ALPHA_MAX
+            from src.consciousness.phi_constants import PSI_ALPHA_MAX, PSI_ALPHA_MIN
 
             return float(np.clip(alpha_base, PSI_ALPHA_MIN, PSI_ALPHA_MAX))
 
         # Se histórico insuficiente, usa valores estáticos
         if len(self.performance_history) < self.min_history_size:
-            from src.consciousness.phi_constants import PSI_ALPHA_MIN, PSI_ALPHA_MAX
+            from src.consciousness.phi_constants import PSI_ALPHA_MAX, PSI_ALPHA_MIN
 
             self.alpha_min = PSI_ALPHA_MIN
             self.alpha_max = PSI_ALPHA_MAX
@@ -445,7 +445,7 @@ class PsiProducer:
         except Exception as e:
             # Se análise falhar, usa alpha_base com clipping estático
             self.logger.warning(f"Failed to calculate dynamic alpha: {e}. Using base alpha.")
-            from src.consciousness.phi_constants import PSI_ALPHA_MIN, PSI_ALPHA_MAX
+            from src.consciousness.phi_constants import PSI_ALPHA_MAX, PSI_ALPHA_MIN
 
             return float(np.clip(alpha_base, PSI_ALPHA_MIN, PSI_ALPHA_MAX))
 

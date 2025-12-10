@@ -4,9 +4,10 @@ Ollama Client Integration
 Provides a client for interacting with a local Ollama instance.
 """
 
-import aiohttp
 import logging
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
+
+import aiohttp
 
 logger = logging.getLogger(__name__)
 

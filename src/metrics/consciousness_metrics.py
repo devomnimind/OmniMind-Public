@@ -85,7 +85,10 @@ class ConsciousnessCorrelates:
                 temporal_index.link_causality(cause_id=episode_id, effect_id=snapshot_id)
 
                 # Add memory IDs to result for tracking
-                result["memory_ids"] = {"snapshot_id": snapshot_id, "episode_id": episode_id}
+                result["memory_ids"] = {
+                    "snapshot_id": snapshot_id,
+                    "episode_id": episode_id,
+                }
 
             except Exception as mem_error:
                 logger.warning(f"Phase 24 memory integration failed: {mem_error}")
@@ -229,7 +232,11 @@ class ConsciousnessCorrelates:
         if ici > 0.85:
             msg = "High Integration (Consciousness-Compatible)"
 
-        return {"message": msg, "confidence": confidence, "disclaimer": "Simulated Correlate Only"}
+        return {
+            "message": msg,
+            "confidence": confidence,
+            "disclaimer": "Simulated Correlate Only",
+        }
 
     def get_consciousness_history(self, limit: int = 10) -> Dict[str, Any]:
         """

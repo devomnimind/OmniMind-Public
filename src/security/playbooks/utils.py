@@ -5,7 +5,7 @@ import logging
 import os
 import shutil
 import subprocess
-from typing import Sequence, TypedDict, List, Set
+from typing import List, Sequence, Set, TypedDict
 
 logger = logging.getLogger(__name__)
 

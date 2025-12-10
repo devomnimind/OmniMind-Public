@@ -140,8 +140,8 @@ class QuantumAnnealer:
             if use_dwave:
                 try:
                     from dwave.system import (  # type: ignore[import-untyped]
-                        EmbeddingComposite,
                         DWaveSampler,
+                        EmbeddingComposite,
                     )
 
                     self.sampler = EmbeddingComposite(DWaveSampler())

@@ -290,7 +290,10 @@ class ModelRouter:
         logger.info("ModelRouter inicializado")
 
     def should_use_fast_path(
-        self, task_complexity: str, query_length: int, requires_high_precision: bool = False
+        self,
+        task_complexity: str,
+        query_length: int,
+        requires_high_precision: bool = False,
     ) -> bool:
         """
         Decide se deve usar fast path (quantizado) ou slow path (full precision).

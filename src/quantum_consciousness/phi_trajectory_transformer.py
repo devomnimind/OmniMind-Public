@@ -32,7 +32,7 @@ import logging
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Sequence, Any
+from typing import Any, Dict, List, Sequence
 
 import numpy as np
 

@@ -5,8 +5,8 @@ Desire as Structural Impossibility.
 """
 
 from src.desire_engine.core import (
-    Desire_as_Structural_Impossibility,
     Desire_as_Lack_Structure,
+    Desire_as_Structural_Impossibility,
 )
 
 

@@ -64,7 +64,9 @@ class HybridPhiCalculator:
             "validation_passed": fidelity > 0.85,
             "latency_classical": latency_classical,
             "latency_quantum": latency_quantum,
-            "quantum_speedup": latency_classical / latency_quantum if latency_quantum > 0 else 1.0,
+            "quantum_speedup": (
+                latency_classical / latency_quantum if latency_quantum > 0 else 1.0
+            ),
         }
 
         logger.info(

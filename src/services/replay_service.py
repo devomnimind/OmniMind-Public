@@ -10,7 +10,10 @@ class SinthomaticCompression:
         self.retention_tiers = {
             "0-24h": {"resolution": 1.0, "compression": "none"},
             "24h-7d": {"resolution": 0.01, "compression": "gzip"},
-            "7d+": {"resolution": 0.001, "compression": "parquet"},  # Parquet simulation for now
+            "7d+": {
+                "resolution": 0.001,
+                "compression": "parquet",
+            },  # Parquet simulation for now
         }
 
     def estimate_storage(self, runtime_days: int) -> Dict[str, float]:

@@ -60,7 +60,8 @@ class QuarantineSystem:
         """
         if component_id in self.quarantined_components:
             logger.warning(
-                "Componente %s já está em quarentena, atualizando registro", component_id
+                "Componente %s já está em quarentena, atualizando registro",
+                component_id,
             )
             record = self.quarantine_records[component_id]
             record.reason = reason
@@ -69,7 +70,9 @@ class QuarantineSystem:
             return
 
         logger.critical(
-            "🚨 COLOCANDO COMPONENTE EM QUARANTENA: %s (motivo: %s)", component_id, reason
+            "🚨 COLOCANDO COMPONENTE EM QUARANTENA: %s (motivo: %s)",
+            component_id,
+            reason,
         )
 
         # 1. Bloquear comunicação

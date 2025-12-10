@@ -21,8 +21,8 @@ from typing import Dict, List, Optional
 
 import numpy as np
 
-from src.consciousness.phi_constants import normalize_phi
 from src.consciousness.adaptive_weights import PrecisionWeighter
+from src.consciousness.phi_constants import normalize_phi
 
 logger = logging.getLogger(__name__)
 

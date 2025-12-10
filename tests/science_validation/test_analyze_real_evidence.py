@@ -1,8 +1,8 @@
 import json
 from datetime import datetime
 from pathlib import Path
-from unittest.mock import patch, mock_open
-from typing import Dict, Any
+from typing import Any, Dict
+from unittest.mock import mock_open, patch
 
 import pytest
 from _pytest.monkeypatch import MonkeyPatch
@@ -10,9 +10,9 @@ from _pytest.monkeypatch import MonkeyPatch
 from scripts.science_validation.analyze_real_evidence import (
     AblationData,
     compute_phi_stats,
-    validate_non_simulated,
     generate_summary_md,
     main,
+    validate_non_simulated,
 )
 
 

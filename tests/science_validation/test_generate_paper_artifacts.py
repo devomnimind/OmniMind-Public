@@ -4,8 +4,8 @@ from unittest.mock import patch
 import pytest
 
 from scripts.science_validation.generate_paper_artifacts import (
-    load_citation_cff,
     generate_paper_summary,
+    load_citation_cff,
     main,
 )
 

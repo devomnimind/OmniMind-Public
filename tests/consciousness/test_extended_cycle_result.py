@@ -4,12 +4,12 @@ Testes para ExtendedLoopCycleResult e componentes relacionados.
 Valida compatibilidade e funcionalidade básica.
 """
 
-import pytest
 import numpy as np
+import pytest
 
-from src.consciousness.integration_loop import LoopCycleResult, IntegrationLoop
-from src.consciousness.extended_cycle_result import ExtendedLoopCycleResult
 from src.consciousness.cycle_result_builder import LoopCycleResultBuilder
+from src.consciousness.extended_cycle_result import ExtendedLoopCycleResult
+from src.consciousness.integration_loop import IntegrationLoop, LoopCycleResult
 from src.consciousness.shared_workspace import SharedWorkspace
 
 

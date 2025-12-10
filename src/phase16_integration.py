@@ -43,7 +43,9 @@ from src.narrative_consciousness.dialogue_engine import DialogueEngine
 from src.narrative_consciousness.identity_construction import IdentityConstruction
 
 # Phase 16.2: Narrative Consciousness
-from src.narrative_consciousness.life_story_model import Life_Story_as_Retroactive_Resignification
+from src.narrative_consciousness.life_story_model import (
+    Life_Story_as_Retroactive_Resignification,
+)
 from src.neurosymbolic.hybrid_reasoner import NeurosymbolicReasoner
 from src.neurosymbolic.neural_component import NeuralComponent
 from src.neurosymbolic.reconciliation import Reconciliator
@@ -647,5 +649,5 @@ RECENT GOALS: {len(self.cognitive_history)}
             "min": min(self.phi_history),
             "max": max(self.phi_history),
             "latest": self.phi_history[-1],
-            "stdev": statistics.stdev(self.phi_history) if len(self.phi_history) > 1 else 0.0,
+            "stdev": (statistics.stdev(self.phi_history) if len(self.phi_history) > 1 else 0.0),
         }

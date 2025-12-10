@@ -15,7 +15,11 @@ class PolivalentExistence:
         # Mocking Reality classes for now as they are not defined elsewhere
         self.realities = {
             "Optimistic": {"bias": "trust", "strategy": "fast", "history": []},
-            "Paranoid_Security": {"bias": "suspicion", "strategy": "slow_careful", "history": []},
+            "Paranoid_Security": {
+                "bias": "suspicion",
+                "strategy": "slow_careful",
+                "history": [],
+            },
             "Pragmatic": {"bias": "balance", "strategy": "hybrid", "history": []},
         }
         self.current_bifurcations: List[Dict[str, Any]] = []

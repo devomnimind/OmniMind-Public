@@ -60,10 +60,14 @@ class DynamicToolCreator:
 
         logger.info("DynamicToolCreator inicializado")
         structured_logger.info(
-            "DynamicToolCreator inicializado", {"sandbox_enabled": sandbox_system is not None}
+            "DynamicToolCreator inicializado",
+            {"sandbox_enabled": sandbox_system is not None},
         )
         metrics.record_metric(
-            "DynamicToolCreator", "initialized", 1, {"sandbox_enabled": sandbox_system is not None}
+            "DynamicToolCreator",
+            "initialized",
+            1,
+            {"sandbox_enabled": sandbox_system is not None},
         )
 
     def create_tool(
@@ -161,7 +165,11 @@ class DynamicToolCreator:
             logger.info(f"Ferramenta dinâmica criada: {name} ({category.value})")
             structured_logger.info(
                 f"Ferramenta dinâmica criada: {name}",
-                {"name": name, "category": category.value, "total_tools": len(self.created_tools)},
+                {
+                    "name": name,
+                    "category": category.value,
+                    "total_tools": len(self.created_tools),
+                },
             )
             metrics.record_metric(
                 "DynamicToolCreator",

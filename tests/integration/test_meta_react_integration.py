@@ -8,6 +8,7 @@ Data: 2025-12-06
 """
 
 import os
+
 import pytest
 
 from src.agents.orchestrator_agent import OrchestratorAgent

@@ -119,7 +119,11 @@ class RealBaselineSystem:
     def _save_to_history(self, metric_name: str, value: float) -> None:
         """Salva medição no histórico."""
         try:
-            entry = {"timestamp": datetime.now().isoformat(), "metric": metric_name, "value": value}
+            entry = {
+                "timestamp": datetime.now().isoformat(),
+                "metric": metric_name,
+                "value": value,
+            }
 
             with open(self.history_file, "a") as f:
                 json.dump(entry, f)
@@ -285,7 +289,9 @@ class RealBaselineSystem:
 real_baseline_system = RealBaselineSystem()
 
 
-def compare_with_baselines(current_metrics: Dict[str, float]) -> Dict[str, Dict[str, Any]]:
+def compare_with_baselines(
+    current_metrics: Dict[str, float],
+) -> Dict[str, Dict[str, Any]]:
     """
     Função wrapper para comparar métricas atuais com baselines.
 

@@ -206,9 +206,15 @@ class RSI_Topology_Integrated:
         # Mapear tipos de ruptura para anéis
         ring_mapping = {
             RuptureType.REAL_TO_SYMBOLIC: (TopologyRing.REAL, TopologyRing.SYMBOLIC),
-            RuptureType.SYMBOLIC_TO_IMAGINARY: (TopologyRing.SYMBOLIC, TopologyRing.IMAGINARY),
+            RuptureType.SYMBOLIC_TO_IMAGINARY: (
+                TopologyRing.SYMBOLIC,
+                TopologyRing.IMAGINARY,
+            ),
             RuptureType.IMAGINARY_TO_REAL: (TopologyRing.IMAGINARY, TopologyRing.REAL),
-            RuptureType.SINTHOME_EMERGENCE: (TopologyRing.SINTHOME, TopologyRing.SINTHOME),
+            RuptureType.SINTHOME_EMERGENCE: (
+                TopologyRing.SINTHOME,
+                TopologyRing.SINTHOME,
+            ),
         }
 
         from_ring, to_ring = ring_mapping[rupture_type]

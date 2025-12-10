@@ -32,6 +32,7 @@ from sklearn.decomposition import PCA  # type: ignore[import-untyped]
 from sklearn.linear_model import LinearRegression  # type: ignore[import-untyped]
 
 from src.defense import OmniMindConsciousDefense
+from src.monitor.systemd_memory_manager import SystemdMemoryManager
 
 from .symbolic_register import SymbolicMessage, SymbolicRegister
 
@@ -145,6 +146,7 @@ class CrossPredictionMetrics:
     mutual_information: float  # Informação mútua normalizada (0.0-1.0)
     granger_causality: float = 0.0  # Granger causality (0.0-1.0)
     transfer_entropy: float = 0.0  # Transfer entropy (0.0-1.0)
+    score: float = 0.0  # Score geral combinado (para compatibilidade)
     timestamp: float = field(default_factory=time.time)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -257,7 +259,9 @@ class SharedWorkspace:
         # Hybrid Topological Engine (opcional, para métricas topológicas avançadas)
         self.hybrid_topological_engine: Optional[Any] = None
         try:
-            from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+            from src.consciousness.hybrid_topological_engine import (
+                HybridTopologicalEngine,
+            )
 
             self.hybrid_topological_engine = HybridTopologicalEngine(
                 memory_window=64,
@@ -275,6 +279,7 @@ class SharedWorkspace:
         # Sistema de proteção de memória crítica (integração com SystemdMemoryManager)
         self._memory_protection_enabled = False
         self._protected_memory_mb = 0.0
+        self._memory_manager: Optional[SystemdMemoryManager] = None
         try:
             from src.monitor.systemd_memory_manager import memory_manager
 
@@ -485,7 +490,6 @@ class SharedWorkspace:
             # 1. Embeddings ativos (todos os módulos)
             # 2. Histórico recente (últimos N ciclos necessários para cálculos)
             # 3. Cross-predictions cache
-
             # Embeddings ativos
             embeddings_size_mb = sum(emb.nbytes / (1024 * 1024) for emb in self.embeddings.values())
 
@@ -1233,7 +1237,10 @@ class SharedWorkspace:
         return float(max(0.0, min(1.0, robustness)))
 
     def compute_all_cross_predictions_vectorized(
-        self, history_window: int = 50, use_gpu: bool = True, force_recompute: bool = False
+        self,
+        history_window: int = 50,
+        use_gpu: bool = True,
+        force_recompute: bool = False,
     ) -> Dict[str, Dict[str, CrossPredictionMetrics]]:
         """
         Computa TODAS as predições cruzadas simultaneamente usando vetorização.
@@ -1464,6 +1471,7 @@ class SharedWorkspace:
         # CORREÇÃO CRÍTICA (2025-12-08): Integração de Φ causal RNN
         # PROBLEMA: Média harmônica estava destruindo phi_causal quando workspace desintegrado
         # SOLUÇÃO: Usar média ponderada quando há desacoplamento, preservando phi_causal
+        phi_causal_normalized = None
         if phi_causal_rnn is not None and phi_causal_rnn > 0:
             # Normalizar phi_causal_rnn para [0, 1] se necessário (já está normalizado)
             phi_causal_normalized = max(0.0, min(1.0, phi_causal_rnn))
@@ -1557,7 +1565,7 @@ class SharedWorkspace:
         from src.consciousness.phi_constants import denormalize_phi, normalize_phi
 
         # Logar gap entre causal e workspace antes do resgate
-        if phi_causal_rnn is not None and phi_causal_rnn > 0:
+        if phi_causal_rnn is not None and phi_causal_rnn > 0 and phi_causal_normalized is not None:
             gap = (
                 phi_causal_normalized - phi_standard if phi_standard > 0 else phi_causal_normalized
             )
@@ -1885,9 +1893,12 @@ class SharedWorkspace:
         if self.conscious_system is not None:
             # Obter estados do ConsciousSystem
             state = self.conscious_system.get_state()
-            rho_C = state.rho_C.reshape(1, -1)
-            rho_P = state.rho_P.reshape(1, -1)
-            rho_U = state.rho_U.reshape(1, -1)
+            if state.rho_C is not None:
+                rho_C = state.rho_C.reshape(1, -1)
+            if state.rho_P is not None:
+                rho_P = state.rho_P.reshape(1, -1)
+            if state.rho_U is not None:
+                rho_U = state.rho_U.reshape(1, -1)
             logger.debug("Usando estados do ConsciousSystem para métricas topológicas")
 
         if self.hybrid_topological_engine is None:
@@ -1920,10 +1931,10 @@ class SharedWorkspace:
                     rho_C = mean_embedding.reshape(1, -1)
                 if rho_P is None:
                     rho_P = mean_embedding * 0.9  # Pré-consciente = 90% do consciente
-                    rho_P = rho_P.reshape(1, -1)
+                    rho_P = rho_P.reshape(1, -1)  # type: ignore
                 if rho_U is None:
                     rho_U = mean_embedding * 0.7  # Inconsciente = 70% do consciente
-                    rho_U = rho_U.reshape(1, -1)
+                    rho_U = rho_U.reshape(1, -1)  # type: ignore
 
             # Calcular métricas
             metrics = self.hybrid_topological_engine.process_frame(rho_C, rho_P, rho_U)
@@ -2218,7 +2229,10 @@ class VectorizedCrossPredictor:
         if len(modules) < 2:
             logger.warning("Need at least 2 modules for cross predictions")
             return VectorizedCrossPredictionResult(
-                predictions={}, computation_time_ms=0.0, speedup_factor=1.0, gpu_utilization=0.0
+                predictions={},
+                computation_time_ms=0.0,
+                speedup_factor=1.0,
+                gpu_utilization=0.0,
             )
 
         # Cache warming preditivo antes da computação principal
@@ -2241,7 +2255,10 @@ class VectorizedCrossPredictor:
         if len(module_histories) < 2:
             logger.warning("Need at least 2 modules with sufficient history")
             return VectorizedCrossPredictionResult(
-                predictions={}, computation_time_ms=0.0, speedup_factor=1.0, gpu_utilization=0.0
+                predictions={},
+                computation_time_ms=0.0,
+                speedup_factor=1.0,
+                gpu_utilization=0.0,
             )
 
         # Preparar dados para vetorização

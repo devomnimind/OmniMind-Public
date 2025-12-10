@@ -19,16 +19,16 @@ Classificação:
 """
 
 import logging
-from enum import Enum
-from typing import Dict, Optional, Any
 from dataclasses import dataclass
 from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, Optional
 
 import numpy as np
 
-from .soft_hair_encoding import SoftHairMemory
-from ..lacanian.encrypted_unconscious import EncryptedUnconsciousLayer
 from ..consciousness.dynamic_trauma import DynamicTraumaCalculator
+from ..lacanian.encrypted_unconscious import EncryptedUnconsciousLayer
+from .soft_hair_encoding import SoftHairMemory
 
 logger = logging.getLogger(__name__)
 

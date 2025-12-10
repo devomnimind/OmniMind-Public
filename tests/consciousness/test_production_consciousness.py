@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import tempfile
 from pathlib import Path
-from typing import List, Generator
+from typing import Generator, List
 
 import pytest
 
@@ -521,8 +521,8 @@ class TestProductionConsciousnessHybridTopological:
 
     def test_system_can_integrate_with_shared_workspace(self):
         """Testa que sistema pode integrar com SharedWorkspace para métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
         from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)
@@ -551,9 +551,10 @@ class TestProductionConsciousnessHybridTopological:
 
     def test_phi_and_topological_metrics_complementary(self):
         """Testa que Φ e métricas topológicas são complementares."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         workspace = SharedWorkspace(embedding_dim=256)
         workspace.hybrid_topological_engine = HybridTopologicalEngine()

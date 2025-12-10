@@ -83,7 +83,11 @@ class EmbeddingNarrative:
             for key, value in self.goal_inference.items():
                 if isinstance(value, (int, float)):
                     goal_values.append(float(value))
-                elif isinstance(value, str) and value in ["exploration", "validation", "uncertain"]:
+                elif isinstance(value, str) and value in [
+                    "exploration",
+                    "validation",
+                    "uncertain",
+                ]:
                     # Mapeia strings para números
                     mapping = {"exploration": 1.0, "validation": 0.0, "uncertain": 0.5}
                     goal_values.append(mapping.get(value, 0.5))

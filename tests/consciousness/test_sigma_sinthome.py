@@ -12,10 +12,10 @@ Autor: Fabrício da Silva + assistência de IA
 Data: 2025-12-06
 """
 
-import pytest
 from unittest.mock import MagicMock
 
 import numpy as np
+import pytest
 
 from src.consciousness.sigma_sinthome import (
     SigmaComponents,
@@ -86,9 +86,10 @@ class TestSigmaSinthomeHybridTopological:
 
     def test_sigma_with_topological_metrics_complementary(self):
         """Testa que σ e métricas topológicas são complementares."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)

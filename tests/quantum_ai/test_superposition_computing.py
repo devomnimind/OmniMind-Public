@@ -8,8 +8,9 @@ Cobertura de:
 - StateAmplification
 """
 
-import pytest
 from typing import Any, Callable
+
+import pytest
 
 from src.quantum_ai.superposition_computing import (
     QuantumParallelism,

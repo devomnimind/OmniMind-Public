@@ -106,7 +106,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--analyze_recent_logs", action="store_true", help="Analyze recent logs")
     parser.add_argument(
-        "--summary_report_short", action="store_true", help="Print short summary to stdout"
+        "--summary_report_short",
+        action="store_true",
+        help="Print short summary to stdout",
     )
     args = parser.parse_args()
 

@@ -345,7 +345,10 @@ class AlertSystem:
         )
 
     async def emit_test_timeout(
-        self, test_name: str, timeout_seconds: int, context: Optional[Dict[str, Any]] = None
+        self,
+        test_name: str,
+        timeout_seconds: int,
+        context: Optional[Dict[str, Any]] = None,
     ) -> AlertEvent:
         """Emitir alerta de teste com timeout.
 

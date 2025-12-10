@@ -21,9 +21,7 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, cast
 
 try:
-    from sentence_transformers import (
-        SentenceTransformer,  # type: ignore[import-untyped]
-    )
+    from sentence_transformers import SentenceTransformer  # type: ignore[import-untyped]
 
     TRANSFORMERS_AVAILABLE = True
 except ImportError:

@@ -184,7 +184,11 @@ async def websocket_endpoint(websocket: WebSocket):
                 if msg.get("type") == "ping":
                     await websocket.send_text(
                         json.dumps(
-                            {"type": "pong", "id": msg.get("id"), "timestamp": time.time() * 1000}
+                            {
+                                "type": "pong",
+                                "id": msg.get("id"),
+                                "timestamp": time.time() * 1000,
+                            }
                         )
                     )
             except Exception:

@@ -195,7 +195,11 @@ class QdrantIntegration:
                     )
 
             return [
-                {"id": hit.id, "score": hit.score, "payload": getattr(hit, "payload", {})}
+                {
+                    "id": hit.id,
+                    "score": hit.score,
+                    "payload": getattr(hit, "payload", {}),
+                }
                 for hit in hits
             ]
 

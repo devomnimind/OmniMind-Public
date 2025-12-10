@@ -10,6 +10,7 @@ Cobertura de:
 """
 
 from __future__ import annotations
+
 from typing import Any, Dict
 
 from src.integrations.mcp_system_info_server import SystemInfoMCPServer

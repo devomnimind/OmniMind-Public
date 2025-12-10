@@ -20,10 +20,10 @@ import time
 from dataclasses import dataclass
 from typing import List, Tuple
 
-import numpy as np
 import networkx as nx
-from scipy.spatial.distance import pdist, squareform
+import numpy as np
 from scipy.sparse.csgraph import laplacian as csgraph_laplacian
+from scipy.spatial.distance import pdist, squareform
 from sklearn.decomposition import PCA
 from sklearn.manifold import Isomap
 
@@ -661,7 +661,7 @@ class HybridTopologicalEngine:
 
         # 6. Tensão (melhorada)
         shear = self._compute_shear_tension_improved(
-            projected_cloud[-3:-2] if len(projected_cloud) >= 3 else projected_cloud[-1:],
+            (projected_cloud[-3:-2] if len(projected_cloud) >= 3 else projected_cloud[-1:]),
             projected_cloud[-1:],
         )
 

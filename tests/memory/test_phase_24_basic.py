@@ -12,6 +12,7 @@ License: MIT
 
 import logging
 from datetime import datetime
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -81,21 +82,53 @@ class TestSemanticMemoryLayer:
     """Tests for semantic memory layer"""
 
     @pytest.fixture
-    def semantic_memory(self):
+    @patch("src.memory.semantic_memory_layer.SentenceTransformer")
+    @patch("src.integrations.qdrant_integration.QdrantClient")
+    def semantic_memory(self, mock_qdrant_client, mock_sentence_transformer):
         """Create semantic memory instance"""
+        # Mock the SentenceTransformer
+        mock_embedder = MagicMock()
+        mock_embedder.encode.return_value = [[0.1] * 384]  # Mock embedding
+        mock_sentence_transformer.return_value = mock_embedder
+
+        # Mock QdrantClient
+        mock_client = MagicMock()
+        mock_qdrant_client.return_value = mock_client
 
         from src.memory.semantic_memory_layer import SemanticMemoryLayer
 
         return SemanticMemoryLayer()
 
-    def test_semantic_memory_initialization(self, semantic_memory):
+    @patch("src.memory.semantic_memory_layer.SentenceTransformer")
+    @patch("src.integrations.qdrant_integration.QdrantClient")
+    def test_semantic_memory_initialization(
+        self, mock_qdrant_client, mock_sentence_transformer, semantic_memory
+    ):
         """Test initialization"""
+        # Mock the SentenceTransformer
+        mock_embedder = MagicMock()
+        mock_embedder.encode.return_value = [[0.1] * 384]  # Mock embedding
+        mock_sentence_transformer.return_value = mock_embedder
+
+        # Mock QdrantClient
+        mock_client = MagicMock()
+        mock_qdrant_client.return_value = mock_client
 
         assert semantic_memory.embedder is not None, "Embedder should be loaded"
         assert semantic_memory.embedding_dim == 384, "Embedding dimension should be 384"
 
-    def test_store_episode(self, semantic_memory):
+    @patch("src.memory.semantic_memory_layer.SentenceTransformer")
+    @patch("src.integrations.qdrant_integration.QdrantClient")
+    def test_store_episode(self, mock_qdrant_client, mock_sentence_transformer, semantic_memory):
         """Test storing episode"""
+        # Mock the SentenceTransformer
+        mock_embedder = MagicMock()
+        mock_embedder.encode.return_value = [[0.1] * 384]  # Mock embedding
+        mock_sentence_transformer.return_value = mock_embedder
+
+        # Mock QdrantClient
+        mock_client = MagicMock()
+        mock_qdrant_client.return_value = mock_client
 
         episode_id = semantic_memory.store_episode(
             episode_text="This is a test consciousness episode",
@@ -108,8 +141,18 @@ class TestSemanticMemoryLayer:
         assert episode_id, "Episode should have ID"
         assert isinstance(episode_id, str), "Episode ID should be string"
 
-    def test_retrieve_similar(self, semantic_memory):
+    @patch("src.memory.semantic_memory_layer.SentenceTransformer")
+    @patch("src.integrations.qdrant_integration.QdrantClient")
+    def test_retrieve_similar(self, mock_qdrant_client, mock_sentence_transformer, semantic_memory):
         """Test semantic similarity search"""
+        # Mock the SentenceTransformer
+        mock_embedder = MagicMock()
+        mock_embedder.encode.return_value = [[0.1] * 384]  # Mock embedding
+        mock_sentence_transformer.return_value = mock_embedder
+
+        # Mock QdrantClient
+        mock_client = MagicMock()
+        mock_qdrant_client.return_value = mock_client
 
         # Store test episodes
         semantic_memory.store_episode(
@@ -127,8 +170,18 @@ class TestSemanticMemoryLayer:
 
         assert len(results) >= 0, "Should return results"
 
-    def test_get_stats(self, semantic_memory):
+    @patch("src.memory.semantic_memory_layer.SentenceTransformer")
+    @patch("src.integrations.qdrant_integration.QdrantClient")
+    def test_get_stats(self, mock_qdrant_client, mock_sentence_transformer, semantic_memory):
         """Test statistics"""
+        # Mock the SentenceTransformer
+        mock_embedder = MagicMock()
+        mock_embedder.encode.return_value = [[0.1] * 384]  # Mock embedding
+        mock_sentence_transformer.return_value = mock_embedder
+
+        # Mock QdrantClient
+        mock_client = MagicMock()
+        mock_qdrant_client.return_value = mock_client
 
         # Store an episode first to ensure collection exists
         semantic_memory.store_episode(
@@ -252,7 +305,7 @@ class TestConsciousnessStateManager:
         assert second_id
 
         # Wide window should include both
-        from datetime import datetime, timezone, timedelta
+        from datetime import datetime, timedelta, timezone
 
         now = datetime.now(timezone.utc)
         start = now - timedelta(hours=1)
@@ -376,8 +429,18 @@ class TestTemporalMemoryIndex:
 class TestPhase24Integration:
     """Integration tests for Phase 24 modules"""
 
-    def test_semantic_to_consciousness_flow(self):
+    @patch("src.memory.semantic_memory_layer.SentenceTransformer")
+    @patch("src.integrations.qdrant_integration.QdrantClient")
+    def test_semantic_to_consciousness_flow(self, mock_qdrant_client, mock_sentence_transformer):
         """Test flow: Store episode → Consciousness snapshot → Temporal tracking"""
+        # Mock the SentenceTransformer
+        mock_embedder = MagicMock()
+        mock_embedder.encode.return_value = [[0.1] * 384]  # Mock embedding
+        mock_sentence_transformer.return_value = mock_embedder
+
+        # Mock QdrantClient
+        mock_client = MagicMock()
+        mock_qdrant_client.return_value = mock_client
 
         from src.memory.consciousness_state_manager import (
             get_consciousness_state_manager,
@@ -440,11 +503,25 @@ class TestPhase24Integration:
 class TestPhase24HybridTopological:
     """Testes de integração entre Phase 24 Memory e HybridTopologicalEngine."""
 
-    def test_phase24_memory_with_topological_metrics(self, semantic_memory):
+    @patch("src.memory.semantic_memory_layer.SentenceTransformer")
+    @patch("src.integrations.qdrant_integration.QdrantClient")
+    def test_phase24_memory_with_topological_metrics(
+        self, mock_qdrant_client, mock_sentence_transformer, semantic_memory
+    ):
         """Testa que Phase 24 Memory pode ser usado com métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        # Mock the SentenceTransformer
+        mock_embedder = MagicMock()
+        mock_embedder.encode.return_value = [[0.1] * 384]  # Mock embedding
+        mock_sentence_transformer.return_value = mock_embedder
+
+        # Mock QdrantClient
+        mock_client = MagicMock()
+        mock_qdrant_client.return_value = mock_client
+
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)

@@ -178,7 +178,10 @@ class DistributedDatasetAccess:
                         # Prefetch assíncrono (simplificado: síncrono por enquanto)
                         logger.debug(f"Prefetching: {related_query}")
                         results = self.retrieval_system.retrieve(
-                            query=related_query, top_k=5, use_sparse=True, use_rerank=False
+                            query=related_query,
+                            top_k=5,
+                            use_sparse=True,
+                            use_rerank=False,
                         )
                         self.cache.set(cache_key, results, level=CacheLevel.L2, ttl_seconds=1800)
                 except Exception as e:

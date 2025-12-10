@@ -11,8 +11,8 @@ from __future__ import annotations
 
 import pytest
 
-from src.autopoietic.meta_architect import ComponentSpec, MetaArchitect
 from src.autopoietic.architecture_evolution import ArchitectureEvolution, EvolutionStrategy
+from src.autopoietic.meta_architect import ComponentSpec, MetaArchitect
 
 
 def _strategy_prefix(strategy: EvolutionStrategy) -> str:

@@ -199,7 +199,9 @@ class QuantumMemoryCell:
 
         except Exception as e:
             logger.error(
-                "quantum_encoding_failed", error=str(e), data_type=type(self.data).__name__
+                "quantum_encoding_failed",
+                error=str(e),
+                data_type=type(self.data).__name__,
             )
             # Fallback: keep original data
             return
@@ -258,7 +260,9 @@ class QuantumMemoryCell:
             measured_value = float(np.real(self.quantum_state[outcome_idx]))
 
             logger.debug(
-                "quantum_measurement", outcome_idx=outcome_idx, measured_value=measured_value
+                "quantum_measurement",
+                outcome_idx=outcome_idx,
+                measured_value=measured_value,
             )
             return measured_value
         else:
@@ -744,7 +748,10 @@ class QuantumMemorySystem:
             cell.quantum_state /= norm
 
         logger.info(
-            "memory_consolidated", index=index, strength=strength, new_coherence=cell.coherence_time
+            "memory_consolidated",
+            index=index,
+            strength=strength,
+            new_coherence=cell.coherence_time,
         )
 
     def get_memory_stats(self) -> Dict[str, Any]:
@@ -825,7 +832,9 @@ class QuantumMemorySystem:
         self.entanglement_graph.clear()
 
         logger.info(
-            "quantum_memory_cleared", cells_cleared=num_cleared, entanglements_cleared=num_cleared
+            "quantum_memory_cleared",
+            cells_cleared=num_cleared,
+            entanglements_cleared=num_cleared,
         )
 
 
@@ -1049,7 +1058,10 @@ class HybridQLearning:
                     action_idx = a
 
             logger.debug(
-                "exploitation_best_action", state=state, action_idx=action_idx, q_value=best_q
+                "exploitation_best_action",
+                state=state,
+                action_idx=action_idx,
+                q_value=best_q,
             )
 
         return f"action_{action_idx}"

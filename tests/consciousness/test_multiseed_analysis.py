@@ -5,15 +5,16 @@ Tests for MultiSeedRunner, ConvergenceAggregator, StatisticalValidator.
 """
 
 import json
-import numpy as np
-import pytest
 import tempfile
 from pathlib import Path
 
+import numpy as np
+import pytest
+
 from src.consciousness.multiseed_analysis import (
-    SeedResult,
-    MultiSeedRunner,
     ConvergenceAggregator,
+    MultiSeedRunner,
+    SeedResult,
     StatisticalValidator,
 )
 
@@ -415,9 +416,10 @@ class TestMultiSeedAnalysisHybridTopological:
     @pytest.mark.asyncio
     async def test_multiseed_analysis_with_topological_metrics(self):
         """Testa que MultiSeedAnalysis pode ser usado com métricas topológicas."""
-        from src.consciousness.shared_workspace import SharedWorkspace
-        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
         import numpy as np
+
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+        from src.consciousness.shared_workspace import SharedWorkspace
 
         # Criar workspace com engine topológico
         workspace = SharedWorkspace(embedding_dim=256)

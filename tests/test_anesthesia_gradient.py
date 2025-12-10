@@ -5,12 +5,13 @@ Validação de Φ como medida de consciência através de degradação gradual
 """
 
 import asyncio
+import json
 import logging
 import time
-from typing import Dict, List
-import numpy as np
 from pathlib import Path
-import json
+from typing import Dict, List
+
+import numpy as np
 
 from src.consciousness.shared_workspace import SharedWorkspace
 
@@ -182,8 +183,9 @@ async def main():
 
 async def test_anesthesia_with_topological_metrics():
     """Testa gradiente de anestesia com métricas topológicas."""
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     logger.info("🧑‍⚕️ TESTE ANESTHESIA: Com Topological Metrics")
     logger.info("=" * 60)

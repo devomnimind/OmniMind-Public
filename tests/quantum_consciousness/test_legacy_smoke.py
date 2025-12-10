@@ -1,6 +1,6 @@
 import importlib
-import pytest
 
+import pytest
 
 LEGACY_MODULES = [
     "src.quantum_consciousness.quantum_backend",

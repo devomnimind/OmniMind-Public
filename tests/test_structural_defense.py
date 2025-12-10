@@ -109,8 +109,9 @@ async def test_bion_metabolism():
 @pytest.mark.asyncio
 async def test_structural_defense_with_topological_metrics():
     """Test Structural Defense with topological metrics integration."""
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     workspace = SharedWorkspace(embedding_dim=256, max_history_size=100)
     workspace.hybrid_topological_engine = HybridTopologicalEngine()

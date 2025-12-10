@@ -9,9 +9,10 @@ License: MIT
 from __future__ import annotations
 
 import logging
-import psutil
 from dataclasses import dataclass
 from typing import Any, Dict, List
+
+import psutil
 
 logger = logging.getLogger(__name__)
 

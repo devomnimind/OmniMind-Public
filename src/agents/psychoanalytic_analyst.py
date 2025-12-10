@@ -218,7 +218,11 @@ class PsychoanalyticDecisionSystem:
     """Orquestra os agentes internos e realiza a votação ponderada."""
 
     def __init__(self, llm_client=None):
-        self.agents = [IdAgent(llm_client), EgoAgent(llm_client), SuperegoAgent(llm_client)]
+        self.agents = [
+            IdAgent(llm_client),
+            EgoAgent(llm_client),
+            SuperegoAgent(llm_client),
+        ]
         self.history: List[Dict[str, Any]] = []
 
     def resolve_conflict(self, context: str) -> Dict[str, Any]:

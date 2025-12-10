@@ -229,8 +229,9 @@ async def test_llm_impact_with_topological_metrics(
     - Impacto do LLM pode ser analisado com métricas topológicas
     - Ambas as métricas são complementares
     """
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
 
     logger.info("\n" + "=" * 70)
     logger.info("Testing LLM Impact with Topological Metrics")

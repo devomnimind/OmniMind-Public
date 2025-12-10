@@ -42,7 +42,10 @@ def check_hardware() -> HardwareProfile:
     cpu_count = psutil.cpu_count() or 1
 
     profile = HardwareProfile(
-        gpu_available=gpu_available, gpu_name=gpu_name, memory_total=mem.total, cpu_count=cpu_count
+        gpu_available=gpu_available,
+        gpu_name=gpu_name,
+        memory_total=mem.total,
+        cpu_count=cpu_count,
     )
 
     logger.info(f"Hardware Profile: {profile}")

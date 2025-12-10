@@ -80,12 +80,18 @@ class AutoValidationEngine:
         if issue_type == "MEMORY" and "batch_size" in solution_keys:
             # Reducing batch size should help memory
             if solution.get("batch_size", 32) < 32:
-                return {"success": True, "reason": "batch_size reduction addresses memory issue"}
+                return {
+                    "success": True,
+                    "reason": "batch_size reduction addresses memory issue",
+                }
 
         if issue_type == "PERFORMANCE" and "use_gpu" in solution_keys:
             # Enabling GPU should help performance
             if solution.get("use_gpu", False):
-                return {"success": True, "reason": "GPU usage addresses performance issue"}
+                return {
+                    "success": True,
+                    "reason": "GPU usage addresses performance issue",
+                }
 
         # Default: accept if solution has any relevant keys
         if solution_keys:

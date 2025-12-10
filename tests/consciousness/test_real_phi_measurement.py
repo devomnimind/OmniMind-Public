@@ -17,7 +17,6 @@ Como rodar:
 import pytest
 import torch
 
-
 pytestmark = pytest.mark.real
 
 
@@ -184,9 +183,10 @@ async def test_phi_measurement_with_topological_metrics(gpu_device: str) -> None
     - Mede Φ e métricas topológicas
     - Valida complementaridade
     """
-    from src.consciousness.integration_loop import IntegrationLoop
-    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
     import numpy as np
+
+    from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+    from src.consciousness.integration_loop import IntegrationLoop
 
     # Setup com engine topológico
     consciousness = IntegrationLoop()

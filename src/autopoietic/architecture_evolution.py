@@ -14,7 +14,7 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass
 from enum import Enum, auto
-from typing import Dict, List, Mapping, Any, Optional
+from typing import Any, Dict, List, Mapping, Optional
 
 from .meta_architect import ComponentSpec, MetaArchitect
 
@@ -83,7 +83,9 @@ class ArchitectureEvolution:
         return EvolutionStrategy.EXPAND
 
     def propose_evolution(
-        self, existing_specs: Mapping[str, ComponentSpec], metrics: Optional[Dict[str, Any]] = None
+        self,
+        existing_specs: Mapping[str, ComponentSpec],
+        metrics: Optional[Dict[str, Any]] = None,
     ) -> EvolutionBatch:
         """Generate evolved specifications from existing ones.
 
