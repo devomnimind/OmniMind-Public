@@ -14,10 +14,9 @@ Data: 2025-12-11
 import gzip
 import json
 import logging
-import shutil
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -69,7 +68,7 @@ class ReportMaintenanceManager:
             f"ReportMaintenanceManager inicializado: {self.reports_dir} → {self.archive_dir}"
         )
 
-    def execute_maintenance(self) -> Dict[str, any]:
+    def execute_maintenance(self) -> Dict[str, Any]:
         """
         Executa limpeza, compressão e manutenção completa.
 
@@ -114,7 +113,7 @@ class ReportMaintenanceManager:
             stats["errors"].append(str(e))
             return stats
 
-    def _compress_old_reports(self) -> Dict[str, any]:
+    def _compress_old_reports(self) -> Dict[str, Any]:
         """
         Comprime reports antigos (mais antigos que retention_days).
 
@@ -217,7 +216,7 @@ class ReportMaintenanceManager:
             stats["error"] = str(e)
             return stats
 
-    def _cleanup_expired_files(self) -> Dict[str, any]:
+    def _cleanup_expired_files(self) -> Dict[str, Any]:
         """
         Remove arquivos excessivamente antigos (mais antigos que retention_days).
 
@@ -283,7 +282,7 @@ class ReportMaintenanceManager:
         except Exception as e:
             logger.error(f"Erro ao atualizar índice: {e}")
 
-    def check_maintenance_needed(self) -> Tuple[bool, Dict[str, any]]:
+    def check_maintenance_needed(self) -> Tuple[bool, Dict[str, Any]]:
         """
         Verifica se manutenção é necessária baseado em limiares.
 
@@ -332,7 +331,7 @@ class ReportMaintenanceManager:
                         if file_date < cutoff_date:
                             stats["needs_cleanup"] = True
                             break
-                    except:
+                    except (ValueError, IndexError):
                         pass
 
             needs_maintenance = stats["needs_compression"] or stats["needs_cleanup"]

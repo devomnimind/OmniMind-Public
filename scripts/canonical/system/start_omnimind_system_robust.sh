@@ -153,9 +153,11 @@ export PYTORCH_CUDA_ALLOC_CONF="backend:cudaMallocAsync"
 PHASE_TIMEOUT_ESSENTIAL=300       # 5 minutos para essenciais
 PHASE_TIMEOUT_SECONDARY=180       # 3 minutos para secundários
 PHASE_TIMEOUT_MONITORING=60       # 1 minuto para monitoring
-HEALTH_CHECK_TIMEOUT=5            # curl timeout
-HEALTH_CHECK_RETRIES_ESSENTIAL=100  # Retries para Primary
-HEALTH_CHECK_RETRIES_SECONDARY=30   # Retries para secundários
+HEALTH_CHECK_TIMEOUT=5            # curl timeout padrão (importante: timeout não é suficiente para 3001)
+HEALTH_CHECK_TIMEOUT_FALLBACK=10  # curl timeout aumentado para Fallback (3001)
+HEALTH_CHECK_RETRIES_ESSENTIAL=100  # Retries para Primary (8000)
+HEALTH_CHECK_RETRIES_SECONDARY=30   # Retries para secundários (8080)
+HEALTH_CHECK_RETRIES_FALLBACK=50    # Retries para Fallback (3001) - precisa mais tempo para inicializar
 HEALTH_CHECK_STABLE_CHECKS=3      # Quantas checks consecutivas para confirmar "estável"
 
 log_info "Timeouts configurados:"
@@ -204,12 +206,43 @@ check_http_health() {
     return 1
 }
 
+# Verificar resposta HTTP com timeout customizado
+check_http_health_with_timeout() {
+    local port=$1
+    local custom_timeout=${2:-$HEALTH_CHECK_TIMEOUT}
+    local url="http://localhost:${port}/health/"
+
+    # Tentar up to 3 vezes em caso de timeout transitório
+    for attempt in 1 2 3; do
+        local http_code=$(curl -s -o /dev/null -w "%{http_code}" --max-time $custom_timeout "$url" 2>/dev/null)
+
+        if [ "$http_code" = "200" ] || [ "$http_code" = "000" ]; then
+            # 000 = connection successful but no response (pode ser normal em boot)
+            [ "$http_code" = "200" ] && return 0  # OK completo
+        fi
+
+        [ $attempt -lt 3 ] && sleep 1
+    done
+
+    return 1
+}
+
 # Verificar resposta de tempo (em milisegundos)
 check_response_time() {
     local port=$1
     local url="http://localhost:${port}/health/"
 
     local response_time=$(curl -s -w "%{time_total}" -o /dev/null --max-time $HEALTH_CHECK_TIMEOUT "$url" 2>/dev/null || echo "10.0")
+    echo "$response_time"
+}
+
+# Verificar resposta de tempo com timeout customizado
+check_response_time_with_timeout() {
+    local port=$1
+    local custom_timeout=${2:-$HEALTH_CHECK_TIMEOUT}
+    local url="http://localhost:${port}/health/"
+
+    local response_time=$(curl -s -w "%{time_total}" -o /dev/null --max-time $custom_timeout "$url" 2>/dev/null || echo "${custom_timeout}")
     echo "$response_time"
 }
 
@@ -220,17 +253,32 @@ declare -A BACKEND_STABLE_COUNT
 
 unified_health_check() {
     local port=$1
-    local mode=${2:-essential}  # essential ou secondary
+    local mode=${2:-essential}  # essential, secondary ou fallback
     local max_retries=${HEALTH_CHECK_RETRIES_ESSENTIAL}
+    local custom_timeout=${HEALTH_CHECK_TIMEOUT}
     local retry_interval=3
     local stable_threshold=${HEALTH_CHECK_STABLE_CHECKS}
 
-    [ "$mode" = "secondary" ] && max_retries=${HEALTH_CHECK_RETRIES_SECONDARY}
+    # Definir parâmetros baseado no modo
+    case "$mode" in
+        essential)
+            max_retries=${HEALTH_CHECK_RETRIES_ESSENTIAL}
+            custom_timeout=${HEALTH_CHECK_TIMEOUT}
+            ;;
+        secondary)
+            max_retries=${HEALTH_CHECK_RETRIES_SECONDARY}
+            custom_timeout=${HEALTH_CHECK_TIMEOUT}
+            ;;
+        fallback)
+            max_retries=${HEALTH_CHECK_RETRIES_FALLBACK}
+            custom_timeout=${HEALTH_CHECK_TIMEOUT_FALLBACK}
+            ;;
+    esac
 
     # Inicializar contadores se não existem
     [ -z "${BACKEND_STABLE_COUNT[$port]}" ] && BACKEND_STABLE_COUNT[$port]=0
 
-    log_debug "Health check iniciado para porta $port (mode: $mode, max_retries: $max_retries)"
+    log_debug "Health check iniciado para porta $port (mode: $mode, max_retries: $max_retries, timeout: ${custom_timeout}s)"
 
     for i in $(seq 1 $max_retries); do
         # Verificar porta aberta como pre-check
@@ -241,12 +289,12 @@ unified_health_check() {
             continue
         fi
 
-        # Verificar resposta HTTP
-        if check_http_health $port; then
-            local response_time=$(check_response_time $port)
+        # Verificar resposta HTTP com timeout customizado
+        if check_http_health_with_timeout $port $custom_timeout; then
+            local response_time=$(check_response_time_with_timeout $port $custom_timeout)
 
             # Validar tempo de resposta
-            if (( $(echo "$response_time < $HEALTH_CHECK_TIMEOUT" | bc -l 2>/dev/null || echo "1") )); then
+            if (( $(echo "$response_time < $custom_timeout" | bc -l 2>/dev/null || echo "1") )); then
                 BACKEND_STABLE_COUNT[$port]=$((${BACKEND_STABLE_COUNT[$port]:-0} + 1))
                 log_debug "  [$i/$max_retries] Porta $port OK (${response_time}s, stable: ${BACKEND_STABLE_COUNT[$port]}/$stable_threshold)"
 
@@ -465,10 +513,10 @@ else
     fi
 fi
 
-# Verificar secundários (não-crítico)
+# Verificar secundários e fallback (não-crítico)
 log_info "Aguardando Backends Secundários (8080, 3001)..."
 unified_health_check 8080 secondary || log_warning "Backend Secondary (8080) não está pronto (prosseguindo...)"
-unified_health_check 3001 secondary || log_warning "Backend Fallback (3001) não está pronto (prosseguindo...)"
+unified_health_check 3001 fallback || log_warning "Backend Fallback (3001) não está pronto (prosseguindo...)"
 
 # ============================================================================
 # PHASE 2.5: STABILIZAÇÃO DE CPU
