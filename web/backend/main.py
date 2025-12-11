@@ -1465,6 +1465,15 @@ try:
 except ImportError:
     logger.debug("Monitoring routes not available")
 
+# API de Métricas de Consciência (Task 2.6.1)
+try:
+    from web.backend.api import metrics_api
+
+    app.include_router(metrics_api.router)
+    logger.info("Metrics API routes registered")
+except ImportError as e:
+    logger.warning(f"Metrics API routes not available: {e}")
+
 # Set orchestrator for metacognition routes
 # This will be set when orchestrator is initialized
 # Orchestrator initialization is now handled asynchronously in lifespan
