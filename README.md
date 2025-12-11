@@ -301,6 +301,61 @@ python scripts/run_200_cycles_verbose.py --help
 | `@pytest.mark.slow` | Tests taking >30s | ❌ Excluded | ❌ Excluded |
 | (no markers) | Unit/integration mocked tests | ✅ Included | ✅ Included |
 
+### Indexação de Embeddings
+
+**Sistema de Embeddings OmniMind:**
+- **Script principal**: `run_indexing.py` - Indexação completa do projeto
+- **Módulo**: `src/embeddings/code_embeddings.py` - Sistema de embeddings abrangente
+- **Banco vetorial**: Qdrant (porta 6333)
+
+**Funcionalidades:**
+- ✅ Indexação completa: código, documentação, dados, logs, modelos, notebooks
+- ✅ Indexação incremental: só processa arquivos modificados
+- ✅ Metadados do sistema: kernel, hardware, processos
+- ✅ Paralelização: múltiplos workers para performance
+- ✅ **GPU Otimizada**: Gerenciamento automático de memória GPU
+- ✅ **Execução Assíncrona**: Previne fragmentação de memória
+
+**Configurações GPU:**
+- **Threshold automático**: 500MB mínimo de VRAM livre
+- **Limpeza automática**: `torch.cuda.empty_cache()` após batches
+- **Batch processing**: Tamanho configurável (padrão: 32)
+- **Forçar GPU**: `OMNIMIND_FORCE_GPU_EMBEDDINGS=true`
+
+```bash
+# Indexação completa
+python run_indexing.py
+
+# Indexação incremental (só modificados)
+python run_indexing.py --incremental
+
+# Configuração GPU personalizada
+python run_indexing.py --gpu-memory-threshold 1000 --batch-size 64
+
+# Forçar GPU independente de memória
+python run_indexing.py --force-gpu
+
+# Desabilitar async (modo compatibilidade)
+python run_indexing.py --disable-async
+
+# Ver todas as opções
+python run_indexing.py --help
+```
+
+**Tipos de Conteúdo Indexados:**
+- **Código**: `.py`, `.js`, `.ts`, `.java`, `.cpp`, `.go`, `.rs`
+- **Documentação**: `.md`, `.txt`, `.rst`, `.adoc`
+- **Dados**: `.json`, `.jsonl`, `.csv`, `.yaml`
+- **Modelos**: `.pkl`, `.h5`, `.onnx`, `.pt`
+- **Notebooks**: `.ipynb`
+- **Sistema**: Kernel info, hardware, processos
+
+**Estatísticas de Performance:**
+- **GPU Memory Cleared**: Contador de limpezas de cache
+- **Embedding Batches**: Número de batches processados
+- **Total Chunks**: Fragmentos indexados
+- **Tempo de processamento**: Com paralelização
+
 ---
 
 ## 📋 Configuration Files

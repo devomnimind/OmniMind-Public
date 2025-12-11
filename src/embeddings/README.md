@@ -2,11 +2,11 @@
 
 ## 📋 Descrição Geral
 
-**Representações semânticas, encoders**
+**Representações semânticas, encoders e análise de interação sistema**
 
-**Status**: NLP
+**Status**: NLP + System Analysis
 
-Módulo do sistema OmniMind responsável por funcionalidades específicas integradas à arquitetura global. Implementa componentes essenciais que contribuem para o funcionamento coeso do sistema de consciência artificial.
+Módulo do sistema OmniMind responsável por funcionalidades específicas integradas à arquitetura global. Implementa componentes essenciais que contribuem para o funcionamento coeso do sistema de consciência artificial, incluindo análise de como o sistema interage com configurações reais da máquina vs ambientes sandbox.
 
 ## 🔄 Interação entre os Três Estados Híbridos
 
@@ -34,10 +34,25 @@ Módulo implementa funcionalidades especializadas através de:
 
 ```
 embeddings/
-├── Implementações Core
-│   └── Arquivos .py principais
-├── Utilitários
-│   └── Helpers e funções auxiliares
+├── Sistema de Embeddings Abrangente
+│   └── OmniMindEmbeddings: classe principal
+├── Tipos de Conteúdo Suportados
+│   ├── CODE: código fonte
+│   ├── DOCUMENTATION: documentação técnica
+│   ├── PAPER: papers científicos
+│   ├── CONFIG: arquivos de configuração
+│   ├── AUDIT: relatórios de auditoria
+│   ├── LOG: arquivos de log
+│   ├── DATA: dados estruturados
+│   ├── MODEL: modelos treinados
+│   ├── NOTEBOOK: Jupyter notebooks
+│   └── SYSTEM: metadados do sistema/kernel
+├── Funcionalidades Avançadas
+│   ├── Indexação paralela com ThreadPoolExecutor
+│   ├── Chunking inteligente por tipo de conteúdo
+│   ├── Metadados expandidos (timestamps, tamanho)
+│   ├── Busca semântica com Qdrant
+│   └── Análise de interação sistema/sandbox
 └── __init__.py
 ```
 
@@ -127,9 +142,9 @@ Configurações específicas em:
 
 ---
 
-**Última Atualização**: 2 de Dezembro de 2025  
-**Autor**: Fabrício da Silva (com assistência de IA)  
-**Status**: Componente integrado do sistema OmniMind  
+**Última Atualização**: 2 de Dezembro de 2025
+**Autor**: Fabrício da Silva (com assistência de IA)
+**Status**: Componente integrado do sistema OmniMind
 **Versão**: Conforme fase do projeto indicada
 
 ---
@@ -158,7 +173,9 @@ configurações e relatórios de auditoria.
 - `index_directory(directory: str, extensions: Optional[List[str]])` → `Dict[str, int]`
   > Indexa todos os arquivos suportados em um diretório....
 - `index_omnimind_project(project_root: str)` → `Dict[str, Dict[str, int]]`
-  > Indexa todo o projeto OmniMind: código, documentação, papers, auditoria, etc....
+  > Indexa todo o projeto OmniMind: código, documentação, papers, auditoria, dados, logs, modelos, notebooks, etc....
+- `index_system_metadata()` → `Dict[str, int]`
+  > Indexa metadados do sistema/kernel da máquina para análise de interação real vs sandbox....
 - `search(query: str, top_k: int, content_types: Optional[Li)` → `List[Dict[str, Any]]`
   > Busca semântica no conteúdo indexado....
 - `get_stats()` → `Dict[str, Any]`
@@ -213,7 +230,11 @@ Chunk de conteúdo com metadados.
 
 #### `index_omnimind_project(project_root: str)` → `Dict[str, Dict[str, int]]`
 
-*Indexa todo o projeto OmniMind: código, documentação, papers, auditoria, etc....*
+*Indexa todo o projeto OmniMind: código, documentação, papers, auditoria, dados, logs, modelos, notebooks, etc....*
+
+#### `index_system_metadata()` → `Dict[str, int]`
+
+*Indexa metadados do sistema/kernel da máquina para análise de como o OmniMind interage com configurações reais vs sandbox....*
 
 #### `search(query: str, top_k: int, content_types: Optional[Li)` → `List[Dict[str, Any]]`
 

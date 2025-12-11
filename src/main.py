@@ -83,6 +83,23 @@ async def main():
         )
         logger.info("Autopoietic Manager initialized (Phase 22).")
 
+        # Initialize Report Maintenance Scheduler (Automated Cleanup & Compression)
+        try:
+            from src.observability.report_maintenance_scheduler import (
+                init_report_maintenance_scheduler,
+            )
+
+            maintenance_scheduler = init_report_maintenance_scheduler(
+                check_interval_minutes=60,  # Verificar a cada hora
+                daily_hour=3,  # Executar limpeza diária às 3 AM UTC
+                daily_minute=0,
+            )
+            logger.info(
+                "✅ Report Maintenance Scheduler initialized (automated cleanup & compression enabled)."
+            )
+        except Exception as e:
+            logger.warning(f"Failed to initialize maintenance scheduler: {e}")
+
         logger.info("=== Boot Sequence Complete. System is ALIVE. ===")
 
         # Start Main Cycle

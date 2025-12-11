@@ -72,6 +72,9 @@ class ModuleMetricsCollector:
         # Cache de métricas por módulo
         self.module_metrics: Dict[str, Dict[str, Any]] = {}
 
+        # Carregar métricas do snapshot ao inicializar
+        self._load_metrics_from_snapshot()
+
         logger.info(f"ModuleMetricsCollector inicializado: {self.metrics_dir}")
 
     def record_metric(
@@ -161,6 +164,23 @@ class ModuleMetricsCollector:
         """
         return any(excluded in module_name for excluded in self.EXCLUDED_FROM_AUDIT)
 
+    def _load_metrics_from_snapshot(self) -> None:
+        """
+        Carrega métricas do snapshot ao inicializar.
+        Permite recuperar métricas persistidas de execuções anteriores.
+        """
+        try:
+            if self.snapshot_file.exists():
+                with open(self.snapshot_file, "r", encoding="utf-8") as f:
+                    snapshot = json.load(f)
+
+                if "modules" in snapshot:
+                    self.module_metrics = snapshot["modules"]
+                    logger.info(f"Carregadas {len(self.module_metrics)} módulos do snapshot")
+        except Exception as e:
+            logger.debug(f"Erro ao carregar snapshot: {e}")
+            # Continuar normalmente se não conseguir carregar
+
     def _update_snapshot(self) -> None:
         """Atualiza snapshot JSON com métricas atuais."""
         try:
@@ -227,3 +247,9 @@ def get_metrics_collector() -> ModuleMetricsCollector:
     if _global_collector is None:
         _global_collector = ModuleMetricsCollector()
     return _global_collector
+
+
+# Alias para compatibilidade
+def get_module_metrics() -> ModuleMetricsCollector:
+    """Alias para get_metrics_collector() - retorna instância global do coletor."""
+    return get_metrics_collector()

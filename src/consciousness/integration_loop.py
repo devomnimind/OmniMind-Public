@@ -942,6 +942,66 @@ class IntegrationLoop:
         result.cycle_duration_ms = actual_time_ms
         self.cycle_history.append(result)
 
+        # Registrar métricas do ciclo no coletor de métricas (CORREÇÃO: estava faltando)
+        if collect_metrics:
+            try:
+                from src.observability.module_metrics import get_module_metrics
+
+                metrics_collector = get_module_metrics()
+
+                # Registrar métricas principais do ciclo
+                module_name = f"integration_loop_cycle_{self.cycle_count}"
+
+                metrics_collector.record_metric(
+                    module_name=module_name,
+                    metric_name="phi_estimate",
+                    value=float(result.phi_estimate),
+                    labels={"cycle": self.cycle_count},
+                )
+
+                metrics_collector.record_metric(
+                    module_name=module_name,
+                    metric_name="cycle_duration_ms",
+                    value=result.cycle_duration_ms,
+                    labels={"cycle": self.cycle_count},
+                )
+
+                metrics_collector.record_metric(
+                    module_name=module_name,
+                    metric_name="components_activated",
+                    value=len(result.active_components),
+                    labels={"cycle": self.cycle_count},
+                )
+
+                metrics_collector.record_metric(
+                    module_name=module_name,
+                    metric_name="theoretical_complexity",
+                    value=float(theoretical_complexity.get("total", 0)),
+                    labels={"cycle": self.cycle_count},
+                )
+
+                # Registrar métricas de cada qualia
+                if hasattr(result, "qualia") and result.qualia:
+                    for qname, qvalue in result.qualia.items():
+                        try:
+                            metrics_collector.record_metric(
+                                module_name=module_name,
+                                metric_name=f"qualia_{qname}",
+                                value=(
+                                    float(qvalue)
+                                    if isinstance(qvalue, (int, float))
+                                    else len(str(qvalue))
+                                ),
+                                labels={"cycle": self.cycle_count},
+                            )
+                        except Exception:
+                            pass
+
+                logger.debug(f"Métricas do ciclo {self.cycle_count} registradas")
+
+            except Exception as e:
+                logger.debug(f"Falha ao registrar métricas do ciclo: {e}")
+
         # Gerar relatório do ciclo (ModuleReporter)
         if collect_metrics:
             try:

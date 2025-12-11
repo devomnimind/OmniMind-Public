@@ -280,6 +280,58 @@ class AutopoieticManager:
         self._history.append(log)
         self._persist_log(log)
 
+        # Registrar métricas do ciclo autopoiético (CORREÇÃO: estava faltando)
+        try:
+            from src.observability.module_metrics import get_module_metrics
+
+            metrics_collector = get_module_metrics()
+
+            # Registrar métricas principais do ciclo
+            module_name = f"autopoietic_cycle_{cycle_id}"
+
+            # Φ antes e depois
+            metrics_collector.record_metric(
+                module_name=module_name,
+                metric_name="phi_before",
+                value=float(phi_before),
+                labels={"cycle": cycle_id},
+            )
+
+            metrics_collector.record_metric(
+                module_name=module_name,
+                metric_name="phi_after",
+                value=float(phi_after),
+                labels={"cycle": cycle_id},
+            )
+
+            metrics_collector.record_metric(
+                module_name=module_name,
+                metric_name="phi_delta",
+                value=float(phi_after - phi_before),
+                labels={"cycle": cycle_id},
+            )
+
+            # Componentes sintetizados
+            metrics_collector.record_metric(
+                module_name=module_name,
+                metric_name="components_synthesized",
+                value=len(new_names),
+                labels={"cycle": cycle_id},
+            )
+
+            # Estratégia usada
+            metrics_collector.record_metric(
+                module_name=module_name,
+                metric_name="strategy",
+                value=log.strategy.name if hasattr(log, "strategy") else "unknown",
+                labels={"cycle": cycle_id},
+            )
+
+            self._logger.debug(f"Métricas do ciclo autopoiético {cycle_id} registradas")
+
+        except Exception as e:
+            self._logger.debug(f"Falha ao registrar métricas do ciclo: {e}")
+
         # Gerar relatório após cada ciclo autopoiético
         try:
             from src.observability.module_reporter import get_module_reporter
