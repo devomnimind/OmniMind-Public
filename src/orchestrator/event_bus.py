@@ -6,15 +6,20 @@ Implementa recomendações da Seção 3 da AUDITORIA_ORCHESTRATOR_COMPLETA.md:
 - Debouncing para evitar spam de eventos
 - Integração de sensores com Orchestrator
 - Resposta em tempo real para eventos críticos
+Sprint 1 Observability: Adds distributed tracing support with trace_id propagation.
 """
 
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
 import time
-from dataclasses import dataclass
+import uuid
+from dataclasses import dataclass, asdict
+from datetime import datetime, timezone
 from enum import Enum
+from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
 
 from ..security.security_agent import SecurityEvent
@@ -40,6 +45,8 @@ class OrchestratorEvent:
     priority: EventPriority
     data: Dict[str, Any]
     timestamp: float
+    trace_id: Optional[str] = None  # 🎯 Sprint 1: TraceID para correlação distribuída
+    span_id: Optional[str] = None  # 🎯 Sprint 1: Span ID para OpenTelemetry
 
 
 class OrchestratorEventBus:
@@ -100,11 +107,22 @@ class OrchestratorEventBus:
         return False
 
     async def publish(self, event: OrchestratorEvent) -> None:
-        """Publica evento no bus.
+        """
+        Publica evento no bus com suporte a distributed tracing.
+
+        Sprint 1 Observability: Adiciona trace_id ao evento se não presente.
 
         Args:
             event: Evento a publicar
         """
+        # 🎯 Sprint 1 Task 1.4: Add trace_id to event if not already set
+        if event.trace_id is None:
+            # Try to get trace_id from current RNN cycle context (if available)
+            # Otherwise, generate a new one
+            event.trace_id = str(uuid.uuid4())
+        if event.span_id is None:
+            event.span_id = str(uuid.uuid4())
+
         # Eventos críticos nunca são debounced
         if event.priority != EventPriority.CRITICAL and self._should_debounce(event):
             return
@@ -117,7 +135,11 @@ class OrchestratorEventBus:
             "Evento publicado: %s (prioridade: %s)",
             event.event_type,
             event.priority.name,
+            extra={"trace_id": event.trace_id},  # 🎯 Sprint 1: Add trace_id to logs
         )
+
+        # 🎯 Sprint 1 Task 1.4: Write event to traced JSONL file
+        self._write_event_traced(event)
 
     async def publish_security_event(
         self, security_event: SecurityEvent, priority: Optional[EventPriority] = None
@@ -250,6 +272,34 @@ class OrchestratorEventBus:
                 await self._processing_task
             except asyncio.CancelledError:
                 pass
+
+    def _write_event_traced(self, event: OrchestratorEvent) -> None:
+        """
+        Write event to traced JSONL file for correlation analysis.
+
+        Sprint 1 Task 1.4: Logs events with trace_id for distributed tracing.
+
+        Args:
+            event: Event to log
+        """
+        try:
+            # Create data directory if needed
+            log_dir = Path("data/monitor")
+            log_dir.mkdir(parents=True, exist_ok=True)
+
+            # Convert event to dict
+            event_dict = asdict(event)
+            event_dict["priority"] = event.priority.name  # Convert enum to string
+            event_dict["published_at"] = datetime.now(timezone.utc).isoformat()
+
+            # Write to JSONL file
+            log_file = log_dir / "events_traced.jsonl"
+            with open(log_file, "a") as f:
+                f.write(json.dumps(event_dict) + "\n")
+
+        except Exception as e:
+            # Don't fail event publishing if logging fails
+            logger.debug(f"Failed to write traced event: {e}")
 
     def get_queue_sizes(self) -> Dict[str, int]:
         """Obtém tamanho de cada fila de prioridade.
