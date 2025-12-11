@@ -21,7 +21,9 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, cast
 
 try:
-    from sentence_transformers import SentenceTransformer  # type: ignore[import-untyped]
+    from sentence_transformers import (
+        SentenceTransformer,  # type: ignore[import-untyped]
+    )
 
     TRANSFORMERS_AVAILABLE = True
 except ImportError:
@@ -82,7 +84,15 @@ class SemanticMemoryLayer:
         if SentenceTransformer is None:
             raise ImportError("SentenceTransformer not available")
 
-        self.embedder = SentenceTransformer(model_name)  # type: ignore[assignment]
+        # Resolve model name for offline compatibility
+        try:
+            from src.utils.offline_mode import resolve_sentence_transformer_name
+
+            resolved_model_name = resolve_sentence_transformer_name(model_name)
+        except ImportError:
+            resolved_model_name = model_name
+
+        self.embedder = SentenceTransformer(resolved_model_name)  # type: ignore[assignment]
         self.embedding_dim = (
             self.embedder.get_sentence_embedding_dimension()  # type: ignore[attr-defined]
         )

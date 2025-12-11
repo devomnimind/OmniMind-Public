@@ -61,8 +61,8 @@ export function useBackendHealth() {
     // Verificação inicial
     checkBackendHealth();
 
-    // Configurar intervalo inicial
-    const initialInterval = health.isOnline ? 10000 : 30000;
+    // Configurar intervalo inicial (aumentado para dar mais tempo de carregamento)
+    const initialInterval = health.isOnline ? 30000 : 60000; // 30s quando online, 60s quando offline
     checkIntervalRef.current = window.setInterval(() => {
       checkBackendHealth();
     }, initialInterval);
@@ -80,7 +80,7 @@ export function useBackendHealth() {
       clearInterval(checkIntervalRef.current);
     }
 
-    const currentInterval = health.isOnline ? 10000 : 30000;
+    const currentInterval = health.isOnline ? 30000 : 60000; // 30s quando online, 60s quando offline
     checkIntervalRef.current = window.setInterval(() => {
       checkBackendHealth();
     }, currentInterval);

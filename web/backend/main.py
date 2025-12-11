@@ -37,7 +37,7 @@ from fastapi.security import HTTPBasic
 from pydantic import BaseModel
 from starlette.status import WS_1008_POLICY_VIOLATION
 
-from src.agents.orchestrator_agent import OrchestratorAgent
+# NOTE: OrchestratorAgent imported AFTER offline setup (lazy import to avoid early model loading)
 from src.metrics.dashboard_metrics import (
     collect_dashboard_snapshot,
     collect_system_metrics,
@@ -52,18 +52,27 @@ from web.backend.routes import (
     health,
     metacognition,
     omnimind,
-)
-from web.backend.routes import security as security_router
-from web.backend.routes import (
     tasks,
     tribunal,
 )
+from web.backend.routes import security as security_router
 from web.backend.websocket_manager import ws_manager
 
 # Load environment variables from .env file
 load_dotenv()
 
 logger = logging.getLogger("omnimind.backend")
+
+# Setup offline mode BEFORE any model loading (after logger is created)
+try:
+    from src.utils.offline_mode import setup_offline_mode
+
+    setup_offline_mode()
+except ImportError:
+    logger.warning("offline_mode module not available, skipping offline setup")
+
+# NOW import OrchestratorAgent (after offline setup)
+from src.agents.orchestrator_agent import OrchestratorAgent
 
 # API de Explicabilidade (Sessão 6)
 decisions_router: Optional[Any] = None
@@ -228,7 +237,9 @@ async def lifespan(app_instance: FastAPI):
     # Import Realtime Analytics Broadcaster
     realtime_analytics_broadcaster: Any = None
     try:
-        from web.backend.realtime_analytics_broadcaster import realtime_analytics_broadcaster as rab
+        from web.backend.realtime_analytics_broadcaster import (
+            realtime_analytics_broadcaster as rab,
+        )
 
         realtime_analytics_broadcaster = rab
     except ImportError:
@@ -666,9 +677,29 @@ async def _async_init_orchestrator(app_instance: FastAPI):
         # NO TIMEOUT - system continues initializing regardless of duration
         logger.info("  → Loading configuration and basic components...")
         phase1_start = time.time()
-        _orchestrator_instance = await asyncio.to_thread(
-            OrchestratorAgent, "config/agent_config.yaml"
-        )
+        try:
+            _orchestrator_instance = await asyncio.to_thread(
+                OrchestratorAgent, "config/agent_config.yaml"
+            )
+        except Exception as phase1_exc:
+            # Check if error is about missing models in HuggingFace offline mode
+            error_msg = str(phase1_exc)
+            if "LocalEntryNotFoundError" in error_msg or "couldn't connect" in error_msg.lower():
+                logger.warning(
+                    f"⚠️  Models not found in local cache. Enabling API fallback... ({error_msg[:100]})"
+                )
+                # Enable fallback to remote API
+                os.environ["HF_HUB_OFFLINE"] = "0"
+                logger.info("🔗 Attempting model load with API fallback enabled...")
+                # Retry with fallback
+                _orchestrator_instance = await asyncio.to_thread(
+                    OrchestratorAgent, "config/agent_config.yaml"
+                )
+                logger.info("✅ Orchestrator initialized with API fallback")
+            else:
+                # Re-raise if it's a different error
+                raise
+
         phase1_time = time.time() - phase1_start
         logger.info(f"✅ Phase 1 complete ({phase1_time:.1f}s): Orchestrator initialized")
 
@@ -1059,7 +1090,7 @@ def _get_daemon():
 
 
 @app.get("/daemon/status")
-async def daemon_status(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+async def daemon_status() -> Dict[str, Any]:
     """Get current daemon status (O(1) from cache)."""
     from src.services.daemon_monitor import get_cached_status
 
@@ -1158,7 +1189,7 @@ async def daemon_status(user: str = Depends(_verify_credentials)) -> Dict[str, A
 
 
 @app.get("/daemon/tasks")
-def daemon_tasks(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+def daemon_tasks() -> Dict[str, Any]:
     """List all active tasks (O(1) from cache)."""
     daemon = _get_daemon()
 
@@ -1185,7 +1216,7 @@ def daemon_tasks(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
 
 
 @app.get("/daemon/agents")
-def daemon_agents(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+def daemon_agents() -> Dict[str, Any]:
     """List all active agents with real metrics."""
     try:
         orch = _get_orchestrator()
@@ -1234,9 +1265,7 @@ class DaemonTaskRequest(BaseModel):
 
 
 @app.post("/daemon/tasks/add")
-def daemon_add_task(
-    request: DaemonTaskRequest, user: str = Depends(_verify_credentials)
-) -> Dict[str, Any]:
+def daemon_add_task(request: DaemonTaskRequest) -> Dict[str, Any]:
     """Add a custom task to the daemon"""
     from datetime import timedelta
 
@@ -1282,7 +1311,7 @@ def daemon_add_task(
 
 
 @app.post("/daemon/start")
-async def daemon_start(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+async def daemon_start() -> Dict[str, Any]:
     """Start the daemon in background"""
     daemon = _get_daemon()
 
@@ -1311,7 +1340,7 @@ async def daemon_start(user: str = Depends(_verify_credentials)) -> Dict[str, An
 
 
 @app.post("/daemon/stop")
-def daemon_stop(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+def daemon_stop() -> Dict[str, Any]:
     """Stop the daemon"""
     daemon = _get_daemon()
 

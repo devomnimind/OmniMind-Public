@@ -85,16 +85,26 @@ def _load_embedding_model(model_name: str) -> Optional["SentenceTransformer"]:
         from src.memory.gpu_memory_consolidator import get_gpu_consolidator
         from src.utils.device_utils import get_sentence_transformer_device
 
+        # Resolve model name for offline compatibility
+        try:
+            from src.utils.offline_mode import resolve_sentence_transformer_name
+
+            resolved_model_name = resolve_sentence_transformer_name(model_name)
+        except ImportError:
+            resolved_model_name = model_name
+
         # Pass HuggingFace token to access gated models
         hf_token: Optional[str] = os.getenv("HUGGING_FACE_HUB_TOKEN")
         device = get_sentence_transformer_device()
 
         try:
-            return SentenceTransformer(model_name, token=hf_token, device=device)
+            return SentenceTransformer(resolved_model_name, token=hf_token, device=device)
         except Exception as oom_exc:
             # Se OOM, tentar consolidar memórias antes de fallback
             if "out of memory" in str(oom_exc).lower() or "OOM" in str(oom_exc):
-                logger.warning(f"CUDA OOM ao carregar {model_name}. Consolidando memórias...")
+                logger.warning(
+                    f"CUDA OOM ao carregar {resolved_model_name}. Consolidando memórias..."
+                )
 
                 consolidator = get_gpu_consolidator()
                 if consolidator.should_consolidate():
@@ -106,8 +116,8 @@ def _load_embedding_model(model_name: str) -> Optional["SentenceTransformer"]:
                     )
 
                 # Fallback para CPU
-                logger.info(f"Usando CPU para {model_name} (fallback após consolidação)")
-                return SentenceTransformer(model_name, token=hf_token, device="cpu")
+                logger.info(f"Usando CPU para {resolved_model_name} (fallback após consolidação)")
+                return SentenceTransformer(resolved_model_name, token=hf_token, device="cpu")
             else:
                 raise
     except Exception as exc:

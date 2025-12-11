@@ -91,9 +91,17 @@ class SemanticCacheLayer:
                 get_sentence_transformer_device,
             )
 
+            # Resolve model name for offline compatibility
+            try:
+                from src.utils.offline_mode import resolve_sentence_transformer_name
+
+                resolved_model_name = resolve_sentence_transformer_name(model_name)
+            except ImportError:
+                resolved_model_name = model_name
+
             device = get_sentence_transformer_device()
-            logger.info(f"Carregando modelo de embeddings: {model_name} (device={device})")
-            self.embedding_model = SentenceTransformer(model_name, device=device)
+            logger.info(f"Carregando modelo de embeddings: {resolved_model_name} (device={device})")
+            self.embedding_model = SentenceTransformer(resolved_model_name, device=device)
             # Garantir que o modelo está em dispositivo real (não meta)
             ensure_tensor_on_real_device(self.embedding_model)
             embedding_dim_raw = self.embedding_model.get_sentence_embedding_dimension()

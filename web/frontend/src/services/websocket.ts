@@ -24,7 +24,7 @@ class WebSocketService {
   private static instance: WebSocketService;
   private ws: WebSocket | null = null;
   private reconnectAttempts = 0;
-  private maxReconnectAttempts = 5;
+  private maxReconnectAttempts = 20; // Aumentado de 5 para 20 tentativas
   private reconnectTimeout: number | null = null;
   private listeners: Set<(msg: WebSocketMessage) => void> = new Set();
   private connectionStateListeners: Set<(state: ConnectionState) => void> = new Set();
@@ -97,7 +97,8 @@ class WebSocketService {
         window.clearTimeout(this.reconnectTimeout);
     }
 
-    const delay = Math.min(1000 * Math.pow(2, this.reconnectAttempts), 10000);
+    // Backoff exponencial: 1s, 2s, 4s, 8s... até máximo de 120s (2 minutos)
+    const delay = Math.min(1000 * Math.pow(2, this.reconnectAttempts), 120000);
     this.reconnectTimeout = window.setTimeout(() => {
       this.reconnectAttempts++;
       this.connect();

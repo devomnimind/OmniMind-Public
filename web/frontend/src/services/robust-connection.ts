@@ -34,14 +34,14 @@ class RobustConnectionService {
 
   // Retry logic
   private reconnectAttempts = 0;
-  private maxReconnectAttempts = 15; // Mais tentativas
-  private reconnectDelay = 1000;
-  private maxReconnectDelay = 30000;
+  private maxReconnectAttempts = 25; // Mais tentativas (aumentado de 15)
+  private reconnectDelay = 2000; // Começar com 2s (aumentado de 1s)
+  private maxReconnectDelay = 120000; // Max 2 minutos (aumentado de 30s)
   private reconnectTimeout: number | null = null;
 
   // Polling fallback
   private pollingInterval: number | null = null;
-  private pollDelay = 2000;
+  private pollDelay = 5000; // 5 segundos entre polls (aumentado de 2s)
 
   // Message handling
   private listeners: Set<(msg: WebSocketMessage) => void> = new Set();

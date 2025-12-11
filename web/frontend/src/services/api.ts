@@ -78,15 +78,19 @@ class ApiService {
       ...options.headers,
     };
 
-    // CORREÇÃO CRÍTICA (2025-12-10): Timeout adaptativo aumentado
-    // Backend pode estar sobrecarregado, aumentar timeouts significativamente
+    // CORREÇÃO CRÍTICA (2025-12-11): Timeout MUITO aumentado sem bloqueio de máquina
+    // Sistema rodando em dev com modelos LLM pesados, precisa de muito tempo
+    // Backend responde, mas carregamento de modelos pode levar minutos
     const criticalEndpoints = ['/daemon/status', '/api/v1/autopoietic/consciousness/metrics'];
     const slowEndpoints = ['/api/v1/autopoietic/status', '/api/v1/autopoietic/cycles', '/api/tribunal', '/api/metacognition'];
     const isCritical = criticalEndpoints.some(ep => endpoint.includes(ep));
     const isSlow = slowEndpoints.some(ep => endpoint.includes(ep));
 
-    // Timeouts aumentados: 30s críticos, 20s lentos, 15s normais
-    const timeoutMs = isCritical ? 30000 : (isSlow ? 20000 : 15000);
+    // Timeouts MUITO aumentados para acomodar carregamento de modelos:
+    // - Crítico: 5 minutos (300s) - Consciência + Phi calculations
+    // - Lento: 3 minutos (180s) - Autopoietic cycles, tribunal analysis
+    // - Normal: 2 minutos (120s) - Health checks, simples queries
+    const timeoutMs = isCritical ? 300000 : (isSlow ? 180000 : 120000);
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);

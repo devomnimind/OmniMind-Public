@@ -4,10 +4,10 @@ import { useAuthStore } from '../store/authStore';
 /**
  * Hook centralizado para polling otimizado
  *
- * Prioridades:
- * - 'high': 10-15s (métricas críticas)
- * - 'medium': 30s (métricas importantes)
- * - 'low': 60s+ (métricas secundárias)
+ * Prioridades (AUMENTADO para acomodar carregamento de modelos LLM em dev):
+ * - 'high': 30-45s (métricas críticas - permite tempo de inicialização)
+ * - 'medium': 60s (métricas importantes - mais tolerância)
+ * - 'low': 120s+ (métricas secundárias - sem pressão)
  */
 export function useOptimizedPolling<T>(
   fetchFn: () => Promise<T>,
@@ -38,9 +38,9 @@ export function useOptimizedPolling<T>(
     if (interval) return interval;
 
     const baseIntervals = {
-      high: 15000,    // 15s para métricas críticas
-      medium: 30000,  // 30s para métricas importantes
-      low: 60000,     // 60s para métricas secundárias
+      high: 45000,    // 45s para métricas críticas (3x original)
+      medium: 60000,  // 60s para métricas importantes (2x original)
+      low: 120000,    // 120s para métricas secundárias (2x original)
     };
 
     return baseIntervals[priority];

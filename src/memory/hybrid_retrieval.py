@@ -118,11 +118,17 @@ class HybridRetrievalSystem:
                 get_sentence_transformer_device,
             )
 
+            # Resolve model name for offline compatibility (resolve short names to full paths)
+            try:
+                from src.utils.offline_mode import resolve_sentence_transformer_name
+
+                resolved_model_name = resolve_sentence_transformer_name(embedding_model_name)
+            except ImportError:
+                resolved_model_name = embedding_model_name
+
             device = get_sentence_transformer_device()
-            logger.info(
-                f"Carregando modelo de embeddings: {embedding_model_name} (device={device})"
-            )
-            self.embedding_model = SentenceTransformer(embedding_model_name, device=device)
+            logger.info(f"Carregando modelo de embeddings: {resolved_model_name} (device={device})")
+            self.embedding_model = SentenceTransformer(resolved_model_name, device=device)
             # Garantir que o modelo está em dispositivo real (não meta)
             ensure_tensor_on_real_device(self.embedding_model)
             embedding_dim_raw = self.embedding_model.get_sentence_embedding_dimension()
@@ -153,9 +159,17 @@ class HybridRetrievalSystem:
             try:
                 from src.utils.device_utils import get_sentence_transformer_device
 
+                # Resolve model name for offline compatibility
+                try:
+                    from src.utils.offline_mode import resolve_sentence_transformer_name
+
+                    resolved_reranker_name = resolve_sentence_transformer_name(reranker_model_name)
+                except ImportError:
+                    resolved_reranker_name = reranker_model_name
+
                 device = get_sentence_transformer_device()
-                logger.info(f"Carregando reranker: {reranker_model_name} (device={device})")
-                self.reranker_model = SentenceTransformer(reranker_model_name, device=device)
+                logger.info(f"Carregando reranker: {resolved_reranker_name} (device={device})")
+                self.reranker_model = SentenceTransformer(resolved_reranker_name, device=device)
                 logger.info(f"Reranker carregado (device={device})")
             except Exception as e:
                 logger.warning(f"Erro ao carregar reranker: {e}. Continuando sem reranking.")

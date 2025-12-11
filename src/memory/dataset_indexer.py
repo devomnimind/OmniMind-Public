@@ -89,11 +89,17 @@ class DatasetIndexer:
                 get_sentence_transformer_device,
             )
 
+            # Resolve model name for offline compatibility
+            try:
+                from src.utils.offline_mode import resolve_sentence_transformer_name
+
+                resolved_model_name = resolve_sentence_transformer_name(embedding_model_name)
+            except ImportError:
+                resolved_model_name = embedding_model_name
+
             device = get_sentence_transformer_device()
-            logger.info(
-                f"Carregando modelo de embeddings: {embedding_model_name} (device={device})"
-            )
-            self.embedding_model = SentenceTransformer(embedding_model_name, device=device)
+            logger.info(f"Carregando modelo de embeddings: {resolved_model_name} (device={device})")
+            self.embedding_model = SentenceTransformer(resolved_model_name, device=device)
 
             # Garantir que modelo não está em meta device
             ensure_tensor_on_real_device(self.embedding_model)
