@@ -245,6 +245,17 @@ class ConsciousSystem:
         self.rho_P = rho_P_new
         self.rho_U = rho_U_new
 
+        # 🎯 Sprint 2 Task 2.3.2: Extrair métricas RNN após atualização de pesos
+        try:
+            from src.observability.rnn_metrics_extractor import get_rnn_metrics_extractor
+
+            extractor = get_rnn_metrics_extractor()
+            # Phi será calculado após, então passamos None aqui
+            extractor.extract_metrics(self, cycle_id=None, phi_value=None)
+        except Exception as e:
+            # Não falhar se métricas não estiverem disponíveis
+            pass
+
         return rho_C_new  # O estado "experienciado"
 
     def compute_phi_causal(self) -> float:

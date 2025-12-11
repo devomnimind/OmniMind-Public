@@ -541,6 +541,20 @@ class IntegrationLoop:
                         f"(Φ={phi_causal:.4f}, repression={repression:.3f})",
                         extra={"trace_id": cycle_context.trace_id},  # 🎯 Sprint 1: Add trace_id
                     )
+                    
+                    # 🎯 Sprint 2 Task 2.3.2: Extrair métricas RNN com correlação de Φ e ciclo
+                    try:
+                        from src.observability.rnn_metrics_extractor import get_rnn_metrics_extractor
+
+                        extractor = get_rnn_metrics_extractor()
+                        extractor.extract_metrics(
+                            self.workspace.conscious_system,
+                            cycle_id=self.cycle_count,
+                            phi_value=phi_causal,
+                        )
+                    except Exception as e:
+                        # Não falhar se métricas não estiverem disponíveis
+                        logger.debug(f"Falha ao extrair métricas RNN: {e}")
             except Exception as e:
                 logger.warning(f"Cycle {self.cycle_count}: RNN step failed - {e}")
 
