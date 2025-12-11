@@ -114,14 +114,14 @@ class AutopoieticManager:
         self._cycle_count += 1
         cycle_id = self._cycle_count
         self._logger.info("Starting autopoietic cycle %d", cycle_id)
-        
+
         # 🎯 Sprint 2: Rastrear métricas adicionais do ciclo
         cycle_start_time = time.time()
         synthesis_start_time = 0.0
         synthesis_end_time = 0.0
         rollback_count = 0
         validation_success = True
-        
+
         # Capturar uso de memória antes do ciclo
         try:
             process = psutil.Process()
@@ -353,7 +353,7 @@ class AutopoieticManager:
             )
 
             # 🎯 Sprint 2 Task 2.1.1: Adicionar novas métricas
-            
+
             # Tempo de síntese em milissegundos
             synthesis_time_ms = 0.0
             if synthesis_end_time > 0 and synthesis_start_time > 0:
@@ -364,7 +364,7 @@ class AutopoieticManager:
                 value=float(synthesis_time_ms),
                 labels={"cycle": cycle_id},
             )
-            
+
             # Sucesso da validação (booleano convertido para int)
             metrics_collector.record_metric(
                 module_name=module_name,
@@ -372,7 +372,7 @@ class AutopoieticManager:
                 value=int(validation_success),
                 labels={"cycle": cycle_id},
             )
-            
+
             # Contagem de rollbacks
             metrics_collector.record_metric(
                 module_name=module_name,
@@ -380,7 +380,7 @@ class AutopoieticManager:
                 value=int(rollback_count),
                 labels={"cycle": cycle_id},
             )
-            
+
             # Delta de memória em MB
             try:
                 process = psutil.Process()
@@ -388,7 +388,7 @@ class AutopoieticManager:
                 memory_delta_mb = memory_after_mb - memory_before_mb
             except Exception:
                 memory_delta_mb = 0.0
-                
+
             metrics_collector.record_metric(
                 module_name=module_name,
                 metric_name="memory_delta_mb",

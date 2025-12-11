@@ -32,7 +32,7 @@ export function RealtimeAnalytics() {
       cpu: systemMetrics.cpu_percent || 0,
       memory: systemMetrics.memory_percent || 0,
       tasks: status.task_count || 0,
-      agents: status.agents?.length || 0,
+      agents: 0,
     };
 
     // Só atualizar se valores são diferentes e não temos dados WebSocket recentes
@@ -57,7 +57,7 @@ export function RealtimeAnalytics() {
 
       return prev;
     });
-  }, [status?.system_metrics?.cpu_percent, status?.system_metrics?.memory_percent, status?.task_count, status?.agents?.length, analyticsData.length]); // CORREÇÃO: Depender apenas de valores primitivos
+  }, [status?.system_metrics?.cpu_percent, status?.system_metrics?.memory_percent, status?.task_count, analyticsData.length]); // CORREÇÃO: Depender apenas de valores primitivos
 
   useEffect(() => {
     // CORREÇÃO CRÍTICA (2025-12-09): Depender apenas de campos estáveis para evitar re-renders constantes
@@ -65,7 +65,6 @@ export function RealtimeAnalytics() {
 
     // CORREÇÃO: Usar useRef para evitar atualizações se os dados não mudaram
     const data = lastMessage.data as any;
-    const messageId = lastMessage.id || `${lastMessage.type}-${Date.now()}`;
 
     // Verificar se já processamos esta mensagem
     const newDataPoint: AnalyticsData = {

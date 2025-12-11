@@ -355,14 +355,7 @@ class ApiService {
   }
 
   // API de Explicabilidade (Sessão 6 - Orchestrator) - for future use
-  async getDecisions(params?: {
-    action?: string;
-    start_date?: number;
-    end_date?: number;
-    success?: boolean;
-    min_trust_level?: number;
-    limit?: number;
-  }): Promise<any[]> {
+  async getDecisions(): Promise<any[]> {
     // Placeholder: Future endpoint for decision logging
     // For now, use metacognition insights
     try {
@@ -385,7 +378,7 @@ class ApiService {
     }
   }
 
-  async getDecisionDetail(decisionId: number): Promise<any> {
+  async getDecisionDetail(): Promise<any> {
     // Placeholder: Future endpoint for decision details
     try {
       const data = await this.get('/api/metacognition/last-analysis');
@@ -423,12 +416,7 @@ class ApiService {
     }
   }
 
-  async exportDecisions(params?: {
-    action?: string;
-    start_date?: number;
-    end_date?: number;
-    limit?: number;
-  }): Promise<any> {
+  async exportDecisions(): Promise<any> {
     // Placeholder: Use security events export
     try {
       const data = await this.get('/api/security/events?limit=1000');
@@ -443,6 +431,16 @@ class ApiService {
     } catch (err) {
       console.error('Error in exportDecisions:', err);
       return [];
+    }
+  }
+
+  async resetMetrics(): Promise<void> {
+    // Reset all metrics via API endpoint
+    try {
+      await this.post('/api/metrics/reset', {});
+    } catch (err) {
+      console.error('Error resetting metrics:', err);
+      throw err;
     }
   }
 }

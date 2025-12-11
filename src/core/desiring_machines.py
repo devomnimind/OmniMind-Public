@@ -359,52 +359,51 @@ class Rhizoma:
     def get_metrics(self) -> Dict[str, Any]:
         """
         Captura métricas do Rhizoma e DesireFlow para monitoramento.
-        
+
         Conforme especificado em Task 2.4.4, captura:
         - flows_per_cycle: fluxos por ciclo
         - average_intensity: intensidade média
         - source_diversity: diversidade de fontes
         - flow_rate: fluxos por segundo
-        
+
         Returns:
             Dict com métricas do rhizoma
         """
         import time
-        
+
         # flows_per_cycle: número de fluxos recentes (últimos 100)
         recent_flows = self.flows_history[-100:] if self.flows_history else []
-        
+
         # Calcular ciclos únicos (baseado em timestamps agrupados por segundo)
         if recent_flows:
-            unique_cycles = len(set(
-                int(flow.timestamp.timestamp()) for flow in recent_flows
-            ))
+            unique_cycles = len(set(int(flow.timestamp.timestamp()) for flow in recent_flows))
             flows_per_cycle = len(recent_flows) / max(1, unique_cycles)
         else:
             flows_per_cycle = 0.0
-        
+
         # average_intensity: intensidade média dos fluxos
         average_intensity = 0.0
         if recent_flows:
             intensities = [flow.intensity.value for flow in recent_flows]
             average_intensity = sum(intensities) / len(intensities)
-        
+
         # source_diversity: diversidade de fontes (entropia)
         source_diversity = 0.0
         if recent_flows:
             source_counts: Dict[str, int] = {}
             for flow in recent_flows:
                 source_counts[flow.source_id] = source_counts.get(flow.source_id, 0) + 1
-            
+
             # Calcular entropia de Shannon
             total = sum(source_counts.values())
             if total > 0:
                 import math
+
                 for count in source_counts.values():
                     p = count / total
                     if p > 0:
                         source_diversity -= p * math.log2(p)
-        
+
         # flow_rate: fluxos por segundo (baseado em timestamps recentes)
         flow_rate = 0.0
         if len(recent_flows) >= 2:
@@ -412,10 +411,10 @@ class Rhizoma:
             first_time = recent_flows[0].timestamp.timestamp()
             last_time = recent_flows[-1].timestamp.timestamp()
             time_span = last_time - first_time
-            
+
             if time_span > 0:
                 flow_rate = len(recent_flows) / time_span
-        
+
         return {
             "flows_per_cycle": float(flows_per_cycle),
             "average_intensity": float(average_intensity),

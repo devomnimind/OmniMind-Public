@@ -317,23 +317,25 @@ class SymbolicRegister:
     def get_metrics(self) -> Dict[str, Any]:
         """
         Captura métricas do SymbolicRegister para monitoramento.
-        
+
         Conforme especificado em Task 2.4.2, captura:
         - message_count_per_cycle: mensagens enviadas por ciclo
         - symbol_diversity: diversidade simbólica (entropia)
         - narrative_coherence: coerência narrativa
         - message_latency_ms: latência de mensagens
-        
+
         Returns:
             Dict com métricas do registro simbólico
         """
         # Calcular message_count_per_cycle (média de mensagens por ciclo)
         # Estimativa baseada em mensagens recentes (últimas 100)
         recent_messages = self.symbolic_messages[-100:] if self.symbolic_messages else []
-        message_count_per_cycle = len(recent_messages) / max(1, len(set(
-            msg.timestamp // 1.0 for msg in recent_messages
-        ))) if recent_messages else 0.0
-        
+        message_count_per_cycle = (
+            len(recent_messages) / max(1, len(set(msg.timestamp // 1.0 for msg in recent_messages)))
+            if recent_messages
+            else 0.0
+        )
+
         # Calcular symbol_diversity (entropia de tipos de mensagens)
         symbol_diversity = 0.0
         if self.symbolic_messages:
@@ -342,16 +344,17 @@ class SymbolicRegister:
             for msg in self.symbolic_messages[-100:]:
                 order = msg.symbolic_content.get("order", "unknown")
                 order_counts[order] = order_counts.get(order, 0) + 1
-            
+
             # Calcular entropia de Shannon (otimizado)
             total = sum(order_counts.values())
             if total > 0:
                 import math
+
                 for count in order_counts.values():
                     p = count / total
                     if p > 0:
                         symbol_diversity -= p * math.log2(p)
-        
+
         # Calcular narrative_coherence (coerência entre mensagens consecutivas)
         narrative_coherence = 0.0
         if len(self.symbolic_messages) >= 2:
@@ -359,25 +362,27 @@ class SymbolicRegister:
             coherent_count = 0
             for i in range(1, min(100, len(self.symbolic_messages))):
                 curr_msg = self.symbolic_messages[-i]
-                prev_msg = self.symbolic_messages[-i-1]
-                
+                prev_msg = self.symbolic_messages[-i - 1]
+
                 # Coerente se sender/receiver mantém relação
-                if (curr_msg.sender == prev_msg.sender or 
-                    curr_msg.sender == prev_msg.receiver or
-                    curr_msg.receiver == prev_msg.sender):
+                if (
+                    curr_msg.sender == prev_msg.sender
+                    or curr_msg.sender == prev_msg.receiver
+                    or curr_msg.receiver == prev_msg.sender
+                ):
                     coherent_count += 1
-            
+
             narrative_coherence = float(coherent_count / min(99, len(self.symbolic_messages) - 1))
-        
+
         # Calcular message_latency_ms (latência média de processamento)
         message_latency_ms = 0.0
         if recent_messages and self.messages_processed > 0:
             # Estima latência baseado no tempo entre mensagens
             timestamps = [msg.timestamp for msg in recent_messages]
             if len(timestamps) >= 2:
-                intervals = [timestamps[i] - timestamps[i-1] for i in range(1, len(timestamps))]
+                intervals = [timestamps[i] - timestamps[i - 1] for i in range(1, len(timestamps))]
                 message_latency_ms = float(np.mean(intervals) * 1000)  # Converter para ms
-        
+
         return {
             "message_count_per_cycle": float(message_count_per_cycle),
             "symbol_diversity": float(symbol_diversity),

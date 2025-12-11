@@ -55,12 +55,7 @@ export function DecisionsDashboard() {
     try {
       setLoading(true);
       setError(null);
-      const data = await apiService.getDecisions({
-        action: filters.action || undefined,
-        success: filters.success !== null ? filters.success : undefined,
-        min_trust_level: filters.min_trust_level > 0 ? filters.min_trust_level : undefined,
-        limit: filters.limit,
-      });
+      const data = await apiService.getDecisions();
       // Defensive check to ensure data is an array
       if (Array.isArray(data)) {
         setDecisions(data);
@@ -105,14 +100,14 @@ export function DecisionsDashboard() {
     }
   }, []);
 
-  const fetchDecisionDetail = useCallback(async (index: number) => {
+  const fetchDecisionDetail = useCallback(async () => {
     // CORREÇÃO CRÍTICA (2025-12-10): Verificar autenticação antes de fazer fetch
     if (!useAuthStore.getState().isAuthenticated) {
       return;
     }
 
     try {
-      const data = await apiService.getDecisionDetail(index);
+      const data = await apiService.getDecisionDetail();
       // Validate that data is an object with expected fields
       if (data && typeof data === 'object' && 'action' in data) {
         setSelectedDecision(data as DecisionDetail);
@@ -131,10 +126,7 @@ export function DecisionsDashboard() {
 
   const handleExport = useCallback(async () => {
     try {
-      const data = await apiService.exportDecisions({
-        action: filters.action || undefined,
-        limit: filters.limit,
-      });
+      const data = await apiService.exportDecisions();
 
       // Criar download
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -347,7 +339,7 @@ export function DecisionsDashboard() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <button
-                      onClick={() => fetchDecisionDetail(index)}
+                      onClick={() => fetchDecisionDetail()}
                       className="text-blue-400 hover:text-blue-300 text-sm transition-colors"
                     >
                       Ver Detalhes

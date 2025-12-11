@@ -227,7 +227,9 @@ class RNNMetricsExtractor:
         # Calcular magnitude do gradiente (aproximação via mudança de peso)
         if layer_name in self._previous_weights:
             gradient_magnitude = float(
-                np.linalg.norm(weights_np - self._previous_weights[layer_name].detach().cpu().numpy())
+                np.linalg.norm(
+                    weights_np - self._previous_weights[layer_name].detach().cpu().numpy()
+                )
             )
 
             metrics_collector.record_metric(

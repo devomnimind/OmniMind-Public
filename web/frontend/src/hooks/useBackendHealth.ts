@@ -35,7 +35,7 @@ export function useBackendHealth() {
       await apiService.get('/health/');
 
       // Backend está online
-      setHealth((prev) => ({
+      setHealth(() => ({
         isOnline: true,
         consecutiveFailures: 0,
         lastCheck: Date.now(),

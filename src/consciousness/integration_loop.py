@@ -541,10 +541,12 @@ class IntegrationLoop:
                         f"(Φ={phi_causal:.4f}, repression={repression:.3f})",
                         extra={"trace_id": cycle_context.trace_id},  # 🎯 Sprint 1: Add trace_id
                     )
-                    
+
                     # 🎯 Sprint 2 Task 2.3.2: Extrair métricas RNN com correlação de Φ e ciclo
                     try:
-                        from src.observability.rnn_metrics_extractor import get_rnn_metrics_extractor
+                        from src.observability.rnn_metrics_extractor import (
+                            get_rnn_metrics_extractor,
+                        )
 
                         extractor = get_rnn_metrics_extractor()
                         extractor.extract_metrics(

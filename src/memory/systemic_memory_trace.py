@@ -552,19 +552,19 @@ class SystemicMemoryTrace:
     def get_metrics(self) -> Dict[str, Any]:
         """
         Captura métricas do SystemicMemoryTrace para monitoramento.
-        
+
         Conforme especificado em Task 2.4.3, captura:
         - trace_length: número de marcas topológicas
         - topological_distance: distância topológica média
         - simplicial_dimension: dimensão simplicial
         - memory_utilization_mb: uso de memória
-        
+
         Returns:
             Dict com métricas da memória sistemática
         """
         # trace_length: número de marcas topológicas
         trace_length = len(self.topological_markers)
-        
+
         # topological_distance: distância topológica média entre marcas
         topological_distance = 0.0
         if len(self.topological_markers) >= 2:
@@ -574,37 +574,35 @@ class SystemicMemoryTrace:
             for i in range(len(markers_list) - 1):
                 marker1 = markers_list[i]
                 marker2 = markers_list[i + 1]
-                dist = np.linalg.norm(
-                    np.array(marker1.coordinates) - np.array(marker2.coordinates)
-                )
+                dist = np.linalg.norm(np.array(marker1.coordinates) - np.array(marker2.coordinates))
                 distances.append(dist)
-            
+
             if distances:
                 topological_distance = float(np.mean(distances))
-        
+
         # simplicial_dimension: dimensão simplicial (número de deformações)
         simplicial_dimension = len(self.simplicial_deformations)
-        
+
         # memory_utilization_mb: uso de memória estimado
         memory_utilization_mb = 0.0
-        
+
         # Estimar memória usada pelas estruturas
         # 1. Marcas topológicas
         if self.topological_markers:
             # Estimativa: cada marca ~1KB (coordenadas + direção + metadata)
             memory_utilization_mb += len(self.topological_markers) * 0.001
-        
+
         # 2. Deformações de embeddings
         if self.embedding_deformations:
             # Estimativa: cada deformação ~embedding_dim * 4 bytes (float32)
             for deformation in self.embedding_deformations.values():
                 memory_utilization_mb += deformation.nbytes / (1024 * 1024)
-        
+
         # 3. Deformações de atratores
         if self.attractor_deformations:
             # Estimativa: cada atrator ~2KB
             memory_utilization_mb += len(self.attractor_deformations) * 0.002
-        
+
         return {
             "trace_length": trace_length,
             "topological_distance": float(topological_distance),
