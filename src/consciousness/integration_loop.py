@@ -29,6 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 @dataclass
+@dataclass
 class RNNCycleContext:
     """
     Contexto de observabilidade para um ciclo RNN.
@@ -429,6 +430,9 @@ class IntegrationLoop:
         if self.enable_extended_results:
             self._initialize_extended_components()
 
+        # OBSERVABILITY (Sprint 1): Current cycle context for distributed tracing
+        self._current_cycle_context: Optional[RNNCycleContext] = None
+
         # PROTOCOLO LIVEWIRE FASE 3.1: Consciousness Watchdog
         self.watchdog: Optional["ConsciousnessWatchdog"] = None
         try:
@@ -471,7 +475,9 @@ class IntegrationLoop:
 
         # 🎯 Sprint 1 Task 1.2: Create RNN cycle context for distributed tracing
         # Create a more comprehensive workspace state hash for better uniqueness
-        workspace_state_hash = f"{self.workspace.embedding_dim}_{len(self.loop_sequence)}_{self.cycle_count}"
+        workspace_state_hash = (
+            f"{self.workspace.embedding_dim}_{len(self.loop_sequence)}_{self.cycle_count}"
+        )
         cycle_context = RNNCycleContext.create(self.cycle_count, workspace_state_hash)
         self._current_cycle_context = cycle_context  # Store for step-level tracing
 
@@ -965,7 +971,7 @@ class IntegrationLoop:
                 logger.debug(f"Falha ao processar extended results: {e}")
 
         # 🎯 Sprint 1 Task 1.2: Clear cycle context and log completion
-        if hasattr(self, '_current_cycle_context'):
+        if hasattr(self, "_current_cycle_context"):
             if self.enable_logging:
                 logger.debug(
                     f"Cycle {self.cycle_count} completed (Φ={result.phi_estimate:.4f})",
