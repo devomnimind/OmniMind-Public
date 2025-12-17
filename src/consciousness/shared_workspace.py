@@ -1379,7 +1379,8 @@ class SharedWorkspace:
 
         # DEBUG: Log cross_predictions status
         logger.info(
-            f"IIT TRACE: compute_phi_from_integrations called with {len(self.cross_predictions)} cross-predictions"
+            f"IIT TRACE: compute_phi_from_integrations called with "
+            f"{len(self.cross_predictions)} cross-predictions"
         )
 
         if not self.cross_predictions:
@@ -1418,7 +1419,8 @@ class SharedWorkspace:
             recent_predictions = self.cross_predictions
 
         logger.debug(
-            f"IIT: Using {len(recent_predictions)} recent predictions (total: {len(self.cross_predictions)})"
+            f"IIT: Using {len(recent_predictions)} recent predictions "
+            f"(total: {len(self.cross_predictions)})"
         )
 
         if not recent_predictions:
@@ -1434,7 +1436,8 @@ class SharedWorkspace:
         ]
 
         logger.debug(
-            f"IIT: {len(valid_predictions)} predictions have causal fields out of {len(recent_predictions)} recent"
+            f"IIT: {len(valid_predictions)} predictions have causal fields "
+            f"out of {len(recent_predictions)} recent"
         )
         logger.debug(
             f"IIT: Module count = {len(modules)}, Valid prediction count = {len(valid_predictions)}"
@@ -1450,10 +1453,12 @@ class SharedWorkspace:
 
         if len(valid_predictions) < min_valid_required:
             logger.debug(
-                f"IIT: Only {len(valid_predictions)} valid predictions < {min_valid_required} required. "
+                f"IIT: Only {len(valid_predictions)} valid predictions "
+                f"< {min_valid_required} required. "
                 f"Using all recent predictions for warmup."
             )
-            # Durante warmup, usar TODOS recent_predictions mesmo se não têm campos causais completos
+            # Durante warmup, usar TODOS recent_predictions mesmo se não têm campos
+            # causais completos
             valid_predictions = recent_predictions if recent_predictions else []
 
             if not valid_predictions:

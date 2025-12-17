@@ -125,7 +125,11 @@ class OmniMindEmbeddings:
 
             # Configurar para usar apenas cache local
             os.environ["HF_HUB_OFFLINE"] = "1"
-            cache_path = "/home/fahbrain/.cache/huggingface/hub/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf"
+            cache_path = (
+                "/home/fahbrain/.cache/huggingface/hub/"
+                "models--sentence-transformers--all-MiniLM-L6-v2/"
+                "snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf"
+            )
 
             if os.path.exists(cache_path):
                 logger.info(f"Usando modelo do cache local: {cache_path}")
@@ -348,7 +352,9 @@ class OmniMindEmbeddings:
 
             # Upsert no Qdrant
             if points:
-                self.client.upsert(collection_name=self.collection_name, points=points)  # type: ignore
+                self.client.upsert(
+                    collection_name=self.collection_name, points=points
+                )  # type: ignore
                 logger.debug(f"Indexado {len(points)} chunks otimizados de {source_id}")
                 return len(points)
 
@@ -357,8 +363,8 @@ class OmniMindEmbeddings:
 
         return 0
 
-    def _ensure_collection(self):
-        """Cria coleção se não existir."""
+    def _ensure_collection_backup(self):
+        """Cria coleção se não existir (backup/legacy)."""
         try:
             collections = self.client.get_collections().collections or []
             collection_names = [info.name for info in collections]
@@ -567,7 +573,7 @@ class OmniMindEmbeddings:
             logger.warning(f"Erro ao verificar reindexação para {file_path}: {exc}")
             return True  # Em caso de erro, reindexar
 
-    def index_directory(
+    def index_directory_simple(
         self,
         directory: str,
         extensions: Optional[List[str]] = None,
@@ -575,7 +581,7 @@ class OmniMindEmbeddings:
         skip_patterns: Optional[List[str]] = None,
         min_file_size: int = 10,
     ) -> Dict[str, int]:
-        """Indexa todos os arquivos suportados em um diretório."""
+        """Indexa todos os arquivos suportados em um diretório (versão simples)."""
         if extensions is None:
             # Extensões para código
             extensions = [".py", ".js", ".ts", ".java", ".cpp", ".c", ".go", ".rs"]
@@ -1054,7 +1060,8 @@ class OmniMindEmbeddings:
                 # Salvar checkpoint sem marcar como concluída
                 self._save_checkpoint(checkpoint_path, completed_stages, results)
                 logger.info(
-                    f"✅ Etapa '{stage_name}' processada (não marcada como concluída): {sum(stage_results.values())} chunks"
+                    f"✅ Etapa '{stage_name}' processada "
+                    f"(não marcada como concluída): {sum(stage_results.values())} chunks"
                 )
 
         return results
@@ -1097,7 +1104,8 @@ class OmniMindEmbeddings:
                 json.dump(checkpoint_data, f, indent=2, ensure_ascii=False)
 
             logger.info(
-                f"💾 Checkpoint salvo: {len(all_completed_stages)} etapas concluídas, {checkpoint_data['total_chunks']} chunks totais"
+                f"💾 Checkpoint salvo: {len(all_completed_stages)} etapas concluídas, "
+                f"{checkpoint_data['total_chunks']} chunks totais"
             )
 
         except Exception as e:
@@ -1326,7 +1334,7 @@ class OmniMindEmbeddings:
                     info_lines.append("EXECUTION_ENVIRONMENT: Docker/Container")
                 else:
                     info_lines.append("EXECUTION_ENVIRONMENT: Host System")
-        except:
+        except Exception:
             info_lines.append("EXECUTION_ENVIRONMENT: Unknown")
 
         # Verificar privilégios
@@ -1337,7 +1345,7 @@ class OmniMindEmbeddings:
                 info_lines.append("PRIVILEGES: Root/Superuser")
             else:
                 info_lines.append("PRIVILEGES: Regular User")
-        except:
+        except Exception:
             info_lines.append("PRIVILEGES: Unknown")
 
         # Verificar acesso a hardware
@@ -1350,7 +1358,7 @@ class OmniMindEmbeddings:
             info_lines.append(f"HARDWARE_ACCESS: Memory available: {memory.total // (1024**3)}GB")
         except ImportError:
             info_lines.append("HARDWARE_ACCESS: psutil not available")
-        except:
+        except Exception:
             info_lines.append("HARDWARE_ACCESS: Error accessing hardware info")
 
         # Verificar configurações do Python
@@ -1360,7 +1368,7 @@ class OmniMindEmbeddings:
             info_lines.append(f"PYTHON_CONFIG: Version {sys.version}")
             info_lines.append(f"PYTHON_CONFIG: Executable: {sys.executable}")
             info_lines.append(f"PYTHON_CONFIG: Platform: {sys.platform}")
-        except:
+        except Exception:
             info_lines.append("PYTHON_CONFIG: Error")
 
         # Verificar variáveis de ambiente relevantes

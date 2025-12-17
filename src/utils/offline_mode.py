@@ -155,7 +155,8 @@ def resolve_sentence_transformer_name(short_name: str) -> str:
     Otherwise returns full HuggingFace model name.
 
     Args:
-        short_name: Short name like 'all-MiniLM-L6-v2' or full name like 'sentence-transformers/all-MiniLM-L6-v2'
+        short_name: Short name like 'all-MiniLM-L6-v2' or full name like
+        'sentence-transformers/all-MiniLM-L6-v2'
 
     Returns:
         Absolute path to model snapshot (if found locally) or full model name for HuggingFace
@@ -190,5 +191,6 @@ def resolve_sentence_transformer_name(short_name: str) -> str:
 
     # Return mapped name if available, otherwise return original
     result = name_mapping.get(short_name, short_name)
-    logger.debug(f"🔍 Model name: {short_name} → {result} (not found in local cache)")
+    logger.debug(f"🔍 Model name: {short_name} → {result} "
+                 f"(not found in local cache)")
     return result

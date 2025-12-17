@@ -116,7 +116,6 @@ class AutopoieticManager:
         self._logger.info("Starting autopoietic cycle %d", cycle_id)
 
         # 🎯 Sprint 2: Rastrear métricas adicionais do ciclo
-        cycle_start_time = time.time()
         synthesis_start_time = 0.0
         synthesis_end_time = 0.0
         rollback_count = 0

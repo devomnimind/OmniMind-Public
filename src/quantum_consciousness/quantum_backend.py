@@ -256,7 +256,10 @@ class QuantumBackend:
     def _setup_dwave(self):
         """Setup D-Wave QPU."""
         try:
-            self.backend = EmbeddingComposite(DWaveSampler(token=self.token, solver={"qpu": True}))
+            sampler = DWaveSampler(  # type: ignore[name-defined]
+                token=self.token, solver={"qpu": True}
+            )
+            self.backend = EmbeddingComposite(sampler)  # type: ignore[name-defined]
             self.mode = "CLOUD_DWAVE"
             logger.info("Connected to D-Wave QPU.")
         except Exception as e:
@@ -294,7 +297,7 @@ class QuantumBackend:
 
     def _setup_neal(self):
         """Setup Neal (classical annealing)."""
-        self.backend = neal.SimulatedAnnealingSampler()
+        self.backend = neal.SimulatedAnnealingSampler()  # type: ignore[name-defined]
         self.mode = "LOCAL_NEAL"
         logger.info("Initialized Neal Simulated Annealing (Classical).")
 

@@ -49,6 +49,7 @@ class TestSemanticSearchEngine:
     def mock_semantic_memory(self):
         """Mock SemanticMemoryLayer - DEPRECATED"""
         from unittest.mock import MagicMock
+
         mock = MagicMock()
         mock.retrieve_similar.return_value = [
             {"content": "test content", "score": 0.9},
@@ -60,6 +61,7 @@ class TestSemanticSearchEngine:
     def mock_knowledge_integrator(self):
         """Mock KnowledgeIntegrator - DEPRECATED"""
         from unittest.mock import MagicMock
+
         mock = MagicMock()
         mock.query.return_value = {
             "concepts": [{"name": "concept1", "definition": "def1"}],

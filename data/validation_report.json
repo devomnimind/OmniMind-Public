@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "total_checks": 18,
+    "passed": 16,
+    "warnings": 2,
+    "issues": 0,
+    "success_rate": 88.88888888888889
+  },
+  "passed": [
+    "Módulo de Φ encontrado: src/consciousness/topological_phi.py",
+    "Módulo de Φ encontrado: src/consciousness/integration_loop.py",
+    "Módulo de Φ encontrado: src/metrics/real_consciousness_metrics.py",
+    "Cálculo de Φ topológico válido: 1.0000",
+    "IntegrationLoop importado com sucesso",
+    "Campo phi válido: 0.0100",
+    "Campo anxiety válido: 0.0000",
+    "Campo flow válido: 0.9292",
+    "Campo entropy válido: 0.0002",
+    "Campo ici válido: 0.0100",
+    "Campo prs válido: 1.0000",
+    "Encontrados 1 ciclos no histórico",
+    "Encontrados 1 arquivos em data/sessions",
+    "Encontrados 17 arquivos em real_evidence",
+    "Encontrados 16 scripts de validação",
+    "Φ consistente: atual=0.0100, último=0.5000"
+  ],
+  "warnings": [
+    "Φ abaixo do threshold: 0.0100 < 0.3",
+    "Diretório data/training existe mas está vazio"
+  ],
+  "issues": []
+}

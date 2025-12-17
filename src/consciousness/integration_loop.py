@@ -613,8 +613,8 @@ class IntegrationLoop:
 
                             if alpha is not None:
                                 # Converter α-element para embedding
-                                # Estratégia: usar symbolic_potential para modificar embedding original
-                                # e incorporar narrative_form como componente semântico
+                                # Estratégia: usar symbolic_potential para modificar
+                                # embedding original e incorporar narrative_form
                                 alpha_embedding = sensory_state.copy()
 
                                 # Aplicar transformação baseada em symbolic_potential
@@ -673,7 +673,8 @@ class IntegrationLoop:
                             )
                         # Continuar mesmo se Bion falhar
 
-                # PHASE 6 INTEGRATION (2025-12-10): Analisar narrativa via Lacanian Discourse Analyzer
+                # PHASE 6 INTEGRATION (2025-12-10): Analisar narrativa
+                # via Lacanian Discourse Analyzer
                 elif module_name == "narrative" and self._lacanian_discourse_analyzer is not None:
                     # Executar narrative normalmente primeiro
                     executor.execute_sync(self.workspace)
@@ -684,14 +685,16 @@ class IntegrationLoop:
                         narrative_state = self.workspace.read_module_state("narrative")
                         if isinstance(narrative_state, np.ndarray):
                             # Converter embedding para análise de discurso
-                            # Estratégia: usar propriedades do embedding e histórico para criar contexto textual
+                            # Estratégia: usar propriedades do embedding e histórico
+                            # para criar contexto textual
                             narrative_magnitude = float(np.linalg.norm(narrative_state))
                             narrative_sparsity = float(np.mean(np.abs(narrative_state) < 0.1))
                             narrative_max = float(np.max(np.abs(narrative_state)))
 
                             # CORREÇÃO (2025-12-10): Buscar narrative_form de sensory_input
                             # (onde Bion salva)
-                            # e melhorar geração de texto simbólico com marcadores baseados em propriedades
+                            # e melhorar geração de texto simbólico com marcadores
+                            # baseados em propriedades
                             narrative_form = ""
                             try:
                                 # Buscar em sensory_input (onde Bion salva narrative_form)
@@ -705,13 +708,13 @@ class IntegrationLoop:
                             except Exception:
                                 pass
 
-                            # Criar "texto" simbólico melhorado com marcadores baseados em propriedades do embedding
+                            # Criar "texto" simbólico melhorado com marcadores
+                            # baseados em propriedades do embedding
                             # CORREÇÃO (2025-12-10): narrative_form de Bion não contém
                             # marcadores de discurso
                             # Sempre usar método melhorado que gera texto com marcadores
                             # baseados em propriedades
                             # Se narrative_form disponível, combinar com marcadores
-                            # gerados
                             if narrative_form:
                                 # Combinar narrative_form com marcadores gerados para melhor análise
                                 generated_text = self._generate_symbolic_text_from_embedding(
@@ -777,7 +780,7 @@ class IntegrationLoop:
                                 }
                             )
 
-                            # Atualizar metadata no workspace (reescrever estado com metadata atualizado)
+                            # Atualizar metadata no workspace
                             self.workspace.write_module_state(
                                 module_name="narrative",
                                 embedding=narrative_state,
@@ -882,23 +885,27 @@ class IntegrationLoop:
                     result.phi_estimate = phi_returned
                     if result.phi_estimate == 0.0 and len(self.workspace.cross_predictions) > 0:
                         logger.warning(
-                            f"Cycle {self.cycle_count}: phi_estimate is 0.0 despite {len(self.workspace.cross_predictions)} cross-predictions"
+                            f"Cycle {self.cycle_count}: phi_estimate is 0.0 despite "
+                            f"{len(self.workspace.cross_predictions)} cross-predictions"
                         )
                 else:
                     # Might be a PhiValue object
                     if hasattr(phi_returned, "normalized"):
                         result.phi_estimate = phi_returned.normalized
                         logger.debug(
-                            f"Cycle {self.cycle_count}: Extracted phi_estimate={result.phi_estimate} from PhiValue.normalized"
+                            f"Cycle {self.cycle_count}: Extracted phi_estimate="
+                            f"{result.phi_estimate} from PhiValue.normalized"
                         )
                     elif hasattr(phi_returned, "nats"):
                         result.phi_estimate = phi_returned.nats
                         logger.debug(
-                            f"Cycle {self.cycle_count}: Extracted phi_estimate={result.phi_estimate} from PhiValue.nats"
+                            f"Cycle {self.cycle_count}: Extracted phi_estimate="
+                            f"{result.phi_estimate} from PhiValue.nats"
                         )
                     else:
                         logger.error(
-                            f"Cycle {self.cycle_count}: Unknown return type from compute_phi_from_integrations: {type(phi_returned)}"
+                            f"Cycle {self.cycle_count}: Unknown return type from "
+                            f"compute_phi_from_integrations: {type(phi_returned)}"
                         )
                         result.phi_estimate = 0.0
 
@@ -949,8 +956,8 @@ class IntegrationLoop:
         if self.enable_logging:
             logger.info(
                 f"Cycle {self.cycle_count} Complexity: "
-                f"~{theoretical_complexity['total'] /
-    1e6:.1f}M ops in {actual_time_ms:.1f}ms "
+                f"~{theoretical_complexity['total'] / 1e6:.1f}M ops "
+                f"in {actual_time_ms:.1f}ms "
                 f"({ops_per_ms / 1e3:.1f}GOps/s)"
             )
 
@@ -1089,7 +1096,8 @@ class IntegrationLoop:
             except Exception as e:
                 # Log verboso para debug de problemas de dimensão
                 logger.error(
-                    f"ERRO ao construir extended result no ciclo {base_result.cycle_number}: {type(e).__name__}: {str(e)}",
+                    f"ERRO ao construir extended result no ciclo "
+                    f"{base_result.cycle_number}: {type(e).__name__}: {str(e)}",
                     exc_info=True,
                 )
                 # Tentar logar informações de debug adicionais
@@ -1103,7 +1111,7 @@ class IntegrationLoop:
                                 logger.error(f"    {module}: shape={emb.shape}")
                 except Exception:
                     pass
-                logger.warning(f"  Retornando base result (sem extended metrics)")
+                logger.warning("  Retornando base result (sem extended metrics)")
                 return base_result
 
         return base_result

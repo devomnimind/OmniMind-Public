@@ -13,8 +13,6 @@ Key responsibilities:
 - Provide observability through the dashboard
 """
 
-from __future__ import annotations
-
 import asyncio
 import os
 import signal
@@ -26,21 +24,21 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
 
+import psutil
+import structlog
+
 # Ensure project root is in python path
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-import psutil
-import structlog
+# Add autopoietic imports (occur after PROJECT_ROOT sys.path insert)
+from src.autopoietic.manager import AutopoieticManager  # noqa: E402
+from src.autopoietic.meta_architect import ComponentSpec  # noqa: E402
+from src.autopoietic.metrics_adapter import collect_metrics  # noqa: E402
 
-# Add autopoietic imports
-from src.autopoietic.manager import AutopoieticManager
-from src.autopoietic.meta_architect import ComponentSpec
-from src.autopoietic.metrics_adapter import collect_metrics
-
-# Add consciousness imports
-from src.memory.consciousness_state_manager import get_consciousness_state_manager
-from src.metrics.real_consciousness_metrics import real_metrics_collector
+# Add consciousness imports (occur after PROJECT_ROOT sys.path insert)
+from src.memory.consciousness_state_manager import get_consciousness_state_manager  # noqa: E402
+from src.metrics.real_consciousness_metrics import real_metrics_collector  # noqa: E402
 
 # Configure structured logging
 structlog.configure(  # type: ignore[attr-defined]

@@ -249,7 +249,6 @@ class ReactAgent:
         e carregamento forçado em CPU com validação de modelo.
         """
         try:
-            import torch
             from sentence_transformers import SentenceTransformer
 
             from src.memory.gpu_memory_consolidator import get_gpu_consolidator

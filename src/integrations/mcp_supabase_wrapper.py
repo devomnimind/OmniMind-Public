@@ -25,42 +25,38 @@ class SupabaseMCPServer(MCPServer):
     def __init__(self, host: str = "127.0.0.1", port: int = 4337):
         """Inicializa servidor Supabase MCP."""
         super().__init__(host=host, port=port)
-        
+
         # Configuração Supabase externa
         self.supabase_url = os.environ.get(
-            "SUPABASE_MCP_URL", 
-            "https://mcp.supabase.com/mcp?project_ref=noetzkgvyqcrycdsfnib"
+            "SUPABASE_MCP_URL", "https://mcp.supabase.com/mcp?project_ref=noetzkgvyqcrycdsfnib"
         )
-        
+
         # Apenas informações básicas, sem acesso a dados reais
         self.external_info = {
             "service": "supabase_external",
             "mode": "external_only",
             "description": "Integração externa com Supabase para VS Code",
             "features": ["basic_info", "external_integration"],
-            "limitations": ["readonly", "external_only", "no_real_data"]
+            "limitations": ["readonly", "external_only", "no_real_data"],
         }
-        
-        logger.info(
-            f"SupabaseMCPServer inicializado (externo): "
-            f"url={self.supabase_url}"
-        )
+
+        logger.info(f"SupabaseMCPServer inicializado (externo): " f"url={self.supabase_url}")
 
     def handle_request(self, method: str, params: Dict[str, Any]) -> Any:
         """Processa requisições MCP com limitações externas."""
         try:
             if method == "get_basic_info":
                 return self._get_basic_info()
-            
+
             elif method == "get_external_status":
                 return self._get_external_status()
-            
+
             elif method == "list_available_features":
                 return self._list_available_features()
-            
+
             elif method == "ping_external_service":
                 return self._ping_external_service()
-            
+
             else:
                 raise MCPRequestError(
                     code=-32601,
@@ -68,19 +64,18 @@ class SupabaseMCPServer(MCPServer):
                     data={
                         "available_methods": [
                             "get_basic_info",
-                            "get_external_status", 
+                            "get_external_status",
                             "list_available_features",
-                            "ping_external_service"
+                            "ping_external_service",
                         ],
-                        "note": "Este é um servidor MCP externo com acesso limitado"
-                    }
+                        "note": "Este é um servidor MCP externo com acesso limitado",
+                    },
                 )
-                
+
         except Exception as e:
             logger.error(f"Erro em SupabaseMCP request {method}: {e}")
             raise MCPRequestError(
-                code=-32603,
-                message=f"Erro interno do servidor Supabase: {str(e)}"
+                code=-32603, message=f"Erro interno do servidor Supabase: {str(e)}"
             ) from e
 
     def _get_basic_info(self) -> Dict[str, Any]:
@@ -94,7 +89,7 @@ class SupabaseMCPServer(MCPServer):
             "features": self.external_info["features"],
             "limitations": self.external_info["limitations"],
             "project_ref": "noetzkgvyqcrycdsfnib",
-            "last_updated": "2025-12-17T14:35:58Z"
+            "last_updated": "2025-12-17T14:35:58Z",
         }
 
     def _get_external_status(self) -> Dict[str, Any]:
@@ -106,7 +101,7 @@ class SupabaseMCPServer(MCPServer):
             "access_level": "external",
             "data_access": "none",
             "timestamp": "2025-12-17T14:35:58Z",
-            "note": "Serviço configurado para acesso externo apenas"
+            "note": "Serviço configurado para acesso externo apenas",
         }
 
     def _list_available_features(self) -> List[str]:
@@ -115,7 +110,7 @@ class SupabaseMCPServer(MCPServer):
             "get_basic_info - Informações básicas do serviço",
             "get_external_status - Status do serviço externo",
             "list_available_features - Lista de features disponíveis",
-            "ping_external_service - Teste de conectividade"
+            "ping_external_service - Teste de conectividade",
         ]
 
     def _ping_external_service(self) -> Dict[str, Any]:
@@ -127,35 +122,34 @@ class SupabaseMCPServer(MCPServer):
                 "service": "supabase_external",
                 "response_time_ms": 150,
                 "timestamp": "2025-12-17T14:35:58Z",
-                "note": "Ping simulado - serviço externo ativo"
+                "note": "Ping simulado - serviço externo ativo",
             }
         except Exception as e:
             return {
                 "status": "error",
-                "service": "supabase_external", 
+                "service": "supabase_external",
                 "error": str(e),
-                "timestamp": "2025-12-17T14:35:58Z"
+                "timestamp": "2025-12-17T14:35:58Z",
             }
 
 
 if __name__ == "__main__":
     # Executar servidor standalone
     import sys
-    
+
     # Configurar logging
     logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     )
-    
+
     # Inicializar e executar servidor
     port = int(os.environ.get("MCP_PORT", "4337"))
     host = os.environ.get("MCP_HOST", "127.0.0.1")
-    
+
     server = SupabaseMCPServer(host=host, port=port)
-    
+
     logger.info(f"🚀 Iniciando Supabase MCP Server (externo) em {host}:{port}")
-    
+
     try:
         server.run()
     except KeyboardInterrupt:

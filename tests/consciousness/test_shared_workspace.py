@@ -71,7 +71,8 @@ class TestWriteReadModuleState:
 
         assert len(workspace.embeddings) == 3
         assert len(workspace.history) == 3
-        # CORREÇÃO: LangevinDynamics adiciona ruído significativo, então usamos tolerância muito maior
+        # CORREÇÃO: LangevinDynamics adiciona ruído significativo,
+        # então usamos tolerância muito maior
         assert all(
             np.allclose(workspace.embeddings[m], embeddings[m], rtol=1e-0, atol=1e-0)
             for m in modules

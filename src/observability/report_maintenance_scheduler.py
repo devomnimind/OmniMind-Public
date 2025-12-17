@@ -59,7 +59,8 @@ class ReportMaintenanceScheduler:
 
         logger.info(
             f"ReportMaintenanceScheduler inicializado "
-            f"(intervalo: {check_interval_minutes}min, execução diária às {daily_execution_hour:02d}:{daily_execution_minute:02d} UTC)"
+            f"(intervalo: {check_interval_minutes}min, execução diária às "
+            f"{daily_execution_hour:02d}:{daily_execution_minute:02d} UTC)"
         )
 
         if enable_auto_start:
@@ -155,11 +156,13 @@ class ReportMaintenanceScheduler:
             logger.info(
                 f"✅ Manutenção concluída em {elapsed:.1f}s\n"
                 f"  📦 Compressão: {stats['compression']['files_processed']} arquivos, "
-                f"{stats['compression']['size_before_mb']:.1f}MB → {stats['compression']['size_after_mb']:.1f}MB\n"
+                f"{stats['compression']['size_before_mb']:.1f}MB → "
+                f"{stats['compression']['size_after_mb']:.1f}MB\n"
                 f"  🗑️  Limpeza: {stats['cleanup']['files_deleted']} arquivos removidos, "
                 f"{stats['cleanup']['size_freed_mb']:.1f}MB liberados\n"
                 f"  📊 Status: {stats['total_files_active']} ativos, "
-                f"{stats['total_files_archived']} arquivados ({stats['total_size_archived_mb']:.1f}MB)"
+                f"{stats['total_files_archived']} arquivados "
+                f"({stats['total_size_archived_mb']:.1f}MB)"
             )
 
             self.last_execution_time = datetime.now(timezone.utc)
@@ -183,7 +186,9 @@ class ReportMaintenanceScheduler:
                 self.last_execution_time.isoformat() if self.last_execution_time else None
             ),
             "check_interval_seconds": self.check_interval_seconds,
-            "daily_execution_time": f"{self.daily_execution_hour:02d}:{self.daily_execution_minute:02d} UTC",
+            "daily_execution_time": (
+                f"{self.daily_execution_hour:02d}:{self.daily_execution_minute:02d} UTC"
+            ),
         }
 
 

@@ -424,7 +424,7 @@ class MCPConnectionHandler:
                 )
         else:
             status.update({"phi_monitoring_enabled": False, "phi_status": "disabled"})
-            
+
         # Cast para resolver type checking issues
         status = cast(Dict[str, Any], status)
 

@@ -622,7 +622,6 @@ except Exception as e:
         """Clean up sandbox resources with extended timeout."""
         try:
             import shutil
-            import signal
             import subprocess
 
             if self.temp_dir.exists():

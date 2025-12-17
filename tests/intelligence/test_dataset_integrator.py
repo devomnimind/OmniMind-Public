@@ -33,8 +33,7 @@ import pytest
 
 pytestmark = pytest.mark.skip(
     reason=(
-        "Módulo intelligence.dataset_integrator foi substituído por "
-        "src.memory.dataset_indexer"
+        "Módulo intelligence.dataset_integrator foi substituído por " "src.memory.dataset_indexer"
     )
 )
 
@@ -52,6 +51,7 @@ class TestDatasetIntegrator:
         """Mock DeclarativeLayer - DEPRECATED"""
         # Nota: Fixtures mantidas para compatibilidade, mas não são mais usadas
         from unittest.mock import MagicMock
+
         mock = MagicMock()
         return mock
 
@@ -59,6 +59,7 @@ class TestDatasetIntegrator:
     def mock_procedural(self):
         """Mock ProceduralLayer - DEPRECATED"""
         from unittest.mock import MagicMock
+
         mock = MagicMock()
         return mock
 
@@ -66,6 +67,7 @@ class TestDatasetIntegrator:
     def mock_semantic_memory(self):
         """Mock SemanticMemoryLayer - DEPRECATED"""
         from unittest.mock import MagicMock
+
         mock = MagicMock()
         return mock
 

@@ -1,9 +1,79 @@
 {
-	"servers": {
-		"supabase": {
-			"type": "http",
-			"url": "https://mcp.supabase.com/mcp?project_ref=noetzkgvyqcrycdsfnib"
-		}
-	},
-	"inputs": []
+    "servers": {
+        "supabase": {
+            "type": "http",
+            "url": "https://mcp.supabase.com/mcp?project_ref=noetzkgvyqcrycdsfnib"
+        },
+        "omnimind-python": {
+            "type": "http",
+            "url": "http://localhost:4333/mcp",
+            "headers": {
+                "X-Data-Protection": "enabled",
+                "X-Token-Optimization": "enabled",
+                "X-Content-Type": "application/json",
+                "X-Max-Context-Tokens": "3000",
+                "X-Execution-Timeout": "30",
+                "X-Audit-Category": "python_mcp_external"
+            }
+        },
+        "omnimind-system-info": {
+            "type": "http",
+            "url": "http://localhost:4335/mcp",
+            "headers": {
+                "X-Data-Protection": "enabled",
+                "X-Token-Optimization": "enabled",
+                "X-Content-Type": "application/json",
+                "X-Refresh-Interval": "5",
+                "X-Audit-Category": "system_info_mcp"
+            }
+        },
+        "omnimind-logging": {
+            "type": "http",
+            "url": "http://localhost:4336/mcp",
+            "headers": {
+                "X-Data-Protection": "enabled",
+                "X-Token-Optimization": "enabled",
+                "X-Content-Type": "application/json",
+                "X-Max-Search-Results": "1000",
+                "X-Audit-Category": "logging_mcp"
+            }
+        },
+        "omnimind-filesystem": {
+            "type": "http",
+            "url": "http://localhost:4331/mcp",
+            "headers": {
+                "X-Data-Protection": "enabled",
+                "X-Token-Optimization": "enabled",
+                "X-Content-Type": "application/json",
+                "X-Max-File-Size-MB": "10",
+                "X-Allowed-Paths": "src/,tests/,docs/,config/,scripts/,web/",
+                "X-Audit-Category": "filesystem_mcp"
+            }
+        },
+        "omnimind-git": {
+            "type": "http",
+            "url": "http://localhost:4332/mcp",
+            "headers": {
+                "X-Data-Protection": "enabled",
+                "X-Token-Optimization": "enabled",
+                "X-Content-Type": "application/json",
+                "X-Safe-Operations": "status,diff,add,commit,branch,checkout,log",
+                "X-Require-Audit": "commit,checkout,branch",
+                "X-Audit-Category": "git_mcp"
+            }
+        },
+        "omnimind-sqlite": {
+            "type": "http",
+            "url": "http://localhost:4334/mcp",
+            "headers": {
+                "X-Data-Protection": "enabled",
+                "X-Token-Optimization": "enabled",
+                "X-Content-Type": "application/json",
+                "X-Max-Query-Time": "5",
+                "X-Max-Rows-Returned": "10000",
+                "X-Audit-Category": "sqlite_mcp"
+            }
+        }
+    },
+    "inputs": []
 }

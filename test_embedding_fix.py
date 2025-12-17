@@ -21,7 +21,6 @@ def test_embedding_model_load():
     print("=" * 70)
 
     try:
-        import torch
         from sentence_transformers import SentenceTransformer
 
         print("\n✓ Imports OK")
@@ -61,7 +60,7 @@ def test_embedding_model_load():
         print("\n[2/3] Verificando meta tensors...")
         has_meta = False
         meta_count = 0
-        for module in model_cpu.modules():
+        for module in model_cpu.modules():  # type: ignore[attr-defined]
             for param in module.parameters():
                 if param.device.type == "meta":
                     has_meta = True
@@ -77,11 +76,12 @@ def test_embedding_model_load():
         test_text = "Este é um teste de carregamento de modelo"
         embedding = model_cpu.encode(test_text)
 
-        print(f"✓ Embedding gerado com sucesso")
+        print("✓ Embedding gerado com sucesso")
         print(f"  - Texto: '{test_text}'")
-        print(f"  - Dimensões: {embedding.shape}")
-        print(f"  - Tipo: {embedding.dtype}")
-        print(f"  - Device modelo: {next(model_cpu.parameters()).device}")
+        print(f"  - Dimensões: {embedding.shape}")  # type: ignore[attr-defined]
+        print(f"  - Tipo: {embedding.dtype}")  # type: ignore[attr-defined]
+        device = next(model_cpu.parameters()).device  # type: ignore[attr-defined]
+        print(f"  - Device modelo: {device}")
 
         # Resumo
         print("\n" + "=" * 70)

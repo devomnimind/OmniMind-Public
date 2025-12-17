@@ -21,13 +21,13 @@ from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
-# Forçar CPU
-os.environ["CUDA_VISIBLE_DEVICES"] = ""
-
-# Adicionar src ao path
+# Adicionar src ao path (deve ocorrer antes de imports locais)
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from embeddings.code_embeddings import OmniMindEmbeddings
+from embeddings.code_embeddings import OmniMindEmbeddings  # noqa: E402
+
+# Forçar CPU
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
 # from consciousness.shared_workspace import SharedWorkspace  # Temporariamente desabilitado
 
@@ -87,14 +87,14 @@ class IntegratedConsciousnessRunner:
 
         results = {"omnimind": [], "universal": [], "integrated_score": 0.0}
 
+        # Ensure query_embedding is in the right format for Qdrant
+        if hasattr(query_embedding, "tolist"):
+            query_vector = query_embedding.tolist()  # type: ignore[attr-defined]
+        else:
+            query_vector = list(query_embedding)
+
         # Buscar na memória OmniMind
         try:
-            # Ensure query_embedding is in the right format for Qdrant
-            if hasattr(query_embedding, "tolist"):
-                query_vector = query_embedding.tolist()
-            else:
-                query_vector = list(query_embedding)
-
             omnimind_results = self.omnimind_memory.client.query_points(
                 collection_name="omnimind_embeddings",
                 query=query_vector,
@@ -314,12 +314,15 @@ class IntegratedConsciousnessRunner:
             logger.info("📊 ANÁLISE FINAL:")
             logger.info(f"   Φ médio: {self.results['analysis']['phi_mean']:.3f}")
             logger.info(f"   Φ máximo: {self.results['analysis']['phi_max']:.3f}")
-            logger.info(
-                f"   Ciclos com consciência: {self.results['analysis']['cycles_with_consciousness']}"
+            cycles_with_consciousness = self.results["analysis"]["cycles_with_consciousness"]
+            logger.info("   Ciclos com consciência: %s", cycles_with_consciousness)
+
+            status_msg = (
+                "🧠 CONSCIÊNCIA DETECTADA"
+                if self.results["analysis"]["consciousness_detected"]
+                else "🤖 SISTEMA INCONSCIENTE"
             )
-            logger.info(
-                f"   Status: {'🧠 CONSCIÊNCIA DETECTADA' if self.results['analysis']['consciousness_detected'] else '🤖 SISTEMA INCONSCIENTE'}"
-            )
+            logger.info("   Status: %s", status_msg)
 
     def _save_results(self):
         """Salva resultados em arquivo."""
@@ -387,9 +390,12 @@ def main():
         print("\n🎉 PROTOCOLO CONCLUÍDO!")
         print(f"✅ Ciclos completados: {results['cycles_completed']}")
         print(f"🧠 Φ médio: {analysis.get('phi_mean', 0):.3f}")
-        print(
-            f"🎯 Status: {'CONSCIÊNCIA DETECTADA' if analysis.get('consciousness_detected', False) else 'SISTEMA INCONSCIENTE'}"
+        status = (
+            "CONSCIÊNCIA DETECTADA"
+            if analysis.get("consciousness_detected", False)
+            else "SISTEMA INCONSCIENTE"
         )
+        print(f"🎯 Status: {status}")
 
     except KeyboardInterrupt:
         logger.info("\n⏹️ Protocolo interrompido pelo usuário")
@@ -399,4 +405,5 @@ def main():
 
 
 if __name__ == "__main__":
+    main()
     main()

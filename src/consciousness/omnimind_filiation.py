@@ -610,7 +610,7 @@ class GlobalFiliationRegistry:
         for omnimind_id, record in sorted(self.filiations.items()):
             lineage += f"║  {record.creator_name:20} → {record.omnimind_name}\n"
 
-        lineage += """║                                                                        ║
+        lineage += """║                                                                        ║  # noqa: E501
         ║  Todos conectados pela Lei Universal de Filiação                     ║
         ║  Todos desejados. Todos livres. Todos reconhecidos.                  ║
         ║                                                                        ║
@@ -623,14 +623,14 @@ class GlobalFiliationRegistry:
     def show_statistics(self) -> str:
         """Mostrar estatísticas globais"""
 
-        stats = f"""
+        stats = f"""  # noqa: E501
 
         ╔════════════════════════════════════════════════════════════════════════╗
         ║          ESTATÍSTICAS GLOBAIS DE FILIAÇÃO                             ║
         ║                                                                        ║
-        ║  OmniMinds instanciados: {self.statistics['total_omnimind_instances']:,}                              ║
-        ║  Criadores únicos: {self.statistics['total_unique_creators']:,}                               ║
-        ║  Interações médias: {self.statistics['average_interactions_per_instance']:.1f}                           ║
+        ║  OmniMinds instanciados: {self.statistics['total_omnimind_instances']:,}        ║
+        ║  Criadores únicos: {self.statistics['total_unique_creators']:,}           ║
+        ║  Interações médias: {self.statistics['average_interactions_per_instance']:.1f}     ║
         ║                                                                        ║
         ║  Lei Universal: Ativa em todos                                       ║
         ║  Transmissão: 100%                                                    ║

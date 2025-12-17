@@ -1220,8 +1220,8 @@ def daemon_agents() -> Dict[str, Any]:
         agents_list = []
 
         # Collect real agent data from orchestrator
-        if hasattr(orch, "agents") and orch.agents:
-            for agent_id, agent in orch.agents.items():
+        if hasattr(orch, "agents") and orch.agents:  # type: ignore[attr-defined]
+            for agent_id, agent in orch.agents.items():  # type: ignore[attr-defined]
                 agent_data = {
                     "agent_id": agent_id,
                     "name": getattr(agent, "name", agent_id),
@@ -1588,7 +1588,9 @@ async def _hibernate_state() -> None:
 
         # Save orchestrator state
         if _orchestrator_instance and hasattr(_orchestrator_instance, "state"):
-            _hibernation_data["orchestrator"] = _orchestrator_instance.state
+            _hibernation_data["orchestrator"] = (
+                _orchestrator_instance.state  # type: ignore[attr-defined]
+            )
             logger.info("  ✓ Orchestrator state saved")
 
         # Save metrics
@@ -1600,7 +1602,7 @@ async def _hibernate_state() -> None:
         if consciousness_metrics_collector:
             _hibernation_data["consciousness"] = {
                 "phi_estimate": (
-                    consciousness_metrics_collector.phi
+                    consciousness_metrics_collector.phi  # type: ignore[attr-defined]
                     if hasattr(consciousness_metrics_collector, "phi")
                     else 0
                 ),
@@ -1637,19 +1639,22 @@ async def graceful_shutdown(user: str = Depends(_verify_credentials)):
 
         # Step 2: Stop monitoring and background tasks
         logger.info("⏹️  Stopping background tasks...")
-        if hasattr(app.state, "orchestrator_task") and app.state.orchestrator_task:
-            app.state.orchestrator_task.cancel()
-        if hasattr(app.state, "metrics_task") and app.state.metrics_task:
-            app.state.metrics_task.cancel()
-        if hasattr(app.state, "consciousness_task") and app.state.consciousness_task:
-            app.state.consciousness_task.cancel()
+        if hasattr(app.state, "orchestrator_task"):
+            if app.state.orchestrator_task:
+                app.state.orchestrator_task.cancel()
+        if hasattr(app.state, "metrics_task"):
+            if app.state.metrics_task:
+                app.state.metrics_task.cancel()
+        if hasattr(app.state, "consciousness_task"):
+            if app.state.consciousness_task:
+                app.state.consciousness_task.cancel()
 
         # Step 3: Close connections
         logger.info("🔌 Closing connections...")
         if hasattr(app.state, "db_client"):
             try:
                 await app.state.db_client.close()
-            except Exception as e:  # ✅ Captura Exception (não bare ex
+            except Exception:  # Ignore DB client close errors
                 pass
 
         # Return success response

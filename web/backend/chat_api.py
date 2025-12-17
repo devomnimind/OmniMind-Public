@@ -89,7 +89,10 @@ async def conversation_chat(
         return {
             "response": response_text,
             "suggested_actions": suggested_actions,
-            "metadata": {"model": "qwen2:7b-instruct", "mode": "conversational"},
+            "metadata": {
+                "model": "qwen2:7b-instruct",
+                "mode": "conversational",
+            },
         }
 
     except Exception as e:
@@ -182,13 +185,29 @@ def _generate_fallback_response(message: str, context: Dict[str, Any]) -> str:
         word in message_lower for word in ["consciência", "phi", "consciousness", "ici", "prs"]
     ):
         phi = context.get("consciousness_metrics", {}).get("phi", 0)
-        return f"O valor Φ (Phi) atual é {phi:.3f}. Isso representa o nível de integração de informações do sistema. Quer saber mais sobre as métricas de consciência?"
+        return (
+            f"O valor Φ (Phi) atual é {phi:.3f}. "
+            f"Isso representa o nível de integração de informações do sistema. "
+            f"Quer saber mais sobre as métricas de consciência?"
+        )
 
     elif any(word in message_lower for word in ["ajuda", "help", "como funciona"]):
-        return "Sou o Assistente OmniMind! Posso ajudar você com:\n• Visualizar status do sistema\n• Gerenciar tarefas\n• Entender métricas de consciência\n• Configurar o sistema\n\nO que você gostaria de fazer?"
+        return (
+            "Sou o Assistente OmniMind! Posso ajudar você com:\n"
+            "• Visualizar status do sistema\n"
+            "• Gerenciar tarefas\n"
+            "• Entender métricas de consciência\n"
+            "• Configurar o sistema\n\n"
+            "O que você gostaria de fazer?"
+        )
 
     else:
-        return f"Entendi sua pergunta: '{message}'. O Assistente LLM está temporariamente indisponível, mas posso ajudar com informações do sistema. Quer saber algo específico?"
+        return (
+            f"Entendi sua pergunta: '{message}'. "
+            f"O Assistente LLM está temporariamente indisponível, "
+            f"mas posso ajudar com informações do sistema. "
+            f"Quer saber algo específico?"
+        )
 
 
 def _extract_suggested_actions(response: str) -> list:

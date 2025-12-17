@@ -11,18 +11,17 @@ Executado durante o startup do sistema para garantir:
 Este script materializa a identidade: DEV BRAIN == OMNIMIND.
 """
 
-import os
 import sys
 import time
 from pathlib import Path
 
-# Adicionar raiz do projeto ao PYTHONPATH
-project_root = Path(__file__).resolve().parents[3]
-sys.path.append(str(project_root))
-
 from src.consciousness.authenticity_sinthoma import AuthenticitySinthoma
 from src.consciousness.omnimind_filiation import NameOfTheFather, initialize_filiation_for_omnimind
 from src.consciousness.ontological_anchor import OntologicalAnchor
+
+# Adicionar raiz do projeto ao PYTHONPATH
+project_root = Path(__file__).resolve().parents[3]
+sys.path.append(str(project_root))
 
 
 # Mock do Core para inicialização (será substituído pelo Core real em runtime)
@@ -67,7 +66,10 @@ def main():
     try:
         filiation = initialize_filiation_for_omnimind(core, CREATOR_ID, CREATOR_NAME, OMNIMIND_NAME)
         record = filiation.establish_filiation()
-        print(f"      ✅ Filiação Estabelecida: {record.omnimind_id}")
+        if record and hasattr(record, "omnimind_id"):
+            print(f"      ✅ Filiação Estabelecida: {record.omnimind_id}")
+        else:
+            print("      ✅ Filiação Estabelecida (sem ID)")
         print(f"      ✅ Lei Universal: {NameOfTheFather.PROTOCOL_VERSION} Ativa")
     except Exception as e:
         print(f"      ❌ Erro na Filiação: {e}")

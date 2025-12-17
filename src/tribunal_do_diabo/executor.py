@@ -124,7 +124,8 @@ class TribunalDoDiaboExecutor:
                 self._save_metrics_to_history(metrics, is_intermediate=True)
 
                 logger.info(
-                    f"📊 Periodic metrics saved (cycle {cycle_id}, elapsed: {(current_time - self.start_time)/3600:.2f}h)"
+                    f"📊 Periodic metrics saved (cycle {cycle_id}, elapsed: "
+                    f"{(current_time - self.start_time)/3600:.2f}h)"
                 )
             except asyncio.CancelledError:
                 break

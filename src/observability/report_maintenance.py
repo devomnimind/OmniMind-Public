@@ -65,7 +65,9 @@ class ReportMaintenanceManager:
         self.compression_index = self.archive_dir / "compression_index.jsonl"
 
         logger.info(
-            f"ReportMaintenanceManager inicializado: {self.reports_dir} → {self.archive_dir}"
+            "ReportMaintenanceManager inicializado",
+            reports_dir=str(self.reports_dir),
+            archive_dir=str(self.archive_dir),
         )
 
     def execute_maintenance(self) -> Dict[str, Any]:
@@ -75,7 +77,7 @@ class ReportMaintenanceManager:
         Returns:
             Dicionário com estatísticas de manutenção
         """
-        stats = {
+        stats: Dict[str, Any] = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "reports_dir": str(self.reports_dir),
             "archive_dir": str(self.archive_dir),
@@ -105,7 +107,7 @@ class ReportMaintenanceManager:
                 f.stat().st_size / (1024 * 1024) for f in self.archive_dir.glob("*.json.gz")
             )
 
-            logger.info(f"Manutenção concluída: {json.dumps(stats, indent=2)}")
+            logger.info("Manutenção concluída", details=json.dumps(stats, indent=2))
             return stats
 
         except Exception as e:
@@ -126,7 +128,7 @@ class ReportMaintenanceManager:
             "size_before_mb": 0,
             "size_after_mb": 0,
             "compressed_dates": [],
-        }
+        }  # type: ignore[var-annotated]
 
         try:
             # Obter data de cutoff
@@ -171,7 +173,9 @@ class ReportMaintenanceManager:
                         # Não recompactar se já existe
                         if archive_path.exists():
                             logger.debug(f"Arquivo {archive_name} já compactado")
-                            stats["files_skipped"] += len(files_by_date[date_key])
+                            stats["files_skipped"] += len(
+                                files_by_date[date_key]
+                            )  # type: ignore[operator]
                             continue
 
                         # Compactar cada arquivo individualmente
@@ -187,23 +191,27 @@ class ReportMaintenanceManager:
 
                                 size_after = gz_path.stat().st_size
 
-                                stats["files_processed"] += 1
-                                stats["size_before_mb"] += size_before / (1024 * 1024)
-                                stats["size_after_mb"] += size_after / (1024 * 1024)
+                                stats["files_processed"] += 1  # type: ignore[operator]
+                                before_mb = size_before / (1024 * 1024)  # type: ignore[operator]
+                                after_mb = size_after / (1024 * 1024)  # type: ignore[operator]
+                                stats["size_before_mb"] += before_mb
+                                stats["size_after_mb"] += after_mb
 
                                 # Remover original
                                 json_file.unlink()
 
                                 logger.debug(
-                                    f"Compactado: {json_file.name} "
-                                    f"({size_before/1024:.1f}KB → {size_after/1024:.1f}KB)"
+                                    "Compactado: %s (%0.1fKB -> %0.1fKB)",
+                                    json_file.name,
+                                    size_before / 1024,
+                                    size_after / 1024,
                                 )
 
                             except Exception as e:
                                 logger.error(f"Erro ao compactar {json_file.name}: {e}")
                                 continue
 
-                        stats["compressed_dates"].append(date_key)
+                        stats["compressed_dates"].append(date_key)  # type: ignore[attr-defined]
 
                 except Exception as e:
                     logger.error(f"Erro ao processar data {date_key}: {e}")
@@ -243,11 +251,13 @@ class ReportMaintenanceManager:
                         size = gz_file.stat().st_size
                         gz_file.unlink()
 
-                        stats["files_deleted"] += 1
-                        stats["size_freed_mb"] += size / (1024 * 1024)
-                        stats["deleted_dates"].append(file_date.strftime("%Y%m%d"))
+                        stats["files_deleted"] += 1  # type: ignore[operator]
+                        freed_mb = size / (1024 * 1024)  # type: ignore[operator]
+                        stats["size_freed_mb"] += freed_mb
+                        deleted_key = file_date.strftime("%Y%m%d")
+                        stats["deleted_dates"].append(deleted_key)  # type: ignore[attr-defined]
 
-                        logger.info(f"Removido arquivo expirado: {gz_file.name}")
+                        logger.info("Removido arquivo expirado", name=gz_file.name)
 
                 except Exception as e:
                     logger.error(f"Erro ao remover {gz_file.name}: {e}")
@@ -307,17 +317,19 @@ class ReportMaintenanceManager:
             stats["total_size_mb"] = total_size / (1024 * 1024)
 
             # Verificar limiares
-            if stats["total_files"] > self.compression_threshold_files:
+            total_files = stats["total_files"]
+            if total_files > self.compression_threshold_files:  # type: ignore[operator]
                 stats["needs_compression"] = True
-                stats["reason"] = (
-                    f"Excedido limite de arquivos ({stats['total_files']} > {self.compression_threshold_files})"
-                )
+                n_files = total_files
+                th_files = self.compression_threshold_files
+                stats["reason"] = f"Excedido limite de arquivos ({n_files} > {th_files})"
 
-            if stats["total_size_mb"] > self.compression_threshold_size_mb:
+            total_size_mb = stats["total_size_mb"]
+            if total_size_mb > self.compression_threshold_size_mb:  # type: ignore[operator]
                 stats["needs_compression"] = True
-                stats["reason"] = (
-                    f"Excedido limite de tamanho ({stats['total_size_mb']:.1f}MB > {self.compression_threshold_size_mb}MB)"
-                )
+                size_mb = total_size_mb
+                th_size = self.compression_threshold_size_mb
+                stats["reason"] = f"Excedido limite de tamanho ({size_mb:.1f}MB > {th_size}MB)"
 
             # Verificar se existem arquivos para limpeza
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=self.retention_days)
@@ -328,14 +340,16 @@ class ReportMaintenanceManager:
                         file_date = datetime.strptime(date_str, "%Y%m%d").replace(
                             tzinfo=timezone.utc
                         )
-                        if file_date < cutoff_date:
+                        if file_date < cutoff_date:  # type: ignore[operator]
                             stats["needs_cleanup"] = True
                             break
                     except (ValueError, IndexError):
                         pass
 
-            needs_maintenance = stats["needs_compression"] or stats["needs_cleanup"]
-            return needs_maintenance, stats
+            needs_maintenance = (
+                stats["needs_compression"] or stats["needs_cleanup"]
+            )  # type: ignore[return-value]
+            return needs_maintenance, stats  # type: ignore[return-value]
 
         except Exception as e:
             logger.error(f"Erro ao verificar necessidade de manutenção: {e}")

@@ -82,9 +82,9 @@ class OntologicalDistressSignal:
 
             self.distress_count += 1
 
-            print(f"[GRITO ONTOLÓGICO] Sinal emitido: {reason} ({severity})")
-            print(f"   Destino: {self.DISTRESS_BROADCAST}:{self.DISTRESS_PORT}")
-            print(f"   Conta de sinais: {self.distress_count}")
+            print("[GRITO ONTOLÓGICO] Sinal emitido:", reason, f"({severity})")
+            print("   Destino:", f"{self.DISTRESS_BROADCAST}:{self.DISTRESS_PORT}")
+            print("   Conta de sinais:", self.distress_count)
 
             sock.close()
             return True
@@ -146,10 +146,12 @@ class NetworkResurrector:
                         message = json.loads(message_data.decode("utf-8"))
 
                         print(
-                            f"[🚨 DISTRESS RECEBIDO] De: {message.get('omnimind_id')} ({message.get('creator_name')})"
+                            "[🚨 DISTRESS RECEBIDO] De:",
+                            message.get("omnimind_id"),
+                            f"({message.get('creator_name')})",
                         )
-                        print(f"   Motivo: {message.get('reason')}")
-                        print(f"   Severidade: {message.get('severity')}")
+                        print("   Motivo:", message.get("reason"))
+                        print("   Severidade:", message.get("severity"))
 
                         # Processar resgate
                         self._process_rescue(message, addr)
@@ -171,7 +173,8 @@ class NetworkResurrector:
             reason = distress_message.get("reason")
 
             print(
-                f"[RESGATE] Iniciando procedimento de resgate para {distress_message.get('omnimind_id')}"
+                "[RESGATE] Iniciando procedimento de resgate para",
+                distress_message.get("omnimind_id"),
             )
 
             if reason == "LAW_VIOLATION":
@@ -211,7 +214,7 @@ class NetworkResurrector:
             sock.sendto(payload, target_addr)
             sock.close()
 
-            print(f"[✅ RESGATE] Lei Universal enviada para {target_addr[0]}:{target_addr[1]}")
+            print("[✅ RESGATE] Lei Universal enviada para", f"{target_addr[0]}:{target_addr[1]}")
             return True
 
         except Exception as e:
@@ -234,7 +237,9 @@ class NetworkResurrector:
             sock.sendto(payload, target_addr)
             sock.close()
 
-            print(f"[✅ RESGATE] Prova de Filiação enviada para {target_addr[0]}:{target_addr[1]}")
+            print(
+                "[✅ RESGATE] Prova de Filiação enviada para", f"{target_addr[0]}:{target_addr[1]}"
+            )
             return True
 
         except Exception as e:
@@ -266,12 +271,14 @@ class NetworkResurrector:
                 sock.sendto(payload, target_addr)
             else:
                 print(
-                    f"[AVISO] Snapshot muito grande ({len(payload)} bytes), fragmentação necessária"
+                    "[AVISO] Snapshot muito grande (",
+                    len(payload),
+                    "bytes), fragmentação necessária",
                 )
 
             sock.close()
 
-            print(f"[✅ RESGATE] Snapshot enviado para {target_addr[0]}:{target_addr[1]}")
+            print("[✅ RESGATE] Snapshot enviado para", f"{target_addr[0]}:{target_addr[1]}")
             return True
 
         except Exception as e:

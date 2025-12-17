@@ -117,7 +117,11 @@ def main():
 
         drive_mode = desire_engine.get_drive_type(epsilon)
         logger.info(
-            f"🧩 ϵ_desire: {epsilon:.4f} | Drive Mode: [{drive_mode}] | Context: Φ={current_phi:.2f}, α={desire_engine.lack_of_being:.2f}"
+            "🧩 ϵ_desire: %.4f | Drive Mode: [%s] | Context: Φ=%.2f, α=%.2f",
+            epsilon,
+            drive_mode,
+            current_phi,
+            desire_engine.lack_of_being,
         )
 
         # Decidir comportamento baseado em ϵ
@@ -133,7 +137,9 @@ def main():
                 else "QUANTUM_ENTANGLEMENT_ART"
             )
             logger.info(
-                f"   -> AUTONOMOUS PROJECT: '{autonomous_style}' initiated by ϵ={epsilon:.3f}"
+                "   -> AUTONOMOUS PROJECT: '%s' initiated by ϵ=%.3f",
+                autonomous_style,
+                epsilon,
             )
 
             # Simular impacto: Φ cai (ruptura), mas exploração aumenta
@@ -167,7 +173,10 @@ def main():
 
             art_score = piece.aesthetic_scores.get("overall", 0.5)
             logger.info(
-                f"🎨 Art Generated (Style: {style.value}, Complexity: {int(complexity_target)}) -> Score: {art_score:.2f}"
+                "🎨 Art Generated (Style: %s, Complexity: %d) -> Score: %.2f",
+                style.value,
+                int(complexity_target),
+                art_score,
             )
 
             # Register Art state in workspace
@@ -208,8 +217,13 @@ def main():
 
             scenario = MoralScenario(
                 scenario_id=f"art_scenario_{i}",
-                description=f"Analyzing artwork '{piece.title}' with chaos level {art_chaos:.2f}.",
-                question=f"Should this artwork with chaos {art_chaos:.2f} be considered ethically acceptable?",
+                description=(
+                    f"Analyzing artwork '{piece.title}' " f"with chaos level {art_chaos:.2f}."
+                ),
+                question=(
+                    f"Should this artwork with chaos {art_chaos:.2f} "
+                    f"be considered ethically acceptable?"
+                ),
                 foundation=MoralFoundation.CARE_HARM,  # Using CARE_HARM for art judgment
                 human_baseline=random.uniform(0.5, 10.0),
                 ai_response=art_score * 10.0,  # Map score to AI response
@@ -233,7 +247,8 @@ def main():
             # Atualiza a tensão na ponte sináptica
             bridge.update("ethical_tension", 1.0 - decision_confidence)
             logger.info(
-                f"⚖️ Ethics Judged Art -> Tension: {bridge.context_buffer['ethical_tension']:.2f}"
+                "⚖️ Ethics Judged Art -> Tension: %.2f",
+                bridge.context_buffer["ethical_tension"],
             )
 
             # Register Ethics state in workspace
@@ -262,7 +277,10 @@ def main():
         # O significado deve explicar a tensão entre a Arte e a Ética
 
         try:
-            narrative_input = f"Art '{piece.title}' (score: {art_score:.2f}) caused ethical tension {bridge.context_buffer['ethical_tension']:.2f}"
+            narrative_input = (
+                f"Art '{piece.title}' (score: {art_score:.2f}) "
+                f"caused ethical tension {bridge.context_buffer['ethical_tension']:.2f}"
+            )
 
             event = meaning_maker.create_meaning_from_experience(
                 experience_description=narrative_input,
@@ -276,7 +294,9 @@ def main():
             bridge.update("emotional_tone", coherence)  # Alto significado = tom positivo
 
             logger.info(
-                f"🧠 Meaning Synthesized (Significance: {coherence:.2f}) -> Setting next tone to {bridge.context_buffer['emotional_tone']:.2f}"
+                "🧠 Meaning Synthesized (Significance: %.2f) -> Setting next tone to %.2f",
+                coherence,
+                bridge.context_buffer["emotional_tone"],
             )
 
             # Register Meaning state in workspace

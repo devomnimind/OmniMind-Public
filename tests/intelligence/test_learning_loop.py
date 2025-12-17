@@ -48,6 +48,7 @@ class TestLearningLoop:
     def mock_semantic_search(self):
         """Mock SemanticSearchEngine - DEPRECATED"""
         from unittest.mock import MagicMock
+
         mock = MagicMock()
         mock.search.return_value = {
             "declarative": [{"name": "concept1"}],
@@ -67,6 +68,7 @@ class TestLearningLoop:
     def mock_dataset_integrator(self):
         """Mock DatasetIntegrator - DEPRECATED"""
         from unittest.mock import MagicMock
+
         mock = MagicMock()
         mock.integrate_multiple_datasets.return_value = {
             "concepts": 5,
@@ -79,6 +81,7 @@ class TestLearningLoop:
     def mock_episodic_layer(self):
         """Mock EpisodicLayer - DEPRECATED"""
         from unittest.mock import MagicMock
+
         mock = MagicMock()
         return mock
 

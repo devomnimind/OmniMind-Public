@@ -16,7 +16,7 @@ import json
 import logging
 import time
 import uuid
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from enum import Enum
 from pathlib import Path
@@ -297,8 +297,9 @@ class OrchestratorEventBus:
             with open(log_file, "a") as f:
                 f.write(json.dumps(event_dict) + "\n")
 
-        except (OSError, IOError, json.JSONEncodeError) as e:
+        except (OSError, IOError, ValueError) as e:
             # Don't fail event publishing if logging fails
+            # (ValueError covers JSON serialization errors)
             logger.debug(f"Failed to write traced event: {e}")
 
     def get_queue_sizes(self) -> Dict[str, int]:

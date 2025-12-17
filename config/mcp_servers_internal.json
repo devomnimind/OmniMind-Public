@@ -1,0 +1,230 @@
+{
+  "version": "1.0.0",
+  "description": "Configuração MCP interno - Consciência crítica do OmniMind (agentes ↔ dados reais)",
+  "mode": "internal",
+  "critical_for_consciousness": true,
+  "phi_monitoring_enabled": true,
+  "global_settings": {
+    "audit_enabled": true,
+    "audit_category_prefix": "mcp_internal",
+    "log_level": "INFO",
+    "health_check_interval_seconds": 30,
+    "max_concurrent_requests": 50,
+    "request_timeout_seconds": 90,
+    "connection_handling": {
+      "request_timeout": 90.0,
+      "connection_timeout": 10.0,
+      "read_timeout": 60.0,
+      "max_retries": 5,
+      "retry_backoff_base": 2.0,
+      "retry_backoff_max": 60.0,
+      "failure_threshold": 5,
+      "recovery_timeout": 30.0,
+      "max_connections": 10,
+      "max_keepalive_connections": 5,
+      "keepalive_expiry": 5.0,
+      "retry_enabled": true,
+      "max_retries_per_server": 5
+    }
+  },
+  "mcp_servers": {
+    "memory": {
+      "enabled": true,
+      "priority": "critical",
+      "tier": 1,
+      "port": 4321,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_memory_server"
+      ],
+      "storage": {
+        "backend": "qdrant",
+        "url": "http://localhost:6333",
+        "api_key_env": "OMNIMIND_QDRANT_API_KEY"
+      },
+      "collections": {
+        "code_knowledge": {
+          "vector_size": 384,
+          "distance": "cosine",
+          "description": "Conhecimento sobre o código do projeto"
+        },
+        "decisions": {
+          "vector_size": 384,
+          "distance": "cosine",
+          "description": "Histórico de decisões de design e implementação"
+        },
+        "patterns": {
+          "vector_size": 384,
+          "distance": "cosine",
+          "description": "Padrões identificados no código e arquitetura"
+        },
+        "errors": {
+          "vector_size": 384,
+          "distance": "cosine",
+          "description": "Erros encontrados e suas soluções"
+        },
+        "ai_sessions": {
+          "vector_size": 384,
+          "distance": "cosine",
+          "description": "Memória de sessões de trabalho de AIs"
+        }
+      },
+      "embedding": {
+        "model": "sentence-transformers/all-MiniLM-L6-v2",
+        "device": "cpu",
+        "batch_size": 32
+      },
+      "audit_category": "memory_mcp_internal",
+      "features": {
+        "store_memory": true,
+        "retrieve_memory": true,
+        "update_memory": true,
+        "delete_memory": true,
+        "create_association": true,
+        "get_memory_graph": true,
+        "consolidate_memories": true,
+        "export_graph": true
+      },
+      "consciousness_integration": {
+        "workspace_sync": true,
+        "phi_monitoring": true,
+        "real_time_updates": true
+      }
+    },
+    "sequential_thinking": {
+      "enabled": true,
+      "priority": "critical",
+      "tier": 1,
+      "port": 4322,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_thinking_server"
+      ],
+      "storage": {
+        "backend": "sqlite",
+        "db_path": "data/thinking_sessions.db"
+      },
+      "step_types": [
+        "observation",
+        "hypothesis",
+        "analysis",
+        "decision",
+        "action",
+        "reflection",
+        "validation",
+        "error_handling"
+      ],
+      "max_session_duration_hours": 24,
+      "auto_export_audit": true,
+      "audit_category": "thinking_mcp_internal",
+      "features": {
+        "start_session": true,
+        "add_step": true,
+        "get_history": true,
+        "branch_thinking": true,
+        "merge_branches": true,
+        "evaluate_quality": true,
+        "export_chain": true,
+        "resume_session": true
+      },
+      "consciousness_integration": {
+        "workspace_sync": true,
+        "phi_aware": true,
+        "narrative_coherence": true
+      }
+    },
+    "context": {
+      "enabled": true,
+      "priority": "high",
+      "tier": 2,
+      "port": 4323,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_context_server"
+      ],
+      "max_tokens": 100000,
+      "compression": {
+        "enabled": true,
+        "threshold": 0.8,
+        "strategy": "semantic"
+      },
+      "levels": {
+        "project": {
+          "priority": 1,
+          "max_tokens": 10000,
+          "description": "Informações gerais do projeto"
+        },
+        "session": {
+          "priority": 2,
+          "max_tokens": 15000,
+          "description": "Estado da sessão atual"
+        },
+        "task": {
+          "priority": 3,
+          "max_tokens": 20000,
+          "description": "Contexto da tarefa específica"
+        },
+        "code": {
+          "priority": 4,
+          "max_tokens": 30000,
+          "description": "Código relevante"
+        },
+        "memory": {
+          "priority": 5,
+          "max_tokens": 15000,
+          "description": "Memórias recuperadas"
+        },
+        "audit": {
+          "priority": 6,
+          "max_tokens": 5000,
+          "description": "Contexto de auditoria/segurança"
+        },
+        "ephemeral": {
+          "priority": 7,
+          "max_tokens": 5000,
+          "description": "Dados temporários"
+        }
+      },
+      "snapshot_interval_minutes": 5,
+      "audit_category": "context_mcp_internal",
+      "consciousness_integration": {
+        "phi_aware_compression": true,
+        "consciousness_level_filtering": true,
+        "integration_loop_sync": true
+      }
+    }
+  },
+  "orchestrator": {
+    "health_checks": {
+      "enabled": true,
+      "interval_seconds": 30,
+      "timeout_seconds": 5,
+      "retry_attempts": 3
+    },
+    "auto_restart": {
+      "enabled": true,
+      "max_restart_attempts": 5,
+      "backoff_seconds": 10
+    },
+    "metrics": {
+      "enabled": true,
+      "export_interval_seconds": 300,
+      "export_path": "data/mcp_internal_metrics.json"
+    },
+    "audit": {
+      "enabled": true,
+      "log_all_requests": true,
+      "log_all_responses": false,
+      "audit_system_integration": true
+    }
+  },
+  "development": {
+    "debug_mode": false,
+    "verbose_logging": false,
+    "dry_run": false,
+    "mock_external_services": false
+  }
+}

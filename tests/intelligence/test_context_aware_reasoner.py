@@ -48,6 +48,7 @@ class TestContextAwareReasoner:
     def mock_semantic_search(self):
         """Mock SemanticSearchEngine - DEPRECATED"""
         from unittest.mock import MagicMock
+
         mock = MagicMock()
         mock.search.return_value = {
             "declarative": [
@@ -70,6 +71,7 @@ class TestContextAwareReasoner:
     def mock_knowledge_integrator(self):
         """Mock KnowledgeIntegrator - DEPRECATED"""
         from unittest.mock import MagicMock
+
         mock = MagicMock()
         mock.get_full_knowledge.return_value = {
             "concepts": [{"name": "concept1", "definition": "full def"}],

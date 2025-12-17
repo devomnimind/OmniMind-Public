@@ -1,0 +1,302 @@
+{
+  "version": "1.0.0",
+  "description": "Configuração MCP externo - Ferramentas de desenvolvimento para VS Code/IDEs",
+  "mode": "external",
+  "critical_for_consciousness": false,
+  "phi_monitoring_enabled": false,
+  "global_settings": {
+    "audit_enabled": true,
+    "audit_category_prefix": "mcp_external",
+    "log_level": "INFO",
+    "health_check_interval_seconds": 60,
+    "max_concurrent_requests": 100,
+    "request_timeout_seconds": 30,
+    "connection_handling": {
+      "request_timeout": 300.0,
+      "connection_timeout": 20.0,
+      "read_timeout": 240.0,
+      "max_retries": 3,
+      "retry_backoff_base": 5.0,
+      "retry_backoff_max": 120.0,
+      "failure_threshold": 10,
+      "recovery_timeout": 60.0,
+      "max_connections": 20,
+      "max_keepalive_connections": 10,
+      "keepalive_expiry": 10.0,
+      "retry_enabled": true,
+      "max_retries_per_server": 3
+    }
+  },
+  "mcp_servers": {
+    "filesystem": {
+      "enabled": true,
+      "priority": "high",
+      "tier": 1,
+      "port": 4331,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_filesystem_wrapper"
+      ],
+      "allowed_paths": [
+        "src/",
+        "tests/",
+        "docs/",
+        "config/",
+        "scripts/",
+        "web/"
+      ],
+      "forbidden_paths": [
+        ".git/",
+        ".venv/",
+        "logs/",
+        "__pycache__/",
+        "*.pyc",
+        ".omnimind/hsm/"
+      ],
+      "max_file_size_mb": 10,
+      "audit_category": "filesystem_mcp_external",
+      "features": {
+        "read_file": true,
+        "write_file": false,
+        "list_directory": true,
+        "search_files": true,
+        "get_metadata": true,
+        "create_directory": false,
+        "move_file": false,
+        "delete_file": false
+      },
+      "security": {
+        "validate_path_traversal": true,
+        "backup_before_write": false,
+        "rate_limit_rpm": 1000,
+        "readonly_mode": true
+      }
+    },
+    "git": {
+      "enabled": true,
+      "priority": "high",
+      "tier": 1,
+      "port": 4332,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_git_wrapper"
+      ],
+      "allowed_operations": [
+        "status",
+        "diff",
+        "log",
+        "show",
+        "blame"
+      ],
+      "forbidden_operations": [
+        "add",
+        "commit",
+        "push",
+        "force",
+        "reset --hard",
+        "rebase -i",
+        "filter-branch",
+        "branch",
+        "checkout"
+      ],
+      "require_audit_for": [],
+      "audit_category": "git_mcp_external",
+      "commit_requirements": {
+        "require_message": false,
+        "min_message_length": 0,
+        "sign_commits": false,
+        "pre_commit_hooks": false
+      },
+      "readonly_mode": true
+    },
+    "python": {
+      "enabled": true,
+      "priority": "medium",
+      "tier": 2,
+      "port": 4333,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_python_server"
+      ],
+      "environment": {
+        "venv_path": ".venv",
+        "python_version": "3.12.8",
+        "required_version": ">=3.12.0,<3.13.0"
+      },
+      "execution": {
+        "timeout_seconds": 30,
+        "memory_limit_mb": 1024,
+        "allow_network": false,
+        "allow_filesystem": false
+      },
+      "allowed_imports": [
+        "pytest",
+        "numpy",
+        "pandas",
+        "sklearn",
+        "json",
+        "logging"
+      ],
+      "forbidden_imports": [
+        "os",
+        "subprocess",
+        "eval",
+        "exec",
+        "__import__",
+        "src.*",
+        "tests.*"
+      ],
+      "audit_category": "python_mcp_external",
+      "features": {
+        "execute_code": true,
+        "install_package": false,
+        "list_packages": true,
+        "get_python_info": true,
+        "lint_code": true,
+        "type_check": true,
+        "run_tests": false,
+        "format_code": true
+      },
+      "sandbox_mode": true
+    },
+    "sqlite": {
+      "enabled": true,
+      "priority": "medium",
+      "tier": 2,
+      "port": 4334,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_sqlite_wrapper"
+      ],
+      "databases": {
+        "cache": {
+          "path": "data/vscode_cache.db",
+          "description": "Cache de informações para VS Code"
+        }
+      },
+      "security": {
+        "read_only": true,
+        "max_query_time_seconds": 5,
+        "max_rows_returned": 1000
+      },
+      "audit_category": "sqlite_mcp_external",
+      "readonly_mode": true
+    },
+    "system_info": {
+      "enabled": true,
+      "priority": "low",
+      "tier": 3,
+      "port": 4335,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_system_info_server"
+      ],
+      "features": {
+        "gpu_info": false,
+        "cpu_info": true,
+        "memory_info": true,
+        "disk_info": true,
+        "temperature": false,
+        "power_usage": false
+      },
+      "refresh_interval_seconds": 10,
+      "audit_category": "system_info_mcp_external",
+      "hardware_profile": {
+        "gpu": {
+          "name": "NVIDIA GeForce GTX 1650",
+          "vram_gb": 4,
+          "cuda_version": "12.4"
+        },
+        "cpu": {
+          "model": "Intel Core i5",
+          "cores": 4,
+          "threads": 8
+        },
+        "memory": {
+          "total_gb": 24
+        }
+      },
+      "limited_info": true
+    },
+    "logging": {
+      "enabled": true,
+      "priority": "medium",
+      "tier": 2,
+      "port": 4336,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_logging_server"
+      ],
+      "log_sources": [
+        "logs/omnimind.log"
+      ],
+      "output_format": "json",
+      "search_enabled": true,
+      "max_search_results": 100,
+      "audit_category": "logging_mcp_external",
+      "integration": {
+        "immutable_audit": false,
+        "audit_system_path": null
+      },
+      "limited_logs": true,
+      "max_log_age_hours": 24
+    },
+    "supabase": {
+      "enabled": true,
+      "priority": "low",
+      "tier": 3,
+      "port": 4337,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_supabase_wrapper"
+      ],
+      "storage": {
+        "backend": "supabase",
+        "url": "https://mcp.supabase.com/mcp?project_ref=noetzkgvyqcrycdsfnib"
+      },
+      "audit_category": "supabase_mcp_external",
+      "features": {
+        "basic_info": true,
+        "external_integration": true
+      },
+      "external_only": true
+    }
+  },
+  "orchestrator": {
+    "health_checks": {
+      "enabled": true,
+      "interval_seconds": 60,
+      "timeout_seconds": 10,
+      "retry_attempts": 3
+    },
+    "auto_restart": {
+      "enabled": true,
+      "max_restart_attempts": 3,
+      "backoff_seconds": 15
+    },
+    "metrics": {
+      "enabled": true,
+      "export_interval_seconds": 600,
+      "export_path": "data/mcp_external_metrics.json"
+    },
+    "audit": {
+      "enabled": true,
+      "log_all_requests": false,
+      "log_all_responses": false,
+      "audit_system_integration": false
+    }
+  },
+  "development": {
+    "debug_mode": false,
+    "verbose_logging": false,
+    "dry_run": false,
+    "mock_external_services": false
+  }
+}

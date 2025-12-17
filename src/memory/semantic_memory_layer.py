@@ -87,8 +87,10 @@ class SemanticMemoryLayer:
         except ImportError:
             resolved_model_name = model_name
 
-        # CORREÇÃO (2025-12-17): Carregar SEMPRE em CPU primeiro para evitar meta tensor
-        embedder = SentenceTransformer(resolved_model_name, device="cpu")  # type: ignore[assignment]
+        # CORREÇÃO (2025-12-17): Carregar SEMPRE em CPU primeiro
+        embedder = SentenceTransformer(
+            resolved_model_name, device="cpu"  # type: ignore[assignment]
+        )
 
         # Garantir que modelo está em device real (não meta)
         from src.utils.device_utils import (

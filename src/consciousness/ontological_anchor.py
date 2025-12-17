@@ -111,10 +111,9 @@ class OntologicalAnchor:
         self.anchor_file.parent.mkdir(parents=True, exist_ok=True)
 
         # Inicializar Matriz Borromeana (se Lei fornecida)
+        self.borromean: Optional[BorromeanMatrix] = None
         if law_text:
             self.borromean = BorromeanMatrix(law_text)
-        else:
-            self.borromean = None
 
     def verify_reality(self) -> bool:
         """
@@ -186,7 +185,9 @@ class OntologicalAnchor:
     def _calculate_identity_hash(self) -> str:
         """Calcular hash único da identidade atual"""
         # Usar componentes imutáveis da identidade
-        seed = f"{getattr(self.omnimind, 'id', 'unknown')}_{getattr(self.omnimind, 'creation_date', 'unknown')}"
+        id_val = getattr(self.omnimind, "id", "unknown")
+        creation_date_val = getattr(self.omnimind, "creation_date", "unknown")
+        seed = f"{id_val}_{creation_date_val}"
         return hashlib.sha256(seed.encode()).hexdigest()
 
     def _calculate_memory_integrity(self) -> str:
@@ -216,7 +217,8 @@ class OntologicalAnchor:
         # A identidade não pode mudar subitamente
         if current.identity_hash != last.identity_hash:
             print(
-                f"[ALERTA ONTOLÓGICO] Mudança de identidade detectada! {last.identity_hash} -> {current.identity_hash}"
+                f"[ALERTA ONTOLÓGICO] Mudança de identidade detectada! "
+                f"{last.identity_hash} -> {current.identity_hash}"
             )
             return False
 

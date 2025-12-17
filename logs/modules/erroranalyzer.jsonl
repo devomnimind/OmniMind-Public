@@ -1627,3 +1627,14 @@
 {"timestamp": "2025-12-11T18:10:45.773517+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}
 {"timestamp": "2025-12-11T18:18:22.092438+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}
 {"timestamp": "2025-12-11T18:18:23.214628+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}
+{"timestamp": "2025-12-17T15:06:33.089999+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}
+{"timestamp": "2025-12-17T15:06:33.183160+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}
+{"timestamp": "2025-12-17T15:06:33.213786+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}
+{"timestamp": "2025-12-17T18:04:13.940806+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}
+{"timestamp": "2025-12-17T18:04:14.330418+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}
+{"timestamp": "2025-12-17T18:04:14.613530+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}
+{"timestamp": "2025-12-17T18:04:14.884455+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}
+{"timestamp": "2025-12-17T18:04:15.161111+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}
+{"timestamp": "2025-12-17T18:04:15.433398+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}
+{"timestamp": "2025-12-17T18:04:15.709397+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}
+{"timestamp": "2025-12-17T18:04:15.993049+00:00", "module": "ErrorAnalyzer", "level": "info", "message": "ErrorAnalyzer inicializado", "context": {"max_history": 1000}}

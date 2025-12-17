@@ -252,7 +252,7 @@ class ConsciousSystem:
             extractor = get_rnn_metrics_extractor()
             # Phi será calculado após, então passamos None aqui
             extractor.extract_metrics(self, cycle_id=None, phi_value=None)
-        except Exception as e:
+        except Exception:
             # Não falhar se métricas não estiverem disponíveis
             pass
 

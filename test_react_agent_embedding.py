@@ -46,11 +46,10 @@ def test_react_agent_embedding():
         embedding = agent._generate_embedding(test_text)
 
         if embedding is not None and len(embedding) > 0:
-            print(f"✓ Embedding gerado com sucesso")
-            print(f"  - Texto: '{test_text}'")
-            print(
-                f"  - Dimensões: {embedding.shape if hasattr(embedding, 'shape') else len(embedding)}"
-            )
+            print("✓ Embedding gerado com sucesso")
+            print("  - Texto: '{}'".format(test_text))
+            dims = embedding.shape if hasattr(embedding, "shape") else len(embedding)
+            print("  - Dimensões:", dims)
         else:
             print("⚠️ Embedding retornou None (fallback hash-based)")
 
@@ -58,7 +57,7 @@ def test_react_agent_embedding():
         if agent._embedding_model is not None:
             print("✓ Modelo de embedding disponível")
             # Testar segunda chamada (deve usar modelo em cache)
-            embedding2 = agent._generate_embedding("Segundo teste")
+            agent._generate_embedding("Segundo teste")
             print("✓ Segunda geração de embedding funcionou")
         else:
             print("⚠️ Modelo em fallback (hash-based)")

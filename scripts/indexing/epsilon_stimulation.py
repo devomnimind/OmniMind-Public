@@ -17,14 +17,11 @@ sys.path.append(str(PROJECT_ROOT))
 
 # Mock imports para simular a estrutura se os arquivos reais não existirem no ambiente
 ArtGenerator = None
-ArtStyle = None
 DesireEngine = None
-MeaningMaker = None
 
 try:
-    from src.autopoietic.art_generator import ArtGenerator, ArtStyle
+    from src.autopoietic.art_generator import ArtGenerator
     from src.autopoietic.desire_engine import DesireEngine
-    from src.autopoietic.meaning_maker import MeaningMaker
 except ImportError:
     # Fallback: módulos não disponíveis neste ambiente
     pass
@@ -41,6 +38,9 @@ def main():
     logger.info("🌌 Initializing OmniMind with Epsilon Desire Architecture...")
 
     # Inicialização dos Módulos
+    if DesireEngine is None:
+        logger.error("DesireEngine não disponível")
+        return
     desire_engine = DesireEngine(max_phi_theoretical=1.5)  # Phi teórico > 1.0
 
     # Estado do Sistema Simulado

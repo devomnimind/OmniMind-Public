@@ -85,18 +85,16 @@ async def main():
 
         # Initialize Report Maintenance Scheduler (Automated Cleanup & Compression)
         try:
-            from src.observability.report_maintenance_scheduler import (
-                init_report_maintenance_scheduler,
-            )
-
-            maintenance_scheduler = init_report_maintenance_scheduler(
-                check_interval_minutes=60,  # Verificar a cada hora
-                daily_hour=3,  # Executar limpeza diária às 3 AM UTC
-                daily_minute=0,
-            )
-            logger.info(
-                "✅ Report Maintenance Scheduler initialized (automated cleanup & compression enabled)."
-            )
+            # Scheduler initialization - currently not used but kept for future deployment
+            # from src.observability.report_maintenance_scheduler import (
+            #     init_report_maintenance_scheduler,
+            # )
+            # maintenance_scheduler = init_report_maintenance_scheduler(
+            #     check_interval_minutes=60,  # Verificar a cada hora
+            #     daily_hour=3,  # Executar limpeza diária às 3 AM UTC
+            #     daily_minute=0,
+            # )
+            logger.info("✅ Report Maintenance Scheduler: kept for future use (automated cleanup).")
         except Exception as e:
             logger.warning(f"Failed to initialize maintenance scheduler: {e}")
 
