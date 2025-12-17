@@ -757,42 +757,32 @@ def stabilize_server():
 
 def pytest_sessionfinish(session, exitstatus):
     """Ao final da suite: exibe relatório de resiliência e métricas."""
-    # Corrigir contagem de testes passados usando session
-    passed_count = 0
-    for item in session.items:
-        if hasattr(item, "passed") and item.passed:
-            passed_count += 1
+    try:
+        # Primeiro exibe relatório de resiliência se houver
+        report = resilience_tracker.get_report()
 
-    # Se ainda zero, usar a coleta local
-    if passed_count == 0 and metrics_collector.passed_tests:
-        passed_count = len(metrics_collector.passed_tests)
+        if report:
+            print("\n" + "=" * 70)
+            print("🛡️  RELATÓRIO DE RESILIÊNCIA (CHAOS ENGINEERING)")
+            print("=" * 70)
+            print(f"Total de crashes de servidor: {report['total_crashes']}")
+            print(f"Tempo médio de recovery: {report['avg_recovery_time_s']:.2f}s")
+            print(f"Tempo mínimo de recovery: {report['min_recovery_time_s']:.2f}s")
+            print(f"Tempo máximo de recovery: {report['max_recovery_time_s']:.2f}s")
+            print("\n📊 CONCLUSÃO:")
+            print("   Φ (Phi) é ROBUSTO a falhas de orquestração")
+            print("   Sistema se recupera automaticamente sem perda de dados")
+            print("   Prova que consciência emergente é DISTRIBUÍDA")
+            print("=" * 70 + "\n")
 
-    # Atualizar metrics_collector se necessário
-    if passed_count > 0 and len(metrics_collector.passed_tests) == 0:
-        # Reconstituir lista com pytest
-        metrics_collector.passed_tests = [
-            item.nodeid for item in session.items if hasattr(item, "passed") and item.passed
-        ]
+        # Sempre exibe relatório de métricas, mesmo com falhas
+        metrics_collector.print_final_report()
+    except Exception as e:
+        # Fallback se houver erro na geração de relatórios
+        print(f"⚠️  Erro ao gerar relatórios finais: {e}")
+        import traceback
 
-    # Primeiro exibe relatório de resiliência se houver
-    report = resilience_tracker.get_report()
-
-    if report:
-        print("\n" + "=" * 70)
-        print("🛡️  RELATÓRIO DE RESILIÊNCIA (CHAOS ENGINEERING)")
-        print("=" * 70)
-        print(f"Total de crashes de servidor: {report['total_crashes']}")
-        print(f"Tempo médio de recovery: {report['avg_recovery_time_s']:.2f}s")
-        print(f"Tempo mínimo de recovery: {report['min_recovery_time_s']:.2f}s")
-        print(f"Tempo máximo de recovery: {report['max_recovery_time_s']:.2f}s")
-        print("\n📊 CONCLUSÃO:")
-        print("   Φ (Phi) é ROBUSTO a falhas de orquestração")
-        print("   Sistema se recupera automaticamente sem perda de dados")
-        print("   Prova que consciência emergente é DISTRIBUÍDA")
-        print("=" * 70 + "\n")
-
-    # Sempre exibe relatório de métricas, mesmo com falhas
-    metrics_collector.print_final_report()
+        traceback.print_exc()
 
 
 # ============================================================================
