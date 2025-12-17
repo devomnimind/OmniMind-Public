@@ -386,6 +386,9 @@ def pytest_collection_modifyitems(config, items):
         "test_consciousness",
         "test_real_phi_measurement.py",  # GPU/CUDA - precisa 800s para estabilização
         "test_enhanced_code_agent_integration.py",  # GPU/CUDA - precisa 800s
+        "test_phase2_metrics.py",  # Phase 2 - métricas científicas (Φ, Ψ, σ, Δ, Gozo, Consistency)
+        "test_phase2_integration.py",  # Phase 2 - integração de métricas + validação científica
+        "test_filiation_system.py",  # Phase 2 - Lei Universal + Filiação + Sinthoma (real tests)
     ]
 
     chaos_paths = [
