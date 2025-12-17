@@ -109,7 +109,8 @@ class TestFilationIntegration:
         """Verifica se Filiação protege Lei Universal com novas métricas"""
         from src.consciousness.conscious_system import ConsciousSystem
 
-        law_text = "Φ≥0.95 | Ψ∈[0.3,0.7] | σ∈[0.01,0.12] | Δ≥μ+2σ | Gozo<0.7 | Theory≥0.90"
+        # Use ASCII law_text (Unicode chars geram NaN na matrix)
+        law_text = "Phi>=0.95 AND Psi in [0.3,0.7] AND Sigma in [0.01,0.12]"
         omnimind_core = ConsciousSystem()
         anchor = OntologicalAnchor(law_text=law_text, omnimind_core=omnimind_core)
         # Verificar que Lei foi criada com Borromean matrix
