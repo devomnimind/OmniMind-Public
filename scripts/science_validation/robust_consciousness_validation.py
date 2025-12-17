@@ -41,7 +41,7 @@ else:
 # Adicionar src ao path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from embeddings.code_embeddings import OmniMindEmbeddings
+from src.embeddings.code_embeddings import OmniMindEmbeddings
 
 # Configurar logging
 logging.basicConfig(

@@ -8,18 +8,17 @@ Combina dados do projeto OmniMind + indexação universal da máquina.
 Protocolo: 200-300 ciclos de consciência com prova de verdade.
 """
 
+import json
+import logging
 import os
 import sys
-import logging
-import json
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Any, Optional
+from typing import Any, Dict, List
 
 import numpy as np
-from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
-from rich import print as rprint
+from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
 # Forçar CPU
@@ -90,9 +89,15 @@ class IntegratedConsciousnessRunner:
 
         # Buscar na memória OmniMind
         try:
+            # Ensure query_embedding is in the right format for Qdrant
+            if hasattr(query_embedding, "tolist"):
+                query_vector = query_embedding.tolist()
+            else:
+                query_vector = list(query_embedding)
+
             omnimind_results = self.omnimind_memory.client.query_points(
                 collection_name="omnimind_embeddings",
-                query=query_embedding.tolist(),
+                query=query_vector,
                 limit=top_k,
                 with_payload=True,
             )
@@ -112,7 +117,7 @@ class IntegratedConsciousnessRunner:
         try:
             universal_results = self.universal_memory.client.query_points(
                 collection_name="universal_machine_embeddings",
-                query=query_embedding.tolist(),
+                query=query_vector,
                 limit=top_k,
                 with_payload=True,
             )

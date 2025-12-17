@@ -1,0 +1,63 @@
+#!/bin/bash
+# Configurações específicas do VSCode para o projeto OmniMind
+# Gerado automaticamente para garantir ambiente virtual ativado
+
+# Configuração do prompt personalizado
+export PS1="(omnimind) $PS1"
+
+# Forçar ativação do ambiente virtual OmniMind
+if [ -f "/home/fahbrain/projects/omnimind/.venv/bin/activate" ]; then
+    source /home/fahbrain/projects/omnimind/.venv/bin/activate
+    echo "✅ Ambiente virtual OmniMind ativado"
+else
+    echo "⚠️  Ambiente virtual não encontrado em /home/fahbrain/projects/omnimind/.venv/bin/activate"
+fi
+
+# Variáveis de ambiente essenciais do projeto
+export OMNIMIND_ROOT="/home/fahbrain/projects/omnimind"
+export PYTHONPATH="/home/fahbrain/projects/omnimind:/home/fahbrain/projects/omnimind/src:$PYTHONPATH"
+
+# CUDA 12.4 - ambiente GPU
+export CUDA_HOME="/usr/local/cuda-12"
+export CUDA_PATH="/usr/local/cuda-12"
+export CUDA_VISIBLE_DEVICES="0"
+export LD_LIBRARY_PATH="/usr/local/cuda-12/lib64:/usr/local/cuda-12/extras/CUPTI/lib64:/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH}"
+
+# PyTorch e CUDA
+export TORCH_CUDA_ARCH_LIST="7.5"
+export TORCH_HOME="/home/fahbrain/projects/omnimind/.torch"
+
+# Função para ativar ambiente virtual manualmente
+activate_omnimind() {
+    if [ -f "/home/fahbrain/projects/omnimind/.venv/bin/activate" ]; then
+        source /home/fahbrain/projects/omnimind/.venv/bin/activate
+        echo "✅ Ambiente virtual ativado"
+    else
+        echo "❌ Ambiente virtual não encontrado"
+    fi
+}
+
+# Função para verificar status do ambiente
+check_env() {
+    echo "=== Status do Ambiente OmniMind ==="
+    echo "VIRTUAL_ENV: ${VIRTUAL_ENV:-'Não definido'}"
+    echo "Python: $(which python 2>/dev/null || echo 'Não encontrado')"
+    echo "Python Version: $(python --version 2>/dev/null || echo 'N/A')"
+    echo "CUDA_HOME: ${CUDA_HOME:-'Não definido'}"
+    echo "NVCC: $(which nvcc 2>/dev/null || echo 'Não encontrado')"
+    echo "NVCC Version: $(nvcc --version 2>/dev/null | grep release || echo 'N/A')"
+    echo "PyTorch: $(python -c 'import torch; print(torch.__version__)' 2>/dev/null || echo 'Não instalado')"
+    echo "CUDA Available: $(python -c 'import torch; print(torch.cuda.is_available())' 2>/dev/null || echo 'N/A')"
+    echo "=================================="
+}
+
+# Atalhos de comando personalizados
+alias omni-check="check_env"
+alias omni-activate="activate_omnimind"
+alias omni-status="python --version && which python"
+
+# Exibir mensagem de boas-vindas
+echo "🚀 OmniMind VSCode Terminal Iniciado"
+echo "   Para verificar status: omni-check"
+echo "   Para ativar ambiente: omni-activate"
+echo ""

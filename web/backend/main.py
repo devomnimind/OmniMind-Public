@@ -1,10 +1,9 @@
 from __future__ import annotations
 
+# Standard library imports
 import asyncio
 import json
 import logging
-
-# ===== CUDA DIAGNOSTICS =====
 import os
 import secrets
 import sys
@@ -12,51 +11,54 @@ import threading
 import time
 import uuid
 from base64 import b64encode
-
-# NOTE: CUDA environment variables are handled by the shell script (start_omnimind_system.sh)
-# Removing manual overrides to prevent PyTorch initialization errors.
-
-
-# Add src to path for imports
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
 from contextlib import asynccontextmanager, suppress
 from pathlib import Path
 from typing import Any, Callable, Dict, Optional, Tuple
 
+# Third-party imports
 from dotenv import load_dotenv
-from fastapi import (
-    Depends,
-    FastAPI,
-    HTTPException,
-    Request,
-    WebSocket,
-    WebSocketDisconnect,
-)
+from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBasic
 from pydantic import BaseModel
 from starlette.status import WS_1008_POLICY_VIOLATION
 
-# NOTE: OrchestratorAgent imported AFTER offline setup (lazy import to avoid early model loading)
-from src.metrics.dashboard_metrics import (
+# NOTE: CUDA environment variables are handled by the shell script (start_omnimind_system.sh)
+# Removing manual overrides to prevent PyTorch initialization errors.
+
+# Add src to path for imports
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+
+# Local application imports (after sys.path modification)
+# noqa: E402 - Imports must come after sys.path modification
+from src.metrics.dashboard_metrics import (  # noqa: E402
     collect_dashboard_snapshot,
     collect_system_metrics,
     dashboard_metrics_aggregator,
 )
-from src.metrics.real_consciousness_metrics import RealConsciousnessMetricsCollector
-from web.backend import chat_api
-from web.backend.auth import verify_credentials as _verify_credentials
-from web.backend.routes import (
-    agents,
-    autopoietic,
-    health,
-    metacognition,
-    omnimind,
-    tasks,
-    tribunal,
-)
-from web.backend.routes import security as security_router
-from web.backend.websocket_manager import ws_manager
+from src.metrics.real_consciousness_metrics import RealConsciousnessMetricsCollector  # noqa: E402
+from web.backend import chat_api  # noqa: E402
+from web.backend.auth import verify_credentials as _verify_credentials  # noqa: E402
+from web.backend.routes import agents, autopoietic, health, metacognition, omnimind  # noqa: E402
+from web.backend.routes import security as security_router  # noqa: E402
+from web.backend.routes import tasks, tribunal  # noqa: E402
+from web.backend.websocket_manager import ws_manager  # noqa: E402
+
+# Load environment variables from .env file
+load_dotenv()
+
+logger = logging.getLogger("omnimind.backend")
+
+# Setup offline mode BEFORE any model loading (after logger is created)
+try:
+    from src.utils.offline_mode import setup_offline_mode  # noqa: E402
+
+    setup_offline_mode()
+except ImportError:
+    logger.warning("offline_mode module not available, skipping offline setup")
+
+# NOTE: OrchestratorAgent imported AFTER offline setup (lazy import to avoid early model loading)
+from src.agents.orchestrator_agent import OrchestratorAgent  # noqa: E402
 
 # Load environment variables from .env file
 load_dotenv()
@@ -70,9 +72,6 @@ try:
     setup_offline_mode()
 except ImportError:
     logger.warning("offline_mode module not available, skipping offline setup")
-
-# NOW import OrchestratorAgent (after offline setup)
-from src.agents.orchestrator_agent import OrchestratorAgent
 
 # API de Explicabilidade (Sessão 6)
 decisions_router: Optional[Any] = None
@@ -237,9 +236,7 @@ async def lifespan(app_instance: FastAPI):
     # Import Realtime Analytics Broadcaster
     realtime_analytics_broadcaster: Any = None
     try:
-        from web.backend.realtime_analytics_broadcaster import (
-            realtime_analytics_broadcaster as rab,
-        )
+        from web.backend.realtime_analytics_broadcaster import realtime_analytics_broadcaster as rab
 
         realtime_analytics_broadcaster = rab
     except ImportError:
@@ -1652,7 +1649,7 @@ async def graceful_shutdown(user: str = Depends(_verify_credentials)):
         if hasattr(app.state, "db_client"):
             try:
                 await app.state.db_client.close()
-            except:
+            except Exception as e:  # ✅ Captura Exception (não bare ex
                 pass
 
         # Return success response

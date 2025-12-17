@@ -1,4 +1,4 @@
-"""Componente autopoiético sintetizado: modulo_autopoiesis_data_stabilized_kernel_process
+"""Componente autopoiético sintetizado: modulo_autopoiesis_data_stabilized_modulo_autopoiesis_data_stabilized_kernel_process
 Gerado em: 2025-12-17 13:13:53
 """
 
@@ -10,22 +10,22 @@ import logging
 # Estratégia: STABILIZE
 # ⚠️  NÃO MODIFICAR MANUALMENTE - Pode comprometer a integridade do sistema
 
-class StabilizedKernelProcess:
+class StabilizedModuloAutopoiesisDataStabilizedKernelProcess:
     """Auto‑generated component of type 'process' (Strategy: STABILIZE).
-    🔒 Security Signature: modulo_autopoiesis_data_stabilized_kernel_process
+    🔒 Security Signature: modulo_autopoiesis_data_stabilized_modulo_autopoiesis_data_stabilized_kernel_process
     🧪 Generated in Sandbox Environment
     """
     def __init__(self):
         # Configuration injected by MetaArchitect
-        self.generation = '1'
+        self.generation = '2'
         self.initial = 'true'
-        self.parent = 'kernel_process'
+        self.parent = 'modulo_autopoiesis_data_stabilized_kernel_process'
         self.strategy = 'STABILIZE'
         self.evolved = 'true'
         self.robustness = 'high'
         self.monitoring = 'verbose'
         # 🔒 Security markers
-        self._security_signature = "modulo_autopoiesis_data_stabilized_kernel_process"
+        self._security_signature = "modulo_autopoiesis_data_stabilized_modulo_autopoiesis_data_stabilized_kernel_process"
         self._generated_in_sandbox = True
         self._generation_timestamp = "2025-12-17 13:13:52"
         self._logger = logging.getLogger(__name__)
