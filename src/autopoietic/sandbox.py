@@ -619,25 +619,45 @@ except Exception as e:
             self._logger.info("🛡️ Exited sandbox execution context")
 
     def cleanup(self):
-        """Clean up sandbox resources."""
+        """Clean up sandbox resources with extended timeout."""
         try:
             import shutil
+            import signal
             import subprocess
 
             if self.temp_dir.exists():
                 try:
+                    # Direct shutil cleanup first (fast path)
                     shutil.rmtree(self.temp_dir)
                     self._logger.info("🧹 Sandbox cleaned up: %s", self.temp_dir)
                 except PermissionError:
-                    # Fallback: use sudo rm -rf if permission denied
+                    # Fallback: use sudo rm -rf if permission denied (extended timeout)
                     try:
                         subprocess.run(
                             ["sudo", "rm", "-rf", str(self.temp_dir)],
                             capture_output=True,
-                            timeout=5,
+                            timeout=30,  # Increased from 5 to 30 seconds for large sandboxes
                             check=False,
                         )
                         self._logger.info("🧹 Sandbox cleaned up (sudo): %s", self.temp_dir)
+                    except subprocess.TimeoutExpired:
+                        # Last resort: attempt async cleanup with pkill on background thread
+                        self._logger.warning(
+                            "⚠️ Sandbox cleanup timeout (30s), attempting async cleanup: %s",
+                            self.temp_dir,
+                        )
+                        try:
+                            # Non-blocking attempt to remove in background
+                            subprocess.Popen(
+                                ["sudo", "rm", "-rf", str(self.temp_dir)],
+                                stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL,
+                            )
+                            self._logger.info(
+                                "🧹 Async sandbox cleanup scheduled: %s", self.temp_dir
+                            )
+                        except Exception as async_e:
+                            self._logger.debug("Async cleanup attempt failed: %s", async_e)
                     except Exception as sudo_e:
                         self._logger.warning(
                             "Could not cleanup sandbox (even with sudo): %s", sudo_e
