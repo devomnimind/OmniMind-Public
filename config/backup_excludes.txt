@@ -1,0 +1,11 @@
+# OmniMind backup exclusion patterns
+guardian/backups/**/guardian/backups
+**/backups_devbrain
+**/*.lnk
+**/*.tmp
+**/*.bak
+**/*.swp
+**/.Trash-*/**
+**/.cache/**
+**/.config/**/sessions/**
+**/lost+found/**

@@ -1,0 +1,62 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "🚀 OmniMind Dev (Backend + Frontend)",
+            "type": "compound",
+            "preLaunchTask": "omnimind-cleanup",
+            "configurations": [
+                "🔧 Backend (Simple)",
+                "🎨 Frontend (Vite)"
+            ]
+        },
+        {
+            "name": "🔧 Backend (Simple)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/simple_backend.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src:.",
+                "PYTHONUNBUFFERED": "1"
+            }
+        },
+        {
+            "name": "🎨 Frontend (Vite)",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "dev"],
+            "cwd": "${workspaceFolder}/web/frontend",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src",
+                "PYTHONUNBUFFERED": "1"
+            }
+        },
+        {
+            "name": "Python: Pytest",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "args": ["tests/", "-v"],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src",
+                "PYTHONUNBUFFERED": "1"
+            }
+        }
+    ]
+}

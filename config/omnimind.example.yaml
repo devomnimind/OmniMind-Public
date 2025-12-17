@@ -1,0 +1,141 @@
+# 🔐 OmniMind Configuration - Exemplo Seguro
+
+Este arquivo é um TEMPLATE. Não contém credenciais reais.
+
+## ⚠️ IMPORTANTE
+
+**NUNCA** faça commit de:
+- Senhas
+- Tokens de API
+- Chaves secretas
+- Credenciais de banco de dados
+
+## ✅ Como Usar
+
+1. Copie este arquivo:
+   ```bash
+   cp config/omnimind.example.yaml config/omnimind.yaml
+   ```
+
+2. Edite `config/omnimind.yaml` e preencha seus valores:
+   ```yaml
+   qdrant:
+     url: "http://localhost:6333"
+     api_key: "sua-chave-aqui"
+   ```
+
+3. Adicione `config/omnimind.yaml` ao `.gitignore` (já está)
+
+## 🌍 Variáveis de Ambiente (Recomendado)
+
+Em vez de armazenar credenciais em arquivo, use variáveis de ambiente:
+
+```bash
+export OMNIMIND_QDRANT_API_KEY="sua-chave"
+export IBMQ_API_TOKEN="seu-token"
+export DWAVE_API_TOKEN="seu-token"
+export JWT_SECRET_KEY="sua-chave-secreta"
+export HUGGING_FACE_HUB_TOKEN="seu-token"
+```
+
+Ou use arquivo `.env` (não fazer commit):
+
+```bash
+OMNIMIND_QDRANT_API_KEY=sua-chave
+IBMQ_API_TOKEN=seu-token
+# ... etc
+```
+
+## 🏗️ Estrutura de Configuração
+
+```yaml
+# Banco de Dados
+qdrant:
+  url: "http://localhost:6333"
+  api_key: "${OMNIMIND_QDRANT_API_KEY}"  # Variável de ambiente
+
+# Provedores Quânticos
+quantum:
+  providers:
+    ibm:
+      enabled: true
+      token: "${IBMQ_API_TOKEN}"
+    dwave:
+      enabled: false
+      token: "${DWAVE_API_TOKEN}"
+
+# Autenticação
+auth:
+  jwt_secret: "${JWT_SECRET_KEY}"
+  jwt_algorithm: "HS256"
+  token_expiration: 3600
+
+# Modelos Linguagem
+huggingface:
+  enabled: true
+  token: "${HUGGING_FACE_HUB_TOKEN}"
+  cache_dir: "/home/fahbrain/.cache/huggingface"
+
+# Logging
+logging:
+  level: "INFO"
+  file: "/var/log/omnimind/omnimind.log"
+
+# GPU
+cuda:
+  enabled: true
+  device: 0
+```
+
+## 🔍 Verificação de Segurança
+
+Antes de fazer commit, rodar:
+
+```bash
+# 1. Verificar se há credenciais
+grep -r "api_key\|token\|secret\|password" . --include="*.yaml" --include="*.json" | grep -v "example\|template"
+
+# 2. Verificar se omnimind.yaml está no .gitignore
+cat .gitignore | grep omnimind.yaml
+
+# 3. Listar arquivos que serão commitados
+git status
+```
+
+## 📝 Exemplos Seguros
+
+✅ **SEGURO - Usar variáveis de ambiente:**
+```yaml
+qdrant:
+  api_key: "${OMNIMIND_QDRANT_API_KEY}"
+```
+
+✅ **SEGURO - Deixar vazio em exemplo:**
+```yaml
+qdrant:
+  api_key: ""  # Preencher em produção
+```
+
+❌ **INSEGURO - Nunca fazer commit:**
+```yaml
+qdrant:
+  api_key: "ey8h3f8h3f8h3f8h3f8h3f8"  # ❌ Vai vazar!
+```
+
+## 🚀 Em Produção
+
+1. Use gerenciador de secrets (Vault, AWS Secrets Manager, etc)
+2. Injete credenciais via variáveis de ambiente
+3. Rode: `git secret` para criptografar arquivos sensíveis
+4. Mantenha `.gitignore` rigoroso
+
+## 📚 Referências
+
+- [12 Factor App - Config](https://12factor.net/config)
+- [OWASP - Secrets Management](https://owasp.org/www-community/Sensitive_Data_Exposure)
+- [Git Secrets - Prevent committed secrets](https://github.com/awslabs/git-secrets)
+
+---
+
+**Responsável:** Segurança de OmniMind
+**Status:** ✅ Pronto para produção

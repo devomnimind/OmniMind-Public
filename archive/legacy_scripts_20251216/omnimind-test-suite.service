@@ -1,0 +1,21 @@
+[Unit]
+Description=OmniMind Test Suite Runner
+After=omnimind.service omnimind-qdrant.service
+Requires=omnimind.service omnimind-qdrant.service
+Wants=omnimind-qdrant.service
+
+[Service]
+Type=oneshot
+User=fahbrain
+Group=fahbrain
+WorkingDirectory=/home/fahbrain/projects/omnimind
+Environment=PYTHONPATH=/home/fahbrain/projects/omnimind/src
+ExecStart=/bin/bash /home/fahbrain/projects/omnimind/scripts/systemd/run_test_suite.sh
+TimeoutStartSec=3600
+TimeoutStopSec=300
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=omnimind-test-suite
+
+[Install]
+WantedBy=multi-user.target

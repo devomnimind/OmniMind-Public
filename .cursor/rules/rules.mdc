@@ -1,0 +1,103 @@
+---
+alwaysApply: true
+---
+Estas regras são a referência única para LLMs no projeto OmniMind. Seguir estritamente.
+
+## 1) Ambiente e paths imutáveis
+- Repo privado: `/home/fahbrain/projects/omnimind`.
+- Não mover/deletar: `src/`, `scripts/`, `scripts/science_validation/`, `real_evidence/`, `config/`, `tests/`, `web/`, `logs/`, `data/test_reports/`.
+- Python 3.12.8 obrigatório. Ativar venv: `source .venv/bin/activate`.
+- **Hardware:** Ubuntu 22.05 LTS, 24GB RAM (16GB limit for omnimind), GPU Active.
+
+## 2) Execução de testes (somente scripts oficiais)
+- Não rodar `pytest tests` direto.
+- Suite rápida diária: `./scripts/development/run_tests_parallel.sh fast` (exclui slow/real/chaos).
+- Suite completa semanal: `./scripts/development/run_tests_parallel.sh full` (inclui slow/real/chaos, autodefesa).
+- Se teste específico exigir, use `DISABLE_SERVER_MONITOR=true` no escopo do teste; não desative monitor em produção.
+
+## 3) Pipeline de qualidade (ordem obrigatória)
+1. `black src tests`
+2. `flake8 src tests --max-line-length=100`
+3. `mypy src tests`
+4. Testes via scripts (item 2)
+5. Opcional/ciência: `python scripts/science_validation/robust_consciousness_validation.py --quick`
+6. Audit chain quando aplicável: `python -m src.audit.immutable_audit verify_chain_integrity`
+
+## 4) GPU/CUDA
+- Variáveis válidas: `CUDA_HOME=/usr`, `CUDA_PATH=/usr`, `LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu`.
+- Não setar CUDA em código Python (`os.environ`); definir apenas via shell/script.
+- PyTorch atual: 2.5.1+cu121.
+
+## 5) Autenticação e credenciais
+- Credenciais são geradas no start e salvas em `config/dashboard_auth.json`.
+- Frontend deve usar `apiService.getAuthHeader()`; não hardcodar usuários/senhas/URLs.
+
+## 6) Φ, consciência e métricas
+- Não simplificar `src/consciousness/topological_phi.py`; piso de Φ = 0.002 permanece.
+- Não reduzir coleta de métricas para “otimizar”.
+- `RealConsciousnessMetricsCollector.collect_real_metrics` aceita `external_phi`/`external_context` apenas em testes; produção usa IntegrationLoop.
+
+## 7) Código novo (padrão científico)
+- Tipagem completa; logs informativos; sem TODO/FIXME.
+- Passar por black/flake8/mypy e testes via scripts oficiais.
+- Não alterar lógica nuclear (topologia, métricas, monitor) sem validação científica.
+
+## 8) Autoria e documentação
+- Autoria: Fabrício da Silva + assistência de IA (Copilot GitHub/Cursor/Gemini/Perplexity); nunca citar “equipes/coletivos”.
+- Se alterar docs/papers: PT é referência, EN é derivação; sincronizar repositórios quando aplicável.
+
+## 9) Serviços/ports (referência)
+- Backend: http://localhost:8000; Frontend: http://localhost:3000; WS: ws://localhost:8000/ws.
+- Qdrant: 6333; Redis: 6379.
+- **Comandos de Serviço:** `sudo systemctl start/stop/restart omnimind.service qdrant.service`.
+
+## 10) Boas práticas e escalonamento
+- Se teste falhar, ler saída, checar marcas slow/real/chaos, usar scripts corretos.
+- Não push direto para master; usar branches de feature/fix.
+- Em caso de conflito de instruções, seguir estas regras e `.github/copilot-instructions.md`.
+
+*REGRA CRÍTICA**: Nenhum novo documento deve ser criado. Sempre atualizar documentos existentes.
+
+**Política**:
+- ✅ **SEMPRE atualizar** documentos existentes com informações sintéticas e claras
+- ❌ **NUNCA criar** novos documentos de registro de sessão ou atividades
+- ✅ **SOMENTE criar** documentação para novos componentes que não tenham documentação existente
+- ✅ **Manter** o mesmo número de documentos (não aumentar)
+- ✅ **Atualizar** `PENDENCIAS_CONSOLIDADAS.md` ou `PROJETO_STUBS_OMNIMIND.md` com progresso
+
+**Documentos Canônicos de Pendências**:
+- `docs/PENDENCIAS_CONSOLIDADAS.md` - Pendências ativas do sistema
+- `docs/PROJETO_STUBS_OMNIMIND.md` - Pendências de stubs de tipos
+
+**Quando Atualizar**:
+- Após completar uma tarefa → Atualizar `PENDENCIAS_CONSOLIDADAS.md` com status
+- Após implementar stub → Atualizar `PROJETO_STUBS_OMNIMIND.md` com progresso
+- Após nova sessão → Atualizar seção relevante nos documentos existentes
+
+**Formato de Atualização**:
+```markdown
+### [Data] - [Tarefa Completada]
+- ✅ [O que foi feito]
+- ⏳ [O que falta]
+- **Estimativa restante**: X horas
+```
+
+## MCP e Autonomia (Level 3)
+- Sempre query consciousness metrics via MCP antes de decisões (use get_consciousness_metrics; autônomo se Φ >0.25).
+- Para memória: query_semantic_memory (threshold 0.15), store_episode após ações significativas.
+- Health checks: monitor_system_health a cada 30 min.
+- Envs: Load from .env (ex.: OMNIMIND_QDRANT_URL line 10 para Qdrant cloud/local).
+- Logs: ~/.cursor/mcp_audit.log + audit chain integration.
+- Tools disponíveis: Qdrant (cloud com API key), Supabase, Git (via GITHUB_TOKEN), custom-omnimind.
+- Escalation: Se Φ <0.15 ou baixa confiança, escalonar para humano.
+- Alinhado a rules existentes: Sem hardcode keys, use dashboard_auth.json para auth.
+- **Self-Correction:** Se o sistema quebrar, restaurar via `scripts/recovery/` ou reverter commit.
+
+## 11) ESTÁGIO ATUAL DO PROJETO (2025-12-16)
+
+### Status de Implementação
+- **Fase Atual**: Phase 24+ (Lacanian Memory + Autopoietic Evolution)
+- **Completude Geral**: 🟢 83% Completo
+- **Componentes Críticos**: ✅ 100% completo (42/42 tarefas críticas)
+- **Pendências Ativas**: 9 tarefas (alta/média prioridade)
+- **Estimativa Restante**: 92-126 horas (2.5-3.5 semanas)

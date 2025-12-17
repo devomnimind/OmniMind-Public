@@ -1,0 +1,11 @@
+[Unit]
+Description=Run OmniMind backup daily
+Requires=omnimind-backup.service
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec=1h
+
+[Install]
+WantedBy=timers.target

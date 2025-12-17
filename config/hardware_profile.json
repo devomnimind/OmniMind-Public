@@ -1,0 +1,33 @@
+{
+  "cpu_cores_physical": 4,
+  "cpu_cores_logical": 8,
+  "cpu_freq_mhz": 2500.0009999999997,
+  "cpu_architecture": "x86_64",
+  "ram_total_gb": 23.219505310058594,
+  "ram_available_gb": 11.601802825927734,
+  "swap_total_gb": 23.742183685302734,
+  "gpu_available": false,
+  "os_system": "Linux",
+  "os_release": "6.16.8+kali-amd64",
+  "machine_type": "x86_64",
+  "gpu_name": null,
+  "gpu_vram_gb": null,
+  "gpu_compute_capability"🔍 Detecting hardware capabilities...
+
+📊 Hardware Profile:
+  CPU: 4c/8t @ 2500 MHz
+  RAM: 11.6 GB available / 23.2 GB total
+  GPU: Not available (CPU mode)
+
+⚙️  Optimization Config:
+  Device: cpu
+  LLM Batch Size: 4
+  Embedding Batch Size: 64
+  Max Tensor Size: 5000
+  Workers: 3
+  Vector DB: chromadb
+  Cache: fakeredis
+  Database: sqlite
+  Quantization: False (16-bit)
+
+✅ Configuration saved to config/

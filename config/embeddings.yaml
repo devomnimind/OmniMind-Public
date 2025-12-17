@@ -1,0 +1,52 @@
+# ===================================================================
+# OmniMind Embeddings Configuration
+# Modelos salvos localmente para uso OFFLINE
+# Estratégia: Leve em CUDA (fast), Multilíngue em CPU (sob demanda)
+# ===================================================================
+
+embedding_backend: "sentence-transformers"
+
+# Variáveis de ambiente para modo offline (exportar antes de rodar)
+environment:
+  TRANSFORMERS_OFFLINE: "1"
+  HF_HUB_OFFLINE: "1"
+  HF_HOME: "/opt/hf_cache"
+
+# Modelos disponíveis (todos salvos em /opt/models)
+models:
+  # ⭐ PADRÃO: Leve e RÁPIDO em CUDA (87MB, 384 dims)
+  default:
+    name: "all-MiniLM-L6-v2"
+    path: "/opt/models/sentence-transformers/all-MiniLM-L6-v2"
+    device: "cuda"  # CUDA para máximo desempenho
+    encoding: "utf-8"
+    max_seq_length: 256
+    description: "General purpose embeddings (fast, small, CUDA optimized)"
+
+  # Multilíngue: PT, EN, ES, FR, etc. - CPU por padrão (479MB)
+  multilingual:
+    name: "paraphrase-multilingual-MiniLM-L12-v2"
+    path: "/opt/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    device: "cpu"  # CPU - ativa só quando precisa de multilíngue
+    encoding: "utf-8"
+    max_seq_length: 256
+    description: "Multilingual embeddings (CPU, carrega sob demanda)"
+
+# Estratégia de fallback
+fallback_chain:
+  - default          # Tenta primeiro (CUDA, rápido)
+  - multilingual     # Se precisa multilíngue (CPU)
+
+# Cache de embeddings
+cache:
+  enabled: true
+  type: "memory"
+  max_size: 10000
+  ttl: 3600  # segundos
+
+# Performance tunning
+performance:
+  # Usar batch processing para múltiplos textos
+  batch_size: 32
+  # Pool de threads para CPU (multilíngue)
+  cpu_workers: 2

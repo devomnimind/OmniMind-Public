@@ -1,0 +1,80 @@
+═══════════════════════════════════════════════════════════════════════════════
+                      🚀 ÍNDICE RÁPIDO - VALIDAÇÃO CIENTÍFICA
+═══════════════════════════════════════════════════════════════════════════════
+
+👉 COMECE AQUI - 3 OPÇÕES:
+
+1️⃣ RÁPIDO (5 min) - Digite no terminal:
+   python3 scripts/science_validation/validate_consciousness_simple.py
+   python3 scripts/science_validation/robust_consciousness_validation.py --quick
+   python3 scripts/science_validation/run_full_scientific_suite.py --cycles 100
+
+2️⃣ COMPLETO (30 min) - Digite no terminal:
+   python3 scripts/science_validation/robust_consciousness_validation.py
+   python3 scripts/science_validation/run_full_scientific_suite.py --cycles 500
+   python3 scripts/science_validation/run_integrated_consciousness_protocol.py
+   python3 scripts/science_validation/scientific_audit.py
+   python3 scripts/science_validation/final_validation_report.py
+
+3️⃣ ESTENDIDO (1-2h) - Veja RESUMO_EXECUTIVO.txt para lista completa
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📚 DOCUMENTAÇÃO COMPLETA:
+
+  • RESUMO_EXECUTIVO.txt
+    └─ Visão geral + 3 planos detalhados
+
+  • SCRIPTS_VALIDACAO_CIENTIFICA_PRONTOS.md
+    └─ Documentação técnica de cada script
+
+  • COMANDOS_PRONTOS.sh
+    └─ Todos os comandos prontos para copiar-colar
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ PRÉ-REQUISITOS (já verificados):
+
+  ✓ Backend: Saudável (http://localhost:8000/health)
+  ✓ Qdrant: Rodando (http://localhost:6333)
+  ✓ Redis: Ativo (localhost:6379)
+  ✓ GPU: NVIDIA GTX 1650 (ativa)
+  ✓ Python: 3.12.12 (venv ativo)
+  ✓ Todos os 18 scripts: Funcionais
+
+═══════════════════════════════════════════════════════════════════════════════
+
+⚡ COMANDOS DE SUPORTE RÁPIDOS:
+
+  # Verificar backend
+  curl http://localhost:8000/health
+
+  # Ver GPU status
+  nvidia-smi
+
+  # Listar últimas validações
+  ls -lh real_evidence/robust_consciousness_validation_*.json | tail -5
+
+  # Ver Φ do último arquivo
+  tail -1 real_evidence/robust_consciousness_validation_*.json | grep phi_mean
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📍 LOCALIZAÇÃO DOS ARQUIVOS:
+
+  Projeto:    /home/fahbrain/projects/omnimind
+  Scripts:    scripts/science_validation/
+  Evidências: real_evidence/
+  Docs:       (root do projeto)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 PRÓXIMO PASSO:
+
+  1. cd /home/fahbrain/projects/omnimind
+  2. source ~/.venv/bin/activate
+  3. Escolha um dos 3 planos acima
+  4. Copie e cole o comando
+  5. Aguarde resultados em real_evidence/
+
+═══════════════════════════════════════════════════════════════════════════════

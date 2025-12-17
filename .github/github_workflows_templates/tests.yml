@@ -1,0 +1,235 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  test:
+    name: Test Suite
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.12']
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libdbus-1-dev pkg-config
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+
+    - name: Install test dependencies
+      run: |
+        pip install pytest pytest-cov pytest-asyncio pytest-mock pytest-xdist
+        pip install codecov
+
+    - name: Run Code Quality Checks
+      run: |
+        echo "🔍 Executando verificações de qualidade de código..."
+
+        # Formatação
+        echo "📝 Verificando formatação com Black..."
+        black --check src/ tests/ || (echo "❌ Black falhou. Execute: black src/ tests/" && exit 1)
+
+        # Linting
+        echo "🔍 Executando Flake8..."
+        flake8 src/ tests/ --max-line-length=100 --exclude=archive,legacy,third_party || (echo "❌ Flake8 falhou" && exit 1)
+
+        # Type checking
+        echo "🔍 Executando MyPy..."
+        mypy src/ --ignore-missing-imports --no-strict-optional || (echo "❌ MyPy falhou" && exit 1)
+
+        echo "✅ Verificações de qualidade passaram"
+
+    - name: Run Tests with Coverage
+      id: test
+      run: |
+        echo "🧪 Executando testes com cobertura..."
+
+        # Executar testes com cobertura detalhada
+        pytest tests/ \
+          --cov=src \
+          --cov-report=term-missing \
+          --cov-report=xml \
+          --cov-report=html \
+          --cov-fail-under=90 \
+          -v \
+          --tb=short \
+          --durations=10 \
+          --maxfail=5
+
+        # Extrair métricas de cobertura
+        COVERAGE=$(python -c "import xml.etree.ElementTree as ET; root = ET.parse('coverage.xml').getroot(); print(root.find('.//coverage').get('line-rate'))")
+        COVERAGE_PERCENT=$(python -c "print(f'{float('$COVERAGE')*100:.1f}')")
+
+        echo "coverage_rate=$COVERAGE" >> $GITHUB_OUTPUT
+        echo "coverage_percent=$COVERAGE_PERCENT" >> $GITHUB_OUTPUT
+
+        echo "📊 Cobertura total: $COVERAGE_PERCENT%"
+
+    - name: Generate Test Report
+      run: |
+        echo "# Relatório de Testes - ${{ github.sha }}"
+        echo ""
+        echo "## Métricas de Cobertura"
+        echo "- **Cobertura Total:** ${{ steps.test.outputs.coverage_percent }}%"
+        echo "- **Limite Mínimo:** 90%"
+        echo ""
+        echo "## Status da Cobertura"
+        if (( $(echo "${{ steps.test.outputs.coverage_percent }} >= 90" | bc -l) )); then
+          echo "✅ **APROVADO** - Cobertura adequada"
+        else
+          echo "❌ **REPROVADO** - Cobertura insuficiente"
+          echo ""
+          echo "🔧 Execute geração automática de testes:"
+          echo "  python scripts/auto_generate_tests.py"
+        fi
+        echo ""
+        echo "## Módulos com Baixa Cobertura"
+        python -c "
+        import xml.etree.ElementTree as ET
+        import os
+
+        if os.path.exists('coverage.xml'):
+            root = ET.parse('coverage.xml').getroot()
+            for package in root.findall('.//package'):
+                name = package.get('name')
+                rate = float(package.get('line-rate')) * 100
+                if rate < 80:
+                    print(f'- {name}: {rate:.1f}%')
+        "
+        echo ""
+        echo "## Timestamp: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" > test-report.md
+
+    - name: Upload Coverage Reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-reports-${{ github.sha }}
+        path: |
+          coverage.xml
+          htmlcov/
+          test-report.md
+          .coverage
+
+    - name: Upload to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+    - name: Comment PR with Test Results
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const report = fs.readFileSync('test-report.md', 'utf8');
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `## 🧪 Test Results\n\n${report}`
+          });
+
+    - name: Test Coverage Gate Check
+      run: |
+        # Gate: Cobertura mínima de 90%
+        if (( $(echo "${{ steps.test.outputs.coverage_percent }} < 90" | bc -l) )); then
+          echo "🚫 COVERAGE GATE FAILED: Coverage below 90%"
+          echo "🔧 Run: python scripts/auto_generate_tests.py"
+          echo "🔧 Then: pytest tests/ --cov=src --cov-report=term-missing"
+          exit 1
+        fi
+
+        echo "✅ COVERAGE GATE PASSED"
+
+    - name: Run Performance Benchmarks
+      run: |
+        echo "⚡ Executando benchmarks de performance..."
+        python -m pytest tests/ -k "benchmark" --tb=short || echo "ℹ️  Nenhum benchmark encontrado"
+
+    - name: Validate Audit Chain Integrity
+      run: |
+        echo "🔐 Validando integridade da cadeia de auditoria..."
+        python -m src.audit.immutable_audit verify_chain_integrity || (echo "❌ Audit chain compromised" && exit 1)
+
+        echo "✅ Audit chain integrity verified"
+
+    - name: Generate Test Skeletons for New Code
+      if: steps.test.outputs.coverage_percent < 95
+      run: |
+        echo "🔧 Gerando esqueletos de teste para código novo..."
+        python scripts/auto_generate_tests.py --dry-run || echo "ℹ️  Nenhum novo código detectado"
+
+    - name: Notify on Test Failures
+      if: failure()
+      run: |
+        echo "🚨 Test suite failed - notification would be sent to dev team"
+        # TODO: Integrate with Slack, Teams, or email notification
+
+  integration-test:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+
+    - name: Start Qdrant (for memory tests)
+      run: |
+        docker run -d --name qdrant -p 6333:6333 qdrant/qdrant:v1.7.4
+
+    - name: Run Integration Tests
+      run: |
+        echo "🔗 Executando testes de integração..."
+        pytest tests/ -k "integration" --tb=short --maxfail=3 || (echo "❌ Integration tests failed" && exit 1)
+
+        echo "✅ Integration tests passed"
+
+    - name: Stop Qdrant
+      run: |
+        docker stop qdrant
+        docker rm qdrant</content>
+<parameter name="filePath">/home/fahbrain/projects/omnimind/github_workflows_templates/tests.yml

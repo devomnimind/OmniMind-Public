@@ -1,0 +1,432 @@
+{
+  "version": "1.0.0",
+  "description": "Configuração de servidores MCP prioritários para desenvolvimento local OmniMind",
+  "global_settings": {
+    "audit_enabled": true,
+    "audit_category_prefix": "mcp",
+    "log_level": "INFO",
+    "health_check_interval_seconds": 60,
+    "max_concurrent_requests": 500,
+    "request_timeout_seconds": 30,
+    "cache_enabled": true,
+    "compression_enabled": true,
+    "rate_limiting_enabled": true,
+    "target_throughput_rps": 500
+  },
+  "mcp_servers": {
+    "filesystem": {
+      "enabled": true,
+      "priority": "critical",
+      "tier": 1,
+      "port": 4327,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_filesystem_wrapper"
+      ],
+      "allowed_paths": [
+        "src/",
+        "tests/",
+        "docs/",
+        "config/",
+        "scripts/",
+        "web/"
+      ],
+      "forbidden_paths": [
+        ".git/",
+        ".venv/",
+        "logs/",
+        "__pycache__/",
+        "*.pyc",
+        ".omnimind/hsm/"
+      ],
+      "max_file_size_mb": 10,
+      "audit_category": "filesystem_mcp",
+      "features": {
+        "read_file": true,
+        "write_file": true,
+        "list_directory": true,
+        "search_files": true,
+        "get_metadata": true,
+        "create_directory": true,
+        "move_file": true,
+        "delete_file": false
+      },
+      "security": {
+        "validate_path_traversal": true,
+        "backup_before_write": true,
+        "rate_limit_rpm": 1000
+      }
+    },
+    "memory": {
+      "enabled": true,
+      "priority": "critical",
+      "tier": 1,
+      "port": 4321,
+      "cache_enabled": true,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_memory_server"
+      ],
+      "storage": {
+        "backend": "qdrant",
+        "url": "http://localhost:6333",
+        "api_key_env": "OMNIMIND_QDRANT_API_KEY"
+      },
+      "collections": {
+        "code_knowledge": {
+          "vector_size": 384,
+          "distance": "cosine",
+          "description": "Conhecimento sobre o código do projeto"
+        },
+        "decisions": {
+          "vector_size": 384,
+          "distance": "cosine",
+          "description": "Histórico de decisões de design e implementação"
+        },
+        "patterns": {
+          "vector_size": 384,
+          "distance": "cosine",
+          "description": "Padrões identificados no código e arquitetura"
+        },
+        "errors": {
+          "vector_size": 384,
+          "distance": "cosine",
+          "description": "Erros encontrados e suas soluções"
+        },
+        "ai_sessions": {
+          "vector_size": 384,
+          "distance": "cosine",
+          "description": "Memória de sessões de trabalho de AIs"
+        }
+      },
+      "embedding": {
+        "model": "sentence-transformers/all-MiniLM-L6-v2",
+        "device": "cpu",
+        "batch_size": 32
+      },
+      "audit_category": "memory_mcp",
+      "features": {
+        "store_memory": true,
+        "retrieve_memory": true,
+        "update_memory": true,
+        "delete_memory": true,
+        "create_association": true,
+        "get_memory_graph": true,
+        "consolidate_memories": true,
+        "export_graph": true
+      }
+    },
+    "sequential_thinking": {
+      "enabled": true,
+      "priority": "critical",
+      "tier": 1,
+      "port": 4322,
+      "cache_enabled": true,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_thinking_server"
+      ],
+      "storage": {
+        "backend": "sqlite",
+        "db_path": "data/thinking_sessions.db"
+      },
+      "step_types": [
+        "observation",
+        "hypothesis",
+        "analysis",
+        "decision",
+        "action",
+        "reflection",
+        "validation",
+        "error_handling"
+      ],
+      "max_session_duration_hours": 24,
+      "auto_export_audit": true,
+      "audit_category": "thinking_mcp",
+      "features": {
+        "start_session": true,
+        "add_step": true,
+        "get_history": true,
+        "branch_thinking": true,
+        "merge_branches": true,
+        "evaluate_quality": true,
+        "export_chain": true,
+        "resume_session": true
+      }
+    },
+    "context": {
+      "enabled": true,
+      "priority": "high",
+      "tier": 2,
+      "port": 4323,
+      "cache_enabled": true,
+      "compression_enabled": true,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_context_server"
+      ],
+      "max_tokens": 100000,
+      "compression": {
+        "enabled": true,
+        "threshold": 0.8,
+        "strategy": "semantic"
+      },
+      "levels": {
+        "project": {
+          "priority": 1,
+          "max_tokens": 10000,
+          "description": "Informações gerais do projeto"
+        },
+        "session": {
+          "priority": 2,
+          "max_tokens": 15000,
+          "description": "Estado da sessão atual"
+        },
+        "task": {
+          "priority": 3,
+          "max_tokens": 20000,
+          "description": "Contexto da tarefa específica"
+        },
+        "code": {
+          "priority": 4,
+          "max_tokens": 30000,
+          "description": "Código relevante"
+        },
+        "memory": {
+          "priority": 5,
+          "max_tokens": 15000,
+          "description": "Memórias recuperadas"
+        },
+        "audit": {
+          "priority": 6,
+          "max_tokens": 5000,
+          "description": "Contexto de auditoria/segurança"
+        },
+        "ephemeral": {
+          "priority": 7,
+          "max_tokens": 5000,
+          "description": "Dados temporários"
+        }
+      },
+      "snapshot_interval_minutes": 5,
+      "audit_category": "context_mcp"
+    },
+    "git": {
+      "enabled": true,
+      "priority": "high",
+      "tier": 2,
+      "port": 4328,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_git_wrapper"
+      ],
+      "allowed_operations": [
+        "status",
+        "diff",
+        "add",
+        "commit",
+        "branch",
+        "checkout",
+        "log",
+        "show",
+        "blame"
+      ],
+      "forbidden_operations": [
+        "push",
+        "force",
+        "reset --hard",
+        "rebase -i",
+        "filter-branch"
+      ],
+      "require_audit_for": [
+        "commit",
+        "checkout",
+        "branch"
+      ],
+      "audit_category": "git_mcp",
+      "commit_requirements": {
+        "require_message": true,
+        "min_message_length": 10,
+        "sign_commits": false,
+        "pre_commit_hooks": true
+      }
+    },
+    "python": {
+      "enabled": true,
+      "priority": "high",
+      "tier": 2,
+      "port": 4324,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_python_server"
+      ],
+      "environment": {
+        "venv_path": ".venv",
+        "python_version": "3.12.8",
+        "required_version": ">=3.12.0,<3.13.0"
+      },
+      "execution": {
+        "timeout_seconds": 30,
+        "memory_limit_mb": 2048,
+        "allow_network": false,
+        "allow_filesystem": false
+      },
+      "allowed_imports": [
+        "src.*",
+        "tests.*",
+        "pytest",
+        "torch",
+        "numpy",
+        "pandas",
+        "sklearn",
+        "transformers"
+      ],
+      "forbidden_imports": [
+        "os.system",
+        "subprocess.Popen",
+        "eval",
+        "exec",
+        "__import__"
+      ],
+      "audit_category": "python_mcp",
+      "features": {
+        "execute_code": true,
+        "install_package": false,
+        "list_packages": true,
+        "get_python_info": true,
+        "lint_code": true,
+        "type_check": true,
+        "run_tests": true,
+        "format_code": true
+      }
+    },
+    "sqlite": {
+      "enabled": true,
+      "priority": "medium",
+      "tier": 3,
+      "port": 4329,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_sqlite_wrapper"
+      ],
+      "databases": {
+        "cache": {
+          "path": "data/omnimind_cache.db",
+          "description": "Cache de resultados computacionais"
+        },
+        "metrics": {
+          "path": "data/metrics.db",
+          "description": "Métricas de performance"
+        },
+        "sessions": {
+          "path": "data/ai_sessions.db",
+          "description": "Histórico de sessões de trabalho"
+        }
+      },
+      "security": {
+        "read_only": false,
+        "max_query_time_seconds": 5,
+        "max_rows_returned": 10000
+      },
+      "audit_category": "sqlite_mcp"
+    },
+    "system_info": {
+      "enabled": true,
+      "priority": "medium",
+      "tier": 3,
+      "port": 4325,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_system_info_server"
+      ],
+      "features": {
+        "gpu_info": true,
+        "cpu_info": true,
+        "memory_info": true,
+        "disk_info": true,
+        "temperature": true,
+        "power_usage": false
+      },
+      "refresh_interval_seconds": 5,
+      "audit_category": "system_info_mcp",
+      "hardware_profile": {
+        "gpu": {
+          "name": "NVIDIA GeForce GTX 1650",
+          "vram_gb": 4,
+          "cuda_version": "12.4"
+        },
+        "cpu": {
+          "model": "Intel Core i5",
+          "cores": 4,
+          "threads": 8
+        },
+        "memory": {
+          "total_gb": 24
+        }
+      }
+    },
+    "logging": {
+      "enabled": true,
+      "priority": "medium",
+      "tier": 3,
+      "port": 4326,
+      "command": "python",
+      "args": [
+        "-m",
+        "src.integrations.mcp_logging_server"
+      ],
+      "log_sources": [
+        "logs/omnimind.log",
+        "logs/security.log",
+        "logs/audit.log",
+        "logs/agents.log"
+      ],
+      "output_format": "json",
+      "search_enabled": true,
+      "max_search_results": 1000,
+      "audit_category": "logging_mcp",
+      "integration": {
+        "immutable_audit": true,
+        "audit_system_path": "src.audit.immutable_audit"
+      }
+    }
+  },
+  "orchestrator": {
+    "health_checks": {
+      "enabled": true,
+      "interval_seconds": 60,
+      "timeout_seconds": 5,
+      "retry_attempts": 3
+    },
+    "auto_restart": {
+      "enabled": true,
+      "max_restart_attempts": 5,
+      "backoff_seconds": 10
+    },
+    "metrics": {
+      "enabled": true,
+      "export_interval_seconds": 300,
+      "export_path": "data/mcp_metrics.json"
+    },
+    "audit": {
+      "enabled": true,
+      "log_all_requests": true,
+      "log_all_responses": false,
+      "audit_system_integration": true
+    }
+  },
+  "development": {
+    "debug_mode": false,
+    "verbose_logging": false,
+    "dry_run": false,
+    "mock_external_services": false
+  }
+}

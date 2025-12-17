@@ -1,0 +1,1 @@
+canonical/diagnose/final_status.sh

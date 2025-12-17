@@ -1,0 +1,8 @@
+{
+  "host": "127.0.0.1",
+  "port": 4321,
+  "allowed_paths": ["./"],
+  "max_read_size": 2097152,
+  "allowed_extensions": ["py", "md", "json", "yaml", "yml", "txt", "sh"],
+  "audit_category": "mcp"
+}

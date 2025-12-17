@@ -1,0 +1,24 @@
+# Ultra-minimal requirements for Hugging Face Space testing
+# Only essential dependencies that work reliably in containers
+
+# Core web framework
+fastapi>=0.122.0
+uvicorn>=0.38.0
+
+# Data science basics (no heavy ML libraries)
+numpy>=2.2.0
+pydantic>=2.12.0
+python-dotenv>=1.2.0
+rich>=14.0.0
+PyYAML>=6.0.3
+requests>=2.32.0
+
+# Testing essentials
+pytest>=8.0.0
+pytest-cov>=4.0.0
+
+# Minimal ML (lightweight libraries only)
+transformers>=4.57.0
+
+# Database (minimal)
+qdrant-client>=1.16.0,<2.0.0

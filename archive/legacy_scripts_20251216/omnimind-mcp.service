@@ -1,0 +1,19 @@
+[Unit]
+Description=OmniMind MCP Servers (Fase 2: Após 30s)
+After=network.target omnimind.service
+Requires=omnimind.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/fahbrain/projects/omnimind
+EnvironmentFile=/home/fahbrain/projects/omnimind/.env
+# Aguardar 30s após serviços essenciais iniciarem
+ExecStartPre=/bin/sleep 30
+ExecStart=/home/fahbrain/projects/omnimind/scripts/start_mcp_servers.sh
+ExecStop=/usr/bin/pkill -f mcp
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

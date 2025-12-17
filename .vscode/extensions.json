@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "ms-python.isort",
+        "ms-python.flake8",
+        "matangover.mypy",
+        "njpwerner.autodocstring",
+        "tamasfe.even-better-toml",
+        "redhat.vscode-yaml"
+    ]
+}

@@ -1,0 +1,89 @@
+{
+  "_metadata": "🧠 MEMORY OPTIMIZATION - 16/12/2025 - Target: 7.5GB (3.5GB RAM + 4GB VRAM)",
+  "memory": {
+    "comment": "Otimização para evitar swap usage",
+    "total_target_mb": 7500,
+    "ram_max_mb": 3500,
+    "vram_max_mb": 4000,
+    "swap_emergency_only": true,
+    "vm_swappiness": 10
+  },
+  "workers": {
+    "comment": "Reduzir processo multiprocessing que estava usando 5.5GB",
+    "worker_processes": 2,
+    "max_worker_threads": 4,
+    "worker_memory_limit_mb": 512,
+    "spawn_method": "fork_no_preload"
+  },
+  "gpu": {
+    "comment": "Otimizar VRAM allocation",
+    "gpu_batch_size": 4,
+    "memory_fraction": 0.9,
+    "allow_growth": true,
+    "tf_force_gpu_allow_growth": true,
+    "torch_cuda_max_memory": 4000
+  },
+  "cache": {
+    "comment": "Reduzir footprint de cache",
+    "cache_size_mb": 256,
+    "vector_cache_limit": 10000,
+    "embedding_cache_ttl_seconds": 300
+  },
+  "batch_processing": {
+    "batch_size": 8,
+    "prefetch_size": 2,
+    "drop_remainder": true
+  },
+  "consciousness": {
+    "phi_baseline_range": [0.01, 0.20],
+    "phi_perturbation_threshold": 0.1,
+    "anesthesia_levels": [0.1, 0.3, 0.5, 0.7, 0.9],
+    "anesthesia_decay_rate": 0.15,
+    "optimal_timescale_range": [5, 50],
+    "timescale_resolution": 5,
+    "min_raters": 5,
+    "max_raters": 10,
+    "agreement_threshold": 0.75
+  },
+  "lacan": {
+    "federation_cycles": 250,
+    "min_disagreement_rate": 0.2,
+    "max_disagreement_rate": 0.8,
+    "noise_level_range": [0.05, 0.25],
+    "communication_asymmetry": 0.3,
+    "quantum_qubits_range": [4, 8],
+    "quantum_options_count": 4,
+    "quantum_noise_level": 0.05,
+    "sujeito_mutuo_threshold": 0.25,
+    "inconsciente_irredutivel_tests": 3,
+    "alteridade_noise_min": 0.05,
+    "real_observation_collapse": true
+  },
+  "expectation": {
+    "embedding_dim": 128,
+    "hidden_dim": 64,
+    "num_layers": 2,
+    "learning_rate_range": [0.0001, 0.01],
+    "nachtraglichkeit_threshold_range": [0.5, 0.9],
+    "max_memory_size": 5,
+    "temporal_consistency_weight": 0.3,
+    "use_quantum_unconscious": true,
+    "quantum_decision_weight": 0.4
+  },
+  "validation": {
+    "confidence_level": 0.95,
+    "min_sample_size": 30,
+    "bootstrap_iterations": 100,
+    "max_execution_time": 300.0,
+    "memory_limit_gb": 3.5,
+    "random_seed_range": [1, 10000],
+    "deterministic_mode": false
+  },
+  "system": {
+    "comment": "Desabilitar processos background pesados durante validação",
+    "disable_dmypy": true,
+    "disable_mcp_thinking": false,
+    "max_open_files": 8192
+  },
+  "validation_history": []
+}

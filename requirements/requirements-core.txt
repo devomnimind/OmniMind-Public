@@ -1,0 +1,75 @@
+# Core dependencies for OmniMind (essential runtime)
+# Install with: pip install -r requirements-core.txt
+#
+# CRITICAL: Sistema quântico é CORE e FUNCIONAL
+# GPU já está configurado via requirements_core_quantum.txt
+
+# Web Framework
+fastapi>=0.122.0
+uvicorn>=0.38.0
+
+# Core AI/ML (Versão Controlada para GPU)
+# ✅ CURRENT: PyTorch 2.5.1+cu121 instalado via requirements_core_quantum.txt
+# ✅ CURRENT: Qiskit 1.2.4 + Aer-GPU 0.15.1 instalado via requirements_core_quantum.txt
+#
+# INSTALAÇÃO CORRETA:
+#   pip install -r requirements/requirements-core.txt
+#   pip install -r requirements/requirements_core_quantum.txt
+#
+# ⚠️ VERSÕES ANTIGAS (DEPRECATED):
+# ❌ torch==2.5.1 com cu122 ou cu128 (não funciona bem com GTX 1650)
+# ✅ torch==2.5.1+cu121 (CURRENT - testado e validado)
+# ❌ qiskit-aer (CPU only - lento)
+# ✅ qiskit-aer-gpu 0.15.1 (CURRENT - GPU acelerado)
+#
+transformers>=4.57.0
+sentence-transformers>=3.0.0
+
+# Vector Database
+qdrant-client>=1.16.0,<2.0.0
+
+# Data Models & Config
+pydantic>=2.12.0
+python-dotenv>=1.2.0
+PyYAML>=6.0.3
+
+# Data Processing
+numpy>=2.3.0
+
+# Statistical Analysis (Causality)
+statsmodels>=0.14.0
+
+# System & Utils
+rich>=14.0.0
+psutil>=7.0.0
+requests>=2.32.5
+structlog>=25.0.0
+
+# Observability (Core)
+opentelemetry-api>=1.38.0
+prometheus-client>=0.23.0
+
+# Database (Core)
+redis>=7.0.0
+
+# Testing (Core)
+pytest>=9.0.0
+pytest-cov>=7.0.0
+pytest-asyncio>=1.3.0
+
+# Code Quality (Development)
+black>=24.0.0
+flake8>=7.0.0
+mypy>=1.8.0
+
+# ============================================================================
+# NOTA: GPU CONFIGURATION
+# ============================================================================
+# GPU está COMPLETAMENTE configurado em requirements_core_quantum.txt:
+# - qiskit==1.2.4
+# - qiskit-aer-gpu==0.15.1 (pré-compilado com CUDA 11.8/12)
+# - torch==2.5.1 (com CUDA 12.4)
+# - cuQuantum cu12 ONLY (cuquantum-cu12, custatevec-cu12, cutensor-cu12)
+#
+# NÃO duplicar packages GPU aqui!
+# ============================================================================

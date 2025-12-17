@@ -1,0 +1,16 @@
+{
+    "include": ["src", "scripts"],
+    "extraPaths": ["src"],
+    "reportMissingImports": "warning",
+    "reportMissingTypeStubs": false,
+    "reportGeneralTypeIssues": false,
+    "reportUnknownMemberType": false,
+    "reportUnknownArgumentType": false,
+    "reportUnknownParameterType": false,
+    "typeCheckingMode": "basic",
+    "ignore": [
+        "src/quantum_consciousness/quantum_backend.py",
+        "tests/**"
+    ],
+    "venv": ".venv"
+}

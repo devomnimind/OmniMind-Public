@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* DevBrain Futuristic Global Styles */
+@layer base {
+  :root {
+    --cyber-blue: #0080ff;
+    --neon-purple: #a855f7;
+    --neon-pink: #ec4899;
+    --neon-cyan: #06b6d4;
+    --dark-bg: #0a0a0a;
+  }
+
+  body {
+    @apply bg-dark-300 text-gray-100;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-200;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cyber-600 rounded-full;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-cyber-500;
+  }
+}
+
+@layer components {
+  /* Glassmorphism Cards */
+  .glass-card {
+    @apply backdrop-blur-md bg-white/5 border border-white/10 rounded-xl;
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300 hover:bg-white/10 hover:border-cyber-500/50 hover:shadow-neon-sm;
+  }
+
+  /* Neon Buttons */
+  .btn-neon {
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300;
+    @apply bg-gradient-to-r from-cyber-500 to-neon-purple text-white;
+    @apply hover:shadow-cyber-glow hover:scale-105;
+    @apply active:scale-95;
+  }
+
+  .btn-outline-neon {
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300;
+    @apply border-2 border-cyber-500 text-cyber-400;
+    @apply hover:bg-cyber-500/20 hover:shadow-neon-md hover:text-cyber-300;
+  }
+
+  /* Status Indicators */
+  .status-online {
+    @apply flex items-center gap-2;
+  }
+
+  .status-online::before {
+    content: '';
+    @apply w-2 h-2 rounded-full bg-neon-green animate-pulse-slow;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+  }
+
+  .status-offline::before {
+    content: '';
+    @apply w-2 h-2 rounded-full bg-gray-500;
+  }
+
+  /* Cyber Grid Background */
+  .cyber-grid {
+    background-image: 
+      linear-gradient(rgba(0, 128, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 128, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  /* Scan Line Effect */
+  .scan-line {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scan-line::after {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-b from-transparent via-cyber-500/20 to-transparent;
+    @apply animate-scan;
+    pointer-events: none;
+  }
+
+  /* Metric Cards */
+  .metric-card {
+    @apply glass-card p-6 relative overflow-hidden;
+  }
+
+  .metric-card::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-1 bg-gradient-neon;
+  }
+
+  /* Input Fields */
+  .input-cyber {
+    @apply w-full px-4 py-3 rounded-lg;
+    @apply bg-dark-100 border-2 border-gray-700;
+    @apply text-gray-100 placeholder-gray-500;
+    @apply focus:outline-none focus:border-cyber-500 focus:shadow-neon-sm;
+    @apply transition-all duration-300;
+  }
+
+  /* Focus Styles for Accessibility */
+  .focus-cyber:focus {
+    @apply outline-none ring-2 ring-cyber-500 ring-offset-2 ring-offset-dark-300;
+  }
+
+  /* Loading Spinner */
+  .spinner-cyber {
+    @apply w-8 h-8 border-4 border-gray-700 border-t-cyber-500 rounded-full animate-spin;
+  }
+
+  /* Badge Styles */
+  .badge-cyber {
+    @apply px-3 py-1 rounded-full text-xs font-semibold;
+    @apply bg-cyber-500/20 text-cyber-300 border border-cyber-500/50;
+  }
+
+  .badge-success {
+    @apply px-3 py-1 rounded-full text-xs font-semibold;
+    @apply bg-neon-green/20 text-green-300 border border-neon-green/50;
+  }
+
+  .badge-warning {
+    @apply px-3 py-1 rounded-full text-xs font-semibold;
+    @apply bg-neon-yellow/20 text-yellow-300 border border-neon-yellow/50;
+  }
+
+  .badge-error {
+    @apply px-3 py-1 rounded-full text-xs font-semibold;
+    @apply bg-neon-red/20 text-red-300 border border-neon-red/50;
+  }
+}
+
+@layer utilities {
+  /* Text gradients */
+  .text-gradient-cyber {
+    @apply bg-clip-text text-transparent bg-gradient-cyber;
+  }
+
+  .text-gradient-neon {
+    @apply bg-clip-text text-transparent bg-gradient-neon;
+  }
+
+  /* Hover Lift Effect */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  /* Accessibility - High Contrast Mode Support */
+  @media (prefers-contrast: high) {
+    .glass-card {
+      @apply bg-black border-white;
+    }
+
+    .btn-neon {
+      @apply bg-cyber-500;
+    }
+  }
+
+  /* Reduce Motion for Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

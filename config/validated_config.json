@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "environment": "development",
+  "validated_at": "2025-11-30T22:00:00Z",
+  "components": {
+    "qdrant": {
+      "status": "operational",
+      "vectors": 7886
+    },
+    "redis": {
+      "status": "empty",
+      "needs_restore": true
+    },
+    "supabase": {
+      "status": "partial",
+      "needs_setup": true
+    },
+    "gpu": {
+      "status": "operational",
+      "cuda_available": true
+    },
+    "embeddings": {
+      "status": "operational",
+      "model": "all-mpnet-base-v2"
+    }
+  },
+  "validation_results": {
+    "phi_baseline": 0.0,
+    "ablation_tests": "pending",
+    "integration_tests": "pending"
+  }
+}

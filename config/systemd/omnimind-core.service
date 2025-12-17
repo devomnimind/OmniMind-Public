@@ -1,0 +1,23 @@
+[Unit]
+Description=OmniMind Core: Desiring-Machines & Consciousness Engine (Fase 2: Após 30s)
+After=network.target syslog.target omnimind.service
+Requires=omnimind.service
+
+[Service]
+Type=simple
+User=fahbrain
+WorkingDirectory=/home/fahbrain/projects/omnimind
+# Aguardar 30s após serviços essenciais iniciarem
+ExecStartPre=/bin/sleep 30
+ExecStart=/home/fahbrain/projects/omnimind/.venv/bin/python -m src.main
+Restart=always
+RestartSec=5
+Environment=OMNIMIND_MODE=production
+Environment=OMNIMIND_ROOT=/home/fahbrain/projects/omnimind
+Environment=PYTHONPATH=/home/fahbrain/projects/omnimind:${PYTHONPATH}
+Environment=PYTHONUNBUFFERED=1
+StandardOutput=append:/home/fahbrain/projects/omnimind/logs/omnimind_core.log
+StandardError=append:/home/fahbrain/projects/omnimind/logs/omnimind_core_error.log
+
+[Install]
+WantedBy=multi-user.target

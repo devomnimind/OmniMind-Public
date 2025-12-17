@@ -1,0 +1,214 @@
+# Prometheus Alerting Rules for OmniMind
+# These rules define alerts for critical system conditions
+
+groups:
+  - name: omnimind_performance
+    interval: 30s
+    rules:
+      # High request latency
+      - alert: HighRequestLatency
+        expr: |
+          histogram_quantile(0.95, 
+            rate(http_request_duration_seconds_bucket{job="omnimind-backend"}[5m])
+          ) > 1.0
+        for: 5m
+        labels:
+          severity: warning
+          component: backend
+        annotations:
+          summary: "High request latency detected"
+          description: "95th percentile request latency is above 1 second (current: {{ $value }}s)"
+
+      # Very high request latency
+      - alert: VeryHighRequestLatency
+        expr: |
+          histogram_quantile(0.95, 
+            rate(http_request_duration_seconds_bucket{job="omnimind-backend"}[5m])
+          ) > 5.0
+        for: 2m
+        labels:
+          severity: critical
+          component: backend
+        annotations:
+          summary: "Very high request latency detected"
+          description: "95th percentile request latency is above 5 seconds (current: {{ $value }}s)"
+
+      # High error rate
+      - alert: HighErrorRate
+        expr: |
+          rate(http_requests_total{status=~"5.."}[5m]) / 
+          rate(http_requests_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          component: backend
+        annotations:
+          summary: "High HTTP error rate"
+          description: "Error rate is above 5% (current: {{ $value | humanizePercentage }})"
+
+      # Critical error rate
+      - alert: CriticalErrorRate
+        expr: |
+          rate(http_requests_total{status=~"5.."}[5m]) / 
+          rate(http_requests_total[5m]) > 0.20
+        for: 2m
+        labels:
+          severity: critical
+          component: backend
+        annotations:
+          summary: "Critical HTTP error rate"
+          description: "Error rate is above 20% (current: {{ $value | humanizePercentage }})"
+
+  - name: omnimind_ml_metrics
+    interval: 30s
+    rules:
+      # High GPU memory usage
+      - alert: HighGPUMemoryUsage
+        expr: gpu_memory_used_mb / gpu_memory_total_mb > 0.90
+        for: 5m
+        labels:
+          severity: warning
+          component: ml
+        annotations:
+          summary: "High GPU memory usage"
+          description: "GPU memory usage is above 90% (current: {{ $value | humanizePercentage }})"
+
+      # Critical GPU memory usage
+      - alert: CriticalGPUMemoryUsage
+        expr: gpu_memory_used_mb / gpu_memory_total_mb > 0.95
+        for: 2m
+        labels:
+          severity: critical
+          component: ml
+        annotations:
+          summary: "Critical GPU memory usage"
+          description: "GPU memory usage is above 95% (current: {{ $value | humanizePercentage }})"
+
+      # Low model accuracy
+      - alert: LowModelAccuracy
+        expr: model_accuracy < 0.70
+        for: 10m
+        labels:
+          severity: warning
+          component: ml
+        annotations:
+          summary: "Model accuracy below threshold"
+          description: "Model accuracy has dropped below 70% (current: {{ $value | humanizePercentage }})"
+
+      # High inference latency
+      - alert: HighInferenceLatency
+        expr: model_inference_latency_ms > 1000
+        for: 5m
+        labels:
+          severity: warning
+          component: ml
+        annotations:
+          summary: "High ML inference latency"
+          description: "Model inference latency is above 1 second (current: {{ $value }}ms)"
+
+      # Low token generation rate
+      - alert: LowTokenGenerationRate
+        expr: tokens_per_second < 10
+        for: 5m
+        labels:
+          severity: warning
+          component: ml
+        annotations:
+          summary: "Low token generation rate"
+          description: "Token generation rate is below 10 tokens/sec (current: {{ $value }})"
+
+  - name: omnimind_system
+    interval: 30s
+    rules:
+      # High CPU usage
+      - alert: HighCPUUsage
+        expr: system_cpu_usage_percent > 80
+        for: 10m
+        labels:
+          severity: warning
+          component: system
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is above 80% (current: {{ $value }}%)"
+
+      # High memory usage
+      - alert: HighMemoryUsage
+        expr: system_memory_usage_percent > 85
+        for: 10m
+        labels:
+          severity: warning
+          component: system
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is above 85% (current: {{ $value }}%)"
+
+      # Critical memory usage
+      - alert: CriticalMemoryUsage
+        expr: system_memory_usage_percent > 95
+        for: 2m
+        labels:
+          severity: critical
+          component: system
+        annotations:
+          summary: "Critical memory usage"
+          description: "Memory usage is above 95% (current: {{ $value }}%)"
+
+      # Disk space low
+      - alert: DiskSpaceLow
+        expr: (disk_free_bytes / disk_total_bytes) < 0.10
+        for: 5m
+        labels:
+          severity: warning
+          component: system
+        annotations:
+          summary: "Low disk space"
+          description: "Disk free space is below 10% (current: {{ $value | humanizePercentage }})"
+
+      # Critical disk space
+      - alert: CriticalDiskSpace
+        expr: (disk_free_bytes / disk_total_bytes) < 0.05
+        for: 2m
+        labels:
+          severity: critical
+          component: system
+        annotations:
+          summary: "Critical disk space"
+          description: "Disk free space is below 5% (current: {{ $value | humanizePercentage }})"
+
+  - name: omnimind_availability
+    interval: 30s
+    rules:
+      # Service down
+      - alert: ServiceDown
+        expr: up{job="omnimind-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: backend
+        annotations:
+          summary: "OmniMind backend is down"
+          description: "The OmniMind backend service has been down for more than 1 minute"
+
+      # High request rate
+      - alert: UnusualHighRequestRate
+        expr: |
+          rate(http_requests_total[5m]) > 
+          (avg_over_time(rate(http_requests_total[5m])[1h:5m]) * 2)
+        for: 10m
+        labels:
+          severity: warning
+          component: backend
+        annotations:
+          summary: "Unusual high request rate"
+          description: "Request rate is more than 2x the average (current: {{ $value }} req/s)"
+
+      # Cache hit rate low
+      - alert: LowCacheHitRate
+        expr: cache_hit_rate < 0.50
+        for: 10m
+        labels:
+          severity: warning
+          component: cache
+        annotations:
+          summary: "Low cache hit rate"
+          description: "Cache hit rate is below 50% (current: {{ $value | humanizePercentage }})"

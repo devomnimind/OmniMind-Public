@@ -1,0 +1,281 @@
+{
+  "dashboard": {
+    "title": "OmniMind - ML Performance Metrics",
+    "tags": ["omnimind", "ml", "performance", "gpu"],
+    "timezone": "browser",
+    "refresh": "5s",
+    "time": {
+      "from": "now-15m",
+      "to": "now"
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Model Inference Latency",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(model_inference_latency_ms_bucket[5m]))",
+            "legendFormat": "p50",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(model_inference_latency_ms_bucket[5m]))",
+            "legendFormat": "p95",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(model_inference_latency_ms_bucket[5m]))",
+            "legendFormat": "p99",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "ms", "label": "Latency"},
+          {"format": "short"}
+        ],
+        "alert": {
+          "conditions": [
+            {
+              "evaluator": {"params": [1000], "type": "gt"},
+              "operator": {"type": "and"},
+              "query": {"params": ["B", "5m", "now"]},
+              "reducer": {"params": [], "type": "avg"},
+              "type": "query"
+            }
+          ],
+          "name": "High ML Inference Latency"
+        }
+      },
+      {
+        "id": 2,
+        "title": "Model Throughput",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "targets": [
+          {
+            "expr": "rate(model_throughput_rps[5m])",
+            "legendFormat": "Requests/sec",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "reqps", "label": "Throughput"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 3,
+        "title": "GPU Utilization",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "targets": [
+          {
+            "expr": "gpu_utilization",
+            "legendFormat": "GPU {{gpu_id}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "percent", "label": "Utilization", "max": 100, "min": 0},
+          {"format": "short"}
+        ],
+        "alert": {
+          "conditions": [
+            {
+              "evaluator": {"params": [90], "type": "gt"},
+              "operator": {"type": "and"},
+              "query": {"params": ["A", "5m", "now"]},
+              "reducer": {"params": [], "type": "avg"},
+              "type": "query"
+            }
+          ],
+          "name": "High GPU Utilization"
+        }
+      },
+      {
+        "id": 4,
+        "title": "GPU Memory Usage",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "targets": [
+          {
+            "expr": "gpu_memory_used_mb",
+            "legendFormat": "Used",
+            "refId": "A"
+          },
+          {
+            "expr": "gpu_memory_total_mb",
+            "legendFormat": "Total",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "mbytes", "label": "Memory"},
+          {"format": "short"}
+        ],
+        "alert": {
+          "conditions": [
+            {
+              "evaluator": {"params": [3500], "type": "gt"},
+              "operator": {"type": "and"},
+              "query": {"params": ["A", "5m", "now"]},
+              "reducer": {"params": [], "type": "avg"},
+              "type": "query"
+            }
+          ],
+          "name": "High GPU Memory Usage"
+        }
+      },
+      {
+        "id": 5,
+        "title": "Model Accuracy",
+        "type": "singlestat",
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 16},
+        "targets": [
+          {
+            "expr": "model_accuracy",
+            "refId": "A"
+          }
+        ],
+        "format": "percentunit",
+        "thresholds": "0.5,0.7,0.9",
+        "colors": ["#d44a3a", "#e0b400", "#299c46"],
+        "colorValue": true
+      },
+      {
+        "id": 6,
+        "title": "Model Loss",
+        "type": "graph",
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 16},
+        "targets": [
+          {
+            "expr": "model_loss",
+            "legendFormat": "Loss",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Loss"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Token Generation Rate",
+        "type": "singlestat",
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 16},
+        "targets": [
+          {
+            "expr": "tokens_per_second",
+            "refId": "A"
+          }
+        ],
+        "format": "short",
+        "postfix": " tokens/s",
+        "thresholds": "10,50,100",
+        "colors": ["#d44a3a", "#e0b400", "#299c46"],
+        "colorValue": true
+      },
+      {
+        "id": 8,
+        "title": "Cache Hit Rate",
+        "type": "singlestat",
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 16},
+        "targets": [
+          {
+            "expr": "cache_hit_rate",
+            "refId": "A"
+          }
+        ],
+        "format": "percentunit",
+        "thresholds": "0.5,0.7,0.9",
+        "colors": ["#d44a3a", "#e0b400", "#299c46"],
+        "colorValue": true
+      },
+      {
+        "id": 9,
+        "title": "Batch Size Distribution",
+        "type": "graph",
+        "gridPos": {"h": 6, "w": 12, "x": 0, "y": 20},
+        "targets": [
+          {
+            "expr": "batch_size",
+            "legendFormat": "Batch Size",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Size"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Model Memory Footprint",
+        "type": "graph",
+        "gridPos": {"h": 6, "w": 12, "x": 12, "y": 20},
+        "targets": [
+          {
+            "expr": "model_memory_footprint_mb",
+            "legendFormat": "Model Memory",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "mbytes", "label": "Memory"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Training/Inference Split",
+        "type": "piechart",
+        "gridPos": {"h": 6, "w": 8, "x": 0, "y": 26},
+        "targets": [
+          {
+            "expr": "sum(rate(model_operations_total{operation=\"training\"}[5m]))",
+            "legendFormat": "Training",
+            "refId": "A"
+          },
+          {
+            "expr": "sum(rate(model_operations_total{operation=\"inference\"}[5m]))",
+            "legendFormat": "Inference",
+            "refId": "B"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Active Model Instances",
+        "type": "stat",
+        "gridPos": {"h": 6, "w": 8, "x": 8, "y": 26},
+        "targets": [
+          {
+            "expr": "count(model_inference_latency_ms) by (model_name)",
+            "legendFormat": "{{model_name}}",
+            "refId": "A"
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Error Rate by Model",
+        "type": "graph",
+        "gridPos": {"h": 6, "w": 8, "x": 16, "y": 26},
+        "targets": [
+          {
+            "expr": "rate(model_errors_total[5m]) by (model_name)",
+            "legendFormat": "{{model_name}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Errors/sec"},
+          {"format": "short"}
+        ]
+      }
+    ]
+  }
+}

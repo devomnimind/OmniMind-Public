@@ -1,0 +1,225 @@
+# Configuração de Provedores Externos de IA - OmniMind
+# Integração Segura com Gemini, Copilot, OpenRouter
+
+version: "1.0.0"
+description: "Configuração de provedores externos de IA com isolamento seguro"
+
+# Configurações Globais
+global_settings:
+  audit_enabled: true
+  audit_category_prefix: "external_ai"
+  log_level: "INFO"
+  isolation_level: "strict"  # strict, moderate, permissive
+  timeout_seconds: 300
+  max_concurrent_tasks: 5
+
+# Provedores Externos Disponíveis
+providers:
+  gemini:
+    enabled: true
+    name: "Google Gemini"
+    api_base_url: "https://generativelanguage.googleapis.com"
+    api_key_env: "GOOGLE_AI_API_KEY"
+    auth_method: "api_key"
+
+    models:
+      gemini-1.5-pro:
+        name: "Gemini 1.5 Pro"
+        context_window: 2097152
+        max_output_tokens: 8192
+        capabilities: ["text_generation", "code_generation", "analysis", "multimodal"]
+        cost_per_1k_input: 0.00125
+        cost_per_1k_output: 0.005
+
+      gemini-1.5-flash:
+        name: "Gemini 1.5 Flash"
+        context_window: 1048576
+        max_output_tokens: 8192
+        capabilities: ["text_generation", "code_generation", "analysis"]
+        cost_per_1k_input: 0.000075
+        cost_per_1k_output: 0.0003
+
+    rate_limits:
+      requests_per_minute: 60
+      tokens_per_minute: 1000000
+      requests_per_hour: 1000
+      tokens_per_hour: 4000000
+
+    retry_policy:
+      max_attempts: 3
+      backoff_seconds: 1
+      exponential_backoff: true
+
+  copilot:
+    enabled: true
+    name: "GitHub Copilot"
+    api_base_url: "https://api.github.com"
+    auth_method: "oauth"  # ou "pat" para personal access token
+    github_token_env: "GITHUB_TOKEN"
+    oauth_config:
+      client_id_env: "GITHUB_OAUTH_CLIENT_ID"
+      client_secret_env: "GITHUB_OAUTH_CLIENT_SECRET"
+      redirect_uri: "http://localhost:4173/oauth/callback"
+
+    models:
+      copilot-chat:
+        name: "Copilot Chat"
+        context_window: 8192
+        max_output_tokens: 4096
+        capabilities: ["code_generation", "code_review", "documentation", "debugging"]
+        cost_per_request: 0.0  # Gratuito para usuários GitHub
+
+    rate_limits:
+      requests_per_hour: 2000
+      requests_per_day: 12000
+
+    retry_policy:
+      max_attempts: 3
+      backoff_seconds: 2
+      exponential_backoff: true
+
+  huggingface:
+    enabled: true
+    name: "Hugging Face"
+    api_base_url: "https://api-inference.huggingface.co"
+    api_key_env: "HF_TOKEN"
+    auth_method: "api_key"
+
+    models:
+      phi-3.5-mini-instruct:
+        name: "Phi-3.5 Mini Instruct"
+        context_window: 4096
+        max_output_tokens: 2048
+        capabilities: ["text_generation", "code_generation", "analysis"]
+        cost_per_1k_input: 0.0  # Gratuito para inference básica
+        cost_per_1k_output: 0.0
+
+      qwen2.5-1.5b-instruct:
+        name: "Qwen2.5 1.5B Instruct"
+        context_window: 32768
+        max_output_tokens: 4096
+        capabilities: ["text_generation", "code_generation", "analysis", "reasoning"]
+        cost_per_1k_input: 0.0
+        cost_per_1k_output: 0.0
+
+    rate_limits:
+      requests_per_minute: 1000  # Para Pro
+      tokens_per_minute: 500000
+      requests_per_hour: 10000
+      tokens_per_hour: 1000000
+
+    retry_policy:
+      max_attempts: 3
+      backoff_seconds: 1
+      exponential_backoff: true
+
+# Sistema de Delegação de Tarefas
+task_delegation:
+  enabled: true
+
+  # Regras de Seleção de Provedor
+  provider_selection_rules:
+    code_generation:
+      priority_order: ["huggingface", "openrouter", "copilot", "gemini"]  # Hugging Face primeiro (local/gratuito)
+      fallback_chain: ["huggingface", "openrouter", "copilot", "ollama"]
+      preferred_models:
+        huggingface: "phi-3.5-mini-instruct"
+
+    code_review:
+      priority_order: ["huggingface", "openrouter", "copilot", "gemini"]
+      fallback_chain: ["huggingface", "openrouter", "copilot", "ollama"]
+      preferred_models:
+        huggingface: "qwen2.5-1.5b-instruct"
+
+    documentation:
+      priority_order: ["huggingface", "gemini", "openrouter", "copilot"]
+      fallback_chain: ["huggingface", "gemini", "openrouter", "ollama"]
+
+    analysis:
+      priority_order: ["huggingface", "openrouter", "gemini", "copilot"]
+      fallback_chain: ["huggingface", "openrouter", "gemini", "ollama"]
+
+    optimization:
+      priority_order: ["huggingface", "openrouter", "copilot", "gemini"]
+      fallback_chain: ["huggingface", "openrouter", "copilot", "ollama"]
+      preferred_models:
+        huggingface: "phi-3.5-mini-instruct"
+
+  # Critérios de Seleção Automática
+  selection_criteria:
+    cost_priority: 0.3      # 30% peso no custo
+    speed_priority: 0.3     # 30% peso na velocidade
+    quality_priority: 0.4   # 40% peso na qualidade
+
+    # Thresholds para mudança automática
+    cost_threshold: 0.01    # USD por request
+    latency_threshold: 30   # segundos
+    quality_threshold: 0.8  # score mínimo
+
+  # Configurações de Isolamento
+  isolation:
+    level: "strict"  # strict, moderate, permissive
+
+    # Padrões proibidos no prompt/contexto
+    forbidden_patterns:
+      - ".*password.*"
+      - ".*secret.*"
+      - ".*token.*"
+      - ".*key.*"
+      - ".*credential.*"
+      - ".*private.*"
+      - ".*internal.*"
+      - ".*confidential.*"
+
+    # Sanitização automática
+    sanitization_rules:
+      remove_file_paths: true
+      remove_ip_addresses: true
+      remove_email_addresses: true
+      mask_sensitive_data: true
+
+    # Limites de recursos
+    resource_limits:
+      max_prompt_length: 10000
+      max_context_files: 5
+      max_file_size_kb: 100
+
+# Monitoramento e Métricas
+monitoring:
+  enabled: true
+  metrics_collection: true
+  performance_tracking: true
+
+  # Dashboards
+  dashboards:
+    cost_tracking: true
+    usage_analytics: true
+    performance_comparison: true
+
+  # Alertas
+  alerts:
+    budget_exceeded:
+      enabled: true
+      threshold_usd: 50
+      period_days: 30
+
+    rate_limit_exceeded:
+      enabled: true
+      cooldown_minutes: 5
+
+    quality_degraded:
+      enabled: true
+      threshold_drop: 0.2
+
+# Configurações de Desenvolvimento/Teste
+development:
+  mock_external_calls: false
+  verbose_logging: false
+  test_mode: false
+
+# Backup e Recuperação
+backup:
+  enabled: true
+  config_backup: true
+  metrics_backup: true
+  retention_days: 90

@@ -1,0 +1,78 @@
+# ✅ OmniMind Development Dockerfile - GPU + Quantum Support
+# Purpose: Development environment with qiskit 1.2.4 + aer-gpu 0.15.1 + CUDA 12
+# Target: Local development, testing, quantum simulations
+# GPU: NVIDIA (CUDA 12.4)
+
+# Base image with Python 3.12 and CUDA 12
+FROM nvidia/cuda:12.4.1-cudnn-devel-ubuntu22.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    CUDA_HOME=/usr/local/cuda-12 \
+    CUDA_PATH=/usr/local/cuda-12 \
+    LD_LIBRARY_PATH=/usr/local/cuda-12/lib64:/usr/local/cuda-12/extras/CUPTI/lib64:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH \
+    PATH=/usr/local/cuda-12/bin:$PATH \
+    CUDA_VISIBLE_DEVICES=0
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.12 \
+    python3.12-dev \
+    python3.12-venv \
+    python3-pip \
+    git \
+    build-essential \
+    cmake \
+    curl \
+    wget \
+    libssl-dev \
+    libffi-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create Python 3.12 symlink
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.12 1 && \
+    update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
+
+# Upgrade pip
+RUN pip install --upgrade pip setuptools wheel
+
+# Copy requirements
+COPY requirements/requirements_core_quantum.txt /app/requirements_core_quantum.txt
+COPY requirements/requirements-core.txt /app/requirements-core.txt
+
+# Install locked versions: qiskit 1.2.4 + aer-gpu 0.15.1 (PRÉ-COMPILADOS)
+# ⚠️ CRITICAL: These versions are LOCKED and TESTED with GTX 1650 (4GB VRAM)
+RUN pip install --no-cache-dir -r /app/requirements_core_quantum.txt && \
+    pip install --no-cache-dir -r /app/requirements-core.txt
+
+# Verify Qiskit GPU backend is available
+RUN python -c "from qiskit_aer import AerSimulator; sim = AerSimulator(method='statevector', device='GPU'); print(f'✅ Qiskit GPU Backend: {sim.name}'); print(f'✅ Available Devices: {sim.available_devices()}')"
+
+# Verify Torch CUDA
+RUN python -c "import torch; print(f'✅ Torch CUDA: {torch.cuda.is_available()}'); print(f'✅ Device: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else \"CPU only\"}')"
+
+# Copy source code
+COPY . .
+
+# Install omnimind package in editable mode for development
+RUN pip install --no-cache-dir -e .
+
+# Create non-root user for security
+RUN useradd -m -u 1000 omnimind && \
+    chown -R omnimind:omnimind /app
+
+USER omnimind
+
+# Health check: Verify qiskit and CUDA work
+HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
+    CMD python -c "from qiskit_aer import AerSimulator; from qiskit import QuantumCircuit, transpile; qc = QuantumCircuit(2); qc.h(0); qc.cx(0,1); sim = AerSimulator(method='statevector', device='GPU'); result = sim.run(transpile(qc, sim)).result(); print('✅ Health check passed')" || exit 1
+
+# Default: Start bash for interactive development
+CMD ["/bin/bash"]
+

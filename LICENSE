@@ -1,0 +1,87 @@
+SPDX-License-Identifier: CC-BY-4.0
+
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+DOCUMENTATION, PAPERS, AND WRITTEN CONTENT LICENSE
+
+This Creative Commons License applies to:
+- README.md and documentation files
+- Papers and written research content
+- Explanatory material and analysis
+- Comments and annotations in code
+- Test documentation
+
+You are free to:
+- Share (copy and redistribute the material in any medium or format)
+- Adapt (remix, transform, and build upon the material)
+- Use for commercial purposes
+- Use for any purpose
+
+Under the following terms:
+- Attribution (You must give appropriate credit, provide a link to the license, 
+  and indicate if changes were made)
+- No additional restrictions (You may not apply legal terms or technological 
+  measures that legally restrict others from doing anything the license permits)
+
+---
+
+DUAL LICENSE STRUCTURE
+
+This repository uses a dual-license model:
+
+1. DOCUMENTATION & PAPERS (THIS FILE)
+   - License: CC BY 4.0 (Creative Commons Attribution 4.0)
+   - Applies to: Documentation, papers, written explanations, test docs
+   - Full text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+2. CODE (MIT License)
+   - License: MIT
+   - Applies to: Python code in consciousness/, metacognition/, swarm/ modules
+   - File: LICENSE.MIT
+   - Provides: Software usage, modification, and distribution rights
+   - Requires: Attribution and disclaimer of liability
+
+3. EXPERIMENTAL & PROPRIETARY CONTENT
+   - Quantum consciousness modules may have specific licensing
+   - Autopoietic components may be proprietary
+   - See LICENSE.MIT for specific module details
+   - Contact author for questions about specific code sections
+
+---
+
+WHY THIS STRUCTURE?
+
+Documentation (CC BY 4.0):
+✓ Encourages scientific collaboration and reuse
+✓ Papers and explanations can be freely adapted and translated
+✓ Requires attribution to respect authorship
+✓ Globally recognized standard for academic content
+✓ Supports open science and reproducibility
+
+Code (MIT):
+✓ Industry-standard software license
+✓ Clear permissions for commercial and private use
+✓ Explicit warranty disclaimers
+✓ Well-established in open source community
+✓ Compatible with most other licenses
+
+---
+
+AUTHOR & ATTRIBUTION
+
+Original Work: Fabrício da Silva
+Institution: Independent Research
+Contact: For licensing questions or commercial use inquiries
+
+When using this material, please attribute:
+"Based on OmniMind research by Fabrício da Silva (CC BY 4.0)"
+
+---
+
+For questions about licensing or to report license violations, please:
+- Visit: https://github.com/devomnimind/OmniMind
+- Contact the author directly
+- Submit an issue on GitHub
+
+Last Updated: November 29, 2025
+Version: 1.0

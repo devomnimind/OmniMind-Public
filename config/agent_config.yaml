@@ -1,0 +1,93 @@
+# OmniMind Agent System Configuration
+# Updated: 2025-11-17
+
+agent:
+  name: "OmniMind"
+  role: "Autonomous System Agent"
+  version: "0.1.0"
+
+model:
+  name: "phi:latest"           # Primary LLM model (validated via benchmark)
+  provider: "ollama"
+  base_url: "http://localhost:11434"
+  quantization: "Q4_K_M"
+  context_window: 4096
+  temperature: 0.7
+  max_tokens: 2048
+  fallback_model: "qwen2:7b-instruct"  # Secondary model (pending Ollama 404 fix)
+
+gpu:
+  device: "cuda:0"
+  gpu_layers: -1  # Auto-manage (Ollama handles this)
+  offload_ratio: 0.95
+
+memory:
+  episodic_db: "qdrant"
+  qdrant_url: "http://localhost:6333"
+  qdrant_path: "~/projects/omnimind/data/qdrant"
+  collection_name: "omnimind_episodes"
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+  embedding_dim: 384
+  consolidation_interval: 100  # Episodes before consolidation
+
+agents:
+  orchestrator:
+    enabled: true
+    role: "Main coordinator"
+  
+  coder:
+    enabled: true
+    role: "Code generation"
+    tools:
+      - read_file
+      - write_file
+      - list_files
+      - search_memory
+  
+  reviewer:
+    enabled: true
+    role: "Code review and scoring"
+    score_threshold: 7.0  # Minimum acceptable score (0-10)
+  
+  monitor:
+    enabled: true
+    role: "System resource monitoring"
+    check_interval: 30  # seconds
+  
+  learning:
+    enabled: true
+    role: "Experience consolidation"
+    rlaif_enabled: true  # Reinforcement Learning from AI Feedback
+
+system:
+  dbus_enabled: true
+  dbus_session: true
+  dbus_system: false  # Requires root
+  
+  mcp_enabled: true
+  mcp_allowed_dirs:
+    - "~/projects/omnimind"
+    - "~/projects"
+  
+  shell_isolation: "subprocess"
+  shell_whitelist:
+    - ls
+    - pwd
+    - cat
+    - echo
+    - ps
+    - git
+    - python
+    - pip
+  shell_timeout: 10  # seconds
+
+logging:
+  level: "INFO"
+  format: "structured"
+  audit_enabled: true
+  audit_file: "~/projects/omnimind/logs/audit.log"
+
+performance:
+  max_concurrent_tasks: 1
+  task_timeout: 300  # 5 minutes
+  retry_attempts: 3

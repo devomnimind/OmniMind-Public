@@ -1,0 +1,42 @@
+[MASTER]
+disable=
+    missing-docstring,
+    too-many-arguments,
+    too-many-locals,
+    too-many-branches,
+    too-many-statements,
+    too-many-return-statements,
+    too-few-public-methods,
+    too-many-public-methods,
+    line-too-long,
+    broad-exception-caught,
+    redefined-outer-name,
+    reimported,
+    unused-import,
+    unused-variable,
+    unused-argument,
+    global-statement,
+    unspecified-encoding,
+    logging-fstring-interpolation,
+    subprocess-run-check,
+    no-else-return,
+    no-else-raise,
+    import-outside-toplevel,
+    invalid-name,
+    duplicate-code,
+    protected-access,
+    cyclic-import,
+    wildcard-import,
+    undefined-variable,
+    no-member,
+    no-name-in-module,
+    attribute-defined-outside-init,
+
+[FORMAT]
+max-line-length=100
+
+[BASIC]
+good-names=i,j,k,ex,Run,_,x,y,z,f
+
+[DESIGN]
+max-attributes=10

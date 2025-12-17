@@ -1,0 +1,204 @@
+════════════════════════════════════════════════════════════════════════════════
+🚀 OMNIMIND SYSTEM OS MIGRATION - SCRIPTS & DEPENDENCIES AUDIT (16 DEC 2025)
+════════════════════════════════════════════════════════════════════════════════
+
+📌 QUICK REFERENCE - 3 MAIN SCRIPTS
+
+1️⃣  DEPRECATED ❌
+   Path: scripts/canonical/install/install_systemd_services.sh
+   Status: DO NOT USE
+   Reason: Old omnimind-backend.service conflicts with new omnimind.service
+   Use Instead: scripts/systemd/install_all_services.sh ✅
+
+2️⃣  ACTIVE 🟢 (Security Privileges)
+   Path: scripts/canonical/install/setup_security_privileges.sh
+   Status: FUNCTIONAL
+   Use: sudo ./scripts/canonical/install/setup_security_privileges.sh
+   Installs: /etc/sudoers.d/omnimind with NOPASSWD for monitoring commands
+
+3️⃣  RECOMMENDED 🟢 (Robust v2.0)
+   Path: scripts/canonical/system/start_omnimind_system_robust.sh
+   Status: BEST FOR SYSTEM OS INITIALIZATION
+   Use: ./scripts/canonical/system/start_omnimind_system_robust.sh
+   Phases: Check → Cluster → Health → CPU Stable → Services → Monitor
+
+════════════════════════════════════════════════════════════════════════════════
+🔗 DEPENDENCIES CHAIN
+════════════════════════════════════════════════════════════════════════════════
+
+start_omnimind_system_robust.sh (MAIN ENTRY)
+│
+├─→ run_cluster.sh
+│   ├─ Spawns: uvicorn port 8000 (Primary, 2 workers)
+│   ├─ Spawns: uvicorn port 8080 (Secondary, 2 workers)
+│   └─ Spawns: uvicorn port 3001 (Fallback, 2 workers)
+│
+├─→ run_mcp_orchestrator.py
+│   └─ MCP Agent Orchestration
+│
+└─→ run_observer_service.py
+    └─ System Observability & Metrics
+
+════════════════════════════════════════════════════════════════════════════════
+⏱️  INITIALIZATION PHASES
+════════════════════════════════════════════════════════════════════════════════
+
+Phase 0: Environment Setup
+Phase 1: Check Existing Services (ports 8000, 8080, 3001)
+Phase 1.5: Initialize Backend Cluster (run_cluster.sh)
+Phase 2: Health Checks (Primary: 100 retries, Secondary: 30, Fallback: 50)
+Phase 2.5: CPU Stabilization (wait 60s + check CPU < 50%)
+Phase 3: Start Secondary Services (MCP, Main Cycle, Frontend)
+Phase 4: Monitoring (Observer Service + eBPF if available)
+
+Total Expected Time: ~5-10 minutes
+
+════════════════════════════════════════════════════════════════════════════════
+✅ SETUP CHECKLIST
+════════════════════════════════════════════════════════════════════════════════
+
+[ ] 1. System Databases: ./scripts/systemd/install_all_services.sh
+[ ] 2. Redis: redis-cli ping
+[ ] 3. PostgreSQL: psql -U postgres -c "SELECT 1"
+[ ] 4. Qdrant: curl http://localhost:6333/health
+[ ] 5. Security: sudo ./scripts/canonical/install/setup_security_privileges.sh
+[ ] 6. GPU: nvidia-smi (verify NVIDIA GTX 1650)
+[ ] 7. Python: python --version (must be 3.12.12)
+[ ] 8. venv: source .venv/bin/activate
+[ ] 9. GPU Stack: pip list | grep qiskit (1.2.4) + aer-gpu (0.15.1)
+[ ] 10. System Init: ./scripts/canonical/system/start_omnimind_system_robust.sh
+
+════════════════════════════════════════════════════════════════════════════════
+🔍 HEALTH VERIFICATION
+════════════════════════════════════════════════════════════════════════════════
+
+After initialization, verify:
+
+Backend Primary (8000):
+  curl http://localhost:8000/health/
+  Expected: 200 OK with JSON response
+
+Backend Secondary (8080):
+  curl http://localhost:8080/health/
+  Expected: 200 OK
+
+Backend Fallback (3001):
+  curl http://localhost:3001/health/
+  Expected: 200 OK
+
+Frontend (3000):
+  curl http://localhost:3000/
+  Expected: 200 OK (React app)
+
+MCP Orchestrator:
+  pgrep -f "run_mcp_orchestrator.py"
+  Expected: PID number
+
+Observer Service:
+  pgrep -f "run_observer_service.py"
+  Expected: PID number
+
+════════════════════════════════════════════════════════════════════════════════
+📊 FILES & DEPENDENCIES
+════════════════════════════════════════════════════════════════════════════════
+
+INSTALLATION:
+  scripts/canonical/install/install_systemd_services.sh ❌ DEPRECATED
+  scripts/canonical/install/setup_security_privileges.sh ✅ ACTIVE
+  scripts/systemd/install_all_services.sh ✅ RECOMMENDED
+
+SYSTEM:
+  scripts/canonical/system/start_omnimind_system_robust.sh ⭐ MAIN
+  scripts/canonical/system/run_cluster.sh (called by robust.sh)
+  scripts/canonical/system/run_mcp_orchestrator.py (called by robust.sh)
+  scripts/canonical/system/run_observer_service.py (called by robust.sh)
+
+CONFIGURATION:
+  config/sudoers.d/omnimind (read by setup_security_privileges.sh)
+  config/omnimind.yaml (read by start_omnimind_system_robust.sh)
+  config/dashboard_auth.json (read by start_omnimind_system_robust.sh)
+  .env (read by start_omnimind_system_robust.sh)
+
+LOGS CREATED:
+  logs/startup_detailed.log (main startup log)
+  logs/backend_8000.log (Primary backend)
+  logs/backend_8080.log (Secondary backend)
+  logs/backend_3001.log (Fallback backend)
+  logs/mcp_orchestrator.log (MCP service)
+  logs/observer_service.log (Observer service)
+  logs/main_cycle.log (Main OmniMind cycle)
+  logs/frontend.log (React frontend)
+
+════════════════════════════════════════════════════════════════════════════════
+⚠️  KNOWN ISSUES & SOLUTIONS
+════════════════════════════════════════════════════════════════════════════════
+
+Issue 1: Port 8000 already in use
+Solution: lsof -i :8000 && kill -9 <PID>
+         or let run_cluster.sh cleanup (does pkill automatically)
+
+Issue 2: Backend not becoming healthy
+Solution: Check logs/backend_8000.log for specific error
+         Possible: GPU not available, model not loading, port conflict, import error
+
+Issue 3: MCP Orchestrator fails to start
+Solution: Check if already running: pgrep -f "run_mcp_orchestrator.py"
+         Check logs/mcp_orchestrator.log
+         Verify file exists: ls -la scripts/canonical/system/run_mcp_orchestrator.py
+
+Issue 4: CPU stability check times out
+Solution: This is warning only, system continues if CPU > 50%
+         But try: kill -9 background processes, restart
+
+════════════════════════════════════════════════════════════════════════════════
+🎯 STEP-BY-STEP COMPLETE SETUP
+════════════════════════════════════════════════════════════════════════════════
+
+# 1. Create venv (if not exists)
+cd /home/fahbrain/projects/omnimind
+python3.12 -m venv .venv
+source .venv/bin/activate
+
+# 2. Install GPU stack (if not installed)
+pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+pip install torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+pip install qiskit==1.2.4 qiskit-aer-gpu==0.15.1
+pip install cuquantum-cu12==25.11.0 custatevec-cu12==1.11.0 cutensor-cu12==2.4.1
+
+# 3. Install system databases
+./scripts/systemd/install_all_services.sh
+# Verify:
+redis-cli ping
+psql -U postgres -c "SELECT 1"
+curl http://localhost:6333/health
+
+# 4. Install security privileges
+sudo ./scripts/canonical/install/setup_security_privileges.sh
+# Verify:
+sudo -l -U fahbrain | grep NOPASSWD
+
+# 5. Initialize OmniMind system
+./scripts/canonical/system/start_omnimind_system_robust.sh
+
+# 6. Verify initialization
+curl http://localhost:8000/health/
+curl http://localhost:3000/
+tail -f logs/startup_detailed.log
+
+════════════════════════════════════════════════════════════════════════════════
+📖 FOR DETAILED DOCUMENTATION, SEE:
+════════════════════════════════════════════════════════════════════════════════
+
+Main Reference:
+  scripts/INDEX_SCRIPTS_INSTALLED_DEPS.md (COMPREHENSIVE AUDIT)
+
+GPU Stack:
+  requirements/INDEX_VERSOES_DEPRECATED_CURRENT.txt
+
+System Migration:
+  scripts/migration/install_system_databases.sh (Full Phase 0-5 setup)
+
+════════════════════════════════════════════════════════════════════════════════
+⏱️ Last Updated: 16 de Dezembro de 2025
+✅ Status: All 3 scripts audited and dependencies mapped
+════════════════════════════════════════════════════════════════════════════════

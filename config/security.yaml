@@ -1,0 +1,220 @@
+security_agent:
+  enabled: true
+  config_version: 1.0
+  name: "OmniMind SecurityAgent"
+  llm_model: "qwen2-7b-instruct-q4_k_m"
+  monitoring_interval: 60  # seconds between full sweeps
+  auto_response: true
+  audit_log_path: "/opt/omnimind/security_logs/security_actions.log"
+  baseline_refresh_interval: 3600
+  min_threat_level_to_report: "medium"
+  retry_attempts: 3
+  max_concurrent_playbooks: 2
+
+monitoring:
+  processes:
+    enabled: true
+    interval: 60
+    baseline_refresh: 3600
+    suspicious_patterns:
+      - "nmap"
+      - "nikto"
+      - "sqlmap"
+      - "nc"
+      - "ncat"
+      - "bash -i"
+      - "sh -i"
+      - "/dev/tcp"
+      - "metasploit"
+      - "msfconsole"
+    watch_list:
+      - "/usr/bin/python"
+      - "/usr/sbin/sshd"
+    alert_threshold: 2
+  files:
+    enabled: true
+    interval: 300
+    paths_to_monitor:
+      - "/etc"
+      - "/usr/bin"
+      - "/usr/sbin"
+      - "/root"
+      - "/opt"
+      - "/home"
+    integrity_tool: "AIDE"
+    aide_db_path: "/var/lib/aide/aide.db.gz"
+    inotify_watch:
+      enabled: true
+      max_events: 1000
+    alert_on_unexpected_changes: true
+  network:
+    enabled: true
+    interval: 30
+    suspicious_ports:
+      - 4444
+      - 5555
+      - 6666
+      - 7777
+      - 8888
+      - 31337
+    max_connections_per_ip: 5
+    inspect_protocols:
+      - "tcp"
+      - "udp"
+      - "raw"
+    net_tools:
+      - "ss"
+      - "netstat"
+      - "lsof"
+    data_threshold_mb: 10
+  logs:
+    enabled: true
+    interval: 10
+    files:
+      - "/var/log/auth.log"
+      - "/var/log/syslog"
+      - "/var/log/audit/audit.log"
+      - "/var/log/messages"
+    anomaly_keywords:
+      - "Failed password"
+      - "Invalid user"
+      - "sudo: COMMAND="
+      - "Authentication failure"
+      - "kernel: WARNING"
+      - "segfault"
+    watch_minutes: 5
+
+threat_levels:
+  low:
+    score: 1
+    auto_response: false
+    actions:
+      - "monitor"
+      - "log"
+  medium:
+    score: 2
+    auto_response: true
+    actions:
+      - "quarantine"
+      - "alert_user"
+  high:
+    score: 3
+    auto_response: true
+    actions:
+      - "block_connection"
+      - "kill_process"
+      - "isolate_host"
+  critical:
+    score: 4
+    auto_response: true
+    actions:
+      - "network_disconnect"
+      - "raise_alarm"
+      - "forensic_snapshot"
+
+playbooks:
+  rootkit:
+    enabled: true
+    tools:
+      - "chkrootkit"
+      - "rkhunter"
+      - "lynis"
+    steps:
+      - "Isolate system"
+      - "Run chkrootkit"
+      - "Run rkhunter"
+      - "Collect results"
+      - "Report to incident log"
+      - "Verify remediation"
+  intrusion:
+    enabled: true
+    tools:
+      - "ps"
+      - "ss"
+      - "lsof"
+      - "history"
+      - "ufw"
+    steps:
+      - "Capture evidence"
+      - "Block attacker IP"
+      - "Terminate sessions"
+      - "Increase audit logging"
+      - "Alert user"
+      - "Store forensic snapshot"
+  malware:
+    enabled: true
+    tools:
+      - "clamdscan"
+      - "qry"
+    steps:
+      - "Run ClamAV scan"
+      - "Quarantine payloads"
+      - "Restore clean backups"
+      - "Assess persistence"
+      - "Document remediation"
+  privilege_escalation:
+    enabled: true
+    tools:
+      - "pkill"
+      - "auditctl"
+      - "chmod"
+    steps:
+      - "Detect exploitation"
+      - "Block process"
+      - "Reset sudoers"
+      - "Apply security patches"
+      - "Audit sudo logs"
+  data_exfiltration:
+    enabled: true
+    tools:
+      - "iftop"
+      - "bpftrace"
+      - "ufw"
+    steps:
+      - "Detect large transfers"
+      - "Block connection"
+      - "Notify user"
+      - "Preserve logs"
+      - "Verify backups"
+
+reporting:
+  generate_logs: true
+  store_path: "/opt/omnimind/security_logs"
+  retention_days: 90
+  report_interval: 3600
+  incident_summary:
+    include_hashes: true
+    include_llm_correlation: true
+  alert_channels:
+    - "console"
+    - "file"
+    - "syslog"
+    - "ollama_notify"
+
+integration:
+  audit_chain:
+    enabled: true
+    entry_template:
+      timestamp: "{timestamp}"
+      event_type: "security_event"
+      threat_level: "{threat_level}"
+      action: "{action}"  # e.g., block, isolate
+      input_hash: "{input_hash}"
+      output_hash: "{output_hash}"
+      prev_hash: "{prev_hash}"
+      status: "{status}"
+  orchestrator:
+    delegate_tag: "SECURITY"
+    llm_reasons: true
+    emergency_channel: "security_alerts"
+
+system:
+  enforce_permissions: true
+  run_as_user: "omnimind" 
+  run_as_group: "omnimind"
+  logging:
+    level: "INFO"
+    format: "json"
+  telemetry:
+    enable_metrics: true
+    metrics_interval: 60

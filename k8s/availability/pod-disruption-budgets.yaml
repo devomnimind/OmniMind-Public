@@ -1,0 +1,79 @@
+# Pod Disruption Budgets for OmniMind
+# Ensures high availability during voluntary disruptions (updates, drains, etc.)
+
+---
+# Backend Pod Disruption Budget
+# Ensures at least 2 backend pods are always available
+# This allows safe rolling updates and node maintenance
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: omnimind-backend-pdb
+  namespace: omnimind
+  labels:
+    app: omnimind
+    component: backend
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: omnimind
+      component: backend
+  unhealthyPodEvictionPolicy: IfHealthyBudget
+
+---
+# Frontend Pod Disruption Budget
+# Ensures at least 1 frontend pod is always available
+# Allows rolling updates without service interruption
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: omnimind-frontend-pdb
+  namespace: omnimind
+  labels:
+    app: omnimind
+    component: frontend
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: omnimind
+      component: frontend
+  unhealthyPodEvictionPolicy: IfHealthyBudget
+
+---
+# Alternative: Percentage-based PDB (commented out)
+# Use this if you want to specify availability as a percentage
+# rather than absolute number of pods
+
+# Backend PDB (percentage-based)
+# apiVersion: policy/v1
+# kind: PodDisruptionBudget
+# metadata:
+#   name: omnimind-backend-pdb-pct
+#   namespace: omnimind
+#   labels:
+#     app: omnimind
+#     component: backend
+# spec:
+#   minAvailable: 67%  # At least 67% of pods must be available
+#   selector:
+#     matchLabels:
+#       app: omnimind
+#       component: backend
+
+# Frontend PDB (percentage-based)
+# apiVersion: policy/v1
+# kind: PodDisruptionBudget
+# metadata:
+#   name: omnimind-frontend-pdb-pct
+#   namespace: omnimind
+#   labels:
+#     app: omnimind
+#     component: frontend
+# spec:
+#   minAvailable: 50%  # At least 50% of pods must be available
+#   selector:
+#     matchLabels:
+#       app: omnimind
+#       component: frontend

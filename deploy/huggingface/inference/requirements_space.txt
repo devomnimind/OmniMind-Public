@@ -1,0 +1,23 @@
+# ============================================================================
+# SECURITY HARDENED + GPU COMPATIBLE (HuggingFace Spaces Deployment)
+# ============================================================================
+# CRITICAL: GPU setup requires EXACT version compatibility
+# DO NOT use >= ranges for torch/torchvision/torchaudio - they MUST match
+#
+# Security Strategy:
+# 1. torch 2.5.1 - Safe version (GPU-compatible with torchvision/torchaudio)
+# 2. transformers 4.46.x - Latest safe version (addresses ReDoS/deserialization)
+# 3. Other deps - Latest with proven compatibility
+#
+# Note: torch.load() RCE (CVE-2024-49988) mitigation:
+#   - Use weights_only=True when loading external models
+#   - This is a code-level fix, not version-dependent
+# ============================================================================
+
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+transformers==4.46.3
+torch==2.5.1
+accelerate==0.30.1
+python-dotenv==1.0.0
+pydantic==2.5.0

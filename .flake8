@@ -1,0 +1,23 @@
+[flake8]
+max-line-length = 100
+extend-ignore = E203,W503
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    tmp_agents,
+    tmp_tools,
+    tests/legacy,
+    DEVBRAIN_V23,
+    third_party,
+    archive/examples/*,
+    archive/legacy_scripts/*,
+    data,
+    venv,
+    src/agents/react_agent_broken.py,
+    src/agents/react_agent.py.backup,
+    src/integrations,
+    src/onboarding
+    */sympy/*
+# Excluído sympy/** do flake8 por erro recursivo em dependência externa (não faz parte do core OmniMind)
+# Excluído archive/legacy_scripts/* - scripts legados arquivados do desenvolvimento

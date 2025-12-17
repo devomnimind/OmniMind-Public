@@ -1,0 +1,36 @@
+{
+    "folders": [
+        {
+            "name": "OmniMind",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+        "python.pythonPath": "${workspaceFolder}/.venv/bin/python",
+        "python.terminal.activateEnvironment": true,
+        "python.terminal.activateEnvInCurrentTerminal": true,
+        "python.envFile": "${workspaceFolder}/.env",
+        "github.copilot.enable": {
+            "*": true,
+            "plaintext": false,
+            "markdown": false,
+            "json": false,
+            "yaml": false
+        },
+        "chat.agent.enabled": true,
+        "chat.command.enabled": true,
+        "python.linting.enabled": true,
+        "python.linting.flake8Enabled": true,
+        "python.linting.mypyEnabled": true,
+
+        "[MYPY CONFIGURATION - FIX PARA dmypy WARNING]": "Use interpreter ativo do venv",
+        "mypy.enabled": true,
+        "mypy.runUsingActiveInterpreter": true,
+        "mypy.dmypyExecutable": "${workspaceFolder}/.venv/bin/dmypy",
+        "mypy.mypyExecutable": "${workspaceFolder}/.venv/bin/mypy",
+        "mypy.configFile": "${workspaceFolder}/config/mypy.ini",
+        "mypy.targets": ["src", "tests"],
+        "mypy.statusFile": "${workspaceFolder}/.dmypy.json"
+    }
+}

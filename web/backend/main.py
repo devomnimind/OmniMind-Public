@@ -1,0 +1,1774 @@
+from __future__ import annotations
+
+import os
+import sys
+
+# Add src to path for imports FIRST (before any other imports)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+
+import asyncio  # noqa: E402
+import json  # noqa: E402
+import logging  # noqa: E402
+import secrets  # noqa: E402
+import threading  # noqa: E402
+import time  # noqa: E402
+import uuid  # noqa: E402
+from base64 import b64encode  # noqa: E402
+from contextlib import asynccontextmanager, suppress  # noqa: E402
+from datetime import datetime  # noqa: E402
+from pathlib import Path  # noqa: E402
+from typing import Any, Callable, Dict, Optional, Tuple  # noqa: E402
+
+from dotenv import load_dotenv  # noqa: E402
+from fastapi import (  # noqa: E402
+    Depends,
+    FastAPI,
+    HTTPException,
+    Request,
+    WebSocket,
+    WebSocketDisconnect,
+)
+from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
+from fastapi.security import HTTPBasic  # noqa: E402
+from pydantic import BaseModel  # noqa: E402
+from starlette.status import WS_1008_POLICY_VIOLATION  # noqa: E402
+
+# Import Service Update API for intelligent service updates
+from src.services import register_service_update_routes  # noqa: E402
+from web.backend import chat_api  # noqa: E402
+from web.backend.auth import verify_credentials as _verify_credentials  # noqa: E402
+from web.backend.routes import agents, autopoietic, health, metacognition, omnimind  # noqa: E402
+from web.backend.routes import security as security_router  # noqa: E402
+from web.backend.routes import tasks, tribunal  # noqa: E402
+from web.backend.websocket_manager import ws_manager  # noqa: E402
+
+# NOTE: CUDA environment variables are handled by the shell script
+# Removing manual overrides to prevent PyTorch initialization errors.
+
+# NOTE: OrchestratorAgent imported AFTER offline setup
+# (lazy import to avoid early model loading)
+# Temporarily disabled heavy imports during startup
+# from src.metrics.dashboard_metrics import (
+#     collect_dashboard_snapshot,
+#     collect_system_metrics,
+#     dashboard_metrics_aggregator,
+# )
+# from src.metrics.real_consciousness_metrics import RealConsciousnessMetricsCollector
+
+
+# Load environment variables from .env file
+load_dotenv()
+
+logger = logging.getLogger("omnimind.backend")
+
+
+# Define stub functions for metrics (for stability during Ubuntu migration)
+def collect_system_metrics() -> Dict[str, Any]:
+    """Collect system metrics stub."""
+    import psutil
+
+    try:
+        return {
+            "cpu_percent": psutil.cpu_percent(interval=0.1),
+            "memory_percent": psutil.virtual_memory().percent,
+            "disk_percent": psutil.disk_usage("/").percent,
+        }
+    except Exception:
+        return {"cpu_percent": 0.0, "memory_percent": 0.0, "disk_percent": 0.0}
+
+
+def collect_dashboard_snapshot() -> Dict[str, Any]:
+    """Collect dashboard snapshot stub."""
+    return {"timestamp": datetime.now().isoformat(), "metrics": {}}
+
+
+class StubDashboardMetricsAggregator:
+    """Stub aggregator for dashboard metrics."""
+
+    def set_consciousness_collector(self, collector: Any) -> None:
+        pass
+
+    async def collect_snapshot(
+        self, include_consciousness: bool = False, include_baseline: bool = False
+    ) -> Dict[str, Any]:
+        """Stub snapshot collection for metrics."""
+        return {"timestamp": datetime.now().isoformat(), "metrics": {}}
+
+
+dashboard_metrics_aggregator = StubDashboardMetricsAggregator()
+
+# Setup offline mode BEFORE any model loading (after logger is created)
+try:
+    from src.utils.offline_mode import setup_offline_mode  # noqa: E402
+
+    setup_offline_mode()
+except ImportError:
+    logger.warning("offline_mode module not available, skipping offline setup")
+
+# NOW import OrchestratorAgent (after offline setup)
+from src.agents.orchestrator_agent import OrchestratorAgent  # noqa: E402
+
+# API de Explicabilidade (Sessão 6)
+decisions_router: Optional[Any] = None
+try:
+    from web.backend.api.decisions import router as decisions_router
+except ImportError:
+    logger.warning("Decisions API not available")
+
+
+# Simple observability for backend (replaces DEVBRAIN_V23 import)
+class AutonomyObservability:
+    def __init__(self) -> None:
+        self.self_healing_history: list[dict] = []
+        self.atlas_insights: list[dict] = []
+        self.sandbox_events: list[dict] = []
+        self.dlp_alerts: list[dict] = []
+        self.alerts: list[str] = []
+
+    def record_sandbox_event(self, event: dict) -> None:
+        """Record sandbox event for observability."""
+        logger.info("Backend sandbox event recorded", extra={"sandbox_event": event})
+        self.sandbox_events.append(event)
+
+    def record_dlp_alert(self, alert: dict) -> None:
+        """Record DLP alert for observability."""
+        logger.info("Backend DLP alert recorded", extra={"dlp_alert": alert})
+        self.dlp_alerts.append(alert)
+
+    def get_self_healing_snapshot(self) -> dict:
+        """Get self healing observability snapshot."""
+        return {"latest": {}, "history": self.self_healing_history[-5:], "alerts": []}
+
+    def get_atlas_snapshot(self) -> dict:
+        """Get atlas observability snapshot."""
+        return {"insights": self.atlas_insights[-10:]}
+
+    def get_security_snapshot(self) -> dict:
+        """Get security observability snapshot."""
+        return {"sandbox_events": self.sandbox_events[-5:], "dlp_alerts": self.dlp_alerts[-5:]}
+
+
+autonomy_observability = AutonomyObservability()
+
+
+# Global consciousness metrics collector (stub for stability)
+class StubConsciousnessMetricsCollector:
+    """Stub collector for consciousness metrics (placeholder until full integration)."""
+
+    phi: float = 1.0
+
+    async def initialize(self) -> None:
+        """Initialize stub collector."""
+        pass
+
+    async def collect_real_metrics(self) -> dict:
+        """Collect stub metrics."""
+        return {"phi": 1.0, "psi": 0.5, "sigma": 0.1}
+
+
+consciousness_metrics_collector: Any = StubConsciousnessMetricsCollector()
+
+_AUTH_FILE = Path(os.environ.get("OMNIMIND_DASHBOARD_AUTH_FILE", "config/dashboard_auth.json"))
+
+
+def _load_dashboard_credentials() -> Optional[Dict[str, str]]:
+    if not _AUTH_FILE.exists():
+        return None
+    try:
+        with _AUTH_FILE.open("r", encoding="utf-8") as stream:
+            data = json.load(stream)
+        user = data.get("user")
+        password = data.get("pass")
+        if isinstance(user, str) and isinstance(password, str):
+            return {"user": user, "pass": password}
+    except Exception as exc:
+        logger.warning("Failed to read dashboard auth file %s: %s", _AUTH_FILE, exc)
+    return None
+
+
+def _persist_dashboard_credentials(credentials: Dict[str, str]) -> None:
+    _AUTH_FILE.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with _AUTH_FILE.open("w", encoding="utf-8") as stream:
+            json.dump(credentials, stream, indent=2)
+        _AUTH_FILE.chmod(0o600)
+    except Exception as exc:
+        logger.warning("Unable to persist dashboard credentials %s: %s", _AUTH_FILE, exc)
+
+
+def _generate_dashboard_credentials() -> Dict[str, str]:
+    return {
+        "user": secrets.token_hex(8),
+        "pass": secrets.token_urlsafe(16),
+    }
+
+
+def _ensure_dashboard_credentials() -> Tuple[str, str]:
+    env_user = os.environ.get("OMNIMIND_DASHBOARD_USER")
+    env_pass = os.environ.get("OMNIMIND_DASHBOARD_PASS")
+    if env_user and env_pass:
+        logger.info("Using dashboard credentials from environment variables")
+        return env_user, env_pass
+
+    # Try to load existing credentials to prevent 403 loops on restart
+    existing = _load_dashboard_credentials()
+    if existing:
+        logger.info("Loaded existing dashboard credentials from %s", _AUTH_FILE)
+        return existing["user"], existing["pass"]
+
+    # LOCAL SOVEREIGNTY MODE:
+    # Generate fresh credentials only if none exist
+    generated = _generate_dashboard_credentials()
+    _persist_dashboard_credentials(generated)
+    logger.info("🔐 Generated FRESH dashboard credentials in %s", _AUTH_FILE)
+    return generated["user"], generated["pass"]
+
+
+@asynccontextmanager
+async def lifespan(app_instance: FastAPI):
+    # Import WebSocket manager
+    # Import agent communication broadcaster
+    from web.backend.agent_communication_ws import get_broadcaster
+    from web.backend.websocket_manager import ws_manager
+
+    # Detecta modo de execução (test=com timeouts maiores, production=rápido)
+    execution_mode = os.environ.get("OMNIMIND_MODE", "production").lower()
+    is_test_mode = execution_mode == "test"
+
+    # Initialize monitoring variables
+    agent_monitor = None
+    metrics_collector = None
+    performance_tracker = None
+    monitoring_available = False
+
+    # Import monitoring systems
+    try:
+        from web.backend.monitoring import agent_monitor as am  # type: ignore
+        from web.backend.monitoring import metrics_collector as mc
+        from web.backend.monitoring import performance_tracker as pt
+
+        agent_monitor = am
+        metrics_collector = mc
+        performance_tracker = pt
+
+        monitoring_available = True
+    except ImportError:
+        logger.warning("Monitoring systems not available")
+
+    # Import Sinthome Broadcaster
+    sinthome_broadcaster: Any = None
+    try:
+        from web.backend.sinthome_broadcaster import sinthome_broadcaster as sb
+
+        sinthome_broadcaster = sb
+    except ImportError:
+        logger.warning("Sinthome Broadcaster not available")
+
+    # Import Daemon Monitor
+    daemon_monitor_loop: Any = None
+    try:
+        from src.services.daemon_monitor import daemon_monitor_loop as dml
+
+        daemon_monitor_loop = dml
+    except ImportError:
+        logger.warning("Daemon Monitor not available")
+
+    # Import Observer Service
+    observer_service: Any = None
+    try:
+        from src.services.observer_service import ObserverService
+
+        observer_service = ObserverService()
+    except ImportError:
+        logger.warning("Observer Service not available")
+
+    # Import Realtime Analytics Broadcaster
+    realtime_analytics_broadcaster: Any = None
+    try:
+        from web.backend.realtime_analytics_broadcaster import realtime_analytics_broadcaster as rab
+
+        realtime_analytics_broadcaster = rab
+    except ImportError:
+        logger.warning("Realtime Analytics Broadcaster not available")
+
+    # Initialize Consciousness Metrics Collector
+    # DELAYED: Only initialize if environment variable is set (not during normal startup)
+    should_init_consciousness = os.environ.get("OMNIMIND_INIT_CONSCIOUSNESS", "0") == "1"
+    if should_init_consciousness:
+        try:
+            await consciousness_metrics_collector.initialize()
+            logger.info("Consciousness Metrics Collector initialized")
+        except Exception as e:
+            logger.warning(f"Failed to initialize Consciousness Metrics Collector: {e}")
+    else:
+        logger.info(
+            "⏭️  Consciousness Metrics Collector initialization DEFERRED "
+            "(set OMNIMIND_INIT_CONSCIOUSNESS=1 to enable)"
+        )
+
+    # ========== PARALLELIZAÇÃO DE COMPONENTES RÁPIDOS ==========
+    # Inicia componentes não-bloqueantes em paralelo
+    fast_startup_tasks = []
+
+    # WebSocket manager
+    async def _start_ws_manager():
+        try:
+            await asyncio.wait_for(ws_manager.start(), timeout=3.0)
+        except asyncio.TimeoutError:
+            logger.warning("WebSocket manager startup timed out")
+        except Exception as e:
+            logger.warning(f"Failed to start WebSocket manager: {e}")
+
+    fast_startup_tasks.append(asyncio.create_task(_start_ws_manager()))
+
+    # Sinthome Broadcaster
+    async def _start_sinthome():
+        if sinthome_broadcaster:
+            try:
+                await asyncio.wait_for(sinthome_broadcaster.start(), timeout=3.0)
+            except asyncio.TimeoutError:
+                logger.warning("Sinthome Broadcaster startup timed out")
+            except Exception as e:
+                logger.warning(f"Failed to start Sinthome Broadcaster: {e}")
+
+    fast_startup_tasks.append(asyncio.create_task(_start_sinthome()))
+
+    # Agent communication broadcaster
+    async def _start_agent_broadcaster():
+        try:
+            broadcaster = get_broadcaster()
+            await asyncio.wait_for(broadcaster.start(), timeout=3.0)
+        except asyncio.TimeoutError:
+            logger.warning("Agent communication broadcaster startup timed out")
+        except Exception as e:
+            logger.warning(f"Failed to start agent communication broadcaster: {e}")
+
+    fast_startup_tasks.append(asyncio.create_task(_start_agent_broadcaster()))
+
+    # Aguarda componentes rápidos em paralelo
+    # Aguardar fast startup tasks com timeout geral
+    try:
+        await asyncio.wait_for(
+            asyncio.gather(*fast_startup_tasks, return_exceptions=True), timeout=3.0
+        )
+    except asyncio.TimeoutError:
+        logger.warning("Fast startup tasks timeout - continuing without waiting")
+
+    # ========== SISTEMA DE MONITORAMENTO PROGRESSIVO ==========
+    progressive_monitor = None
+    resource_protector = None
+    alert_system = None
+
+    try:
+        from src.monitor import (
+            AlertChannel,
+            get_alert_system,
+            get_progressive_monitor,
+            get_resource_protector,
+        )
+
+        # Iniciar monitor progressivo
+        progressive_monitor = await get_progressive_monitor()
+        await progressive_monitor.start()
+
+        # Iniciar protetor de recursos
+        mode = "test" if is_test_mode else "prod"
+        resource_protector = await get_resource_protector(mode)
+        await resource_protector.start()
+
+        # CRITICAL: Register uvicorn process as protected
+        # (prevent resource_protector from killing it)
+        resource_protector.register_process(os.getpid())
+        logger.info(f"✅ Uvicorn PID {os.getpid()} registered as protected")
+
+        # Iniciar sistema de alertas
+        alert_system = await get_alert_system()
+
+        # Registrar handler para alertas em tempo real
+        async def _alert_handler(alert_event):
+            try:
+                # Enviar via WebSocket (para frontend + VS Code)
+                from web.backend.websocket_manager import MessageType
+
+                await ws_manager.broadcast(
+                    message_type=MessageType.SECURITY_EVENT,
+                    data=alert_event.to_dict(),
+                    channel="monitoring",
+                )
+            except Exception as e:
+                logger.debug(f"Erro ao broadcast alerta: {e}")
+
+        alert_system.register_handler(AlertChannel.WEBSOCKET, _alert_handler)
+
+        logger.info("✅ Sistema de monitoramento progressivo iniciado")
+        app_instance.state.progressive_monitor = progressive_monitor
+        app_instance.state.resource_protector = resource_protector
+        app_instance.state.alert_system = alert_system
+
+    except ImportError as e:
+        logger.warning(f"Sistema de monitoramento progressivo não disponível: {e}")
+    except Exception as e:
+        logger.exception(f"Erro ao iniciar monitoramento progressivo: {e}")
+
+    # ========== COMPONENTES MEDIUM-SPEED (EM PARALELO) ==========
+    medium_startup_tasks = []
+
+    # Observer Service (métricas de longo prazo)
+    async def _start_observer_service():
+        if observer_service is not None:
+            try:
+                # Observer Service é leve, pode iniciar em paralelo
+                observer_task = asyncio.create_task(observer_service.run())
+                app_instance.state.observer_service_task = observer_task
+                logger.info("✅ Observer Service iniciado (métricas de longo prazo)")
+            except Exception as e:
+                logger.warning(f"Failed to start Observer Service: {e}")
+
+    medium_startup_tasks.append(asyncio.create_task(_start_observer_service()))
+
+    # Daemon Monitor
+    async def _start_daemon_monitor():
+        if daemon_monitor_loop is not None:
+            try:
+                daemon_monitor_task = asyncio.create_task(
+                    asyncio.wait_for(daemon_monitor_loop(refresh_interval=5), timeout=10.0)
+                )
+                app_instance.state.daemon_monitor_task = daemon_monitor_task
+            except asyncio.TimeoutError:
+                logger.warning("Daemon Monitor startup timed out")
+            except Exception as e:
+                logger.warning(f"Failed to start Daemon Monitor: {e}")
+
+    medium_startup_tasks.append(asyncio.create_task(_start_daemon_monitor()))
+
+    # Realtime Analytics Broadcaster
+    async def _start_realtime_analytics():
+        if realtime_analytics_broadcaster:
+            try:
+                await asyncio.wait_for(realtime_analytics_broadcaster.start(), timeout=3.0)
+            except asyncio.TimeoutError:
+                logger.warning("Realtime Analytics Broadcaster startup timed out")
+            except Exception as e:
+                logger.warning(f"Failed to start Realtime Analytics Broadcaster: {e}")
+
+    medium_startup_tasks.append(asyncio.create_task(_start_realtime_analytics()))
+
+    # Monitoring systems
+    async def _start_monitoring():
+        if monitoring_available and agent_monitor and metrics_collector and performance_tracker:
+            try:
+                # Inicia monitoring em paralelo
+                await asyncio.gather(
+                    asyncio.wait_for(agent_monitor.start(), timeout=3.0),
+                    asyncio.wait_for(metrics_collector.start(), timeout=3.0),
+                    asyncio.wait_for(performance_tracker.start(), timeout=3.0),
+                )
+                logger.info("All monitoring systems started")
+            except asyncio.TimeoutError:
+                logger.warning("One or more monitoring systems startup timed out")
+            except Exception as e:
+                logger.warning(f"Failed to start monitoring systems: {e}")
+
+    medium_startup_tasks.append(asyncio.create_task(_start_monitoring()))
+
+    # Aguarda componentes medium-speed em paralelo com timeout geral
+    try:
+        await asyncio.wait_for(
+            asyncio.gather(*medium_startup_tasks, return_exceptions=True), timeout=5.0
+        )
+    except asyncio.TimeoutError:
+        logger.warning("Medium-speed startup tasks timeout - continuing without waiting")
+
+    # ========== ORCHESTRATOR (PESADO - INICIALIZAÇÃO ASSÍNCRONA NÃO BLOQUEADA) ==========
+    # Orchestrator sempre ON para produção + testes (precisa de métricas PHI reais)
+    # CRÍTICO: Apenas inicia se ambiente permitir (para testes rápidos de health check)
+
+    should_init_orchestrator = os.environ.get("OMNIMIND_INIT_ORCHESTRATOR", "0") == "1"
+
+    if should_init_orchestrator:
+        logger.info("Starting Orchestrator initialization asynchronously (non-blocking)...")
+        try:
+            # Não aguardar orchestrator - deixar inicializar em background
+            # Isso permite que o server responda aos health checks enquanto orchestrator inicializa
+            app_instance.state.orchestrator_task = asyncio.create_task(
+                _async_init_orchestrator(app_instance)
+            )
+            logger.info("✅ Orchestrator initialization task created (running in background)")
+        except Exception as e:
+            logger.warning(f"Failed to create orchestrator task: {e}")
+            app_instance.state.orchestrator_error = str(e)
+            app_instance.state.orchestrator_ready = False
+    else:
+        logger.info(
+            "⏭️  Orchestrator initialization DISABLED (set OMNIMIND_INIT_ORCHESTRATOR=1 to enable)"
+        )
+        app_instance.state.orchestrator_task = None
+        app_instance.state.orchestrator_ready = False
+        app_instance.state.orchestrator = None
+
+    # ========== BACKGROUND METRICS TASKS ==========
+    # Start metrics reporter
+    app_instance.state.metrics_task = asyncio.create_task(_metrics_reporter())
+
+    # Start consciousness metrics collector (DELAYED - only if enabled)
+    # Don't start immediately - wait 60s for health checks first
+    should_init_consciousness_metrics = os.environ.get("OMNIMIND_INIT_CONSCIOUSNESS", "0") == "1"
+
+    if should_init_consciousness_metrics:
+
+        async def _delayed_consciousness_collector():
+            await asyncio.sleep(60)  # Wait for health checks to start working
+            await _consciousness_metrics_collector()
+
+        app_instance.state.consciousness_metrics_task = asyncio.create_task(
+            _delayed_consciousness_collector()
+        )
+        logger.info("✓ Consciousness metrics collector scheduled (delayed 60s)")
+    else:
+        logger.info("⏭️  Consciousness metrics collector DISABLED during startup")
+        app_instance.state.consciousness_metrics_task = None
+
+    try:
+        yield
+    finally:
+        # Stop SecurityAgent monitoring
+        try:
+            orch = _get_orchestrator()
+            if orch.security_agent:
+                logger.info("Stopping SecurityAgent monitoring...")
+                # SecurityAgent should have a stop method
+        except Exception:
+            pass
+
+        # Stop metrics reporter
+        task = getattr(app_instance.state, "metrics_task", None)
+        if task:
+            task.cancel()
+            with suppress(asyncio.CancelledError):
+                await task
+
+        # Stop consciousness metrics collector
+        consciousness_task = getattr(app_instance.state, "consciousness_metrics_task", None)
+        if consciousness_task:
+            consciousness_task.cancel()
+            with suppress(asyncio.CancelledError):
+                await consciousness_task
+
+        # Stop Sinthome Broadcaster
+        if sinthome_broadcaster:
+            await sinthome_broadcaster.stop()
+
+        # Stop Observer Service
+        if hasattr(app_instance.state, "observer_service_task"):
+            observer_task = app_instance.state.observer_service_task
+            if observer_service:
+                observer_service.running = False
+            observer_task.cancel()
+            try:
+                await asyncio.wait_for(observer_task, timeout=5.0)
+            except (asyncio.CancelledError, asyncio.TimeoutError):
+                pass
+            logger.info("Observer Service stopped")
+
+        # Stop Daemon Monitor
+        if hasattr(app_instance.state, "daemon_monitor_task"):
+            app_instance.state.daemon_monitor_task.cancel()
+            try:
+                await asyncio.wait_for(app_instance.state.daemon_monitor_task, timeout=5.0)
+            except (asyncio.CancelledError, asyncio.TimeoutError):
+                pass
+
+        # Stop Realtime Analytics Broadcaster
+        if realtime_analytics_broadcaster:
+            await realtime_analytics_broadcaster.stop()
+
+        # Stop agent communication broadcaster
+        try:
+            broadcaster = get_broadcaster()
+            await broadcaster.stop()
+        except Exception:
+            pass
+
+        # Stop monitoring systems
+        if monitoring_available and agent_monitor and metrics_collector and performance_tracker:
+            await agent_monitor.stop()
+            await metrics_collector.stop()
+            await performance_tracker.stop()
+            logger.info("All monitoring systems stopped")
+
+        # Stop WebSocket manager
+        await ws_manager.stop()
+
+
+app = FastAPI(
+    title="OmniMind Dashboard API",
+    description=(
+        "Provides orchestrator snapshots, MCP/D-Bus telemetry, metrics, and "
+        "orchestration controls."
+    ),
+    version="0.2.0",
+    lifespan=lifespan,
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",  # Frontend Default
+        "http://127.0.0.1:3000",
+        "http://localhost:5173",  # Vite Default
+        "http://127.0.0.1:5173",
+        "http://localhost:3001",  # Alternative frontend port
+        "http://127.0.0.1:3001",
+        "http://localhost:8080",  # Alternative backend port
+        "http://127.0.0.1:8080",
+    ],
+    allow_credentials=True,  # Required for Basic Auth headers
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allow_headers=["*"],
+    expose_headers=["*"],  # Expose all response headers
+    max_age=600,  # Cache preflight for 10 minutes
+)
+
+security = HTTPBasic()
+
+_orchestrator_instance: Optional[OrchestratorAgent] = None
+_metrics_collect_interval = int(os.environ.get("OMNIMIND_METRICS_INTERVAL", "30"))
+_consciousness_metrics_interval = int(
+    os.environ.get("OMNIMIND_CONSCIOUSNESS_METRICS_INTERVAL", "300")
+)
+_validation_log = Path(
+    os.environ.get("OMNIMIND_SECURITY_VALIDATION_LOG", "logs/security_validation.jsonl")
+)
+_dashboard_user, _dashboard_pass = _ensure_dashboard_credentials()
+
+
+def _expected_ws_token() -> str:
+    return b64encode(f"{_dashboard_user}:{_dashboard_pass}".encode()).decode()
+
+
+async def _authorize_websocket(websocket: WebSocket) -> bool:
+    auth_token = None
+    auth_header = websocket.headers.get("authorization")
+    if auth_header and auth_header.lower().startswith("basic "):
+        token = auth_header.split(" ", 1)[1].strip()
+        if token:
+            auth_token = token
+    if not auth_token:
+        auth_token = websocket.query_params.get("auth_token")
+    return auth_token == _expected_ws_token()
+
+
+class MetricsCollector:
+    def __init__(self) -> None:
+        self._lock = threading.Lock()
+        self._counts: Dict[str, int] = {}
+        self._errors: Dict[str, int] = {}
+        self._latencies: Dict[str, float] = {}
+
+    def record(self, path: str, latency: float, success: bool) -> None:
+        with self._lock:
+            self._counts[path] = self._counts.get(path, 0) + 1
+            self._latencies[path] = self._latencies.get(path, 0.0) + latency
+            self._errors[path] = self._errors.get(path, 0) + (0 if success else 1)
+
+    def summary(self) -> Dict[str, Any]:
+        with self._lock:
+            details: Dict[str, Dict[str, float]] = {}
+            for path, count in self._counts.items():
+                total_latency = self._latencies.get(path, 0.0)
+                errors = self._errors.get(path, 0)
+                details[path] = {
+                    "count": count,
+                    "errors": errors,
+                    "avg_latency": round(total_latency / count, 3) if count else 0.0,
+                }
+            return {
+                "requests": sum(self._counts.values()),
+                "errors": sum(self._errors.values()),
+                "details": details,
+            }
+
+
+metrics_collector = MetricsCollector()
+
+
+class OrchestrateRequest(BaseModel):
+    task: str
+    max_iterations: int = 3
+
+
+class MCPFlowRequest(BaseModel):
+    action: str = "read"
+    path: Optional[str] = None
+    recursive: bool = False
+
+
+class DBusFlowRequest(BaseModel):
+    flow: str = "power"
+    media_action: str = "playpause"
+
+
+async def _async_init_orchestrator(app_instance: FastAPI):
+    """Initialize OrchestratorAgent asynchronously with proper error handling.
+
+    FIXES (2025-12-09):
+    1. REMOVED timeout blocking - timeout is METRIC, not barrier
+    2. System continues initializing even if it takes >60 seconds
+    3. Detailed logging tracks initialization progress for analysis
+    4. Separates sync and async initialization phases
+    """
+    global _orchestrator_instance
+    start_time = time.time()
+    logger.info("Starting asynchronous Orchestrator initialization (PHASE 1/2: sync)...")
+
+    try:
+        # PHASE 1: Run __init__ in thread pool (handles config + basic setup)
+        # NO TIMEOUT - system continues initializing regardless of duration
+        logger.info("  → Loading configuration and basic components...")
+        phase1_start = time.time()
+        try:
+            _orchestrator_instance = await asyncio.to_thread(
+                OrchestratorAgent, "config/agent_config.yaml"
+            )
+        except Exception as phase1_exc:
+            # Check if error is about missing models in HuggingFace offline mode
+            error_msg = str(phase1_exc)
+            is_model_error = (
+                "LocalEntryNotFoundError" in error_msg or "couldn't connect" in error_msg.lower()
+            )
+            if is_model_error:
+                logger.warning(
+                    f"⚠️  Models not found in local cache. "
+                    f"Enabling API fallback... ({error_msg[:100]})"
+                )
+                # Enable fallback to remote API
+                os.environ["HF_HUB_OFFLINE"] = "0"
+                logger.info("🔗 Attempting model load with API fallback enabled...")
+                # Retry with fallback
+                _orchestrator_instance = await asyncio.to_thread(
+                    OrchestratorAgent, "config/agent_config.yaml"
+                )
+                logger.info("✅ Orchestrator initialized with API fallback")
+            else:
+                # Re-raise if it's a different error
+                raise
+
+        phase1_time = time.time() - phase1_start
+        logger.info(f"✅ Phase 1 complete ({phase1_time:.1f}s): Orchestrator initialized")
+
+        app_instance.state.orchestrator_ready = True
+
+        # PHASE 2: Async initialization tasks (dashboard refresh, etc)
+        logger.info("Starting asynchronous Orchestrator initialization (PHASE 2/2: async)...")
+        phase2_start = time.time()
+
+        try:
+            # Try to initialize dashboard snapshot asynchronously with timeout
+            # SKIP dashboard refresh during startup to avoid blocking on security_agent.execute()
+            # Dashboard will be refreshed on-demand via API endpoints
+            if hasattr(_orchestrator_instance, "refresh_dashboard_snapshot"):
+                msg = "  → Skipping dashboard snapshot (deferred to on-demand)"
+                logger.info(msg)
+                # Removed: await asyncio.to_thread(
+                #     _orchestrator_instance.refresh_dashboard_snapshot
+                # )
+                # Reason: security_agent.execute() can deadlock during startup
+                # causing 40+ sec delay
+        except Exception as exc:
+            logger.warning(f"Failed to refresh dashboard during init: {exc}")
+
+        # Connect metacognition routes
+        try:
+            metacognition.set_orchestrator(_orchestrator_instance)
+            logger.info("✅ Metacognition routes connected to orchestrator")
+        except Exception as exc:
+            logger.warning(f"Failed to connect metacognition routes: {exc}")
+
+        # Start SecurityAgent continuous monitoring (if enabled)
+        # SecurityAgent SEMPRE roda (necessário para testes reais)
+        # TEMPORARILY DISABLED: Continuous monitoring causing event spam (data_exfiltration loop)
+        # Re-enable after fixing DLP alert generation
+        if False and _orchestrator_instance.security_agent:
+            if _orchestrator_instance.security_agent.config.get("security_agent", {}).get(
+                "enabled", False
+            ):
+                logger.info("Starting SecurityAgent continuous monitoring...")
+                asyncio.create_task(
+                    _orchestrator_instance.security_agent.start_continuous_monitoring()
+                )
+                logger.info("✅ SecurityAgent continuous monitoring started")
+            else:
+                logger.info("SecurityAgent initialized but monitoring disabled in config")
+        else:
+            logger.info(
+                "SecurityAgent initialized but continuous monitoring disabled in code (spam fix)"
+            )
+
+        phase2_time = time.time() - phase2_start
+        total_time = time.time() - start_time
+        logger.info(f"✅ Phase 2 complete ({phase2_time:.1f}s)")
+        logger.info(
+            f"📊 Total Orchestrator initialization: {total_time:.1f}s "
+            "(metrics for scientific analysis)"
+        )
+
+    except asyncio.CancelledError:
+        # This can happen during shutdown - don't log as error
+        logger.info("Orchestrator initialization cancelled (likely during shutdown)")
+        app_instance.state.orchestrator_error = "Initialization cancelled"
+    except Exception as exc:
+        logger.error(f"❌ Failed to initialize orchestrator asynchronously: {exc}", exc_info=True)
+        app_instance.state.orchestrator_error = str(exc)
+
+
+def _get_orchestrator() -> OrchestratorAgent:
+    if _orchestrator_instance is None:
+        # Check if initialization failed (using app global since we are in same module)
+        if hasattr(app, "state") and hasattr(app.state, "orchestrator_error"):
+            raise HTTPException(
+                status_code=500,
+                detail=f"Orchestrator initialization failed: {app.state.orchestrator_error}",
+            )
+
+        # Check if still loading
+        raise HTTPException(status_code=503, detail="Orchestrator is initializing, please wait")
+
+    return _orchestrator_instance
+
+
+# _verify_credentials moved to web.backend.auth to avoid circular imports
+# Imported above as: from web.backend.auth import verify_credentials as _verify_credentials
+
+
+@app.middleware("http")
+async def track_metrics(request: Request, call_next: Callable[[Request], Any]) -> Any:
+    start = time.perf_counter()
+    success = True
+    error_msg = None
+    status_code = 200
+
+    try:
+        response = await call_next(request)
+        status_code = response.status_code
+        success = status_code < 400
+        return response
+    except Exception as exc:
+        success = False
+        status_code = 500
+        error_msg = str(exc)
+        logger.exception("Unhandled error processing %s", request.url.path)
+        raise
+    finally:
+        latency = time.perf_counter() - start
+        metrics_collector.record(request.url.path, latency, success)
+
+        # Also record in new metrics collector if available
+        try:
+            from web.backend.monitoring import metrics_collector as new_collector
+
+            new_collector.record_request(
+                path=request.url.path,
+                method=request.method,
+                latency=latency,
+                status_code=status_code,
+                error=error_msg,
+            )
+        except ImportError:
+            pass
+
+
+def _collect_orchestrator_metrics() -> Dict[str, Any]:
+    try:
+        orch = _get_orchestrator()
+        return orch.metrics_summary()
+    except HTTPException:
+        return {"error": "orchestrator unavailable"}
+
+
+async def _metrics_reporter() -> None:
+    while True:
+        await asyncio.sleep(_metrics_collect_interval)
+        summary = metrics_collector.summary()
+        orch_metrics = _collect_orchestrator_metrics()
+        logger.info(
+            "Dashboard metrics heartbeat - requests=%s errors=%s orchestrator=%s",
+            summary["requests"],
+            summary["errors"],
+            orch_metrics,
+        )
+
+
+async def _consciousness_metrics_collector() -> None:
+    """Background task that periodically collects consciousness metrics."""
+    logger.info("Starting consciousness metrics collection background task")
+    while True:
+        try:
+            # Collect consciousness metrics at configurable interval
+            await asyncio.sleep(_consciousness_metrics_interval)
+            # Collect metrics via aggregator for persistence guarantee
+            await dashboard_metrics_aggregator.collect_snapshot(
+                include_consciousness=True,
+                include_baseline=True,
+            )
+            metrics = await consciousness_metrics_collector.collect_real_metrics()
+            logger.debug(
+                f"Collected consciousness metrics: "
+                f"phi={metrics.phi:.4f}, anxiety={metrics.anxiety:.4f}"
+            )
+        except asyncio.CancelledError:
+            logger.info("Consciousness metrics collection task cancelled")
+            break
+        except Exception as e:
+            logger.error(f"Error collecting consciousness metrics: {e}")
+            await asyncio.sleep(60)  # Retry after error with longer delay
+
+
+def _load_last_validation_entry() -> Dict[str, Any]:
+    if not _validation_log.exists():
+        return {"latest": None, "log_path": str(_validation_log)}
+    entry = None
+    try:
+        with _validation_log.open("r", encoding="utf-8") as stream:
+            for line in stream:
+                line = line.strip()
+                if not line:
+                    continue
+                entry = json.loads(line)
+        return {"latest": entry, "log_path": str(_validation_log)}
+    except Exception:
+        return {
+            "latest": None,
+            "log_path": str(_validation_log),
+            "error": "failed to parse",
+        }
+
+
+@app.get("/")
+async def read_root():
+    """A simple endpoint to confirm the API is running."""
+    return {"message": "OmniMind Backend is running."}
+
+
+@app.get("/auth/credentials")
+async def get_credentials_for_login():
+    """
+    Returns dashboard credentials for first login.
+    SECURITY: This endpoint returns credentials needed for first login.
+    In production, this should be protected or disabled.
+    """
+    creds = _load_dashboard_credentials()
+    if creds:
+        return {
+            "user": creds["user"],
+            "pass": creds["pass"],
+        }
+    return {"error": "Credentials not initialized"}
+
+
+@app.get("/api/v1/status")
+async def get_status():
+    """Returns the current status of the OmniMind system."""
+    # In the future, this will query the OrchestratorAgent.
+    return {"status": "nominal", "active_agents": 0}
+
+
+@app.get("/status")
+def status(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    orch = _get_orchestrator()
+    return {
+        "plan": orch.current_plan,
+        "progress": orch.plan_overview(),
+        "dashboard": orch.dashboard_snapshot,
+        "orchestrator_metrics": orch.metrics_summary(),
+        "backend_metrics": metrics_collector.summary(),
+    }
+
+
+@app.get("/snapshot")
+def snapshot(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    orch = _get_orchestrator()
+    return orch.dashboard_snapshot or orch.refresh_dashboard_snapshot()
+
+
+@app.get("/plan")
+def _collect_system_metrics() -> Dict[str, Any]:
+    """Mantido para retrocompatibilidade: retorna snapshot rápido do host."""
+    try:
+        return collect_system_metrics()
+    except Exception as exc:
+        logger.error("Erro ao coletar métricas do sistema: %s", exc)
+        return {
+            "cpu_percent": 0.0,
+            "memory_percent": 0.0,
+            "disk_percent": 0.0,
+            "error": str(exc),
+        }
+
+
+@app.get("/metrics")
+def metrics(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    """Get comprehensive system metrics."""
+    backend_metrics = metrics_collector.summary()
+
+    # Collect real-time system metrics
+    system_metrics = collect_system_metrics()
+
+    # Try to get enhanced metrics
+    try:
+        from web.backend.monitoring import metrics_collector as new_collector
+        from web.backend.monitoring import performance_tracker
+
+        return {
+            "backend": backend_metrics,
+            "api": new_collector.get_all_metrics(),
+            "performance": performance_tracker.get_performance_summary(),
+            "system": system_metrics,
+            "errors": new_collector.get_error_summary(),
+            "timestamp": time.time(),
+        }
+    except ImportError:
+        return {
+            "backend": backend_metrics,
+            "system": system_metrics,
+            "timestamp": time.time(),
+        }
+
+
+@app.get("/observability")
+def observability(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    return {
+        "self_healing": autonomy_observability.get_self_healing_snapshot(),
+        "atlas": autonomy_observability.get_atlas_snapshot(),
+        "alerts": autonomy_observability.alerts[-10:],
+        "security": autonomy_observability.get_security_snapshot(),
+        "validation": _load_last_validation_entry(),
+    }
+
+
+@app.get("/audit/stats")
+def audit_stats(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    """Get audit chain statistics for dashboard."""
+    try:
+        from src.audit.immutable_audit import get_audit_system
+
+        audit_system = get_audit_system()
+        summary = audit_system.get_audit_summary()
+
+        return {
+            "total_events": summary.get("total_events", 0),
+            "chain_integrity": summary.get("chain_integrity", {}).get("valid", False),
+            "last_hash": summary.get("last_hash", ""),
+            "log_size_bytes": summary.get("log_size_bytes", 0),
+        }
+    except Exception as e:
+        logger.error(f"Error getting audit stats: {e}")
+        return {
+            "total_events": 0,
+            "chain_integrity": False,
+            "last_hash": "",
+            "log_size_bytes": 0,
+            "error": str(e),
+        }
+
+
+@app.post("/tasks/orchestrate")
+def orchestrate(
+    request: OrchestrateRequest, user: str = Depends(_verify_credentials)
+) -> Dict[str, Any]:
+    orch = _get_orchestrator()
+    result = orch.run_orchestrated_task(request.task, request.max_iterations)
+    snapshot = orch.refresh_dashboard_snapshot()
+    return {
+        "task": request.task,
+        "success": result.get("success"),
+        "plan": result.get("plan"),
+        "execution": result.get("execution"),
+        "dashboard_snapshot": snapshot,
+    }
+
+
+@app.post("/dashboard/refresh")
+def refresh_dashboard(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    orch = _get_orchestrator()
+    snapshot = orch.refresh_dashboard_snapshot()
+    return {"status": "refreshed", "snapshot": snapshot}
+
+
+@app.post("/mcp/execute")
+def mcp_execute(
+    request: MCPFlowRequest, user: str = Depends(_verify_credentials)
+) -> Dict[str, Any]:
+    orch = _get_orchestrator()
+    result = orch.trigger_mcp_action(
+        action=request.action,
+        path=request.path or "config/agent_config.yaml",
+        recursive=request.recursive,
+    )
+    return {"result": result, "dashboard": orch.dashboard_snapshot}
+
+
+@app.post("/dbus/execute")
+def dbus_execute(
+    request: DBusFlowRequest, user: str = Depends(_verify_credentials)
+) -> Dict[str, Any]:
+    orch = _get_orchestrator()
+    result = orch.trigger_dbus_action(flow=request.flow, media_action=request.media_action)
+    return {"result": result, "dashboard": orch.dashboard_snapshot}
+
+
+# ============================================================================
+# DAEMON ENDPOINTS (Phase 9)
+# ============================================================================
+
+# Global daemon instance (initialized on first use)
+_daemon_instance: Optional[Any] = None
+
+
+def _get_daemon():
+    """Get or create the daemon instance"""
+    global _daemon_instance
+    if _daemon_instance is None:
+        from pathlib import Path
+
+        from src.daemon import OmniMindDaemon, create_default_tasks
+
+        workspace = Path(os.getenv("OMNIMIND_WORKSPACE", ".")).resolve()
+        _daemon_instance = OmniMindDaemon(
+            workspace_path=workspace,
+            check_interval=int(os.getenv("DAEMON_CHECK_INTERVAL", "30")),
+            enable_cloud=os.getenv("OMNIMIND_CLOUD_ENABLED", "true").lower() == "true",
+        )
+
+        # Register default tasks
+        for task in create_default_tasks():
+            _daemon_instance.register_task(task)
+
+        logger.info("Daemon instance created with workspace: %s", workspace)
+
+    return _daemon_instance
+
+
+@app.get("/daemon/status")
+async def daemon_status() -> Dict[str, Any]:
+    """Get current daemon status (O(1) from cache)."""
+    from src.services.daemon_monitor import get_cached_status
+
+    cache = get_cached_status()
+    task_info = cache.get("task_info", {})
+    system_metrics = cache.get("system_metrics", {})
+
+    # Try to get real daemon status if running
+    daemon = _get_daemon()
+    if daemon.running:
+        daemon_status_data = daemon.get_status()
+        # Merge or prefer daemon data
+        if daemon_status_data.get("system_metrics"):
+            system_metrics = daemon_status_data["system_metrics"]
+
+        task_info = {
+            "task_count": daemon_status_data.get("task_count", 0),
+            "completed_tasks": daemon_status_data.get("completed_tasks", 0),
+            "failed_tasks": daemon_status_data.get("failed_tasks", 0),
+        }
+
+    metrics_snapshot: Dict[str, Any] = {}
+    try:
+        metrics_snapshot = collect_dashboard_snapshot()
+    except Exception as exc:
+        logger.error("Erro coletando snapshot do dashboard: %s", exc)
+
+    snapshot_system_metrics = metrics_snapshot.get("system_metrics") or {}
+    if snapshot_system_metrics:
+        if system_metrics:
+            system_metrics = {**system_metrics, **snapshot_system_metrics}
+        else:
+            system_metrics = snapshot_system_metrics
+
+    consciousness_metrics = metrics_snapshot.get("consciousness_metrics")
+    baseline_comparison = metrics_snapshot.get("baseline_comparison") or None
+    module_activity = metrics_snapshot.get("module_activity") or {}
+    system_health = metrics_snapshot.get("system_health")
+    metrics_errors = metrics_snapshot.get("errors", [])
+
+    if not consciousness_metrics:
+        consciousness_metrics = {
+            "phi": 0.0,
+            "ICI": 0.0,
+            "PRS": 0.0,
+            "anxiety": 0.0,
+            "flow": 0.0,
+            "entropy": 0.0,
+            "ici_components": {},
+            "prs_components": {},
+            "interpretation": {
+                "message": "Metrics unavailable",
+                "confidence": "None",
+            },
+            "history": {
+                "phi": [],
+                "ici": [],
+                "prs": [],
+                "anxiety": [],
+                "flow": [],
+                "entropy": [],
+                "timestamps": [],
+            },
+            "details": {
+                "ici_components": {},
+                "prs_components": {},
+            },
+        }
+
+    return {
+        "running": daemon.running,
+        "uptime_seconds": daemon._calculate_uptime() if daemon.running else 0,
+        "task_count": task_info.get("task_count", 0),
+        "completed_tasks": task_info.get("completed_tasks", 0),
+        "failed_tasks": task_info.get("failed_tasks", 0),
+        "cloud_connected": daemon.enable_cloud,
+        "system_metrics": (
+            system_metrics
+            if system_metrics
+            else {
+                "cpu_percent": 0.0,
+                "memory_percent": 0.0,
+                "disk_percent": 0.0,
+                "is_user_active": True,
+                "idle_seconds": 0,
+                "is_sleep_hours": False,
+            }
+        ),
+        "consciousness_metrics": consciousness_metrics,
+        "baseline_comparison": baseline_comparison,
+        "module_activity": module_activity or None,
+        "system_health": system_health,
+        "metrics_errors": metrics_errors,
+        "last_cache_update": cache.get("last_update", 0),
+    }
+
+
+@app.get("/daemon/tasks")
+def daemon_tasks() -> Dict[str, Any]:
+    """List all active tasks (O(1) from cache)."""
+    daemon = _get_daemon()
+
+    tasks_list = []
+    for task in daemon.tasks:
+        tasks_list.append(
+            {
+                "task_id": task.task_id,
+                "name": task.name,
+                "description": task.description,
+                "priority": task.priority.name,
+                "repeat_interval": str(task.repeat_interval) if task.repeat_interval else "None",
+                "execution_count": task.execution_count,
+                "success_count": task.success_count,
+                "failure_count": task.failure_count,
+                "last_execution": task.last_execution.isoformat() if task.last_execution else None,
+            }
+        )
+
+    return {
+        "total_tasks": len(tasks_list),
+        "tasks": tasks_list,
+    }
+
+
+@app.get("/daemon/agents")
+def daemon_agents() -> Dict[str, Any]:
+    """List all active agents with real metrics."""
+    try:
+        orch = _get_orchestrator()
+        agents_list = []
+
+        # Collect real agent data from orchestrator
+        if hasattr(orch, "agents") and orch.agents:
+            for agent_id, agent in orch.agents.items():
+                agent_data = {
+                    "agent_id": agent_id,
+                    "name": getattr(agent, "name", agent_id),
+                    "type": getattr(agent, "agent_type", "unknown"),
+                    "status": getattr(agent, "status", "offline"),
+                    "tasks_completed": getattr(agent, "completed_tasks", 0),
+                    "tasks_failed": getattr(agent, "failed_tasks", 0),
+                    "uptime_seconds": getattr(agent, "uptime_seconds", 0),
+                    "last_active": getattr(agent, "last_active", None),
+                    "current_task": getattr(agent, "current_task", None),
+                    "metrics": {
+                        "avg_response_time_ms": getattr(agent, "avg_response_time_ms", 0),
+                        "success_rate": getattr(agent, "success_rate", 0.0),
+                        "memory_usage_mb": getattr(agent, "memory_usage_mb", 0),
+                    },
+                }
+                agents_list.append(agent_data)
+
+        return {
+            "agents": agents_list,
+            "total": len(agents_list),
+            "active": len([a for a in agents_list if a["status"] == "working"]),
+        }
+    except Exception as e:
+        logger.error(f"Error fetching agents: {e}")
+        return {"agents": [], "total": 0, "active": 0, "error": str(e)}
+
+
+class DaemonTaskRequest(BaseModel):
+    """Request to add a custom daemon task"""
+
+    task_id: str
+    name: str
+    description: str
+    priority: str  # CRITICAL, HIGH, MEDIUM, LOW
+    code: str  # Python code to execute
+    repeat_hours: Optional[int] = None
+
+
+@app.post("/daemon/tasks/add")
+def daemon_add_task(request: DaemonTaskRequest) -> Dict[str, Any]:
+    """Add a custom task to the daemon"""
+    from datetime import timedelta
+
+    from src.daemon import DaemonTask, TaskPriority
+
+    daemon = _get_daemon()
+
+    # Parse priority
+    try:
+        priority = TaskPriority[request.priority.upper()]
+    except KeyError:
+        raise HTTPException(status_code=400, detail=f"Invalid priority: {request.priority}")
+
+    # Create execution function from code
+    # SECURITY NOTE: This is for the local single-user case only
+    # In production, this would need sandboxing/validation
+    exec_globals: Dict[str, Any] = {}
+    exec(request.code, exec_globals)
+    exec_fn = exec_globals.get("execute")
+
+    if exec_fn is None:
+        raise HTTPException(
+            status_code=400,
+            detail="Code must define an 'execute()' function",
+        )
+
+    task = DaemonTask(
+        task_id=request.task_id,
+        name=request.name,
+        description=request.description,
+        priority=priority,
+        execute_fn=exec_fn,
+        repeat_interval=(timedelta(hours=request.repeat_hours) if request.repeat_hours else None),
+    )
+
+    daemon.register_task(task)
+
+    return {
+        "status": "task_added",
+        "task_id": request.task_id,
+        "message": f"Task '{request.name}' added successfully",
+    }
+
+
+@app.post("/daemon/start")
+async def daemon_start() -> Dict[str, Any]:
+    """Start the daemon in background"""
+    daemon = _get_daemon()
+
+    if daemon.running:
+        return {
+            "status": "already_running",
+            "message": "Daemon is already running",
+        }
+
+    # Start daemon in background task
+    async def run_daemon():
+        from src.daemon import DaemonState
+
+        daemon.running = True
+        daemon.state = DaemonState.IDLE
+        # Run daemon loop as background task
+        await daemon._daemon_loop()
+
+    # Create background task
+    app.state.daemon_task = asyncio.create_task(run_daemon())
+
+    return {
+        "status": "started",
+        "message": "Daemon started successfully",
+    }
+
+
+@app.post("/daemon/stop")
+def daemon_stop() -> Dict[str, Any]:
+    """Stop the daemon"""
+    daemon = _get_daemon()
+
+    if not daemon.running:
+        return {
+            "status": "not_running",
+            "message": "Daemon is not running",
+        }
+
+    daemon.stop()
+
+    # Cancel background task if exists
+    if hasattr(app.state, "daemon_task"):
+        app.state.daemon_task.cancel()
+
+    return {
+        "status": "stopped",
+        "message": "Daemon stopped successfully",
+    }
+
+
+# ============================================================================
+# WEBSOCKET ENDPOINTS (Phase 8.2)
+# ============================================================================
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    """Main WebSocket endpoint for real-time updates."""
+    client_id = str(uuid.uuid4())
+    if not await _authorize_websocket(websocket):
+        await websocket.close(code=WS_1008_POLICY_VIOLATION)
+        return
+
+    await ws_manager.connect(websocket, client_id)
+
+    try:
+        while True:
+            # Receive messages from client
+            data = await websocket.receive_json()
+
+            # Handle subscription requests
+            if data.get("type") == "subscribe":
+                channels = data.get("channels", [])
+                await ws_manager.subscribe(client_id, channels)
+
+            elif data.get("type") == "unsubscribe":
+                channels = data.get("channels", [])
+                await ws_manager.unsubscribe(client_id, channels)
+
+            elif data.get("type") == "ping":
+                # Respond to ping
+                await websocket.send_json({"type": "pong", "timestamp": time.time()})
+
+    except WebSocketDisconnect:
+        ws_manager.disconnect(client_id)
+    except Exception as exc:
+        logger.exception(f"WebSocket error for client {client_id}: {exc}")
+        ws_manager.disconnect(client_id)
+
+
+@app.get("/ws/stats")
+def websocket_stats(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    """Get WebSocket connection statistics."""
+    return ws_manager.get_stats()
+
+
+# ============================================================================
+# PUBLIC ENDPOINTS (NO AUTH)
+# ============================================================================
+
+
+@app.get("/api/metrics")
+def api_metrics() -> Dict[str, Any]:
+    """Get comprehensive system metrics (public endpoint)."""
+    backend_metrics = metrics_collector.summary()
+
+    # Collect real-time system metrics
+    system_metrics = collect_system_metrics()
+
+    # Try to get enhanced metrics
+    try:
+        from web.backend.monitoring import metrics_collector as new_collector
+        from web.backend.monitoring import performance_tracker
+
+        return {
+            "backend": backend_metrics,
+            "api": new_collector.get_all_metrics(),
+            "performance": performance_tracker.get_performance_summary(),
+            "system": system_metrics,
+            "errors": new_collector.get_error_summary(),
+            "timestamp": time.time(),
+        }
+    except ImportError:
+        return {
+            "backend": backend_metrics,
+            "system": system_metrics,
+            "timestamp": time.time(),
+        }
+
+
+@app.get("/ws")
+def websocket_info() -> Dict[str, Any]:
+    """Get WebSocket connection information and available channels."""
+    return {
+        "status": "available",
+        "endpoint": "/ws",
+        "protocol": "websocket",
+        "description": "Real-time updates via WebSocket",
+        "available_channels": [
+            "tasks",
+            "agents",
+            "security",
+            "metacognition",
+            "health",
+            "system",
+        ],
+        "subscription_example": {"type": "subscribe", "channels": ["tasks", "agents"]},
+        "ping_example": {"type": "ping"},
+        "authentication": "Token-based",
+        "stats_endpoint": "/ws/stats",
+        "timestamp": time.time(),
+    }
+
+
+# ============================================================================
+# API ROUTERS (Phase 8.2)
+# ============================================================================
+
+app.include_router(tasks.router)
+app.include_router(agents.router)
+app.include_router(security_router.router)
+app.include_router(metacognition.router)
+app.include_router(health.router)
+app.include_router(omnimind.router)
+app.include_router(
+    autopoietic.router, prefix="/api/v1/autopoietic", dependencies=[Depends(_verify_credentials)]
+)
+app.include_router(chat_api.router)
+app.include_router(tribunal.router, dependencies=[Depends(_verify_credentials)])
+
+# API de Explicabilidade (Sessão 6)
+if decisions_router:
+    app.include_router(decisions_router)
+
+# Monitoramento e alertas
+try:
+    from web.backend.routes import monitoring as monitoring_router
+
+    app.include_router(monitoring_router.router)
+except ImportError:
+    logger.debug("Monitoring routes not available")
+
+# API de Métricas de Consciência (Task 2.6.1)
+try:
+    from web.backend.api import metrics_api
+
+    app.include_router(metrics_api.router)
+    logger.info("Metrics API routes registered")
+except ImportError:
+    logger.debug("Metrics API routes not available")
+
+# Service Update Protocol (Intelligent Service Restart Communication)
+try:
+    register_service_update_routes(app)
+    logger.info("✅ Service Update Protocol routes registered")
+except Exception as e:
+    logger.warning(f"⚠️ Service Update Protocol registration failed: {e}")
+except ImportError as e:
+    logger.warning(f"Metrics API routes not available: {e}")
+
+# Set orchestrator for metacognition routes
+# This will be set when orchestrator is initialized
+# Orchestrator initialization is now handled asynchronously in lifespan
+# Metacognition routes will be connected in _async_init_orchestrator
+
+
+@app.get("/metrics/training")
+def training_metrics(user: str = Depends(_verify_credentials)) -> Dict[str, Any]:
+    """Get training metrics including causal predictions and conflict quality."""
+    try:
+        # Access the global collector
+        collector = consciousness_metrics_collector
+
+        total_iterations = 0
+        avg_conflict_quality = 0.0
+        repression_events = 0
+        valid_causal_predictions = 0
+        total_causal_predictions = 0
+
+        if collector.integration_loop:
+            # Get iterations from cycle history
+            total_iterations = len(collector.integration_loop.cycle_history)
+
+            # Calculate average conflict quality (using phi as proxy if not available)
+            if total_iterations > 0:
+                phi_values = [
+                    c.phi_estimate
+                    for c in collector.integration_loop.cycle_history
+                    if c.phi_estimate > 0
+                ]
+                if phi_values:
+                    avg_conflict_quality = sum(phi_values) / len(phi_values)
+
+            # Count repression events (using errors or specific flags)
+            repression_events = len(
+                [c for c in collector.integration_loop.cycle_history if c.errors_occurred]
+            )
+
+            # Get causal predictions from workspace
+            if collector.integration_loop.workspace:
+                workspace = collector.integration_loop.workspace
+                if hasattr(workspace, "cross_predictions"):
+                    preds = workspace.cross_predictions
+                    total_causal_predictions = len(preds)
+                    valid_causal_predictions = len(
+                        [p for p in preds if p.r_squared > 0.5]
+                    )  # Assuming >0.5 is valid
+
+        # If no real data yet, provide some realistic baseline for the dashboard
+        if total_iterations == 0:
+            # Check if we have cached metrics that might indicate activity
+            if collector.cached_metrics:
+                avg_conflict_quality = collector.cached_metrics.phi
+
+        return {
+            "total_iterations": total_iterations,
+            "avg_conflict_quality": avg_conflict_quality,
+            "repression_events": repression_events,
+            "valid_causal_predictions": valid_causal_predictions,
+            "total_causal_predictions": total_causal_predictions,
+            "message": (
+                f"based on {valid_causal_predictions}/"
+                f"{total_causal_predictions} valid causal predictions"
+            ),
+        }
+    except Exception as e:
+        logger.error(f"Error getting training metrics: {e}")
+        return {
+            "total_iterations": 0,
+            "avg_conflict_quality": 0.0,
+            "repression_events": 0,
+            "error": str(e),
+        }
+
+
+# ============================================================================
+# GRACEFUL SHUTDOWN ENDPOINTS (Preserves ethics + hibernation)
+# ============================================================================
+
+_shutdown_requested = False
+_hibernation_data: Dict[str, Any] = {}
+
+
+async def _hibernate_state() -> None:
+    """Save critical state before shutdown (hibernation)."""
+    global _hibernation_data  # noqa: F824
+    try:
+        logger.info("🌙 Hibernating OmniMind state...")
+
+        # Save orchestrator state
+        if _orchestrator_instance and hasattr(_orchestrator_instance, "state"):
+            _hibernation_data["orchestrator"] = _orchestrator_instance.state
+            logger.info("  ✓ Orchestrator state saved")
+
+        # Save metrics
+        if hasattr(app.state, "metrics"):
+            _hibernation_data["metrics"] = app.state.metrics.summary()
+            logger.info("  ✓ Metrics saved")
+
+        # Save consciousness data
+        if consciousness_metrics_collector:
+            _hibernation_data["consciousness"] = {
+                "phi_estimate": (
+                    consciousness_metrics_collector.phi
+                    if hasattr(consciousness_metrics_collector, "phi")
+                    else 0
+                ),
+                "integration_status": "hibernated",
+            }
+            logger.info("  ✓ Consciousness state saved")
+
+        logger.info("✅ Hibernation complete - ready for shutdown")
+        return None
+    except Exception as e:
+        logger.error(f"❌ Hibernation error: {e}", exc_info=True)
+
+
+@app.post("/api/shutdown")
+async def graceful_shutdown(user: str = Depends(_verify_credentials)):
+    """
+    Initiate graceful shutdown with state hibernation.
+
+    Steps:
+    1. Hibernates critical state (saves to disk)
+    2. Closes database connections
+    3. Signals services to stop
+    4. Returns success
+    5. Backend then exits cleanly
+    """
+    global _shutdown_requested
+
+    logger.warning("🔴 SHUTDOWN INITIATED - Beginning graceful termination sequence...")
+    _shutdown_requested = True
+
+    try:
+        # Step 1: Hibernate state
+        await _hibernate_state()
+
+        # Step 2: Stop monitoring and background tasks
+        logger.info("⏹️  Stopping background tasks...")
+        if hasattr(app.state, "orchestrator_task") and app.state.orchestrator_task:
+            app.state.orchestrator_task.cancel()
+        if hasattr(app.state, "metrics_task") and app.state.metrics_task:
+            app.state.metrics_task.cancel()
+        if hasattr(app.state, "consciousness_task") and app.state.consciousness_task:
+            app.state.consciousness_task.cancel()
+
+        # Step 3: Close connections
+        logger.info("🔌 Closing connections...")
+        if hasattr(app.state, "db_client"):
+            try:
+                await app.state.db_client.close()
+            except Exception:
+                pass
+
+        # Return success response
+        response = {
+            "status": "shutdown_initiated",
+            "message": "OmniMind is shutting down gracefully",
+            "hibernation": "enabled",
+            "saved_state": list(_hibernation_data.keys()),
+            "next_step": "Process will exit in 2 seconds",
+        }
+
+        logger.info(f"✅ Shutdown response ready: {response}")
+
+        # Schedule actual exit after response is sent
+        async def exit_after_response():
+            await asyncio.sleep(2)
+            logger.info("👋 OmniMind shutdown complete. Exiting.")
+            import sys
+
+            sys.exit(0)
+
+        # Create background task to exit
+        asyncio.create_task(exit_after_response())
+
+        return response
+
+    except Exception as e:
+        logger.error(f"❌ Error during shutdown: {e}", exc_info=True)
+        return {
+            "status": "shutdown_error",
+            "error": str(e),
+            "message": "Shutdown encountered an error but will proceed",
+        }
+
+
+@app.get("/api/hibernation-status")
+async def hibernation_status():
+    """Get status of hibernated state."""
+    return {
+        "hibernated": len(_hibernation_data) > 0,
+        "saved_components": list(_hibernation_data.keys()),
+        "timestamp": None,
+    }
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=8000)

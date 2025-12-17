@@ -1,0 +1,15 @@
+[Unit]
+Description=OmniMind Frontend Service
+After=network.target omnimind.service
+
+[Service]
+User=fahbrain
+WorkingDirectory=/home/fahbrain/projects/omnimind/web/frontend
+# Assuming npm is in /usr/bin/npm, verify with 'which npm'
+ExecStart=/usr/bin/npm run dev
+Restart=always
+# High priority for responsiveness
+Nice=-5
+
+[Install]
+WantedBy=multi-user.target

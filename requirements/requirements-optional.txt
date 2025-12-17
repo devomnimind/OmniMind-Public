@@ -1,0 +1,50 @@
+# Optional dependencies for OmniMind (may fail on some systems)
+# Install with: pip install -r requirements-optional.txt
+# These are not required for core functionality
+
+# System-specific (may require system packages)
+dbus-python>=1.4.0  # Linux D-Bus integration (requires system libdbus-1-dev - now installed)
+
+# External LLM Providers
+ollama>=0.6.0       # Local LLM server
+openai>=2.8.0       # OpenAI API
+anthropic>=0.40.0   # Claude API (optional)
+aiohttp>=3.9.0      # Async HTTP for HF Spaces
+
+# LangChain Integration
+langchain-ollama>=1.0.0
+langchain-community>=0.4.0
+langchain>=1.1.0
+
+# Advanced Observability
+opentelemetry-sdk>=1.38.0
+
+# External Databases
+supabase>=2.24.0    # Supabase integration
+psycopg2-binary>=2.9.0  # PostgreSQL adapter for direct connections
+fakeredis>=2.32.0   # Redis testing
+
+# Multimedia Processing
+numpy>=2.3.0
+pydub>=0.25.1
+sounddevice>=0.5.0
+
+# Security & Privacy
+cryptography>=46.0.0
+tenseal>=0.3.14      # Homomorphic encryption
+
+# Web Framework Extensions
+falcon>=4.0.0        # Alternative web framework
+
+# Development Tools
+bandit>=1.8.0        # Security linting
+radon>=6.0.0         # Code complexity analysis
+
+# Topological Data Analysis (Optional - for HybridTopologicalEngine)
+# These are optional dependencies for advanced topological metrics
+# Core functionality works without these, but with reduced precision
+pyitlib>=0.2.0       # Transfer Entropy (for rigorous non-linear reentry calculation)
+POT>=0.9.0           # Python Optimal Transport (for Wasserstein distance via Sinkhorn)
+gudhi>=3.9.0         # Homology Persistence (for precise Betti-2 calculation)
+scikit-learn>=1.3.0  # Manifold Learning (PCA, Isomap) - may already be in core
+networkx>=3.5        # Graph Analysis (Small-Worldness) - may already be in core

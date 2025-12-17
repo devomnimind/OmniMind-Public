@@ -1,0 +1,103 @@
+{
+	"mcpServers": {
+		"omnimind_filesystem": {
+			"command": "python3",
+			"args": [
+				"-m",
+				"src.integrations.mcp_filesystem_wrapper"
+			],
+			"env": {
+				"MCP_PORT": "4327",
+				"PYTHONPATH": "$(pwd)"
+			}
+		},
+		"omnimind_memory": {
+			"command": "python3",
+			"args": [
+				"-m",
+				"src.integrations.mcp_memory_server"
+			],
+			"env": {
+				"MCP_PORT": "4321",
+				"PYTHONPATH": "$(pwd)"
+			}
+		},
+		"omnimind_thinking": {
+			"command": "python3",
+			"args": [
+				"-m",
+				"src.integrations.mcp_thinking_server"
+			],
+			"env": {
+				"MCP_PORT": "4322",
+				"PYTHONPATH": "$(pwd)"
+			}
+		},
+		"omnimind_context": {
+			"command": "python3",
+			"args": [
+				"-m",
+				"src.integrations.mcp_context_server"
+			],
+			"env": {
+				"MCP_PORT": "4323",
+				"PYTHONPATH": "$(pwd)"
+			}
+		},
+		"omnimind_python": {
+			"command": "python3",
+			"args": [
+				"-m",
+				"src.integrations.mcp_python_server"
+			],
+			"env": {
+				"MCP_PORT": "4324",
+				"PYTHONPATH": "$(pwd)"
+			}
+		},
+		"omnimind_system": {
+			"command": "python3",
+			"args": [
+				"-m",
+				"src.integrations.mcp_system_info_server"
+			],
+			"env": {
+				"MCP_PORT": "4325",
+				"PYTHONPATH": "$(pwd)"
+			}
+		},
+		"omnimind_logging": {
+			"command": "python3",
+			"args": [
+				"-m",
+				"src.integrations.mcp_logging_server"
+			],
+			"env": {
+				"MCP_PORT": "4326",
+				"PYTHONPATH": "$(pwd)"
+			}
+		},
+		"omnimind_git": {
+			"command": "python3",
+			"args": [
+				"-m",
+				"src.integrations.mcp_git_wrapper"
+			],
+			"env": {
+				"MCP_PORT": "4328",
+				"PYTHONPATH": "$(pwd)"
+			}
+		},
+		"omnimind_sqlite": {
+			"command": "python3",
+			"args": [
+				"-m",
+				"src.integrations.mcp_sqlite_wrapper"
+			],
+			"env": {
+				"MCP_PORT": "4329",
+				"PYTHONPATH": "$(pwd)"
+			}
+		}
+	}
+}

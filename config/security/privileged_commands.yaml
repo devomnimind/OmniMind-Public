@@ -1,0 +1,95 @@
+# 🛡️ OmniMind Privileged Execution Policy
+# Define quais comandos o agente pode executar com privilégios (sudo) e quais devem ser isolados.
+
+policy_version: "1.1"
+
+# ✅ Comandos permitidos no Host (System) via Sudo
+# Estes comandos serão executados com `sudo -n` (non-interactive).
+# Requer configuração no /etc/sudoers (ver scripts/setup_permissions.sh).
+system_allowlist:
+  # --- OBSERVABILITY & KERNEL ---
+  - name: "eBPF Monitor"
+    command: "/usr/bin/bpftrace"
+    args_regex: "^scripts/canonical/system/monitor_mcp_bpf\\.bt$"
+    risk: "high"
+    description: "Monitoramento de segurança do kernel via eBPF"
+
+  - name: "System Logs"
+    command: "/usr/bin/journalctl"
+    args_regex: ".*"
+    risk: "low"
+    description: "Leitura de logs do sistema para diagnóstico"
+
+  - name: "Kernel Messages"
+    command: "/usr/bin/dmesg"
+    args_regex: ".*"
+    risk: "low"
+    description: "Leitura de logs do kernel"
+
+  # --- NETWORK SECURITY ---
+  - name: "Network Scan (Local)"
+    command: "/usr/bin/nmap"
+    args_regex: "^(-sS|-sT|-O|-p).*127\\.0\\.0\\.1.*|^(-sS|-sT|-O|-p).*localhost.*"
+    risk: "medium"
+    description: "Scan de portas locais para verificação de segurança"
+
+  - name: "Socket Statistics"
+    command: "/usr/bin/ss"
+    args_regex: "^-.*"
+    risk: "low"
+    description: "Visualização de sockets e processos (substituto do netstat)"
+
+  - name: "Packet Capture"
+    command: "/usr/bin/tcpdump"
+    args_regex: "^-i (lo|eth0|wlan0|docker0) .*"
+    risk: "high"
+    description: "Captura de tráfego para análise forense"
+
+  - name: "Firewall Management"
+    command: "/usr/sbin/iptables"
+    args_regex: "^(-A|-D|-I|-L) (INPUT|OUTPUT|FORWARD).*"
+    risk: "high"
+    description: "Gerenciamento de regras de firewall (bloqueio de IPs)"
+
+  # --- PROCESS MANAGEMENT ---
+  - name: "Process Cleanup"
+    command: "/usr/bin/pkill"
+    args_regex: "^-f.*"
+    risk: "medium"
+    description: "Limpeza de processos travados (uvicorn, python, node)"
+
+  - name: "Service Management"
+    command: "/usr/bin/systemctl"
+    args_regex: "^(status|restart|stop|start) (nginx|docker|omnimind).*"
+    risk: "medium"
+    description: "Gerenciamento de serviços essenciais"
+
+  # --- HARDWARE & STORAGE ---
+  - name: "Disk Health"
+    command: "/usr/sbin/smartctl"
+    args_regex: "^-a /dev/.*"
+    risk: "low"
+    description: "Verificação de saúde de discos (S.M.A.R.T)"
+
+  - name: "Docker Management"
+    command: "/usr/bin/docker"
+    args_regex: ".*"
+    risk: "medium"
+    description: "Gerenciamento de containers"
+
+# 🐳 Comandos que DEVEM rodar em Docker (Isolados)
+# Se o agente tentar rodar isso no host com sudo, será bloqueado e redirecionado.
+docker_enforced:
+  - "npm install"
+  - "pip install"
+  - "rm -rf"
+  - "dd"
+  - "mkfs"
+  - "fdisk"
+  - "wget"
+  - "curl -O"
+
+# 📝 Configuração de Auditoria
+audit:
+  log_file: "logs/audit/privileged_access.log"
+  log_format: "{timestamp} | {user} | {status} | {command} | {reason}"

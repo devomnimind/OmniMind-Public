@@ -1,0 +1,48 @@
+# OmniMind Validation Baseline Configuration
+# Este arquivo define o estado baseline do sistema que deve ser mantido
+# Qualquer mudança que infrinja estes valores será bloqueada
+
+[baseline]
+# Estado atual validado em 19 de novembro de 2025
+tests_passed = 1017
+tests_skipped = 2
+warnings = 6
+python_version = "3.12.8"
+
+[validation_rules]
+# Regras de bloqueio obrigatórias
+block_on_test_regression = true
+block_on_linting_errors = true
+block_on_type_errors = true
+block_on_formatting_issues = true
+block_on_dependency_conflicts = true
+block_on_core_file_corruption = true
+
+# Avisos (não bloqueiam, mas alertam)
+warn_on_new_warnings = true
+warn_on_new_skipped_tests = true
+warn_on_python_version_mismatch = true
+
+[protected_files]
+# Arquivos core que não podem ser corrompidos ou removidos
+core_files = [
+    "src/omnimind_core.py",
+    "src/agents/orchestrator_agent.py",
+    "src/agents/code_agent.py",
+    "src/agents/architect_agent.py",
+    "src/agents/debug_agent.py",
+    "src/agents/reviewer_agent.py",
+    "src/audit/immutable_audit.py",
+    "src/security/security_agent.py",
+    "requirements.txt",
+    "pyproject.toml",
+    "README.md"
+]
+
+[commands]
+# Comandos oficiais de validação que devem ser executados
+formatting = "black --check --diff src tests"
+linting = "flake8 src tests --max-line-length=100"
+type_checking = "mypy src tests --strict"
+testing = "python -m pytest tests/ -x --tb=short -q"
+dependencies = "pip check"

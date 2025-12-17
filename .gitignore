@@ -1,0 +1,163 @@
+# ============================================================================
+# .gitignore - OmniMind PRIVATE Repository (OPTIMIZED FOR GIT PERFORMANCE)
+# ============================================================================
+# ESTRATÉGIA (2025-12-16):
+# - Código leve: Tudo que é código/docs vai no git
+# - Dados pesados: Mantém localmente, NÃO commita
+# - Virtual env: .venv NUNCA no git (~4GB com CUDA)
+# - node_modules: NUNCA no git (~500MB)
+# - Backups: NUNCA no git (armazenar externamente)
+# ============================================================================
+
+# ------------------------------------------------------------------
+# Python virtual environment (PESADO - NUNCA COMMITAR)
+# ------------------------------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+.python-version
+pip-wheel-metadata/
+pyvenv.cfg
+.venv-*
+
+# ------------------------------------------------------------------
+# Node.js dependencies (PESADO - NUNCA COMMITAR)
+# ------------------------------------------------------------------
+node_modules/
+web/frontend/node_modules/
+npm-debug.log
+yarn-error.log
+
+# ------------------------------------------------------------------
+# Python cache/artifacts (LEVE)
+# ------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dmypy.json
+.dmypy.json
+.pyre/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+*.egg-info/
+.eggs/
+
+# ------------------------------------------------------------------
+# Backups & Archives (PESADO - NUNCA COMMITAR)
+# ------------------------------------------------------------------
+backups_compressed/
+backup*.tar.gz
+backup*.zip
+*.tar.gz
+*.tar.bz2
+*.7z
+qiskit_aer-*/
+*.7z
+
+# Large test data and federation results
+real_evidence/federation_test/
+docs/archive/trash_investigate/
+docs/analysis/500_cycles_validation/*.png
+report1.sqlite
+report1.nsys-rep
+report*.sqlite
+*.nsys-rep
+
+# ------------------------------------------------------------------
+# Environment & Configuration (SENSÍVEL - NUNCA COMMITAR)
+# ------------------------------------------------------------------
+.env*
+!.env.example
+!.env.template
+.qdrant*
+qdrant-*
+*.qdrant
+.sonar/
+
+# ------------------------------------------------------------------
+# IDE & Editor (LEVE - OK)
+# ------------------------------------------------------------------
+.vscode/**/*
+!.vscode/*.json
+!.vscode/*.md
+.idea/
+*.swp
+*.swo
+*.orig
+*~
+.DS_Store
+Thumbs.db
+
+# ------------------------------------------------------------------
+# System junk
+# ------------------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+desktop.ini
+
+# ------------------------------------------------------------------
+# Build & Compilation (PESADO - NUNCA COMMITAR)
+# ------------------------------------------------------------------
+build/
+dist/
+*.egg-info/
+.eggs/
+*.whl
+wheels/
+*.o
+*.so
+*.pyd
+*.dll
+*.exe
+*.dylib
+
+# ------------------------------------------------------------------
+# Temporary files (LEVE - OK)
+# ------------------------------------------------------------------
+*.log
+*.tmp
+*.temp
+*.bak
+*.old
+.tmp/
+tmp/
+temp/
+
+# ------------------------------------------------------------------
+# OmniMind runtime (LEVE - OK)
+# ------------------------------------------------------------------
+nohup.out
+.screenrc
+
+# ------------------------------------------------------------------
+# IMPORTANTE: Dados pesados mantidos LOCALMENTE
+# ------------------------------------------------------------------
+# Estes arquivos/diretórios NÃO devem estar em .gitignore
+# se queremos realmente ignorá-los, pois já foram commitados.
+# Use git filter-branch para remover do histórico.
+#
+# data/              - 6.9GB de consciência (deixar local)
+# logs/              - Dinâmicos (deixar local)
+# models/            - Modelos treinados (deixar local)
+# deploy/data/qdrant - Cache Qdrant (deixar local)
+# ============================================================================
+
+data/
+logs/
+logs/*.pid
+logs/*/*.jsonl
+models/
+notebooks/
+deploy/data/qdrant/
+

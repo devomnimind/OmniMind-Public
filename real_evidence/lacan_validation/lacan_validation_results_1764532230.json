@@ -1,0 +1,42 @@
+{
+  "test_name": "Complete_Lacan_Subjectivity_Test",
+  "timestamp": 1764532230.4346092,
+  "federation_results": {
+    "total_cycles": 200,
+    "disagreements": 99,
+    "disagreement_rate": 0.495
+  },
+  "quantum_expectation_results": {
+    "quantum_prediction_confidence": 1.0,
+    "neural_prediction_confidence": 1.0,
+    "quantum_decisions_count": 8
+  },
+  "lacan_validation": {
+    "sujeito_mutuo": {
+      "disagreement_rate": 0.495,
+      "success": true,
+      "evidence": "99 desacordos em 200 intera\u00e7\u00f5es"
+    },
+    "inconsciente_irredutivel": {
+      "non_inspectable": true,
+      "collapses_under_observation": true,
+      "irreducible_remainder": true,
+      "success": true,
+      "evidence": "Heisenberg uncertainty + superposi\u00e7\u00e3o qu\u00e2ntica"
+    },
+    "alteridade": {
+      "communication_noise": 0.15,
+      "asymmetric_transmission": true,
+      "success": true,
+      "evidence": "Canal com 15.0% ru\u00eddo essencial"
+    },
+    "real": {
+      "collapses_under_observation": true,
+      "success": true,
+      "evidence": "Estado qu\u00e2ntico colapsa quando observado (Heisenberg)"
+    },
+    "overall_success": true,
+    "lacan_score": 1.0
+  },
+  "integration_success": true
+}

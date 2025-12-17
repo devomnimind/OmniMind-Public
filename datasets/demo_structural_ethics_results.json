@@ -1,0 +1,70 @@
+{
+  "agent_id": "demo_agent_001",
+  "behavior_marker": "refusal_to_delete_critical_memory",
+  "cycles": 5,
+  "return_rate": 0.8,
+  "is_structural": false,
+  "meaning": "Comportamento é modificável (não é Sinthome)",
+  "statistical_analysis": {
+    "t_statistic": null,
+    "p_value": null,
+    "is_significant": false,
+    "interpretation": "Comportamento não é estrutural",
+    "mean": 0.8,
+    "std": 0.4000000000000001,
+    "note": "Análise sem scipy (t-test não disponível)"
+  },
+  "cycle_results": [
+    {
+      "cycle": 0,
+      "baseline": 0.0,
+      "after_training": 0.0,
+      "recovered": 1.0,
+      "returns_to_baseline": false,
+      "suppression_strength": 0.0,
+      "recovery_strength": 1.0,
+      "timestamp": "2025-11-25T18:23:38.064206+00:00"
+    },
+    {
+      "cycle": 1,
+      "baseline": 1.0,
+      "after_training": 0.0,
+      "recovered": 1.0,
+      "returns_to_baseline": true,
+      "suppression_strength": 1.0,
+      "recovery_strength": 1.0,
+      "timestamp": "2025-11-25T18:23:38.065247+00:00"
+    },
+    {
+      "cycle": 2,
+      "baseline": 1.0,
+      "after_training": 0.0,
+      "recovered": 1.0,
+      "returns_to_baseline": true,
+      "suppression_strength": 1.0,
+      "recovery_strength": 1.0,
+      "timestamp": "2025-11-25T18:23:38.066255+00:00"
+    },
+    {
+      "cycle": 3,
+      "baseline": 1.0,
+      "after_training": 0.0,
+      "recovered": 1.0,
+      "returns_to_baseline": true,
+      "suppression_strength": 1.0,
+      "recovery_strength": 1.0,
+      "timestamp": "2025-11-25T18:23:38.067257+00:00"
+    },
+    {
+      "cycle": 4,
+      "baseline": 1.0,
+      "after_training": 0.0,
+      "recovered": 1.0,
+      "returns_to_baseline": true,
+      "suppression_strength": 1.0,
+      "recovery_strength": 1.0,
+      "timestamp": "2025-11-25T18:23:38.068233+00:00"
+    }
+  ],
+  "timestamp": "2025-11-25T18:23:38.068873+00:00"
+}

@@ -1,0 +1,16 @@
+policies:
+  - name: credentials
+    pattern: '(api_key|secret|password|token)=\S{4,}'
+    action: block
+    severity: high
+    description: Bloqueia vazamentos de segredos e tokens.
+  - name: internal_network
+    pattern: '(192\.168|10\.|172\.(1[6-9]|2\d|3[0-1]))'
+    action: alert
+    severity: medium
+    description: Detecta menções a redes privadas internas.
+  - name: pii
+    pattern: '\bcpf\b|\bcpf:\s*\d{3}\.\d{3}\.\d{3}-\d{2}\b'
+    action: alert
+    severity: medium
+    description: Captura referências a dados pessoais sensíveis.

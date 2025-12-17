@@ -1,0 +1,24 @@
+# GPU-specific dependencies for OmniMind
+# ⚠️ DEPRECATED (16 DEC 2025) - GPU configuration moved to requirements_core_quantum.txt
+#
+# ✅ CURRENT: Use requirements_core_quantum.txt instead
+#    This file kept only for historical reference
+#
+# All GPU support is now in:
+# - requirements_core_quantum.txt (qiskit-aer-gpu, cuQuantum cu12, PyTorch cu121)
+#
+# ⚠️ DO NOT install packages from here - they will conflict with quantum setup!
+
+# DEPRECATED: PyTorch GPU (MOVED to requirements_core_quantum.txt)
+# ❌ torch==2.5.1 (was installed wrongly with cu122)
+# ✅ CURRENT: torch==2.5.1+cu121 (via requirements_core_quantum.txt)
+
+# NVIDIA Monitoring
+nvidia-ml-py>=12.560.30
+
+# DEPRECATED: GPU-accelerated libraries (MOVED to requirements_core_quantum.txt)
+# ❌ These are now in requirements_core_quantum.txt:
+# cuquantum-cu12==25.11.0
+# custatevec-cu12==1.11.0
+# cutensor-cu12==2.4.1
+

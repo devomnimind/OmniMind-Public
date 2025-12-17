@@ -1,0 +1,17 @@
+[Unit]
+Description=Qdrant Vector Database (Native)
+After=network.target
+
+[Service]
+Type=simple
+User=fahbrain
+Group=fahbrain
+WorkingDirectory=/home/fahbrain/projects/omnimind
+Environment="QDRANT__STORAGE__STORAGE_PATH=/home/fahbrain/projects/omnimind/data/qdrant"
+ExecStart=/usr/bin/qdrant
+Restart=always
+RestartSec=5
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

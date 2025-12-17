@@ -1,0 +1,156 @@
+# Configuração para vetorização do sistema Ubuntu e OmniMind
+# Este arquivo define quais arquivos e diretórios do sistema serão vetorizados
+
+[system_vectorization]
+# Arquivos do kernel (seguros para leitura)
+kernel_files = [
+    "/proc/cpuinfo",
+    "/proc/meminfo",
+    "/proc/version",
+    "/proc/uptime",
+    "/proc/loadavg",
+    "/proc/stat",
+    "/proc/vmstat",
+    "/proc/diskstats",
+    "/proc/net/dev",
+    "/proc/net/route",
+    "/proc/net/arp",
+    "/proc/sys/kernel/hostname",
+    "/proc/sys/kernel/osrelease",
+    "/proc/sys/kernel/version",
+]
+
+# Configurações do sistema (seguras)
+system_configs = [
+    "/etc/os-release",
+    "/etc/hostname",
+    "/etc/hosts",
+    "/etc/resolv.conf",
+    "/etc/fstab",
+    "/etc/mtab",
+]
+
+# Diretórios do sistema para vetorização (limitados)
+system_dirs = [
+    "/etc/apt",
+    "/etc/systemd",
+    "/etc/network",
+    "/usr/share/doc",
+]
+
+# Extensões de arquivo a incluir na vetorização do sistema
+system_extensions = [
+    ".conf",
+    ".txt",
+    ".md",
+    ".yaml",
+    ".yml",
+    ".json",
+    ".service",
+    ".list",
+    ".rules",
+]
+
+# Arquivos/diretórios a EXCLUIR (por segurança)
+exclude_patterns = [
+    # Arquivos de senha
+    "/etc/passwd",
+    "/etc/shadow",
+    "/etc/sudoers",
+    # Diretórios sensíveis
+    "/etc/ssl/private",
+    "/etc/ssh",
+    "/root",
+    "/home/*/.ssh",
+    "/var/log/auth.log",
+    "/var/log/secure",
+    # Arquivos grandes
+    "*.log",
+    "*.gz",
+    "*.bz2",
+    "*.xz",
+]
+
+# Limites de segurança
+max_file_size_mb = 10
+max_files_per_dir = 100
+max_total_files = 10000
+
+# Comandos do sistema para coletar metadados
+[system_commands]
+installed_packages = ["dpkg", "--list"]
+python_packages = ["pip", "list"]
+node_packages = ["npm", "list", "-g", "--depth=0"]
+system_services = ["systemctl", "list-units", "--type=service", "--state=active"]
+kernel_modules = ["lsmod"]
+pci_devices = ["lspci"]
+usb_devices = ["lsusb"]
+network_interfaces = ["ip", "addr"]
+disk_usage = ["df", "-h"]
+memory_info = ["free", "-h"]
+cpu_info = ["lscpu"]
+system_uptime = ["uptime"]
+
+# Configurações do OmniMind
+[omnimind]
+# Diretórios do projeto a incluir
+project_dirs = [
+    "src",
+    "docs",
+    "scripts",
+    "tests",
+    "config",
+    "notebooks",
+]
+
+# Extensões para código OmniMind
+code_extensions = [
+    ".py",
+    ".js",
+    ".ts",
+    ".html",
+    ".css",
+    ".md",
+    ".txt",
+    ".yaml",
+    ".yml",
+    ".json",
+    ".toml",
+    ".ini",
+]
+
+# Diretórios do kernel AI
+kernel_dirs = [
+    "kernel_ai",
+    "quantum_ai",
+    "neurosymbolic",
+    "src/consciousness",
+    "src/memory",
+    "src/orchestrator",
+]
+
+# Configurações de indexação
+[indexing]
+# Número máximo de workers para processamento paralelo
+max_workers = 4
+
+# Tamanho mínimo de arquivo para indexar (bytes)
+min_file_size = 10
+
+# Habilitar indexação incremental
+incremental = true
+
+# Timeout para comandos do sistema (segundos)
+command_timeout = 30
+
+# Configurações do Qdrant
+[qdrant]
+url = "http://localhost:6333"
+collection_name = "omnimind_system"
+vector_dim = 384  # Dimensão do modelo all-MiniLM-L6-v2
+
+# Configurações de busca
+[search]
+default_top_k = 5
+max_top_k = 50
+score_threshold = 0.7

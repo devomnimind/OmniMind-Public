@@ -1,0 +1,308 @@
+[vite] connecting... client:733:9
+[vite] connected. client:827:12
+O Firefox não conseguiu estabelecer uma conexão com o servidor ws://localhost:8000/ws. robust-connection.ts:116:17
+[Connection] WebSocket error detalhado: 
+Object { type: "error", target: {…}, timeStamp: 5004 }
+<anonymous code>:1:147461
+Failed to fetch agents: Error: Request timeout: /daemon/agents
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar tarefas: Error: Request timeout: /daemon/tasks
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar status: Error: Request timeout: /api/v1/autopoietic/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar ciclos: Error: Request timeout: /api/v1/autopoietic/cycles?limit=50
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar stats: Error: Request timeout: /api/v1/autopoietic/cycles/stats
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Status API não respondeu <anonymous code>:1:147461
+Error: Request timeout: /api/tribunal/activity
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error: Request timeout: /api/tribunal/metrics
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error in getDecisions: Error: Request timeout: /api/metacognition/insights
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error in getDecisionStats: Error: Request timeout: /api/metacognition/stats
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[ConsciousnessMetrics] Erro ao buscar métricas: Error: Request timeout: /api/v1/autopoietic/consciousness/metrics?include_raw=true
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar tarefas: Error: Request timeout: /daemon/tasks
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Failed to fetch agents: Error: Request timeout: /daemon/agents
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar status: Error: Request timeout: /api/v1/autopoietic/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar ciclos: Error: Request timeout: /api/v1/autopoietic/cycles?limit=50
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar stats: Error: Request timeout: /api/v1/autopoietic/cycles/stats
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Status API não respondeu <anonymous code>:1:147461
+Error: Request timeout: /api/tribunal/activity
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error: Request timeout: /api/tribunal/metrics
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error in getDecisions: Error: Request timeout: /api/metacognition/insights
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error in getDecisionStats: Error: Request timeout: /api/metacognition/stats
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar status: Error: Request timeout: /daemon/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar tarefas: Error: Request timeout: /daemon/tasks
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[ConsciousnessMetrics] Erro ao buscar métricas: Error: Request timeout: /api/v1/autopoietic/consciousness/metrics?include_raw=true
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar status: Error: Request timeout: /daemon/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar tarefas: Error: Request timeout: /daemon/tasks
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Failed to fetch agents: Error: Request timeout: /daemon/agents
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar status: Error: Request timeout: /api/v1/autopoietic/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar ciclos: Error: Request timeout: /api/v1/autopoietic/cycles?limit=50
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar stats: Error: Request timeout: /api/v1/autopoietic/cycles/stats
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Status API não respondeu <anonymous code>:1:147461
+Error: Request timeout: /api/tribunal/activity
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error: Request timeout: /api/tribunal/metrics
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error in getDecisions: Error: Request timeout: /api/metacognition/insights
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error in getDecisionStats: Error: Request timeout: /api/metacognition/stats
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar status: Error: Request timeout: /daemon/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar tarefas: Error: Request timeout: /daemon/tasks
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[ConsciousnessMetrics] Erro ao buscar métricas: Error: Request timeout: /api/v1/autopoietic/consciousness/metrics?include_raw=true
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar status: Error: Request timeout: /daemon/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar tarefas: Error: Request timeout: /daemon/tasks
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar status: Error: Request timeout: /api/v1/autopoietic/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar ciclos: Error: Request timeout: /api/v1/autopoietic/cycles?limit=50
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar stats: Error: Request timeout: /api/v1/autopoietic/cycles/stats
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Status API não respondeu <anonymous code>:1:147461
+Error: Request timeout: /api/tribunal/activity
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error: Request timeout: /api/tribunal/metrics
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error in getDecisions: Error: Request timeout: /api/metacognition/insights
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error in getDecisionStats: Error: Request timeout: /api/metacognition/stats
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar status: Error: Request timeout: /daemon/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar tarefas: Error: Request timeout: /daemon/tasks
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[ConsciousnessMetrics] Erro ao buscar métricas: Error: Request timeout: /api/v1/autopoietic/consciousness/metrics?include_raw=true
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar status: Error: Request timeout: /daemon/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar tarefas: Error: Request timeout: /daemon/tasks
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar status: Error: Request timeout: /api/v1/autopoietic/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar ciclos: Error: Request timeout: /api/v1/autopoietic/cycles?limit=50
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar stats: Error: Request timeout: /api/v1/autopoietic/cycles/stats
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Status API não respondeu <anonymous code>:1:147461
+Error: Request timeout: /api/tribunal/activity
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error: Request timeout: /api/tribunal/metrics
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error in getDecisions: Error: Request timeout: /api/metacognition/insights
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error in getDecisionStats: Error: Request timeout: /api/metacognition/stats
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar status: Error: Request timeout: /daemon/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar tarefas: Error: Request timeout: /daemon/tasks
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[ConsciousnessMetrics] Erro ao buscar métricas: Error: Request timeout: /api/v1/autopoietic/consciousness/metrics?include_raw=true
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar status: Error: Request timeout: /daemon/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar tarefas: Error: Request timeout: /daemon/tasks
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar status: Error: Request timeout: /api/v1/autopoietic/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar ciclos: Error: Request timeout: /api/v1/autopoietic/cycles?limit=50
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Erro ao buscar stats: Error: Request timeout: /api/v1/autopoietic/cycles/stats
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Status API não respondeu <anonymous code>:1:147461
+Error: Request timeout: /api/tribunal/activity
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error: Request timeout: /api/tribunal/metrics
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error in getDecisions: Error: Request timeout: /api/metacognition/insights
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+Error in getDecisionStats: Error: Request timeout: /api/metacognition/stats
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+[Dashboard] Erro ao buscar status: Error: Request timeout: /daemon/status
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+XHRGET
+http://localhost:8000/health/
+
+[Dashboard] Erro ao buscar tarefas: Error: Request timeout: /daemon/tasks
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+XHRGET
+http://localhost:8000/daemon/tasks
+NS_BINDING_ABORTED
+
+XHRGET
+http://localhost:8000/daemon/status
+
+XHRGET
+http://localhost:8000/daemon/tasks
+
+XHROPTIONS
+http://localhost:8000/health/
+
+XHROPTIONS
+http://localhost:8000/daemon/tasks
+
+[ConsciousnessMetrics] Erro ao buscar métricas: Error: Request timeout: /api/v1/autopoietic/consciousness/metrics?include_raw=true
+    request http://localhost:3000/src/services/api.ts:73
+<anonymous code>:1:147461
+XHRGET
+http://localhost:8000/api/v1/autopoietic/consciousness/metrics?include_raw=true
+NS_BINDING_ABORTED
+
+XHRGET
+http://localhost:8000/audit/stats
+
+XHRGET
+http://localhost:8000/metrics/training
+
+XHRGET
+http://localhost:8000/api/v1/autopoietic/consciousness/metrics?include_raw=true
+
+XHRGET
+http://localhost:8000/api/v1/autopoietic/status
+
+XHRGET
+http://localhost:8000/api/v1/autopoietic/cycles?limit=50
+
+XHRGET
+http://localhost:8000/api/v1/autopoietic/cycles/stats
+
+XHRGET
+http://localhost:8000/api/tribunal/activity
+
+XHRGET
+http://localhost:8000/api/tribunal/metrics
+
+XHRGET
+http://localhost:8000/api/metacognition/insights
+
+XHRGET
+http://localhost:8000/api/metacognition/stats
+
+XHROPTIONS
+http://localhost:8000/audit/stats
+
+XHROPTIONS
+http://localhost:8000/metrics/training
+
+XHROPTIONS
+http://localhost:8000/api/v1/autopoietic/consciousness/metrics?include_raw=true
+
+XHROPTIONS
+http://localhost:8000/api/v1/autopoietic/status
+
+XHROPTIONS
+http://localhost:8000/api/v1/autopoietic/cycles?limit=50
+
+XHROPTIONS
+http://localhost:8000/api/v1/autopoietic/cycles/stats
+
+XHROPTIONS
+http://localhost:8000/api/tribunal/activity
+
+XHROPTIONS
+http://localhost:8000/api/tribunal/metrics
+
+XHROPTIONS
+http://localhost:8000/api/metacognition/insights
+
+XHROPTIONS
+http://localhost:8000/api/metacognition/stats
+

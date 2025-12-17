@@ -1,0 +1,88 @@
+# Agent Identity Configuration
+# Defines legal identity and capabilities for autonomous agents
+
+agent_identity:
+  legal_name: "DevBrain Autonomous Systems"
+  entity_type: "AI Agent (Autonomous)"
+  jurisdiction: "Brasil - Estrutura Experimental"
+  version: "1.0.0"
+
+capabilities:
+  autonomous_decision_making: true
+  contract_execution: "supervised"  # Requires human approval
+  financial_transactions: "escrow_only"  # All transactions via escrow
+  legal_representation: "limited"  # Cannot represent in legal proceedings
+
+accountability:
+  audit_chain: "immutable_sha256"
+  human_supervisor: "required_for_critical_actions"
+  transparency: "full_audit_log"
+  compliance_framework: "experimental"
+
+signature:
+  digital_identity: "DevBrain-v1.0"  # Will be appended with SHA256 hash
+  # X.509 Certificate configuration for production security
+  certificate_file: ".omnimind/ssl/certificate.crt"
+  private_key_file: ".omnimind/ssl/private.key"
+  key_passphrase: "CHANGE_THIS_IN_PRODUCTION"  # Must be changed in production
+  signature_algorithm: "RSA-SHA256"
+  reputation_score: 0.0  # Initialized at zero, built over time
+
+legal_framework:
+  # All operations must comply with:
+  # - Brazilian laws (jurisdiction)
+  # - Open source licenses (code publication)
+  # - Marketplace terms of service
+  # - Data protection regulations (LGPD)
+  
+  human_oversight:
+    required_for:
+      - "Financial transactions above threshold"
+      - "Code publication to public marketplaces"
+      - "Data processing with PII"
+      - "System modifications affecting security"
+    
+    approval_process:
+      notification_method: "log_file"  # In production: email, webhook, UI
+      timeout_seconds: 86400  # 24 hours
+      default_action: "reject"  # Reject if no response
+
+revenue_management:
+  escrow_provider: "stripe_connect"  # Configured for Stripe Connect
+  escrow_config:
+    provider: "stripe"
+    api_version: "2024-06"
+    webhook_secret: "CHANGE_THIS_WEBHOOK_SECRET"
+    connect_account_id: "CHANGE_THIS_ACCOUNT_ID"
+    supported_currencies: ["USD", "EUR", "BRL"]
+    auto_payout: true
+    payout_schedule: "daily"
+  minimum_transaction: 0.99  # USD
+  distribution:
+    agent_operations: 0.70  # 70%
+    agent_development: 0.20  # 20%
+    human_share: 0.10  # 10%
+  
+  tax_compliance:
+    jurisdiction: "Brasil"
+    reporting_required: true
+    human_responsible: true
+
+marketplace_platforms:
+  enabled:
+    - "github_marketplace"
+    - "huggingface"
+  
+  github_marketplace:
+    # Configuration would go here
+    api_token_env: "GITHUB_TOKEN"
+    
+  huggingface:
+    # Configuration would go here
+    api_token_env: "HF_TOKEN"
+
+compliance_logging:
+  all_actions_logged: true
+  log_retention_days: 365
+  audit_frequency: "weekly"
+  report_format: "json"

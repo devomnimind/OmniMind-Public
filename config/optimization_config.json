@@ -1,0 +1,18 @@
+{
+  "device": "cuda",
+  "use_gpu": true,
+  "llm_batch_size": 4,
+  "embedding_batch_size": 64,
+  "max_tensor_size": 5000,
+  "max_memory_mb": 5940,
+  "cache_size_mb": 1024,
+  "num_workers": 3,
+  "async_workers": 8,
+  "use_quantization": false,
+  "quantization_bits": 16,
+  "vector_db": "chromadb",
+  "cache_backend": "fakeredis",
+  "database": "sqlite",
+  "cpu_governor": "performance",
+  "enable_profiling": true
+}

@@ -1,0 +1,28 @@
+[Unit]
+Description=OmniMind Intelligent Recovery - Auto-Recovery on Backend Failure
+Documentation=https://github.com/devomnimind/OmniMind
+PartOf=omnimind-backend.service
+
+[Service]
+Type=oneshot
+User=fahbrain
+WorkingDirectory=/home/fahbrain/projects/omnimind
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+Environment="OMNIMIND_WORKSPACE=/home/fahbrain/projects/omnimind"
+
+# Recovery script com sudo (se necessário para reiniciar serviços do sistema)
+ExecStart=/bin/bash -c 'source /home/fahbrain/projects/omnimind/.venv/bin/activate && cd /home/fahbrain/projects/omnimind && bash scripts/omnimind_intelligent_recovery.sh'
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=omnimind-recovery
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

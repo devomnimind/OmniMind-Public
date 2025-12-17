@@ -1,0 +1,162 @@
+#!/usr/bin/env python3
+"""
+Script para inicializar coleções Qdrant do OmniMind.
+
+Este script cria todas as coleções necessárias para o funcionamento
+completo do sistema OmniMind no Qdrant.
+
+Coleções criadas:
+- omnimind_consciousness: Dados de consciência e estados mentais
+- omnimind_episodes: Memória episódica e experiências
+- omnimind_embeddings: Embeddings de código e documentos
+- omnimind_narratives: Narrativas históricas e histórias
+- omnimind_system: Dados do sistema e metadados
+
+Uso:
+    python init_qdrant_collections.py
+
+Requisitos:
+- Qdrant rodando em localhost:6333
+- qdrant-client instalado
+"""
+
+import logging
+import sys
+from pathlib import Path
+
+# Adicionar src ao path
+project_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(project_root / "src"))
+
+try:
+    from qdrant_client import QdrantClient
+    from qdrant_client.models import Distance, VectorParams
+except ImportError:
+    print("❌ qdrant-client não instalado. Instale com: pip install qdrant-client")
+    sys.exit(1)
+
+# Configurar logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+
+# Definições das coleções
+COLLECTIONS = {
+    "omnimind_consciousness": {
+        "description": "Dados de consciência e estados mentais",
+        "vector_size": 768,  # all-mpnet-base-v2
+        "distance": Distance.COSINE
+    },
+    "omnimind_episodes": {
+        "description": "Memória episódica e experiências",
+        "vector_size": 768,
+        "distance": Distance.COSINE
+    },
+    "omnimind_embeddings": {
+        "description": "Embeddings de código e documentos",
+        "vector_size": 768,
+        "distance": Distance.COSINE
+    },
+    "omnimind_narratives": {
+        "description": "Narrativas históricas e histórias",
+        "vector_size": 768,
+        "distance": Distance.COSINE
+    },
+    "omnimind_system": {
+        "description": "Dados do sistema e metadados",
+        "vector_size": 384,  # all-MiniLM-L6-v2
+        "distance": Distance.COSINE
+    },
+    "omnimind_memories": {
+        "description": "Memórias gerais do sistema",
+        "vector_size": 768,
+        "distance": Distance.COSINE
+    }
+}
+
+def init_qdrant_collections():
+    """Inicializar todas as coleções Qdrant necessárias"""
+
+    # Conectar ao Qdrant
+    try:
+        client = QdrantClient(url="http://localhost:6333")
+        logger.info("✅ Conectado ao Qdrant em localhost:6333")
+    except Exception as e:
+        logger.error(f"❌ Falha ao conectar ao Qdrant: {e}")
+        return False
+
+    # Verificar coleções existentes
+    try:
+        existing_collections = client.get_collections().collections
+        existing_names = [col.name for col in existing_collections]
+        logger.info(f"📋 Coleções existentes: {existing_names}")
+    except Exception as e:
+        logger.error(f"❌ Erro ao listar coleções: {e}")
+        return False
+
+    # Criar coleções necessárias
+    created_count = 0
+    for collection_name, config in COLLECTIONS.items():
+        if collection_name in existing_names:
+            logger.info(f"⏭️  Coleção '{collection_name}' já existe - pulando")
+            continue
+
+        try:
+            # Criar coleção
+            client.create_collection(
+                collection_name=collection_name,
+                vectors_config=VectorParams(
+                    size=config["vector_size"],
+                    distance=config["distance"]
+                )
+            )
+
+            logger.info(f"✅ Criada coleção '{collection_name}': {config['description']}")
+            logger.info(f"   📏 Dimensão: {config['vector_size']}, Distância: {config['distance'].value}")
+
+            created_count += 1
+
+        except Exception as e:
+            logger.error(f"❌ Erro ao criar coleção '{collection_name}': {e}")
+            return False
+
+    # Verificar criação
+    try:
+        final_collections = client.get_collections().collections
+        final_names = [col.name for col in final_collections]
+        logger.info(f"📋 Coleções finais: {sorted(final_names)}")
+
+        # Verificar se todas as coleções necessárias existem
+        missing = []
+        for collection_name in COLLECTIONS.keys():
+            if collection_name not in final_names:
+                missing.append(collection_name)
+
+        if missing:
+            logger.error(f"❌ Coleções faltando: {missing}")
+            return False
+
+    except Exception as e:
+        logger.error(f"❌ Erro ao verificar coleções finais: {e}")
+        return False
+
+    logger.info(f"🎉 Inicialização completa! {created_count} coleções criadas.")
+    return True
+
+def main():
+    """Função principal"""
+    logger.info("🚀 Iniciando inicialização das coleções Qdrant do OmniMind")
+
+    success = init_qdrant_collections()
+
+    if success:
+        logger.info("✅ Todas as coleções foram inicializadas com sucesso!")
+        sys.exit(0)
+    else:
+        logger.error("❌ Falha na inicialização das coleções")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()

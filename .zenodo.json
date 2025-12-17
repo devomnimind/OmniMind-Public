@@ -1,0 +1,46 @@
+{
+  "title": "OmniMind-Core-Papers: Artificial Consciousness System Research Core",
+  "description": "Public research core of OmniMind system containing reproducible implementations of 4 peer-reviewed papers on computational psychoanalysis, quantum consciousness, decolonial theory, and AI ethics. Includes 230+ tests with 90%+ code coverage. MIT-licensed code, CC BY 4.0 documentation.",
+  "creators": [
+    {
+      "name": "Silva, Fabrício da",
+      "affiliation": "Independent Researcher"
+    }
+  ],
+  "contributors": [],
+  "keywords": [
+    "artificial consciousness",
+    "psychoanalysis",
+    "integrated information theory",
+    "quantum computing",
+    "AI ethics",
+    "decolonial theory",
+    "computational psychiatry"
+  ],
+  "subjects": [
+    {
+      "term": "Artificial Intelligence",
+      "identifier": "http://www.yso.fi/onto/yso/p1234"
+    },
+    {
+      "term": "Consciousness Studies",
+      "identifier": "http://www.yso.fi/onto/yso/p1234"
+    },
+    {
+      "term": "Psychology",
+      "identifier": "http://www.yso.fi/onto/yso/p1234"
+    }
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/devomnimind/OmniMind-Core-Papers",
+      "relation": "isSupplementedBy",
+      "resource_type": "software"
+    }
+  ],
+  "license": "MIT",
+  "upload_type": "software",
+  "publication_date": "2025-11-28",
+  "language": "eng",
+  "access_right": "open"
+}

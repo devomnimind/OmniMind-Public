@@ -1,0 +1,20 @@
+# Dependências específicas para integração Hugging Face
+# Instalar com: pip install -r requirements-huggingface.txt
+
+# Hugging Face CLI e SDK
+huggingface_hub[cli]>=0.36.0
+
+# AutoTrain para treinamento privado (opcional - instalar apenas quando necessário)
+# autotrain-advanced>=0.8.0
+
+# Modelos quantizados locais (opcional)
+# bitsandbytes>=0.45.0  # Para quantização 4-bit
+# optimum>=1.21.0       # Para quantização avançada
+
+# Inferência otimizada
+# vllm>=0.6.0          # Para inferência GPU otimizada
+# llama-cpp-python>=0.3.0  # Para inferência CPU otimizada
+
+# Spaces e deployment
+# gradio>=4.0.0        # Para interfaces web
+# streamlit>=1.28.0    # Alternativa para interfaces

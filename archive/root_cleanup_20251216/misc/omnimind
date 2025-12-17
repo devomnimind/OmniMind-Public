@@ -1,0 +1,23 @@
+#!/bin/bash
+# OmniMind Main Entry Point Wrapper
+# Configures PYTHONPATH and starts the main application
+
+set -e
+
+# Get script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
+# Configure Python path
+export PYTHONPATH="${PROJECT_DIR}:${PYTHONPATH:-}"
+
+# Ensure venv is activated
+if [[ -z "${VIRTUAL_ENV}" ]]; then
+    if [[ -f "${PROJECT_DIR}/.venv/bin/activate" ]]; then
+        source "${PROJECT_DIR}/.venv/bin/activate"
+    fi
+fi
+
+# Run the main application
+cd "${PROJECT_DIR}"
+python -m src.main "$@"

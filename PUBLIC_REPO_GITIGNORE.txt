@@ -1,0 +1,143 @@
+# OmniMind Public Repository - Production .gitignore
+# ============================================================================
+# ESTRATÉGIA: Apenas código, testes e documentação técnica
+# REMOVIDO: Research, papers, ideias, dados, modelos, backups
+# ============================================================================
+
+# ------------------------------------------------------------------
+# Python (Standard)
+# ------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ------------------------------------------------------------------
+# Virtual Environments (NUNCA commitar)
+# ------------------------------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+.venv-*
+pyvenv.cfg
+
+# ------------------------------------------------------------------
+# IDE & Editors
+# ------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*.orig
+*~
+.DS_Store
+Thumbs.db
+.sublime-project
+.sublime-workspace
+
+# ------------------------------------------------------------------
+# Type Checking & Linting
+# ------------------------------------------------------------------
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+
+# ------------------------------------------------------------------
+# Environment Variables
+# ------------------------------------------------------------------
+.env
+.env.local
+.env.*.local
+config/dashboard_auth.json
+
+# ------------------------------------------------------------------
+# Runtime Artifacts (NÃO persistir)
+# ------------------------------------------------------------------
+*.log
+*.pid
+nohup.out
+.screenrc
+
+# ------------------------------------------------------------------
+# Node.js (se houver frontend)
+# ------------------------------------------------------------------
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# ------------------------------------------------------------------
+# ⚠️ CRÍTICO: NÃO COMMITAR (Data Pesada)
+# ------------------------------------------------------------------
+data/
+models/
+logs/
+.cache/
+*.tar.gz
+*.zip
+*.7z
+backups_compressed/
+backup*.tar.gz
+
+# ------------------------------------------------------------------
+# ⚠️ NÃO COMMITAR (Desenvolvimento Interno)
+# ------------------------------------------------------------------
+docs/research/
+docs/roadmaps/
+docs/archive/
+docs/analysis/
+notebooks/
+ibm_results/
+real_evidence/
+archive/
+.sonar/
+
+# ------------------------------------------------------------------
+# ⚠️ NÃO COMMITAR (Infraestrutura)
+# ------------------------------------------------------------------
+k8s/
+deploy/data/
+deploy/monitoring/
+deploy/.env
+
+# ------------------------------------------------------------------
+# ⚠️ NÃO COMMITAR (Arquivos Temporários)
+# ------------------------------------------------------------------
+.tmp/
+tmp/
+temp/
+*.tmp
+*.bak
+*.old
+.DS_Store
+
+# ------------------------------------------------------------------
+# ✅ COMMITAR (Production essentials)
+# ------------------------------------------------------------------
+# src/ - All production code
+# tests/ - Test suite
+# scripts/canonical/ - Production scripts
+# scripts/services/ - Service scripts
+# config/ - Configuration (templates only, no secrets)
+# requirements/ - Dependencies
+# docs/ - Technical documentation only
+# README.md, LICENSE, CITATION.cff
+# pyproject.toml, setup.py
+

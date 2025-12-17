@@ -1,0 +1,36 @@
+# Dockerfile para gerar o wheel qiskit-aer 0.17.2 com suporte CUDA 11.8
+# Toolchain isolado para compilação estável com suporte GPU
+
+FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
+
+# Instalar Python 3.10 e dependências de compilação
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.10 \
+    python3-pip \
+    python3.10-dev \
+    git \
+    cmake \
+    g++ \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configurar Python padrão para 3.10
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
+
+# Definir Variáveis de Ambiente Críticas para Compilação
+ENV CUDA_PATH /usr/local/cuda
+ENV PATH $PATH:$CUDA_PATH/bin
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$CUDA_PATH/lib64
+
+WORKDIR /qiskit-build
+
+# Instalar dependências de build do Qiskit Aer
+RUN pip3 install --upgrade pip
+RUN pip3 install numpy scipy cython qiskit-terra==0.24.1 setuptools wheel
+
+# Copiar código fonte do Qiskit Aer 0.17.2 (será montado via bind mount ou COPY)
+# Se usar Docker build: COPY qiskit_aer-0.17.2.tar.gz /qiskit-build/
+# Se usar docker run com mount: vai estar em /qiskit-build/qiskit_aer-0.17.2.tar.gz
+RUN true
+
+WORKDIR /qiskit-build

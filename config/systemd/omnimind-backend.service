@@ -1,0 +1,66 @@
+[Unit]
+Description=OmniMind Backend - Main Autopoietic System
+Documentation=https://github.com/devomnimind/OmniMind
+After=network.target redis-server.service
+Wants=omnimind-monitor.service
+
+[Service]
+Type=simple
+User=fahbrain
+Group=fahbrain
+WorkingDirectory=/home/fahbrain/projects/omnimind
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+Environment="OMNIMIND_WORKSPACE=/home/fahbrain/projects/omnimind"
+Environment="PYTHONPATH=/home/fahbrain/projects/omnimind:/home/fahbrain/projects/omnimind/src"
+Environment="OMNIMIND_MODE=production"
+
+# Ativar venv e executar main.py (sistema autopoiético principal)
+ExecStart=/bin/bash -c 'source /home/fahbrain/projects/omnimind/.venv/bin/activate && cd /home/fahbrain/projects/omnimind && python3 src/main.py'
+
+# Pre-start: Verificar se sistema anterior foi encerrado corretamente
+ExecStartPre=-/bin/bash -c 'pkill -f "python3 src/main.py" || true'
+ExecStartPre=/bin/sleep 2
+
+# Post-start: Verificar se iniciou corretamente (opcional, não bloqueia)
+ExecStartPost=/bin/bash -c 'sleep 3 && (curl -f http://127.0.0.1:8000/health 2>/dev/null || echo "Waiting for backend to be ready...")'
+
+# On-failure: Executar recovery automático
+OnFailure=omnimind-recovery.service
+
+# Restart policy: Auto-restart com backoff exponencial
+Restart=on-failure
+RestartSec=5s
+StartLimitBurst=5
+StartLimitInterval=600
+
+# Graceful shutdown
+KillMode=process
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+# Resource limits
+MemoryMax=2G
+CPUQuota=200%
+TasksMax=256
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=omnimind-backend
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/fahbrain/projects/omnimind/logs /home/fahbrain/projects/omnimind/data /home/fahbrain/projects/omnimind/real_evidence
+
+# Device access (para CUDA/GPU se necessário)
+DevicePolicy=auto
+DeviceAllow=char-nvidia uvm rw
+DeviceAllow=char-nvidia-uvm-tools rw
+
+[Install]
+WantedBy=multi-user.target

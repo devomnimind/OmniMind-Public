@@ -1,0 +1,174 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  schedule:
+    # Executar scan diário às 6h UTC
+    - cron: '0 6 * * *'
+
+jobs:
+  security:
+    name: Security Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+        pip install bandit safety pip-audit
+
+    - name: Run Bandit Security Scan
+      id: bandit
+      run: |
+        echo "🔍 Executando Bandit security scan..."
+        bandit -r src/ -f json -o bandit-results.json --configfile .bandit
+
+        # Extrair métricas
+        HIGH=$(jq '.results.HIGH // 0' bandit-results.json)
+        MEDIUM=$(jq '.results.MEDIUM // 0' bandit-results.json)
+        LOW=$(jq '.results.LOW // 0' bandit-results.json)
+
+        echo "high_issues=$HIGH" >> $GITHUB_OUTPUT
+        echo "medium_issues=$MEDIUM" >> $GITHUB_OUTPUT
+        echo "low_issues=$LOW" >> $GITHUB_OUTPUT
+
+        echo "📊 Resultados Bandit:"
+        echo "  HIGH: $HIGH"
+        echo "  MEDIUM: $MEDIUM"
+        echo "  LOW: $LOW"
+
+    - name: Check Critical Security Issues
+      if: steps.bandit.outputs.high_issues > 0
+      run: |
+        echo "❌ CRITICAL: $HIGH_COUNT vulnerabilidades HIGH encontradas!"
+        echo ""
+        echo "🔧 Execute correções automáticas:"
+        echo "  python scripts/auto_fix_security.py"
+        echo ""
+        echo "📋 Vulnerabilidades HIGH devem ser corrigidas antes do merge"
+        jq '.issues[] | select(.issue_severity == "HIGH") | "\(.filename):\(.line_number) - \(.issue_text)"' bandit-results.json
+        exit 1
+
+    - name: Run Safety (Dependency Vulnerabilities)
+      id: safety
+      run: |
+        echo "🔍 Verificando vulnerabilidades de dependências..."
+        safety check --output json > safety-results.json || true
+
+        # Contar vulnerabilidades
+        VULN_COUNT=$(jq '.issues | length' safety-results.json 2>/dev/null || echo "0")
+        echo "vulnerabilities=$VULN_COUNT" >> $GITHUB_OUTPUT
+
+        echo "📊 Vulnerabilidades encontradas: $VULN_COUNT"
+
+    - name: Run pip-audit (Alternative Dependency Check)
+      id: pip-audit
+      run: |
+        echo "🔍 Executando pip-audit..."
+        pip-audit --format json > pip-audit-results.json || true
+
+        # Contar vulnerabilidades
+        AUDIT_COUNT=$(jq '. | length' pip-audit-results.json 2>/dev/null || echo "0")
+        echo "audit_issues=$AUDIT_COUNT" >> $GITHUB_OUTPUT
+
+        echo "📊 Issues pip-audit: $AUDIT_COUNT"
+
+    - name: Generate Security Report
+      run: |
+        echo "# Relatório de Segurança - ${{ github.sha }}"
+        echo ""
+        echo "## Métricas"
+        echo "- **Bandit HIGH:** ${{ steps.bandit.outputs.high_issues }}"
+        echo "- **Bandit MEDIUM:** ${{ steps.bandit.outputs.medium_issues }}"
+        echo "- **Bandit LOW:** ${{ steps.bandit.outputs.low_issues }}"
+        echo "- **Safety Vulnerabilities:** ${{ steps.safety.outputs.vulnerabilities }}"
+        echo "- **pip-audit Issues:** ${{ steps.pip-audit.outputs.audit_issues }}"
+        echo ""
+        echo "## Status"
+        if [ "${{ steps.bandit.outputs.high_issues }}" = "0" ]; then
+          echo "✅ **APROVADO** - Nenhum issue crítico"
+        else
+          echo "❌ **REPROVADO** - Issues críticos encontrados"
+        fi
+        echo ""
+        echo "## Detalhes"
+        echo "### Bandit Issues"
+        jq -r '.issues[] | "- \(.issue_severity): \(.filename):\(.line_number) \(.issue_text)"' bandit-results.json || echo "Nenhum issue detalhado"
+        echo ""
+        echo "### Safety Vulnerabilities"
+        jq -r '.issues[] | "- \(.package): \(.vulnerability)"' safety-results.json || echo "Nenhuma vulnerabilidade"
+        echo ""
+        echo "## Timestamp: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" > security-report.md
+
+    - name: Upload Security Results
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-results-${{ github.sha }}
+        path: |
+          bandit-results.json
+          safety-results.json
+          pip-audit-results.json
+          security-report.md
+
+    - name: Comment PR with Security Results
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const report = fs.readFileSync('security-report.md', 'utf8');
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `## 🔒 Security Scan Results\n\n${report}`
+          });
+
+    - name: Security Gate Check
+      run: |
+        # Gate: Nenhum HIGH issue permitido
+        if [ "${{ steps.bandit.outputs.high_issues }}" != "0" ]; then
+          echo "🚫 SECURITY GATE FAILED: High severity issues found"
+          echo "🔧 Run: python scripts/auto_fix_security.py"
+          exit 1
+        fi
+
+        # Gate: Máximo 5 vulnerabilidades de dependências
+        if [ "${{ steps.safety.outputs.vulnerabilities }}" -gt 5 ]; then
+          echo "🚫 SECURITY GATE FAILED: Too many dependency vulnerabilities"
+          echo "🔧 Run: pip install --upgrade <packages>"
+          exit 1
+        fi
+
+        echo "✅ SECURITY GATES PASSED"
+
+    - name: Notify Security Team
+      if: failure()
+      run: |
+        echo "🚨 Security scan failed - notification would be sent to security team"
+        # TODO: Integrate with Slack, Teams, or email notification</content>
+<parameter name="filePath">/home/fahbrain/projects/omnimind/github_workflows_templates/security.yml

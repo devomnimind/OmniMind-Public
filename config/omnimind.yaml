@@ -1,0 +1,160 @@
+# OmniMind Main Configuration File
+# Production-ready configuration for OmniMind Autonomous AI System
+
+version: "1.0"
+environment: "production"
+
+# Server Configuration
+server:
+  host: "0.0.0.0"
+  port: 8000
+  workers: ${OMNIMIND_WORKERS:-2}
+  reload: false
+  ssl_enabled: true
+  ssl_certfile: ".omnimind/ssl/certificate.crt"
+  ssl_keyfile: ".omnimind/ssl/private.key"
+
+# Database Configuration
+database:
+  type: "qdrant"
+  url: "${OMNIMIND_QDRANT_URL}"
+  api_key: "${OMNIMIND_QDRANT_API_KEY}"
+  collection: "${OMNIMIND_QDRANT_COLLECTION}"
+  vector_size: 384
+  distance_metric: "Cosine"
+
+# Supabase Configuration (for cloud features)
+supabase:
+  url: "${OMNIMIND_SUPABASE_URL}"
+  anon_key: "${OMNIMIND_SUPABASE_ANON_KEY}"
+  service_role_key: "${OMNIMIND_SUPABASE_SERVICE_ROLE_KEY}"
+  project_id: "${OMNIMIND_SUPABASE_PROJECT}"
+
+# Quantum Configuration
+quantum:
+  backend: "simulator" # Options: "simulator", "ibmq", "dwave"
+  ibmq_token: "${IBMQ_API_TOKEN}"
+  dwave_token: "${DWAVE_API_TOKEN}"
+  dwave_solver: "Advantage_system6.4"
+  use_real_hardware: false # Set to true to use actual QPU
+
+# Security Configuration
+security:
+  jwt_secret: "change-this-in-production-to-a-secure-random-string"
+  jwt_algorithm: "HS256"
+  jwt_expiration_hours: 24
+
+  cors_origins:
+    - "http://localhost:4173"
+    - "http://localhost:3000"
+    - "https://localhost:4173"
+    - "https://localhost:3000"
+
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 60
+    burst_limit: 10
+
+# Authentication Configuration
+authentication:
+  dashboard_user: "${OMNIMIND_DASHBOARD_USER:-dashboard}"
+  dashboard_pass: "${OMNIMIND_DASHBOARD_PASS:-omnimind}"
+  enable_basic_auth: true
+
+# AI/ML Configuration
+ai:
+  huggingface_token: "${HUGGING_FACE_HUB_TOKEN}"
+
+  # Local LLM Configuration
+  local_llm:
+    enabled: true
+    model_path: "models/llama-2-7b-chat.gguf"
+    context_window: 4096
+    threads: 4
+    gpu_layers: 32
+
+  # External AI Providers Configuration
+  external_ai:
+    enabled: true
+    providers_config: "config/external_ai_providers.yaml"
+    delegation_enabled: true
+    isolation_level: "strict"
+    audit_enabled: true
+    max_concurrent_delegations: 5
+    delegation_timeout_seconds: 300
+
+  # Embedding Configuration
+  embeddings:
+    model: "sentence-transformers/all-MiniLM-L6-v2"
+    device: "cuda"  # or "cpu"
+    max_seq_length: 512
+
+# Metacognition Configuration
+metacognition:
+  enabled: true
+  consciousness_tracking: true
+  goal_generation: true
+  self_optimization: true
+  homeostasis_enabled: true
+
+# Monitoring & Observability
+monitoring:
+  enabled: true
+  health_check_interval: 30  # seconds
+  metrics_enabled: true
+  prometheus_port: 9090
+
+  # OpenTelemetry Configuration
+  tracing:
+    enabled: true
+    service_name: "omnimind"
+    service_version: "1.0.0"
+    otlp_endpoint: "http://localhost:4317"
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "json"
+  file: "logs/omnimind.log"
+  max_file_size: "10 MB"
+  backup_count: 5
+
+  # Structured logging
+  structured: true
+  include_extra_fields: true
+
+# Backup Configuration
+backup:
+  enabled: true
+  schedule: "daily"
+  retention_days: 30
+  compression: true
+  encryption: true
+
+# Performance Configuration
+performance:
+  max_concurrent_tasks: 10
+  memory_limit_gb: 8
+  cpu_limit_cores: 4
+  gpu_memory_limit_gb: 4
+
+# Feature Flags
+features:
+  web_dashboard: true
+  api_documentation: true
+  websocket_realtime: true
+  multi_tenant: false  # Disabled for local deployment
+  advanced_analytics: true
+  chaos_engineering: true
+  load_testing: true
+
+# Development/Production Overrides
+development:
+  reload: true
+  debug: true
+  log_level: "DEBUG"
+
+production:
+  reload: false
+  debug: false
+  log_level: "WARNING"
