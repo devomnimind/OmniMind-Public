@@ -175,6 +175,7 @@ logs/.gitkeep
 deploy/data/
 report*.nsys-rep
 report*.sqlite
+logs/*.pid
 
 # ------------------------------------------------------------------
 # Mypy/Pytest/Test artifacts (gerados em execução)
