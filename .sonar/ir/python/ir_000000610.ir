@@ -1,0 +1,19 @@
+
+¯¥"Check if connection is stale.
+
+        Args:
+            max_age_seconds: Maximum age in seconds
+
+        Returns:
+            True if connection is stale
+        "strselfD D(max_age_secondsD D(+"Ç#
+!
+M M("
+timetimeBfloat-
++
+M M(-"#get-field# last_used_at:6
+4
+M M(-age"#dependent-value#*:Bfloat)
+'
+N N($"?python-unknown?*:
+N N($*H/home/fahbrain/projects/omnimind/src/scaling/database_connection_pool.py

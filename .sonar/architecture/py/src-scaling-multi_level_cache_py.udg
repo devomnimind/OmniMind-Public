@@ -1,0 +1,365 @@
+
+1.0PythonFrontend"1763831844378*py2.B´
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+%
+ src/scaling/multi_level_cache.py9
+#
+src.scaling.multi_level_cache11
+
+
+json12
+
+
+time14
+
+dataclasses16
+
+
+enum18
+
+typing20
+
+hashlib22
+2
+,src.scaling.multi_level_cache.EvictionPolicy24
+
+	enum.Enum26
+.
+(src.scaling.multi_level_cache.CacheEntry28
+6
+0src.scaling.multi_level_cache.CacheEntry.to_dict30
+
+
+dict32
+9
+3src.scaling.multi_level_cache.CacheEntry.is_expired34
+
+
+bool36
+<
+6src.scaling.multi_level_cache.CacheEntry.mark_accessed38
+3
+-src.scaling.multi_level_cache.MultiLevelCache40
+=
+7src.scaling.multi_level_cache.MultiLevelCache.get_stats42
+C
+=src.scaling.multi_level_cache.MultiLevelCache.cache_decorator44
+.
+(src.scaling.multi_level_cache.CacheLevel46
+9
+3src.scaling.multi_level_cache.MultiLevelCache.clear48
+:
+4src.scaling.multi_level_cache.MultiLevelCache.delete50
+	
+str52
+<
+6src.scaling.multi_level_cache.MultiLevelCache.__init__54
+/
+)src.scaling.multi_level_cache.CacheConfig56
+7
+1src.scaling.multi_level_cache.MultiLevelCache.get58
+7
+1src.scaling.multi_level_cache.MultiLevelCache.set60
+.
+(src.scaling.multi_level_cache.CacheLayer62
+9
+3src.scaling.multi_level_cache.CacheLayer._evict_lfu64
+2
+,src.scaling.multi_level_cache.CacheLayer.set66
+C
+=src.scaling.multi_level_cache.CacheLayer._update_access_order68
+2
+,src.scaling.multi_level_cache.CacheLayer.get70
+:
+4src.scaling.multi_level_cache.CacheLayer._evict_fifo72
+5
+/src.scaling.multi_level_cache.CacheLayer._evict74
+=
+7src.scaling.multi_level_cache.CacheLayer._evict_expired76
+8
+2src.scaling.multi_level_cache.CacheLayer.get_stats78
+.
+(src.scaling.multi_level_cache.CacheStats80
+5
+/src.scaling.multi_level_cache.CacheLayer.delete82
+9
+3src.scaling.multi_level_cache.CacheLayer._evict_lru84
+>
+8src.scaling.multi_level_cache.CacheLayer._needs_eviction86
+	
+int88
+4
+.src.scaling.multi_level_cache.CacheLayer.clear90
+>
+8src.scaling.multi_level_cache.CacheLayer._calculate_size92
+7
+1src.scaling.multi_level_cache.CacheLayer.__init__94
+6
+0src.scaling.multi_level_cache.CacheStats.to_dict96
+7
+1src.scaling.multi_level_cache.CacheStats.hit_rate98
+
+float100J
+
+8
+89j¬
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25246 210
+
+27
+27266
+
+29
+29286 210
+
+31
+31307 229
+
+33
+33326
+
+35
+35347 229
+
+37
+37366
+
+39
+39387 229
+
+41
+41406 210
+
+43
+43427 241
+
+45
+45447 241
+
+47
+47466 210
+
+49
+49487 241
+
+51
+51507 241
+
+53
+53526
+
+55
+55547 241
+
+57
+57566 210
+
+59
+59587 241
+
+61
+61607 241
+
+63
+63626 210
+
+65
+65647 263
+
+67
+67667 263
+
+69
+69687 263
+
+71
+71707 263
+
+73
+73727 263
+
+75
+75747 263
+
+77
+77767 263
+
+79
+79787 263
+
+81
+81806 210
+
+83
+83827 263
+
+85
+85847 263
+
+87
+87867 263
+
+89
+89886
+
+91
+91907 263
+
+93
+93927 263
+
+95
+95947 263
+
+97
+97967 281
+
+99
+99987 281
+
+101
+1011006rΩ
+
+10131*
+8	 	(
+
+10151*
+8
+ 
+(
+
+10171*
+8 ()
+
+10191*
+8 (
+
+10211*
+8 (@
+
+10231*
+8 (
+
+25272*
+8 (
+
+31333*
+8P	 P(
+
+35373*
+8@	 @(
+
+43333*
+8˜	 ˜(
+
+45474*
+8ç	 ç(
+
+51373*
+8·	 ·(
+
+51534*
+8·	 ·(
+
+55574*
+8ä	 ä(
+
+55574*
+8ä	 ä(
+
+55574*
+8ä	 ä(
+
+59534*
+8ù	 ù(
+
+61373*
+8¬	 ¬(
+
+61534*
+8¬	 ¬(
+
+61474*
+8¬	 ¬(
+
+67373*
+8œ	 œ(
+
+67534*
+8œ	 œ(
+
+69534*
+8’	 ’(
+
+71534*
+8≥	 ≥(
+
+79813*
+8	 (
+
+83373*
+8˘	 ˘(
+
+83534*
+8˘	 ˘(
+
+87373*
+8ë	 ë(
+
+87894*
+8ë	 ë(
+
+93893*
+8ﬂ	 ﬂ(
+
+95474*
+8†	 †(
+
+95574*
+8†	 †(
+
+47272*
+8 (
+
+97333*
+8{	 {(
+
+991013*
+8p	 p(

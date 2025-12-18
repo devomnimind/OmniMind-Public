@@ -1,0 +1,14 @@
+[
+  {
+    "timestamp": "2025-12-05T12:08:03.605879+00:00",
+    "qdrant_status": "up",
+    "qdrant_mode": "local",
+    "supabase_status": "up",
+    "fast_test_status": "ok",
+    "consolidation_status": "skipped",
+    "consolidation_episodes": null,
+    "consolidation_concepts_created": null,
+    "consolidation_concepts_updated": null,
+    "consolidation_relationships_created": null
+  }
+]

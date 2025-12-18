@@ -1,0 +1,25 @@
+
+	0.4float
+ri"Calculate overall solution score.
+
+        Returns:
+            Weighted average of all scores
+        "str
+0.3floatselfI I("ô.
+,
+Q Q("#get-field# novelty_score:1
+/
+Q Q($"#dependent-value#*:Bfloat2
+0
+R R($"#get-field# feasibility_score:1
+/
+R R(*"#dependent-value#*:Bfloat4
+2
+S S(&"!#get-field# effectiveness_score:1
+/
+S S(,
+"#dependent-value#*:	Bfloat/
+-
+Q S(,"#dependent-value#:
+Bfloat
+P T(	*M/home/fahbrain/projects/omnimind/src/consciousness/creative_problem_solver.py

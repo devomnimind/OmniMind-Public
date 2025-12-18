@@ -27,6 +27,7 @@ Testa se a correção da API IBM Quantum está funcionando.
 
 import os
 import sys
+
 from dotenv import load_dotenv
 
 # Adicionar root ao path
@@ -34,8 +35,9 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from src.quantum_consciousness.qpu_interface import QPUInterface, BackendType
 from qiskit import QuantumCircuit
+
+from src.quantum_consciousness.qpu_interface import BackendType, QPUInterface
 
 
 def test_ibm_api_fixed():

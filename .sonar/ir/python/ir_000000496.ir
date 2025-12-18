@@ -1,0 +1,25 @@
+
+<3"Lazy import to avoid loading torch if not needed."str
+8	/"module {__name__!r} has no attribute {name!r}"str
+!"ThermodynamicAttention"str
+*!"MultiHeadThermodynamicAttention"strname ("T*
+(
+ ('"
+#binop ==#2==:Bbool&"$
+ (' * (2 ("N:
+8
+ (CThermodynamicAttention"?python-unknown?
+ (%"L*
+(
+	 (2"
+#binop ==#2==:Bbool"
+	 (2 * ("WC
+A
+ (LMultiHeadThermodynamicAttention"?python-unknown?
+ (."J6
+4
+
+ (J
+"AttributeError*:	BAttributeError2
+ (J
+*:/home/fahbrain/projects/omnimind/src/attention/__init__.py

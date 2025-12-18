@@ -1,0 +1,412 @@
+
+1.0PythonFrontend"1763831832565*py2.B¿
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+!
+src/lacanian/desire_graph.py9
+
+src.lacanian.desire_graph11
+
+
+__future__12
+
+typing14
+
+dataclasses16
+
+
+enum18
+
+random20
+
+
+statistics22
+
+logging24
+
+collections26
+.
+(src.lacanian.desire_graph.SymbolicMatrix28
+@
+:src.lacanian.desire_graph.SymbolicMatrix.generate_behavior30
+
+
+dict32
+	
+set34
+B
+<src.lacanian.desire_graph.SymbolicMatrix.add_production_rule36
+	
+str38
+7
+1src.lacanian.desire_graph.SymbolicMatrix.__init__40
+A
+;src.lacanian.desire_graph.SymbolicMatrix.set_name_of_father42
+)
+#src.lacanian.desire_graph.Signifier44
+@
+:src.lacanian.desire_graph.Signifier.represents_subject_for46
+
+
+bool48
+9
+3src.lacanian.desire_graph.Signifier.compute_meaning50
+
+
+list52
+.
+(src.lacanian.desire_graph.SignifierChain54
+>
+8src.lacanian.desire_graph.SignifierChain.metonymic_slide56
+D
+>src.lacanian.desire_graph.SignifierChain.create_quilting_point58
+	
+int60
+<
+6src.lacanian.desire_graph.SignifierChain.add_signifier62
+F
+@src.lacanian.desire_graph.SignifierChain.metaphoric_substitution64
+1
++src.lacanian.desire_graph.SignifierPosition66
+
+	enum.Enum68
+6
+0src.lacanian.desire_graph.JouissanceRewardSystem70
+I
+Csrc.lacanian.desire_graph.JouissanceRewardSystem.compute_jouissance72
+
+float74
+P
+Jsrc.lacanian.desire_graph.JouissanceRewardSystem.beyond_pleasure_principle76
+?
+9src.lacanian.desire_graph.JouissanceRewardSystem.__init__78
+7
+1src.lacanian.desire_graph.DesireGraphArchitecture80
+F
+@src.lacanian.desire_graph.DesireGraphArchitecture.process_desire82
+@
+:src.lacanian.desire_graph.DesireGraphArchitecture.__init__84
+S
+Msrc.lacanian.desire_graph.DesireGraphArchitecture._initialize_basic_structure86
+/
+)src.lacanian.desire_graph.LacanianGraphII88
+>
+8src.lacanian.desire_graph.LacanianGraphII.compute_desire90
+=
+7src.lacanian.desire_graph.LacanianGraphII.drive_circuit92
+8
+2src.lacanian.desire_graph.LacanianGraphII.__init__94
+<
+6src.lacanian.desire_graph.LacanianGraphII.create_chain96
+B
+<src.lacanian.desire_graph.LacanianGraphII.connect_signifiers98
+A
+:src.lacanian.desire_graph.LacanianGraphII.position_subject100
+@
+9src.lacanian.desire_graph.LacanianGraphII.fantasy_formula102
+
+tuple104
+>
+7src.lacanian.desire_graph.LacanianGraphII.add_signifier106J
+
+8
+89j¯
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29286 210
+
+31
+31307 229
+
+33
+33326
+
+35
+35346
+
+37
+37367 229
+
+39
+39386
+
+41
+41407 229
+
+43
+43427 229
+
+45
+45446 210
+
+47
+47467 245
+
+49
+49486
+
+51
+51507 245
+
+53
+53526
+
+55
+55546 210
+
+57
+57567 255
+
+59
+59587 255
+
+61
+61606
+
+63
+63627 255
+
+65
+65647 255
+
+67
+67666 210
+
+69
+69686
+
+71
+71706 210
+
+73
+73727 271
+
+75
+75746
+
+77
+77767 271
+
+79
+79787 271
+
+81
+81806 210
+
+83
+83827 281
+
+85
+85847 281
+
+87
+87867 281
+
+89
+89886 210
+
+91
+91907 289
+
+93
+93927 289
+
+95
+95947 289
+
+97
+97967 289
+
+99
+99987 289
+
+101
+1011007 289
+
+103
+1031027 289
+
+105
+1051046
+
+107
+1071067 289rÙ	
+
+10131*
+8 (#
+
+10151*
+8 (C
+
+10171*
+8 ()
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (
+
+10251*
+8 (
+
+10271*
+8 ($
+
+31334*
+8√	 √(
+
+31354*
+8√	 √(
+
+37394*
+8©	 ©(
+
+43394*
+8∂	 ∂(
+
+47493*
+8M	 M(
+
+47394*
+8M	 M(
+
+51533*
+8[	 [(
+
+51334*
+8[	 [(
+
+57533*
+8≠	 ≠(
+
+59614*
+8ü	 ü(
+
+63394*
+8ö	 ö(
+
+65553*
+8º	 º( 
+
+65394*
+8º	 º( 
+
+65394*
+8º	 º( 
+
+67692*
+8$ $(
+
+73753*
+8Ã	 Ã(
+
+73754*
+8Ã	 Ã(
+
+73754*
+8Ã	 Ã(
+
+73754*
+8Ã	 Ã(
+
+77753*
+8Ó	 Ó("
+
+77534*
+8Ó	 Ó("
+
+79754*
+8¿	 ¿(
+
+83333*
+8©	 ©(
+
+83534*
+8©	 ©(
+
+83334*
+8©	 ©(
+
+91333*
+8¡	 ¡(
+
+93533*
+8Ì	 Ì(
+
+93394*
+8Ì	 Ì(
+
+93754*
+8Ì	 Ì(
+
+97553*
+8†	 †(
+
+97534*
+8†	 †(
+
+99394*
+8í	 í(
+
+99394*
+8í	 í(
+
+101394*
+8¥	 ¥(
+
+1031053*
+8ù	 ù(
+
+107394*
+8˝	 ˝(
+
+107674*
+8˝	 ˝(
+
+107754*
+8˝	 ˝(

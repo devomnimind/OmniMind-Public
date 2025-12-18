@@ -1,0 +1,28 @@
+
+"division by zero"bool
+"Mean memory usage."str
+	"S3518"bool
+
+"a"bool
+
+0intself4 4("Á0
+.
+6 6('"#get-field# memory_peaks_mb:%
+#
+6 6(("
+builtinssum*:0
+.
+6/ 6(C"#get-field# memory_peaks_mb:*
+(
+6+ 6(D"
+builtinslen*:Bint*
+(
+6 6(D"
+#binop !=#2!=:Bbool 
+
+6 6(D"
+#assert#:	
+*
+(
+6 6(D"#dependent-value#*:
+6 6(D*A/home/fahbrain/projects/omnimind/src/optimization/benchmarking.py

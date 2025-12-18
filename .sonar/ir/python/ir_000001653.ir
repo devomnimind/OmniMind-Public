@@ -1,0 +1,35 @@
+
+…ø"Decorator for caching function results.
+
+        Args:
+            ttl_seconds: Optional TTL
+            level: Initial cache level
+
+        Returns:
+            Decorator function
+        "strself
+é é(ttl_seconds
+è è()level
+ê ê()"ò#
+!
+
+µ µ(
+"#unknown-value#*
+(
+
+ú µ(%closure"#new-object#(
+&
+
+ú µ("#set-field# self:/
+-
+
+ú µ("#set-field# ttl_seconds:)
+'
+
+ú µ("#set-field# level:-
++
+
+ú µ(	"?python-partial-apply?:
+
+µ µ(
+*A/home/fahbrain/projects/omnimind/src/scaling/multi_level_cache.py

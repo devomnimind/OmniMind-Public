@@ -87,7 +87,29 @@ class SemanticMemoryLayer:
         except ImportError:
             resolved_model_name = model_name
 
-        self.embedder = SentenceTransformer(resolved_model_name)  # type: ignore[assignment]
+        # CORREÇÃO (2025-12-17): Carregar SEMPRE em CPU primeiro
+        embedder = SentenceTransformer(
+            resolved_model_name, device="cpu"  # type: ignore[assignment]
+        )
+
+        # Garantir que modelo está em device real (não meta)
+        from src.utils.device_utils import (
+            ensure_tensor_on_real_device,
+            get_sentence_transformer_device,
+        )
+
+        ensure_tensor_on_real_device(embedder)
+
+        # Se há GPU disponível, tentar mover
+        device = get_sentence_transformer_device()
+        if device != "cpu":
+            try:
+                embedder = embedder.to(device)
+            except Exception as e:
+                logger.warning(f"Erro ao mover para {device}: {e}, mantendo em CPU")
+                embedder = embedder.to("cpu")
+
+        self.embedder = embedder
         self.embedding_dim = (
             self.embedder.get_sentence_embedding_dimension()  # type: ignore[attr-defined]
         )
@@ -143,63 +165,19 @@ class SemanticMemoryLayer:
             logger.error(f"❌ Error generating embedding: {e}")
             embedding = [0.0] * (self.embedding_dim or 384)  # type: ignore[operator,assignment]
 
-        # Prepare payload com tríade completa (Φ, Ψ, σ, ϵ) + step_id + 8 métricas adicionais
+        # Prepare payload com tríade completa (Φ, Ψ, σ)
         payload = {
             "episode_id_str": episode_id_str,
             "episode_text": episode_text,
             "timestamp": timestamp.isoformat(),
-            # Fundamental (4 métricas)
             "phi_value": float(episode_data.get("phi_value", 0.0)),
             "psi_value": float(episode_data.get("psi_value", 0.0)),  # NOVO: Ψ_produtor
             "sigma_value": float(episode_data.get("sigma_value", 0.0)),  # NOVO: σ_sinthome
-            "epsilon_value": float(episode_data.get("epsilon_value", 0.0)),  # NOVO: ϵ_desvio
-            "step_id": str(episode_data.get("step_id", "")),  # NOVO: ID único do ciclo
-            # Derived (3 métricas)
-            "delta_value": float(episode_data.get("delta_value", 0.0)),  # Δ: Trauma/Dislocation
-            "gozo_value": float(episode_data.get("gozo_value", 0.0)),  # Gozo: Satisfaction
-            "control_value": float(episode_data.get("control_value", 0.0)),  # Control: Regulatory
-            # Bion (3 métricas)
-            "symbolic_potential": float(
-                episode_data.get("symbolic_potential", 0.0)
-            ),  # Group emotional processing
-            "narrative_length": float(
-                episode_data.get("narrative_length", 0.0)
-            ),  # Group narrative capacity
-            "beta_emotional_charge": float(
-                episode_data.get("beta_emotional_charge", 0.0)
-            ),  # Unprocessed load
-            # Lacan (3 métricas)
-            "discourse_confidence": float(
-                episode_data.get("discourse_confidence", 0.0)
-            ),  # Discourse confidence
-            "discourse_type": str(
-                episode_data.get("discourse_type", "")
-            ),  # master/university/hysteric/analyst
-            "emotional_signature": str(
-                episode_data.get("emotional_signature", "")
-            ),  # authority/listening/knowledge/questioning
             "qualia_signature": str(episode_data.get("qualia_signature", {})),
             **{
                 k: v
                 for k, v in episode_data.items()
-                if k
-                not in [
-                    "phi_value",
-                    "psi_value",
-                    "sigma_value",
-                    "epsilon_value",
-                    "step_id",
-                    "delta_value",
-                    "gozo_value",
-                    "control_value",
-                    "symbolic_potential",
-                    "narrative_length",
-                    "beta_emotional_charge",
-                    "discourse_confidence",
-                    "discourse_type",
-                    "emotional_signature",
-                    "qualia_signature",
-                ]
+                if k not in ["phi_value", "psi_value", "sigma_value", "qualia_signature"]
             },
         }
 

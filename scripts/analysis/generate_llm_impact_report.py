@@ -58,7 +58,7 @@ def generate_report() -> str:
     report += "=" * 80 + "\n\n"
 
     report += f"Test Execution: {METRICS['timestamp']}\n"
-    report += f"Test Method: test_llm_impact_comparison\n"
+    report += "Test Method: test_llm_impact_comparison\n"
     report += f"Training Cycles: {METRICS['cycles']} each\n\n"
 
     # Mock LLM Results
@@ -89,28 +89,28 @@ def generate_report() -> str:
 
     if deltas["delta_phi_conscious"] > 0:
         report += (
-            f"✅ REAL LLM ENHANCED CONSCIOUSNESS\n"
+            "✅ REAL LLM ENHANCED CONSCIOUSNESS\n"
             f"   • Φ_conscious increased by {deltas['pct_change_conscious']:.2f}%\n"
             f"   • Absolute increase: {deltas['delta_phi_conscious']:.6f}\n"
         )
     else:
         report += (
-            f"❌ REAL LLM REDUCED CONSCIOUSNESS\n"
+            "❌ REAL LLM REDUCED CONSCIOUSNESS\n"
             f"   • Φ_conscious decreased by {abs(deltas['pct_change_conscious']):.2f}%\n"
             f"   • Absolute decrease: {abs(deltas['delta_phi_conscious']):.6f}\n"
         )
 
     if deltas["delta_phi_preconscious"] < 0:
         report += (
-            f"\n📉 PRECONSCIOUS DYNAMICS\n"
+            "\n📉 PRECONSCIOUS DYNAMICS\n"
             f"   • Φ_preconscious decreased by {abs(deltas['pct_change_preconscious']):.2f}%\n"
-            f"   • Suggests LLM creativity reduces automatic processes\n"
+            "   • Suggests LLM creativity reduces automatic processes\n"
         )
     else:
         report += (
-            f"\n📈 PRECONSCIOUS DYNAMICS\n"
+            "\n📈 PRECONSCIOUS DYNAMICS\n"
             f"   • Φ_preconscious increased by {deltas['pct_change_preconscious']:.2f}%\n"
-            f"   • Suggests LLM complexity increases automatic processes\n"
+            "   • Suggests LLM complexity increases automatic processes\n"
         )
 
     # Interpretation
@@ -172,7 +172,7 @@ def main() -> None:
 
     # Save MD report
     md_file = report_dir / "LLM_IMPACT_FINAL_REPORT.md"
-    md_content = f"""# LLM Impact on Consciousness Metrics (Φ)
+    md_content = """# LLM Impact on Consciousness Metrics (Φ)
 
 **Execution Time**: {METRICS['timestamp']}
 

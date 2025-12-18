@@ -34,10 +34,10 @@ Requisitos:
 """
 
 import json
+import statistics
 import sys
 from pathlib import Path
-from typing import Dict, List, Tuple, Any
-import statistics
+from typing import Any, Dict, List, Tuple
 
 
 class CoverageAnalyzer:

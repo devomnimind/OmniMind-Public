@@ -1,0 +1,182 @@
+
+Nsrc.agents.psychoanalytic_analyst.PsychoanalyticAnalyst._build_analysis_promptO
+E/home/fahbrain/projects/omnimind/src/agents/psychoanalytic_analyst.py\ \("2*ÿ
+2_ _(+
+a! r(	
+%1"dictÅ
+
+b b(,
+%2"__id*g
+
+__unknown_file (K*I;
+9src.agents.psychoanalytic_analyst.PsychoanalyticFramework"
+
+FREUDIANâ
+Ü
+b e(
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*"
+
+__unknown_file (
+
+%2*°
+
+__unknown_file (ÑÅ
+Foque em conflitos ed√≠picos, mecanismos de defesa (repress√£o, nega√ß√£o, proje√ß√£o), e a din√¢mica entre Id, Ego e Superego.Å
+
+f f(,
+%4"__id*g
+
+__unknown_file (K*I;
+9src.agents.psychoanalytic_analyst.PsychoanalyticFramework"
+
+LACANIANû
+õ
+f i(
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*"
+
+__unknown_file (
+
+%4*∂
+
+__unknown_file (ôñ
+ìAnalise a estrutura da linguagem, a fun√ß√£o do significante, o Real, o Simb√≥lico e o Imagin√°rio, e a posi√ß√£o do sujeito em rela√ß√£o ao Outro.Å
+
+j j(,
+%6"__id*g
+
+__unknown_file (K*I;
+9src.agents.psychoanalytic_analyst.PsychoanalyticFramework"
+
+KLEINIAN˚
+¯
+j m(
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*"
+
+__unknown_file (
+
+%6*ì
+
+__unknown_file (wu
+sIdentifique ansiedades primitivas, posi√ß√µes esquizo-paranoide e depressiva, e o uso de identifica√ß√£o projetiva.Ü
+É
+n n(0
+%8"__id*k
+
+__unknown_file (O*M;
+9src.agents.psychoanalytic_analyst.PsychoanalyticFramework"
+WINNICOTTIANå
+â
+n q(
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*"
+
+__unknown_file (
+
+%8*§
+
+__unknown_file (áÑ
+ÅObserve a rela√ß√£o com o ambiente, o papel do 'holding', objetos transicionais e a dial√©tica entre o verdadeiro e o falso self.P
+N
+a r(	
+framework_instructions"__id*"
+
+__unknown_file (
+
+%1O
+M
+v6 v(E
+%10"__id*4
+
+__unknown_file (*
+
+	framework"
+valueéã
+y y("
+%11"__mapGet*6
+
+__unknown_file (
+
+framework_instructions*)
+
+__unknown_file (
+
+	framework2__getitem__Õ
+ 
+	t è(
+%12"__concat*¨
+t v(5üú
+ô
+Voc√™ √© um assistente de IA especializado em psican√°lise. Sua tarefa √© analisar as seguintes
+notas de uma sess√£o cl√≠nica sob a √≥tica do framework *
+v6 v(E
+
+%10*0
+vF y&$
+".
+
+**Instru√ß√µes do Framework:**
+*
+y y("
+
+%11**
+y# } 
+
+
+**Notas da Sess√£o:**
+---
+*
+} }(
+
+session_notes*’
+} è…∆
+√
+---
+
+**Sua An√°lise (responda em formato JSON):**
+Com base nas notas e no framework, forne√ßa a seguinte estrutura:
+{{
+  "hypothesis": "Formule uma hip√≥tese interpretativa central sobre o material apresentado.",
+  "resistance": (
+      "Identifique poss√≠veis pontos de resist√™ncia ou defesas not√°veis no discurso."
+  ),
+  "key_elements": (
+      "Liste 3 a 5 elementos-chave (s√≠mbolos, atos falhos, padr√µes de repeti√ß√£o) "
+      "que se destacam."
+  ),
+  "observations": (
+      "Ofere√ßa uma breve observa√ß√£o ou quest√£o que poderia guiar a pr√≥xima sess√£o."
+  )
+}}
+B
+@
+	t è(
+prompt"__id*#
+
+__unknown_file (
+
+%12"
+
+ê ê(
+
+
+prompt:
+] ]( 
+session_notes:
+]" ](D
+	frameworkB;9
+7src.agents.psychoanalytic_analyst.PsychoanalyticAnalystH

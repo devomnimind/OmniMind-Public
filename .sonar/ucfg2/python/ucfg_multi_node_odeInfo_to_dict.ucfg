@@ -1,0 +1,312 @@
+
+'src.scaling.multi_node.NodeInfo.to_dictD
+:/home/fahbrain/projects/omnimind/src/scaling/multi_node.pyH H("2*
+2I I($
+J X(	
+%1"dictf
+d
+K K(#
+%2"__id*L
+
+__unknown_file (0*.!
+src.scaling.multi_node.NodeInfo"	
+node_idŽ
+‹
+K K(#
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+node_id*"
+
+__unknown_file (
+
+%2g
+e
+L L(%
+%4"__id*M
+
+__unknown_file (1*/!
+src.scaling.multi_node.NodeInfo"
+
+hostname
+Œ
+L L(%
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+hostname*"
+
+__unknown_file (
+
+%4i
+g
+M M()
+%6"__id*O
+
+__unknown_file (3*1!
+src.scaling.multi_node.NodeInfo"
+
+ip_address‘
+Ž
+M M()
+%7"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+ip_address*"
+
+__unknown_file (
+
+%6c
+a
+N N(
+%8"__id*I
+
+__unknown_file (-*+!
+src.scaling.multi_node.NodeInfo"
+port‹
+ˆ
+N N(
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+port*"
+
+__unknown_file (
+
+%8f
+d
+O O(!
+%10"__id*K
+
+__unknown_file (/*-!
+src.scaling.multi_node.NodeInfo"
+statusI
+G
+O O('
+%11"__id*.
+
+__unknown_file (*
+
+%10"
+value
+Œ
+O O('
+%12"__mapSet*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+status*#
+
+__unknown_file (
+
+%11i
+g
+P P('
+%13"__id*N
+
+__unknown_file (2*0!
+src.scaling.multi_node.NodeInfo"
+	cpu_cores’
+
+P P('
+%14"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	cpu_cores*#
+
+__unknown_file (
+
+%13i
+g
+Q Q('
+%15"__id*N
+
+__unknown_file (2*0!
+src.scaling.multi_node.NodeInfo"
+	memory_gb’
+
+Q Q('
+%16"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	memory_gb*#
+
+__unknown_file (
+
+%15t
+r
+R$ R(=
+%17"__id*Y
+
+__unknown_file (=*;!
+src.scaling.multi_node.NodeInfo"
+max_concurrent_tasks
+š
+R R(=
+%18"__mapSet*"
+
+__unknown_file (
+
+%1*4
+
+__unknown_file (
+max_concurrent_tasks*#
+
+__unknown_file (
+
+%17m
+k
+S S(/
+%19"__id*R
+
+__unknown_file (6*4!
+src.scaling.multi_node.NodeInfo"
+current_tasks–
+“
+S S(/
+%20"__mapSet*"
+
+__unknown_file (
+
+%1*-
+
+__unknown_file (
+current_tasks*#
+
+__unknown_file (
+
+%19u
+s
+T% T(?
+%21"__id*Z
+
+__unknown_file (>*<!
+src.scaling.multi_node.NodeInfo"
+total_tasks_completedž
+›
+T T(?
+%22"__mapSet*"
+
+__unknown_file (
+
+%1*5
+
+__unknown_file (
+total_tasks_completed*#
+
+__unknown_file (
+
+%21n
+l
+U U(1
+%23"__id*S
+
+__unknown_file (7*5!
+src.scaling.multi_node.NodeInfo"
+last_heartbeat`^
+U U(=
+%24"datetime.datetime.isoformat*#
+
+__unknown_file (
+
+%232	isoformat—
+”
+U U(=
+%25"__mapSet*"
+
+__unknown_file (
+
+%1*.
+
+__unknown_file (
+last_heartbeat*#
+
+__unknown_file (
+
+%24ec
+V V(1
+%26*?
+
+__unknown_file (#!
+src.scaling.multi_node.NodeInfo2get_load_factor”
+‘
+V V(1
+%27"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+load_factor*#
+
+__unknown_file (
+
+%26
+W W(3
+%28"listl
+j
+W! W(2
+%29"__id*Q
+
+__unknown_file (5*3!
+src.scaling.multi_node.NodeInfo"
+capabilitiesge
+W W(3
+%30*#
+
+__unknown_file (
+
+%28*#
+
+__unknown_file (
+
+%292__init__•
+’
+W W(3
+%31"__mapSet*"
+
+__unknown_file (
+
+%1*,
+
+__unknown_file (
+capabilities*#
+
+__unknown_file (
+
+%28"
+J X(	
+
+%1B#!
+src.scaling.multi_node.NodeInfoH

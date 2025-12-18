@@ -1,0 +1,204 @@
+
+,src.metacognition.self_healing.Issue.to_dictL
+B/home/fahbrain/projects/omnimind/src/metacognition/self_healing.py8 8("2*ò
+29 9($
+: C(	
+%1"dictn
+l
+; ;()
+%2"__id*T
+
+__unknown_file (8*6&
+$src.metacognition.self_healing.Issue"
+
+issue_typeG
+E
+; ;(/
+%3"__id*-
+
+__unknown_file (*
+
+%2"
+valueë
+é
+; ;(/
+%4"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+issue_type*"
+
+__unknown_file (
+
+%3l
+j
+< <(%
+%5"__id*R
+
+__unknown_file (6*4&
+$src.metacognition.self_healing.Issue"
+
+severityG
+E
+< <(+
+%6"__id*-
+
+__unknown_file (*
+
+%5"
+valueè
+å
+< <(+
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+severity*"
+
+__unknown_file (
+
+%6o
+m
+= =(+
+%8"__id*U
+
+__unknown_file (9*7&
+$src.metacognition.self_healing.Issue"
+descriptioní
+è
+= =(+
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+description*"
+
+__unknown_file (
+
+%8p
+n
+> >(+
+%10"__id*U
+
+__unknown_file (9*7&
+$src.metacognition.self_healing.Issue"
+detected_at`^
+> >(7
+%11"datetime.datetime.isoformat*#
+
+__unknown_file (
+
+%102	isoformatî
+ë
+> >(7
+%12"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+detected_at*#
+
+__unknown_file (
+
+%11l
+j
+? ?(#
+%13"__id*Q
+
+__unknown_file (5*3&
+$src.metacognition.self_healing.Issue"	
+metricsê
+ç
+? ?(#
+%14"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+metrics*#
+
+__unknown_file (
+
+%13z
+x
+@% @(?
+%15"__id*_
+
+__unknown_file (C*A&
+$src.metacognition.self_healing.Issue"
+remediation_attemptedû
+õ
+@ @(?
+%16"__mapSet*"
+
+__unknown_file (
+
+%1*5
+
+__unknown_file (
+remediation_attempted*#
+
+__unknown_file (
+
+%15{
+y
+A& A(A
+%17"__id*`
+
+__unknown_file (D*B&
+$src.metacognition.self_healing.Issue"
+remediation_successfulü
+ú
+A A(A
+%18"__mapSet*"
+
+__unknown_file (
+
+%1*6
+
+__unknown_file (
+remediation_successful*#
+
+__unknown_file (
+
+%17x
+v
+B# B(;
+%19"__id*]
+
+__unknown_file (A*?&
+$src.metacognition.self_healing.Issue"
+remediation_detailsú
+ô
+B B(;
+%20"__mapSet*"
+
+__unknown_file (
+
+%1*3
+
+__unknown_file (
+remediation_details*#
+
+__unknown_file (
+
+%19"
+: C(	
+
+%1B(&
+$src.metacognition.self_healing.IssueH

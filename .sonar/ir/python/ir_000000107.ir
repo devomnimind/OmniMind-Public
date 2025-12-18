@@ -1,0 +1,54 @@
+
+	10.0float
+0.0float
+ÏÅ"
+        Compute overall urgency factor from evaporation events.
+
+        Args:
+            evaporated_ids: IDs of evaporated knowledge
+
+        Returns:
+            Urgency factor (0-1)
+        "str
+1.0floatself
+ï  ï($evaporated_ids
+ï& ï(?"|+
+)
+
+ù ù("
+__bool__*:BboolH+
+)
+
+ù ù("#unaryop !#2!:Bbool "
+
+ù ù( *
+ù ù(
+"
+
+ú ú("Ê-
++
+
+þ ‚("?python-unknown?:BlistA
+?
+
+ý ƒ(	recent_evaporations"
+builtinslen*:Bint<
+:
+
+… …(,
+urgency"#dependent-value#*:	Bfloat(
+&
+
+‡ ‡(/"
+builtinsmin*:
+(
+&
+
+‡ ‡(0"
+builtinsmax*:0
+.
+
+‡ ‡(1"
+builtinsfloat*:Bfloat
+
+‡ ‡(1*E/home/fahbrain/projects/omnimind/src/motivation/hawking_motivation.py

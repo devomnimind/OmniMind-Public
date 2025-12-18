@@ -1,0 +1,301 @@
+
+1.0PythonFrontend"1763831829707*py2.Bß
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+ 
+src/security/web_scanner.py9
+
+src.security.web_scanner11
+
+
+subprocess12
+
+datetime14
+
+typing16
+
+dataclasses18
+
+
+enum20
+
+urllib.parse22
+
+requests24
+
+src.audit.immutable_audit26
+
+src.audit.alerting_system28
+5
+/src.security.web_scanner.check_security_headers30
+
+
+list32
+	
+str34
+/
+)src.security.web_scanner.WebVulnerability36
+=
+7src.security.web_scanner.WebVulnerability.__post_init__38
+3
+-src.security.web_scanner.scan_web_application40
+
+
+dict42
+4
+.src.security.web_scanner.VulnerabilitySeverity44
+
+	enum.Enum46
+.
+(src.security.web_scanner.WebScannerBrain48
+7
+1src.security.web_scanner.WebScannerBrain.scan_url50
+
+
+bool52
+<
+6src.security.web_scanner.WebScannerBrain._is_valid_url54
+@
+:src.security.web_scanner.WebScannerBrain._generate_summary56
+F
+@src.security.web_scanner.WebScannerBrain._check_security_headers58
+>
+8src.security.web_scanner.WebScannerBrain._run_nikto_scan60
+E
+?src.security.web_scanner.WebScannerBrain._vulnerability_to_dict62
+E
+?src.security.web_scanner.WebScannerBrain._check_nikto_available64
+7
+1src.security.web_scanner.WebScannerBrain.__init__66
+B
+<src.security.web_scanner.WebScannerBrain._check_common_files68
+@
+:src.security.web_scanner.WebScannerBrain._check_ssl_config70
+B
+<src.security.web_scanner.WebScannerBrain._check_http_methods72
+0
+*src.security.web_scanner.VulnerabilityType74J
+
+8
+89jî
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31307 210
+
+33
+33326
+
+35
+35346
+
+37
+37366 210
+
+39
+39387 237
+
+41
+41407 210
+
+43
+43426
+
+45
+45446 210
+
+47
+47466
+
+49
+49486 210
+
+51
+51507 249
+
+53
+53526
+
+55
+55547 249
+
+57
+57567 249
+
+59
+59587 249
+
+61
+61607 249
+
+63
+63627 249
+
+65
+65647 249
+
+67
+67667 249
+
+69
+69687 249
+
+71
+71707 249
+
+73
+73727 249
+
+75
+75746 210rÐ
+
+10131*
+8 (
+
+10151*
+8 ((
+
+10171*
+8 (-
+
+10191*
+8 ()
+
+10211*
+8 (
+
+10231*
+8 ("
+
+10251*
+8 (
+
+10271*
+8 (K
+
+10291*
+8 (Q
+
+31333*
+8¾ ¾(
+
+31354*
+8¾ ¾(
+
+41433*
+8¸ ¸(
+
+41354*
+8¸ ¸(
+
+45472*
+8& &(
+
+51433*
+8l	 l(
+
+51354*
+8l	 l(
+
+51354*
+8l	 l(
+
+51534*
+8l	 l(
+
+55533*
+8¾	 ¾(
+
+55354*
+8¾	 ¾(
+
+57433*
+8™	 ™(
+
+57334*
+8™	 ™(
+
+59333*
+8Æ	 Æ( 
+
+59354*
+8Æ	 Æ( 
+
+61333*
+8ê	 ê(
+
+61354*
+8ê	 ê(
+
+63433*
+8‹	 ‹(
+
+63374*
+8‹	 ‹(
+
+65533*
+8`	 `(
+
+69333*
+8‚	 ‚(
+
+69354*
+8‚	 ‚(
+
+71333*
+8¬	 ¬(
+
+71354*
+8¬	 ¬(
+
+73333*
+8Ð	 Ð(
+
+73354*
+8Ð	 Ð(
+
+75472*
+8 (

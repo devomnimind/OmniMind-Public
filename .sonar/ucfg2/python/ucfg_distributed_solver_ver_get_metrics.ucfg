@@ -1,0 +1,104 @@
+
+Lsrc.collective_intelligence.distributed_solver.DistributedSolver.get_metrics^
+R/home/fahbrain/projects/omnimind/src/collective_intelligence/distributed_solver.py¿ ¿("2*ﬁ
+2
+¡ ¡(!
+
+¬ ∆(	
+%1"dictç
+ä
+
+√ √()
+%2"__id*p
+
+__unknown_file (T*RB
+@src.collective_intelligence.distributed_solver.DistributedSolver"
+
+num_agentsì
+ê
+
+√ √()
+%3"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+num_agents*"
+
+__unknown_file (
+
+%2í
+è
+
+ƒ ƒ(3
+%4"__id*u
+
+__unknown_file (Y*WB
+@src.collective_intelligence.distributed_solver.DistributedSolver"
+problems_solvedò
+ï
+
+ƒ ƒ(3
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*/
+
+__unknown_file (
+problems_solved*"
+
+__unknown_file (
+
+%4ç
+ä
+
+≈" ≈(1
+%6"__id*p
+
+__unknown_file (T*RB
+@src.collective_intelligence.distributed_solver.DistributedSolver"
+
+aggregatorL
+J
+
+≈" ≈(:
+%7"__id*0
+
+__unknown_file (*
+
+%6"
+
+protocolI
+G
+
+≈" ≈(@
+%8"__id*-
+
+__unknown_file (*
+
+%7"
+valueõ
+ò
+
+≈ ≈(@
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*2
+
+__unknown_file (
+consensus_protocol*"
+
+__unknown_file (
+
+%8"
+
+¬ ∆(	
+
+%1BDB
+@src.collective_intelligence.distributed_solver.DistributedSolverH

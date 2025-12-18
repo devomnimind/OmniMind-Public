@@ -1,0 +1,319 @@
+
+2src.observability.distributed_tracing.Span.to_dictU
+I/home/fahbrain/projects/omnimind/src/observability/distributed_tracing.pyŠ Š("2*¿
+2
+‹ ‹(/
+
+Œ ˜(	
+%1"dicts
+q
+
+ ($
+%2"__id*W
+
+__unknown_file (;*9,
+*src.observability.distributed_tracing.Span"	
+contextL
+J
+
+ (-
+%3"__id*0
+
+__unknown_file (*
+
+%2"
+
+trace_id‘
+Ž
+
+ (-
+%4"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+trace_id*"
+
+__unknown_file (
+
+%3s
+q
+
+Ž Ž(#
+%5"__id*W
+
+__unknown_file (;*9,
+*src.observability.distributed_tracing.Span"	
+contextK
+I
+
+Ž Ž(+
+%6"__id*/
+
+__unknown_file (*
+
+%5"	
+span_id
+
+
+Ž Ž(+
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+span_id*"
+
+__unknown_file (
+
+%6s
+q
+
+ (*
+%8"__id*W
+
+__unknown_file (;*9,
+*src.observability.distributed_tracing.Span"	
+contextR
+P
+
+ (9
+%9"__id*6
+
+__unknown_file (*
+
+%8"
+parent_span_id˜
+•
+
+ (9
+%10"__mapSet*"
+
+__unknown_file (
+
+%1*.
+
+__unknown_file (
+parent_span_id*"
+
+__unknown_file (
+
+%9q
+o
+
+ (
+%11"__id*T
+
+__unknown_file (8*6,
+*src.observability.distributed_tracing.Span"
+name
+Œ
+
+ (
+%12"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+name*#
+
+__unknown_file (
+
+%11q
+o
+
+‘ ‘(
+%13"__id*T
+
+__unknown_file (8*6,
+*src.observability.distributed_tracing.Span"
+kindK
+I
+
+‘ ‘(#
+%14"__id*.
+
+__unknown_file (*
+
+%13"
+value
+Œ
+
+‘ ‘(#
+%15"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+kind*#
+
+__unknown_file (
+
+%14w
+u
+
+’ ’()
+%16"__id*Z
+
+__unknown_file (>*<,
+*src.observability.distributed_tracing.Span"
+
+start_time•
+’
+
+’ ’()
+%17"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+start_time*#
+
+__unknown_file (
+
+%16u
+s
+
+“ “(%
+%18"__id*X
+
+__unknown_file (<*:,
+*src.observability.distributed_tracing.Span"
+
+end_time“
+
+
+“ “(%
+%19"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+end_time*#
+
+__unknown_file (
+
+%18s
+q
+
+” ”(!
+%20"__id*V
+
+__unknown_file (:*8,
+*src.observability.distributed_tracing.Span"
+statusK
+I
+
+” ”('
+%21"__id*.
+
+__unknown_file (*
+
+%20"
+value‘
+Ž
+
+” ”('
+%22"__mapSet*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+status*#
+
+__unknown_file (
+
+%21w
+u
+
+• •()
+%23"__id*Z
+
+__unknown_file (>*<,
+*src.observability.distributed_tracing.Span"
+
+attributes•
+’
+
+• •()
+%24"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+attributes*#
+
+__unknown_file (
+
+%23s
+q
+
+– –(!
+%25"__id*V
+
+__unknown_file (:*8,
+*src.observability.distributed_tracing.Span"
+events‘
+Ž
+
+– –(!
+%26"__mapSet*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+events*#
+
+__unknown_file (
+
+%25nl
+
+— —(-
+%27*J
+
+__unknown_file (.,
+*src.observability.distributed_tracing.Span2duration_ms–
+“
+
+— —(-
+%28"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+duration_ms*#
+
+__unknown_file (
+
+%27"
+
+Œ ˜(	
+
+%1B.,
+*src.observability.distributed_tracing.SpanH

@@ -1,0 +1,51 @@
+
+:1"Prioritize actions based on emotion and values."strself
+È È(learning_goals
+É É(!#transcendence_goals
+Ê Ê(&emotion
+Ë Ë(!)%src.desire_engine.core.EmotionalState"õ1
+/
+
+Ï Ï(:all_actions"	#binop +#2+:2
+0
+
+Ò Ò(""#get-field# primary_emotion:0
+.
+
+Ò& Ò(B	"#get-field# DETERMINATION:,
+*
+
+Ò Ò(B
+"
+#binop ==#2==:	Bbool,"*
+
+Ò Ò(B
+ *
+Ò Ò(
+2
+Ú Ú("C-
++
+
+Ô Ø("?python-unknown?:Blist
+
+Ô Ø("´2
+0
+
+Ú Ú($"#get-field# primary_emotion:,
+*
+
+Ú( Ú(@"#get-field# CURIOSITY:,
+*
+
+Ú Ú(@"
+#binop ==#2==:Bbool "
+
+Ú Ú(@ *
+Ú Ú("C-
++
+
+Ü à("?python-unknown?:Blist
+
+Ü à("
+
+ã ã(*:/home/fahbrain/projects/omnimind/src/desire_engine/core.py

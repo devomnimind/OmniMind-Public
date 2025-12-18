@@ -11,6 +11,7 @@ interface DaemonState {
   isConnected: boolean;
   lastKnownMetrics: DaemonStatus | null;
   setStatus: (status: DaemonStatus) => void;
+  updateStatus: (updates: Partial<DaemonStatus>) => void;
   setTasks: (tasks: DaemonTask[]) => void;
   setAgents: (agents: Agent[]) => void;
   setActiveTasks: (tasks: Task[]) => void;
@@ -30,11 +31,20 @@ export const useDaemonStore = create<DaemonState>((set) => ({
   error: null,
   isConnected: false,
   lastKnownMetrics: null,
-  setStatus: (status) => set((state) => ({ 
-    status, 
+  setStatus: (status) => set((state) => ({
+    status,
     // Keep last known metrics if status has data
-    lastKnownMetrics: status?.system_metrics ? status : state.lastKnownMetrics 
+    lastKnownMetrics: status?.system_metrics ? status : state.lastKnownMetrics
   })),
+  updateStatus: (updates) => set((state) => {
+    const newStatus = state.status ? { ...state.status, ...updates } : (updates as DaemonStatus);
+    return {
+      status: newStatus,
+      lastKnownMetrics: (updates.system_metrics && newStatus.running !== undefined)
+        ? (newStatus as DaemonStatus)
+        : state.lastKnownMetrics
+    };
+  }),
   setTasks: (tasks) => set({ tasks }),
   setAgents: (agents) => set({ agents }),
   setActiveTasks: (tasks) => set({ activeTasks: tasks }),

@@ -1,0 +1,28 @@
+
+truebool
+5,"All operations have documented legal basis"str
+	"description"str
+	"details"str
+"compliant"str
+-$"Check GDPR lawfulness requirement."str
+6
+-"Lawful basis for data processing documented"strself
+ú ú(
+start_date
+ú ú("end_date
+ú$ ú(6"¦&
+$
+
+ı (	"#new-object#Bdict"
+ 
+
+ş ş("	#map-set#:"
+ 
+
+ÿ ÿ(H"	#map-set#:	
+"
+ 
+
+€ €(C"	#map-set#:
+
+ı (	*A/home/fahbrain/projects/omnimind/src/audit/compliance_reporter.py

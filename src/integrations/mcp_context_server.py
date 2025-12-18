@@ -21,8 +21,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from src.integrations.mcp_cache import get_mcp_cache
-from src.integrations.mcp_semantic_compression import get_semantic_compressor
 from src.integrations.mcp_server import MCPServer
 
 logger = logging.getLogger(__name__)
@@ -84,10 +82,6 @@ class ContextMCPServer(MCPServer):
         """
         super().__init__()
 
-        # Initialize cache and compression
-        self.cache = get_mcp_cache()
-        self.compressor = get_semantic_compressor()
-
         # Armazenamento em memória (por nível)
         self._contexts: Dict[str, List[ContextEntry]] = {level: [] for level in CONTEXT_LEVELS}
 
@@ -103,8 +97,8 @@ class ContextMCPServer(MCPServer):
         self.storage_dir = storage_dir or Path("data/context")
         self.storage_dir.mkdir(parents=True, exist_ok=True)
 
-        # Registrar métodos MCP
-        self._methods.update(
+        # Registrar métodos MCP (preserva initialize())
+        self.register_methods(
             {
                 "store_context": self.store_context,
                 "retrieve_context": self.retrieve_context,
@@ -215,7 +209,7 @@ class ContextMCPServer(MCPServer):
             return {"status": "error", "error": str(e), "level": level}
 
     def retrieve_context(self, level: str, query: str = "", limit: int = 10) -> Dict[str, Any]:
-        """Recupera contexto de um nível específico com cache.
+        """Recupera contexto de um nível específico.
 
         Args:
             level: Nível do contexto
@@ -233,18 +227,6 @@ class ContextMCPServer(MCPServer):
             }
 
         try:
-            # Cache key
-            cache_key = f"retrieve_context:{level}:{query}:{limit}"
-
-            # Try cache
-            try:
-                if hasattr(self.cache, "_get_sync"):
-                    cached = self.cache._get_sync(cache_key)
-                    if cached:
-                        return cached
-            except Exception:
-                pass
-
             # Buscar em memória
             entries = self._contexts.get(level, [])
 

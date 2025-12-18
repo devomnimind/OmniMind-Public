@@ -1,0 +1,83 @@
+
+Csrc.metacognition.self_healing.SelfHealingLoop.register_remediationN
+B/home/fahbrain/projects/omnimind/src/metacognition/self_healing.py€ €("2*¡
+2
+ƒ ˆ(}
+{
+
+‰ ‰(
+%2"__id*a
+
+__unknown_file (E*C0
+.src.metacognition.self_healing.SelfHealingLoop"
+_remediations±®
+
+‰ ‰(4
+%1"dict.__setitem__*"
+
+__unknown_file (
+
+%2**
+
+__unknown_file (
+
+
+issue_type*+
+
+__unknown_file (
+
+remediation2__setitem__U
+S
+
+Š@ Š(T
+%3"__id*9
+
+__unknown_file (*
+
+remediation"
+
+__name__˜
+•
+
+Š Š(V
+%4"__concat*-
+
+Š Š(1
+Registered remediation for *
+
+Š2 Š(<
+
+
+issue_type*
+
+Š= Š(?
+: *
+
+Š@ Š(T
+
+%3fd
+
+Š Š(W
+%5*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%42info*
+3*7
+3
+self_healing.py"
+Œ Œ(
+implicit return:
+
+ (
+
+issue_type:
+
+ (K
+remediationB20
+.src.metacognition.self_healing.SelfHealingLoopH

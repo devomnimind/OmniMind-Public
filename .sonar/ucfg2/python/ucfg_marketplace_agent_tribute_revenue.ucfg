@@ -1,0 +1,182 @@
+
+Csrc.economics.marketplace_agent.MarketplaceAgent.distribute_revenueO
+C/home/fahbrain/projects/omnimind/src/economics/marketplace_agent.py÷ ÷("2*ˆ
+2
+◊ ﬂ(á
+Ñ
+
+‡ ‡(0
+%1"__id*j
+
+__unknown_file (N*L2
+0src.economics.marketplace_agent.MarketplaceAgent"
+revenue_distributionnl
+
+‡ ‡(E
+%2*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+
+earnings2
+distributeH
+F
+
+‡ ‡(E
+distribution"__id*"
+
+__unknown_file (
+
+%2
+}
+
+„ „(
+%3"__id*c
+
+__unknown_file (G*E2
+0src.economics.marketplace_agent.MarketplaceAgent"
+total_revenueP
+N
+
+„ „(&
+%4"__concat*
+
+„ „(
+
+%3*
+
+„ „(&
+
+
+earnings
+}
+
+„ „(&E2
+0src.economics.marketplace_agent.MarketplaceAgent"
+total_revenue"__id*"
+
+__unknown_file (
+
+%4åâ
+
+Ë Ë(5
+%5"__mapGet*,
+
+__unknown_file (
+
+distribution*0
+
+__unknown_file (
+agent_operations2__getitem__çä
+
+È È(5
+%6"__mapGet*,
+
+__unknown_file (
+
+distribution*1
+
+__unknown_file (
+agent_development2__getitem__áÑ
+
+Í Í(1
+%7"__mapGet*,
+
+__unknown_file (
+
+distribution*+
+
+__unknown_file (
+human_share2__getitem__—
+Œ
+
+Á Í(8
+%8"__concat*(
+
+Á Á($
+Revenue distributed: $*
+
+Á% Á(-
+
+
+earnings*
+
+Á2 Á(9	
+ total *
+
+Ë Ë(
+
+(ops=$*
+
+Ë Ë(5
+
+%5*
+
+Ë: Ë(<
+, *
+
+È È(	
+dev=$*
+
+È È(5
+
+%6*
+
+È: È(<
+, *
+
+Í Í(	
+human=$*
+
+Í Í(1
+
+%7*
+
+Í6 Í(7
+)fd
+
+Ê Î(	
+%9*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%82info—Œ
+
+Ó Ó(4
+%10*P
+
+__unknown_file (42
+0src.economics.marketplace_agent.MarketplaceAgent*(
+
+__unknown_file (
+
+
+earnings*,
+
+__unknown_file (
+
+distribution2_record_revenuetr
+
+Ô Ô(
+%11*P
+
+__unknown_file (42
+0src.economics.marketplace_agent.MarketplaceAgent2_save_state"
+
+Ò Ò(
+
+distribution:
+
+÷! ÷(0
+
+earningsB42
+0src.economics.marketplace_agent.MarketplaceAgentH

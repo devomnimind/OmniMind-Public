@@ -1,22 +1,22 @@
 #!/bin/bash
 
 # ============================================================================
-# 🚀 OMNIMIND SYSTEM START - VERSÃO ROBUSTA v3.0 (Ubuntu 22.04.5 + systemd)
+# 🚀 OMNIMIND SYSTEM START - VERSÃO ROBUSTA v2.0
 # ============================================================================
 # Refactorizado para:
-# 1. APENAS iniciar systemd services (não gerenciar processos diretamente)
-# 2. Compatível com Ubuntu 22.04.5 LTS nativo (systemd-native, sem Docker)
-# 3. Remover redundância com nohup (systemd já orquestra)
-# 4. Health checks APÓS systemd confirmar lançamento
-# 5. Logging detalhado para auditoria
-# 6. Auto-recovery via systemd (não scripts)
+# 1. Eliminar race conditions na lógica de health check
+# 2. Estados consistentes entre verificações
+# 3. CPU metric corrigida (ps ao invés de top)
+# 4. Timeout unificado para curl
+# 5. Logging detalhado de cada verificação
+# 6. Suporte a auto-recovery via OmniMind
 # ============================================================================
-# MUDANÇAS (v3.0 vs v2.0):
-# - REMOVIDO: Todas as chamadas nohup ... & (conflito com systemd)
-# - ADICIONADO: Verificações systemctl start para cada serviço crítico
-# - PADRONIZADO: Paths para Ubuntu 22.04.5 (/usr/lib/x86_64-linux-gnu)
-# - MELHORADO: Health checks APÓS systemd confirmar lançamento
-# - COMPATIBILIDADE: Ubuntu 22.04.5 LTS SOMENTE (não Kali, não Docker)
+# MUDANÇAS (vs v1.0):
+# - Lógica OR para ANY unhealthy → restart (ao invés de AND para ALL)
+# - Função unified_health_check() com estado persistente
+# - CPU calculated via ps (mais preciso)
+# - Logging detalhado em logs/startup_detailed.log
+# - Suporte a OMNIMIND_AUTO_RECOVERY flag
 # ============================================================================
 
 set -o pipefail  # Falhar se qualquer pipe falhar
@@ -542,24 +542,51 @@ cd "$PROJECT_ROOT"
 mkdir -p "$PROJECT_ROOT/logs" "$PROJECT_ROOT/data/autopoietic/synthesized_code" "$PROJECT_ROOT/data/monitor"
 
 # MCP Orchestrator
-log_info "Verificando MCP Orchestrator (gerenciado por systemd)..."
-if pgrep -f "omnimind-mcp" > /dev/null; then
+log_info "Iniciando MCP Orchestrator..."
+if pgrep -f "run_mcp_orchestrator.py" > /dev/null; then
     log_info "MCP Orchestrator já está rodando"
 else
-    log_info "MCP Orchestrator não está ativo - será iniciado via systemctl"
-    log_warning "⚠️  NOTE: MCP Orchestrator é gerenciado por systemd (omnimind-mcp.service)"
+    if [ "${BACKEND_HEALTH_CACHE[8000]}" = "healthy" ] || check_http_health 8000; then
+        chmod +x "$PROJECT_ROOT/scripts/canonical/system/run_mcp_orchestrator.py" 2>/dev/null || true
+        nohup python "$PROJECT_ROOT/scripts/canonical/system/run_mcp_orchestrator.py" > "$PROJECT_ROOT/logs/mcp_orchestrator.log" 2>&1 &
+        MCP_ORCHESTRATOR_PID=$!
+        echo $MCP_ORCHESTRATOR_PID > "$PROJECT_ROOT/logs/mcp_orchestrator.pid"
+        log_success "MCP Orchestrator iniciado (PID $MCP_ORCHESTRATOR_PID)"
+    else
+        log_warning "Backend não está saudável, pulando MCP Orchestrator"
+    fi
 fi
 
-# Ciclo Principal - GERENCIADO POR SYSTEMD
-log_info "Ciclo Principal OmniMind (gerenciado por systemd via omnimind.service)..."
-log_info "✅ Backend está ativo e executando ciclos automaticamente"
-log_info "📊 Monitorar com: tail -f data/autopoietic/cycle_history.jsonl"
+# Ciclo Principal
+log_info "Iniciando Ciclo Principal OmniMind..."
+if [ "${BACKEND_HEALTH_CACHE[8000]}" = "healthy" ] || check_http_health 8000; then
+    nohup python -m src.main > "$PROJECT_ROOT/logs/main_cycle.log" 2>&1 &
+    MAIN_CYCLE_PID=$!
+    echo $MAIN_CYCLE_PID > "$PROJECT_ROOT/logs/main_cycle.pid"
+    log_success "Ciclo Principal iniciado (PID $MAIN_CYCLE_PID)"
+else
+    log_warning "Backend não está saudável, pulando Ciclo Principal"
+fi
 
+# Frontend
+log_info "Iniciando Frontend..."
+if [ -d "web/frontend" ]; then
+    cd web/frontend
+    if [ ! -d "node_modules" ]; then
+        log_info "Instalando dependências do Frontend..."
+        npm install --legacy-peer-deps 2>/dev/null || true
+    fi
 
-# Frontend - GERENCIADO POR SYSTEMD
-log_info "Frontend (gerenciado por systemd via omnimind-frontend.service)..."
-log_info "✅ Frontend está disponível em http://localhost:3000"
-
+    if ! pgrep -f "npm.*dev" > /dev/null; then
+        nohup npm run dev > "$PROJECT_ROOT/logs/frontend.log" 2>&1 &
+        FRONTEND_PID=$!
+        echo $FRONTEND_PID > "$PROJECT_ROOT/logs/frontend.pid"
+        log_success "Frontend iniciado (PID $FRONTEND_PID)"
+    else
+        log_info "Frontend já está rodando"
+    fi
+    cd "$PROJECT_ROOT"
+fi
 
 # ============================================================================
 # FASE 4: MONITORAMENTO E OBSERVABILIDADE
@@ -570,11 +597,16 @@ log_info "════ FASE 4: Monitoramento e Observabilidade (Aguardando ${PHA
 log_info "Aguardando estabilização de serviços secundários..."
 sleep $PHASE_TIMEOUT_MONITORING
 
-# Observer Service - GERENCIADO POR SYSTEMD (Fase 2)
-log_info "Observer Service (será gerenciado por systemd - Fase 2 em desenvolvimento)..."
-mkdir -p "$PROJECT_ROOT/data/long_term_logs"
-log_info "✅ Long-term logs directory preparado em data/long_term_logs"
-
+# Observer Service
+log_info "Iniciando Observer Service..."
+if ! pgrep -f "run_observer_service.py" > /dev/null; then
+    mkdir -p "$PROJECT_ROOT/data/long_term_logs"
+    chmod +x "$PROJECT_ROOT/scripts/canonical/system/run_observer_service.py" 2>/dev/null || true
+    nohup python "$PROJECT_ROOT/scripts/canonical/system/run_observer_service.py" > "$PROJECT_ROOT/logs/observer_service.log" 2>&1 &
+    OBSERVER_PID=$!
+    echo $OBSERVER_PID > "$PROJECT_ROOT/logs/observer_service.pid"
+    log_success "Observer Service iniciado (PID $OBSERVER_PID)"
+fi
 
 # eBPF Monitor
 log_info "Iniciando eBPF Monitor..."
@@ -625,19 +657,3 @@ echo "   Checker saúde: curl http://localhost:8000/health/"
 echo ""
 
 log_success "Startup completo. Tempo total: $(date +%s) segundos"
-
-# ============================================================================
-# MANUTENÇÃO: Manter processo vivo indefinidamente para systemd TYPE=forking
-# ============================================================================
-# Escrever PID para que systemd saiba onde acompanhar
-echo $$ > /var/run/omnimind.pid 2>/dev/null || true
-log_info "PID do orchestrator: $$ (escrito em /var/run/omnimind.pid)"
-
-# Manter o script rodando indefinidamente
-# systemd monitorará os child processes no cgroup
-# Isso evita que o script termine e systemd cancele todos os serviços
-log_info "🟢 Sistema aguardando continuamente... Pressione CTRL+C para sair"
-tail -f /dev/null &
-TAIL_PID=$!
-wait $TAIL_PID  # Aguardar forever
-

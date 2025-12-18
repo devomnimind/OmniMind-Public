@@ -1,0 +1,288 @@
+
+1.0PythonFrontend"1763831835500*py2.Bä
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+!
+src/audit/immutable_audit.py9
+
+src.audit.immutable_audit11
+
+hashlib12
+
+
+json14
+
+
+subprocess16
+
+
+time18
+
+datetime20
+
+pathlib22
+
+typing24
+
+	threading26
+
+shutil28
+*
+$src.audit.immutable_audit.log_action30
+	
+str32
+
+
+dict34
+4
+.src.audit.immutable_audit.ImmutableAuditSystem36
+A
+;src.audit.immutable_audit.ImmutableAuditSystem.hash_content38
+
+bytes40
+E
+?src.audit.immutable_audit.ImmutableAuditSystem.protect_log_file42
+
+
+bool44
+K
+Esrc.audit.immutable_audit.ImmutableAuditSystem.repair_chain_integrity46
+D
+>src.audit.immutable_audit.ImmutableAuditSystem._load_last_hash48
+=
+7src.audit.immutable_audit.ImmutableAuditSystem.__init__50
+?
+9src.audit.immutable_audit.ImmutableAuditSystem.log_action52
+J
+Dsrc.audit.immutable_audit.ImmutableAuditSystem.verify_file_integrity54
+D
+>src.audit.immutable_audit.ImmutableAuditSystem._save_last_hash56
+F
+@src.audit.immutable_audit.ImmutableAuditSystem.get_audit_summary58
+K
+Esrc.audit.immutable_audit.ImmutableAuditSystem.verify_chain_integrity60
+F
+@src.audit.immutable_audit.ImmutableAuditSystem._log_system_event62
+C
+=src.audit.immutable_audit.ImmutableAuditSystem.set_file_xattr64
+H
+Bsrc.audit.immutable_audit.ImmutableAuditSystem._log_security_event66
+0
+*src.audit.immutable_audit.get_audit_system68J
+
+8
+89j©
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31307 210
+
+33
+33326
+
+35
+35346
+
+37
+37366 210
+
+39
+39387 237
+
+41
+41406
+
+43
+43427 237
+
+45
+45446
+
+47
+47467 237
+
+49
+49487 237
+
+51
+51507 237
+
+53
+53527 237
+
+55
+55547 237
+
+57
+57567 237
+
+59
+59587 237
+
+61
+61607 237
+
+63
+63627 237
+
+65
+65647 237
+
+67
+67667 237
+
+69
+69687 210rŒ
+
+10131*
+8	 	(
+
+10151*
+8
+ 
+(
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 ((
+
+10231*
+8 (
+
+10251*
+8 ('
+
+10271*
+8 (
+
+10291*
+8ç ç(
+
+31333*
+8¨ ¨(
+
+31334*
+8¨ ¨(
+
+31354*
+8¨ ¨(
+
+31334*
+8¨ ¨(
+
+39333*
+8I	 I(
+
+39414*
+8I	 I(
+
+43453*
+8⁄	 ⁄(
+
+43334*
+8⁄	 ⁄(
+
+47353*
+8ˇ	 ˇ(
+
+49333*
+8-	 -(
+
+51334*
+8	 (
+
+53333*
+8U	 U(
+
+53334*
+8U	 U(
+
+53354*
+8U	 U(
+
+53334*
+8U	 U(
+
+55353*
+8ò	 ò(
+
+55334*
+8ò	 ò(
+
+57334*
+8<	 <(
+
+59353*
+8Ç	 Ç(
+
+61353*
+8á	 á(
+
+63334*
+8¯	 ¯(
+
+63354*
+8¯	 ¯(
+
+65453*
+8˝	 ˝(
+
+65334*
+8˝	 ˝(
+
+65334*
+8˝	 ˝(
+
+67334*
+8Ú	 Ú(
+
+69373*
+8£ £(

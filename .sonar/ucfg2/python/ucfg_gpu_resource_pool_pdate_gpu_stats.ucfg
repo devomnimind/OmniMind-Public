@@ -1,0 +1,66 @@
+
+>src.scaling.gpu_resource_pool.GPUResourcePool.update_gpu_statsM
+A/home/fahbrain/projects/omnimind/src/scaling/gpu_resource_pool.py¶ ¶("2*¸
+2
+¼ Â(t
+r
+
+Ã Ã(
+%2"__id*X
+
+__unknown_file (<*:/
+-src.scaling.gpu_resource_pool.GPUResourcePool"
+_gpushf
+
+Ã Ã('
+%3*"
+
+__unknown_file (
+
+%2*)
+
+__unknown_file (
+
+	device_id2get?
+=
+
+Ã Ã('
+gpu"__id*"
+
+__unknown_file (
+
+%3*
+3
+4*<
+3
+gpu_resource_pool.py"
+Ç Ç(
+implicit return*Ä
+4
+Å Å(A­ª
+
+Å Å(A
+%1*#
+
+__unknown_file (
+
+gpu*3
+
+__unknown_file (
+
+utilization_percent*.
+
+__unknown_file (
+
+memory_used_mb2update_stats*
+3:
+
+¸ ¸(
+	device_id:#
+
+¹ ¹("
+utilization_percent:
+
+º º(
+memory_used_mbB1/
+-src.scaling.gpu_resource_pool.GPUResourcePoolH

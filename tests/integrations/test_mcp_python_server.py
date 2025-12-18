@@ -113,11 +113,10 @@ print(test_function())
         assert result is not None
         assert isinstance(result, dict)
         assert "packages" in result
-        assert isinstance(result["packages"], (list, dict, str))
-        # Verificar que temos algum conteúdo
-        if isinstance(result["packages"], list):
-            # Se for lista, pode ter 0 ou mais pacotes
-            assert isinstance(result["packages"], list)
+        assert isinstance(result["packages"], list)
+        # Verificar que lista não está vazia e contém strings
+        assert len(result["packages"]) > 0
+        assert all(isinstance(pkg, str) for pkg in result["packages"])
 
     def test_get_python_info_basic(self) -> None:
         """Testa recuperação de informações do Python.
@@ -206,8 +205,7 @@ def add(a: int, b: int) -> int:
         assert result is not None
         assert isinstance(result, dict)
         assert "results" in result
-        # Resultado pode ser "passed", "failed" ou "error" dependendo do estado da suite
-        assert result["results"] in ["passed", "failed", "error"]
+        assert result["results"] == "passed"
 
     def test_run_tests_different_paths(self) -> None:
         """Testa execução de testes em diferentes paths.

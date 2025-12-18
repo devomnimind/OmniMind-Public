@@ -6,12 +6,13 @@ Monitoramento em tempo real com alertas e logs.
 
 import asyncio
 import json
-import psutil
+import logging
+import sys
 import time
 from datetime import datetime
 from pathlib import Path
-import logging
-import sys
+
+import psutil
 
 
 class OmniMindMonitor:

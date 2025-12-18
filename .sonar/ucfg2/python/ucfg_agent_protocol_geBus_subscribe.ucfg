@@ -1,0 +1,127 @@
+
+3src.agents.agent_protocol.AgentMessageBus.subscribeI
+=/home/fahbrain/projects/omnimind/src/agents/agent_protocol.py˜ ˜("2*Ã
+2
+™ Ÿ(y
+w
+
+   (.
+%7"__id*]
+
+__unknown_file (A*?+
+)src.agents.agent_protocol.AgentMessageBus"
+_subscriptionspn
+
+   (.
+%8*"
+
+__unknown_file (
+
+%7*(
+
+__unknown_file (
+
+
+agent_id2__contains__=
+;
+
+   (.
+%9"not*"
+
+__unknown_file (
+
+%8*
+4
+5*9
+3
+agent_protocol.py"
+¦ ¦(
+implicit return*€
+4
+£ £(;y
+w
+
+£ £(
+%1"__id*]
+
+__unknown_file (A*?+
+)src.agents.agent_protocol.AgentMessageBus"
+_subscriptionsyw
+
+£ £(%
+%2"__mapGet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+
+agent_id2__getitem__om
+
+£ £(;
+%3*"
+
+__unknown_file (
+
+%2*-
+
+__unknown_file (
+
+message_types2update™
+–
+
+¤ ¤(F
+%4"__concat*
+
+¤ ¤(
+
+Agent *
+
+¤ ¤(&
+
+
+agent_id*!
+
+¤' ¤(6
+ subscribed to *
+
+¤7 ¤(D
+
+message_typesge
+
+¤ ¤(G
+%5*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%42debug*
+3*±
+5
+¡ ¡()š—
+
+¡ ¡()
+%6*I
+
+__unknown_file (-+
+)src.agents.agent_protocol.AgentMessageBus*(
+
+__unknown_file (
+
+
+agent_id2register_agent*
+4:
+
+˜ ˜(%
+
+agent_id:
+
+˜' ˜(G
+message_typesB-+
+)src.agents.agent_protocol.AgentMessageBusH

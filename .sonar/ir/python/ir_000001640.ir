@@ -1,0 +1,64 @@
+
+	truebool
+falsebool
+§"Check if eviction is needed.
+
+        Args:
+            new_entry_size: Size of new entry
+
+        Returns:
+            True if eviction is needed
+        "strself
+‘ ‘(new_entry_size
+‘ ‘(1"„)
+'
+
+› ›("#get-field# _cache:,
+*
+
+› ›("
+builtinslen*:Bint)
+'
+
+› ›(*"#get-field# config:.
+,
+
+› ›(6"#get-field# max_entries:,
+*
+
+› ›(6"
+#binop >=#2>=:Bbool "
+
+› ›(6 *
+› ›(
+"
+
+œ œ(	"®)
+'
+
+Ÿ Ÿ(
+"#get-field# _stats:-
++
+
+Ÿ Ÿ(!"#get-field# size_bytes:
+$
+"
+
+Ÿ Ÿ(2"	#binop +#2+:)
+'
+
+Ÿ5 Ÿ(@"#get-field# config:1
+/
+
+Ÿ5 Ÿ(O"#get-field# max_size_bytes:*
+(
+
+Ÿ Ÿ(O"	#binop >#2>:Bbool "
+
+Ÿ Ÿ(O *
+Ÿ Ÿ(
+"
+
+   (	"
+
+¢ ¢(*A/home/fahbrain/projects/omnimind/src/scaling/multi_level_cache.py

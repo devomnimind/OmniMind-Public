@@ -1,0 +1,65 @@
+
+%"Add an edge between nodes."str
+*!"Child node {child_id} not found"str
+,#"Parent node {parent_id} not found"strself
+ÿ ÿ(	parent_id
+ÿ ÿ(child_id
+ÿ ÿ(+
+edge_label
+ÿ- ÿ(<"‚(
+&
+
+‚ ‚(&"#get-field# nodes:4
+2
+
+‚ ‚(&"#binop not in#2not in:Bbool "
+
+‚ ‚(& *
+‚ ‚(
+"F0
+.
+
+ƒ ƒ(B	"
+ValueError*:B
+ValueError2
+
+ƒ ƒ(B	"„(
+&
+
+„ „(%
+"#get-field# nodes:4
+2
+
+„ „(%"#binop not in#2not in:
+Bbool "
+
+„ „(% *
+„ „(
+"F0
+.
+
+… …(@"
+ValueError*:B
+ValueError2
+
+… …(@"˜(
+&
+
+‡ ‡("#get-field# nodes:,
+*
+
+‡ ‡(&parent"#array-read#:(
+&
+
+ˆ ˆ("#get-field# nodes:+
+)
+
+ˆ ˆ($child"#array-read#:+
+)
+
+‰ ‰("#get-field# children:&
+$
+
+‰ ‰(+"#array-write#:
+
+‹ ‹(*F/home/fahbrain/projects/omnimind/src/decision_making/decision_trees.py

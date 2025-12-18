@@ -18,8 +18,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import os
 import hashlib
+import os
 
 
 def hash_file_content(file_path):

@@ -44,57 +44,38 @@ pkill -f "uvicorn web.backend.main:app" 2>/dev/null || true
 # Export PYTHONPATH
 export PYTHONPATH="$CLUSTER_PROJECT_ROOT:${PYTHONPATH}"
 
-# Configuração de Workers e Backends (com valores padrão otimizados)
-# OMNIMIND_WORKERS: número de workers por backend (padrão 2 = estável + rápido)
-# OMNIMIND_BACKENDS: quantos backends rodar (padrão 3 = HA cluster)
-# OMNIMIND_WORKERS_VALIDATION: workers durante validação científica (padrão 2 = consistente com produção)
-export OMNIMIND_WORKERS="${OMNIMIND_WORKERS:-2}"
-export OMNIMIND_BACKENDS="${OMNIMIND_BACKENDS:-3}"
-export OMNIMIND_WORKERS_VALIDATION="${OMNIMIND_WORKERS_VALIDATION:-2}"
-
 # Create logs directory if it doesn't exist
 mkdir -p logs
 chmod 755 logs 2>/dev/null || true
 
 echo "Starting OmniMind Backend Cluster..."
-echo -e "${GREEN}⚙️  Configuração:${NC}"
-echo "   Workers por backend: $OMNIMIND_WORKERS (OMNIMIND_WORKERS)"
-echo "   Backends ativos: $OMNIMIND_BACKENDS (OMNIMIND_BACKENDS)"
-echo "   Workers em validação: $OMNIMIND_WORKERS_VALIDATION (OMNIMIND_WORKERS_VALIDATION)"
-echo ""
 
 # Start Primary Instance (Port 8000)
-if [ "$OMNIMIND_BACKENDS" -ge 1 ]; then
-    echo -e "${GREEN}▶ Iniciando Primary (Port 8000)...${NC}"
-    nohup python -m uvicorn web.backend.main:app --host 0.0.0.0 --port 8000 --workers "$OMNIMIND_WORKERS" > logs/backend_8000.log 2>&1 &
-    PID_8000=$!
-    echo $PID_8000 > logs/backend_8000.pid
-    echo "✓ Primary iniciado com PID $PID_8000 (workers: $OMNIMIND_WORKERS)"
-    echo "   Log: tail -f logs/backend_8000.log"
-    sleep 1
-fi
+echo -e "${GREEN}▶ Iniciando Primary (Port 8000)...${NC}"
+nohup python -m uvicorn web.backend.main:app --host 0.0.0.0 --port 8000 --workers 1 > logs/backend_8000.log 2>&1 &
+PID_8000=$!
+echo $PID_8000 > logs/backend_8000.pid
+echo "✓ Primary iniciado com PID $PID_8000"
+echo "   Log: tail -f logs/backend_8000.log"
+sleep 1
 
 # Start Secondary Instance (Port 8080)
-if [ "$OMNIMIND_BACKENDS" -ge 2 ]; then
-    echo -e "${GREEN}▶ Iniciando Secondary (Port 8080)...${NC}"
-    nohup python -m uvicorn web.backend.main:app --host 0.0.0.0 --port 8080 --workers "$OMNIMIND_WORKERS" > logs/backend_8080.log 2>&1 &
-    PID_8080=$!
-    echo $PID_8080 > logs/backend_8080.pid
-    echo "✓ Secondary iniciado com PID $PID_8080 (workers: $OMNIMIND_WORKERS)"
-    echo "   Log: tail -f logs/backend_8080.log"
-    sleep 1
-fi
+echo -e "${GREEN}▶ Iniciando Secondary (Port 8080)...${NC}"
+nohup python -m uvicorn web.backend.main:app --host 0.0.0.0 --port 8080 --workers 1 > logs/backend_8080.log 2>&1 &
+PID_8080=$!
+echo $PID_8080 > logs/backend_8080.pid
+echo "✓ Secondary iniciado com PID $PID_8080"
+echo "   Log: tail -f logs/backend_8080.log"
+sleep 1
 
 # Start Fallback Instance (Port 3001)
-if [ "$OMNIMIND_BACKENDS" -ge 3 ]; then
-    echo -e "${GREEN}▶ Iniciando Fallback (Port 3001)...${NC}"
-    nohup python -m uvicorn web.backend.main:app --host 0.0.0.0 --port 3001 --workers "$OMNIMIND_WORKERS" > logs/backend_3001.log 2>&1 &
-    PID_3001=$!
-    echo $PID_3001 > logs/backend_3001.pid
-    echo "✓ Fallback iniciado com PID $PID_3001 (workers: $OMNIMIND_WORKERS)"
-    echo "   Log: tail -f logs/backend_3001.log"
-    sleep 1
-fi
+echo -e "${GREEN}▶ Iniciando Fallback (Port 3001)...${NC}"
+nohup python -m uvicorn web.backend.main:app --host 0.0.0.0 --port 3001 --workers 1 > logs/backend_3001.log 2>&1 &
+PID_3001=$!
+echo $PID_3001 > logs/backend_3001.pid
+echo "✓ Fallback iniciado com PID $PID_3001"
+echo "   Log: tail -f logs/backend_3001.log"
+sleep 1
 
 echo -e "${GREEN}✅ Cluster rodando${NC}"
 echo "   Logs disponíveis em: logs/backend_*.log"

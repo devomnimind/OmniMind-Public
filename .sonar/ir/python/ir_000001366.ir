@@ -1,0 +1,49 @@
+
+ßù"
+        Gera culpa por a√ß√£o imoral.
+
+        Args:
+            action: A√ß√£o realizada
+
+        Returns:
+            N√≠vel de culpa (0.0-1.0)
+        "str
+
+0int
+0.0float
+1.0floatself
+ë ë(action
+ë ë(+"Ç2
+0
+
+õ õ(!"#get-field# moral_alignment:*
+(
+
+õ õ(%"	#binop <#2<:Bbool "
+
+õ õ(% *
+õ õ(
+"˙2
+0
+
+ù ù(."#get-field# moral_alignment:'
+%
+
+ù ù(/"
+builtinsabs*:-
++
+
+ù2 ù(A	"#get-field# strictness:.
+,
+
+ù ù(A
+guilt"	#binop *#*2*:	(
+&
+
+û û(""
+builtinsmin*:
+
+
+û û(""
+
+† †(*H/home/fahbrain/projects/omnimind/src/lacanian/freudian_metapsychology.py

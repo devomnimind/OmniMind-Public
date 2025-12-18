@@ -5,10 +5,11 @@ TODOS os testes rodando no IBM Quantum para provar Φ quântico
 """
 
 import os
+import subprocess
 import sys
 import time
-import subprocess
 from datetime import datetime
+
 from dotenv import load_dotenv
 
 load_dotenv()

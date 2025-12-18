@@ -1,0 +1,239 @@
+
+1.0PythonFrontend"1763831829772*py2.B‘
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+&
+!src/metacognition/self_healing.py9
+$
+src.metacognition.self_healing11
+
+
+__future__12
+
+logging14
+
+dataclasses16
+
+datetime18
+
+
+enum20
+
+typing22
+
+gc24
+*
+$src.metacognition.self_healing.Issue26
+2
+,src.metacognition.self_healing.Issue.to_dict28
+
+
+dict30
+.
+(src.metacognition.self_healing.IssueType32
+	
+str34
+
+	enum.Enum36
+6
+0src.metacognition.self_healing.RemediationAction38
+>
+8src.metacognition.self_healing.RemediationAction.to_dict40
+4
+.src.metacognition.self_healing.SelfHealingLoop42
+=
+7src.metacognition.self_healing.SelfHealingLoop.__init__44
+E
+?src.metacognition.self_healing.SelfHealingLoop.register_monitor46
+>
+8src.metacognition.self_healing.SelfHealingLoop.run_cycle48
+
+
+list50
+F
+@src.metacognition.self_healing.SelfHealingLoop.get_issue_summary52
+@
+:src.metacognition.self_healing.SelfHealingLoop.get_metrics54
+I
+Csrc.metacognition.self_healing.SelfHealingLoop.register_remediation56
+;
+5src.metacognition.self_healing.SelfHealingIntegration58
+K
+Esrc.metacognition.self_healing.SelfHealingIntegration._setup_monitors60
+O
+Isrc.metacognition.self_healing.SelfHealingIntegration._setup_remediations62
+F
+@src.metacognition.self_healing.SelfHealingIntegration.get_status64
+M
+Gsrc.metacognition.self_healing.SelfHealingIntegration.run_healing_cycle66
+D
+>src.metacognition.self_healing.SelfHealingIntegration.__init__68
+2
+,src.metacognition.self_healing.IssueSeverity70J
+
+8
+89jÎ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27266 210
+
+29
+29287 227
+
+31
+31306
+
+33
+33326 210
+
+35
+35346
+
+37
+37366
+
+39
+39386 210
+
+41
+41407 239
+
+43
+43426 210
+
+45
+45447 243
+
+47
+47467 243
+
+49
+49487 243
+
+51
+51506
+
+53
+53527 243
+
+55
+55547 243
+
+57
+57567 243
+
+59
+59586 210
+
+61
+61607 259
+
+63
+63627 259
+
+65
+65647 259
+
+67
+67667 259
+
+69
+69687 259
+
+71
+71706 210rü
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 ()
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (7
+
+10251*
+8É É(
+
+29313*
+88	 8(
+
+33352*
+8 (
+
+33372*
+8 (
+
+41313*
+8P	 P(
+
+49513*
+8Œ Œ(
+
+53313*
+8á	 á(
+
+55313*
+8Ù	 Ù(
+
+57354*
+8€	 €(
+
+65313*
+8ý	 ý(
+
+67513*
+8õ õ( 
+
+71352*
+8" "(
+
+71372*
+8" "(

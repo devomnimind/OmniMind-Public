@@ -1,0 +1,91 @@
+
+Isrc.metacognition.self_healing.SelfHealingIntegration._setup_remediationsN
+B/home/fahbrain/projects/omnimind/src/metacognition/self_healing.pyπ π("2*ì
+2
+∫ ∫(0Ñ
+Å
+
+Ó Ó(
+%1"__id*g
+
+__unknown_file (K*I7
+5src.metacognition.self_healing.SelfHealingIntegration"
+healing_loop}
+{
+
+Ô Ô()
+%2"__id*a
+
+__unknown_file (E*C*
+(src.metacognition.self_healing.IssueType"
+RESOURCE_EXHAUSTIONI
+G
+
+Ô Ô(/
+%3"__id*-
+
+__unknown_file (*
+
+%2"
+value®•
+
+Ó (	
+%4*"
+
+__unknown_file (
+
+%1*"
+
+__unknown_file (
+
+%3*3
+
+__unknown_file (
+
+remediate_resources2register_remediationÑ
+Å
+
+Ò Ò(
+%5"__id*g
+
+__unknown_file (K*I7
+5src.metacognition.self_healing.SelfHealingIntegration"
+healing_loopÅ
+
+
+Ú Ú(-
+%6"__id*e
+
+__unknown_file (I*G*
+(src.metacognition.self_healing.IssueType"
+PERFORMANCE_DEGRADATIONI
+G
+
+Ú Ú(3
+%7"__id*-
+
+__unknown_file (*
+
+%6"
+value™ß
+
+Ò Û(	
+%8*"
+
+__unknown_file (
+
+%5*"
+
+__unknown_file (
+
+%7*5
+
+__unknown_file (
+
+remediate_performance2register_remediation*
+3*7
+3
+self_healing.py"
+ı ı(
+implicit returnB97
+5src.metacognition.self_healing.SelfHealingIntegrationH

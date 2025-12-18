@@ -1,0 +1,26 @@
+
+¨ž"Calculate overall transparency score.
+
+        Formula from docs: (E + I + T) / 3
+
+        Returns:
+            Overall transparency score (0-100%)
+        "str
+3.0floatselfo o("Ü/
+-
+x x("#get-field# explainability:1
+/
+x" x(7"#get-field# interpretability:-
++
+x: x(K"#get-field# traceability:#
+!
+x x(K"	#binop +#2+:1
+/
+w y("#dependent-value#*:Bfloat/
+-
+w w(	"#set-field# overall_score:.
+,
+{ {(!
+"#get-field# overall_score:
+{ {(!
+*>/home/fahbrain/projects/omnimind/src/metrics/ethics_metrics.py

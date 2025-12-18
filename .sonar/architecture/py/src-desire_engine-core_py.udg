@@ -1,0 +1,578 @@
+
+1.0PythonFrontend"1763831829612*py2.BÕ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+
+src/desire_engine/core.py9
+
+src.desire_engine.core11
+
+
+__future__12
+
+dataclasses14
+
+datetime16
+
+
+enum18
+
+typing20
+
+pickle22
+
+
+zlib24
+
+collections26
+.
+(src.desire_engine.core.UnsatisfiedDesire28
+1
++src.desire_engine.core.ValueEvolutionSystem30
+I
+Csrc.desire_engine.core.ValueEvolutionSystem._initialize_core_values32
+
+
+dict34
+I
+Csrc.desire_engine.core.ValueEvolutionSystem.update_value_importance36
+	
+str38
+B
+<src.desire_engine.core.ValueEvolutionSystem.emerge_new_value40
+
+
+list42
+:
+4src.desire_engine.core.ValueEvolutionSystem.__init__44
+D
+>src.desire_engine.core.ValueEvolutionSystem._identify_patterns46
+!
+src.desire_engine.core.Need48
+3
+-src.desire_engine.core.Need.frustration_level50
+
+float52
++
+%src.desire_engine.core.Need.is_active54
+
+
+bool56
+	
+set58
+'
+!src.desire_engine.core.DesireType60
+
+	enum.Enum62
+5
+/src.desire_engine.core.DesireDrivenMetaLearning64
+K
+Esrc.desire_engine.core.DesireDrivenMetaLearning.execute_learning_goal66
+R
+Lsrc.desire_engine.core.DesireDrivenMetaLearning.identify_unsatisfied_desires68
+S
+Msrc.desire_engine.core.DesireDrivenMetaLearning._generate_potential_solutions70
+K
+Esrc.desire_engine.core.DesireDrivenMetaLearning._classify_desire_type72
+>
+8src.desire_engine.core.DesireDrivenMetaLearning.__init__74
+3
+-src.desire_engine.core.DigitalMaslowHierarchy76
+6
+0src.desire_engine.core.ArtificialCuriosityEngine78
+M
+Gsrc.desire_engine.core.DesireDrivenMetaLearning.generate_learning_goals80
+4
+.src.desire_engine.core.SelfTranscendenceEngine82
+Y
+Ssrc.desire_engine.core.SelfTranscendenceEngine.identify_transcendence_opportunities84
+=
+7src.desire_engine.core.SelfTranscendenceEngine.__init__86
+Q
+Ksrc.desire_engine.core.SelfTranscendenceEngine._generate_transcendence_goal88
++
+%src.desire_engine.core.EmotionalState90
+)
+#src.desire_engine.core.DesireEngine92
+9
+3src.desire_engine.core.DesireEngine.cognitive_cycle94
+2
+,src.desire_engine.core.DesireEngine.__init__96
+=
+7src.desire_engine.core.DesireEngine._prioritize_actions98
+.
+'src.desire_engine.core.EmotionalProfile100
+<
+5src.desire_engine.core.DesireEngine.get_engine_status102
+=
+6src.desire_engine.core.DigitalMaslowHierarchy.__init__104
+H
+Asrc.desire_engine.core.DigitalMaslowHierarchy.update_satisfaction106
+I
+Bsrc.desire_engine.core.DigitalMaslowHierarchy.get_most_urgent_need108
+E
+>src.desire_engine.core.DigitalMaslowHierarchy.get_active_needs110
+F
+?src.desire_engine.core.DigitalMaslowHierarchy._initialize_needs112
+@
+9src.desire_engine.core.ArtificialCuriosityEngine.__init__114
+K
+Dsrc.desire_engine.core.ArtificialCuriosityEngine._calculate_surprise116
+J
+Csrc.desire_engine.core.ArtificialCuriosityEngine.evaluate_curiosity118
+M
+Fsrc.desire_engine.core.ArtificialCuriosityEngine._predict_future_value120
+V
+Osrc.desire_engine.core.ArtificialCuriosityEngine.generate_curiosity_driven_goal122
+9
+2src.desire_engine.core.ArtificialEmotionWithDesire124
+Z
+Ssrc.desire_engine.core.ArtificialEmotionWithDesire.emotional_influence_on_decisions126
+I
+Bsrc.desire_engine.core.ArtificialEmotionWithDesire.compute_emotion128
+B
+;src.desire_engine.core.ArtificialEmotionWithDesire.__init__130
+I
+Bsrc.desire_engine.core.ArtificialEmotionWithDesire._map_to_emotion132
+'
+ src.desire_engine.core.NeedLevel134
+7
+0src.desire_engine.core.CompressionProgressTheory136
+@
+9src.desire_engine.core.CompressionProgressTheory.__init__138
+
+
+int140
+Q
+Jsrc.desire_engine.core.CompressionProgressTheory.compute_compression_ratio142
+
+bytes144
+Q
+Jsrc.desire_engine.core.CompressionProgressTheory.compute_learning_progress146
+#
+src.desire_engine.core.Value148J
+
+8
+89jÀ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29286 210
+
+31
+31306 210
+
+33
+33327 231
+
+35
+35346
+
+37
+37367 231
+
+39
+39386
+
+41
+41407 231
+
+43
+43426
+
+45
+45447 231
+
+47
+47467 231
+
+49
+49486 210
+
+51
+51507 249
+
+53
+53526
+
+55
+55547 249
+
+57
+57566
+
+59
+59586
+
+61
+61606 210
+
+63
+63626
+
+65
+65646 210
+
+67
+67667 265
+
+69
+69687 265
+
+71
+71707 265
+
+73
+73727 265
+
+75
+75747 265
+
+77
+77766 210
+
+79
+79786 210
+
+81
+81807 265
+
+83
+83826 210
+
+85
+85847 283
+
+87
+87867 283
+
+89
+89887 283
+
+91
+91906 210
+
+93
+93926 210
+
+95
+95947 293
+
+97
+97967 293
+
+99
+99987 293
+
+101
+1011006 210
+
+103
+1031027 293
+
+105
+1051047 277
+
+107
+1071067 277
+
+109
+1091087 277
+
+111
+1111107 277
+
+113
+1131127 277
+
+115
+1151147 279
+
+117
+1171167 279
+
+119
+1191187 279
+
+121
+1211207 279
+
+123
+1231227 279
+
+125
+1251246 210
+
+127
+1271267 2125
+
+129
+1291287 2125
+
+131
+1311307 2125
+
+133
+1331327 2125
+
+135
+1351346 210
+
+137
+1371366 210
+
+139
+1391387 2137
+
+141
+1411406
+
+143
+1431427 2137
+
+145
+1451446
+
+147
+1471467 2137
+
+149
+1491486 210rπ
+
+10131*
+8 (#
+
+10151*
+8 ("
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (2
+
+10231*
+8 (
+
+10251*
+8 (
+
+10271*
+8 (
+
+33353*
+8Ò	 Ò( 
+
+37394*
+8ö	 ö( 
+
+37354*
+8ö	 ö( 
+
+41434*
+8∏	 ∏(
+
+47433*
+8“	 “(
+
+47434*
+8“	 “(
+
+51533*
+8I	 I(
+
+55573*
+8M	 M(
+
+55594*
+8M	 M(
+
+61632*
+8' '(
+
+67353*
+8“	 “(
+
+67394*
+8“	 “(
+
+67394*
+8“	 “(
+
+69433*
+8◊	 ◊(%
+
+71433*
+8Å	 Å(&
+
+71494*
+8Å	 Å(&
+
+71614*
+8Å	 Å(&
+
+73613*
+8Ò	 Ò(
+
+73494*
+8Ò	 Ò(
+
+75774*
+8Ã	 Ã(
+
+75794*
+8Ã	 Ã(
+
+81433*
+8∑	 ∑( 
+
+85433*
+8Î	 Î(-
+
+87774*
+8·	 ·(
+
+87314*
+8·	 ·(
+
+89393*
+8ä	 ä(%
+
+89494*
+8ä	 ä(%
+
+91632*
+81 1(
+
+95353*
+8ß ß(
+
+99433*
+8«	 «(
+
+99434*
+8«	 «(
+
+99434*
+8«	 «(
+
+991014*
+8«	 «(
+
+103353*
+8Â	 Â(
+
+107394*
+8ô	 ô(
+
+107534*
+8ô	 ô(
+
+107394*
+8ô	 ô(
+
+111433*
+8Ö	 Ö(
+
+113353*
+8{	 {(
+
+117533*
+8é	 é(
+
+117354*
+8é	 é(
+
+119533*
+8Ê	 Ê(
+
+119354*
+8Ê	 Ê(
+
+121533*
+8°	 °(
+
+121354*
+8°	 °(
+
+127433*
+8¢	 ¢()
+
+127434*
+8¢	 ¢()
+
+1291013*
+8’	 ’(
+
+131774*
+8œ	 œ(
+
+1331013*
+8˜	 ˜(
+
+133534*
+8˜	 ˜(
+
+133534*
+8˜	 ˜(
+
+135632*
+8 (
+
+1391414*
+8ª	 ª(
+
+143533*
+8ø	 ø("
+
+1431454*
+8ø	 ø("
+
+147533*
+8∆	 ∆("
+
+1471454*
+8∆	 ∆("

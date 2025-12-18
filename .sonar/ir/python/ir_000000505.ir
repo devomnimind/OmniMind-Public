@@ -1,0 +1,37 @@
+
+"Get solver metrics."str
+
+"consensus_protocol"str
+"num_agents"str
+"problems_solved"strself
+À À("&
+$
+
+Â Æ(	"#new-object#Bdict-
++
+
+Ã Ã()"#get-field# num_agents:"
+ 
+
+Ã Ã()"	#map-set#:2
+0
+
+Ä Ä(3"#get-field# problems_solved:"
+ 
+
+Ä Ä(3	"	#map-set#:-
++
+
+Å" Å(1"#get-field# aggregator:+
+)
+
+Å" Å(:"#get-field# protocol:(
+&
+
+Å" Å(@"#get-field# value:"
+ 
+
+Å Å(@"	#map-set#:
+
+
+Â Æ(	*R/home/fahbrain/projects/omnimind/src/collective_intelligence/distributed_solver.py

@@ -1,0 +1,87 @@
+
+.src.scaling.multi_node.ClusterCoordinator.stopF
+:/home/fahbrain/projects/omnimind/src/scaling/multi_node.py³ ³("2*‹
+2
+´ ´(+v
+t
+
+µ µ(9+
+)src.scaling.multi_node.ClusterCoordinator"
+
+_running"__id*%
+
+__unknown_file (	
+
+Falsez
+x
+
+¶ ¶(
+%6"__id*^
+
+__unknown_file (B*@+
+)src.scaling.multi_node.ClusterCoordinator"
+_heartbeat_task*
+4
+8*5
+3
+multi_node.py"
+¾ ¾(
+implicit return*•
+4
+¼ ¼(2}
+
+¼ ¼(2
+%1*&
+
+__unknown_file (
+
+
+logger*;
+
+__unknown_file (
+Cluster coordinator stopped2info*
+3*p
+6
+º º()W
+U
+
+º º()
+%2"__id*;
+
+__unknown_file (*
+	
+asyncio"
+CancelledError*
+3
+4*“
+7
+¹ ¹(*z
+x
+
+¹ ¹(*
+%3"__id*^
+
+__unknown_file (B*@+
+)src.scaling.multi_node.ClusterCoordinator"
+_heartbeat_task*
+4
+6*Ò
+8
+· ·()z
+x
+
+· ·( 
+%4"__id*^
+
+__unknown_file (B*@+
+)src.scaling.multi_node.ClusterCoordinator"
+_heartbeat_task@>
+
+· ·()
+%5*"
+
+__unknown_file (
+
+%42cancel*
+7B-+
+)src.scaling.multi_node.ClusterCoordinatorH

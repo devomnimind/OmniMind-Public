@@ -1,0 +1,23 @@
+
+'"Serializa mensagem para dict"str
+"message_type"str
+
+
+"priority"strselfJ J("¶.
+,
+L L(data"
+dataclassesasdict:-
++
+M M(0"#get-field# message_type:&
+$
+M M(6"#get-field# value:$
+"
+M M(6"#array-write#:)
+'
+N N(("#get-field# priority:&
+$
+N N(.	"#get-field# value:$
+"
+N N(."#array-write#:
+	
+O O(*=/home/fahbrain/projects/omnimind/src/agents/agent_protocol.py

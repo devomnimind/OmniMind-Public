@@ -1,0 +1,29 @@
+
+wn"Calculate overall reflection quality.
+
+        Returns:
+            Weighted average of all metrics
+        "str
+0.2float
+0.3floatselfP P("Ö,
+*
+W W("#get-field# depth_score:1
+/
+W W(""#dependent-value#*:Bfloat.
+,
+X X( "#get-field# breadth_score:1
+/
+X X(&"#dependent-value#*:Bfloat4
+2
+Y Y(&	"!#get-field# actionability_score:1
+/
+Y Y(,
+"#dependent-value#*:	Bfloat2
+0
+Z Z($"#get-field# consistency_score:1
+/
+Z Z(*"#dependent-value#*:Bfloat0
+.
+W Z(*"#dependent-value#:
+Bfloat
+V [(	*E/home/fahbrain/projects/omnimind/src/consciousness/self_reflection.py

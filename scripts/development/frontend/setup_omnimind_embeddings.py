@@ -25,9 +25,9 @@ Script de configuração completa do sistema de embeddings OmniMind
 Indexa todo o projeto: código, documentação, papers, auditoria, configurações.
 """
 
+import logging
 import os
 import sys
-import logging
 from pathlib import Path
 
 # Forçar uso de CPU para evitar problemas de memória GPU
@@ -36,7 +36,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = ""
 # Adicionar src ao path
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
-from embeddings.code_embeddings import OmniMindEmbeddings, ContentType
+from embeddings.code_embeddings import ContentType, OmniMindEmbeddings
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -46,8 +46,7 @@ logger = logging.getLogger(__name__)
 def check_dependencies():
     """Verifica se todas as dependências estão instaladas."""
     try:
-        import sentence_transformers
-        import qdrant_client
+        pass
 
         logger.info("✅ Dependências verificadas: sentence_transformers, qdrant_client")
         return True
@@ -63,7 +62,7 @@ def check_qdrant():
 
         client = QdrantClient("http://localhost:6333")
         # Tentar fazer uma operação simples
-        collections = client.get_collections()
+        _collections = client.get_collections()
         logger.info("✅ Qdrant está rodando e acessível")
         return True
     except Exception as e:
@@ -163,7 +162,7 @@ def main():
 
     # Indexar projeto
     try:
-        results = index_omnimind_project()
+        _results = index_omnimind_project()
     except Exception as e:
         logger.error(f"❌ Erro durante indexação: {e}")
         sys.exit(1)

@@ -1,0 +1,68 @@
+
+
+"SoftHair"str
+90"Lazy import to avoid loading all dependencies."str
+"SoftHairMemory"str
+"SoftHairEncoder"str
+ 	"HolographicProjection"str
+8/"module {__name__!r} has no attribute {name!r}"str
+"HolographicSurface"str
+"EventHorizonMemory"str
+"EpisodicMemory"strname ("T*
+(
+ ("
+#binop ==#2==:Bbool&"$
+ ( * (2 ("F2
+0
+ (3EpisodicMemory"?python-unknown?
+ ("V*
+(
+	 (%"
+#binop ==#2==:Bbool&"$
+	 (% * (2 ("J6
+4
+ (:EventHorizonMemory"?python-unknown?
+ (!"V*
+(
+	 ((
+"
+#binop ==#2==:	Bbool&"$
+	 ((
+ * (2 ("M9
+7
+ (=HolographicProjection"?python-unknown?
+ ($"V*
+(
+	 (%"
+#binop ==#2==:Bbool&"$
+	 (% * (2" "("J6
+4
+ (:HolographicSurface"?python-unknown?
+! !(!"V*
+(
+"	 "("
+#binop ==#2==:Bbool&"$
+"	 "(	 
+*" "(2& &("@	,
+*
+# #(0SoftHair"?python-unknown?
+% %("V
+*
+(
+&	 &(""
+#binop ==#2==:Bbool&"$
+&	 &(" *& &(2* *("G3
+1
+' '(7SoftHairEncoder"?python-unknown?
+) )("L*
+(
+*	 *(!"
+#binop ==#2==:Bbool"
+*	 *(! ** *("F2
+0
++ +(6SoftHairMemory"?python-unknown?
+- -("J6
+4
+.
+ .(J"AttributeError*:BAttributeError2
+. .(J*7/home/fahbrain/projects/omnimind/src/memory/__init__.py

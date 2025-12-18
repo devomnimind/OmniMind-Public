@@ -1,0 +1,1 @@
+canonical/validate/verify_gpu_setup.sh

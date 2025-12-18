@@ -259,7 +259,9 @@ class SharedWorkspace:
         # Hybrid Topological Engine (opcional, para métricas topológicas avançadas)
         self.hybrid_topological_engine: Optional[Any] = None
         try:
-            from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+            from src.consciousness.hybrid_topological_engine import (
+                HybridTopologicalEngine,
+            )
 
             self.hybrid_topological_engine = HybridTopologicalEngine(
                 memory_window=64,
@@ -1187,13 +1189,14 @@ class SharedWorkspace:
                 max_possible_te = np.log2(n_bins_y) if n_bins_y > 1 else 1.0
 
                 normalized_te = min(1.0, te / max_possible_te)
+
                 logger.debug(
                     f"Transfer Entropy: raw_te={te:.4f}, "
                     f"max_possible={max_possible_te:.4f}, "
                     f"normalized={normalized_te:.4f}"
                 )
 
-                return float(max(0.0, normalized_te))
+                return max(0.0, normalized_te)
 
             except Exception as e:
                 logger.debug(f"TE calculation failed: {e}")
@@ -1451,11 +1454,11 @@ class SharedWorkspace:
         if len(valid_predictions) < min_valid_required:
             logger.debug(
                 f"IIT: Only {len(valid_predictions)} valid predictions "
-                f"< {min_valid_required} required. Using all recent predictions "
-                f"for warmup."
+                f"< {min_valid_required} required. "
+                f"Using all recent predictions for warmup."
             )
-            # Durante warmup, usar TODOS recent_predictions mesmo se não têm
-            # campos causais completos
+            # Durante warmup, usar TODOS recent_predictions mesmo se não têm campos
+            # causais completos
             valid_predictions = recent_predictions if recent_predictions else []
 
             if not valid_predictions:
@@ -1893,7 +1896,9 @@ class SharedWorkspace:
             Dict com phi, psi, sigma, step_id, timestamp, metadata
         """
         try:
-            from src.consciousness.consciousness_triad import ConsciousnessTriadCalculator
+            from src.consciousness.consciousness_triad import (
+                ConsciousnessTriadCalculator,
+            )
 
             # Inicializar calculador da tríade
             calculator = ConsciousnessTriadCalculator(workspace=self)
@@ -2111,10 +2116,10 @@ class SharedWorkspace:
             if len(recent_r_squared) > 1:
                 # Convergência = 1 - (desvio padrão / média)
                 # Valores próximos de 1.0 indicam convergência
-                mean_val = float(np.mean(recent_r_squared))
-                std_val = float(np.std(recent_r_squared))
+                mean_val = np.mean(recent_r_squared)
+                std_val = np.std(recent_r_squared)
                 if mean_val > 0:
-                    convergence_rate = float(1.0 - min(1.0, std_val / mean_val))
+                    convergence_rate = float(1.0 - min(1.0, float(std_val / mean_val)))
 
         return {
             "cross_prediction_error": cross_prediction_error,

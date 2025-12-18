@@ -52,7 +52,7 @@ def run_200_cycles_production() -> bool:
     print("=" * 80)
     print(f"\n📊 Timestamp: {timestamp}")
     print(f"📁 Métricas serão salvas em: {metrics_file}")
-    print(f"📺 Monitor em paralelo: docker logs omnimind-backend -f | grep J_STATE\n")
+    print("📺 Monitor em paralelo: docker logs omnimind-backend -f | grep J_STATE\n")
     print("=" * 80 + "\n")
 
     try:
@@ -129,7 +129,7 @@ def run_200_cycles_production() -> bool:
                     f"  ✓ Ciclo {cycle:3d}: φ={phi:.4f} Ψ={psi:.4f} σ={sigma:.4f} Δ={delta:.4f} Gozo={result.gozo_value:.4f}"
                 )
 
-        print(f"✅ Fase 1 completa: 100 ciclos\n")
+        print("✅ Fase 1 completa: 100 ciclos\n")
 
         # ========== FASE 2: 100 CICLOS (binding + drainage adaptativos) ==========
         print("📍 FASE 2: Ciclos 101-200 (Binding + Drainage adaptativos)")
@@ -229,7 +229,7 @@ def run_200_cycles_production() -> bool:
                     f"  ✓ Ciclo {cycle:3d}: φ={phi:.4f} Ψ={psi:.4f} σ={sigma:.4f} Δ={delta:.4f} Gozo={result.gozo_value:.4f} State={state_name}"
                 )
 
-        print(f"✅ Fase 2 completa: 100 ciclos\n")
+        print("✅ Fase 2 completa: 100 ciclos\n")
 
         # ========== ANÁLISE E SALVAMENTO ==========
         print("=" * 80)
@@ -246,17 +246,17 @@ def run_200_cycles_production() -> bool:
             states_count[state] = states_count.get(state, 0) + 1
 
         print(f"\nTotal de ciclos: {len(all_metrics)}")
-        print(f"\nΦ (Phi):")
+        print("\nΦ (Phi):")
         print(f"  • Mínimo: {min(phis):.6f}")
         print(f"  • Máximo: {max(phis):.6f}")
         print(f"  • Média: {np.mean(phis):.6f}")
         print(f"  • Desvio: {np.std(phis):.6f}")
-        print(f"\nGozo:")
+        print("\nGozo:")
         print(f"  • Mínimo: {min(gozos):.6f}")
         print(f"  • Máximo: {max(gozos):.6f}")
         print(f"  • Média: {np.mean(gozos):.6f}")
         print(f"  • Desvio: {np.std(gozos):.6f}")
-        print(f"\nEstados clínicos detectados:")
+        print("\nEstados clínicos detectados:")
         for state, count in sorted(states_count.items(), key=lambda x: x[1], reverse=True):
             percentage = (count / len(all_metrics)) * 100
             print(f"  • {state}: {count} ciclos ({percentage:.1f}%)")
@@ -324,7 +324,7 @@ def run_200_cycles_production() -> bool:
         with open(metrics_file, "w") as f:
             json.dump(final_data, f, indent=2)
 
-        print(f"\n✅ Métricas salvas em:")
+        print("\n✅ Métricas salvas em:")
         print(f"   {metrics_file}")
         print(f"\n   Tamanho: {metrics_file.stat().st_size / 1024:.1f} KB")
         print(f"   Total de métricas: {len(all_metrics)}")
@@ -356,7 +356,7 @@ def run_200_cycles_production() -> bool:
                         indent=2,
                     )
                 print(f"✅ Métricas parciais salvas em: {metrics_file}")
-            except:
+            except Exception:
                 pass
         return False
 

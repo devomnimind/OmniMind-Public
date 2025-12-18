@@ -1,0 +1,181 @@
+
+5src.workflows.automated_code_review.CodeIssue.to_dictQ
+G/home/fahbrain/projects/omnimind/src/workflows/automated_code_review.py> >("2*—
+2? ?($
+@ H(	
+%1"dictx
+v
+A A($
+%2"__id*^
+
+__unknown_file (B*@/
+-src.workflows.automated_code_review.CodeIssue"
+line_number‹
+ˆ
+A A($
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+line*"
+
+__unknown_file (
+
+%2u
+s
+B B(%
+%4"__id*[
+
+__unknown_file (?*=/
+-src.workflows.automated_code_review.CodeIssue"
+
+severityG
+E
+B B(+
+%5"__id*-
+
+__unknown_file (*
+
+%4"
+value
+Œ
+B B(+
+%6"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+severity*"
+
+__unknown_file (
+
+%5u
+s
+C C(%
+%7"__id*[
+
+__unknown_file (?*=/
+-src.workflows.automated_code_review.CodeIssue"
+
+categoryG
+E
+C C(+
+%8"__id*-
+
+__unknown_file (*
+
+%7"
+value
+Œ
+C C(+
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+category*"
+
+__unknown_file (
+
+%8u
+s
+D D(#
+%10"__id*Z
+
+__unknown_file (>*</
+-src.workflows.automated_code_review.CodeIssue"	
+message
+
+D D(#
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+message*#
+
+__unknown_file (
+
+%10x
+v
+E E()
+%12"__id*]
+
+__unknown_file (A*?/
+-src.workflows.automated_code_review.CodeIssue"
+
+suggestion“
+
+E E()
+%13"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+suggestion*#
+
+__unknown_file (
+
+%12v
+t
+F F(%
+%14"__id*[
+
+__unknown_file (?*=/
+-src.workflows.automated_code_review.CodeIssue"
+
+auto_fix‘
+Ž
+F F(%
+%15"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+auto_fix*#
+
+__unknown_file (
+
+%14u
+s
+G G(#
+%16"__id*Z
+
+__unknown_file (>*</
+-src.workflows.automated_code_review.CodeIssue"	
+rule_id
+
+G G(#
+%17"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+rule_id*#
+
+__unknown_file (
+
+%16"
+@ H(	
+
+%1B1/
+-src.workflows.automated_code_review.CodeIssueH

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Crontab entry for OmniMind maintenance tasks
+# Install with: crontab -e
+# Then add the following lines:
+
+# Daily cleanup at 3 AM
+0 3 * * * /home/fahbrain/projects/omnimind/scripts/maintenance/cleanup_old_data.sh
+
+# Weekly disk usage report (Sundays at 4 AM)
+0 4 * * 0 /home/fahbrain/projects/omnimind/scripts/maintenance/disk_usage_report.sh
+
+# Hourly check for orphaned PIDs
+0 * * * * /home/fahbrain/projects/omnimind/scripts/maintenance/check_orphaned_pids.sh

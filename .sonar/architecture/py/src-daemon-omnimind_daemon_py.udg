@@ -1,0 +1,293 @@
+
+1.0PythonFrontend"1763831839492*py2.BÄ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+"
+src/daemon/omnimind_daemon.py9
+ 
+src.daemon.omnimind_daemon11
+
+
+__future__12
+
+asyncio14
+
+os16
+
+signal18
+
+
+time20
+
+dataclasses22
+
+datetime24
+
+
+enum26
+
+pathlib28
+
+typing30
+
+psutil32
+-
+'src.daemon.omnimind_daemon.TaskPriority34
+
+	enum.Enum36
+/
+)src.daemon.omnimind_daemon.OmniMindDaemon38
+8
+2src.daemon.omnimind_daemon.OmniMindDaemon.__init__40
+
+pathlib.Path42
+	
+int44
+
+
+bool46
+:
+4src.daemon.omnimind_daemon.OmniMindDaemon.get_status48
+
+
+dict50
+4
+.src.daemon.omnimind_daemon.OmniMindDaemon.stop52
+5
+/src.daemon.omnimind_daemon.OmniMindDaemon.start54
+=
+7src.daemon.omnimind_daemon.OmniMindDaemon.register_task56
++
+%src.daemon.omnimind_daemon.DaemonTask58
+>
+8src.daemon.omnimind_daemon.OmniMindDaemon._get_next_task60
+.
+(src.daemon.omnimind_daemon.SystemMetrics62
+=
+7src.daemon.omnimind_daemon.OmniMindDaemon._execute_task64
+@
+:src.daemon.omnimind_daemon.OmniMindDaemon._handle_shutdown66
+G
+Asrc.daemon.omnimind_daemon.OmniMindDaemon._collect_system_metrics68
+<
+6src.daemon.omnimind_daemon.OmniMindDaemon._daemon_loop70
+%
+src.daemon.omnimind_daemon.main72
+,
+&src.daemon.omnimind_daemon.DaemonState74
+5
+/src.daemon.omnimind_daemon.create_default_tasks76
+
+
+list78
+<
+6src.daemon.omnimind_daemon.SystemMetrics.is_sleep_time80
+6
+0src.daemon.omnimind_daemon.SystemMetrics.is_idle82J
+
+8
+89jÀ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33325
+
+35
+35346 210
+
+37
+37366
+
+39
+39386 210
+
+41
+41407 239
+
+43
+43426
+
+45
+45446
+
+47
+47466
+
+49
+49487 239
+
+51
+51506
+
+53
+53527 239
+
+55
+55547 239
+
+57
+57567 239
+
+59
+59586 210
+
+61
+61607 239
+
+63
+63626 210
+
+65
+65647 239
+
+67
+67667 239
+
+69
+69687 239
+
+71
+71707 239
+
+73
+73727 210
+
+75
+75746 210
+
+77
+77767 210
+
+79
+79786
+
+81
+81807 263
+
+83
+83827 263r´
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 ()
+
+10251*
+8 ()
+
+10271*
+8 (
+
+10291*
+8 (
+
+10311*
+8 (7
+
+10331*
+8 (
+
+35372*
+87 7(
+
+41434*
+8v	 v(
+
+41454*
+8v	 v(
+
+41474*
+8v	 v(
+
+49513*
+8À	 À(
+
+57594*
+8¨	 ¨(
+
+61634*
+8²	 ²(
+
+65473*
+8Í Í(
+
+65594*
+8Í Í(
+
+67454*
+8»	 »(
+
+69633*
+8‘	 ‘( 
+
+75372*
+8, ,(
+
+77793*
+8à à(
+
+81473*
+8f	 f(
+
+83473*
+8^	 ^(

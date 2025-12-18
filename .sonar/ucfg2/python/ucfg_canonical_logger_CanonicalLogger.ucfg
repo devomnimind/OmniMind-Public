@@ -1,0 +1,141 @@
+
+*src.audit.canonical_logger.CanonicalLoggerH
+>/home/fahbrain/projects/omnimind/src/audit/canonical_logger.py ("2*Ï
+2 ( x
+v
+ ( :,
+*src.audit.canonical_logger.CanonicalLogger"
+
+base_dir"__id*(
+
+__unknown_file (
+
+
+base_dirtr
+ (3
+%3*(
+
+__unknown_file (
+
+
+base_dir*)
+
+__unknown_file (
+	.omnimind2__truediv__nl
+ (A
+%4*"
+
+__unknown_file (
+
+%3*)
+
+__unknown_file (
+	canonical2__truediv__w
+u
+ (A?,
+*src.audit.canonical_logger.CanonicalLogger"
+canonical_dir"__id*"
+
+__unknown_file (
+
+%4w
+u
+ (
+%5"__id*]
+
+__unknown_file (A*?,
+*src.audit.canonical_logger.CanonicalLogger"
+canonical_dirhf
+ (=
+%6*"
+
+__unknown_file (
+
+%52mkdir:
+parents
+
+True:
+exist_ok
+
+Truew
+u
+ ()
+%7"__id*]
+
+__unknown_file (A*?,
+*src.audit.canonical_logger.CanonicalLogger"
+canonical_dirrp
+ (;
+%8*"
+
+__unknown_file (
+
+%7*-
+
+__unknown_file (
+action_log.md2__truediv__q
+o
+ (;9,
+*src.audit.canonical_logger.CanonicalLogger"	
+md_file"__id*"
+
+__unknown_file (
+
+%8w
+u
+ (+
+%9"__id*]
+
+__unknown_file (A*?,
+*src.audit.canonical_logger.CanonicalLogger"
+canonical_dirus
+ (?
+%10*"
+
+__unknown_file (
+
+%9*/
+
+__unknown_file (
+action_log.json2__truediv__t
+r
+ (?;,
+*src.audit.canonical_logger.CanonicalLogger"
+	json_file"__id*#
+
+__unknown_file (
+
+%10t
+r
+ (
+%11"__id*Y
+
+__unknown_file (=*;,
+*src.audit.canonical_logger.CanonicalLogger"
+	json_file@>
+ (&
+%12*#
+
+__unknown_file (
+
+%112exists*
+3
+4*j
+3
+canonical_logger.py<:
+   (
+%1"*src.audit.canonical_logger.CanonicalLogger"
+   (
+
+%1*…
+4 ($qo
+ ($
+%2*J
+
+__unknown_file (.,
+*src.audit.canonical_logger.CanonicalLogger2_initialize_files*
+3:
+ (%
+
+base_dirB.,
+*src.audit.canonical_logger.CanonicalLoggerH

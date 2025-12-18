@@ -1,0 +1,206 @@
+
+Isrc.metacognition.optimization_suggestions.OptimizationSuggestion.to_dictX
+N/home/fahbrain/projects/omnimind/src/metacognition/optimization_suggestions.py3 3("2*ı
+24 4($
+5 ?(	
+%1"dictè
+å
+6 6(/
+%2"__id*t
+
+__unknown_file (X*VC
+Asrc.metacognition.optimization_suggestions.OptimizationSuggestion"
+suggestion_idî
+ë
+6 6(/
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*-
+
+__unknown_file (
+suggestion_id*"
+
+__unknown_file (
+
+%2ä
+á
+7 7(%
+%4"__id*o
+
+__unknown_file (S*QC
+Asrc.metacognition.optimization_suggestions.OptimizationSuggestion"
+
+categoryè
+å
+7 7(%
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+category*"
+
+__unknown_file (
+
+%4á
+Ñ
+8 8(
+%6"__id*l
+
+__unknown_file (P*NC
+Asrc.metacognition.optimization_suggestions.OptimizationSuggestion"
+titleå
+â
+8 8(
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*%
+
+__unknown_file (	
+title*"
+
+__unknown_file (
+
+%6ç
+ä
+9 9(+
+%8"__id*r
+
+__unknown_file (V*TC
+Asrc.metacognition.optimization_suggestions.OptimizationSuggestion"
+descriptioní
+è
+9 9(+
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+description*"
+
+__unknown_file (
+
+%8ã
+à
+: :(%
+%10"__id*o
+
+__unknown_file (S*QC
+Asrc.metacognition.optimization_suggestions.OptimizationSuggestion"
+
+priorityë
+é
+: :(%
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+priority*#
+
+__unknown_file (
+
+%10â
+Ü
+; ;(!
+%12"__id*m
+
+__unknown_file (Q*OC
+Asrc.metacognition.optimization_suggestions.OptimizationSuggestion"
+impactè
+å
+; ;(!
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+impact*#
+
+__unknown_file (
+
+%12ë
+é
+< <(1
+%14"__id*u
+
+__unknown_file (Y*WC
+Asrc.metacognition.optimization_suggestions.OptimizationSuggestion"
+implementationó
+î
+< <(1
+%15"__mapSet*"
+
+__unknown_file (
+
+%1*.
+
+__unknown_file (
+implementation*#
+
+__unknown_file (
+
+%14ä
+á
+= =(#
+%16"__id*n
+
+__unknown_file (R*PC
+Asrc.metacognition.optimization_suggestions.OptimizationSuggestion"	
+metricsê
+ç
+= =(#
+%17"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+metrics*#
+
+__unknown_file (
+
+%16ç
+ä
+> >()
+%18"__id*q
+
+__unknown_file (U*SC
+Asrc.metacognition.optimization_suggestions.OptimizationSuggestion"
+
+created_atì
+ê
+> >()
+%19"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+created_at*#
+
+__unknown_file (
+
+%18"
+5 ?(	
+
+%1BEC
+Asrc.metacognition.optimization_suggestions.OptimizationSuggestionH

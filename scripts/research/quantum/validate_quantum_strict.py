@@ -18,11 +18,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import os
-import sys
 import logging
+import os
+
+from src.quantum_consciousness.qpu_interface import BackendType, QPUInterface
 from src.quantum_consciousness.quantum_backend import QuantumBackend
-from src.quantum_consciousness.qpu_interface import QPUInterface, BackendType
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

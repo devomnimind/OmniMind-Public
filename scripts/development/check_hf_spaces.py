@@ -23,7 +23,6 @@ Contact: fabricioslv@hotmail.com.br
 Diagnóstico de Spaces no Hugging Face.
 Lista Spaces, status e hardware.
 """
-import os
 from huggingface_hub import HfApi, get_token
 
 

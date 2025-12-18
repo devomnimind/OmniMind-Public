@@ -192,8 +192,8 @@ class CodeSynthesizer:
                     f"{improvement_comments}",
                 )
 
-            # 🔒 SEGURANÇA: Adicionar assinatura obrigatória no nome do arquivo
-            signed_name = f"modulo_autopoiesis_data_{spec.name}"
+            # 🔒 SEGURANÇA: Adicionar assinatura obrigatória no nome do arquivo (Nome encurtado)
+            signed_name = f"auto_{spec.name}"
             result[signed_name] = SynthesizedComponent(
                 name=signed_name, source_code=source, natural_description=natural_desc
             )

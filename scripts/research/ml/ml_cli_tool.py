@@ -26,8 +26,8 @@ Uso: python scripts/ml/ml_cli_tool.py <comando> [opções]
 
 import argparse
 import json
-import sys
 from pathlib import Path
+
 from hybrid_ml_optimizer import HybridMLOptimizer
 
 

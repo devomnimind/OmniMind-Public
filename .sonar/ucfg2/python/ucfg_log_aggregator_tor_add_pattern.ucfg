@@ -1,0 +1,78 @@
+
+:src.observability.log_aggregator.LogAggregator.add_patternP
+D/home/fahbrain/projects/omnimind/src/observability/log_aggregator.pyó ó("2*Å
+2
+ò ú(y
+w
+
+ù ù(
+%1"__id*]
+
+__unknown_file (A*?0
+.src.observability.log_aggregator.LogAggregator"
+	_patternsig
+
+ù ù(&
+%2*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (
+	
+pattern2appendM
+K
+
+ü" ü(.
+%3"__id*1
+
+__unknown_file (*
+	
+pattern"
+nameQ
+O
+
+ü9 ü(I
+%4"__id*5
+
+__unknown_file (*
+	
+pattern"
+
+severityI
+G
+
+ü9 ü(O
+%5"__id*-
+
+__unknown_file (*
+
+%4"
+valueóî
+
+û †(	
+%6*&
+
+__unknown_file (
+
+
+logger*-
+
+__unknown_file (
+pattern_added2debug:
+name
+
+%3:
+severity
+
+%5*
+3*9
+3
+log_aggregator.py"
+¢ ¢(
+implicit return:
+
+ó ó(-	
+patternB20
+.src.observability.log_aggregator.LogAggregatorH

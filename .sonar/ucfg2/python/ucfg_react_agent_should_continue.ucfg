@@ -1,0 +1,63 @@
+
+2src.agents.react_agent.ReactAgent._should_continueF
+:/home/fahbrain/projects/omnimind/src/agents/react_agent.pyÆ Æ("2*®
+2
+Ç Ê(}{
+
+Ì Ì(
+%1"__mapGet*%
+
+__unknown_file (	
+
+state*)
+
+__unknown_file (
+	iteration2__getitem__ƒ€
+
+Ì! Ì(8
+%2"__mapGet*%
+
+__unknown_file (	
+
+state*.
+
+__unknown_file (
+max_iterations2__getitem__Œ
+‰
+
+Ì Ì(8
+%3"	__compare*"
+
+__unknown_file (
+>=*"
+
+__unknown_file (
+
+%1*"
+
+__unknown_file (
+
+%2*	
+4
+5
+7*+
+4
+Ó Ó("
+
+Ó Ó(
+
+continue*&
+5
+Ñ Ñ("
+
+Ñ Ñ(
+end*&
+7
+Í Í("
+
+Í Í(
+end:
+
+Æ Æ(0
+stateB%#
+!src.agents.react_agent.ReactAgentH

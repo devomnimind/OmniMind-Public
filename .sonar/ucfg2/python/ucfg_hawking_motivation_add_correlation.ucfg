@@ -1,0 +1,266 @@
+
+Isrc.motivation.hawking_motivation.HawkingMotivationEngine.add_correlationQ
+E/home/fahbrain/projects/omnimind/src/motivation/hawking_motivation.pyº º("2*ù
+2
+ø ∆(ã
+à
+
+« «(.
+%19"__id*m
+
+__unknown_file (Q*O;
+9src.motivation.hawking_motivation.HawkingMotivationEngine"
+knowledge_basevt
+
+« «(.
+%20*#
+
+__unknown_file (
+
+%19*,
+
+__unknown_file (
+
+knowledge_id2__contains__*
+7
+9*=
+3
+hawking_motivation.py"
+” ”(
+implicit return*ù
+4
+— —(Kù
+ö
+
+— —(J
+%1"__concat*%
+
+— —(*
+Correlation added: *
+
+—+ —(7
+
+knowledge_id*
+
+—8 —(=	
+ <-> *
+
+—> —(H
+
+
+related_idge
+
+— —(K
+%2*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%12debug*
+3*€
+5
+œ œ(9U
+S
+
+œ œ($
+%3"__id*9
+
+__unknown_file (*
+	
+related"
+correlationsnl
+
+œ œ(9
+%4*"
+
+__unknown_file (
+
+%3*,
+
+__unknown_file (
+
+knowledge_id2append*
+4*Ú
+6
+Õ Õ(5ä
+á
+
+Õ Õ()
+%5"__id*m
+
+__unknown_file (Q*O;
+9src.motivation.hawking_motivation.HawkingMotivationEngine"
+knowledge_base{y
+
+Õ Õ(5
+%6"__mapGet*"
+
+__unknown_file (
+
+%5**
+
+__unknown_file (
+
+
+related_id2__getitem__C
+A
+
+Õ Õ(5	
+related"__id*"
+
+__unknown_file (
+
+%6U
+S
+
+Œ# Œ(7
+%7"__id*9
+
+__unknown_file (*
+	
+related"
+correlationstr
+
+Œ Œ(7
+%8*"
+
+__unknown_file (
+
+%7*,
+
+__unknown_file (
+
+knowledge_id2__contains__=
+;
+
+Œ Œ(7
+%9"not*"
+
+__unknown_file (
+
+%8*
+4
+5*õ
+7
+Ã Ã(>ã
+à
+
+Ã+ Ã(>
+%10"__id*m
+
+__unknown_file (Q*O;
+9src.motivation.hawking_motivation.HawkingMotivationEngine"
+knowledge_basetr
+
+Ã Ã(>
+%11*#
+
+__unknown_file (
+
+%10**
+
+__unknown_file (
+
+
+related_id2__contains__*
+4
+6*Ÿ
+8
+   (4S
+Q
+
+   (!
+%12"__id*6
+
+__unknown_file (*
+
+item"
+correlationsnl
+
+   (4
+%13*#
+
+__unknown_file (
+
+%12**
+
+__unknown_file (
+
+
+related_id2append*
+7*ı
+9
+» »(4ã
+à
+
+» »(&
+%14"__id*m
+
+__unknown_file (Q*O;
+9src.motivation.hawking_motivation.HawkingMotivationEngine"
+knowledge_base}
+
+» »(4
+%15"__mapGet*#
+
+__unknown_file (
+
+%14*,
+
+__unknown_file (
+
+knowledge_id2__getitem__A
+?
+
+» »(4
+item"__id*#
+
+__unknown_file (
+
+%15S
+Q
+
+…! …(2
+%16"__id*6
+
+__unknown_file (*
+
+item"
+correlationstr
+
+… …(2
+%17*#
+
+__unknown_file (
+
+%16**
+
+__unknown_file (
+
+
+related_id2__contains__?
+=
+
+… …(2
+%18"not*#
+
+__unknown_file (
+
+%17*
+7
+8:
+
+Ω Ω(
+knowledge_id:
+
+Ω! Ω(0
+
+related_id:
+
+Ω2 Ω(L
+bidirectionalB=;
+9src.motivation.hawking_motivation.HawkingMotivationEngineH

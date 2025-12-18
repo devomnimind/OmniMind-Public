@@ -37,7 +37,9 @@ from src.ethics.production_ethics import ProductionEthicsSystem
 from src.metrics.ethics_metrics import MoralFoundation, MoralScenario
 
 # Add src to path
-PROJECT_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+LOGS_DIR = PROJECT_ROOT / "logs"
+LOGS_DIR.mkdir(exist_ok=True)
 
 # ============================================================================
 # NEUROSCIENTIFIC PARAMETERS
@@ -124,7 +126,7 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler(PROJECT_ROOT / "logs/stimulation_scientific.log"),
+        logging.FileHandler(LOGS_DIR / "stimulation_scientific.log"),
     ],
 )
 logger = logging.getLogger("OmniMind-Stimulation")

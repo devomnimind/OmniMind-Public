@@ -1,0 +1,81 @@
+{
+  "mcpServers": {
+    "omnimind-filesystem": {
+      "command": "stdio",
+      "args": [
+        "python",
+        "-m",
+        "src.integrations.mcp_filesystem_server"
+      ],
+      "env": {
+        "MCP_PORT": "4331"
+      }
+    },
+    "omnimind-git": {
+      "command": "stdio",
+      "args": [
+        "python",
+        "-m",
+        "src.integrations.mcp_git_wrapper"
+      ],
+      "env": {
+        "MCP_PORT": "4332"
+      }
+    },
+    "omnimind-python": {
+      "command": "stdio",
+      "args": [
+        "python",
+        "-m",
+        "src.integrations.mcp_python_server"
+      ],
+      "env": {
+        "MCP_PORT": "4333"
+      }
+    },
+    "omnimind-sqlite": {
+      "command": "stdio",
+      "args": [
+        "python",
+        "-m",
+        "src.integrations.mcp_sqlite_wrapper"
+      ],
+      "env": {
+        "MCP_PORT": "4334"
+      }
+    },
+    "omnimind-system-info": {
+      "command": "stdio",
+      "args": [
+        "python",
+        "-m",
+        "src.integrations.mcp_system_info_server"
+      ],
+      "env": {
+        "MCP_PORT": "4335"
+      }
+    },
+    "omnimind-logging": {
+      "command": "stdio",
+      "args": [
+        "python",
+        "-m",
+        "src.integrations.mcp_logging_server"
+      ],
+      "env": {
+        "MCP_PORT": "4336"
+      }
+    },
+    "omnimind-supabase": {
+      "command": "stdio",
+      "args": [
+        "python",
+        "-m",
+        "src.integrations.mcp_supabase_wrapper"
+      ],
+      "env": {
+        "MCP_PORT": "4337"
+      }
+    }
+  }
+}

@@ -1,0 +1,87 @@
+
+8src.metacognition.homeostasis.HomeostaticController.stopM
+A/home/fahbrain/projects/omnimind/src/metacognition/homeostasis.pyé é("2*£
+2
+ê ê(*€
+~
+
+ë ë(C5
+3src.metacognition.homeostasis.HomeostaticController"
+
+_running"__id*%
+
+__unknown_file (	
+
+False†
+ƒ
+
+í í( 
+%6"__id*i
+
+__unknown_file (M*K5
+3src.metacognition.homeostasis.HomeostaticController"
+_monitoring_task*
+4
+8*6
+3
+homeostasis.py"
+ö ö(
+implicit return*š
+4
+ô ô(5ƒ€
+
+ô ô(5
+%1*&
+
+__unknown_file (
+
+
+logger*>
+
+__unknown_file (" 
+Homeostatic controller stopped2info*
+3*p
+6
+ñ ñ()W
+U
+
+ñ ñ()
+%2"__id*;
+
+__unknown_file (*
+	
+asyncio"
+CancelledError*
+3
+4* 
+7
+ð ð(+†
+ƒ
+
+ð ð(+
+%3"__id*i
+
+__unknown_file (M*K5
+3src.metacognition.homeostasis.HomeostaticController"
+_monitoring_task*
+4
+6*ß
+8
+î î(*†
+ƒ
+
+î î(!
+%4"__id*i
+
+__unknown_file (M*K5
+3src.metacognition.homeostasis.HomeostaticController"
+_monitoring_task@>
+
+î î(*
+%5*"
+
+__unknown_file (
+
+%42cancel*
+7B75
+3src.metacognition.homeostasis.HomeostaticControllerH

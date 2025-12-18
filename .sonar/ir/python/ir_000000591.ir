@@ -1,0 +1,14 @@
+
+90"Get experiences, optionally filtered by agent."strself5 5(agent_id5 5(,limit5. 5(>"S)
+'
+8 8("
+__bool__*:BboolH&"$
+8 8( *8 8(
+2: :("C9
+7
+9 9(Wexperiences"?python-unknown?:Blist"C9
+7
+; ;(*experiences"#get-field# experiences:"5!
+
+= =(#"#unknown-value#
+= =(#*S/home/fahbrain/projects/omnimind/src/collective_intelligence/collective_learning.py

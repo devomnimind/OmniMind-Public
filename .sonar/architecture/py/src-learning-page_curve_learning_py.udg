@@ -1,0 +1,260 @@
+
+1.0PythonFrontend"1763831830857*py2.BÏ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+(
+#src/learning/page_curve_learning.py9
+&
+ src.learning.page_curve_learning11
+
+
+__future__12
+
+logging14
+
+dataclasses16
+
+
+enum18
+
+typing20
+
+random22
+
+
+math24
+
+
+statistics26
+7
+1src.learning.page_curve_learning.PageCurveLearner28
+Y
+Ssrc.learning.page_curve_learning.PageCurveLearner._enable_information_recovery_mode30
+K
+Esrc.learning.page_curve_learning.PageCurveLearner._is_declining_trend32
+
+
+bool34
+
+
+list36
+E
+?src.learning.page_curve_learning.PageCurveLearner._is_page_time38
+E
+?src.learning.page_curve_learning.PageCurveLearner._update_phase40
+F
+@src.learning.page_curve_learning.PageCurveLearner.get_page_curve42
+0
+*src.learning.page_curve_learning.PageCurve44
+P
+Jsrc.learning.page_curve_learning.PageCurveLearner._linear_regression_slope46
+
+float48
+@
+:src.learning.page_curve_learning.PageCurveLearner.__init__50
+	
+int52
+=
+7src.learning.page_curve_learning.PageCurveLearner.reset54
+D
+>src.learning.page_curve_learning.PageCurveLearner.record_epoch56
+
+
+dict58
+N
+Hsrc.learning.page_curve_learning.PageCurveLearner._compute_entropy_trend60
+F
+@src.learning.page_curve_learning.PageCurveLearner.get_statistics62
+L
+Fsrc.learning.page_curve_learning.PageCurveLearner._von_neumann_entropy64
+Q
+Ksrc.learning.page_curve_learning.PageCurveLearner._generate_recommendations66
+4
+.src.learning.page_curve_learning.LearningPhase68
+
+	enum.Enum70J
+
+8
+89jº
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29286 210
+
+31
+31307 229
+
+33
+33327 229
+
+35
+35346
+
+37
+37366
+
+39
+39387 229
+
+41
+41407 229
+
+43
+43427 229
+
+45
+45446 210
+
+47
+47467 229
+
+49
+49486
+
+51
+51507 229
+
+53
+53526
+
+55
+55547 229
+
+57
+57567 229
+
+59
+59586
+
+61
+61607 229
+
+63
+63627 229
+
+65
+65647 229
+
+67
+67667 229
+
+69
+69686 210
+
+71
+71706r†
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 ("
+
+10191*
+8 (
+
+10211*
+8 (7
+
+10231*
+8 (
+
+10251*
+8 (
+
+10271*
+8 (
+
+33353*
+8ç	 ç(
+
+33374*
+8ç	 ç(
+
+39353*
+8Í	 Í(
+
+43453*
+8ê	 ê(
+
+47493*
+8≈	 ≈(!
+
+47374*
+8≈	 ≈(!
+
+51534*
+8Q	 Q(
+
+51494*
+8Q	 Q(
+
+51534*
+8Q	 Q(
+
+57593*
+8s	 s(
+
+57594*
+8s	 s(
+
+61493*
+8∑	 ∑(
+
+63593*
+8ü	 ü(
+
+65493*
+8™	 ™(
+
+65594*
+8™	 ™(
+
+67593*
+8‹	 ‹("
+
+69712*
+8& &(

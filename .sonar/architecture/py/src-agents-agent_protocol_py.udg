@@ -1,0 +1,326 @@
+
+1.0PythonFrontend"1763831841360*py2.Bµ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+!
+src/agents/agent_protocol.py9
+
+src.agents.agent_protocol11
+
+
+__future__12
+
+asyncio14
+
+logging16
+
+
+uuid18
+
+dataclasses20
+
+datetime22
+
+
+enum24
+
+typing26
+,
+&src.agents.agent_protocol.AgentMessage28
+4
+.src.agents.agent_protocol.AgentMessage.to_dict30
+
+
+dict32
+6
+0src.agents.agent_protocol.AgentMessage.from_dict34
+/
+)src.agents.agent_protocol.get_message_bus36
+/
+)src.agents.agent_protocol.AgentMessageBus38
+/
+)src.agents.agent_protocol.MessagePriority40
+
+	enum.Enum42
+8
+2src.agents.agent_protocol.AgentMessageBus.__init__44
+<
+6src.agents.agent_protocol.AgentMessageBus.send_message46
+?
+9src.agents.agent_protocol.AgentMessageBus.receive_message48
+	
+str50
+;
+5src.agents.agent_protocol.AgentMessageBus.add_handler52
+B
+<src.agents.agent_protocol.AgentMessageBus.respond_to_message54
+9
+3src.agents.agent_protocol.AgentMessageBus.get_stats56
+5
+/src.agents.agent_protocol.AgentMessageBus.start58
+9
+3src.agents.agent_protocol.AgentMessageBus.subscribe60
+
+
+list62
+@
+:src.agents.agent_protocol.AgentMessageBus.resolve_conflict64
+2
+,src.agents.agent_protocol.ConflictResolution66
+4
+.src.agents.agent_protocol.AgentMessageBus.stop68
+>
+8src.agents.agent_protocol.AgentMessageBus.register_agent70
+>
+8src.agents.agent_protocol.AgentMessageBus.get_queue_size72
+	
+int74
+@
+:src.agents.agent_protocol.AgentMessageBus.unregister_agent76
+9
+3src.agents.agent_protocol.AgentMessageBus.broadcast78
++
+%src.agents.agent_protocol.MessageType80
+=
+7src.agents.agent_protocol.AgentMessageBus.send_and_wait82
+*
+$src.agents.agent_protocol._timestamp84J
+
+8
+89jñ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29286 210
+
+31
+31307 229
+
+33
+33326
+
+35
+35347 229
+
+37
+37367 210
+
+39
+39386 210
+
+41
+41406 210
+
+43
+43426
+
+45
+45447 239
+
+47
+47467 239
+
+49
+49487 239
+
+51
+51506
+
+53
+53527 239
+
+55
+55547 239
+
+57
+57567 239
+
+59
+59587 239
+
+61
+61607 239
+
+63
+63626
+
+65
+65647 239
+
+67
+67666 210
+
+69
+69687 239
+
+71
+71707 239
+
+73
+73727 239
+
+75
+75746
+
+77
+77767 239
+
+79
+79787 239
+
+81
+81806 210
+
+83
+83827 239
+
+85
+85847 210rÖ
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (1
+
+10231*
+8 ((
+
+10251*
+8 (
+
+10271*
+8 (<
+
+31333*
+8J	 J(
+
+35293*
+8R	 R(
+
+35334*
+8R	 R(
+
+37393*
+8€ €(
+
+41432*
+8 (
+
+47294*
+8´ ´(
+
+49514*
+8ï ï(
+
+53514*
+8¦	 ¦(
+
+55294*
+8• •(!
+
+55334*
+8• •(!
+
+57333*
+8ë	 ë(
+
+61514*
+8˜	 ˜(
+
+61634*
+8˜	 ˜(
+
+65673*
+8Ë	 Ë(
+
+65634*
+8Ë	 Ë(
+
+65514*
+8Ë	 Ë(
+
+65514*
+8Ë	 Ë(
+
+71514*
+8ƒ	 ƒ(
+
+73753*
+8å	 å(
+
+73514*
+8å	 å(
+
+77514*
+8	 (
+
+79514*
+8± ±(
+
+79814*
+8± ±(
+
+79334*
+8± ±(
+
+83293*
+8Ð Ð(
+
+83294*
+8Ð Ð(
+
+85513*
+8÷ ÷(
+
+81432*
+8" "(

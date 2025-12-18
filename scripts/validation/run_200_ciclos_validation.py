@@ -24,7 +24,9 @@ from datetime import datetime
 from pathlib import Path
 
 # Setup path
-PROJECT_ROOT = Path(__file__).resolve().parents[len(Path(__file__).relative_to(Path.cwd()).parents)-1]
+PROJECT_ROOT = (
+    Path(__file__).resolve().parents[len(Path(__file__).relative_to(Path.cwd()).parents) - 1]
+)
 sys.path.insert(0, str(PROJECT_ROOT))
 
 

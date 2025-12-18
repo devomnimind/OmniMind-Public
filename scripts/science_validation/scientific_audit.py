@@ -20,10 +20,9 @@ from __future__ import annotations
 
 import json
 import logging
-import statistics
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 import numpy as np
 
@@ -277,7 +276,6 @@ class ScientificAuditor:
 
 def main():
     """Função principal."""
-    from datetime import datetime
 
     project_root = Path(__file__).parent.parent.parent
     auditor = ScientificAuditor(project_root)
@@ -320,7 +318,6 @@ def main():
 
 if __name__ == "__main__":
     import time
-
     from datetime import datetime
 
     main()

@@ -1,0 +1,39 @@
+# Logrotate configuration for OmniMind logs
+# Install to: /etc/logrotate.d/omnimind
+# Test with: sudo logrotate -d /etc/logrotate.d/omnimind
+
+/home/fahbrain/projects/omnimind/logs/*.log {
+    daily
+    rotate 7
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 0640 fahbrain fahbrain
+    sharedscripts
+    postrotate
+        # Notify systemd services if needed
+        systemctl is-active --quiet omnimind-backend.service && systemctl reload omnimind-backend.service || true
+    endscript
+}
+
+/home/fahbrain/projects/omnimind/logs/modules/*.jsonl {
+    daily
+    rotate 14
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 0640 fahbrain fahbrain
+}
+
+/home/fahbrain/projects/omnimind/logs/security/*.jsonl {
+    daily
+    rotate 30
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 0640 fahbrain fahbrain
+    # Security logs kept longer (30 days)
+}

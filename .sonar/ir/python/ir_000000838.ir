@@ -1,0 +1,42 @@
+
+
+2int
+<3"Calculate Euclidean distance to another position."str
+0.5floatselfG G(otherG G(+"ì"
+ 
+I I("#get-field# x:"
+ 
+I I("#get-field# x:)
+'
+I I(dx"	#binop -#*2-:"
+ 
+J J("#get-field# y:"
+ 
+J J("#get-field# y:)
+'
+J J(	dy"	#binop -#*2-:"
+ 
+K K(
+"#get-field# z:"
+ 
+K K("#get-field# z:)
+'
+K K(dz"	#binop -#*2-:
+'
+%
+L L("
+#binop **#*2**:'
+%
+L L(#"
+#binop **#*2**:	'
+%
+L& L(+"
+#binop **#*2**:#
+!
+L L(+"	#binop +#2+:1
+/
+L L(3"#dependent-value#*:Bfloat.
+,
+L L(4"
+builtinsfloat*:Bfloat
+L L(4*H/home/fahbrain/projects/omnimind/src/multimodal/embodied_intelligence.py

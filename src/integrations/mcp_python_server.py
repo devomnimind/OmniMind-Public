@@ -19,7 +19,6 @@ import tempfile
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from src.integrations.mcp_cache import get_mcp_cache
 from src.integrations.mcp_server import MCPServer
 
 logger = logging.getLogger(__name__)
@@ -55,14 +54,11 @@ class PythonMCPServer(MCPServer):
         """
         super().__init__()
 
-        # Initialize cache
-        self.cache = get_mcp_cache()
-
         self.allow_package_install = allow_package_install
         self.timeout = timeout
 
-        # Registrar métodos MCP
-        self._methods.update(
+        # Registrar métodos MCP (preserva initialize())
+        self.register_methods(
             {
                 "execute_code": self.execute_code,
                 "install_package": self.install_package,
@@ -93,16 +89,6 @@ class PythonMCPServer(MCPServer):
         """
         if not code or not code.strip():
             return {"stdout": "", "stderr": "", "exit_code": 0, "result": None}
-
-        # Check cache first
-        cache_key = f"python_exec_{hash(code) % 10000}"
-        try:
-            if hasattr(self.cache, "_get_sync"):
-                cached_result = self.cache._get_sync(cache_key)
-                if cached_result:
-                    return cached_result
-        except Exception:
-            pass
 
         exec_timeout = timeout or self.timeout
 
@@ -419,7 +405,7 @@ class PythonMCPServer(MCPServer):
                             return {"issues": []}
                     except json.JSONDecodeError:
                         # Se não for JSON válido, parsear saída texto linha por linha
-                        # Apenas linhas que parecem erros (file:line:col: code message)
+                        # Apenas linhas que parecem erros do flake8 (formato: file:line:col: code message)
                         issues = []
                         for line in result.stdout.split("\n"):
                             line = line.strip()

@@ -1,0 +1,277 @@
+
+1.0PythonFrontend"1763831836079*py2.Bâ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+)
+$src/integrations/supabase_adapter.py9
+'
+!src.integrations.supabase_adapter11
+
+
+__future__12
+
+logging14
+
+os16
+
+dataclasses18
+
+typing20
+
+postgrest.exceptions22
+
+supabase24
+!
+src.integrations.mcp_client26
+<
+6src.integrations.supabase_adapter.SupabaseAdapterError28
+
+	Exception30
+6
+0src.integrations.supabase_adapter.SupabaseConfig32
+;
+5src.integrations.supabase_adapter.SupabaseConfig.load34
+?
+9src.integrations.supabase_adapter.SupabaseConfig.from_env36
+K
+Esrc.integrations.supabase_adapter.SupabaseConfig.has_service_role_key38
+
+
+bool40
+@
+:src.integrations.supabase_adapter.SupabaseConfig.from_text42
+	
+str44
+7
+1src.integrations.supabase_adapter.SupabaseAdapter46
+@
+:src.integrations.supabase_adapter.SupabaseAdapter.__init__48
+C
+=src.integrations.supabase_adapter.SupabaseAdapter.query_table50
+
+
+list52
+	
+int54
+E
+?src.integrations.supabase_adapter.SupabaseAdapter.update_record56
+
+
+dict58
+E
+?src.integrations.supabase_adapter.SupabaseAdapter.insert_record60
+C
+=src.integrations.supabase_adapter.SupabaseAdapter.list_tables62
+F
+@src.integrations.supabase_adapter.SupabaseAdapter.delete_records64
+E
+?src.integrations.supabase_adapter.SupabaseAdapter.log_operation66
+F
+@src.integrations.supabase_adapter.SupabaseAdapter.describe_table68J
+
+8
+89j£
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29286 210
+
+31
+31306
+
+33
+33326 210
+
+35
+35347 233
+
+37
+37367 233
+
+39
+39387 233
+
+41
+41406
+
+43
+43427 233
+
+45
+45446
+
+47
+47466 210
+
+49
+49487 247
+
+51
+51507 247
+
+53
+53526
+
+55
+55546
+
+57
+57567 247
+
+59
+59586
+
+61
+61607 247
+
+63
+63627 247
+
+65
+65647 247
+
+67
+67667 247
+
+69
+69687 247rÇ
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+
+10191*
+8 ("
+
+10211*
+8 (	
+
+10231*
+8 (.
+
+10251*
+8 (/
+
+10231*
+8	 (2
+
+10251*
+8	 (3
+
+10271*
+8- -(2
+
+29312*
+82 2(
+
+39413*
+8>	 >(
+
+43454*
+8O	 O(
+
+49334*
+8ê	 ê(
+
+51533*
+8æ	 æ(
+
+51454*
+8æ	 æ(
+
+51554*
+8æ	 æ(
+
+51554*
+8æ	 æ(
+
+57533*
+8Ÿ	 Ÿ(
+
+57454*
+8Ÿ	 Ÿ(
+
+57594*
+8Ÿ	 Ÿ(
+
+57594*
+8Ÿ	 Ÿ(
+
+61533*
+8“	 “(
+
+61454*
+8“	 “(
+
+61594*
+8“	 “(
+
+63533*
+8®	 ®(
+
+65533*
+8Â	 Â(
+
+65454*
+8Â	 Â(
+
+65594*
+8Â	 Â(
+
+67454*
+8Ô	 Ô(
+
+67454*
+8Ô	 Ô(
+
+69533*
+8ô	 ô(
+
+69454*
+8ô	 ô(

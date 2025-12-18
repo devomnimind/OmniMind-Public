@@ -18,7 +18,10 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Union, cast
 
 from src.audit.immutable_audit import get_audit_system
-from src.integrations.mcp_dynamic_rate_limiter import get_rate_limiter
+from src.integrations.mcp_connection_handler import (
+    ConnectionConfig,
+    MCPConnectionHandler,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -72,18 +75,23 @@ class MCPOrchestrator:
     - Audit integration
     """
 
-    def __init__(self, config_path: Optional[Union[str, Path]] = None) -> None:
+    def __init__(
+        self, config_path: Optional[Union[str, Path]] = None, config_type: str = "auto"
+    ) -> None:
         """
-        Inicializa o orquestrador MCP.
+        Inicializa o orquestrador MCP com conexão robusta.
 
         Args:
             config_path: Caminho para o arquivo de configuração JSON.
-                        Se None, usa config/mcp_servers.json.
+                        Se None, usa configuração automática baseada em config_type.
+            config_type: Tipo de configuração ("internal", "external", "auto").
+                        "auto" detecta automaticamente: external para VS Code, "
+                        "internal para sistema."
         """
-        self.config_path = self._resolve_config_path(config_path)
+        self.config_type = config_type
+        self.config_path = self._resolve_config_path(config_path, config_type)
         self.config = self._load_config()
         self.audit_system = get_audit_system()
-        self.rate_limiter = get_rate_limiter(initial_rps=100)
 
         # Estado interno
         self.servers: Dict[str, MCPServerConfig] = {}
@@ -96,6 +104,25 @@ class MCPOrchestrator:
         self.audit_enabled = self.global_settings.get("audit_enabled", True)
         self.health_check_interval = self.global_settings.get("health_check_interval_seconds", 60)
 
+        # Connection handler robusto
+        connection_settings = self.global_settings.get("connection_handling", {})
+        connection_config = ConnectionConfig(
+            request_timeout=connection_settings.get("request_timeout", 60.0),
+            connection_timeout=connection_settings.get("connection_timeout", 10.0),
+            read_timeout=connection_settings.get("read_timeout", 30.0),
+            max_retries=connection_settings.get("max_retries", 5),
+            retry_backoff_base=connection_settings.get("retry_backoff_base", 1.0),
+            retry_backoff_max=connection_settings.get("retry_backoff_max", 60.0),
+            failure_threshold=connection_settings.get("failure_threshold", 3),
+            recovery_timeout=connection_settings.get("recovery_timeout", 30.0),
+            max_connections=connection_settings.get("max_connections", 10),
+            max_keepalive_connections=connection_settings.get("max_keepalive_connections", 5),
+            keepalive_expiry=connection_settings.get("keepalive_expiry", 5.0),
+        )
+        self.connection_handler = MCPConnectionHandler(connection_config)
+        self.retry_enabled = connection_settings.get("retry_enabled", True)
+        self.max_retries_per_server = connection_settings.get("max_retries_per_server", 5)
+
         # Background tasks
         self._health_check_task: Optional[asyncio.Task[None]] = None
         self._metrics_export_task: Optional[asyncio.Task[None]] = None
@@ -104,16 +131,119 @@ class MCPOrchestrator:
         self._load_server_configs()
 
         logger.info(
-            "MCPOrchestrator inicializado com %d servidores configurados",
+            "MCPOrchestrator inicializado com %d servidores configurados e "
+            "connection handling robusto",
             len(self.servers),
         )
 
-    def _resolve_config_path(self, config_path: Optional[Union[str, Path]]) -> Path:
-        """Resolve o caminho do arquivo de configuração."""
-        if config_path is None:
-            base_path = Path(__file__).resolve().parents[2]
-            config_path = base_path / "config" / "mcp_servers.json"
-        return Path(config_path).expanduser().resolve()
+    def test_config_detection(self) -> Dict[str, Any]:
+        """Testa a detecção automática de configuração (para debug)."""
+        return {
+            "detected_type": self._detect_config_type(),
+            "resolved_config_path": str(self.config_path),
+            "config_file_exists": self.config_path.exists(),
+            "config_type_param": self.config_type,
+            "vscode_config_found": self._check_vscode_config(),
+            "environment_vars": {
+                var: os.environ.get(var)
+                for var in [
+                    "VSCODE_INJECTION",
+                    "VSCODE_GIT_ASKPASS",
+                    "VSCODE_SHELL_INTEGRATION",
+                    "ELECTRON_RUN_AS_NODE",
+                    "OMNIMIND_INTERNAL_MODE",
+                ]
+                if var in os.environ
+            },
+        }
+
+    def _check_vscode_config(self) -> bool:
+        """Verifica se existe configuração VS Code com portas externas."""
+        try:
+            vscode_config = Path.home() / ".vscode" / "mcp.json"
+            if vscode_config.exists():
+                with open(vscode_config) as f:
+                    config = json.load(f)
+                    for server_config in config.values():
+                        if isinstance(server_config, dict) and "url" in server_config:
+                            if "433" in str(server_config["url"]):
+                                return True
+        except Exception:
+            pass
+        return False
+
+    def _resolve_config_path(
+        self, config_path: Optional[Union[str, Path]], config_type: str = "auto"
+    ) -> Path:
+        """Resolve o caminho do arquivo de configuração baseado no tipo."""
+        if config_path is not None:
+            return Path(config_path).expanduser().resolve()
+
+        base_path = Path(__file__).resolve().parents[2]
+
+        # Detectar tipo de configuração automaticamente
+        if config_type == "auto":
+            config_type = self._detect_config_type()
+
+        # Selecionar arquivo baseado no tipo
+        if config_type == "external":
+            config_file = base_path / "config" / "mcp_servers_external.json"
+            logger.info("Usando configuração MCP externa (VS Code/IDEs)")
+        elif config_type == "internal":
+            config_file = base_path / "config" / "mcp_servers_internal.json"
+            logger.info("Usando configuração MCP interna (sistema/consciência)")
+        else:
+            # Fallback para configuração legada
+            config_file = base_path / "config" / "mcp_servers.json"
+            logger.warning("Usando configuração MCP legada (portas 4321-4329)")
+
+        if not config_file.exists():
+            if config_type == "external":
+                # Fallback para configuração legada se externa não existe
+                config_file = base_path / "config" / "mcp_servers.json"
+                logger.warning("Configuração externa não encontrada, usando legada")
+            else:
+                raise MCPOrchestratorError(f"Arquivo de configuração não encontrado: {config_file}")
+
+        return config_file
+
+    def _detect_config_type(self) -> str:
+        """Detecta automaticamente o tipo de configuração baseado no ambiente."""
+        # Verificar se está rodando em ambiente VS Code/IDE
+        if any(
+            env_var in os.environ
+            for env_var in [
+                "VSCODE_INJECTION",
+                "VSCODE_GIT_ASKPASS",
+                "VSCODE_SHELL_INTEGRATION",
+                "ELECTRON_RUN_AS_NODE",
+            ]
+        ):
+            logger.info("Detectado ambiente VS Code/IDE, usando configuração externa")
+            return "external"
+
+        # Verificar variáveis específicas do OmniMind
+        if "OMNIMIND_INTERNAL_MODE" in os.environ:
+            return "internal"
+
+        # Verificar arquivo de configuração do VS Code
+        vscode_config = Path.home() / ".vscode" / "mcp.json"
+        if vscode_config.exists():
+            try:
+                with open(vscode_config) as f:
+                    vscode_mcp_config = json.load(f)
+                    # Verificar se usa portas externas (4331+)
+                    for server_config in vscode_mcp_config.values():
+                        if isinstance(server_config, dict) and "url" in server_config:
+                            if "433" in str(server_config["url"]):
+                                logger.info("Detectado VS Code usando portas externas")
+                                return "external"
+            except Exception:
+                pass
+
+        # Por padrão, usar configuração interna para o sistema
+        logger.info("Nenhum ambiente específico detectado, usando configuração interna")
+        return "internal"
 
     def _load_config(self) -> Dict[str, Any]:
         """Carrega a configuração do arquivo JSON."""
@@ -417,45 +547,9 @@ class MCPOrchestrator:
         """
         return dict(self.status)
 
-    def submit_request(
-        self, server_name: str, priority: str = "normal", request_id: Optional[str] = None
-    ) -> bool:
-        """
-        Submete um request para fila do rate limiter.
-
-        Args:
-            server_name: Nome do servidor alvo
-            priority: Prioridade ('critical', 'high', 'normal', 'low')
-            request_id: ID único do request
-
-        Returns:
-            True se request foi aceito, False se rejeitado (limite excedido)
-        """
-        try:
-            # Check if request should be allowed using sync method
-            accepted = True  # Default to allowing, rate limiter will handle async checks
-
-            if accepted:
-                self.audit_system.log_action(
-                    action="request_accepted",
-                    details={"server": server_name, "priority": priority},
-                    category="mcp_orchestration",
-                )
-            else:
-                self.audit_system.log_action(
-                    action="request_rejected",
-                    details={"server": server_name, "priority": priority, "reason": "rate_limit"},
-                    category="mcp_orchestration",
-                )
-
-            return accepted
-        except (ValueError, KeyError) as exc:
-            logger.error("Erro ao submeter request: %s", exc)
-            return False
-
     def check_server_health(self, name: str) -> bool:
         """
-        Verifica a saúde de um servidor MCP.
+        Verifica a saúde de um servidor MCP com circuit breaker.
 
         Args:
             name: Nome do servidor MCP.
@@ -464,9 +558,8 @@ class MCPOrchestrator:
             True se saudável, False caso contrário.
 
         Note:
-            Implementação atual verifica apenas se o processo está rodando.
-            TODO: Implementar health check via endpoint HTTP/gRPC para verificação
-            real de responsividade do servidor (Issue #TBD).
+            Implementação atual verifica processo + circuito + porta.
+            Circuit breaker previne tentativas em servidores com falhas persistentes.
         """
         if name not in self.processes:
             self.status[name].healthy = False
@@ -474,11 +567,19 @@ class MCPOrchestrator:
 
         process = self.processes[name]
 
+        # Verificar circuit breaker primeiro
+        if self.connection_handler._is_circuit_open(name):
+            self.status[name].healthy = False
+            self.status[name].last_health_check = time.time()
+            logger.debug("Circuit breaker aberto para servidor %s", name)
+            return False
+
         # Verificar se processo está rodando
         if process.poll() is not None:
             # Processo terminou
             self.status[name].running = False
             self.status[name].healthy = False
+            self.connection_handler._record_failure(name)
             logger.warning("Servidor MCP %s não está mais rodando", name)
             return False
 
@@ -496,24 +597,28 @@ class MCPOrchestrator:
                     # Porta está aberta e aceitando conexões
                     self.status[name].healthy = True
                     self.status[name].last_health_check = time.time()
+                    # Reset circuit breaker on successful health check
+                    self.connection_handler.record_success(name)
                     return True
                 else:
                     # Porta não está respondendo, mas processo está rodando
-                    # Marcar como não saudável mas não reiniciar imediatamente
                     logger.debug("Servidor %s: porta %s não está respondendo", name, config.port)
                     self.status[name].healthy = False
                     self.status[name].last_health_check = time.time()
+                    self.connection_handler._record_failure(name)
                     return False
             except Exception as e:
                 logger.debug("Erro ao verificar porta do servidor %s: %s", name, e)
                 # Em caso de erro, assumir que está saudável se processo está rodando
                 self.status[name].healthy = True
                 self.status[name].last_health_check = time.time()
+                self.connection_handler.record_success(name)
                 return True
 
         # Se não tem porta configurada, apenas verificar se processo está rodando
         self.status[name].healthy = True
         self.status[name].last_health_check = time.time()
+        self.connection_handler.record_success(name)
         return True
 
     async def health_check_loop(self) -> None:
@@ -530,6 +635,16 @@ class MCPOrchestrator:
                         if name in self.processes:
                             process = self.processes[name]
                             if process.poll() is None:
+                                # Processo ainda está rodando, apenas não saudável
+                                # Verificar circuit breaker - se aberto, não reiniciar
+                                if self.connection_handler._is_circuit_open(name):
+                                    logger.debug(
+                                        "Servidor %s não saudável e circuit breaker aberto, "
+                                        "não reiniciando automaticamente",
+                                        name,
+                                    )
+                                    continue
+
                                 # Processo ainda está rodando, apenas não saudável
                                 # Não reiniciar imediatamente - pode ser um problema temporário
                                 logger.debug(
@@ -591,3 +706,38 @@ class MCPOrchestrator:
     def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         """Context manager exit."""
         self.stop_all_servers()
+
+    def get_connection_status(self, name: str) -> Dict[str, Any]:
+        """Retorna status detalhado de conexão para um servidor.
+
+        Args:
+            name: Nome do servidor MCP.
+
+        Returns:
+            Dict com status de conexão e circuit breaker.
+        """
+        if name not in self.servers:
+            raise MCPOrchestratorError(f"Servidor MCP não encontrado: {name}")
+
+        return {
+            "server_name": name,
+            "process_running": name in self.processes and self.processes[name].poll() is None,
+            "health_status": self.get_server_status(name).__dict__,
+            "connection_status": self.connection_handler.get_status(name),
+        }
+
+    def reset_circuit_breaker(self, name: str) -> bool:
+        """Reset manual do circuit breaker para um servidor.
+
+        Args:
+            name: Nome do servidor MCP.
+
+        Returns:
+            True se resetado com sucesso.
+        """
+        if name not in self.servers:
+            raise MCPOrchestratorError(f"Servidor MCP não encontrado: {name}")
+
+        self.connection_handler.record_success(name)
+        logger.info(f"Circuit breaker reset manualmente para servidor {name}")
+        return True

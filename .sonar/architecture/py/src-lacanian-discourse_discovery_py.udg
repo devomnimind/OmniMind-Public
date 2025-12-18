@@ -1,0 +1,216 @@
+
+1.0PythonFrontend"1763831838484*py2.B«
+
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+(
+#src/lacanian/discourse_discovery.py9
+&
+ src.lacanian.discourse_discovery11
+
+
+__future__12
+
+typing14
+
+dataclasses16
+
+
+enum18
+
+re20
+
+logging22
+
+collections24
+8
+2src.lacanian.discourse_discovery.LacanianDiscourse26
+
+	enum.Enum28
+7
+1src.lacanian.discourse_discovery.DiscourseMarkers30
+O
+Isrc.lacanian.discourse_discovery.demonstrate_lacanian_discourse_discovery32
+>
+8src.lacanian.discourse_discovery.DiscourseAnalysisResult34
+9
+3src.lacanian.discourse_discovery.EmotionalSignature36
+@
+:src.lacanian.discourse_discovery.LacanianDiscourseAnalyzer38
+M
+Gsrc.lacanian.discourse_discovery.LacanianDiscourseAnalyzer.analyze_text40
+	
+str42
+T
+Nsrc.lacanian.discourse_discovery.LacanianDiscourseAnalyzer._initialize_markers44
+
+
+dict46
+N
+Hsrc.lacanian.discourse_discovery.LacanianDiscourseAnalyzer.analyze_batch48
+
+
+list50
+P
+Jsrc.lacanian.discourse_discovery.LacanianDiscourseAnalyzer.export_analysis52
+[
+Usrc.lacanian.discourse_discovery.LacanianDiscourseAnalyzer.get_discourse_distribution54
+Y
+Ssrc.lacanian.discourse_discovery.LacanianDiscourseAnalyzer._compute_discourse_score56
+
+float58
+I
+Csrc.lacanian.discourse_discovery.LacanianDiscourseAnalyzer.__init__60J
+
+8
+89jË
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27266 210
+
+29
+29286
+
+31
+31306 210
+
+33
+33327 210
+
+35
+35346 210
+
+37
+37366 210
+
+39
+39386 210
+
+41
+41407 239
+
+43
+43426
+
+45
+45447 239
+
+47
+47466
+
+49
+49487 239
+
+51
+51506
+
+53
+53527 239
+
+55
+55547 239
+
+57
+57567 239
+
+59
+59586
+
+61
+61607 239r€
+
+10131*
+8 (#
+
+10151*
+8 (2
+
+10171*
+8 ("
+
+10191*
+8 (
+
+10211*
+8 (
+
+
+10231*
+8 (
+
+10251*
+8 ( 
+
+27292*
+8# #(
+
+37292*
+83 3(
+
+41353*
+8Æ	 Æ(
+
+41434*
+8Æ	 Æ(
+
+45473*
+8}	 }(
+
+49513*
+8±	 ±(
+
+49514*
+8±	 ±(
+
+53513*
+8Ð	 Ð(
+
+55473*
+8½	 ½(#
+
+57593*
+8ü	 ü(!
+
+57434*
+8ü	 ü(!
+
+57314*
+8ü	 ü(!

@@ -41,7 +41,7 @@ import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple
 
 # Setup paths
 project_root = Path(__file__).parent.parent.parent.parent.resolve()
@@ -419,9 +419,9 @@ class Phase5_6Validator:
 
             # Validação contra baseline
             baseline_phi = 0.0183
-            target_phi_phase5 = 0.026
+            _target_phi_phase5 = 0.026
 
-            metrics_pass = True
+            _metrics_pass = True
 
             if phi_stats.get("mean", 0) > 0:
                 self._log(

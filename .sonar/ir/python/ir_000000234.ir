@@ -1,0 +1,64 @@
+
+"call_count"str
+"cumulative_time_ms"str
+"percentage_of_total"str
+!	"details"str
+"recommendation"str
+!"Convert to dictionary."str
+
+"function"str
+"file"str
+
+
+"category"str
+"per_call_time_ms"str
+
+"severity"strselfJ J("±$
+"
+L W(	"#new-object#Bdict.
+,
+M M(*"#get-field# function_name: 
+
+M M(*"	#map-set#:)
+'
+N N(!"#get-field# filename: 
+
+N N(!	"	#map-set#:)
+'
+O O(%"#get-field# category:&
+$
+O O(+"#get-field# value: 
+
+O O(+"	#map-set#:
+)
+'
+P P(%"#get-field# severity:&
+$
+P P(+"#get-field# value: 
+
+P P(+"	#map-set#:3
+1
+Q" Q(9" #get-field# cumulative_time_ms: 
+
+Q Q(9"	#map-set#:+
+)
+R R()"#get-field# call_count: 
+
+R R()"	#map-set#:1
+/
+S  S(5"#get-field# per_call_time_ms: 
+
+S S(5"	#map-set#:4
+2
+T# T(;"!#get-field# percentage_of_total: 
+
+T T(;"	#map-set#:/
+-
+U U(1"#get-field# recommendation: 
+
+U U(1 "	#map-set#:(
+&
+V V(#""#get-field# details: 
+
+V V(##"	#map-set#:!"
+L W(	*J/home/fahbrain/projects/omnimind/src/observability/performance_analyzer.py

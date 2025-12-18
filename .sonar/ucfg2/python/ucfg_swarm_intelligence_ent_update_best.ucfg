@@ -1,0 +1,78 @@
+
+Esrc.collective_intelligence.swarm_intelligence.SwarmAgent.update_best\
+R/home/fahbrain/projects/omnimind/src/collective_intelligence/swarm_intelligence.py< <("2*­
+2= =(A€
+~
+> >(
+%4"__id*f
+
+__unknown_file (J*H;
+9src.collective_intelligence.swarm_intelligence.SwarmAgent"	
+fitness†
+ƒ
+> >(+
+%5"__id*k
+
+__unknown_file (O*M;
+9src.collective_intelligence.swarm_intelligence.SwarmAgent"
+best_fitness‰
+†
+> >(+
+%6"	__compare*!
+
+__unknown_file (
+<*"
+
+__unknown_file (
+
+%4*"
+
+__unknown_file (
+
+%5*
+3
+4*9
+3
+swarm_intelligence.py"
+C C
+implicit return*õ
+4? ?(,€
+~
+?  ?(,
+%1"__id*f
+
+__unknown_file (J*H;
+9src.collective_intelligence.swarm_intelligence.SwarmAgent"	
+fitness†
+ƒ
+? ?(,M;
+9src.collective_intelligence.swarm_intelligence.SwarmAgent"
+best_fitness"__id*"
+
+__unknown_file (
+
+%1
+
+@! @(.
+%2"__id*g
+
+__unknown_file (K*I;
+9src.collective_intelligence.swarm_intelligence.SwarmAgent"
+
+positionGE
+@! @(5
+%3"	list.copy*"
+
+__unknown_file (
+
+%22copy‡
+„
+@ @(5N;
+9src.collective_intelligence.swarm_intelligence.SwarmAgent"
+best_position"__id*"
+
+__unknown_file (
+
+%3*
+3B=;
+9src.collective_intelligence.swarm_intelligence.SwarmAgentH

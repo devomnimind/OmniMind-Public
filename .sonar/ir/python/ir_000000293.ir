@@ -1,0 +1,73 @@
+
+"cache_hit_rate"str
+"tokens_per_second"str
+
+"model_accuracy"str
+%"model_inference_latency_ms"str
+"model_loss"str
+,#"model_throughput_requests_per_sec"str
+"batch_size"str
+!"Convert to dictionary."str
+"gpu_memory_used_mb"str
+""gpu_utilization_percent"strself
+ì ì("&
+$
+
+ï ü(	"#new-object#Bdict=
+;
+
+ñ* ñ(I"(&#get-field# model_inference_latency_ms:"
+ 
+
+ñ ñ(I"	#map-set#:D
+B
+
+ó1 ó(W"/-#get-field# model_throughput_requests_per_sec:"
+ 
+
+ó ó(W	"	#map-set#:1
+/
+
+ò ò(1"#get-field# model_accuracy:"
+ 
+
+ò ò(1"	#map-set#:
+-
++
+
+ô ô()"#get-field# model_loss:"
+ 
+
+ô ô()"	#map-set#::
+8
+
+ö' ö(C"%##get-field# gpu_utilization_percent:"
+ 
+
+ö ö(C"	#map-set#:5
+3
+
+õ" õ(9" #get-field# gpu_memory_used_mb:"
+ 
+
+õ õ(9"	#map-set#:-
++
+
+ú ú()"#get-field# batch_size:"
+ 
+
+ú ú()"	#map-set#:4
+2
+
+ù! ù(7"#get-field# tokens_per_second:"
+ 
+
+ù ù(7"	#map-set#:1
+/
+
+û û(1"#get-field# cache_hit_rate:"
+ 
+
+û û(1"	#map-set#:
+
+ï ü(	*F/home/fahbrain/projects/omnimind/src/observability/metrics_exporter.py

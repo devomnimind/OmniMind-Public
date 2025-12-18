@@ -1,0 +1,86 @@
+
+‡ý"
+        Check if knowledge density exceeds Schwarzschild radius.
+
+        Args:
+            knowledge_mass: Total knowledge mass
+            knowledge_volume: Knowledge space volume
+
+        Returns:
+            True if collapse should occur
+        "str
+"division by zero"bool
+"S3518"bool
+
+4int
+
+3int
+"a"bool
+
+
+0int
+1e-10float
+falsebool
+
+2intself; ;(knowledge_mass; ;(#knowledge_volume;% ;(<"t)
+'
+G G(#"?python-unknown?*:)
+'
+G G(#"
+__bool__*:BboolH"
+G G(# *G G(
+"
+H H("Þ*
+(
+J J(3	"
+#binop !=#2!=:
+Bbool 
+
+J J(3"
+#assert#:	:
+8
+J J(3density"#dependent-value#*:Bfloat!
+
+M M("#unknown-value#%
+#
+M M("	#binop *#*2*:%
+#
+M M(-"	#binop *#*2*:!
+
+M1 M(;"#unknown-value#'
+%
+M1 M(>"
+#binop **#*2**:*
+(
+M M(?"
+#binop !=#2!=:
+Bbool 
+
+M M(?"
+#assert#:6
+4
+M M(?r_s"#dependent-value#*:Bfloat1
+/
+P P( "#dependent-value#*:Bfloat!
+
+P$ P(("#unknown-value##
+!
+P$ P(+"#get-field# pi:1
+/
+P P(+"#dependent-value#*:Bfloat1
+/
+P/ P(5"#dependent-value#*:BfloatB
+@
+P P(6 critical_volume"#dependent-value#*:Bfloat)
+'
+R R(2!"?python-unknown?*: )
+'
+R R(2""
+__bool__*:!BboolH"
+R R(2" "p1
+/
+R@ R(U#"#get-field# critical_density:)
+'
+R6 R(U$"?python-unknown?*:#
+R R(U"$*%!$
+R R(U%*I/home/fahbrain/projects/omnimind/src/meta_learning/black_hole_collapse.py

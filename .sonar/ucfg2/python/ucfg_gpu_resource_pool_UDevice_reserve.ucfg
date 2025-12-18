@@ -1,0 +1,59 @@
+
+/src.scaling.gpu_resource_pool.GPUDevice.reserveK
+A/home/fahbrain/projects/omnimind/src/scaling/gpu_resource_pool.pyH H("2*ü
+2I M(o
+m
+N N((
+%1"__id*U
+
+__unknown_file (9*7)
+'src.scaling.gpu_resource_pool.GPUStatus"
+
+RESERVEDm
+k
+N N((5)
+'src.scaling.gpu_resource_pool.GPUDevice"
+status"__id*"
+
+__unknown_file (
+
+%1w
+u
+O O(":)
+'src.scaling.gpu_resource_pool.GPUDevice"
+reserved_by"__id*'
+
+__unknown_file (
+	
+task_idp
+n
+P. P(<
+%2"__id*V
+
+__unknown_file (:*8)
+'src.scaling.gpu_resource_pool.GPUDevice"
+	device_idœ™
+P P(N
+%3*&
+
+__unknown_file (
+
+
+logger*,
+
+__unknown_file (
+gpu_reserved2info:
+	device_id
+
+%2:
+task_id
+	
+task_id*
+3*:
+3
+gpu_resource_pool.py"
+R R(
+implicit return:
+H H("	
+task_idB+)
+'src.scaling.gpu_resource_pool.GPUDeviceH

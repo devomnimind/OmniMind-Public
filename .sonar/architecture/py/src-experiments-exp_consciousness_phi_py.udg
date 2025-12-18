@@ -1,0 +1,105 @@
+
+1.0PythonFrontend"1763831832419*py2.Bª
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+-
+(src/experiments/exp_consciousness_phi.py9
++
+%src.experiments.exp_consciousness_phi11
+
+
+json12
+
+pathlib14
+
+typing16
+'
+!src.metrics.consciousness_metrics18
+F
+@src.experiments.exp_consciousness_phi.experiment_phi_integration20
+
+
+dict22
+E
+?src.experiments.exp_consciousness_phi.experiment_self_awareness24
+9
+3src.experiments.exp_consciousness_phi.AgentTestCase26
+6
+0src.experiments.exp_consciousness_phi.ScoresDict28
+M
+Gsrc.experiments.exp_consciousness_phi.run_all_consciousness_experiments30
+;
+5src.experiments.exp_consciousness_phi.AgentResultDict32J
+
+8
+89j—
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21207 210
+
+23
+23226
+
+25
+25247 210
+
+27
+27266 210
+
+29
+29286 210
+
+31
+31307 210
+
+33
+33326 210rž
+
+10131*
+8	 	(
+
+10151*
+8
+ 
+(
+
+10171*
+8 ("
+
+10191*
+8 (
+
+21233*
+8/ /(
+
+25233*
+8è è(

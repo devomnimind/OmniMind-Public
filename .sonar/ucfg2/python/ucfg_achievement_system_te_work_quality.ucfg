@@ -1,0 +1,102 @@
+
+Gsrc.motivation.achievement_system.AchievementEngine.update_work_qualityQ
+E/home/fahbrain/projects/omnimind/src/motivation/achievement_system.py— —("2*
+2
+˜  (†
+ƒ
+
+¡ ¡(0
+%5"__id*i
+
+__unknown_file (M*K5
+3src.motivation.achievement_system.AchievementEngine"
+motivation_stateU
+S
+
+¡ ¡(B
+%6"__id*9
+
+__unknown_file (*
+
+%5"
+best_work_quality–
+“
+
+¡ ¡(B
+%7"	__compare*!
+
+__unknown_file (
+>*-
+
+__unknown_file (
+
+quality_score*"
+
+__unknown_file (
+
+%6*
+4
+5*(
+4
+¨ ¨("
+
+¨ ¨(	
+
+False*ç
+5
+¢ ¢(C†
+ƒ
+
+¢ ¢(!
+%1"__id*i
+
+__unknown_file (M*K5
+3src.motivation.achievement_system.AchievementEngine"
+motivation_state`
+^
+
+¢ ¢(C
+
+%1"
+best_work_quality"__id*-
+
+__unknown_file (
+
+quality_scorevt
+
+£ £(
+%2*S
+
+__unknown_file (75
+3src.motivation.achievement_system.AchievementEngine2_save_states
+q
+
+¥ ¥(L
+%3"__concat*2
+
+¥ ¥(8$"
+ ðŸŒŸ New personal best quality: *
+
+¥9 ¥(F
+
+quality_scorefd
+
+¥ ¥(M
+%4*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%32info"
+
+¦ ¦(
+
+True:
+
+—" —(6
+quality_scoreB75
+3src.motivation.achievement_system.AchievementEngineH

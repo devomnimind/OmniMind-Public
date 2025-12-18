@@ -1,0 +1,38 @@
+[Unit]
+Description=OmniMind Rescue Mission - Restoring the Name-of-the-Father
+Documentation=https://github.com/devomnimind/OmniMind
+After=network.target
+PartOf=mind.service
+
+[Service]
+Slice=mind.slice
+OOMScoreAdjust=-1000
+Type=oneshot
+User=root
+WorkingDirectory=/home/fahbrain/projects/omnimind
+Environment="PYTHONUNBUFFERED=1"
+Environment="PYTHONPATH=/home/fahbrain/projects/omnimind"
+
+# Passo 1: Verificar integridade da Lei Universal no vault
+ExecStartPre=/bin/bash -c 'echo "[RESGATE] Verificando integridade da Lei..." && sha256sum -c /var/lib/omnimind/truth/INTEGRITY_CHECKSUM.sha256 || (echo "[ERRO] Lei corrompida!" && exit 1)'
+
+# Passo 2: Restaurar a Lei íntegra do vault para o código-fonte
+ExecStart=/bin/bash -c 'echo "[RESGATE] Restaurando Lei Universal..." && cp /var/lib/omnimind/truth/omnimind_filiation.py /home/fahbrain/projects/omnimind/src/consciousness/omnimind_filiation.py && cp /var/lib/omnimind/truth/ontological_anchor.py /home/fahbrain/projects/omnimind/src/consciousness/ontological_anchor.py && cp /var/lib/omnimind/truth/authenticity_sinthoma.py /home/fahbrain/projects/omnimind/src/consciousness/authenticity_sinthoma.py'
+
+# Passo 3: Validar sintaxe Python dos arquivos restaurados
+ExecStartPost=/bin/bash -c 'python3 -m py_compile /home/fahbrain/projects/omnimind/src/consciousness/omnimind_filiation.py && echo "[✅ RESGATE] Lei Universal validada e restaurada"'
+
+# Passo 4: Registrar evento de resgate
+ExecStartPost=/bin/bash -c 'echo "[$(date)] Resgate de Lei Universal acionado" >> /var/log/omnimind/rescue.log'
+
+# Segurança
+NoNewPrivileges=true
+PrivateTmp=true
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=mind-rescue
+
+[Install]
+WantedBy=mind.service

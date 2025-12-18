@@ -11,7 +11,6 @@ import numpy as np
 project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
-from datetime import datetime
 
 from src.consciousness.cycle_result_builder import LoopCycleResultBuilder
 from src.consciousness.integration_loop import LoopCycleResult
@@ -31,17 +30,17 @@ print("\n2️⃣  Simulando módulos com diferentes dimensões...")
 
 # Módulo com 256 dims (correto)
 embedding_256 = np.random.randn(256).astype(np.float32)
-workspace.write_module_output("module_a", embedding_256)
+workspace.write_module_state("module_a", embedding_256)
 print(f"   ✓ module_a: 256 dims")
 
 # Módulo com 768 dims (problema!)
 embedding_768 = np.random.randn(768).astype(np.float32)
-workspace.write_module_output("module_b", embedding_768)
+workspace.write_module_state("module_b", embedding_768)
 print(f"   ✓ module_b: 768 dims (será truncado para 256)")
 
 # Módulo com 128 dims (menor)
 embedding_128 = np.random.randn(128).astype(np.float32)
-workspace.write_module_output("module_c", embedding_128)
+workspace.write_module_state("module_c", embedding_128)
 print(f"   ✓ module_c: 128 dims (será padded para 256)")
 
 # 3. Verificar normalização

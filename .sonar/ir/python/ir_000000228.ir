@@ -1,0 +1,9 @@
+
+%"Check if node is a master."str
+"master"strself] ]("c%
+#
+_ _("#get-field# role:*
+(
+_ _($"
+#binop ==#2==:Bbool
+_ _($*E/home/fahbrain/projects/omnimind/src/scaling/redis_cluster_manager.py

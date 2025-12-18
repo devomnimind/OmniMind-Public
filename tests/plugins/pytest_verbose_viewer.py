@@ -64,7 +64,6 @@ class VerboseTestViewer:
         """Durante execução do teste."""
         # Neste ponto, o teste está rodando
         # Logs do teste aparecem com indentação
-        pass
 
     def pytest_runtest_teardown(self, item):
         """Após cada teste."""

@@ -1,0 +1,145 @@
+
+7src.integrations.webhook_framework.WebhookEvent.to_dictP
+F/home/fahbrain/projects/omnimind/src/integrations/webhook_framework.py9 9("2*∑
+2: :($
+; B(	
+%1"dictq
+o
+< <(
+%2"__id*W
+
+__unknown_file (;*91
+/src.integrations.webhook_framework.WebhookEvent"
+idâ
+Ü
+< <(
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*"
+
+__unknown_file (
+id*"
+
+__unknown_file (
+
+%2s
+q
+= =(
+%4"__id*Y
+
+__unknown_file (=*;1
+/src.integrations.webhook_framework.WebhookEvent"
+typeG
+E
+= =(#
+%5"__id*-
+
+__unknown_file (*
+
+%4"
+valueã
+à
+= =(#
+%6"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+type*"
+
+__unknown_file (
+
+%5x
+v
+> >('
+%7"__id*^
+
+__unknown_file (B*@1
+/src.integrations.webhook_framework.WebhookEvent"
+	timestampê
+ç
+> >('
+%8"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	timestamp*"
+
+__unknown_file (
+
+%7v
+t
+? ?(#
+%9"__id*\
+
+__unknown_file (@*>1
+/src.integrations.webhook_framework.WebhookEvent"	
+payloadè
+å
+? ?(#
+%10"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+payload*"
+
+__unknown_file (
+
+%9v
+t
+@ @(!
+%11"__id*[
+
+__unknown_file (?*=1
+/src.integrations.webhook_framework.WebhookEvent"
+sourceè
+å
+@ @(!
+%12"__mapSet*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+source*#
+
+__unknown_file (
+
+%11y
+w
+A A('
+%13"__id*^
+
+__unknown_file (B*@1
+/src.integrations.webhook_framework.WebhookEvent"
+	signatureí
+è
+A A('
+%14"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	signature*#
+
+__unknown_file (
+
+%13"
+; B(	
+
+%1B31
+/src.integrations.webhook_framework.WebhookEventH

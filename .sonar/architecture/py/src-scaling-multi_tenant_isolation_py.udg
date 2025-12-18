@@ -1,0 +1,422 @@
+
+1.0PythonFrontend"1763831835874*py2.Bú
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+*
+%src/scaling/multi_tenant_isolation.py9
+(
+"src.scaling.multi_tenant_isolation11
+
+
+json12
+
+hashlib14
+
+secrets16
+
+datetime18
+
+pathlib20
+
+typing22
+
+dataclasses24
+
+
+enum26
+
+	threading28
+
+src.audit.immutable_audit30
+5
+/src.scaling.multi_tenant_isolation.ResourceType32
+
+	enum.Enum34
+3
+-src.scaling.multi_tenant_isolation.get_tenant36
+	
+str38
+D
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManager40
+P
+Jsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.check_quota42
+
+
+bool44
+
+float46
+]
+Wsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.enforce_tenant_isolation48
+
+pathlib.Path50
+R
+Lsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.create_tenant52
+5
+/src.scaling.multi_tenant_isolation.TenantConfig54
+\
+Vsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.get_tenant_audit_system56
+X
+Rsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager._generate_tenant_id58
+W
+Qsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager._get_resource_unit60
+R
+Lsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager._save_tenants62
+M
+Gsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.__init__64
+R
+Lsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.release_quota66
+V
+Psrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.get_quota_summary68
+
+
+dict70
+^
+Xsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.get_tenant_encryption_key72
+O
+Isrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.get_tenant74
+R
+Lsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager._load_tenants76
+R
+Lsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.consume_quota78
+]
+Wsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager._generate_encryption_key80
+
+tuple82
+Y
+Ssrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.update_tenant_status84
+5
+/src.scaling.multi_tenant_isolation.TenantStatus86
+Q
+Ksrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.list_tenants88
+
+
+list90
+6
+0src.scaling.multi_tenant_isolation.ResourceQuota92
+G
+Asrc.scaling.multi_tenant_isolation.ResourceQuota.usage_percentage94
+B
+<src.scaling.multi_tenant_isolation.ResourceQuota.is_exceeded96
+@
+:src.scaling.multi_tenant_isolation.ResourceQuota.available98
+>
+7src.scaling.multi_tenant_isolation.TenantConfig.to_dict100
+7
+0src.scaling.multi_tenant_isolation.create_tenant102
+?
+8src.scaling.multi_tenant_isolation.get_isolation_manager104J
+
+8
+89jÖ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33326 210
+
+35
+35346
+
+37
+37367 210
+
+39
+39386
+
+41
+41406 210
+
+43
+43427 241
+
+45
+45446
+
+47
+47466
+
+49
+49487 241
+
+51
+51506
+
+53
+53527 241
+
+55
+55546 210
+
+57
+57567 241
+
+59
+59587 241
+
+61
+61607 241
+
+63
+63627 241
+
+65
+65647 241
+
+67
+67667 241
+
+69
+69687 241
+
+71
+71706
+
+73
+73727 241
+
+75
+75747 241
+
+77
+77767 241
+
+79
+79787 241
+
+81
+81807 241
+
+83
+83826
+
+85
+85847 241
+
+87
+87866 210
+
+89
+89887 241
+
+91
+91906
+
+93
+93926 210
+
+95
+95947 293
+
+97
+97967 293
+
+99
+99987 293
+
+101
+1011007 255
+
+103
+1031027 210
+
+105
+1051047 210rø
+
+
+10131*
+8 (
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 ((
+
+10211*
+8 (
+
+10231*
+8 (-
+
+10251*
+8 ()
+
+10271*
+8 (
+
+10291*
+8 (
+
+10311*
+8 (K
+
+33352*
+8& &(
+
+37394*
+8¨ ¨(
+
+43453*
+8Ð	 Ð(
+
+43394*
+8Ð	 Ð(
+
+43334*
+8Ð	 Ð(
+
+43474*
+8Ð	 Ð(
+
+49453*
+8ÿ	 ÿ(!
+
+49394*
+8ÿ	 ÿ(!
+
+49514*
+8ÿ	 ÿ(!
+
+53553*
+8Î	 Î(
+
+53394*
+8Î	 Î(
+
+57394*
+8¾	 ¾( 
+
+59393*
+8Á	 Á(
+
+59394*
+8Á	 Á(
+
+61393*
+8 	  (
+
+61334*
+8 	  (
+
+67453*
+8’	 ’(
+
+67394*
+8’	 ’(
+
+67334*
+8’	 ’(
+
+67474*
+8’	 ’(
+
+69713*
+8ß	 ß(
+
+69394*
+8ß	 ß(
+
+73394*
+8®	 ®("
+
+75394*
+8¬	 ¬(
+
+79453*
+8è	 è(
+
+79394*
+8è	 è(
+
+79334*
+8è	 è(
+
+79474*
+8è	 è(
+
+81833*
+8È	 È(!
+
+85453*
+8°	 °(
+
+85394*
+8°	 °(
+
+85874*
+8°	 °(
+
+89913*
+8Ð	 Ð(
+
+87352*
+8 (
+
+95473*
+8B	 B(
+
+97453*
+8:	 :(
+
+99473*
+8>	 >(
+
+101713*
+8X	 X(
+
+103553*
+8   (
+
+103394*
+8   (
+
+105413*
+8˜ ˜(

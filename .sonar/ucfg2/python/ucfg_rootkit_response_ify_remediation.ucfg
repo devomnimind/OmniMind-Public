@@ -1,0 +1,77 @@
+
+Ksrc.security.playbooks.rootkit_response.RootkitPlaybook._verify_remediationU
+K/home/fahbrain/projects/omnimind/src/security/playbooks/rootkit_response.py@ @(!"2*⁄
+2A A(Béã
+A A(B
+%3*&
+
+__unknown_file (
+
+
+logger*J
+
+__unknown_file (.,
+*   [5/5] Verifying remediation via re-scan2debugÄ~
+B B(3
+%4*W
+
+__unknown_file (;9
+7src.security.playbooks.rootkit_response.RootkitPlaybook2_run_forensic_scansB
+@
+B B(3
+
+findings"__id*"
+
+__unknown_file (
+
+%4¶£
+C C(6
+%5*W
+
+__unknown_file (;9
+7src.security.playbooks.rootkit_response.RootkitPlaybook*(
+
+__unknown_file (
+
+
+findings2_analyze_scansB
+@
+C C(6
+
+analysis"__id*"
+
+__unknown_file (
+
+%5*
+5
+6*'
+4H H("
+H H(
+
+
+analysis*ò
+5E E(9ÉÄ
+E E(9
+%1*&
+
+__unknown_file (
+
+
+logger*@
+
+__unknown_file ($"
+ ‚úÖ Rootkit remediation verified2info*
+4*¶
+6G G(Gëé
+G G(G
+%2*&
+
+__unknown_file (
+
+
+logger*K
+
+__unknown_file (/-
++‚ùå Rootkit still present after remediation2warning*
+4B;9
+7src.security.playbooks.rootkit_response.RootkitPlaybookH

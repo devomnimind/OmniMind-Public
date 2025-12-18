@@ -202,8 +202,8 @@ class RealCertification:
 
         try:
             from qiskit import QuantumCircuit, QuantumRegister
-            from qiskit_ibm_runtime import Sampler
             from qiskit.transpiler import generate_preset_pass_manager
+            from qiskit_ibm_runtime import Sampler
 
             start_time = time.time()
             start_ts = datetime.now().isoformat()

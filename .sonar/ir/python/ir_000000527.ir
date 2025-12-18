@@ -1,0 +1,32 @@
+
+
+1int
+2)"Select node using round-robin strategy."strself
+ç! ç(%available_nodes
+ç' ç(F"‰5
+3
+
+è è(6" #get-field# _round_robin_index:,
+*
+
+è9 è(M"
+builtinslen*:Bint'
+%
+
+è è(M"	#binop %#*2%:*
+(
+
+è è(Nnode"#array-read#:5
+3
+
+ê ê(	" #get-field# _round_robin_index:'
+%
+
+ê ê($
+"	#binop +#*2+:	6
+4
+
+ê ê($" #set-field# _round_robin_index:
+
+
+ë ë(*I/home/fahbrain/projects/omnimind/src/scaling/intelligent_load_balancer.py

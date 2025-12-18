@@ -1,0 +1,21 @@
+[Unit]
+Description=OmniMind Frontend Dashboard (Fase 2: Após 30s)
+After=network.target mind.service
+Requires=mind.service
+
+[Service]
+Slice=mind.slice
+OOMScoreAdjust=-1000
+Type=simple
+User=root
+WorkingDirectory=/home/fahbrain/projects/omnimind
+EnvironmentFile=/home/fahbrain/projects/omnimind/.env
+# Aguardar 30s após serviços essenciais iniciarem
+ExecStartPre=/bin/sleep 30
+ExecStart=/usr/bin/docker-compose -f deploy/docker-compose.yml up frontend
+ExecStop=/usr/bin/docker-compose -f deploy/docker-compose.yml stop frontend
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

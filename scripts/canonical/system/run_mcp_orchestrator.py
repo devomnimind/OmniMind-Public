@@ -20,9 +20,9 @@ Contact: fabricioslv@hotmail.com.br
 
 import asyncio
 import logging
+import os
 import signal
 import sys
-import os
 from pathlib import Path
 
 # Add project root to python path

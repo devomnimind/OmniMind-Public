@@ -1,0 +1,155 @@
+
+<src.tools.code_generator.CodeGenerator.generate_api_endpointH
+</home/fahbrain/projects/omnimind/src/tools/code_generator.pyç ç("2*‰
+
+2
+ñ ÿ(
+
+€ ‡(	
+%1"dict¡
+ž
+
+ (*
+%2"__mapSet*"
+
+__unknown_file (
+
+%1*-
+
+__unknown_file (
+endpoint_name*-
+
+__unknown_file (
+
+endpoint_name
+š
+
+‚ ‚(&
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+description*+
+
+__unknown_file (
+
+description“
+
+
+ƒ ƒ(
+%4"__mapSet*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+prefix*&
+
+__unknown_file (
+
+
+prefix
+Š
+
+„ „(
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*#
+
+__unknown_file (
+tag*#
+
+__unknown_file (
+
+tag
+Œ
+
+… …(
+%6"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+path*$
+
+__unknown_file (
+
+path“
+
+
+† †(
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+method*&
+
+__unknown_file (
+
+
+methodB
+@
+
+€ ‡(	
+params"__id*"
+
+__unknown_file (
+
+%1ïì
+
+‰ ‰(F
+%8*F
+
+__unknown_file (*(
+&src.tools.code_generator.CodeGenerator*,
+
+__unknown_file (
+api_endpoint*&
+
+__unknown_file (
+
+
+params*+
+
+__unknown_file (
+
+output_file2generate_code"
+
+‰ ‰(F
+
+%8:
+
+é é(
+endpoint_name:
+
+ê ê(
+description:
+
+ë ë(
+prefix:
+
+ì ì(
+tag:
+
+í í(
+path:
+
+î î(
+method:
+
+ï ï(*
+output_fileB*(
+&src.tools.code_generator.CodeGeneratorH

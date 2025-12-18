@@ -12,18 +12,17 @@ This script demonstrates the complete Autopoietic Loop:
 It cycles through 3 scenarios: Healthy, Unstable, and Overloaded.
 """
 
-import sys
-import os
 import logging
+import os
+import sys
 import time
-from typing import Dict
 
 # Ensure project root is in python path
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.insert(0, PROJECT_ROOT)
 
-from src.autopoietic.meta_architect import ComponentSpec
 from src.autopoietic.manager import AutopoieticManager, CycleLog
+from src.autopoietic.meta_architect import ComponentSpec
 
 # Configure logging
 logging.basicConfig(

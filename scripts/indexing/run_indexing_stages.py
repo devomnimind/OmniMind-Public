@@ -9,19 +9,11 @@ Executa a indexação em etapas ordenadas por prioridade:
 4. Arquivos kernel e metadados
 5. Dados massivos (última prioridade)
 
-UBUNTU 22.04.5 COMPATIBLE:
-  - Python 3.12.12 ✓
-  - systemd services ✓
-
 Uso:
     python run_indexing_stages.py                    # Executa todas as etapas pendentes
     python run_indexing_stages.py --stage core_code  # Executa apenas uma etapa específica
     python run_indexing_stages.py --reset            # Reseta e começa do início
     python run_indexing_stages.py --status           # Mostra status das etapas
-
-Ativação venv:
-    source /home/fahbrain/projects/omnimind/.venv/bin/activate
-    python3 scripts/indexing/run_indexing_stages.py
 """
 
 import argparse
@@ -29,16 +21,9 @@ import subprocess
 import sys
 from pathlib import Path
 
-# ============================================================================
-# SETUP PROJECT ROOT (UBUNTU 22.04.5 COMPATIBLE)
-# ============================================================================
-# FIX: scripts/indexing/ → go up 3 levels to /omnimind/
-project_root = Path(__file__).parent.parent.parent
+# Adicionar src ao path
+project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root / "src"))
-
-print(f"📂 PROJECT_ROOT: {project_root}")
-print(f"🐍 Python: {sys.version}")
-print()
 
 
 def run_stage(stage_name: str, max_workers: int = 2, min_file_size: int = 50):

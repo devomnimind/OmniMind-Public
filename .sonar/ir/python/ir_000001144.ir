@@ -1,0 +1,28 @@
+
+"name"str
+
+"parameters"str
+"config_id"str
+
+"metadata"str
+!"Convert to dictionary."strself3 3("é$
+"
+5 :(	"#new-object#Bdict*
+(
+6 6('"#get-field# config_id: 
+
+6 6('"	#map-set#:%
+#
+7 7("#get-field# name: 
+
+7 7(	"	#map-set#:+
+)
+8 8()"#get-field# parameters: 
+
+8 8()"	#map-set#:
+)
+'
+9 9(%"#get-field# metadata: 
+
+9 9(%"	#map-set#:
+5 :(	*G/home/fahbrain/projects/omnimind/src/metacognition/self_optimization.py

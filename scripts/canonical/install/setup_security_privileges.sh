@@ -5,7 +5,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SUDOERS_FILE="/home/fahbrain/projects/omnimind/config/sudoers.d/omnimind"
+SUDOERS_FILE="$SCRIPT_DIR/../config/sudoers.d/omnimind"
 SUDOERS_DEST="/etc/sudoers.d/omnimind"
 
 echo "🔐 OmniMind Security Setup"

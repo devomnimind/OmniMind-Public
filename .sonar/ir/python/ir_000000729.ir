@@ -1,0 +1,10 @@
+
+4+"Check if GPU is available for allocation."strself8 8(+'src.scaling.gpu_resource_pool.GPUStatus"‘'
+%
+: :("#get-field# status:*
+(
+: :(1"#get-field# AVAILABLE:*
+(
+: :(1"
+#binop ==#2==:Bbool
+: :(1*A/home/fahbrain/projects/omnimind/src/scaling/gpu_resource_pool.py

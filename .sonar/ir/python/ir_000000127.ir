@@ -1,0 +1,48 @@
+
+&"ObtÃ©m nome de um decorador"strself
+Ã Ã( 	decorator
+Ã" Ã(5ast.Nameast.Call"[+
+)
+
+Å Å(*"#is-instance#:Bbool,"*
+
+Å Å(* *
+Å Å(
+2
+Ç Ç(";%
+#
+
+Æ Æ("#get-field# id:
+
+Æ Æ("Q+
+)
+
+Ç Ç(,"#is-instance#:Bbool "
+
+Ç Ç(, *
+Ç Ç("z'
+%
+
+È È((	"#get-field# func:+
+)
+
+È È(3
+"#is-instance#:	Bbool "
+
+È È(3
+ *
+È È(">(
+&
+
+Ê Ê(%"
+astunparse:Bstr
+
+Ê Ê(%"d'
+%
+
+É É(%"#get-field# func:%
+#
+
+É É(("#get-field# id:
+
+É É(("*8/home/fahbrain/projects/omnimind/src/tools/ast_parser.py

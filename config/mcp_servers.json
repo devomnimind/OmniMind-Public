@@ -6,23 +6,19 @@
     "audit_category_prefix": "mcp",
     "log_level": "INFO",
     "health_check_interval_seconds": 60,
-    "max_concurrent_requests": 500,
-    "request_timeout_seconds": 30,
-    "cache_enabled": true,
-    "compression_enabled": true,
-    "rate_limiting_enabled": true,
-    "target_throughput_rps": 500
+    "max_concurrent_requests": 100,
+    "request_timeout_seconds": 30
   },
   "mcp_servers": {
     "filesystem": {
       "enabled": true,
       "priority": "critical",
       "tier": 1,
-      "port": 4327,
-      "command": "python",
+      "port": 4331,
+      "command": ".venv/bin/python",
       "args": [
         "-m",
-        "src.integrations.mcp_filesystem_wrapper"
+        "src.integrations.mcp_filesystem_server"
       ],
       "allowed_paths": [
         "src/",
@@ -63,8 +59,7 @@
       "priority": "critical",
       "tier": 1,
       "port": 4321,
-      "cache_enabled": true,
-      "command": "python",
+      "command": ".venv/bin/python",
       "args": [
         "-m",
         "src.integrations.mcp_memory_server"
@@ -123,8 +118,7 @@
       "priority": "critical",
       "tier": 1,
       "port": 4322,
-      "cache_enabled": true,
-      "command": "python",
+      "command": ".venv/bin/python",
       "args": [
         "-m",
         "src.integrations.mcp_thinking_server"
@@ -162,9 +156,7 @@
       "priority": "high",
       "tier": 2,
       "port": 4323,
-      "cache_enabled": true,
-      "compression_enabled": true,
-      "command": "python",
+      "command": ".venv/bin/python",
       "args": [
         "-m",
         "src.integrations.mcp_context_server"
@@ -220,7 +212,7 @@
       "priority": "high",
       "tier": 2,
       "port": 4328,
-      "command": "python",
+      "command": ".venv/bin/python",
       "args": [
         "-m",
         "src.integrations.mcp_git_wrapper"
@@ -261,7 +253,7 @@
       "priority": "high",
       "tier": 2,
       "port": 4324,
-      "command": "python",
+      "command": ".venv/bin/python",
       "args": [
         "-m",
         "src.integrations.mcp_python_server"
@@ -311,7 +303,7 @@
       "priority": "medium",
       "tier": 3,
       "port": 4329,
-      "command": "python",
+      "command": ".venv/bin/python",
       "args": [
         "-m",
         "src.integrations.mcp_sqlite_wrapper"
@@ -342,7 +334,7 @@
       "priority": "medium",
       "tier": 3,
       "port": 4325,
-      "command": "python",
+      "command": ".venv/bin/python",
       "args": [
         "-m",
         "src.integrations.mcp_system_info_server"
@@ -378,7 +370,7 @@
       "priority": "medium",
       "tier": 3,
       "port": 4326,
-      "command": "python",
+      "command": ".venv/bin/python",
       "args": [
         "-m",
         "src.integrations.mcp_logging_server"

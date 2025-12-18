@@ -1,0 +1,215 @@
+
+1.0PythonFrontend"1763831834957*py2.BÔ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+"
+src/agents/architect_agent.py9
+ 
+src.agents.architect_agent11
+
+
+__future__12
+
+
+json14
+
+pathlib16
+
+typing18
+
+src.agents.react_agent20
+ 
+src.memory.episodic_memory22
+
+src.tools.omnimind_tools24
+/
+)src.agents.architect_agent.ArchitectAgent26
+'
+!src.agents.react_agent.ReactAgent28
+D
+>src.agents.architect_agent.ArchitectAgent.analyze_dependencies30
+
+
+dict32
+	
+str34
+;
+5src.agents.architect_agent.ArchitectAgent._think_node36
+'
+!src.agents.react_agent.AgentState38
+F
+@src.agents.architect_agent.ArchitectAgent.generate_spec_document40
+?
+9src.agents.architect_agent.ArchitectAgent._execute_action42
+J
+Dsrc.agents.architect_agent.ArchitectAgent._validate_write_permission44
+
+
+bool46
+8
+2src.agents.architect_agent.ArchitectAgent.__init__48
+K
+Esrc.agents.architect_agent.ArchitectAgent.create_architecture_diagram50
+
+
+list52J
+
+8
+89já
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27266 210
+
+29
+29286
+
+31
+31307 227
+
+33
+33326
+
+35
+35346
+
+37
+37367 227
+
+39
+39386
+
+41
+41407 227
+
+43
+43427 227
+
+45
+45447 227
+
+47
+47466
+
+49
+49487 227
+
+51
+51507 227
+
+53
+53526rœ
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (#
+
+10211*
+8	 	(0
+
+10231*
+8
+ 
+(4
+
+10251*
+8 (@
+
+27292*
+8 (
+
+31333*
+8²	 ²(
+
+31354*
+8²	 ²(
+
+37393*
+8`	 `(
+
+37394*
+8`	 `(
+
+41333*
+8ò	 ò(
+
+41354*
+8ò	 ò(
+
+41334*
+8ò	 ò(
+
+41354*
+8ò	 ò(
+
+43353*
+84	 4(
+
+43354*
+84	 4(
+
+43334*
+84	 4(
+
+45473*
+8/	 /(#
+
+45354*
+8/	 /(#
+
+49354*
+8	 (
+
+51353*
+8Ö	 Ö($
+
+51534*
+8Ö	 Ö($
+
+51534*
+8Ö	 Ö($

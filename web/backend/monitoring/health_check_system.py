@@ -41,6 +41,7 @@ class DependencyType(str, Enum):
     MEMORY = "memory"
     CPU = "cpu"
     EXTERNAL_API = "external_api"
+    SENTINEL = "sentinel"
 
 
 @dataclass
@@ -151,7 +152,9 @@ class HealthCheckSystem:
                 status=HealthStatus.UNHEALTHY,
                 response_time_ms=(time.time() - start_time) * 1000,
                 error=str(e),
-                remediation_suggestion="Database connection failed. Verify credentials and network.",
+                remediation_suggestion=(
+                    "Database connection failed. Verify credentials and network."
+                ),
                 threshold_breached=True,
             )
 
@@ -376,6 +379,54 @@ class HealthCheckSystem:
                 error=str(e),
             )
 
+    async def check_sentinel(self) -> HealthCheckResult:
+        """Check Sentinel Watchdog health."""
+        start_time = time.time()
+        try:
+            # Check if sentinel process is running (simple check for now)
+            import psutil
+
+            sentinel_running = False
+            for proc in psutil.process_iter(["name", "cmdline"]):
+                try:
+                    cmdline = proc.info.get("cmdline") or []
+                    if any("sentinel_watchdog.py" in str(arg) for arg in cmdline):
+                        sentinel_running = True
+                        break
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    continue
+
+            response_time = (time.time() - start_time) * 1000
+
+            if sentinel_running:
+                status = HealthStatus.HEALTHY
+                details = {"status": "active", "mode": "protection_enabled"}
+                suggestion = None
+            else:
+                status = HealthStatus.DEGRADED
+                details = {"status": "inactive", "mode": "protection_disabled"}
+                suggestion = (
+                    "Sentinel Watchdog not detected. Run scripts/management/sentinel_watchdog.py"
+                )
+
+            return HealthCheckResult(
+                name="sentinel",
+                dependency_type=DependencyType.SENTINEL,
+                status=status,
+                response_time_ms=response_time,
+                details=details,
+                remediation_suggestion=suggestion,
+                threshold_breached=not sentinel_running,
+            )
+        except Exception as e:
+            return HealthCheckResult(
+                name="sentinel",
+                dependency_type=DependencyType.SENTINEL,
+                status=HealthStatus.UNKNOWN,
+                response_time_ms=(time.time() - start_time) * 1000,
+                error=str(e),
+            )
+
     async def run_all_checks(self) -> Dict[str, HealthCheckResult]:
         """Run all registered health checks."""
         results: Dict[str, HealthCheckResult] = {}
@@ -388,6 +439,7 @@ class HealthCheckSystem:
             ("filesystem", self.check_filesystem),
             ("memory", self.check_memory),
             ("cpu", self.check_cpu),
+            ("sentinel", self.check_sentinel),
         ]
 
         for name, check_func in builtin_checks:
@@ -519,9 +571,8 @@ class HealthCheckSystem:
                 # Log warnings for unhealthy checks
                 for name, result in results.items():
                     if result.status == HealthStatus.UNHEALTHY:
-                        logger.warning(
-                            f"Health check {name} is UNHEALTHY: {result.error or 'threshold breached'}"
-                        )
+                        error_msg = result.error or "threshold breached"
+                        logger.warning(f"Health check {name} is UNHEALTHY: {error_msg}")
                         if result.remediation_suggestion:
                             logger.warning(f"Suggestion: {result.remediation_suggestion}")
 

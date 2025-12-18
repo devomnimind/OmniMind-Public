@@ -10,9 +10,7 @@ import json
 import statistics
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List
-
-import numpy as np
+from typing import Any, Dict
 
 
 def analyze_training_sessions(sessions_dir: Path) -> Dict[str, Any]:
@@ -140,7 +138,7 @@ def generate_scientific_report(project_root: Path) -> None:
 
 
 if __name__ == "__main__":
-    import sys
+    pass
 
     project_root = Path(__file__).parent.parent.parent
     generate_scientific_report(project_root)

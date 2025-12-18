@@ -1,0 +1,262 @@
+
+1.0PythonFrontend"1763831831536*py2.BÂ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+)
+$src/metrics/consciousness_metrics.py9
+'
+!src.metrics.consciousness_metrics11
+
+
+json12
+
+
+time14
+
+dataclasses16
+
+datetime18
+
+pathlib20
+
+typing22
+6
+0src.metrics.consciousness_metrics.ConnectionDict24
+4
+.src.metrics.consciousness_metrics.FeedbackLoop26
+<
+6src.metrics.consciousness_metrics.SelfAwarenessMetrics28
+N
+Hsrc.metrics.consciousness_metrics.SelfAwarenessMetrics.calculate_overall30
+
+float32
+=
+7src.metrics.consciousness_metrics.ConsciousnessSnapshot34
+=
+7src.metrics.consciousness_metrics.InsufficientDataTrend36
+;
+5src.metrics.consciousness_metrics.calculate_phi_proxy38
+
+
+list40
+8
+2src.metrics.consciousness_metrics.FeedbackLoopDict42
+5
+/src.metrics.consciousness_metrics.TrendAnalysis44
+7
+1src.metrics.consciousness_metrics.AgentConnection46
+>
+8src.metrics.consciousness_metrics.measure_self_awareness48
+
+
+bool50
+<
+6src.metrics.consciousness_metrics.ConsciousnessMetrics52
+E
+?src.metrics.consciousness_metrics.ConsciousnessMetrics.__init__54
+K
+Esrc.metrics.consciousness_metrics.ConsciousnessMetrics.add_connection56
+N
+Hsrc.metrics.consciousness_metrics.ConsciousnessMetrics.add_feedback_loop58
+E
+?src.metrics.consciousness_metrics.ConsciousnessMetrics.snapshot60
+	
+str62
+F
+@src.metrics.consciousness_metrics.ConsciousnessMetrics.get_trend64
+	
+int66
+P
+Jsrc.metrics.consciousness_metrics.ConsciousnessMetrics.calculate_phi_proxy68
+S
+Msrc.metrics.consciousness_metrics.ConsciousnessMetrics.measure_self_awareness70J
+
+8
+89jÎ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25246 210
+
+27
+27266 210
+
+29
+29286 210
+
+31
+31307 229
+
+33
+33326
+
+35
+35346 210
+
+37
+37366 210
+
+39
+39387 210
+
+41
+41406
+
+43
+43426 210
+
+45
+45446 210
+
+47
+47466 210
+
+49
+49487 210
+
+51
+51506
+
+53
+53526 210
+
+55
+55547 253
+
+57
+57567 253
+
+59
+59587 253
+
+61
+61607 253
+
+63
+63626
+
+65
+65647 253
+
+67
+67666
+
+69
+69687 253
+
+71
+71707 253rÌ
+
+10131*
+8
+ 
+(
+
+10151*
+8 (
+
+10171*
+8 ("
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (4
+
+31333*
+8€	 €(
+
+39333*
+8 (
+
+39414*
+8 (
+
+39414*
+8 (
+
+49293*
+8— —(
+
+49514*
+8— —(
+
+49514*
+8— —(
+
+49334*
+8— —(
+
+49334*
+8— —(
+
+57474*
+8³	 ³(
+
+59274*
+8Á	 Á(
+
+61353*
+8©	 ©(
+
+61634*
+8©	 ©(
+
+65674*
+8Ý	 Ý(
+
+69333*
+8Ï	 Ï(
+
+71293*
+8	 (
+
+71514*
+8	 (
+
+71514*
+8	 (
+
+71334*
+8	 (
+
+71334*
+8	 (

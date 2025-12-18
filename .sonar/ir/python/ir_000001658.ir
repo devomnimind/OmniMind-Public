@@ -1,0 +1,28 @@
+
+(
+"Only necessary data collected"str
+truebool
+;2"Check if only necessary data is being collected."str
+0'"No excessive data collection detected"str
+	"description"str
+	"details"str
+"compliant"strself
+¤ ¤(
+start_date
+¤ ¤("end_date
+¤$ ¤(6"¦&
+$
+
+¨ ¬(	"#new-object#Bdict"
+ 
+
+© ©("	#map-set#:"
+ 
+
+ª ª(:"	#map-set#:	
+"
+ 
+
+« «(>"	#map-set#:
+
+¨ ¬(	*A/home/fahbrain/projects/omnimind/src/audit/compliance_reporter.py

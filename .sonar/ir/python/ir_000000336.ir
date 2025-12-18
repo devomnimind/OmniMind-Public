@@ -1,0 +1,53 @@
+
+0.6float
+"resilience"str
+"name"str
+"transparency"str
+-$"Identify patterns in observations."str
+
+0int
+	0.8float
+"frequency"strself
+Ó Ó(observations
+Ó Ó(0list"ø&
+$
+
+Ù Ù(6"#new-object#Bdict"
+ 
+
+Ù Ù(#"	#map-set#:"
+ 
+
+Ù% Ù(5
+"	#map-set#:	&
+$
+
+Ú Ú(4"#new-object#Bdict"
+ 
+
+Ú Ú(!"	#map-set#:"
+ 
+
+Ú# Ú(3"	#map-set#:)
+'
+
+Ø Û(	"#unknown-value#Blist(
+&
+
+Ø Û(	"
+#is-exact#:Bbool
+
+
+Ø Û(	"
+#assume#::
+8
+
+Ø Û(	"#set-field# __collection_size:Bint(
+&
+
+Ø Û(	"#array-add-last#:(
+&
+
+Ø Û(	"#array-add-last#:
+
+Ø Û(	*:/home/fahbrain/projects/omnimind/src/desire_engine/core.py

@@ -1,0 +1,156 @@
+
+1.0PythonFrontend"1763831823963*py2.Bæ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+-
+(src/metacognition/pattern_recognition.py9
++
+%src.metacognition.pattern_recognition11
+
+
+__future__12
+
+logging14
+
+collections16
+
+datetime18
+
+typing20
+>
+8src.metacognition.pattern_recognition.PatternRecognition22
+O
+Isrc.metacognition.pattern_recognition.PatternRecognition.detect_anomalies24
+
+
+dict26
+
+
+list28
+X
+Rsrc.metacognition.pattern_recognition.PatternRecognition.calculate_diversity_score30
+G
+Asrc.metacognition.pattern_recognition.PatternRecognition.__init__32
+
+float34
+Y
+Ssrc.metacognition.pattern_recognition.PatternRecognition.detect_repetitive_behavior36
+J
+Dsrc.metacognition.pattern_recognition.PatternRecognition.detect_bias38
+T
+Nsrc.metacognition.pattern_recognition.PatternRecognition.analyze_decision_tree40J
+
+8
+89jé
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23226 210
+
+25
+25247 223
+
+27
+27266
+
+29
+29286
+
+31
+31307 223
+
+33
+33327 223
+
+35
+35346
+
+37
+37367 223
+
+39
+39387 223
+
+41
+41407 223r¬
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8	 	( 
+
+10191*
+8
+ 
+(
+
+10211*
+8 (#
+
+25273*
+8‡	 ‡(
+
+25294*
+8‡	 ‡(
+
+31273*
+8ø	 ø("
+
+31294*
+8ø	 ø("
+
+33354*
+8	 (
+
+37273*
+8	 (#
+
+37294*
+8	 (#
+
+39273*
+8P	 P(
+
+39294*
+8P	 P(
+
+41273*
+8Â	 Â(
+
+41294*
+8Â	 Â(

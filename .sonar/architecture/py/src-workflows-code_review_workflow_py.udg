@@ -1,0 +1,367 @@
+
+1.0PythonFrontend"1763831842975*py2.B­
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+*
+%src/workflows/code_review_workflow.py9
+(
+"src.workflows.code_review_workflow11
+
+
+__future__12
+
+
+statistics14
+
+dataclasses16
+
+pathlib18
+
+typing20
+
+src.tools.omnimind_tools22
+;
+5src.workflows.code_review_workflow.CodeReviewWorkflow24
+K
+Esrc.workflows.code_review_workflow.CodeReviewWorkflow._score_security26
+
+float28
+	
+str30
+M
+Gsrc.workflows.code_review_workflow.CodeReviewWorkflow._score_efficiency32
+N
+Hsrc.workflows.code_review_workflow.CodeReviewWorkflow._score_correctness34
+N
+Hsrc.workflows.code_review_workflow.CodeReviewWorkflow._ensure_main_block36
+?
+9src.workflows.code_review_workflow.CodeReviewWorkflow.run38
+
+
+dict40
+	
+int42
+N
+Hsrc.workflows.code_review_workflow.CodeReviewWorkflow._score_readability44
+Q
+Ksrc.workflows.code_review_workflow.CodeReviewWorkflow._has_module_docstring46
+
+
+bool48
+P
+Jsrc.workflows.code_review_workflow.CodeReviewWorkflow._average_line_length50
+K
+Esrc.workflows.code_review_workflow.CodeReviewWorkflow._add_type_hints52
+D
+>src.workflows.code_review_workflow.CodeReviewWorkflow.__init__54
+I
+Csrc.workflows.code_review_workflow.CodeReviewWorkflow._read_content56
+R
+Lsrc.workflows.code_review_workflow.CodeReviewWorkflow._score_maintainability58
+L
+Fsrc.workflows.code_review_workflow.CodeReviewWorkflow._generate_report60
+
+
+list62
+Q
+Ksrc.workflows.code_review_workflow.CodeReviewWorkflow._add_module_docstring64
+K
+Esrc.workflows.code_review_workflow.CodeReviewWorkflow._has_type_hints66
+B
+<src.workflows.code_review_workflow.CodeReviewWorkflow._clamp68
+F
+@src.workflows.code_review_workflow.CodeReviewWorkflow._apply_fix70
+
+tuple72
+J
+Dsrc.workflows.code_review_workflow.CodeReviewWorkflow._write_content74
+J
+Dsrc.workflows.code_review_workflow.CodeReviewWorkflow._evaluate_code76
+8
+2src.workflows.code_review_workflow.IterationRecord78J
+
+8
+89j¦
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25246 210
+
+27
+27267 225
+
+29
+29286
+
+31
+31306
+
+33
+33327 225
+
+35
+35347 225
+
+37
+37367 225
+
+39
+39387 225
+
+41
+41406
+
+43
+43426
+
+45
+45447 225
+
+47
+47467 225
+
+49
+49486
+
+51
+51507 225
+
+53
+53527 225
+
+55
+55547 225
+
+57
+57567 225
+
+59
+59587 225
+
+61
+61607 225
+
+63
+63626
+
+65
+65647 225
+
+67
+67667 225
+
+69
+69687 225
+
+71
+71707 225
+
+73
+73726
+
+75
+75747 225
+
+77
+77767 225
+
+79
+79786 210rÊ
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 ("
+
+10191*
+8 (
+
+10211*
+8 (4
+
+10231*
+8
+ 
+(2
+
+27293*
+8€	 €(
+
+27314*
+8€	 €(
+
+33293*
+8ó	 ó(
+
+33314*
+8ó	 ó(
+
+35293*
+8Ü	 Ü(
+
+35314*
+8Ü	 Ü(
+
+37313*
+8Ä	 Ä(
+
+37314*
+8Ä	 Ä(
+
+37314*
+8Ä	 Ä(
+
+39413*
+8	 (
+
+39314*
+8	 (
+
+39314*
+8	 (
+
+39314*
+8	 (
+
+39314*
+8	 (
+
+39434*
+8	 (
+
+39294*
+8	 (
+
+45293*
+8è	 è(
+
+45314*
+8è	 è(
+
+47493*
+8¢	 ¢(
+
+47314*
+8¢	 ¢(
+
+51293*
+8—	 —(
+
+51314*
+8—	 —(
+
+53313*
+8±	 ±(
+
+53314*
+8±	 ±(
+
+57313*
+8Ð	 Ð(
+
+57314*
+8Ð	 Ð(
+
+59293*
+8‹	 ‹(
+
+59314*
+8‹	 ‹(
+
+61313*
+8¢	 ¢(
+
+61314*
+8¢	 ¢(
+
+61314*
+8¢	 ¢(
+
+61634*
+8¢	 ¢(
+
+61494*
+8¢	 ¢(
+
+65313*
+8¦	 ¦(
+
+65314*
+8¦	 ¦(
+
+65314*
+8¦	 ¦(
+
+67493*
+8®	 ®(
+
+67314*
+8®	 ®(
+
+69293*
+8Ù	 Ù(
+
+69294*
+8Ù	 Ù(
+
+71733*
+8‰	 ‰(
+
+71314*
+8‰	 ‰(
+
+71314*
+8‰	 ‰(
+
+71634*
+8‰	 ‰(
+
+75314*
+8Í	 Í(
+
+75314*
+8Í	 Í(
+
+77413*
+8d	 d(
+
+77314*
+8d	 d(

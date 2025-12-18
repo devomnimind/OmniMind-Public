@@ -31,14 +31,12 @@ Re-executes ALL experiments from Papers 1-3 with REAL hardware:
 Enforces strict validation, reproducibility, and transparency.
 """
 
-import os
-import sys
-import time
 import json
 import logging
+import time
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any, Dict
 
 # Configure logging
 logging.basicConfig(
@@ -192,7 +190,7 @@ class ComprehensiveValidator:
 
         logger.info("   Running: pytest --cov=src/quantum_ai tests/quantum_ai/")
 
-        result = subprocess.run(
+        _result = subprocess.run(
             ["pytest", "--cov=src/quantum_ai", "--cov-report=json", "tests/quantum_ai/", "-v"],
             capture_output=True,
             text=True,
@@ -271,7 +269,7 @@ class ComprehensiveValidator:
     def _validate_bell_state(self) -> Dict[str, Any]:
         """Validate Bell state entanglement."""
         try:
-            from src.quantum_ai.quantum_circuits import create_bell_state
+            pass
 
             # This should use real IBM hardware if budget allows
             logger.info("   Creating Bell state (|00⟩ + |11⟩)/√2...")

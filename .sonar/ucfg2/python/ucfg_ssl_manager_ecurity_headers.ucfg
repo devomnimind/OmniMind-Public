@@ -1,0 +1,105 @@
+
+8src.security.ssl_manager.SSLManager.get_security_headersH
+</home/fahbrain/projects/omnimind/src/security/ssl_manager.pyĞ Ğ("2*¹
+
+2
+Ñ Ö(
+
+× å(	
+%1"dictjh
+
+Ø) Ø(?
+%2*C
+
+__unknown_file ('%
+#src.security.ssl_manager.SSLManager2get_hsts_header¢
+Ÿ
+
+Ø Ø(?
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*9
+
+__unknown_file (
+Strict-Transport-Security*"
+
+__unknown_file (
+
+%2¤
+¡
+
+Ù Ù(/
+%4"__mapSet*"
+
+__unknown_file (
+
+%1*6
+
+__unknown_file (
+X-Content-Type-Options*'
+
+__unknown_file (	
+nosniffš
+—
+
+Ú Ú(%
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*/
+
+__unknown_file (
+X-Frame-Options*$
+
+__unknown_file (
+DENY¤
+¡
+
+Û Û(/
+%6"__mapSet*"
+
+__unknown_file (
+
+%1*0
+
+__unknown_file (
+X-XSS-Protection*-
+
+__unknown_file (
+1; mode=blockµ
+²
+
+Ü Ü(@
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*/
+
+__unknown_file (
+Referrer-Policy*?
+
+__unknown_file (#!
+strict-origin-when-cross-originÁ
+¾
+
+İ ä(
+%8"__mapSet*"
+
+__unknown_file (
+
+%1*7
+
+__unknown_file (
+Content-Security-Policy*Â
+
+__unknown_file (¥¢
+Ÿdefault-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'"
+
+× å(	
+
+%1B'%
+#src.security.ssl_manager.SSLManagerH

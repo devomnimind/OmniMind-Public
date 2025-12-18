@@ -1,0 +1,33 @@
+
+"is_remote"str
+
+"trace_id"str
+"trace_state"str
+
+"parent_span_id"str
+3*"Convert to dictionary for serialization."str
+	"span_id"strself< <("À$
+"
+> D(	"#new-object#Bdict)
+'
+? ?(%"#get-field# trace_id: 
+
+? ?(%"	#map-set#:(
+&
+@ @(#"#get-field# span_id: 
+
+@ @(#	"	#map-set#:/
+-
+A A(1"#get-field# parent_span_id: 
+
+A A(1"	#map-set#:
+,
+*
+B B(+"#get-field# trace_state: 
+
+B B(+"	#map-set#:*
+(
+C C('"#get-field# is_remote: 
+
+C C('"	#map-set#:
+> D(	*I/home/fahbrain/projects/omnimind/src/observability/distributed_tracing.py

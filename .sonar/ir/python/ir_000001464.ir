@@ -1,0 +1,50 @@
+
+"pending_responses"str
+"queue_sizes"str
+/&"Retorna estat√≠sticas do message bus"str
+"registered_agents"str
+"total_conflicts"strself
+Î Î("ï&
+$
+
+Ì Ù(	"#new-object#Bdict*
+(
+
+Ó% Ó(1"#get-field# _queues:,
+*
+
+Ó! Ó(2"
+builtinslen*:Bint"
+ 
+
+Ó Ó(2"	#map-set#:5
+3
+
+Ô% Ô(<	" #get-field# _pending_responses:,
+*
+
+Ô! Ô(=
+"
+builtinslen*:	Bint"
+ 
+
+Ô Ô(="	#map-set#:
+-
++
+
+# (2"#get-field# _conflicts:,
+*
+
+ (3"
+builtinslen*:Bint"
+ 
+
+ (3"	#map-set#:-
++
+
+Ò Û("?python-unknown?:Bdict"
+ 
+
+Ò Û("	#map-set#:
+
+Ì Ù(	*=/home/fahbrain/projects/omnimind/src/agents/agent_protocol.py

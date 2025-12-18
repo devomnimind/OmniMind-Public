@@ -1,0 +1,75 @@
+
+1.0float
+½³"
+        Computa energia da falta estrutural.
+
+        Quantidade de Real nÃ£o simbolizado = energia de desejo.
+
+        Returns:
+            Energia de falta (0.0-1.0)
+        "str
+"division by zero"bool
+
+1int
+"S3518"bool
+"a"bool
+
+0intself
+° °( "¯1
+/
+
+¹ ¹(""#get-field# symbolic_order:+
+)
+
+¹ ¹(""
+__bool__*:BboolH+
+)
+
+¹ ¹(""#unaryop !#2!:Bbool "
+
+¹ ¹(" *
+¹ ¹(
+"
+
+º º("˜7
+5
+
+½ ½(5"" #get-field# real_impossibilities:;
+9
+
+½ ½(6real_elements"
+builtinslen*:Bint1
+/
+
+¾  ¾(3	"#get-field# symbolic_order:?
+=
+
+¾ ¾(4
+symbolic_elements"
+builtinslen*:	Bint)
+'
+
+À) À(J"	#binop +#2+:
+Bint(
+&
+
+À% À(N"
+builtinsmax*:,
+*
+
+À À(N"
+#binop !=#2!=:Bbool"
+ 
+
+À À(N"
+#assert#:?
+=
+
+À À(N
+lack_ratio"#dependent-value#*:Bfloat0
+.
+
+Â Â( "
+builtinsfloat*:Bfloat
+
+Â Â( *C/home/fahbrain/projects/omnimind/src/lacanian/computational_lack.py

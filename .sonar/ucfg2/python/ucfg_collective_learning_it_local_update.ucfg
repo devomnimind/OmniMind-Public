@@ -1,0 +1,64 @@
+
+Usrc.collective_intelligence.collective_learning.FederatedLearning.submit_local_update_
+S/home/fahbrain/projects/omnimind/src/collective_intelligence/collective_learning.py¾ ¾("2*ú
+2
+¿ Å(
+
+
+Æ Æ(
+%2"__id*s
+
+__unknown_file (W*UC
+Asrc.collective_intelligence.collective_learning.FederatedLearning"
+local_models¯¬
+
+Æ Æ(1
+%1"dict.__setitem__*"
+
+__unknown_file (
+
+%2*(
+
+__unknown_file (
+
+
+agent_id*+
+
+__unknown_file (
+
+local_model2__setitem__Š
+‡
+
+Ç Ç(
+%3"__id*m
+
+__unknown_file (Q*OC
+Asrc.collective_intelligence.collective_learning.FederatedLearning"
+logger‘Ž
+
+Ç Ç(E
+%4*"
+
+__unknown_file (
+
+%3*5
+
+__unknown_file (
+local_update_received2debug:
+agent_id
+
+
+agent_id*
+3*>
+3
+collective_learning.py"
+É É(
+implicit return:
+
+¾" ¾(/
+
+agent_id:
+
+¾1 ¾(L
+local_modelBEC
+Asrc.collective_intelligence.collective_learning.FederatedLearningH

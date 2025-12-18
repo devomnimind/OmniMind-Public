@@ -1,0 +1,228 @@
+
+Qsrc.security.api_documentation.APIDocumentationGenerator._generate_javascript_sdkN
+B/home/fahbrain/projects/omnimind/src/security/api_documentation.pyê ê( "2*ã
+2
+ë ë(/…
+‚
+
+ì ì(%
+%4"__id*h
+
+__unknown_file (L*J:
+8src.security.api_documentation.APIDocumentationGenerator"
+
+output_dirvt
+
+ì ì(9
+%5*"
+
+__unknown_file (
+
+%4*/
+
+__unknown_file (
+omnimind-sdk.js2__truediv__G
+E
+
+ì ì(9
+output_path"__id*"
+
+__unknown_file (
+
+%5Õ
+Ò
+
+î é(
+
+sdk_code"__id*±
+
+__unknown_file (”‘
+Ž/**
+ * OmniMind JavaScript SDK
+ *
+ * Official JavaScript client for the OmniMind API.
+ */
+
+class OmniMindClient {
+    /**
+     * Initialize OmniMind client.
+     *
+     * @param {string} baseURL - API base URL
+     * @param {string} username - Basic auth username
+     * @param {string} password - Basic auth password
+     */
+    constructor(baseURL = 'http://localhost:8000', username = '', password = '') {
+        this.baseURL = baseURL.replace(/\\/$/, '');
+        this.auth = username ? btoa(`${username}:${password}`) : null;
+    }
+
+    /**
+     * Make authenticated request.
+     *
+     * @private
+     */
+    async _request(method, path, data = null) {
+        const headers = {
+            'Content-Type': 'application/json',
+        };
+
+        if (this.auth) {
+            headers['Authorization'] = `Basic ${this.auth}`;
+        }
+
+        const options = {
+            method,
+            headers,
+        };
+
+        if (data) {
+            options.body = JSON.stringify(data);
+        }
+
+        const response = await fetch(`${this.baseURL}${path}`, options);
+
+        if (!response.ok) {
+            throw new Error(`API request failed: ${response.statusText}`);
+        }
+
+        return response.json();
+    }
+
+    /**
+     * Submit a new task.
+     *
+     * @param {string} description - Task description
+     * @param {string} priority - Task priority
+     * @returns {Promise<object>} Task object
+     */
+    async submitTask(description, priority = 'medium') {
+        return this._request('POST', '/tasks', { description, priority });
+    }
+
+    /**
+     * Get task status.
+     *
+     * @param {string} taskId - Task identifier
+     * @returns {Promise<object>} Task object
+     */
+    async getTask(taskId) {
+        return this._request('GET', `/tasks/${taskId}`);
+    }
+
+    /**
+     * List tasks.
+     *
+     * @param {string} status - Filter by status
+     * @param {number} limit - Maximum number of tasks
+     * @returns {Promise<Array>} List of task objects
+     */
+    async listTasks(status = null, limit = 10) {
+        const params = new URLSearchParams({ limit });
+        if (status) params.append('status', status);
+        return this._request('GET', `/tasks?${params}`);
+    }
+
+    /**
+     * List agents.
+     *
+     * @returns {Promise<Array>} List of agent objects
+     */
+    async listAgents() {
+        return this._request('GET', '/agents');
+    }
+
+    /**
+     * Get security events.
+     *
+     * @param {string} severity - Filter by severity
+     * @param {number} limit - Maximum number of events
+     * @returns {Promise<Array>} List of security event objects
+     */
+    async getSecurityEvents(severity = null, limit = 10) {
+        const params = new URLSearchParams({ limit });
+        if (severity) params.append('severity', severity);
+        return this._request('GET', `/security/events?${params}`);
+    }
+
+    /**
+     * Get metacognition insights.
+     *
+     * @param {string} type - Filter by type
+     * @returns {Promise<Array>} List of insight objects
+     */
+    async getMetacognitionInsights(type = null) {
+        const params = type ? `?type=${type}` : '';
+        return this._request('GET', `/metacognition/insights${params}`);
+    }
+}
+
+// Export for Node.js and browsers
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = OmniMindClient;
+}
+jh
+
+ë ë("
+%6*+
+
+__unknown_file (
+
+output_path*!
+
+__unknown_file (
+w2open=
+;
+
+ë ë('
+f"__id*"
+
+__unknown_file (
+
+%6*
+4
+5*ƒ
+4
+î î(?k
+i
+
+î î(>
+%1"__concat*,
+
+î î(0
+JavaScript SDK generated: *
+
+î1 î(<
+
+output_pathfd
+
+î î(?
+%2*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%12info"
+
+ï ï(
+
+output_path*~
+5
+ì ì(hf
+
+ì ì(
+%3*!
+
+__unknown_file (
+
+f*(
+
+__unknown_file (
+
+
+sdk_code2write*
+4B<:
+8src.security.api_documentation.APIDocumentationGeneratorH

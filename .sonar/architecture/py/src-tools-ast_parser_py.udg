@@ -1,0 +1,265 @@
+
+1.0PythonFrontend"1763831825850*py2.B¥	
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+
+src/tools/ast_parser.py9
+
+src.tools.ast_parser11
+
+
+__future__12
+	
+ast14
+
+logging16
+
+dataclasses18
+
+typing20
+&
+ src.tools.ast_parser.CodeElement22
+(
+"src.tools.ast_parser.CodeStructure24
+$
+src.tools.ast_parser.ASTParser26
+/
+)src.tools.ast_parser.ASTParser.parse_file28
+	
+str30
+:
+4src.tools.ast_parser.ASTParser._calculate_complexity32
+	
+int34
+
+_ast.AST36
+3
+-src.tools.ast_parser.ASTParser._extract_class38
+
+_ast.ClassDef40
+6
+0src.tools.ast_parser.ASTParser._extract_function42
+
+_ast.FunctionDef44
+3
+-src.tools.ast_parser.ASTParser._get_base_name46
+
+	_ast.expr48
+6
+0src.tools.ast_parser.ASTParser.generate_skeleton50
+
+
+list52
+<
+6src.tools.ast_parser.ASTParser.analyze_security_issues54
+-
+'src.tools.ast_parser.ASTParser.__init__56
+1
++src.tools.ast_parser.ASTParser.parse_source58
+8
+2src.tools.ast_parser.ASTParser.find_function_calls60
+4
+.src.tools.ast_parser.ASTParser.extract_imports62
+4
+.src.tools.ast_parser.ASTParser.validate_syntax64
+
+tuple66
+8
+2src.tools.ast_parser.ASTParser._get_decorator_name68J
+
+8
+89j©
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23226 210
+
+25
+25246 210
+
+27
+27266 210
+
+29
+29287 227
+
+31
+31306
+
+33
+33327 227
+
+35
+35346
+
+37
+37366
+
+39
+39387 227
+
+41
+41406
+
+43
+43427 227
+
+45
+45446
+
+47
+47467 227
+
+49
+49486
+
+51
+51507 227
+
+53
+53526
+
+55
+55547 227
+
+57
+57567 227
+
+59
+59587 227
+
+61
+61607 227
+
+63
+63627 227
+
+65
+65647 227
+
+67
+67666
+
+69
+69687 227r¶
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 ()
+
+10211*
+8 ('
+
+29314*
+8;	 ;(
+
+33353*
+8Ò	 Ò(
+
+33374*
+8Ò	 Ò(
+
+39233*
+8Ÿ	 Ÿ(
+
+39414*
+8Ÿ	 Ÿ(
+
+43233*
+8«	 «(
+
+43454*
+8«	 «(
+
+47313*
+8Ì	 Ì(
+
+47494*
+8Ì	 Ì(
+
+51313*
+8£	 £(
+
+51314*
+8£	 £(
+
+51534*
+8£	 £(
+
+55533*
+8Ë	 Ë( 
+
+55314*
+8Ë	 Ë( 
+
+59253*
+8M	 M(
+
+59314*
+8M	 M(
+
+59314*
+8M	 M(
+
+61533*
+8‰	 ‰(
+
+61314*
+8‰	 ‰(
+
+63533*
+8î	 î(
+
+63314*
+8î	 î(
+
+65673*
+8Þ	 Þ(
+
+65314*
+8Þ	 Þ(
+
+69313*
+8Ã	 Ã(
+
+69494*
+8Ã	 Ã(

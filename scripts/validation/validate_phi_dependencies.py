@@ -16,7 +16,7 @@ import json
 import os
 import sys
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any, Dict
 
 import numpy as np
 
@@ -25,20 +25,20 @@ project_root = Path(__file__).parent.parent.parent.resolve()
 sys.path.insert(0, str(project_root))
 os.chdir(project_root)
 
-from src.consciousness.phi_constants import (
-    PHI_THRESHOLD,
-    PHI_OPTIMAL,
-    SIGMA_PHI,
-    normalize_phi,
-    calculate_psi_gaussian,
-)
 from src.consciousness.delta_calculator import DeltaCalculator
-from src.consciousness.sigma_sinthome import SigmaSinthomeCalculator
 from src.consciousness.gozo_calculator import GozoCalculator
+from src.consciousness.phi_constants import (
+    PHI_OPTIMAL,
+    PHI_THRESHOLD,
+    SIGMA_PHI,
+    calculate_psi_gaussian,
+    normalize_phi,
+)
 from src.consciousness.regulatory_adjustment import (
     RegulatoryAdjuster,
     RegulatoryAdjustment,
 )
+from src.consciousness.sigma_sinthome import SigmaSinthomeCalculator
 
 
 class PhiDependencyValidator:

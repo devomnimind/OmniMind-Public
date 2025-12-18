@@ -4,12 +4,11 @@ from __future__ import annotations
 
 import logging
 import time
+from enum import Enum
 from typing import Any, Dict, List
 
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
-
-from web.backend.routes.enums import AgentStatus, AgentType
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +24,29 @@ except ImportError as e:
     # Only log at debug level - monitoring is optional
     logger.debug("Agent monitoring not available: %s", e)
     agent_monitor = None  # type: ignore
+
+
+class AgentStatus(str, Enum):
+    """Agent operational status."""
+
+    IDLE = "idle"
+    ACTIVE = "active"
+    BUSY = "busy"
+    ERROR = "error"
+    OFFLINE = "offline"
+
+
+class AgentType(str, Enum):
+    """Types of agents in the system."""
+
+    ORCHESTRATOR = "orchestrator"
+    CODE = "code"
+    ARCHITECT = "architect"
+    DEBUG = "debug"
+    REVIEWER = "reviewer"
+    PSYCHOANALYST = "psychoanalyst"
+    SECURITY = "security"
+    METACOGNITION = "metacognition"
 
 
 class AgentInfo(BaseModel):
@@ -330,14 +352,13 @@ class SendMessageRequest(BaseModel):
 @router.post("/communication/send")
 async def send_agent_message(request: SendMessageRequest) -> Dict[str, Any]:
     """Send a message between agents."""
-    import uuid
-
     from src.agents.agent_protocol import (
         AgentMessage,
-        MessagePriority,
         MessageType,
+        MessagePriority,
         get_message_bus,
     )
+    import uuid
 
     try:
         # Convert string to enums
@@ -371,9 +392,8 @@ async def send_agent_message(request: SendMessageRequest) -> Dict[str, Any]:
 @router.get("/ast/analyze/{filepath:path}")
 async def analyze_code_structure(filepath: str) -> Dict[str, Any]:
     """Analyze code structure using AST parser."""
-    from pathlib import Path
-
     from src.tools.ast_parser import ASTParser
+    from pathlib import Path
 
     parser = ASTParser()
 

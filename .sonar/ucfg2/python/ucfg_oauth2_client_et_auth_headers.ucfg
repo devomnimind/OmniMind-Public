@@ -1,0 +1,76 @@
+
+<src.integrations.oauth2_client.OAuth2Client.get_auth_headersN
+B/home/fahbrain/projects/omnimind/src/integrations/oauth2_client.py´ ´("2*š
+2
+µ ¼(rp
+
+½ ½(&
+%1*K
+
+__unknown_file (/-
++src.integrations.oauth2_client.OAuth2Client2get_valid_tokenA
+?
+
+½ ½(&
+token"__id*"
+
+__unknown_file (
+
+%1
+
+¾ ¾(L
+%2"dictQ
+O
+
+¾$ ¾(4
+%3"__id*5
+
+__unknown_file (*
+
+token"
+
+token_typeS
+Q
+
+¾7 ¾(I
+%4"__id*7
+
+__unknown_file (*
+
+token"
+access_token_
+]
+
+¾! ¾(K
+%5"__concat*
+
+¾$ ¾(4
+
+%3*
+
+¾5 ¾(6
+ *
+
+¾7 ¾(I
+
+%4–
+“
+
+¾ ¾(K
+%6"__mapSet*"
+
+__unknown_file (
+
+%2*-
+
+__unknown_file (
+Authorization*"
+
+__unknown_file (
+
+%5"
+
+¾ ¾(L
+
+%2B/-
++src.integrations.oauth2_client.OAuth2ClientH

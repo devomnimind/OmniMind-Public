@@ -1,0 +1,12 @@
+
+ja"Check if currently in throttled state.
+
+        Returns:
+            True if throttled
+        "strself
+Œ Œ("A-
++
+
+’ ’("#get-field# _throttled:
+
+’ ’(*A/home/fahbrain/projects/omnimind/src/metacognition/homeostasis.py

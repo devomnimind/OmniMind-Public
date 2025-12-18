@@ -1,0 +1,51 @@
+
+
+"metadata"str
+"tenant_name"str
+
+"settings"str
+"tenant_id"str
+!"Convert to dictionary."str
+"created_at"str
+
+"status"str
+"quotas"str
+"encryption_key_id"strselfX X("Õ$
+"
+Z k(	"#new-object#Bdict*
+(
+[ [('"#get-field# tenant_id: 
+
+[ [('"	#map-set#:,
+*
+\ \(+"#get-field# tenant_name: 
+
+\ \(+	"	#map-set#:'
+%
+] ](!"#get-field# status:&
+$
+] ]('"#get-field# value: 
+
+] ]('"	#map-set#:
++
+)
+^ ^()"#get-field# created_at: 
+
+^ ^()"	#map-set#:2
+0
+_! _(7"#get-field# encryption_key_id: 
+
+_ _(7"	#map-set#:)
+'
+` `(%"#get-field# settings: 
+
+` `(%"	#map-set#:+
+)
+a i("?python-unknown?:Bdict 
+
+a i("	#map-set#:)
+'
+j j(%"#get-field# metadata: 
+
+j j(%"	#map-set#:
+Z k(	*F/home/fahbrain/projects/omnimind/src/scaling/multi_tenant_isolation.py

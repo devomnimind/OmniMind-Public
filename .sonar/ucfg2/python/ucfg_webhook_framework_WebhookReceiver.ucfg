@@ -1,0 +1,60 @@
+
+2src.integrations.webhook_framework.WebhookReceiverP
+F/home/fahbrain/projects/omnimind/src/integrations/webhook_framework.py} }("2*¬
+2	~ ‚(~
+|
+
+ƒ ƒ(@4
+2src.integrations.webhook_framework.WebhookReceiver"
+config"__id*&
+
+__unknown_file (
+
+
+config
+
+… …(
+%2"dict}
+{
+
+„ †(	C4
+2src.integrations.webhook_framework.WebhookReceiver"
+	_handlers"__id*"
+
+__unknown_file (
+
+%2Z
+X
+
+Š Š(8
+%3"__id*>
+
+__unknown_file ("* 
+
+config"
+validate_signatureŸœ
+
+ˆ ‹(	
+%4*&
+
+__unknown_file (
+
+
+logger*<
+
+__unknown_file ( 
+webhook_receiver_initialized2info:
+validate_signature
+
+%3*
+3*w
+3
+webhook_framework.pyFD
+ (
+%1"2src.integrations.webhook_framework.WebhookReceiver"
+ (
+
+%1:
+} }(,
+configB64
+2src.integrations.webhook_framework.WebhookReceiverH

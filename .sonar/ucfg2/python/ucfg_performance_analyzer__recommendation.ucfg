@@ -1,0 +1,446 @@
+
+Ssrc.observability.performance_analyzer.PerformanceAnalyzer._generate_recommendationV
+J/home/fahbrain/projects/omnimind/src/observability/performance_analyzer.pyÇ Ç( "2*“&
+2
+Ê Ò(
+
+Ó ð(	
+%1"dict‰
+†
+
+Ô Ô(,
+%2"__id*l
+
+__unknown_file (P*N;
+9src.observability.performance_analyzer.BottleneckCategory"
+CPU_INTENSIVEU
+S
+
+Õ4 Õ(H
+%3"__id*9
+
+__unknown_file (*
+
+sample"
+function_nameÝ
+Ú
+
+Õ Ö([
+%4"__concat*3
+
+Õ Õ(3%#
+!Consider optimizing algorithm in *
+
+Õ4 Õ(H
+
+%3*
+
+ÕI Õ(K
+. *[
+
+Ö Ö([MK
+ILook for opportunities to reduce computational complexity or use caching.‹
+ˆ
+
+Ô ×(
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*"
+
+__unknown_file (
+
+%2*"
+
+__unknown_file (
+
+%4„
+
+
+Ø Ø('
+%6"__id*g
+
+__unknown_file (K*I;
+9src.observability.performance_analyzer.BottleneckCategory"
+
+IO_BOUNDU
+S
+
+Ù% Ù(9
+%7"__id*9
+
+__unknown_file (*
+
+sample"
+function_nameË
+È
+
+Ù Ú(K
+%8"__concat*$
+
+Ù Ù($
+I/O operations in *
+
+Ù% Ù(9
+
+%7*!
+
+Ù: Ù(I
+ are blocking. *K
+
+Ú Ú(K=;
+9Consider using async I/O, buffering, or batch operations.‹
+ˆ
+
+Ø Û(
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*"
+
+__unknown_file (
+
+%6*"
+
+__unknown_file (
+
+%8Š
+‡
+
+Ü Ü(,
+%10"__id*l
+
+__unknown_file (P*N;
+9src.observability.performance_analyzer.BottleneckCategory"
+NETWORK_BOUNDV
+T
+
+Ý) Ý(=
+%11"__id*9
+
+__unknown_file (*
+
+sample"
+function_nameØ
+Õ
+
+Ý Þ(V
+%12"__concat*(
+
+Ý Ý((
+Network operations in *
+
+Ý) Ý(=
+
+%11*
+
+Ý> Ý(I
+ are slow. *V
+
+Þ Þ(VHF
+DConsider connection pooling, request batching, or caching responses.Ž
+‹
+
+Ü ß(
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*#
+
+__unknown_file (
+
+%10*#
+
+__unknown_file (
+
+%12‹
+ˆ
+
+à à(-
+%14"__id*m
+
+__unknown_file (Q*O;
+9src.observability.performance_analyzer.BottleneckCategory"
+FREQUENT_CALLSV
+T
+
+á á('
+%15"__id*9
+
+__unknown_file (*
+
+sample"
+function_nameS
+Q
+
+á4 á(E
+%16"__id*6
+
+__unknown_file (*
+
+sample"
+
+call_countà
+Ý
+
+á â(U
+%17"__concat*
+
+á á('
+
+%15*
+
+á( á(3
+ is called *
+
+á4 á(E
+
+%16*
+
+áF á(N
+
+ times. *U
+
+â â(UGE
+CConsider memoization, reducing call frequency, or batch processing.Ž
+‹
+
+à ã(
+%18"__mapSet*"
+
+__unknown_file (
+
+%1*#
+
+__unknown_file (
+
+%14*#
+
+__unknown_file (
+
+%17‰
+†
+
+ä ä(+
+%19"__id*k
+
+__unknown_file (O*M;
+9src.observability.performance_analyzer.BottleneckCategory"
+LONG_RUNNINGV
+T
+
+å å('
+%20"__id*9
+
+__unknown_file (*
+
+sample"
+function_nameY
+W
+
+å0 å(G
+%21"__id*<
+
+__unknown_file ( *
+
+sample"
+per_call_time_msâ
+ß
+
+å æ(V
+%22"__concat*
+
+å å('
+
+%20*
+
+å( å(/	
+ takes *
+
+å0 å(G
+
+%21*
+
+åL å(Y
+ms per call. *V
+
+æ æ(VHF
+DConsider breaking into smaller operations or running asynchronously.Ž
+‹
+
+ä ç(
+%23"__mapSet*"
+
+__unknown_file (
+
+%1*#
+
+__unknown_file (
+
+%19*#
+
+__unknown_file (
+
+%22
+Š
+
+è è(/
+%24"__id*o
+
+__unknown_file (S*Q;
+9src.observability.performance_analyzer.BottleneckCategory"
+MEMORY_INTENSIVEV
+T
+
+é( é(<
+%25"__id*9
+
+__unknown_file (*
+
+sample"
+function_nameì
+é
+
+é ê(a
+%26"__concat*'
+
+é é('
+Memory operations in *
+
+é( é(<
+
+%25*'
+
+é= é(R
+ may be inefficient. *a
+
+ê ê(aSQ
+OConsider using generators, reducing allocations, or optimizing data structures.Ž
+‹
+
+è ë(
+%27"__mapSet*"
+
+__unknown_file (
+
+%1*#
+
+__unknown_file (
+
+%24*#
+
+__unknown_file (
+
+%26’
+
+
+ì ì(4
+%28"__id*t
+
+__unknown_file (X*V;
+9src.observability.performance_analyzer.BottleneckCategory"
+INEFFICIENT_ALGORITHMV
+T
+
+í  í(4
+%29"__id*9
+
+__unknown_file (*
+
+sample"
+function_name×
+Ô
+
+í î(T
+%30"__concat*
+
+í í(
+Algorithm in *
+
+í  í(4
+
+%29*'
+
+í5 í(J
+ may be inefficient. *T
+
+î î(TFD
+BReview algorithmic complexity and consider alternative approaches.Ž
+‹
+
+ì ï(
+%31"__mapSet*"
+
+__unknown_file (
+
+%1*#
+
+__unknown_file (
+
+%28*#
+
+__unknown_file (
+
+%30K
+I
+
+Ó ð(	
+recommendations"__id*"
+
+__unknown_file (
+
+%1V
+T
+
+ô ô(,
+%32"__id*9
+
+__unknown_file (*
+
+sample"
+function_name
+
+
+ô ô(H
+%33"__concat*
+
+ô ô(
+	Optimize *
+
+ô ô(,
+
+%32*,
+
+ô- ô(G
+ to reduce execution time.¥¢
+
+ò õ(	
+%34"dict.get*/
+
+__unknown_file (
+
+recommendations*(
+
+__unknown_file (
+
+
+category*#
+
+__unknown_file (
+
+%332get"
+
+ò õ(	
+
+%34:
+
+È È(*
+
+category:
+
+È, È(A
+sampleB><
+:src.observability.performance_analyzer.PerformanceAnalyzerH

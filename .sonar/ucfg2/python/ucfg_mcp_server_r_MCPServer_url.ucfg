@@ -1,0 +1,65 @@
+
+)src.integrations.mcp_server.MCPServer.urlK
+?/home/fahbrain/projects/omnimind/src/integrations/mcp_server.pyÈ È("2*­
+2
+É É(Bm
+k
+
+É É($
+%1"__id*Q
+
+__unknown_file (5*3'
+%src.integrations.mcp_server.MCPServer"
+configH
+F
+
+É É()
+%2"__id*,
+
+__unknown_file (*
+
+%1"
+hostm
+k
+
+É, É(7
+%3"__id*Q
+
+__unknown_file (5*3'
+%src.integrations.mcp_server.MCPServer"
+configH
+F
+
+É, É(<
+%4"__id*,
+
+__unknown_file (*
+
+%3"
+port“
+
+
+É É(B
+%5"__concat*
+
+É É(	
+http://*
+
+É É()
+
+%2*
+
+É* É(+
+:*
+
+É, É(<
+
+%4*
+
+É= É(A
+/mcp"
+
+É É(B
+
+%5B)'
+%src.integrations.mcp_server.MCPServerH

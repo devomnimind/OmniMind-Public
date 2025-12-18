@@ -123,10 +123,9 @@ class TribunalDoDiaboExecutor:
                 # Save to history
                 self._save_metrics_to_history(metrics, is_intermediate=True)
 
-                elapsed_hours = (current_time - self.start_time) / 3600
                 logger.info(
-                    f"📊 Periodic metrics saved (cycle {cycle_id}, "
-                    f"elapsed: {elapsed_hours:.2f}h)"
+                    f"📊 Periodic metrics saved (cycle {cycle_id}, elapsed: "
+                    f"{(current_time - self.start_time)/3600:.2f}h)"
                 )
             except asyncio.CancelledError:
                 break

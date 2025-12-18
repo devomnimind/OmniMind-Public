@@ -1,0 +1,393 @@
+
+1.0PythonFrontend"1763831827563*py2.B‚
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+,
+'src/optimization/memory_optimization.py9
+*
+$src.optimization.memory_optimization11
+
+
+__future__12
+
+gc14
+
+logging16
+
+weakref18
+
+collections20
+
+dataclasses22
+
+datetime24
+
+typing26
+
+psutil28
+:
+4src.optimization.memory_optimization.MemoryAllocator30
+F
+@src.optimization.memory_optimization.MemoryAllocator.create_pool32
+5
+/src.optimization.memory_optimization.MemoryPool34
+	
+str36
+	
+int38
+J
+Dsrc.optimization.memory_optimization.MemoryAllocator.clear_all_pools40
+C
+=src.optimization.memory_optimization.MemoryAllocator.__init__42
+C
+=src.optimization.memory_optimization.MemoryAllocator.get_pool44
+H
+Bsrc.optimization.memory_optimization.MemoryAllocator.get_all_stats46
+
+
+dict48
+=
+7src.optimization.memory_optimization.MemoryLeakDetector50
+J
+Dsrc.optimization.memory_optimization.MemoryLeakDetector.track_object52
+F
+@src.optimization.memory_optimization.MemoryLeakDetector.__init__54
+P
+Jsrc.optimization.memory_optimization.MemoryLeakDetector._on_object_deleted56
+M
+Gsrc.optimization.memory_optimization.MemoryLeakDetector.check_for_leaks58
+
+
+list60
+M
+Gsrc.optimization.memory_optimization.MemoryLeakDetector.get_leak_report62
+>
+8src.optimization.memory_optimization.MemoryUsageSnapshot64
+F
+@src.optimization.memory_optimization.MemoryUsageSnapshot.to_dict66
+:
+4src.optimization.memory_optimization.MemoryOptimizer68
+P
+Jsrc.optimization.memory_optimization.MemoryOptimizer.suggest_optimizations70
+J
+Dsrc.optimization.memory_optimization.MemoryOptimizer.track_for_leaks72
+H
+Bsrc.optimization.memory_optimization.MemoryOptimizer.take_snapshot74
+C
+=src.optimization.memory_optimization.MemoryOptimizer.__init__76
+R
+Lsrc.optimization.memory_optimization.MemoryOptimizer.get_optimization_report78
+M
+Gsrc.optimization.memory_optimization.MemoryOptimizer.create_object_pool80
+F
+@src.optimization.memory_optimization.MemoryOptimizer.optimize_gc82
+9
+3src.optimization.memory_optimization.MemoryProfiler84
+G
+Asrc.optimization.memory_optimization.MemoryProfiler.take_snapshot86
+K
+Esrc.optimization.memory_optimization.MemoryProfiler.get_memory_growth88
+
+float90
+M
+Gsrc.optimization.memory_optimization.MemoryProfiler.detect_memory_spike92
+
+
+bool94
+B
+<src.optimization.memory_optimization.MemoryProfiler.__init__96
+H
+Bsrc.optimization.memory_optimization.MemoryProfiler.get_statistics98
+;
+4src.optimization.memory_optimization.AllocationStats100
+K
+Dsrc.optimization.memory_optimization.AllocationStats.get_utilization102
+>
+7src.optimization.memory_optimization.MemoryPool.acquire104
+>
+7src.optimization.memory_optimization.MemoryPool.release106
+@
+9src.optimization.memory_optimization.MemoryPool.get_stats108
+<
+5src.optimization.memory_optimization.MemoryPool.clear110
+?
+8src.optimization.memory_optimization.MemoryPool.__init__112J
+
+8
+89jÙ	
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31306 210
+
+33
+33327 231
+
+35
+35346 210
+
+37
+37366
+
+39
+39386
+
+41
+41407 231
+
+43
+43427 231
+
+45
+45447 231
+
+47
+47467 231
+
+49
+49486
+
+51
+51506 210
+
+53
+53527 251
+
+55
+55547 251
+
+57
+57567 251
+
+59
+59587 251
+
+61
+61606
+
+63
+63627 251
+
+65
+65646 210
+
+67
+67667 265
+
+69
+69686 210
+
+71
+71707 269
+
+73
+73727 269
+
+75
+75747 269
+
+77
+77767 269
+
+79
+79787 269
+
+81
+81807 269
+
+83
+83827 269
+
+85
+85846 210
+
+87
+87867 285
+
+89
+89887 285
+
+91
+91906
+
+93
+93927 285
+
+95
+95946
+
+97
+97967 285
+
+99
+99987 285
+
+101
+1011006 210
+
+103
+1031027 2101
+
+105
+1051047 235
+
+107
+1071067 235
+
+109
+1091087 235
+
+111
+1111107 235
+
+113
+1131127 235r¿
+
+10131*
+8 (#
+
+10151*
+8 (
+
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (+
+
+10231*
+8 ()
+
+10251*
+8 (
+
+10271*
+8 (I
+
+10291*
+8 (
+
+33353*
+8¨	 ¨(
+
+33374*
+8¨	 ¨(
+
+33394*
+8¨	 ¨(
+
+33394*
+8¨	 ¨(
+
+45374*
+8Ã	 Ã(
+
+47493*
+8Î	 Î(
+
+55394*
+8à	 à(
+
+59613*
+8	 (
+
+63493*
+8²	 ²(
+
+67493*
+8)	 )(
+
+71613*
+8ù	 ù(
+
+75653*
+8ä	 ä(
+
+79493*
+8ì	 ì( 
+
+81353*
+8Ë	 Ë(
+
+81374*
+8Ë	 Ë(
+
+81394*
+8Ë	 Ë(
+
+87653*
+8Ñ	 Ñ(
+
+89913*
+8÷	 ÷(
+
+93953*
+8ƒ	 ƒ(
+
+93914*
+8ƒ	 ƒ(
+
+97394*
+8Æ	 Æ(
+
+99493*
+8	 (
+
+103913*
+8B	 B(
+
+1091013*
+8’	 ’(
+
+113394*
+8P	 P(
+
+113394*
+8P	 P(

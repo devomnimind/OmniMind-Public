@@ -1,0 +1,92 @@
+
+1.0PythonFrontend"1763831829225*py2.B–
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+
+src/scaling/__init__.py9
+
+src.scaling11
+(
+"src.scaling.multi_tenant_isolation12
++
+%src.scaling.intelligent_load_balancer14
+
+src.scaling.multi_node16
+'
+!src.scaling.node_failure_recovery18
+#
+src.scaling.gpu_resource_pool20
+*
+$src.scaling.database_connection_pool22
+#
+src.scaling.multi_level_cache24
+'
+!src.scaling.redis_cluster_manager26J
+
+8
+89j∫
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265r–
+
+10131*
+8 (
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 %(
+
+10211*
+8' ,(
+
+10231*
+8. 2(
+
+10251*
+84 9(
+
+10271*
+8; ?(

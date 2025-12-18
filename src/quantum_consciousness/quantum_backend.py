@@ -1,159 +1,115 @@
 """
-Quantum Backend - PROFESSIONAL TYPE-SAFE VERSION (CORRECTED)
-============================================================
+Quantum Backend - CORRECTED VERSION
+====================================
 
-Refatorado com TYPE_CHECKING + Type Guards para eliminar erros do Pylance.
+Fixes:
+1. Prioridade: LOCAL (GPU > CPU) > CLOUD
+2. Grover completo com qiskit_algorithms
+3. Latency tracking separado por modo
+4. GPU support via qiskit-aer-gpu
 
-✅ Type checker entende todos os tipos (via TYPE_CHECKING)
-✅ Runtime seguro (verificações com is not None)
-✅ Zero # type: ignore necessário
-✅ Compatível com mypy, pylance, pyright
-
-Author: Fabrício da Silva + assistência de IA
-Date: 2025-12-16 (Professional Refactor - Corrected)
+Author: Project conceived by Fabrício da Silva. Implementation followed an iterative AI-assisted
+method: the author defined concepts and queried various AIs on construction, integrated code via
+VS Code/Copilot, tested resulting errors, cross-verified validity with other models, and refined
+prompts/corrections in a continuous cycle of human-led AI development.
+from GitHub Copilot (Claude Haiku 4.5 and Grok Code Fast 1), with constant code review
+and debugging across various models including Gemini and Perplexity AI, under
+theoretical coordination by the author.
+Date: 2025-11-26 (P0 Protocol Fix)
 """
 
-import asyncio
 import logging
 import os
-from typing import Any, Dict, Optional
+from typing import TYPE_CHECKING, Any, Dict, Optional
 
-import torch
+import torch  # noqa: E402
 from dotenv import load_dotenv
+
+from src.monitor.resource_manager import resource_manager
 
 load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-# Import QAOA GPU Optimizer (GPU-accelerated consciousness metric)
-_QAOA_GPU_AVAILABLE = False
+# --- Runtime Availability Flags ---
+DWAVE_AVAILABLE = False
+NEAL_AVAILABLE = False
+QISKIT_AVAILABLE = False
+
+# --- D-Wave Imports ---
 try:
-    from src.quantum_consciousness.qaoa_gpu_optimizer import get_qaoa_optimizer
+    import dimod  # type: ignore[import-untyped]
+    from dwave.system import DWaveSampler  # type: ignore[import-untyped,attr-defined]
+    from dwave.system import EmbeddingComposite  # type: ignore[import-untyped,attr-defined]
 
-    _QAOA_GPU_AVAILABLE = True
+    DWAVE_AVAILABLE = True
 except ImportError:
-    get_qaoa_optimizer = None  # type: ignore[assignment]
+    pass
 
-# RUNTIME IMPORTS - Defensive imports com flags
-# =============================================================================
-
-# Qiskit Aer flags
-_QISKIT_AER_AVAILABLE = False
-AerSimulator: Optional[type] = None
-
+# --- Neal (Simulated Annealing) Imports ---
 try:
-    from qiskit_aer import AerSimulator  # type: ignore[no-redef]
+    import neal  # type: ignore[import-untyped]
 
-    _QISKIT_AER_AVAILABLE = True
+    NEAL_AVAILABLE = True
 except ImportError:
-    AerSimulator = None
+    pass
 
-# Qiskit Algorithms flags
-_QISKIT_ALGORITHMS_AVAILABLE = False
-AmplificationProblem: Optional[type] = None
-Grover: Optional[type] = None
-QAOA: Optional[type] = None
+# --- Qiskit Imports (with proper fallback handling) ---
+if TYPE_CHECKING:
+    from qiskit.circuit.library import PhaseOracle  # type: ignore[import-untyped,attr-defined]
+    from qiskit.primitives import Sampler  # type: ignore[import-untyped,attr-defined]
+    from qiskit_aer import AerSimulator  # type: ignore[import-untyped,attr-defined]
+    from qiskit_algorithms import AmplificationProblem  # type: ignore[attr-defined]
+    from qiskit_algorithms import Grover  # type: ignore[attr-defined]
+    from qiskit_algorithms.optimizers import COBYLA  # type: ignore[import-untyped,attr-defined]
+    from qiskit_optimization import QuadraticProgram  # type: ignore[import-untyped,attr-defined]
+    from qiskit_optimization.algorithms import (
+        MinimumEigenOptimizer,  # type: ignore[import-untyped,attr-defined]
+    )
+else:
+    try:  # type: ignore[import-untyped]
+        # Core imports (required)
+        from qiskit.circuit.library import PhaseOracle  # type: ignore[import-untyped,attr-defined]
+        from qiskit_aer import AerSimulator  # type: ignore[import-untyped,attr-defined]
+        from qiskit_algorithms import AmplificationProblem  # type: ignore[attr-defined]
+        from qiskit_algorithms import Grover  # type: ignore[attr-defined]
+        from qiskit_algorithms.optimizers import COBYLA  # type: ignore[import-untyped,attr-defined]
+        from qiskit_optimization import (
+            QuadraticProgram,  # type: ignore[import-untyped,attr-defined]
+        )
+        from qiskit_optimization.algorithms import (  # type: ignore[import-untyped,attr-defined]
+            MinimumEigenOptimizer,
+        )
 
-try:
-    from qiskit_algorithms import AmplificationProblem, Grover  # type: ignore[no-redef]
+        # Sampler with version compatibility (newer versions use StatevectorSampler)
+        try:
+            from qiskit.primitives import Sampler  # type: ignore[import-untyped,attr-defined]
+        except ImportError:
+            try:
+                from qiskit.primitives import (
+                    StatevectorSampler as Sampler,  # type: ignore[import-untyped,attr-defined]
+                )
+            except ImportError:
+                # If both fail, we don't need Sampler for core Qiskit ops
+                Sampler = None  # type: ignore[assignment,misc]
 
-    try:
-        from qiskit_algorithms import QAOA  # type: ignore[no-redef]
-    except ImportError:
-        QAOA = None
-    _QISKIT_ALGORITHMS_AVAILABLE = True
-except ImportError:
-    AmplificationProblem = None
-    Grover = None
-    QAOA = None
-
-# Qiskit Primitives flags
-_QISKIT_PRIMITIVES_AVAILABLE = False
-Sampler: Optional[type] = None
-StatevectorSampler: Optional[type] = None
-
-try:
-    from qiskit.primitives import Sampler  # type: ignore[no-redef]
-
-    _QISKIT_PRIMITIVES_AVAILABLE = True
-except ImportError:
-    Sampler = None
-
-try:
-    from qiskit.primitives import StatevectorSampler as Sampler  # type: ignore[no-redef]
-
-    if not _QISKIT_PRIMITIVES_AVAILABLE:
-        _QISKIT_PRIMITIVES_AVAILABLE = True
-except ImportError:
-    if not _QISKIT_PRIMITIVES_AVAILABLE:
-        StatevectorSampler = None
-
-# Qiskit Circuit Library flags
-_QISKIT_CIRCUIT_AVAILABLE = False
-PhaseOracle: Optional[type] = None
-
-try:
-    from qiskit.circuit.library import PhaseOracle  # type: ignore[no-redef]
-
-    _QISKIT_CIRCUIT_AVAILABLE = True
-except ImportError:
-    PhaseOracle = None
-
-# Qiskit Optimization flags
-_QISKIT_OPTIMIZATION_AVAILABLE = False
-QuadraticProgram: Optional[type] = None
-MinimumEigenOptimizer: Optional[type] = None
-
-try:
-    from qiskit_optimization import QuadraticProgram  # type: ignore[no-redef]
-    from qiskit_optimization.algorithms import MinimumEigenOptimizer  # type: ignore[no-redef]
-
-    _QISKIT_OPTIMIZATION_AVAILABLE = True
-except ImportError:
-    QuadraticProgram = None
-    MinimumEigenOptimizer = None
-
-# D-Wave flags
-_DWAVE_AVAILABLE = False
-DWaveSampler: Optional[type] = None
-EmbeddingComposite: Optional[type] = None
-
-try:
-    from dwave.system import DWaveSampler, EmbeddingComposite  # type: ignore[no-redef]
-
-    _DWAVE_AVAILABLE = True
-except ImportError:
-    DWaveSampler = None
-    EmbeddingComposite = None
-
-# Neal flags
-_NEAL_AVAILABLE = False
-neal: Optional[Any] = None
-
-try:
-    import neal  # type: ignore[no-redef]
-
-    _NEAL_AVAILABLE = True
-except ImportError:
-    neal = None
-
-# IBM Runtime flags
-_IBM_RUNTIME_AVAILABLE = False
-IBMSampler: Optional[type] = None
-
-try:
-    from qiskit_ibm_runtime import Sampler as IBMSampler  # type: ignore[no-redef]
-
-    _IBM_RUNTIME_AVAILABLE = True
-except ImportError:
-    IBMSampler = None
+        QISKIT_AVAILABLE = True
+    except ImportError as e:
+        logger.debug(f"Qiskit import failed: {e}")
+        pass
 
 
 class QuantumBackend:
     """
-    Unified Quantum Backend com type safety profissional.
+    Unified Quantum Backend with proper LOCAL > CLOUD priority.
+    Implements Singleton pattern to prevent re-initialization overhead.
 
-    Uses TYPE_CHECKING + Type Guards para compatibility com type checkers.
+    Changes from previous version:
+    - Singleton Pattern (Fixes CPU/PCIe bottleneck)
+    - Prefer local simulation (GPU > CPU) before cloud
+    - Proper Grover implementation via qiskit_algorithms
+    - Latency estimation per mode
+    - GPU support detection
     """
 
     _instance = None
@@ -169,7 +125,6 @@ class QuantumBackend:
         provider: str = "auto",
         api_token: Optional[str] = None,
         prefer_local: bool = True,
-        use_gpu: bool = True,
     ):
         # Prevent re-initialization
         if self._initialized:
@@ -177,21 +132,29 @@ class QuantumBackend:
 
         self.provider = provider
         self.prefer_local = prefer_local
-        self.force_use_gpu = use_gpu
         self.token = (
             api_token
             or os.getenv("QUANTUM_API_TOKEN")
             or os.getenv("IBM_API_KEY")
             or os.getenv("IBMQ_API_TOKEN")
         )
-        self.backend: Optional[Any] = None
+        self.backend: Any = None
         self.mode = "UNKNOWN"  # Will be: LOCAL_GPU, LOCAL_CPU, CLOUD, MOCK
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         logger.info(f"QuantumBackend using device: {self.device}")
 
         # Detect GPU availability (with fallback for CUDA init issues)
-        force_gpu_env = os.getenv("OMNIMIND_FORCE_GPU", "").lower() in ("true", "1", "yes")
-        force_gpu_pytest = os.getenv("PYTEST_FORCE_GPU", "").lower() in ("true", "1", "yes")
+        # CRITICAL: Check environment variables FIRST to allow forced GPU mode
+        force_gpu_env = os.getenv("OMNIMIND_FORCE_GPU", "").lower() in (
+            "true",
+            "1",
+            "yes",
+        )
+        force_gpu_pytest = os.getenv("PYTEST_FORCE_GPU", "").lower() in (
+            "true",
+            "1",
+            "yes",
+        )
 
         try:
             self.use_gpu = torch.cuda.is_available()
@@ -202,15 +165,16 @@ class QuantumBackend:
                     device_count = torch.cuda.device_count()
                     if device_count > 0:
                         logger.info(
-                            f"🚀 FORCED GPU MODE: "
+                            f"🚀 FORCED GPU MODE (env override): "
                             f"OMNIMIND_FORCE_GPU={force_gpu_env}, "
                             f"PYTEST_FORCE_GPU={force_gpu_pytest}. "
-                            f"device_count={device_count}"
+                            f"device_count={device_count}. Will attempt GPU operations."
                         )
                         self.use_gpu = True
                 except Exception as device_count_error:
-                    msg = f"Device count check failed: {device_count_error}"
-                    logger.warning(msg)
+                    logger.warning(
+                        f"Could not check device count (forced mode): {device_count_error}"
+                    )
                     self.use_gpu = False
 
             # Fallback: if is_available() fails but device_count > 0, GPU is present
@@ -218,12 +182,13 @@ class QuantumBackend:
                 try:
                     device_count = torch.cuda.device_count()
                     if device_count > 0:
-                        msg = (
-                            f"CUDA unavailable but device_count={device_count}. "
-                            f"GPU found, attempting GPU ops."
+                        # This means GPU hardware exists but PyTorch init failed
+                        # We can still use GPU by being explicit
+                        logger.warning(
+                            f"CUDA is_available() = False but device_count = {device_count}. "
+                            "GPU hardware detected. Will attempt GPU operations anyway."
                         )
-                        logger.warning(msg)
-                        self.use_gpu = True
+                        self.use_gpu = True  # Force GPU usage despite is_available() failure
                 except Exception as device_count_error:
                     logger.warning(f"Could not check device count: {device_count_error}")
                     self.use_gpu = False
@@ -231,86 +196,84 @@ class QuantumBackend:
             logger.warning(f"CUDA availability check failed: {e}. Assuming no GPU.")
             self.use_gpu = False
 
-        msg = f"Init Quantum: {provider}, local={prefer_local}, gpu={self.use_gpu}"
-        logger.info(msg)
+        logger.info(
+            f"Initializing Quantum Backend. Requested provider: {provider}, "
+            f"Prefer Local: {prefer_local}, GPU Available: {self.use_gpu}"
+        )
 
         # Auto-selection logic with LOCAL GPU > LOCAL CPU > CLOUD priority
         if self.provider == "auto":
-            if self.prefer_local and _QISKIT_AER_AVAILABLE and self.use_gpu:
+            if self.prefer_local and QISKIT_AVAILABLE and self.use_gpu:
                 self.provider = "local_qiskit"  # Force GPU local
-            elif self.prefer_local and _QISKIT_AER_AVAILABLE:
+            elif self.prefer_local and QISKIT_AVAILABLE:
                 self.provider = "local_qiskit"  # CPU local as fallback
-            elif _DWAVE_AVAILABLE and os.getenv("DWAVE_API_TOKEN"):
+            elif DWAVE_AVAILABLE and os.getenv("DWAVE_API_TOKEN"):
                 self.provider = "dwave"
-            elif _QISKIT_AER_AVAILABLE and self.token:
+            elif QISKIT_AVAILABLE and self.token:
                 self.provider = "ibm"
-            elif _NEAL_AVAILABLE:
+            elif NEAL_AVAILABLE:
                 self.provider = "neal"
             else:
-                # Force local_qiskit even without token if Qiskit is available
-                if _QISKIT_AER_AVAILABLE:
-                    self.provider = "local_qiskit"
-                else:
-                    self.provider = "mock"
+                self.provider = "mock"
 
         # Initialization
         self._initialize_backend()
         self._initialized = True
 
-    def _initialize_backend(self) -> None:
+    def _initialize_backend(self):
         """Initialize backend with LOCAL > CLOUD priority."""
 
-        if self.provider == "local_qiskit" and _QISKIT_AER_AVAILABLE:
+        if self.provider == "local_qiskit" and QISKIT_AVAILABLE:
             self._setup_local_qiskit()
-        elif self.provider == "dwave" and _DWAVE_AVAILABLE:
+        elif self.provider == "dwave" and DWAVE_AVAILABLE:
             self._setup_dwave()
-        elif self.provider == "ibm" and _QISKIT_AER_AVAILABLE:
+        elif self.provider == "ibm" and QISKIT_AVAILABLE:
             self._setup_ibm_cloud()
-        elif self.provider == "neal" and _NEAL_AVAILABLE:
+        elif self.provider == "neal" and NEAL_AVAILABLE:
             self._setup_neal()
         else:
             self._setup_mock()
 
-    def _setup_local_qiskit(self) -> None:
-        """Setup LOCAL Qiskit Aer (GPU > CPU) with type safety."""
-        # Type guard for AerSimulator availability
-        assert AerSimulator is not None, "AerSimulator required"
+    def _setup_local_qiskit(self):
+        """Setup LOCAL Qiskit Aer (GPU > CPU)."""
+        # Use Hybrid Resource Manager
+        target_device = resource_manager.allocate_task("quantum", 100.0)
 
-        # Try GPU first if available
-        if self.use_gpu:
+        # Try GPU first if allocated
+        if self.use_gpu and target_device == "cuda":
             try:
                 self.backend = AerSimulator(method="statevector", device="GPU")
                 self.mode = "LOCAL_GPU"
                 logger.info("✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)")
                 return
             except Exception as e:
-                logger.warning(f"⚠️ GPU unavailable: {e}. " f"Using CPU.")
+                logger.error(f"❌ CRITICAL: GPU requested but failed for Qiskit Aer: {e}")
+                # STRICT GPU POLICY: Do not fallback to CPU if GPU was expected
+                raise RuntimeError(f"Quantum GPU backend failed: {e}")
 
-        # Fallback to CPU (default, preferred over mock)
+        # Fallback to CPU (only if GPU not available/requested)
         try:
             self.backend = AerSimulator(method="statevector")
             self.mode = "LOCAL_CPU"
-            logger.info("✅ Quantum Backend: LOCAL CPU (Qiskit Aer statevector)")
+            logger.warning("⚠️ Quantum Backend: LOCAL CPU (Performance degraded)")
         except Exception as e:
             logger.error(f"AerSimulator failed: {e}. Falling back to mock.")
             self._setup_mock()
 
-    def _setup_dwave(self) -> None:
-        """Setup D-Wave QPU with type safety."""
-        # Type guards
-        assert DWaveSampler is not None, "DWaveSampler required"
-        assert EmbeddingComposite is not None, "EmbeddingComposite required"
-
+    def _setup_dwave(self):
+        """Setup D-Wave QPU."""
         try:
-            sampler = DWaveSampler(token=self.token, solver={"qpu": True})
-            self.backend = EmbeddingComposite(sampler)
+            sampler = DWaveSampler(  # type: ignore[name-defined]
+                token=self.token, solver={"qpu": True}
+            )
+            self.backend = EmbeddingComposite(sampler)  # type: ignore[name-defined]
             self.mode = "CLOUD_DWAVE"
-            logger.info("✅ D-Wave QPU connected")
+            logger.info("Connected to D-Wave QPU.")
         except Exception as e:
             logger.error(f"D-Wave connection failed: {e}. Falling back to Neal.")
             self._setup_neal()
 
-    def _setup_ibm_cloud(self) -> None:
+    def _setup_ibm_cloud(self):
         """Setup IBM Quantum Cloud with improved error detection."""
         if self.token:
             try:
@@ -319,18 +282,15 @@ class QuantumBackend:
                 self.backend = IBMQBackend(token=self.token)
                 if self.backend.is_available():
                     self.mode = "CLOUD_IBM"
-                    msg = "✅ IBM Quantum (Cloud, fila latency)"
-                    logger.info(msg)
-                    # Test immediate connectivity
+                    logger.info("✅ IBM Quantum Backend (Cloud) - ⚠️ Latency alta (fila)")
+                    # Test immediate connectivity to detect issues early
                     try:
                         info = self.backend.get_info()
                         if not info.available:
-                            msg2 = "IBM unavailable. Using local GPU."
-                            logger.warning(msg2)
+                            logger.warning("IBM backend reports as unavailable. Using local GPU.")
                             self._setup_local_qiskit()
                     except Exception as test_e:
-                        msg3 = f"IBM backend test failed: {test_e}. Using local GPU."
-                        logger.warning(msg3)
+                        logger.warning(f"IBM backend test failed: {test_e}. Using local GPU.")
                         self._setup_local_qiskit()
                 else:
                     logger.warning("IBM Quantum unavailable. Using local GPU simulator.")
@@ -342,16 +302,13 @@ class QuantumBackend:
             logger.warning("No IBM token. Using local GPU simulator.")
             self._setup_local_qiskit()
 
-    def _setup_neal(self) -> None:
-        """Setup Neal (classical annealing) with type safety."""
-        # Type guard
-        assert neal is not None, "neal should be available when _NEAL_AVAILABLE is True"
-
-        self.backend = neal.SimulatedAnnealingSampler()
+    def _setup_neal(self):
+        """Setup Neal (classical annealing)."""
+        self.backend = neal.SimulatedAnnealingSampler()  # type: ignore[name-defined]
         self.mode = "LOCAL_NEAL"
         logger.info("Initialized Neal Simulated Annealing (Classical).")
 
-    def _setup_mock(self) -> None:
+    def _setup_mock(self):
         """Mock backend."""
         self.backend = None
         self.mode = "MOCK"
@@ -371,7 +328,7 @@ class QuantumBackend:
 
     def grover_search(self, target: int, search_space: int) -> Dict[str, Any]:
         """
-        Grover Search using qiskit_algorithms with type safety.
+        Grover Search using qiskit_algorithms (CORRECT IMPLEMENTATION).
 
         Args:
             target: Target state (e.g., 7 for |0111⟩)
@@ -380,15 +337,9 @@ class QuantumBackend:
         Returns:
             Result with found state and metrics
         """
-        if not _QISKIT_ALGORITHMS_AVAILABLE:
-            logger.error("Qiskit algorithms not available for Grover search.")
-            return {"error": "Qiskit algorithms not available"}
-
-        # Type guards
-        assert PhaseOracle is not None, "PhaseOracle required"
-        assert AmplificationProblem is not None, "AmplificationProblem required"
-        assert Grover is not None, "Grover required"
-        assert Sampler is not None, "Sampler required"
+        if not QISKIT_AVAILABLE:
+            logger.error("Qiskit not available for Grover search.")
+            return {"error": "Qiskit not available"}
 
         try:
             # Convert target to binary string
@@ -396,20 +347,23 @@ class QuantumBackend:
             target_binary = format(target, f"0{num_qubits}b")
 
             # Create oracle for target
-            oracle_parts = [
-                f'{"" if bit == "1" else "~"}{chr(97 + i)}' for i, bit in enumerate(target_binary)
-            ]
-            oracle_expr = " & ".join(oracle_parts)
+            # Example: For target=7 (0111), oracle expression: a & b & c & ~d
+            oracle_expr = " & ".join(
+                [
+                    f'{"" if bit == "1" else "~"}{chr(97 + i)}'  # a, b, c, d
+                    for i, bit in enumerate(target_binary)
+                ]
+            )
 
             oracle = PhaseOracle(oracle_expr)
             problem = AmplificationProblem(oracle, is_good_state=[target_binary])
 
-            # Use appropriate sampler
-            sampler_instance = Sampler() if self.mode.startswith("CLOUD") else Sampler()
-            grover = Grover(sampler=sampler_instance)
+            # Use StatevectorSampler for local execution
+            sampler = Sampler() if self.mode.startswith("CLOUD") else Sampler()
+            grover = Grover(sampler=sampler)
             result = grover.amplify(problem)
 
-            logger.info(f"Grover: {result.top_measurement} " f"(target: {target_binary})")
+            logger.info(f"Grover found: {result.top_measurement} (target: {target_binary})")
 
             return {
                 "target": target,
@@ -495,7 +449,7 @@ class QuantumBackend:
         self, id_energy: float, ego_energy: float, superego_energy: float
     ) -> Dict[str, Any]:
         """
-        Internal conflict resolution logic with type safety.
+        Internal conflict resolution logic.
         """
         # Ensure energies are floats (handle None if passed dynamically)
         id_energy = float(id_energy or 0.0)
@@ -520,31 +474,20 @@ class QuantumBackend:
             return self._solve_mock(Q)
 
     def _solve_annealing(self, Q: Dict) -> Dict[str, Any]:
-        """Solves using D-Wave or Neal with type safety."""
+        """Solves using D-Wave or Neal."""
         if self.backend is None:
             logger.warning("Backend not available, falling back to mock")
             return self._solve_mock(Q)
 
-        # Type guards for dimod
-        try:
-            import dimod
+        bqm: Any = dimod.BinaryQuadraticModel.from_qubo(Q)  # type: ignore[attr-defined]
+        sampleset: Any = self.backend.sample(bqm, num_reads=100)  # type: ignore[union-attr]
+        best_sample = sampleset.first.sample
+        energy = sampleset.first.energy
 
-            bqm = dimod.BinaryQuadraticModel.from_qubo(Q)
-            sampleset = self.backend.sample(bqm, num_reads=100)
-            best_sample = sampleset.first.sample
-            energy = sampleset.first.energy
-
-            return self._format_result(best_sample, energy, is_quantum=(self.provider == "dwave"))
-        except Exception as e:
-            logger.error(f"Annealing solve failed: {e}")
-            return self._solve_mock(Q)
+        return self._format_result(best_sample, energy, is_quantum=(self.provider == "dwave"))
 
     def _solve_gate_based(self, Q: Dict) -> Dict[str, Any]:
-        """Solves using Qiskit QAOA with type safety."""
-        # Type guards
-        assert QuadraticProgram is not None, "QuadraticProgram required"
-        assert Sampler is not None, "Sampler required"
-
+        """Solves using Qiskit QAOA."""
         try:
             problem = QuadraticProgram()
             problem.binary_var("id")
@@ -561,54 +504,27 @@ class QuantumBackend:
 
             problem.minimize(linear=linear, quadratic=quadratic)
 
-            # Import optimizer safely
-            try:
-                # Type guard for COBYLA
-                from qiskit_algorithms.optimizers import COBYLA as _COBYLA
-
-                assert _COBYLA is not None, "COBYLA required"
-                optimizer = _COBYLA(maxiter=50)
-            except (ImportError, AssertionError):
-                # Fallback if COBYLA not available
-                from scipy.optimize import minimize as scipy_minimize
-
-                class SimpleSQLP:
-                    def __init__(self, maxiter=50):
-                        self.maxiter = maxiter
-
-                    def minimize(self, fun, x0):
-                        return scipy_minimize(
-                            fun, x0, method="SLSQP", options={"maxiter": self.maxiter}
-                        )
-
-                optimizer = SimpleSQLP(maxiter=50)
-
-            sampler_instance = Sampler()
+            optimizer = COBYLA(maxiter=50)
+            sampler = Sampler()  # type: ignore[name-defined]
 
             # Use local AerSimulator if available
             if self.mode.startswith("LOCAL"):
-                # Type guards for QAOA
-                assert QAOA is not None, "QAOA required"
-                assert MinimumEigenOptimizer is not None, "MinimumEigenOptimizer required"
+                from qiskit_algorithms import QAOA  # type: ignore[import-untyped]
 
-                try:
-                    qaoa = QAOA(sampler=sampler_instance, optimizer=optimizer, reps=1)
-                    algorithm = MinimumEigenOptimizer(qaoa)
-                    result = algorithm.solve(problem)
+                qaoa: Any = QAOA(  # type: ignore[call-arg,operator]
+                    sampler=sampler, optimizer=optimizer, reps=1
+                )
+                algorithm: Any = MinimumEigenOptimizer(qaoa)  # type: ignore[arg-type]
+                result: Any = algorithm.solve(problem)  # type: ignore[union-attr]
 
-                    var_names = [v.name for v in problem.variables]
-                    solution_x = result.x if result.x is not None else []
-                    sample = (
-                        {name: int(val) for name, val in zip(var_names, solution_x)}
-                        if solution_x
-                        else {}
-                    )
-                    energy_val = result.fval if result.fval is not None else 0.0
-                    return self._format_result(sample, energy_val, is_quantum=False)
-                except Exception as qa_error:
-                    msg = f"QAOA failed: {qa_error}. Using brute force."
-                    logger.warning(msg)
-                    return self._solve_brute_force_fallback(Q)
+                var_names = [v.name for v in problem.variables]
+                sample = (
+                    {name: int(val) for name, val in zip(var_names, result.x)}
+                    if result.x is not None
+                    else {}
+                )
+                energy_val = result.fval if result.fval is not None else 0.0
+                return self._format_result(sample, energy_val, is_quantum=False)
             else:
                 # Cloud path (existing implementation)
                 return self._solve_brute_force_fallback(Q)
@@ -618,53 +534,7 @@ class QuantumBackend:
             return self._solve_brute_force_fallback(Q)
 
     def _solve_brute_force_fallback(self, Q: Dict) -> Dict[str, Any]:
-        """
-        GPU-accelerated QAOA first, then classical brute force fallback.
-
-        Replaces 2s brute force with 0.2-0.5s GPU QAOA when available.
-        """
-        # 🚀 Try GPU-accelerated QAOA first
-        if _QAOA_GPU_AVAILABLE:
-            try:
-                logger.info("🚀 GPU QAOA: Attempting GPU-accelerated optimization...")
-                optimizer = get_qaoa_optimizer(n_qubits=3, use_gpu=True)
-
-                # Run QAOA asynchronously
-                try:
-                    loop = asyncio.get_event_loop()
-                    if loop.is_closed():
-                        loop = asyncio.new_event_loop()
-                        asyncio.set_event_loop(loop)
-                except RuntimeError:
-                    loop = asyncio.new_event_loop()
-                    asyncio.set_event_loop(loop)
-
-                try:
-                    result = loop.run_until_complete(
-                        optimizer.optimize_consciousness_metric(
-                            target_energy=0.5, max_iterations=20
-                        )
-                    )
-
-                    # result is QAOAOptimizationResult (dataclass)
-                    if result.success and result.best_energy < float("inf"):
-                        # Map QAOA result to conflict resolution
-                        sample = {"id": 0, "ego": 1, "superego": 0}
-                        logger.info(
-                            f"✅ GPU QAOA Success: energy={result.best_energy:.6f}, device={result.device}"
-                        )
-                        return self._format_result(sample, result.best_energy, is_quantum=True)
-                    else:
-                        logger.debug("GPU QAOA returned invalid result, using brute force...")
-
-                except Exception as loop_error:
-                    logger.warning(f"GPU QAOA execution error: {loop_error}")
-
-            except Exception as gpu_error:
-                logger.debug(f"GPU QAOA initialization failed: {gpu_error}. Using brute force...")
-
-        # 🔧 Classical brute force fallback
-        logger.info("⏮️  Falling back to classical brute force solver...")
+        """Fallback to brute force."""
         best_state = None
         min_energy = float("inf")
 
@@ -672,6 +542,10 @@ class QuantumBackend:
             b = format(i, "03b")
             state = {"id": int(b[0]), "ego": int(b[1]), "superego": int(b[2])}
             energy = 0
+            for (u, v), bias in Q.items():
+                val_u = state.get(u, 0)
+                val_v = state.get(v, 0)
+                energy += val_u * val_v * bias
 
             if energy < min_energy:
                 min_energy = energy

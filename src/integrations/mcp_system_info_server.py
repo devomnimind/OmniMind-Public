@@ -31,8 +31,8 @@ class SystemInfoMCPServer(MCPServer):
         """Inicializa o servidor de informações do sistema."""
         super().__init__()
 
-        # Registrar métodos MCP
-        self._methods.update(
+        # Registrar métodos MCP (preserva initialize())
+        self.register_methods(
             {
                 "get_gpu_info": self.get_gpu_info,
                 "get_cpu_info": self.get_cpu_info,

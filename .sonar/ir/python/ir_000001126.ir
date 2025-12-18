@@ -1,0 +1,106 @@
+
+	"actions"str
+	"removed"str
+"sanitized"str
+"total_detections"str
+"cache_size"str
+
+"hashed"str
+
+$0int
+("Retorna estatÃ­sticas de uso."str
+"encrypted"str
+"masked"strself
+µ µ("¸&
+$
+
+· Á(	"#new-object#Bdict(
+&
+
+¸  ¸(*"#get-field# stats:$
+"
+
+¸  ¸(>"#array-read#:"
+ 
+
+¸ ¸(>"	#map-set#:&
+$
+
+¹ ¾(	"#new-object#Bdict(
+&
+
+º º($"#get-field# stats:$
+"
+
+º º(."#array-read#:
+"
+ 
+
+º º(."	#map-set#:	
+(
+&
+
+» »('"#get-field# stats:$
+"
+
+» »(4"#array-read#:"
+ 
+
+» »(4"	#map-set#:	(
+&
+
+¼ ¼($"#get-field# stats:$
+"
+
+¼ ¼(."#array-read#:"
+ 
+
+¼ ¼(."	#map-set#:	(
+&
+
+½ ½(%"#get-field# stats:$
+"
+
+½ ½(0"#array-read#:"
+ 
+
+½ ½(0"	#map-set#:	"
+ 
+
+¹ ¾("	#map-set#:	(
+&
+
+¿ ¿(#"#get-field# stats:$
+"
+
+¿ ¿(0"#array-read#:"
+ 
+
+¿ ¿(0"	#map-set#:/
+-
+
+À3 À(D "#get-field# enable_cache:+
+)
+
+À3 À(D!"
+__bool__*: BboolH,"*
+
+À3 À(D! *
+À0 À(22
+ÀE À(I"r.
+,
+
+À À(.""#get-field# _hash_cache:,
+*
+
+À À(/#"
+builtinslen*:"Bint
+
+À À(K"
+
+À À(K"J*%#$"
+ 
+
+À À(K&"	#map-set#:%
+
+· Á(	*H/home/fahbrain/projects/omnimind/src/integrations/mcp_data_protection.py

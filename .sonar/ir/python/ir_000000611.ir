@@ -1,0 +1,56 @@
+
+"last_used_at"str
+"age_seconds"str
+"status"str
+	"conn_id"str
+"use_count"str
+"created_at"str
+!"Convert to dictionary."str
+"error_count"str
+"database_url"strselfP P("„$
+"
+R [(	"#new-object#Bdict(
+&
+S S(#"#get-field# conn_id: 
+
+S S(#"	#map-set#:-
++
+T/ T(@"#get-field# database_url:W
+U
+T T(A	"D
+3src.scaling.database_connection_pool.ConnectionInfo_sanitize_url: 
+
+T T(A
+"	#map-set#:	+
+)
+U U()"#get-field# created_at: 
+
+U U()"	#map-set#:-
++
+V V(-"#get-field# last_used_at: 
+
+V V(-"	#map-set#:*
+(
+W W('"#get-field# use_count: 
+
+W W('"	#map-set#:'
+%
+X X(!"#get-field# status:&
+$
+X X('"#get-field# value: 
+
+X X('"	#map-set#:,
+*
+Y Y(+"#get-field# error_count: 
+
+Y Y(+"	#map-set#:#
+!
+Z Z(&"
+timetimeBfloat+
+)
+Z) Z(8"#get-field# created_at:1
+/
+Z Z(8"#dependent-value#*:Bfloat 
+
+Z Z(8"	#map-set#:
+R [(	*H/home/fahbrain/projects/omnimind/src/scaling/database_connection_pool.py

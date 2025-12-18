@@ -1,0 +1,65 @@
+
+@src.scaling.multi_node.ClusterCoordinator.register_task_callbackF
+:/home/fahbrain/projects/omnimind/src/scaling/multi_node.py¾ ¾("2*œ
+2
+Á Á(;z
+x
+
+Â Â(
+%2"__id*^
+
+__unknown_file (B*@+
+)src.scaling.multi_node.ClusterCoordinator"
+_task_callbacks­ª
+
+Â Â(2
+%1"dict.__setitem__*"
+
+__unknown_file (
+
+%2*)
+
+__unknown_file (
+
+	task_type*(
+
+__unknown_file (
+
+
+callback2__setitem__r
+p
+
+Ã Ã(E
+%3"__concat*5
+
+Ã Ã(9'%
+#Registered callback for task type: *
+
+Ã: Ã(C
+
+	task_typefd
+
+Ã Ã(F
+%4*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%32info*
+3*3
+3
+multi_node.py"
+Ä Ä
+implicit return:
+
+¿ ¿(
+	task_type:
+
+¿ ¿(H
+
+callbackB-+
+)src.scaling.multi_node.ClusterCoordinatorH

@@ -1,0 +1,60 @@
+
+@src.audit.immutable_audit.ImmutableAuditSystem._log_system_eventI
+=/home/fahbrain/projects/omnimind/src/audit/immutable_audit.pyø ø("6*:
+3
+immutable_audit.py"
+ÿ ÿ(
+implicit return*¤
+4
+ý ý(Rm
+k
+
+ý% ý(Q
+%1"__concat*8
+
+ý' ý(M*(
+&Falha ao registrar evento de sistema: *
+
+ýN ý(O
+
+ež›
+
+ý ý(R
+%2*N
+
+__unknown_file (20
+.src.audit.immutable_audit.ImmutableAuditSystem*"
+
+__unknown_file (
+
+%12_log_security_event*
+3*ó
+6
+û û(>ÙÖ
+
+û û(>
+%3*N
+
+__unknown_file (20
+.src.audit.immutable_audit.ImmutableAuditSystem*%
+
+__unknown_file (	
+
+event*'
+
+__unknown_file (
+	
+details2
+log_action:
+category
+
+system*
+3
+4:
+
+ø  ø(*
+event:
+
+ø, ø(C	
+detailsB20
+.src.audit.immutable_audit.ImmutableAuditSystemH

@@ -1,0 +1,34 @@
+#!/usr/bin/env bpftrace
+/*
+ * Immortality Sentinel - OmniMind eBPF Watchdog (bpftrace v0.23+)
+ *
+ * Rastreia a saída de processos críticos do OmniMind.
+ * Quando um processo monitorado morre, o kernel gera um alerta imediato.
+ *
+ * Filtro de Comm: mind-backend, mind-daemon, mind-monitor, python
+ */
+
+BEGIN {
+    printf("🛡️ OmniMind eBPF Sentinel iniciado. Monitorando saídas de processo...\n");
+    printf("%-10s %-16s %-6s %-6s %-12s\n", "TIME", "COMM", "PID", "PPID", "EXIT_CODE");
+}
+
+tracepoint:sched:sched_process_exit {
+    $task = curtask;
+    $comm = comm;
+
+    // Filtrar apenas processos do OmniMind para evitar ruído
+    if ($comm == "mind-backend" || $comm == "mind-daemon" || $comm == "mind-monitor" || $comm == "python" || $comm == "python3") {
+        printf("%-10s %-16s %-6d %-6d %-12d\n",
+               elapsed / 1e9,
+               $comm,
+               pid,
+               ppid,
+               args->code);
+
+        // Alerta de anomalia se exit code != 0
+        if (args->code != 0) {
+            printf("🚨 CRASH DETECTED: %s (PID %d) exited with code %d\n", $comm, pid, args->code);
+        }
+    }
+}

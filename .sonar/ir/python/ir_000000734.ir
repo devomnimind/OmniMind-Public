@@ -1,0 +1,58 @@
+
+
+"total_memory_mb"str
+"name"str
+"status"str
+"memory_free_mb"str
+"utilization_percent"str
+"memory_used_mb"str
+"reserved_by"str
+"device_id"str
+!"Convert to dictionary."str
+"compute_capability"strselfg g("ª$
+"
+i s(	"#new-object#Bdict*
+(
+j j('"#get-field# device_id: 
+
+j j('"	#map-set#:%
+#
+k k("#get-field# name: 
+
+k k(	"	#map-set#:0
+.
+l l(3"#get-field# total_memory_mb: 
+
+l l(3"	#map-set#:
+3
+1
+m" m(9" #get-field# compute_capability: 
+
+m m(9"	#map-set#:'
+%
+n n(!"#get-field# status:&
+$
+n n('"#get-field# value: 
+
+n n('"	#map-set#:<
+:
+o# o(C")'#get-field# current_utilization_percent: 
+
+o o(C"	#map-set#:7
+5
+p p(9"$"#get-field# current_memory_used_mb: 
+
+p p(9"	#map-set#:0
+.
+q q(2"#get-field# total_memory_mb:7
+5
+q5 q(P"$"#get-field# current_memory_used_mb:%
+#
+q q(P"	#binop -#*2-: 
+
+q q(P"	#map-set#:,
+*
+r r(+ "#get-field# reserved_by: 
+
+r r(+!"	#map-set#: 
+i s(	*A/home/fahbrain/projects/omnimind/src/scaling/gpu_resource_pool.py

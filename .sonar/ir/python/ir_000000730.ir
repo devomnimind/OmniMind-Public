@@ -1,0 +1,19 @@
+
+¿µ"Check if GPU has enough free memory.
+
+        Args:
+            required_memory_mb: Required memory in MB
+
+        Returns:
+            True if GPU has enough free memory
+        "strself< <( required_memory_mb< <(2"Û0
+.
+E E(*"#get-field# total_memory_mb:7
+5
+E- E(H"$"#get-field# current_memory_used_mb:2
+0
+E E(Hfree_memory"	#binop -#*2-:*
+(
+F F(0"
+#binop >=#2>=:Bbool
+F F(0*A/home/fahbrain/projects/omnimind/src/scaling/gpu_resource_pool.py

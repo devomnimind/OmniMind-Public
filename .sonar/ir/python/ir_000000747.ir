@@ -1,0 +1,37 @@
+
+"a"bool
+
+0int
+"S3518"bool
+100int
+	"division by zero"boolgpu
+÷ ÷($"ÐQ
+O
+
+ù  ù(?utilization_score")'#get-field# current_utilization_percent:9
+7
+
+ú ú(6"$"#get-field# current_memory_used_mb:2
+0
+
+ú9 ú(L"#get-field# total_memory_mb:,
+*
+
+ú ú(L"
+#binop !=#2!=:Bbool"
+ 
+
+ú ú(L
+"
+#assert#:	3
+1
+
+ú ú(L"#dependent-value#*:BfloatA
+?
+
+ú ú(Smemory_score"#dependent-value#*:Bfloat0
+.
+
+û û(3"#dependent-value#:Bfloat
+
+û û(3*A/home/fahbrain/projects/omnimind/src/scaling/gpu_resource_pool.py

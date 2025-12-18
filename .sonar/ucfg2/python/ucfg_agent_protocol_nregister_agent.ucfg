@@ -1,0 +1,114 @@
+
+:src.agents.agent_protocol.AgentMessageBus.unregister_agentI
+=/home/fahbrain/projects/omnimind/src/agents/agent_protocol.pyè è("2*˝
+2
+ê ê(*r
+p
+
+ë ë(#
+%8"__id*V
+
+__unknown_file (:*8+
+)src.agents.agent_protocol.AgentMessageBus"	
+_queuespn
+
+ë ë(#
+%9*"
+
+__unknown_file (
+
+%8*(
+
+__unknown_file (
+
+
+agent_id2__contains__*
+3
+6*9
+3
+agent_protocol.py"
+ò ò(
+implicit return*‡
+4
+ñ ñ(:b
+`
+
+ñ ñ(9
+%1"__concat*&
+
+ñ ñ(.
+Agent unregistered: *
+
+ñ/ ñ(7
+
+
+agent_idfd
+
+ñ ñ(:
+%2*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%12info*
+3*ä
+5
+ï ï(,t
+r
+
+ï ï("
+%3"__id*X
+
+__unknown_file (<*:+
+)src.agents.agent_protocol.AgentMessageBus"
+	_handlers*
+4*Ó
+6
+í í(&r
+p
+
+í í(
+%4"__id*V
+
+__unknown_file (:*8+
+)src.agents.agent_protocol.AgentMessageBus"	
+_queuesy
+w
+
+ì ì(#
+%5"__id*]
+
+__unknown_file (A*?+
+)src.agents.agent_protocol.AgentMessageBus"
+_subscriptionst
+r
+
+î î()
+%6"__id*X
+
+__unknown_file (<*:+
+)src.agents.agent_protocol.AgentMessageBus"
+	_handlerspn
+
+î î()
+%7*"
+
+__unknown_file (
+
+%6*(
+
+__unknown_file (
+
+
+agent_id2__contains__*
+4
+5:
+
+è è(,
+
+agent_idB-+
+)src.agents.agent_protocol.AgentMessageBusH

@@ -1,0 +1,9 @@
+
+*!"Calculate area of bounding box."strselfL L("ˆ&
+$
+N N("#get-field# width:'
+%
+N N('"#get-field# height:%
+#
+N N('"	#binop *#*2*:
+N N('*C/home/fahbrain/projects/omnimind/src/multimodal/vision_processor.py

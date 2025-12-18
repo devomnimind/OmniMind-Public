@@ -1,0 +1,68 @@
+
+0.3float
+1.0float
+I@"Predict next task completion time using exponential smoothing."str
+
+1int
+
+0intself@% @()"¬6
+4
+B B()"#!#get-field# task_completion_times:)
+'
+B B()"
+__bool__*:BboolH)
+'
+B B()"#unaryop !#2!:Bbool"
+B B() *B B(
+"
+C C("Ž'
+%
+F F(alpha"#id#:Bfloat6
+4
+G G(/	"#!#get-field# task_completion_times:3
+1
+G G(0
+times"
+builtinslist*:	Blist*
+(
+H H("
+builtinslen*:
+Bint*
+(
+H H("
+#binop ==#2==:Bbool"
+H H( *H H(
+"6"
+ 
+I I("#array-read#:
+
+I I("Ê,
+*
+K K(smoothed"#array-read#:
+'
+%
+L L("#unknown-value#Blist&
+$
+L L("#array-add-all#:
+7
+5
+L L("
+builtinsiter*:Btyping.Iterator
+L L("‹*smoothed*alpha2
+0
+L L("
+builtins
+__has_next*:Bbool"
+L L( *L L(H"Ù,
+*
+M M(<time"
+builtinsnext*:%
+#
+M M(#"	#binop *#*2*:%
+#
+M' M(0"	#binop -#*2-:%
+#
+M& M(<"	#binop *#*2*:,
+*
+M M(<smoothed"	#binop +#2+:"
+N N(*I/home/fahbrain/projects/omnimind/src/scaling/intelligent_load_balancer.py

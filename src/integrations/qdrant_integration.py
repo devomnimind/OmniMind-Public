@@ -17,7 +17,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 from uuid import UUID
 
-if TYPE_CHECKING:
+try:
     from qdrant_client import QdrantClient  # type: ignore[import-untyped]
     from qdrant_client.models import (  # type: ignore[import-untyped]
         Distance,
@@ -25,27 +25,21 @@ if TYPE_CHECKING:
         VectorParams,
     )
 
-else:
-    # Runtime imports: use generic types to avoid F811 redefinition
-    QdrantClient = None  # type: ignore[assignment]
-    Distance = None  # type: ignore[assignment]
-    PointStruct = None  # type: ignore[assignment]
-    VectorParams = None  # type: ignore[assignment]
-
-try:
-    # Import at runtime only if not in TYPE_CHECKING
-    from qdrant_client import QdrantClient as _Client  # type: ignore[import-untyped]
-    from qdrant_client.models import Distance as _Distance  # type: ignore[import-untyped]
-    from qdrant_client.models import PointStruct as _Struct
-    from qdrant_client.models import VectorParams as _Params
-
-    QdrantClient = _Client  # type: ignore[misc]
-    Distance = _Distance  # type: ignore[misc]
-    PointStruct = _Struct  # type: ignore[misc]
-    VectorParams = _Params  # type: ignore[misc]
-
     QDRANT_AVAILABLE = True
 except ImportError:
+    if TYPE_CHECKING:
+        from qdrant_client import QdrantClient  # type: ignore[import-untyped]
+        from qdrant_client.models import (  # type: ignore[import-untyped]
+            Distance,
+            PointStruct,
+            VectorParams,
+        )
+    else:
+        QdrantClient = None  # type: ignore[assignment]
+        Distance = None  # type: ignore[assignment]
+        PointStruct = None  # type: ignore[assignment]
+        VectorParams = None  # type: ignore[assignment]
+
     QDRANT_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
@@ -69,18 +63,14 @@ class QdrantIntegration:
         vector_size: int = 384,
         host: str = "localhost",
         port: int = 6333,
-        url: Optional[str] = None,
-        api_key: Optional[str] = None,
     ):
         """Initialize Qdrant integration
 
         Args:
             collection_name: Name of collection
             vector_size: Dimension of vectors (384 for all-MiniLM-L6-v2)
-            host: Qdrant host (deprecated, use url)
-            port: Qdrant port (deprecated, use url)
-            url: Full Qdrant URL (preferred)
-            api_key: API key for authentication
+            host: Qdrant host
+            port: Qdrant port
         """
 
         if not QDRANT_AVAILABLE:
@@ -89,21 +79,9 @@ class QdrantIntegration:
         self.collection_name = collection_name
         self.vector_size = vector_size
 
-        # Use URL if provided, otherwise construct from host/port
-        if url:
-            self.url = url
-            self.api_key = api_key
-        else:
-            # Fallback to host/port for backward compatibility
-            self.url = f"http://{host}:{port}"
-            self.api_key = None
-
         try:
-            if self.api_key:
-                self.client = QdrantClient(url=self.url, api_key=self.api_key)
-            else:
-                self.client = QdrantClient(url=self.url)
-            logger.info(f"✅ Qdrant connected: {self.url}")
+            self.client = QdrantClient(host=host, port=port)
+            logger.info(f"✅ Qdrant connected: {host}:{port}")
         except Exception as e:
             logger.error(f"❌ Failed to connect to Qdrant: {e}")
             raise
@@ -304,21 +282,5 @@ def get_qdrant() -> QdrantIntegration:
 
     global _qdrant_instance
     if _qdrant_instance is None:
-        # Read configuration from environment variables
-        import os
-
-        # Try cloud URL first, then local URL
-        url = os.environ.get("OMNIMIND_QDRANT_CLOUD_URL") or os.environ.get(
-            "OMNIMIND_QDRANT_URL", "http://localhost:6333"
-        )
-        api_key = os.environ.get("OMNIMIND_QDRANT_API_KEY")
-        collection = os.environ.get("OMNIMIND_QDRANT_COLLECTION", "omnimind_consciousness")
-        vector_size = int(os.environ.get("OMNIMIND_QDRANT_VECTOR_SIZE", "384"))
-
-        _qdrant_instance = QdrantIntegration(
-            collection_name=collection,
-            vector_size=vector_size,
-            url=url,
-            api_key=api_key,
-        )
+        _qdrant_instance = QdrantIntegration()
     return _qdrant_instance

@@ -18,15 +18,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Contact: fabricioslv@hotmail.com.br
 """
-
-"""
-Pre-commit hook to enforce security protocols.
-Blocks commits if there are active DLP violations that should block development.
-"""
-
-import os
 import sys
 from pathlib import Path
+
+from security.firecracker_sandbox import FirecrackerSandbox
 
 # Add src to path so we can import modules
 project_root = Path(__file__).parent.parent
@@ -34,8 +29,7 @@ src_path = project_root / "src"
 sys.path.insert(0, str(src_path))
 
 try:
-    from src.security.dlp import DLPValidator, DLPViolationError
-    from src.audit.immutable_audit import ImmutableAuditSystem
+    from src.audit.audit_system import get_audit_system
 except ImportError as e:
     print(f"ERROR: Cannot import required modules: {e}")
     print("Make sure you're running this from the project root.")
@@ -44,13 +38,6 @@ except ImportError as e:
 
 def check_active_violations() -> bool:
     """Check if there are active DLP violations that should block development."""
-    # Load DLP validator
-    policy_path = os.environ.get("OMNIMIND_DLP_POLICY_FILE")
-    if not policy_path:
-        policy_path = str(project_root / "config" / "dlp_policies.yaml")
-
-    validator = DLPValidator(policy_path=policy_path)
-
     # Check recent audit logs for violations
     audit_system = get_audit_system()
     recent_events = audit_system.get_recent_events(limit=50)
@@ -85,7 +72,6 @@ def main() -> int:
 
     # Check if sandbox is operational
     try:
-        from security.firecracker_sandbox import FirecrackerSandbox
 
         sandbox = FirecrackerSandbox()
         if not sandbox.enabled:

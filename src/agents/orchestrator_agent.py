@@ -78,6 +78,7 @@ from .orchestrator_metrics import OrchestratorMetricsCollector
 from .psychoanalytic_analyst import PsychoanalyticAnalyst
 from .react_agent import ReactAgent
 from .reviewer_agent import ReviewerAgent
+from ..benchmarks.benchmark_evaluator import BenchmarkEvaluator
 
 logger = logging.getLogger(__name__)
 
@@ -313,6 +314,10 @@ class OrchestratorAgent(ReactAgent):
             logger.info("MCPOrchestrator inicializado para gerenciamento de servidores MCP")
         except MCPOrchestratorError as e:
             logger.warning("MCPOrchestrator não pôde ser inicializado: %s", e)
+
+        # NEW: BenchmarkEvaluator para Desenvolvimento Intelectual (Seção 6 da Auditoria)
+        self.benchmark_evaluator = BenchmarkEvaluator()
+        logger.info("BenchmarkEvaluator integrado ao Orquestrador.")
 
         # INTEGRAÇÃO DE CONSCIÊNCIA: Inicializar após todos os sistemas
         self._init_consciousness_integration()

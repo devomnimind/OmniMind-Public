@@ -1,0 +1,135 @@
+{
+  "timestamp": "2025-12-01T00:39:48.235118",
+  "processes_count": 11,
+  "resources": {
+    "cpu_percent": 88.0,
+    "memory_percent": 48.5,
+    "memory_used_gb": 11.26,
+    "disk_percent": 25.8,
+    "disk_used_gb": 218.36
+  },
+  "network": {
+    "omnimind_connections": [
+      {
+        "port": 8000,
+        "status": "LISTEN",
+        "pid": 2805052
+      },
+      {
+        "port": 8080,
+        "status": "LISTEN",
+        "pid": 2804733
+      },
+      {
+        "port": 3000,
+        "status": "LISTEN",
+        "pid": 1985631
+      },
+      {
+        "port": 3001,
+        "status": "LISTEN",
+        "pid": 2805223
+      }
+    ],
+    "total_connections": 4
+  },
+  "filesystem": {
+    "large_files": [
+      {
+        "path": ".venv/lib/python3.12/site-packages/cutensor/lib/libcutensor.so.2",
+        "size_mb": 400.69
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/playwright/driver/node",
+        "size_mb": 117.48
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/triton/_C/libtriton.so",
+        "size_mb": 382.5
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/_polars_runtime_32/_polars_runtime_32.abi3.so",
+        "size_mb": 126.93
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "size_mb": 409.73
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/cufft/lib/libcufft.so.11",
+        "size_mb": 266.0
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/cublas/lib/libcublas.so.12",
+        "size_mb": 111.0
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/cublas/lib/libcublasLt.so.12",
+        "size_mb": 716.95
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/cusparselt/lib/libcusparseLt.so.0",
+        "size_mb": 431.04
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/cusparse/lib/libcusparse.so.12",
+        "size_mb": 370.02
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/cusolver/lib/libcusolver.so.11",
+        "size_mb": 232.03
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/cusolver/lib/libcusolverMg.so.11",
+        "size_mb": 154.01
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/cuda_nvrtc/lib/libnvrtc.alt.so.12",
+        "size_mb": 100.1
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/curand/lib/libcurand.so.10",
+        "size_mb": 130.41
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/nvshmem/lib/libnvshmem_host.so.3",
+        "size_mb": 137.5
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/cudnn/lib/libcudnn_ops.so.9",
+        "size_mb": 122.01
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/cudnn/lib/libcudnn_engines_precompiled.so.9",
+        "size_mb": 522.03
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/nvidia/cudnn/lib/libcudnn_adv.so.9",
+        "size_mb": 272.01
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/torch/lib/libtorch_cuda.so",
+        "size_mb": 975.4
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so",
+        "size_mb": 416.7
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/torch/lib/libtorch_cuda_linalg.so",
+        "size_mb": 121.59
+      },
+      {
+        "path": ".venv/lib/python3.12/site-packages/cuquantum/lib/libcustatevec.so.1",
+        "size_mb": 112.23
+      },
+      {
+        "path": ".git/objects/pack/pack-4d52165d945d9377e5852712bd0cdab3884c44c0.pack",
+        "size_mb": 107.96
+      }
+    ]
+  },
+  "security_alerts": [
+    "\u2139\ufe0f  23 arquivos > 100MB"
+  ]
+}

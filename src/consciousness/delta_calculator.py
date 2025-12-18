@@ -239,22 +239,21 @@ class DeltaCalculator:
             float [0, 1] representando detecção de trauma
         """
         # Divergência L2
-        divergence = float(np.linalg.norm(expectation - reality))
+        divergence = np.linalg.norm(expectation - reality)
 
         # Normaliza (garantindo [0, 1])
         # CORREÇÃO: A divergência pode ser maior que max_norm devido à desigualdade
         # triangular reversa. Usar min para garantir que não exceda 1.0
         max_norm = max(np.linalg.norm(expectation), np.linalg.norm(reality))
         max_norm_float = float(max_norm)  # Garantir type float
-        normalized_divergence = float(min(1.0, divergence / (max_norm_float + 1e-10)))
+        normalized_divergence = min(1.0, divergence / (max_norm_float + 1e-10))
 
         # Trauma = divergência acima do threshold
-        trauma_threshold_float = float(self.trauma_threshold)  # type: ignore[arg-type]
-        if normalized_divergence > trauma_threshold_float:
-            threshold = trauma_threshold_float
+        if float(normalized_divergence) > float(self.trauma_threshold):  # type: ignore[arg-type]
+            threshold = float(self.trauma_threshold)  # type: ignore[arg-type]
             trauma_level = min(
                 1.0,
-                (normalized_divergence - threshold) / (1.0 - threshold),
+                (float(normalized_divergence) - threshold) / (1.0 - threshold),  # type: ignore[arg-type]
             )
         else:
             trauma_level = 0.0

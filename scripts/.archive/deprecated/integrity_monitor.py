@@ -33,17 +33,18 @@ Funcionalidades:
 - ✅ Validação de métricas GPU
 """
 
+import json
+import logging
+import smtplib
 import sys
 import time
-import json
-from pathlib import Path
 from datetime import datetime, timedelta
-from typing import Dict, Any, Optional
-import smtplib
 from email.mime.text import MIMEText
-import requests
-import logging
+from pathlib import Path
+from typing import Any, Dict, Optional
+
 import psutil
+import requests
 
 # Adicionar src ao path
 sys.path.insert(0, str(Path(__file__).parent.parent))

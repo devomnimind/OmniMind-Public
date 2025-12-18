@@ -1,0 +1,92 @@
+
+Wsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.enforce_tenant_isolationR
+F/home/fahbrain/projects/omnimind/src/scaling/multi_tenant_isolation.pyÿ ÿ( "2*Ú
+2
+€ ‰(‰
+†
+
+Š Š("
+%4"__id*l
+
+__unknown_file (P*N@
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManager"
+
+data_dirpn
+
+Š Š(.
+%5*"
+
+__unknown_file (
+
+%4*)
+
+__unknown_file (
+
+	tenant_id2__truediv__F
+D
+
+Š Š(.
+
+tenant_dir"__id*"
+
+__unknown_file (
+
+%5*
+7*Ð
+7
+ (.LJ
+
+ (.
+%1*-
+
+__unknown_file (
+
+resource_path2resolveD
+B
+
+ (.
+
+abs_path"__id*"
+
+__unknown_file (
+
+%1IG
+
+Ž Ž(1
+%2**
+
+__unknown_file (
+
+
+tenant_dir2resolveJ
+H
+
+Ž Ž(1
+abs_tenant_dir"__id*"
+
+__unknown_file (
+
+%2~|
+
+ (:
+%3*(
+
+__unknown_file (
+
+
+abs_path*.
+
+__unknown_file (
+
+abs_tenant_dir2is_relative_to"
+
+ (:
+
+%3:
+
+ÿ' ÿ(5
+	tenant_id:
+
+ÿ7 ÿ(J
+resource_pathBB@
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManagerH

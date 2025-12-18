@@ -1,0 +1,70 @@
+
+"top_functions"str
+
+"is_running"str
+f]"Get profiling statistics.
+
+        Returns:
+            Dictionary with statistics
+        "str
+
+0int
+"total_samples"strself
+˚ ˚("©+
+)
+
+Å Å("#get-field# _samples:+
+)
+
+Å Å("
+__bool__*:BboolH+
+)
+
+Å Å("#unaryop !#2!:Bbool "
+
+Å Å( *
+Å Å(
+"¥&
+$
+
+Ç Ö("#new-object#Bdict"
+ 
+
+É É("	"	#map-set#:.
+,
+
+Ñ Ñ(."#get-field# _is_running:"
+ 
+
+Ñ Ñ(."	#map-set#:
+
+
+Ç Ö("‚&
+$
+
+á ã(	"#new-object#Bdict+
+)
+
+à! à(."#get-field# _samples:,
+*
+
+à à(/"
+builtinslen*:Bint"
+ 
+
+à à(/"	#map-set#:.
+,
+
+â â(*"#get-field# _is_running:"
+ 
+
+â â(*"	#map-set#:
+-
++
+
+ä ä(M"?python-unknown?:Blist"
+ 
+
+ä ä(M"	#map-set#:
+
+á ã(	*E/home/fahbrain/projects/omnimind/src/observability/profiling_tools.py

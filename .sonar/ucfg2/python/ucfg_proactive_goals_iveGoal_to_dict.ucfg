@@ -1,0 +1,226 @@
+
+7src.metacognition.proactive_goals.ProactiveGoal.to_dictO
+E/home/fahbrain/projects/omnimind/src/metacognition/proactive_goals.pyR R("2*˛
+2S S($
+T _(	
+%1"dictv
+t
+U U(#
+%2"__id*\
+
+__unknown_file (@*>1
+/src.metacognition.proactive_goals.ProactiveGoal"	
+goal_idé
+ã
+U U(#
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+goal_id*"
+
+__unknown_file (
+
+%2t
+r
+V V(
+%4"__id*Z
+
+__unknown_file (>*<1
+/src.metacognition.proactive_goals.ProactiveGoal"
+titleå
+â
+V V(
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*%
+
+__unknown_file (	
+title*"
+
+__unknown_file (
+
+%4z
+x
+W W(+
+%6"__id*`
+
+__unknown_file (D*B1
+/src.metacognition.proactive_goals.ProactiveGoal"
+descriptioní
+è
+W W(+
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+description*"
+
+__unknown_file (
+
+%6w
+u
+X X(%
+%8"__id*]
+
+__unknown_file (A*?1
+/src.metacognition.proactive_goals.ProactiveGoal"
+
+categoryè
+å
+X X(%
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+category*"
+
+__unknown_file (
+
+%8x
+v
+Y Y(%
+%10"__id*]
+
+__unknown_file (A*?1
+/src.metacognition.proactive_goals.ProactiveGoal"
+
+priorityë
+é
+Y Y(%
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+priority*#
+
+__unknown_file (
+
+%10Ä
+~
+Z  Z(5
+%12"__id*e
+
+__unknown_file (I*G1
+/src.metacognition.proactive_goals.ProactiveGoal"
+estimated_effortô
+ñ
+Z Z(5
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*0
+
+__unknown_file (
+estimated_effort*#
+
+__unknown_file (
+
+%12Ñ
+Å
+[# [(;
+%14"__id*h
+
+__unknown_file (L*J1
+/src.metacognition.proactive_goals.ProactiveGoal"
+acceptance_criteriaú
+ô
+[ [(;
+%15"__mapSet*"
+
+__unknown_file (
+
+%1*3
+
+__unknown_file (
+acceptance_criteria*#
+
+__unknown_file (
+
+%14Ö
+Ç
+\$ \(=
+%16"__id*i
+
+__unknown_file (M*K1
+/src.metacognition.proactive_goals.ProactiveGoal"
+implementation_stepsù
+ö
+\ \(=
+%17"__mapSet*"
+
+__unknown_file (
+
+%1*4
+
+__unknown_file (
+implementation_steps*#
+
+__unknown_file (
+
+%16w
+u
+] ](#
+%18"__id*\
+
+__unknown_file (@*>1
+/src.metacognition.proactive_goals.ProactiveGoal"	
+metricsê
+ç
+] ](#
+%19"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+metrics*#
+
+__unknown_file (
+
+%18z
+x
+^ ^()
+%20"__id*_
+
+__unknown_file (C*A1
+/src.metacognition.proactive_goals.ProactiveGoal"
+
+created_atì
+ê
+^ ^()
+%21"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+created_at*#
+
+__unknown_file (
+
+%20"
+T _(	
+
+%1B31
+/src.metacognition.proactive_goals.ProactiveGoalH

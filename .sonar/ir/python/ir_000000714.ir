@@ -1,0 +1,79 @@
+
+"S3518"bool
+0.0float
+1.0float
+
+0int
+"division by zero"bool
+"a"bool
+È¾"Calculate consciousness emergence level.
+
+        Args:
+            phi: Phi value
+            complexity: Complexity value
+
+        Returns:
+            Emergence level (0.0-1.0)
+        "strself
+Ì" Ì(&phi
+Ì( Ì(2
+complexity
+Ì4 Ì(E"š<
+:
+
+× ×()"'%#get-field# min_phi_for_consciousness:,
+*
+
+× ×(."
+#binop <=#2<=:Bbool,"*
+
+× ×(. *
+× ×(
+2
+Ú Ú("f'
+%
+
+Ù! Ù(1	"	#binop *#*2*:3
+1
+
+Ù Ù(2
+	emergence"
+builtinsmin*:	"œ<
+:
+
+Ú Ú(2"'%#get-field# min_phi_for_consciousness:,
+*
+
+Ú Ú(2"
+#binop >=#2>=:Bbool,"*
+
+Ú Ú(2 *
+Ú Ú(2
+Ý Ý("·<
+:
+
+Ü( Ü(F"'%#get-field# min_phi_for_consciousness:,
+*
+
+Ü" Ü(F"
+#binop !=#2!=:Bbool"
+ 
+
+Ü" Ü(F"
+#assert#:3
+1
+
+Ü" Ü(F"#dependent-value#*:Bfloat3
+1
+
+Ü! Ü(T"#dependent-value#*:Bfloat3
+1
+
+Ü Ü(U	emergence"
+builtinsmin*:"7-
++
+
+ß ß(	emergence"#id#:Bfloat"7!*	emergence
+
+
+á á(*A/home/fahbrain/projects/omnimind/src/metacognition/iit_metrics.py

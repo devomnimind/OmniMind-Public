@@ -1,0 +1,13 @@
+
+Œ‚"
+        Optimize objective function.
+
+        Args:
+            objective: Function to minimize
+            bounds: Bounds for each dimension
+            max_iterations: Maximum iterations
+
+        Returns:
+            (best_solution, best_value)
+        "strself/ /(	objective0 0(1bounds1 1()max_iterations2 2(!NotImplementedError"2
+? ?(!*D/home/fahbrain/projects/omnimind/src/quantum_ai/quantum_optimizer.py

@@ -18,10 +18,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import os
 import json
+import os
 import subprocess
-from pathlib import Path
 
 
 def run_command(cmd, shell=True, timeout=30):

@@ -1,0 +1,49 @@
+
+Rsrc.security.security_orchestrator.SecurityOrchestrator.stop_continuous_monitoringR
+F/home/fahbrain/projects/omnimind/src/security/security_orchestrator.pyí í(""2*ç
+2
+ì ì(2é
+ã
+
+î î(&P9
+7src.security.security_orchestrator.SecurityOrchestrator"
+monitoring_active"__id*%
+
+__unknown_file (	
+
+FalseÜ
+É
+
+ñ ñ(
+%1"__id*i
+
+__unknown_file (M*K9
+7src.security.security_orchestrator.SecurityOrchestrator"
+audit_system
+
+ò ò(
+%2"dict¿Ω
+
+ñ ö(	
+%3*"
+
+__unknown_file (
+
+%1*;
+
+__unknown_file (
+security_monitoring_stopped*"
+
+__unknown_file (
+
+%22
+log_action:
+category
+
+security*
+3*@
+3
+security_orchestrator.py"
+ú ú(
+implicit returnB;9
+7src.security.security_orchestrator.SecurityOrchestratorH

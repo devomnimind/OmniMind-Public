@@ -1,40 +1,42 @@
 from __future__ import annotations
 
+# Standard library imports
+import asyncio
+import json
+import logging
 import os
+import secrets
 import sys
+import threading
+import time
+import uuid
+from base64 import b64encode
+from contextlib import asynccontextmanager, suppress
+from pathlib import Path
+from typing import Any, Callable, Dict, Optional, Tuple
 
-# Add src to path for imports FIRST (before any other imports)
+# Third-party imports
+from dotenv import load_dotenv
+from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBasic
+from pydantic import BaseModel
+from starlette.status import WS_1008_POLICY_VIOLATION
+
+# NOTE: CUDA environment variables are handled by the shell script (start_omnimind_system.sh)
+# Removing manual overrides to prevent PyTorch initialization errors.
+
+# Add src to path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
 
-import asyncio  # noqa: E402
-import json  # noqa: E402
-import logging  # noqa: E402
-import secrets  # noqa: E402
-import threading  # noqa: E402
-import time  # noqa: E402
-import uuid  # noqa: E402
-from base64 import b64encode  # noqa: E402
-from contextlib import asynccontextmanager, suppress  # noqa: E402
-from datetime import datetime  # noqa: E402
-from pathlib import Path  # noqa: E402
-from typing import Any, Callable, Dict, Optional, Tuple  # noqa: E402
-
-from dotenv import load_dotenv  # noqa: E402
-from fastapi import (  # noqa: E402
-    Depends,
-    FastAPI,
-    HTTPException,
-    Request,
-    WebSocket,
-    WebSocketDisconnect,
+# Local application imports (after sys.path modification)
+# noqa: E402 - Imports must come after sys.path modification
+from src.metrics.dashboard_metrics import (  # noqa: E402
+    collect_dashboard_snapshot,
+    collect_system_metrics,
+    dashboard_metrics_aggregator,
 )
-from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
-from fastapi.security import HTTPBasic  # noqa: E402
-from pydantic import BaseModel  # noqa: E402
-from starlette.status import WS_1008_POLICY_VIOLATION  # noqa: E402
-
-# Import Service Update API for intelligent service updates
-from src.services import register_service_update_routes  # noqa: E402
+from src.metrics.real_consciousness_metrics import RealConsciousnessMetricsCollector  # noqa: E402
 from web.backend import chat_api  # noqa: E402
 from web.backend.auth import verify_credentials as _verify_credentials  # noqa: E402
 from web.backend.routes import agents, autopoietic, health, metacognition, omnimind  # noqa: E402
@@ -42,60 +44,10 @@ from web.backend.routes import security as security_router  # noqa: E402
 from web.backend.routes import tasks, tribunal  # noqa: E402
 from web.backend.websocket_manager import ws_manager  # noqa: E402
 
-# NOTE: CUDA environment variables are handled by the shell script
-# Removing manual overrides to prevent PyTorch initialization errors.
-
-# NOTE: OrchestratorAgent imported AFTER offline setup
-# (lazy import to avoid early model loading)
-# Temporarily disabled heavy imports during startup
-# from src.metrics.dashboard_metrics import (
-#     collect_dashboard_snapshot,
-#     collect_system_metrics,
-#     dashboard_metrics_aggregator,
-# )
-# from src.metrics.real_consciousness_metrics import RealConsciousnessMetricsCollector
-
-
 # Load environment variables from .env file
 load_dotenv()
 
 logger = logging.getLogger("omnimind.backend")
-
-
-# Define stub functions for metrics (for stability during Ubuntu migration)
-def collect_system_metrics() -> Dict[str, Any]:
-    """Collect system metrics stub."""
-    import psutil
-
-    try:
-        return {
-            "cpu_percent": psutil.cpu_percent(interval=0.1),
-            "memory_percent": psutil.virtual_memory().percent,
-            "disk_percent": psutil.disk_usage("/").percent,
-        }
-    except Exception:
-        return {"cpu_percent": 0.0, "memory_percent": 0.0, "disk_percent": 0.0}
-
-
-def collect_dashboard_snapshot() -> Dict[str, Any]:
-    """Collect dashboard snapshot stub."""
-    return {"timestamp": datetime.now().isoformat(), "metrics": {}}
-
-
-class StubDashboardMetricsAggregator:
-    """Stub aggregator for dashboard metrics."""
-
-    def set_consciousness_collector(self, collector: Any) -> None:
-        pass
-
-    async def collect_snapshot(
-        self, include_consciousness: bool = False, include_baseline: bool = False
-    ) -> Dict[str, Any]:
-        """Stub snapshot collection for metrics."""
-        return {"timestamp": datetime.now().isoformat(), "metrics": {}}
-
-
-dashboard_metrics_aggregator = StubDashboardMetricsAggregator()
 
 # Setup offline mode BEFORE any model loading (after logger is created)
 try:
@@ -105,8 +57,21 @@ try:
 except ImportError:
     logger.warning("offline_mode module not available, skipping offline setup")
 
-# NOW import OrchestratorAgent (after offline setup)
+# NOTE: OrchestratorAgent imported AFTER offline setup (lazy import to avoid early model loading)
 from src.agents.orchestrator_agent import OrchestratorAgent  # noqa: E402
+
+# Load environment variables from .env file
+load_dotenv()
+
+logger = logging.getLogger("omnimind.backend")
+
+# Setup offline mode BEFORE any model loading (after logger is created)
+try:
+    from src.utils.offline_mode import setup_offline_mode
+
+    setup_offline_mode()
+except ImportError:
+    logger.warning("offline_mode module not available, skipping offline setup")
 
 # API de Explicabilidade (Sessão 6)
 decisions_router: Optional[Any] = None
@@ -124,6 +89,42 @@ class AutonomyObservability:
         self.sandbox_events: list[dict] = []
         self.dlp_alerts: list[dict] = []
         self.alerts: list[str] = []
+        self._systemd_notified = False
+
+    def notify_ready(self) -> None:
+        """Notify systemd that the service is ready."""
+        try:
+            import socket
+
+            notify_socket = os.getenv("NOTIFY_SOCKET")
+            if notify_socket:
+                if notify_socket.startswith("@"):
+                    notify_socket = "\0" + notify_socket[1:]
+                with socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM) as s:
+                    s.connect(notify_socket)
+                    s.sendall(
+                        b"READY=1\nSTATUS=Backend is ready and operational\nMAINPID="
+                        + str(os.getpid()).encode()
+                    )
+                    self._systemd_notified = True
+                    logger.info("Systemd notified: READY=1")
+        except Exception as e:
+            logger.debug(f"Failed to notify systemd: {e}")
+
+    def watchdog_ping(self) -> None:
+        """Send watchdog heartbeat to systemd."""
+        try:
+            import socket
+
+            notify_socket = os.getenv("NOTIFY_SOCKET")
+            if notify_socket:
+                if notify_socket.startswith("@"):
+                    notify_socket = "\0" + notify_socket[1:]
+                with socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM) as s:
+                    s.connect(notify_socket)
+                    s.sendall(b"WATCHDOG=1")
+        except Exception as e:
+            logger.debug(f"Failed to send watchdog ping: {e}")
 
     def record_sandbox_event(self, event: dict) -> None:
         """Record sandbox event for observability."""
@@ -150,23 +151,9 @@ class AutonomyObservability:
 
 autonomy_observability = AutonomyObservability()
 
-
-# Global consciousness metrics collector (stub for stability)
-class StubConsciousnessMetricsCollector:
-    """Stub collector for consciousness metrics (placeholder until full integration)."""
-
-    phi: float = 1.0
-
-    async def initialize(self) -> None:
-        """Initialize stub collector."""
-        pass
-
-    async def collect_real_metrics(self) -> dict:
-        """Collect stub metrics."""
-        return {"phi": 1.0, "psi": 0.5, "sigma": 0.1}
-
-
-consciousness_metrics_collector: Any = StubConsciousnessMetricsCollector()
+# Global consciousness metrics collector
+consciousness_metrics_collector = RealConsciousnessMetricsCollector()
+dashboard_metrics_aggregator.set_consciousness_collector(consciousness_metrics_collector)
 
 _AUTH_FILE = Path(os.environ.get("OMNIMIND_DASHBOARD_AUTH_FILE", "config/dashboard_auth.json"))
 
@@ -302,8 +289,8 @@ async def lifespan(app_instance: FastAPI):
             logger.warning(f"Failed to initialize Consciousness Metrics Collector: {e}")
     else:
         logger.info(
-            "⏭️  Consciousness Metrics Collector initialization DEFERRED "
-            "(set OMNIMIND_INIT_CONSCIOUSNESS=1 to enable)"
+            "⏭️  Consciousness Metrics Collector initialization DEFERRED"
+            " (set OMNIMIND_INIT_CONSCIOUSNESS=1 to enable)",
         )
 
     # ========== PARALLELIZAÇÃO DE COMPONENTES RÁPIDOS ==========
@@ -377,9 +364,9 @@ async def lifespan(app_instance: FastAPI):
         await resource_protector.start()
 
         # CRITICAL: Register uvicorn process as protected
-        # (prevent resource_protector from killing it)
+        # (prevents resource_protector from killing it)
         resource_protector.register_process(os.getpid())
-        logger.info(f"✅ Uvicorn PID {os.getpid()} registered as protected")
+        logger.info("✅ Uvicorn PID " + str(os.getpid()) + " registered as protected")
 
         # Iniciar sistema de alertas
         alert_system = await get_alert_system()
@@ -527,6 +514,18 @@ async def lifespan(app_instance: FastAPI):
     else:
         logger.info("⏭️  Consciousness metrics collector DISABLED during startup")
         app_instance.state.consciousness_metrics_task = None
+
+    # ========== SYSTEMD WATCHDOG & READY NOTIFICATION ==========
+    async def _systemd_watchdog_loop():
+        try:
+            while True:
+                autonomy_observability.watchdog_ping()
+                await asyncio.sleep(5)
+        except asyncio.CancelledError:
+            logger.info("Systemd watchdog loop stopped")
+
+    app_instance.state.watchdog_task = asyncio.create_task(_systemd_watchdog_loop())
+    autonomy_observability.notify_ready()
 
     try:
         yield
@@ -732,13 +731,11 @@ async def _async_init_orchestrator(app_instance: FastAPI):
         except Exception as phase1_exc:
             # Check if error is about missing models in HuggingFace offline mode
             error_msg = str(phase1_exc)
-            is_model_error = (
-                "LocalEntryNotFoundError" in error_msg or "couldn't connect" in error_msg.lower()
-            )
-            if is_model_error:
+            if "LocalEntryNotFoundError" in error_msg or "couldn't connect" in error_msg.lower():
                 logger.warning(
-                    f"⚠️  Models not found in local cache. "
-                    f"Enabling API fallback... ({error_msg[:100]})"
+                    "⚠️  Models not found in local cache. Enabling API fallback... ("
+                    + error_msg[:100]
+                    + ")"
                 )
                 # Enable fallback to remote API
                 os.environ["HF_HUB_OFFLINE"] = "0"
@@ -753,7 +750,7 @@ async def _async_init_orchestrator(app_instance: FastAPI):
                 raise
 
         phase1_time = time.time() - phase1_start
-        logger.info(f"✅ Phase 1 complete ({phase1_time:.1f}s): Orchestrator initialized")
+        logger.info("✅ Phase 1 complete (" + f"{phase1_time:.1f}s)" + ": Orchestrator initialized")
 
         app_instance.state.orchestrator_ready = True
 
@@ -763,18 +760,16 @@ async def _async_init_orchestrator(app_instance: FastAPI):
 
         try:
             # Try to initialize dashboard snapshot asynchronously with timeout
-            # SKIP dashboard refresh during startup to avoid blocking on security_agent.execute()
+            # SKIP dashboard refresh during startup to avoid blocking
+            # on security_agent.execute()
             # Dashboard will be refreshed on-demand via API endpoints
             if hasattr(_orchestrator_instance, "refresh_dashboard_snapshot"):
-                msg = "  → Skipping dashboard snapshot (deferred to on-demand)"
-                logger.info(msg)
-                # Removed: await asyncio.to_thread(
-                #     _orchestrator_instance.refresh_dashboard_snapshot
-                # )
-                # Reason: security_agent.execute() can deadlock during startup
-                # causing 40+ sec delay
+                logger.info("  → Skipping dashboard snapshot (deferred to on-demand)")
+                # Removed the blocking dashboard refresh call to avoid startup hangs
+                # await asyncio.to_thread(_orchestrator_instance.refresh_dashboard_snapshot)
+                # Reason: security_agent.execute() can deadlock during startup.
         except Exception as exc:
-            logger.warning(f"Failed to refresh dashboard during init: {exc}")
+            logger.warning("Failed to refresh dashboard during init: " + str(exc))
 
         # Connect metacognition routes
         try:
@@ -805,10 +800,11 @@ async def _async_init_orchestrator(app_instance: FastAPI):
 
         phase2_time = time.time() - phase2_start
         total_time = time.time() - start_time
-        logger.info(f"✅ Phase 2 complete ({phase2_time:.1f}s)")
+        logger.info("✅ Phase 2 complete (" + f"{phase2_time:.1f}s)")
         logger.info(
-            f"📊 Total Orchestrator initialization: {total_time:.1f}s "
-            "(metrics for scientific analysis)"
+            "📊 Total Orchestrator initialization: "
+            + f"{total_time:.1f}s"
+            + " (metrics for scientific analysis)"
         )
 
     except asyncio.CancelledError:
@@ -902,17 +898,18 @@ async def _consciousness_metrics_collector() -> None:
     logger.info("Starting consciousness metrics collection background task")
     while True:
         try:
-            # Collect consciousness metrics at configurable interval
+            # Collect consciousness metrics at configurable interval (default: 60 seconds)
             await asyncio.sleep(_consciousness_metrics_interval)
-            # Collect metrics via aggregator for persistence guarantee
+            # Coletar métricas via agregador para garantir persistência
             await dashboard_metrics_aggregator.collect_snapshot(
                 include_consciousness=True,
                 include_baseline=True,
             )
             metrics = await consciousness_metrics_collector.collect_real_metrics()
             logger.debug(
-                f"Collected consciousness metrics: "
-                f"phi={metrics.phi:.4f}, anxiety={metrics.anxiety:.4f}"
+                "Collected consciousness metrics: phi="
+                + f"{metrics.phi:.4f}, "
+                + f"anxiety={metrics.anxiety:.4f}"
             )
         except asyncio.CancelledError:
             logger.info("Consciousness metrics collection task cancelled")
@@ -1172,7 +1169,7 @@ async def daemon_status() -> Dict[str, Any]:
 
     metrics_snapshot: Dict[str, Any] = {}
     try:
-        metrics_snapshot = collect_dashboard_snapshot()
+        metrics_snapshot = await collect_dashboard_snapshot()
     except Exception as exc:
         logger.error("Erro coletando snapshot do dashboard: %s", exc)
 
@@ -1281,8 +1278,8 @@ def daemon_agents() -> Dict[str, Any]:
         agents_list = []
 
         # Collect real agent data from orchestrator
-        if hasattr(orch, "agents") and orch.agents:
-            for agent_id, agent in orch.agents.items():
+        if hasattr(orch, "agents") and orch.agents:  # type: ignore[attr-defined]
+            for agent_id, agent in orch.agents.items():  # type: ignore[attr-defined]
                 agent_data = {
                     "agent_id": agent_id,
                     "name": getattr(agent, "name", agent_id),
@@ -1558,15 +1555,6 @@ try:
 
     app.include_router(metrics_api.router)
     logger.info("Metrics API routes registered")
-except ImportError:
-    logger.debug("Metrics API routes not available")
-
-# Service Update Protocol (Intelligent Service Restart Communication)
-try:
-    register_service_update_routes(app)
-    logger.info("✅ Service Update Protocol routes registered")
-except Exception as e:
-    logger.warning(f"⚠️ Service Update Protocol registration failed: {e}")
 except ImportError as e:
     logger.warning(f"Metrics API routes not available: {e}")
 
@@ -1631,8 +1619,9 @@ def training_metrics(user: str = Depends(_verify_credentials)) -> Dict[str, Any]
             "valid_causal_predictions": valid_causal_predictions,
             "total_causal_predictions": total_causal_predictions,
             "message": (
-                f"based on {valid_causal_predictions}/"
-                f"{total_causal_predictions} valid causal predictions"
+                "based on "
+                + f"{valid_causal_predictions}/{total_causal_predictions}"
+                + " valid causal predictions"
             ),
         }
     except Exception as e:
@@ -1655,13 +1644,15 @@ _hibernation_data: Dict[str, Any] = {}
 
 async def _hibernate_state() -> None:
     """Save critical state before shutdown (hibernation)."""
-    global _hibernation_data  # noqa: F824
+    global _hibernation_data
     try:
         logger.info("🌙 Hibernating OmniMind state...")
 
         # Save orchestrator state
         if _orchestrator_instance and hasattr(_orchestrator_instance, "state"):
-            _hibernation_data["orchestrator"] = _orchestrator_instance.state
+            _hibernation_data["orchestrator"] = (
+                _orchestrator_instance.state  # type: ignore[attr-defined]
+            )
             logger.info("  ✓ Orchestrator state saved")
 
         # Save metrics
@@ -1673,7 +1664,7 @@ async def _hibernate_state() -> None:
         if consciousness_metrics_collector:
             _hibernation_data["consciousness"] = {
                 "phi_estimate": (
-                    consciousness_metrics_collector.phi
+                    consciousness_metrics_collector.phi  # type: ignore[attr-defined]
                     if hasattr(consciousness_metrics_collector, "phi")
                     else 0
                 ),
@@ -1710,19 +1701,22 @@ async def graceful_shutdown(user: str = Depends(_verify_credentials)):
 
         # Step 2: Stop monitoring and background tasks
         logger.info("⏹️  Stopping background tasks...")
-        if hasattr(app.state, "orchestrator_task") and app.state.orchestrator_task:
-            app.state.orchestrator_task.cancel()
-        if hasattr(app.state, "metrics_task") and app.state.metrics_task:
-            app.state.metrics_task.cancel()
-        if hasattr(app.state, "consciousness_task") and app.state.consciousness_task:
-            app.state.consciousness_task.cancel()
+        if hasattr(app.state, "orchestrator_task"):
+            if app.state.orchestrator_task:
+                app.state.orchestrator_task.cancel()
+        if hasattr(app.state, "metrics_task"):
+            if app.state.metrics_task:
+                app.state.metrics_task.cancel()
+        if hasattr(app.state, "consciousness_task"):
+            if app.state.consciousness_task:
+                app.state.consciousness_task.cancel()
 
         # Step 3: Close connections
         logger.info("🔌 Closing connections...")
         if hasattr(app.state, "db_client"):
             try:
                 await app.state.db_client.close()
-            except Exception:
+            except Exception:  # Ignore DB client close errors
                 pass
 
         # Return success response

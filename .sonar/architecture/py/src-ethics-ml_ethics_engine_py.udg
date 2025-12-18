@@ -1,0 +1,355 @@
+
+1.0PythonFrontend"1763831840736*py2.Bë
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+#
+src/ethics/ml_ethics_engine.py9
+!
+src.ethics.ml_ethics_engine11
+
+
+__future__12
+
+logging14
+
+collections16
+
+dataclasses18
+
+datetime20
+
+pathlib22
+
+typing24
+
+src.ethics.ethics_agent26
+9
+3src.ethics.ml_ethics_engine.EthicalFeatureExtractor28
+O
+Isrc.ethics.ml_ethics_engine.EthicalFeatureExtractor._calculate_risk_score30
+
+float32
+	
+str34
+J
+Dsrc.ethics.ml_ethics_engine.EthicalFeatureExtractor.extract_features36
+
+
+dict38
+0
+*src.ethics.ml_ethics_engine.EthicalContext40
+H
+Bsrc.ethics.ml_ethics_engine.EthicalFeatureExtractor._encode_impact42
+*
+$src.ethics.ethics_agent.ActionImpact44
+0
+*src.ethics.ml_ethics_engine.FrameworkScore46
+8
+2src.ethics.ml_ethics_engine.FrameworkScore.to_dict48
+0
+*src.ethics.ml_ethics_engine.MLEthicsEngine50
+H
+Bsrc.ethics.ml_ethics_engine.MLEthicsEngine._evaluate_deontological52
+K
+Esrc.ethics.ml_ethics_engine.MLEthicsEngine._evaluate_consequentialist54
+F
+@src.ethics.ml_ethics_engine.MLEthicsEngine._evaluate_care_ethics56
+G
+Asrc.ethics.ml_ethics_engine.MLEthicsEngine._learn_from_precedents58
+
+
+list60
+.
+(src.ethics.ethics_agent.EthicalFramework62
+J
+Dsrc.ethics.ml_ethics_engine.MLEthicsEngine.get_framework_performance64
+H
+Bsrc.ethics.ml_ethics_engine.MLEthicsEngine._evaluate_virtue_ethics66
+9
+3src.ethics.ml_ethics_engine.MLEthicsEngine.__init__68
+H
+Bsrc.ethics.ml_ethics_engine.MLEthicsEngine.evaluate_with_consensus70
+3
+-src.ethics.ml_ethics_engine.ConsensusDecision72
+K
+Esrc.ethics.ml_ethics_engine.MLEthicsEngine._build_consensus_reasoning74
+G
+Asrc.ethics.ml_ethics_engine.MLEthicsEngine._generate_alternatives76
+C
+=src.ethics.ml_ethics_engine.MLEthicsEngine.learn_from_outcome78
+
+
+bool80
+;
+5src.ethics.ml_ethics_engine.ConsensusDecision.to_dict82
+8
+2src.ethics.ml_ethics_engine.EthicalContext.to_dict84J
+
+8
+89jÂ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29286 210
+
+31
+31307 229
+
+33
+33326
+
+35
+35346
+
+37
+37367 229
+
+39
+39386
+
+41
+41406 210
+
+43
+43427 229
+
+45
+45446
+
+47
+47466 210
+
+49
+49487 247
+
+51
+51506 210
+
+53
+53527 251
+
+55
+55547 251
+
+57
+57567 251
+
+59
+59587 251
+
+61
+61606
+
+63
+63626
+
+65
+65647 251
+
+67
+67667 251
+
+69
+69687 251
+
+71
+71707 251
+
+73
+73726 210
+
+75
+75747 251
+
+77
+77767 251
+
+79
+79787 251
+
+81
+81806
+
+83
+83827 273
+
+85
+85847 241rÍ	
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 ($
+
+10191*
+8 (1
+
+10211*
+8 ((
+
+10231*
+8 (
+
+10251*
+8 (-
+
+10271*
+8 (9
+
+31333*
+8ê	 ê(
+
+31354*
+8ê	 ê(
+
+37393*
+8f	 f(
+
+37414*
+8f	 f(
+
+43333*
+8	 (
+
+43454*
+8	 (
+
+49393*
+88	 8(
+
+53473*
+8Ø	 Ø( 
+
+53414*
+8Ø	 Ø( 
+
+53394*
+8Ø	 Ø( 
+
+55473*
+8Ê	 Ê(#
+
+55414*
+8Ê	 Ê(#
+
+55394*
+8Ê	 Ê(#
+
+57473*
+8«	 «(
+
+57414*
+8«	 «(
+
+57394*
+8«	 «(
+
+59333*
+8Ω	 Ω(
+
+59614*
+8Ω	 Ω(
+
+59634*
+8Ω	 Ω(
+
+65393*
+8ë	 ë("
+
+67473*
+8ô	 ô( 
+
+67414*
+8ô	 ô( 
+
+67394*
+8ô	 ô( 
+
+69334*
+8»	 »(
+
+69334*
+8»	 »(
+
+71733*
+8Ò	 Ò( 
+
+71414*
+8Ò	 Ò( 
+
+75353*
+8¯	 ¯(#
+
+75614*
+8¯	 ¯(#
+
+75334*
+8¯	 ¯(#
+
+77613*
+8í	 í(
+
+77414*
+8í	 í(
+
+77614*
+8í	 í(
+
+79734*
+8‰	 ‰(
+
+79354*
+8‰	 ‰(
+
+79814*
+8‰	 ‰(
+
+83393*
+8S	 S(
+
+85393*
+8(	 ((

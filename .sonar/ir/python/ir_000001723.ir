@@ -1,0 +1,29 @@
+
+©Ÿ"Decorator to register event handler.
+
+        Args:
+            event_type: Type of event to handle
+
+        Returns:
+            Decorator function
+        "strself
+Ž Ž(
+event_type
+Ž Ž(*"ì#
+!
+
+¢ ¢("#unknown-value#*
+(
+
+™ ¢(%closure"#new-object#.
+,
+
+™ ¢("#set-field# event_type:(
+&
+
+™ ¢("#set-field# self:-
++
+
+™ ¢("?python-partial-apply?:
+
+¢ ¢(*F/home/fahbrain/projects/omnimind/src/integrations/webhook_framework.py

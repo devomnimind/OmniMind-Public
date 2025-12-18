@@ -40,11 +40,11 @@ check_service() {
 
 echo "📊 Status dos Serviços Systemd:"
 echo "--------------------------------"
-check_service "omnimind-daemon.service"
-check_service "omnimind-mcp.service"
-check_service "omnimind-qdrant.service"
-check_service "omnimind.service"
-check_service "omnimind-test-suite.service"
+check_service "mind-daemon.service"
+check_service "mind-mcp.service"
+check_service "mind-qdrant.service"
+check_service "mind.service"
+check_service "mind-test-suite.service"
 check_service "omnimind-benchmark.service"
 echo ""
 

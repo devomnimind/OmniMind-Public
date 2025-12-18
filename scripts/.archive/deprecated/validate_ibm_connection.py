@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Validação IBM: ENV + Token + Conexão."""
 
-import os
-import sys
 import json
 import logging
+import os
+import sys
 from pathlib import Path
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")

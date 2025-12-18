@@ -1,0 +1,87 @@
+
+Osrc.multimodal.multi_modal_fusion.MultiModalFusion._interpret_cross_modal_matchQ
+E/home/fahbrain/projects/omnimind/src/multimodal/multi_modal_fusion.py´ ´($"2*É
+2
+· ·(<V
+T
+
+¹ ¹(/
+%1"__id*:
+
+__unknown_file (*
+
+query"
+source_modalityI
+G
+
+¹ ¹(5
+%2"__id*-
+
+__unknown_file (*
+
+%1"
+valueS
+Q
+
+º º(!
+%3"__id*7
+
+__unknown_file (*
+
+	candidate"
+
+modalityI
+G
+
+º º('
+%4"__id*-
+
+__unknown_file (*
+
+%3"
+valueÞ
+Û
+
+¹ º(J
+%5"__concat*
+
+¹ ¹(
+Query from *
+
+¹ ¹(5
+
+%2*
+
+¹6 ¹(?
+	 matched *
+
+º º('
+
+%4*
+
+º( º(.
+
+ with *
+
+º/ º(9
+
+
+similarity*
+
+º> º(I
+ similarity"
+
+¸ »(	
+
+%5:
+
+µ µ($
+query:
+
+µ& µ(>
+	candidate:
+
+µ@ µ(Q
+
+similarityB64
+2src.multimodal.multi_modal_fusion.MultiModalFusionH

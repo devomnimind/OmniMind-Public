@@ -31,12 +31,20 @@ class TestAgentMode:
         assert len(AgentMode.__members__) > 0
 
 
+@pytest.mark.heavy
 class TestOrchestratorAgent:
     """Testes para OrchestratorAgent."""
 
     @pytest.fixture
     def agent(self) -> OrchestratorAgent:
         """Cria instância do agente."""
+        # Não mockar OmniMindCore ou SentenceTransformer se for teste real/híbrido
+        # Mas para garantir isolamento básico em unit tests de inicialização simples:
+        # User pediu "testes orquestradores são reais", mas unit tests básicos ainda
+        # podem precisar de suporte.
+        # Vou remover o mock agressivo do SentenceTransformer e deixar o sistema real
+        # (com fallback CPU que implementei) rodar.
+
         with patch("src.agents.orchestrator_agent.OmniMindCore"):
             agent = OrchestratorAgent(config_path="config/agent_config.yaml")
             return agent

@@ -10,7 +10,7 @@ import warnings
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-from src.consciousness.theory_of_mind import TheoryOfMind, LacanianTheoryOfMind
+from src.consciousness.theory_of_mind import LacanianTheoryOfMind, TheoryOfMind
 
 
 def demonstrate_cognitive_vs_lacanian():

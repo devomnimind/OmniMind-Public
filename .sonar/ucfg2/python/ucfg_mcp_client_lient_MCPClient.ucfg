@@ -1,0 +1,60 @@
+
+%src.integrations.mcp_client.MCPClientI
+?/home/fahbrain/projects/omnimind/src/integrations/mcp_client.py ("2*§
+2 ( s
+q
+ ( 5'
+%src.integrations.mcp_client.MCPClient"
+
+endpoint"__id*(
+
+__unknown_file (
+
+
+endpointq
+o
+ (4'
+%src.integrations.mcp_client.MCPClient"	
+timeout"__id*'
+
+__unknown_file (
+	
+timeout
+ (<
+%2"dict¡
+ž
+ (;
+%3"__mapSet*"
+
+__unknown_file (
+
+%2*,
+
+__unknown_file (
+Content-Type*0
+
+__unknown_file (
+application/jsonm
+k
+ (<5'
+%src.integrations.mcp_client.MCPClient"
+
+_headers"__id*"
+
+__unknown_file (
+
+%2*
+3*_
+3
+mcp_client.py75
+ (
+%1"%src.integrations.mcp_client.MCPClient"
+ (
+
+%1:
+ (9
+
+endpoint:
+; (P	
+timeoutB)'
+%src.integrations.mcp_client.MCPClientH

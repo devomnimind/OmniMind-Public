@@ -1,0 +1,43 @@
+
+"meta_question"str
+	"new_level"str
+
+"meta_level"str
+.%"Impossibility itself is informative"str
+"object_level"str
+	"insight"str
+"original_level"str
+§"
+        Transcende nÃ­vel lÃ³gico do problema.
+
+        Move para meta-nÃ­vel onde problema tem soluÃ§Ã£o diferente.
+
+        Args:
+            problem: Problema a transcender
+            attempts: Tentativas anteriores
+
+        Returns:
+            Meta-nÃ­vel do problema
+        "str
+) "Why is '{problem}' impossible?"strself
+Å Å(problem
+Å Å(+attempts
+Å- Å(@"Ê&
+$
+
+Ò ×(	"#new-object#Bdict"
+ 
+
+Ó Ó(,"	#map-set#:"
+ 
+
+Ô Ô(%"	#map-set#:	
+"
+ 
+
+Õ Õ(>"	#map-set#:"
+ 
+
+Ö Ö(<"	#map-set#:
+
+Ò ×(	*</home/fahbrain/projects/omnimind/src/lacanian/godelian_ai.py

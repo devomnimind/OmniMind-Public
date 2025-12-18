@@ -1,0 +1,304 @@
+
+1.0PythonFrontend"1763831828116*py2.Bú
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+.
+)src/observability/performance_analyzer.py9
+,
+&src.observability.performance_analyzer11
+
+
+__future__12
+
+
+json14
+
+dataclasses16
+
+datetime18
+
+
+enum20
+
+pathlib22
+
+typing24
+'
+!src.observability.profiling_tools26
+B
+<src.observability.performance_analyzer.PerformanceBottleneck28
+J
+Dsrc.observability.performance_analyzer.PerformanceBottleneck.to_dict30
+
+
+dict32
+@
+:src.observability.performance_analyzer.PerformanceAnalyzer34
+R
+Lsrc.observability.performance_analyzer.PerformanceAnalyzer._generate_summary36
+	
+str38
+
+
+list40
+
+float42
+	
+int44
+V
+Psrc.observability.performance_analyzer.PerformanceAnalyzer._identify_bottlenecks46
+Y
+Ssrc.observability.performance_analyzer.PerformanceAnalyzer._generate_recommendation48
+?
+9src.observability.performance_analyzer.BottleneckCategory50
+5
+/src.observability.profiling_tools.ProfileSample52
+Z
+Tsrc.observability.performance_analyzer.PerformanceAnalyzer._generate_recommendations54
+T
+Nsrc.observability.performance_analyzer.PerformanceAnalyzer._determine_severity56
+?
+9src.observability.performance_analyzer.BottleneckSeverity58
+I
+Csrc.observability.performance_analyzer.PerformanceAnalyzer.__init__60
+H
+Bsrc.observability.performance_analyzer.PerformanceAnalyzer.analyze62
+>
+8src.observability.performance_analyzer.PerformanceReport64
+L
+Fsrc.observability.performance_analyzer.PerformanceAnalyzer.save_report66
+Q
+Ksrc.observability.performance_analyzer.PerformanceAnalyzer._severity_weight68
+W
+Qsrc.observability.performance_analyzer.PerformanceAnalyzer._categorize_bottleneck70
+
+	enum.Enum72
+F
+@src.observability.performance_analyzer.PerformanceReport.to_dict74J
+
+8
+89jè
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29286 210
+
+31
+31307 229
+
+33
+33326
+
+35
+35346 210
+
+37
+37367 235
+
+39
+39386
+
+41
+41406
+
+43
+43426
+
+45
+45446
+
+47
+47467 235
+
+49
+49487 235
+
+51
+51506 210
+
+53
+53526
+
+55
+55547 235
+
+57
+57567 235
+
+59
+59586 210
+
+61
+61607 235
+
+63
+63627 235
+
+65
+65646 210
+
+67
+67667 235
+
+69
+69687 235
+
+71
+71707 235
+
+73
+73726
+
+75
+75747 265rô
+
+10131*
+8	 	(#
+
+10151*
+8 (
+
+10171*
+8 ()
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (
+
+10251*
+8 (-
+
+10271*
+8 (<
+
+31333*
+8J	 J(
+
+37393*
+8÷	 ÷(
+
+37414*
+8÷	 ÷(
+
+37434*
+8÷	 ÷(
+
+37454*
+8÷	 ÷(
+
+47413*
+8Ï	 Ï(
+
+47414*
+8Ï	 Ï(
+
+47434*
+8Ï	 Ï(
+
+47434*
+8Ï	 Ï(
+
+49393*
+8Ç	 Ç(!
+
+49514*
+8Ç	 Ç(!
+
+49534*
+8Ç	 Ç(!
+
+55413*
+8	 ("
+
+55414*
+8	 ("
+
+57593*
+8²	 ²(
+
+57434*
+8²	 ²(
+
+57534*
+8²	 ²(
+
+63653*
+8“	 “(
+
+63414*
+8“	 “(
+
+63434*
+8“	 “(
+
+67393*
+8²	 ²(
+
+67654*
+8²	 ²(
+
+69453*
+8Í	 Í(
+
+69594*
+8Í	 Í(
+
+71513*
+8†	 †(
+
+71534*
+8†	 †(
+
+59732*
+8 (
+
+75333*
+8n	 n(
+
+51732*
+8" "(

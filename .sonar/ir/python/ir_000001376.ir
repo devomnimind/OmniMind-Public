@@ -1,0 +1,23 @@
+
+
+"criteria"str
+!"Convert to dictionary."str
+
+"status"strselfF F("°.
+,
+H H(data"
+dataclassesasdict:)
+'
+I I(("#get-field# criteria:&
+$
+I I(."#get-field# value:$
+"
+I I(."#array-write#:'
+%
+J J($"#get-field# status:&
+$
+J J(*	"#get-field# value:$
+"
+J J(*"#array-write#:
+	
+K K(*@/home/fahbrain/projects/omnimind/src/security/soc2_compliance.py

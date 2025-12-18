@@ -1,0 +1,134 @@
+
+5src.tools.code_generator.CodeGenerator.generate_agentH
+</home/fahbrain/projects/omnimind/src/tools/code_generator.pyŸ Ÿ("2*Í
+2
+§ ³(
+
+´ ¸(	
+%4"dict›
+˜
+
+µ µ($
+%5"__mapSet*"
+
+__unknown_file (
+
+%4**
+
+__unknown_file (
+
+agent_name**
+
+__unknown_file (
+
+
+agent_name
+š
+
+¶ ¶(&
+%6"__mapSet*"
+
+__unknown_file (
+
+%4*+
+
+__unknown_file (
+description*+
+
+__unknown_file (
+
+description•
+’
+
+· ·(
+%7"__mapSet*"
+
+__unknown_file (
+
+%4*'
+
+__unknown_file (	
+purpose*'
+
+__unknown_file (
+	
+purposeB
+@
+
+´ ¸(	
+params"__id*"
+
+__unknown_file (
+
+%4*
+4
+5*
+4
+½ ½(?èå
+
+½ ½(?
+%1*F
+
+__unknown_file (*(
+&src.tools.code_generator.CodeGenerator*%
+
+__unknown_file (	
+agent*&
+
+__unknown_file (
+
+
+params*+
+
+__unknown_file (
+
+output_file2generate_code"
+
+½ ½(?
+
+%1*½
+5
+» »(<vt
+
+»% »(<
+%2"str.join*"
+
+__unknown_file (
+\n*,
+
+__unknown_file (
+
+capabilities2join®«
+
+» »(<
+%3"dict.__setitem__*&
+
+__unknown_file (
+
+
+params*,
+
+__unknown_file (
+capabilities*"
+
+__unknown_file (
+
+%22__setitem__*
+4:
+
+¡ ¡(
+
+agent_name:
+
+¢ ¢(
+description:
+
+£ £(	
+purpose:
+
+¤ ¤(0
+capabilities:
+
+¥ ¥(*
+output_fileB*(
+&src.tools.code_generator.CodeGeneratorH

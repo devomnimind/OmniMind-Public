@@ -1,0 +1,375 @@
+
+1.0PythonFrontend"1763831837217*py2.B…
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
++
+&src/metacognition/self_optimization.py9
+)
+#src.metacognition.self_optimization11
+
+
+__future__12
+
+logging14
+
+
+statistics16
+
+dataclasses18
+
+datetime20
+
+
+enum22
+
+typing24
+7
+1src.metacognition.self_optimization.Configuration26
+?
+9src.metacognition.self_optimization.Configuration.to_dict28
+
+
+dict30
+0
+*src.metacognition.self_optimization.ABTest32
+C
+=src.metacognition.self_optimization.ABTest.add_control_metric34
+<
+6src.metacognition.self_optimization.PerformanceMetrics36
+E
+?src.metacognition.self_optimization.ABTest.add_treatment_metric38
+8
+2src.metacognition.self_optimization.ABTest.to_dict40
+<
+6src.metacognition.self_optimization.ABTest.get_results42
+D
+>src.metacognition.self_optimization.ABTest.has_sufficient_data44
+
+
+bool46
+>
+8src.metacognition.self_optimization.OptimizationStrategy48
+	
+str50
+
+	enum.Enum52
+F
+@src.metacognition.self_optimization.PerformanceMetrics.get_score54
+
+float56
+D
+>src.metacognition.self_optimization.PerformanceMetrics.to_dict58
+@
+:src.metacognition.self_optimization.SelfOptimizationEngine60
+Q
+Ksrc.metacognition.self_optimization.SelfOptimizationEngine.get_active_tests62
+
+
+list64
+O
+Isrc.metacognition.self_optimization.SelfOptimizationEngine.record_metrics66
+I
+Csrc.metacognition.self_optimization.SelfOptimizationEngine.rollback68
+Z
+Tsrc.metacognition.self_optimization.SelfOptimizationEngine.get_current_configuration70
+X
+Rsrc.metacognition.self_optimization.SelfOptimizationEngine.get_performance_summary72
+M
+Gsrc.metacognition.self_optimization.SelfOptimizationEngine.analyze_test74
+Y
+Ssrc.metacognition.self_optimization.SelfOptimizationEngine.get_optimization_history76
+I
+Csrc.metacognition.self_optimization.SelfOptimizationEngine.__init__78
+O
+Isrc.metacognition.self_optimization.SelfOptimizationEngine.create_ab_test80
+	
+int82
+K
+Esrc.metacognition.self_optimization.SelfOptimizationEngine.start_test84
+[
+Usrc.metacognition.self_optimization.SelfOptimizationEngine.set_baseline_configuration86
+M
+Gsrc.metacognition.self_optimization.SelfOptimizationEngine.apply_winner88
+T
+Nsrc.metacognition.self_optimization.SelfOptimizationEngine.auto_tune_parameter90
+
+tuple92
+:
+4src.metacognition.self_optimization.ExperimentStatus94J
+
+8
+89j‚
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27266 210
+
+29
+29287 227
+
+31
+31306
+
+33
+33326 210
+
+35
+35347 233
+
+37
+37366 210
+
+39
+39387 233
+
+41
+41407 233
+
+43
+43427 233
+
+45
+45447 233
+
+47
+47466
+
+49
+49486 210
+
+51
+51506
+
+53
+53526
+
+55
+55547 237
+
+57
+57566
+
+59
+59587 237
+
+61
+61606 210
+
+63
+63627 261
+
+65
+65646
+
+67
+67667 261
+
+69
+69687 261
+
+71
+71707 261
+
+73
+73727 261
+
+75
+75747 261
+
+77
+77767 261
+
+79
+79787 261
+
+81
+81807 261
+
+83
+83826
+
+85
+85847 261
+
+87
+87867 261
+
+89
+89887 261
+
+91
+91907 261
+
+93
+93926
+
+95
+95946 210rò	
+
+10131*
+8
+ 
+(#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 ()
+
+10211*
+8 (
+
+10231*
+8 (
+
+10251*
+8 (4
+
+29313*
+83	 3(
+
+35374*
+8à	 à(
+
+39374*
+8å	 å(
+
+41313*
+8ƒ	 ƒ(
+
+43313*
+8ó	 ó(
+
+45473*
+8ê	 ê(
+
+49512*
+8 (
+
+49532*
+8 (
+
+55573*
+8I	 I(
+
+59313*
+8i	 i(
+
+63653*
+8„	 „(
+
+67514*
+8°	 °(
+
+67374*
+8°	 °(
+
+67474*
+8°	 °(
+
+69273*
+8˚	 ˚(
+
+69514*
+8˚	 ˚(
+
+73313*
+8Û	 Û( 
+
+75313*
+8ª	 ª(
+
+75514*
+8ª	 ª(
+
+77653*
+8Î	 Î(!
+
+81333*
+8Ï	 Ï(
+
+81514*
+8Ï	 Ï(
+
+81514*
+8Ï	 Ï(
+
+81274*
+8Ï	 Ï(
+
+81574*
+8Ï	 Ï(
+
+81834*
+8Ï	 Ï(
+
+85514*
+8ì	 ì(
+
+87274*
+8„	 „(#
+
+89273*
+8€	 €(
+
+89514*
+8€	 €(
+
+91933*
+8î	 î(
+
+91514*
+8î	 î(
+
+91934*
+8î	 î(
+
+91834*
+8î	 î(
+
+95512*
+8 (
+
+95532*
+8 (

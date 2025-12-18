@@ -1,0 +1,99 @@
+
+2src.multimodal.multi_modal_fusion.MultiModalFusionQ
+E/home/fahbrain/projects/omnimind/src/multimodal/multi_modal_fusion.py¾ ¾("1*š
+2
+Ã È(“
+
+
+É É(0J4
+2src.multimodal.multi_modal_fusion.MultiModalFusion"
+default_strategy"__id*0
+
+__unknown_file (
+
+default_strategy“
+
+
+Ê Ê(0J4
+2src.multimodal.multi_modal_fusion.MultiModalFusion"
+enable_attention"__id*0
+
+__unknown_file (
+
+enable_attention
+
+Ë= Ë(?
+%3"dict
+
+
+Ë Ë(?G4
+2src.multimodal.multi_modal_fusion.MultiModalFusion"
+_fusion_cache"__id*"
+
+__unknown_file (
+
+%3
+
+Ì6 Ì(8
+%4"list†
+ƒ
+
+Ì Ì(8K4
+2src.multimodal.multi_modal_fusion.MultiModalFusion"
+_modality_history"__id*"
+
+__unknown_file (
+
+%4W
+U
+
+Ð Ð(+
+%5"__id*;
+
+__unknown_file (*
+
+default_strategy"
+value¹¶
+
+Î Ò(	
+%6*&
+
+__unknown_file (
+
+
+logger*=
+
+__unknown_file (!
+multimodal_fusion_initialized2info:
+strategy
+
+%5:!
+	attention
+
+enable_attention*
+3*x
+3
+multi_modal_fusion.pyFD
+Ô Ô(
+%2"2src.multimodal.multi_modal_fusion.MultiModalFusion"
+Ô Ô(
+
+%2*Ž
+1
+Á Á(%x
+v
+
+À+ À(@
+%1"__id*\
+
+__unknown_file (@*>2
+0src.multimodal.multi_modal_fusion.FusionStrategy"
+HYBRID*
+2: 
+
+À À(@
+default_strategy: 
+
+Á Á(%
+enable_attentionB64
+2src.multimodal.multi_modal_fusion.MultiModalFusionH

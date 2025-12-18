@@ -12,25 +12,26 @@ Autor: Fabrício da Silva + assistência de IA
 Data: 2025-12-08
 """
 
-import asyncio
 import json
-import sys
-from pathlib import Path
-from datetime import datetime, timezone
-from typing import Dict, List, Any, Optional
-import numpy as np
-from scipy.stats import pearsonr
 
 # Adicionar src ao path
 import os
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, List
+
+import numpy as np
+from scipy.stats import pearsonr
 
 project_root = Path(__file__).parent.parent.parent.resolve()
 sys.path.insert(0, str(project_root))
 os.chdir(project_root)
 
+import torch
+
 from src.consciousness.integration_loop import IntegrationLoop
 from src.consciousness.shared_workspace import SharedWorkspace
-import torch
 
 
 class RNNDynamicsValidator:
@@ -123,14 +124,14 @@ class RNNDynamicsValidator:
             }
 
         state_before = loop.workspace.conscious_system.get_state()
-        rho_C_before = state_before.rho_C.clone()
-        rho_P_before = state_before.rho_P.clone()
-        rho_U_before = state_before.rho_U.clone()
+        _rho_C_before = state_before.rho_C.clone()
+        _rho_P_before = state_before.rho_P.clone()
+        _rho_U_before = state_before.rho_U.clone()
 
         # Execução 1
         result1 = loop.execute_cycle_sync(collect_metrics=True)
         phi1 = result1.phi_estimate
-        state1_after = loop.workspace.conscious_system.get_state()
+        _state1_after = loop.workspace.conscious_system.get_state()
 
         # Resetar para estado antes (aproximado - não temos método exato)
         # Nota: Reset completo requereria salvar/restaurar estado completo do workspace

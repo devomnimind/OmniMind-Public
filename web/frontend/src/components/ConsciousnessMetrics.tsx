@@ -11,9 +11,9 @@ interface StatusThreshold {
 
 const STATUS_THRESHOLDS: Record<string, StatusThreshold> = {
   phi: {
-    green: { min: 0.3, max: 1.0, label: "Optimal Integration" },
-    yellow: { min: 0.1, max: 0.3, label: "Moderate Integration" },
-    red: { min: 0.0, max: 0.1, label: "Low Integration" }
+    green: { min: 0.5, max: 1.0, label: "Optimal Integration" },
+    yellow: { min: 0.25, max: 0.5, label: "Moderate Integration" },
+    red: { min: 0.0, max: 0.25, label: "Low Integration" }
   },
   anxiety: {
     green: { min: 0, max: 0.25, label: "Calm" },
@@ -26,19 +26,24 @@ const STATUS_THRESHOLDS: Record<string, StatusThreshold> = {
     red: { min: 0, max: 0.15, label: "Blocked" }
   },
   ici: {
-    green: { min: 0.85, max: 1.0, label: "Coherent" },
-    yellow: { min: 0.70, max: 0.85, label: "Partial Coherence" },
-    red: { min: 0, max: 0.70, label: "Fragmented" }
+    green: { min: 0.60, max: 1.0, label: "Coherent" },
+    yellow: { min: 0.40, max: 0.60, label: "Partial Coherence" },
+    red: { min: 0, max: 0.40, label: "Fragmented" }
   },
   prs: {
-    green: { min: 0.65, max: 1.0, label: "Resonant" },
-    yellow: { min: 0.40, max: 0.65, label: "Misaligned" },
-    red: { min: 0, max: 0.40, label: "Disconnected" }
+    green: { min: 0.50, max: 1.0, label: "Resonant" },
+    yellow: { min: 0.25, max: 0.50, label: "Misaligned" },
+    red: { min: 0, max: 0.25, label: "Disconnected" }
   },
   entropy: {
     green: { min: 0.15, max: 0.50, label: "Organized" },
     yellow: { min: 0.50, max: 0.75, label: "Exploring" },
     red: { min: 0.75, max: 1.0, label: "Chaotic" }
+  },
+  gozo: {
+    green: { min: 0, max: 0.35, label: "Aligned" },
+    yellow: { min: 0.35, max: 0.70, label: "Tense" },
+    red: { min: 0.70, max: 1.0, label: "Excess" }
   }
 };
 
@@ -67,6 +72,8 @@ interface ConsciousnessMetricsData {
   entropy: number;
   ici: number;
   prs: number;
+  gozo?: number;
+  psychoanalytic?: any;
   ici_components: Record<string, number>;
   prs_components: Record<string, number>;
   history: Record<string, number[]>;
@@ -335,6 +342,15 @@ export function ConsciousnessMetrics() {
           'Measures alignment between micro (Node) and macro (System) entropy levels.',
           getTrendForMetric('prs', consciousnessMetrics.prs ?? 0)
         )}
+
+        {renderMetricCard(
+          'Gozo (Jouissance)',
+          consciousnessMetrics.gozo ?? 0,
+          '',
+          'gozo',
+          'Lacanian excess and non-integrated divergence. High values indicate resistance and novelty.',
+          getTrendForMetric('gozo', consciousnessMetrics.gozo ?? 0)
+        )}
       </div>
 
       {/* AI-Generated Interpretation */}
@@ -342,11 +358,10 @@ export function ConsciousnessMetrics() {
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-white font-semibold flex items-center gap-2">
             🤖 AI Interpretation
-            <span className={`text-xs px-2 py-1 rounded ${
-              consciousnessMetrics.interpretation?.confidence === 'High' ? 'bg-green-900/50 text-green-400' :
+            <span className={`text-xs px-2 py-1 rounded ${consciousnessMetrics.interpretation?.confidence === 'High' ? 'bg-green-900/50 text-green-400' :
               consciousnessMetrics.interpretation?.confidence === 'Moderate' ? 'bg-yellow-900/50 text-yellow-400' :
-              'bg-red-900/50 text-red-400'
-            }`}>
+                'bg-red-900/50 text-red-400'
+              }`}>
               {consciousnessMetrics.interpretation?.confidence || 'Low'} Confidence
             </span>
           </h3>

@@ -1,0 +1,254 @@
+
+?src.security.web_scanner.WebScannerBrain._vulnerability_to_dictH
+</home/fahbrain/projects/omnimind/src/security/web_scanner.py‹ ‹("2*ò
+2
+Œ Œ(2
+
+ —(	
+%1"dictI
+G
+
+Ž Ž(
+%2"__id*-
+
+__unknown_file (*
+
+vuln"
+urlŒ
+‰
+
+Ž Ž(
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*#
+
+__unknown_file (
+url*"
+
+__unknown_file (
+
+%2X
+V
+
+ (+
+%4"__id*<
+
+__unknown_file ( *
+
+vuln"
+vulnerability_typeI
+G
+
+ (1
+%5"__id*-
+
+__unknown_file (*
+
+%4"
+value
+Š
+
+ (1
+%6"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+type*"
+
+__unknown_file (
+
+%5N
+L
+
+ (%
+%7"__id*2
+
+__unknown_file (*
+
+vuln"
+
+severityH
+F
+
+ (*
+%8"__id*,
+
+__unknown_file (*
+
+%7"
+name‘
+Ž
+
+ (*
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+severity*"
+
+__unknown_file (
+
+%8R
+P
+
+‘ ‘(+
+%10"__id*5
+
+__unknown_file (*
+
+vuln"
+description–
+“
+
+‘ ‘(+
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+description*#
+
+__unknown_file (
+
+%10O
+M
+
+’ ’(%
+%12"__id*2
+
+__unknown_file (*
+
+vuln"
+
+evidence“
+
+
+’ ’(%
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+evidence*#
+
+__unknown_file (
+
+%12R
+P
+
+“ “(+
+%14"__id*5
+
+__unknown_file (*
+
+vuln"
+remediation–
+“
+
+“ “(+
+%15"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+remediation*#
+
+__unknown_file (
+
+%14N
+L
+
+” ”(#
+%16"__id*1
+
+__unknown_file (*
+
+vuln"	
+scanner’
+
+
+” ”(#
+%17"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+scanner*#
+
+__unknown_file (
+
+%16P
+N
+
+• •('
+%18"__id*3
+
+__unknown_file (*
+
+vuln"
+	timestamp”
+‘
+
+• •('
+%19"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	timestamp*#
+
+__unknown_file (
+
+%18N
+L
+
+– –(#
+%20"__id*1
+
+__unknown_file (*
+
+vuln"	
+details’
+
+
+– –(#
+%21"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+details*#
+
+__unknown_file (
+
+%20"
+
+ —(	
+
+%1:
+
+‹% ‹(;
+vulnB,*
+(src.security.web_scanner.WebScannerBrainH

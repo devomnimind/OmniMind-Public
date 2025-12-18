@@ -1,0 +1,9 @@
+
+&"Calculate segment duration."strselfr r("è)
+'
+t t("#get-field# end_time:+
+)
+t t(."#get-field# start_time:%
+#
+t t(."	#binop -#*2-:
+t t(.*B/home/fahbrain/projects/omnimind/src/multimodal/audio_processor.py

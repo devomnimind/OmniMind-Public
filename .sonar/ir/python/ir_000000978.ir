@@ -1,0 +1,39 @@
+
+
+"original"str
+ª±"
+        Reformula problema de forma que n√£o seja mais imposs√≠vel.
+
+        Exemplo: "Halting problem" ‚Üí "Approximate halting prediction"
+
+        Args:
+            problem: Problema a reformular
+            attempts: Tentativas anteriores
+
+        Returns:
+            Problema reformulado
+        "str
+
+"reframed"str
+ 	"approximate_{problem}"str
+$"relaxation_of_constraints"str
+
+"approach"strself
+ò ò(problem
+ò ò(+attempts
+ò- ò(@"¶&
+$
+
+• ©(	"#new-object#Bdict"
+ 
+
+¶ ¶("	#map-set#:"
+ 
+
+ß ß(0
+"	#map-set#:	"
+ 
+
+® ®(3"	#map-set#:
+
+• ©(	*</home/fahbrain/projects/omnimind/src/lacanian/godelian_ai.py

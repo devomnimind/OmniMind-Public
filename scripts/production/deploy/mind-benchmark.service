@@ -1,0 +1,22 @@
+[Unit]
+Description=OmniMind Benchmark Suite
+After=network.target mind.service mind-qdrant.service
+Requires=mind.service mind-qdrant.service
+
+[Service]
+Slice=mind.slice
+OOMScoreAdjust=-1000
+Type=simple
+User=fahbrain
+WorkingDirectory=/home/fahbrain/projects/omnimind
+Environment=PATH=/home/fahbrain/projects/omnimind/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+Environment=PYTHONPATH=/home/fahbrain/projects/omnimind
+ExecStartPre=/bin/bash -c 'source /home/fahbrain/projects/omnimind/.venv/bin/activate && mkdir -p /home/fahbrain/projects/omnimind/data/benchmarks'
+ExecStart=/home/fahbrain/projects/omnimind/.venv/bin/python scripts/benchmarks/benchmark_phase21.py
+Restart=no
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=mind-benchmark
+
+[Install]
+WantedBy=multi-user.target

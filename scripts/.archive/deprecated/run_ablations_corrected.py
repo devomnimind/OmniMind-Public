@@ -18,14 +18,24 @@ import json
 import logging
 import sys
 import time
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 from typing import Any, Dict
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler(LOGS_DIR / "ablations_corrected.log"),
+    ],
+)
 logger = logging.getLogger(__name__)
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(PROJECT_ROOT))
+LOGS_DIR = PROJECT_ROOT / "logs"
+LOGS_DIR.mkdir(exist_ok=True)
 
 from src.consciousness.integration_loop import IntegrationLoop
 
@@ -268,7 +278,7 @@ class AblationsCorrected:
 
     def _save_results(self) -> None:
         """Salva resultados."""
-        output_dir = Path("/home/fahbrain/projects/omnimind/data/test_reports")
+        output_dir = PROJECT_ROOT / "data/test_reports"
         output_dir.mkdir(parents=True, exist_ok=True)
 
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

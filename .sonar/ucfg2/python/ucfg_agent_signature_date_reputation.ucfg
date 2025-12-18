@@ -1,0 +1,172 @@
+
+<src.identity.agent_signature.AgentIdentity.update_reputationL
+@/home/fahbrain/projects/omnimind/src/identity/agent_signature.pyÌ Ì("2*‡
+2
+Ï Ù(v
+t
+
+Ú Ú(
+%1"__id*Z
+
+__unknown_file (>*<,
+*src.identity.agent_signature.AgentIdentity"
+
+reputationÓÐ
+
+Ú Ú(P
+%2*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (
+	
+success*-
+
+__unknown_file (
+
+quality_score*.
+
+__unknown_file (
+
+autonomy_level2update_from_taskmk
+
+Û Û(
+%3*J
+
+__unknown_file (.,
+*src.identity.agent_signature.AgentIdentity2_save_statev
+t
+
+Þ# Þ(2
+%4"__id*Z
+
+__unknown_file (>*<,
+*src.identity.agent_signature.AgentIdentity"
+
+reputationQ
+O
+
+Þ# Þ(@
+%5"__id*5
+
+__unknown_file (*
+
+%4"
+overall_scorev
+t
+
+ß ß(&
+%6"__id*Z
+
+__unknown_file (>*<,
+*src.identity.agent_signature.AgentIdentity"
+
+reputationO
+M
+
+ß ß(2
+%7"__id*3
+
+__unknown_file (*
+
+%6"
+total_tasksv
+t
+
+à à(,
+%8"__id*Z
+
+__unknown_file (>*<,
+*src.identity.agent_signature.AgentIdentity"
+
+reputationS
+Q
+
+à à(<
+%9"__id*7
+
+__unknown_file (*
+
+%8"
+task_completionˆ
+…
+
+Þ à(C
+%10"__concat*&
+
+Þ Þ("
+Reputation updated: *
+
+Þ# Þ(@
+
+%5*
+
+ÞE Þ(F
+ *
+
+ß ß(
+
+(tasks: *
+
+ß ß(2
+
+%7*
+
+ß3 ß(5
+, * 
+
+à à(
+success rate: *
+
+à à(<
+
+%9*
+
+àA à(B
+)hf
+
+Ý á(	
+%11*&
+
+__unknown_file (
+
+
+logger*#
+
+__unknown_file (
+
+%102infow
+u
+
+ã ã(
+%12"__id*Z
+
+__unknown_file (>*<,
+*src.identity.agent_signature.AgentIdentity"
+
+reputationS
+Q
+
+ã ã(,
+%13"__id*6
+
+__unknown_file (*
+
+%12"
+overall_score"
+
+ã ã(,
+
+%13:
+
+Í Í(	
+success:
+
+Í Í(1
+quality_score:
+
+Í3 Í(H
+autonomy_levelB.,
+*src.identity.agent_signature.AgentIdentityH

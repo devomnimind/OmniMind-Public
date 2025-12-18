@@ -1,0 +1,109 @@
+
+"0.0float
+
+1int
+"division by zero"bool
+àÖ"
+        Compute frustration from knowledge loss.
+
+        Args:
+            item: Knowledge being lost
+            time_unused: Time since last use
+
+        Returns:
+            Frustration energy (0-1)
+        "str
+10.0float
+ 3.0float
+"S3518"bool
+"a"bool
+
+0int
+1.0floatself
+¹ ¹(item
+¹ ¹(!time_unused
+¹# ¹(9datetime.timezone"è)
+'
+
+É É(0"#unknown-value#Btype&
+$
+
+É# É(/"#get-field# utc:.
+,
+
+É É(0"
+datetime.datetimenow:0
+.
+
+É3 É(E	"#get-field# creation_time:'
+%
+
+É É(E
+"	#binop -#*2-:	3
+1
+
+É É(K
+age_factor"#get-field# days:
+(
+&
+
+Ê$ Ê(8"
+builtinsmax*:,
+*
+
+Ê Ê(8"
+#binop !=#2!=:Bbool"
+ 
+
+Ê Ê(8"
+#assert#:H
+F
+
+Ê Ê(8recency_frustration"#dependent-value#*:Bfloat'
+%
+
+Ì Ì($"#get-field# mass:E
+C
+
+Ì Ì(+mass_frustration"#dependent-value#*:Bfloat,
+*
+
+Ï& Ï(4"#get-field# use_count:$
+"
+
+Ï& Ï(8"	#binop +#2+:(
+&
+
+Ï" Ï(>"
+builtinsmax*:,
+*
+
+Ï Ï(>"
+#binop !=#2!=:Bbool"
+ 
+
+Ï Ï(>"
+#assert#:F
+D
+
+Ï Ï(>usage_frustration"#dependent-value#*:Bfloat1
+/
+
+Ñ Ñ(K"#dependent-value#:Bfloat:
+8
+
+Ñ Ñ(R!total"#dependent-value#*: Bfloat(
+&
+
+Ó Ó(-#"
+builtinsmin*:!(
+&
+
+Ó Ó(.$"
+builtinsmax*:"#0
+.
+
+Ó Ó(/%"
+builtinsfloat*:$Bfloat
+
+Ó Ó(/%*E/home/fahbrain/projects/omnimind/src/motivation/hawking_motivation.py

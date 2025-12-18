@@ -18,12 +18,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
+import hashlib
 import json
 import math
 import os
 import time
-
-import hashlib
 import zlib
 
 LOOP_COUNT = 1_000_000

@@ -1,0 +1,214 @@
+
+"division by zero"bool
+5"max_mb"str
+""max_ms"str
+"total_executions"str
+"S3518"bool
+"a"bool
+E"max_percent"str
+
+0int
+	"mean_ms"str
+"error"str
++	"mean_mb"str
+"No metrics collected"str
+9"cpu"str
+2"min_mb"str
+)"memory"str
+%
+"total_ms"str
+B"min_percent"str
+€w"Get statistical summary of all profiled executions.
+
+        Returns:
+            Dictionary with statistics
+        "str
+"min_ms"str
+"execution_time"str
+;"mean_percent"strself
+ì ì("°2
+0
+
+ò ò(#"#get-field# metrics_history:+
+)
+
+ò ò(#"
+__bool__*:BboolH+
+)
+
+ò ò(#"#unaryop !#2!:Bbool "
+
+ò ò(# *
+ò ò(
+"`&
+$
+
+ó ó(4"#new-object#Bdict"
+ 
+
+ó ó(3	"	#map-set#:
+
+ó ó(4"ë4
+2
+
+õ õ(C
+times"?python-unknown?:Blist7
+5
+
+ö ö(Cmemories"?python-unknown?:Blist3
+1
+
+÷ ÷(<cpus"?python-unknown?:Blist&
+$
+
+ù ‹(	"#new-object#Bdict2
+0
+
+ú$ ú(8"#get-field# metrics_history:,
+*
+
+ú  ú(9"
+builtinslen*:Bint"
+ 
+
+ú ú(9"	#map-set#:&
+$
+
+û €("#new-object#Bdict'
+%
+
+ü ü(%"
+builtinssum*:
+,
+*
+
+ü( ü(2"
+builtinslen*:
+Bint,
+*
+
+ü ü(2"
+#binop !=#2!=:Bbool"
+ 
+
+ü ü(2"
+#assert#:3
+1
+
+ü ü(2"#dependent-value#*:Bfloat"
+ 
+
+ü ü(2"	#map-set#:'
+%
+
+ý ý($ "
+builtinsmin*:
+"
+ 
+
+ý ý($!"	#map-set#: '
+%
+
+þ þ($#"
+builtinsmax*:
+"
+ 
+
+þ þ($$"	#map-set#:"#'
+%
+
+ÿ ÿ(&&"
+builtinssum*:
+"
+ 
+
+ÿ ÿ(&'"	#map-set#:%&"
+ 
+
+û €(("	#map-set#:&
+$
+
+ …(*"#new-object#Bdict'
+%
+
+‚ ‚((,"
+builtinssum*:,
+*
+
+‚+ ‚(8-"
+builtinslen*:Bint,
+*
+
+‚ ‚(8."
+#binop !=#2!=:-Bbool"
+ 
+
+‚ ‚(8/"
+#assert#:.3
+1
+
+‚ ‚(80"#dependent-value#*:,-Bfloat"
+ 
+
+‚ ‚(81"	#map-set#:*+0'
+%
+
+ƒ ƒ('3"
+builtinsmin*:"
+ 
+
+ƒ ƒ('4"	#map-set#:*23'
+%
+
+„ „('6"
+builtinsmax*:"
+ 
+
+„ „('7"	#map-set#:*56"
+ 
+
+ …(8"	#map-set#:)*&
+$
+
+† Š(:"#new-object#Bdict'
+%
+
+‡  ‡()<"
+builtinssum*:,
+*
+
+‡, ‡(5="
+builtinslen*:Bint,
+*
+
+‡  ‡(5>"
+#binop !=#2!=:=Bbool"
+ 
+
+‡  ‡(5?"
+#assert#:>3
+1
+
+‡  ‡(5@"#dependent-value#*:<=Bfloat"
+ 
+
+‡ ‡(5A"	#map-set#::;@'
+%
+
+ˆ ˆ((C"
+builtinsmin*:"
+ 
+
+ˆ ˆ((D"	#map-set#::BC'
+%
+
+‰ ‰((F"
+builtinsmax*:"
+ 
+
+‰ ‰((G"	#map-set#::EF"
+ 
+
+† Š(H"	#map-set#:9:
+
+ù ‹(	*I/home/fahbrain/projects/omnimind/src/optimization/performance_profiler.py

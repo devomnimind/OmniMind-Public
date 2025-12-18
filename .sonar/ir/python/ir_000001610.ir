@@ -1,0 +1,36 @@
+
+/&"Servidor MCP n√£o encontrado: {name}"str
+∞¶"
+        Obt√©m o status atual de um servidor MCP.
+
+        Args:
+            name: Nome do servidor MCP.
+
+        Returns:
+            Status do servidor.
+        "strself
+Ü Ü(name
+Ü  Ü()"É)
+'
+
+ê ê(""#get-field# status:4
+2
+
+ê ê(""#binop not in#2not in:Bbool "
+
+ê ê(" *
+ê ê(
+"yc
+a
+
+ë ë(N"MCPOrchestratorError:B6src.integrations.mcp_orchestrator.MCPOrchestratorError2
+
+ë ë(N"e)
+'
+
+ì ì("#get-field# status:$
+"
+
+ì ì( 	"#array-read#:
+
+ì ì( 	*E/home/fahbrain/projects/omnimind/src/integrations/mcp_orchestrator.py

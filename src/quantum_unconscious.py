@@ -115,8 +115,6 @@ class QuantumUnconscious:
             self.classical_register = ClassicalRegister(n_qubits, "measurement")
             self.circuit = QuantumCircuit(self.quantum_core, self.classical_register)
 
-            # OTIMIZAÇÃO: Usar CPU statevector (GPU é opcional)
-            # CPU statevector é rápido o suficiente para a maioria dos casos
             # OTIMIZAÇÃO GPU: Configurar backend para usar GPU se disponível
             # CRITICAL: Requer qiskit-aer-gpu instalado (não apenas qiskit-aer)
             if GPU_AVAILABLE:
@@ -132,19 +130,16 @@ class QuantumUnconscious:
                     else:
                         raise RuntimeError("No Qiskit backend available")
                 except Exception as e:
-                    # GPU criado mas pode falhar ao executar. Fallback para CPU
-                    logger.warning(
-                        f"⚠️ GPU backend criado mas falhou em runtime: {e}. "
-                        "Usando CPU statevector como fallback."
+                    # NÃO fazer fallback - problema de configuração deve ser corrigido
+                    logger.error(f"❌ CRITICAL: Falha ao configurar Qiskit GPU: {e}")
+                    logger.error("   Verifique:")
+                    logger.error("   1. qiskit-aer-gpu está instalado: pip install qiskit-aer-gpu")
+                    logger.error("   2. Variáveis CUDA configuradas ANTES de importar módulos")
+                    logger.error("   3. CUDA_VISIBLE_DEVICES=0 definido")
+                    logger.error(
+                        "   Consulte: docs/canonical/GUIA_SOLUCAO_PROBLEMAS_AMBIENTE_GPU.md"
                     )
-                    if AerSimulator is not None:
-                        self.backend = AerSimulator(method="statevector")
-                        logger.info("✅ Quantum Backend: Qiskit Aer (CPU Statevector - Fallback)")
-                    elif QasmSimulator is not None:
-                        self.backend = QasmSimulator()
-                        logger.info("✅ Quantum Backend: Qiskit Aer (CPU - Fallback)")
-                    else:
-                        raise RuntimeError("No Qiskit backend available after GPU fallback")
+                    raise RuntimeError(f"Quantum GPU backend failed: {e}")
             else:
                 logger.warning(
                     "⚠️ GPU não detectada para QuantumUnconscious - "
@@ -219,47 +214,20 @@ class QuantumUnconscious:
         self.circuit.measure(self.quantum_core, self.classical_register)
 
         # 5. Executar circuito (nova API Qiskit 1.0+ ou antiga)
-        # CRITICAL: Fazer fallback se GPU falhar em runtime
-        # GPU pode estar configurado na inicialização mas falhar na execução
-        try:
-            if hasattr(self.backend, "run"):
-                # Nova API (Qiskit 1.0+): backend.run()
-                job = self.backend.run(self.circuit, shots=1000)
-                result = job.result()
-                counts = result.get_counts()
-            else:
-                # API antiga: execute()
-                from qiskit import execute  # type: ignore[import-untyped]
+        # CRITICAL: Não fazer fallback - se GPU configurado, deve funcionar
+        # Se falhar, é problema de configuração, não de hardware
+        if hasattr(self.backend, "run"):
+            # Nova API (Qiskit 1.0+): backend.run()
+            job = self.backend.run(self.circuit, shots=1000)
+            result = job.result()
+            counts = result.get_counts()
+        else:
+            # API antiga: execute()
+            from qiskit import execute  # type: ignore[import-untyped]
 
-                job = execute(self.circuit, backend=self.backend, shots=1000)
-                result = job.result()
-                counts = result.get_counts()
-        except RuntimeError as e:
-            # GPU pode falhar em runtime - fallback para CPU
-            if "GPU" in str(e) or "not supported" in str(e):
-                logger.warning(
-                    f"⚠️ GPU falhou em runtime: {e}. " "Usando CPU statevector como fallback."
-                )
-                # Recriar backend sem GPU
-                if AerSimulator is not None:
-                    self.backend = AerSimulator(method="statevector")
-                    logger.info("✅ Fallback: Qiskit Aer (CPU Statevector)")
-                    # Tentar novamente com CPU
-                    if hasattr(self.backend, "run"):
-                        job = self.backend.run(self.circuit, shots=1000)
-                        result = job.result()
-                        counts = result.get_counts()
-                    else:
-                        from qiskit import execute  # type: ignore[import-untyped]
-
-                        job = execute(self.circuit, backend=self.backend, shots=1000)
-                        result = job.result()
-                        counts = result.get_counts()
-                else:
-                    raise RuntimeError(f"GPU fallback failed and no CPU backend available: {e}")
-            else:
-                # Algum outro erro quântico - propagar
-                raise
+            job = execute(self.circuit, backend=self.backend, shots=1000)
+            result = job.result()
+            counts = result.get_counts()
 
         # 6. Selecionar decisão baseada no resultado quântico
         decision = self._select_from_quantum_counts(counts, options)

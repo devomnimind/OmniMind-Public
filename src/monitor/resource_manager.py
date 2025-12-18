@@ -12,6 +12,7 @@ Features:
 - Singleton pattern for global state management
 """
 
+import gc
 import logging
 from typing import Dict, Literal
 
@@ -44,8 +45,67 @@ class HybridResourceManager:
         self.ram_high_threshold = 85.0  # %
         self.vram_high_threshold = 90.0  # %
 
+        # Thresholds de Pânico (Inicia Homeostase)
+        self.vram_panic_threshold = 95.0
+        self.ram_panic_threshold = 95.0
+
+        # Estado de Standby (Ativado durante testes ou alta carga)
+        self.standby_mode = False
+        self._test_mode_detected = False
+
         self._initialized = True
         logger.info(f"HybridResourceManager initialized. GPU: {self.gpu_name}")
+
+    def is_critical_state(self) -> bool:
+        """Verifica se o sistema está em estado crítico de recursos."""
+        stats = self.get_system_status()
+
+        # Se estiver em standby, o threshold de crítico é mais rigoroso para preservar RAM
+        ram_limit = self.ram_panic_threshold if not self.standby_mode else 85.0
+
+        return (
+            stats["vram"] >= self.vram_panic_threshold
+            or stats["ram"] >= ram_limit
+            or (stats["ram"] > 90.0 and stats["swap"] > 80.0)
+        )
+
+    def set_standby_mode(self, enabled: bool, reason: str = "manual"):
+        """Ativa ou desativa o modo standby."""
+        self.standby_mode = enabled
+        if enabled:
+            logger.warning(f"🌙 Standby Mode ATIVADO: {reason}")
+            self.polarize_resources()
+        else:
+            logger.info("☀️ Standby Mode DESATIVADO")
+
+    def polarize_resources(self):
+        """
+        Polariza os recursos do sistema:
+        - Protege serviços críticos na RAM.
+        - Libera memória não essencial (limpeza agressiva).
+        - Incentiva processos de segundo plano (como testes) a usar SWAP.
+        """
+        logger.info("🧪 Polarizando recursos para execução protegida")
+        self.compact_memory()
+
+        # Tentar proteger PID atual (se for o backend principal)
+        import os
+
+        pid = os.get_pid() if hasattr(os, "get_pid") else os.getpid()
+
+        from .systemd_memory_manager import memory_manager
+
+        # Protege o backend principal de swap durante standby
+        memory_manager.protect_memory_from_swap(pid, size_mb=500.0)
+
+    def compact_memory(self):
+        """Executa limpeza agressiva de memória (GC e CUDA Cache)."""
+        logger.warning("🚨 Iniciando compactação de memória (Homeostase)")
+        gc.collect()
+        if self.gpu_available:
+            torch.cuda.empty_cache()
+            torch.cuda.ipc_collect()
+        logger.info("✓ Compactação concluída")
 
     def get_system_status(self) -> Dict[str, float]:
         """Collects real-time system metrics."""
@@ -78,9 +138,39 @@ class HybridResourceManager:
             "cpu": cpu_percent,
             "ram": ram_percent,
             "swap": swap_percent,
-            "gpu_util": gpu_util,  # Placeholder without pynvml
+            "gpu_util": gpu_util,
             "vram": vram_percent,
+            "standby": self.standby_mode,
+            "test_mode": self._detect_test_session(),
         }
+
+    def _detect_test_session(self) -> bool:
+        """Detecta se há uma sessão de teste ativa no sistema."""
+        import os
+
+        if "PYTEST_CURRENT_TEST" in os.environ:
+            return True
+
+        # Busca por processos do pytest ou scripts de teste
+        for proc in psutil.process_iter(["name", "cmdline"]):
+            try:
+                cmd = " ".join(proc.info["cmdline"] or [])
+                if "pytest" in cmd or "run_tests" in cmd:
+                    if not self._test_mode_detected:
+                        logger.warning("🧪 Sessão de teste detectada no sistema!")
+                        self._test_mode_detected = True
+                        self.set_standby_mode(True, reason="automated_test_detection")
+                    return True
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                continue
+
+        if self._test_mode_detected:
+            # Se estava em modo teste e parou
+            self._test_mode_detected = False
+            # Não desativa standby automaticamente aqui para evitar bouncing,
+            # mas o sistema pode reavaliar depois.
+
+        return False
 
     def allocate_task(self, task_type: str, estimated_size_mb: float) -> Literal["cuda", "cpu"]:
         """
@@ -111,6 +201,9 @@ class HybridResourceManager:
 
         # Default behavior based on task type
         if task_type in ["math", "quantum", "tensor"]:
+            # Se VRAM está alta mas não em pânico, ainda tenta CUDA
+            if stats["vram"] > self.vram_high_threshold:
+                return "cpu"
             return "cuda"
 
         return "cpu"

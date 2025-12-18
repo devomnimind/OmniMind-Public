@@ -22,11 +22,12 @@ Contact: fabricioslv@hotmail.com.br
 """Quick Reference: Qiskit Runtime V2 API Patterns."""
 
 import json
-import structlog
 from datetime import datetime
-from qiskit_ibm_runtime import QiskitRuntimeService, Sampler
+
+import structlog
 from qiskit import QuantumCircuit, transpile
 from qiskit_aer import AerSimulator
+from qiskit_ibm_runtime import QiskitRuntimeService, Sampler
 
 logger = structlog.get_logger(__name__)
 

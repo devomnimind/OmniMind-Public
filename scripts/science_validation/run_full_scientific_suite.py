@@ -1,23 +1,22 @@
 import argparse
 import json
-from datetime import datetime
-from pathlib import Path
-from typing import Dict, List, Any
-
-import numpy as np
-from rich import print as rprint
-from tqdm import tqdm
-import psutil
-
-import structlog
 
 # Imports necessários
 import sys
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List
+
+import numpy as np
+import psutil
+import structlog
+from rich import print as rprint
+from tqdm import tqdm
 
 sys.path.append(".")
-from scripts.science_validation.run_scientific_ablations import (
+from scripts.science_validation.run_scientific_ablations import (  # Para consciousness/ablations
     IntegrationLoopSimulator,
-)  # Para consciousness/ablations
+)
 
 # Config structlog
 structlog.configure(

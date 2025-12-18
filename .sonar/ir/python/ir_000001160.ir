@@ -1,0 +1,12 @@
+
+qh"Get current active configuration.
+
+        Returns:
+            Current configuration or None
+        "strself
+Û" Û(&"F2
+0
+
+á á(#"#get-field# _current_config:
+
+á á(#*G/home/fahbrain/projects/omnimind/src/metacognition/self_optimization.py

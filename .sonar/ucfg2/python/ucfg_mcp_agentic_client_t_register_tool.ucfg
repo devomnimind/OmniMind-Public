@@ -1,0 +1,97 @@
+
+Bsrc.integrations.mcp_agentic_client.MCPAgenticClient.register_toolS
+G/home/fahbrain/projects/omnimind/src/integrations/mcp_agentic_client.py˙ ˙("2*ß
+2
+˚ Ä({
+y
+
+Å Å(
+%2"__id*_
+
+__unknown_file (C*A6
+4src.integrations.mcp_agentic_client.MCPAgenticClient"
+toolsM
+K
+
+Å Å(
+%3"__id*1
+
+__unknown_file (*
+
+tool"	
+tool_id¢ü
+
+Å Å('
+%1"dict.__setitem__*"
+
+__unknown_file (
+
+%2*"
+
+__unknown_file (
+
+%3*$
+
+__unknown_file (
+
+tool2__setitem__J
+H
+
+Ç) Ç(2
+%4"__id*.
+
+__unknown_file (*
+
+tool"
+nameM
+K
+
+Ç6 Ç(B
+%5"__id*1
+
+__unknown_file (*
+
+tool"	
+tool_idõ
+ò
+
+Ç Ç(E
+%6"__concat*#
+
+Ç Ç((
+Registered tool: *
+
+Ç) Ç(2
+
+%4*
+
+Ç3 Ç(5
+ (*
+
+Ç6 Ç(B
+
+%5*
+
+ÇC Ç(D
+)ge
+
+Ç Ç(F
+%7*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%62debug*
+3*=
+3
+mcp_agentic_client.py"
+Ñ Ñ(
+implicit return:
+
+˙ ˙()
+toolB86
+4src.integrations.mcp_agentic_client.MCPAgenticClientH

@@ -7,12 +7,14 @@ Move documentos identificados como resolvidos para archive/docs/resolvidos_2025-
 
 import json
 import shutil
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 DOCS_DIR = PROJECT_ROOT / "docs"
-ARCHIVE_DIR = PROJECT_ROOT / "archive" / "docs" / f"resolvidos_{datetime.now().strftime('%Y-%m-%d')}"
+ARCHIVE_DIR = (
+    PROJECT_ROOT / "archive" / "docs" / f"resolvidos_{datetime.now().strftime('%Y-%m-%d')}"
+)
 JSON_PATH = DOCS_DIR / "VARREDURA_COMPLETA_20251207.json"
 
 
@@ -92,4 +94,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

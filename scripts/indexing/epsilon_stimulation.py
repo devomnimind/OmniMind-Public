@@ -4,15 +4,6 @@ Epsilon Desire Stimulation Script
 =================================
 Simulação do loop autopoietico onde a ação não é ditada apenas por triggers externos,
 mas por uma variável interna de desejo (ε) que mede a insatisfação e potencial latente.
-
-UBUNTU 22.04.5 COMPATIBLE:
-  - Python 3.12.12 ✓
-  - GPU-ready: PyTorch 2.5.1+cu121, Qiskit Aer-GPU 0.15.1 ✓
-  - systemd services (qdrant, redis, postgresql) ✓
-
-Ativação venv:
-  source /home/fahbrain/projects/omnimind/.venv/bin/activate
-  python3 scripts/indexing/epsilon_stimulation.py
 """
 
 import logging
@@ -20,29 +11,46 @@ import sys
 import time
 from pathlib import Path
 
-# Imports de produção - módulos reais de autopoiético
-from src.autopoietic.desire_engine import DesireEngine
+# Add src to path
+# Add src to path
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+LOGS_DIR = PROJECT_ROOT / "logs"
+LOGS_DIR.mkdir(exist_ok=True)
+sys.path.append(str(PROJECT_ROOT))
 
-# ============================================================================
-# SETUP PROJECT ROOT (UBUNTU 22.04.5 COMPATIBLE)
-# ============================================================================
-# FIX: scripts/indexing/ → go up 3 levels to /omnimind/
-PROJECT_ROOT = Path(__file__).parent.parent.parent
-sys.path.insert(0, str(PROJECT_ROOT / "src"))
+# Mock imports para simular a estrutura se os arquivos reais não existirem no ambiente
+ArtGenerator = None
+DesireEngine = None
+
+try:
+    from src.autopoietic.art_generator import ArtGenerator
+    from src.autopoietic.desire_engine import DesireEngine
+except ImportError:
+    # Fallback: módulos não disponíveis neste ambiente
+    pass
 
 # Setup Logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler(LOGS_DIR / "epsilon_stimulation.log"),
+    ],
+)
 logger = logging.getLogger("OmniMind_Core")
 
-logger.info(f"📂 PROJECT_ROOT: {PROJECT_ROOT}")
-logger.info(f"🐍 Python: {sys.version}")
-logger.info("✅ Imports from src/ successful - Production modules loaded")
+if ArtGenerator is None:
+    logger.warning("⚠️ Autopoietic modules not available - using stubs only")
 
 
 def main():
     logger.info("🌌 Initializing OmniMind with Epsilon Desire Architecture...")
 
     # Inicialização dos Módulos
+    if DesireEngine is None:
+        logger.error("DesireEngine não disponível")
+        return
     desire_engine = DesireEngine(max_phi_theoretical=1.5)  # Phi teórico > 1.0
 
     # Estado do Sistema Simulado

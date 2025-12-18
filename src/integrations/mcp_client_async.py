@@ -23,6 +23,12 @@ else:
     except ImportError:
         httpx = None
 
+from src.integrations.mcp_connection_handler import (
+    ConnectionConfig,
+    MCPConnectionHandler,
+    MCPPipeError,
+)
+
 logger = logging.getLogger(__name__)
 
 
@@ -48,17 +54,19 @@ class AsyncMCPClient:
     def __init__(
         self,
         endpoint: str = "http://127.0.0.1:4321/mcp",
-        timeout: float = 30.0,
-        max_retries: int = 3,
+        timeout: float = 60.0,
+        max_retries: int = 5,
         retry_backoff: float = 1.0,
+        connection_handler: Optional[MCPConnectionHandler] = None,
     ) -> None:
-        """Initialize async MCP client.
+        """Initialize async MCP client with robust connection handling.
 
         Args:
             endpoint: MCP server endpoint URL
-            timeout: Request timeout in seconds
-            max_retries: Maximum number of retry attempts
+            timeout: Request timeout in seconds (increased to 60s)
+            max_retries: Maximum number of retry attempts (increased to 5)
             retry_backoff: Initial backoff time for retries (doubles each retry)
+            connection_handler: Custom connection handler for robust error handling
         """
         if httpx is None:
             raise RuntimeError(
@@ -69,6 +77,19 @@ class AsyncMCPClient:
         self.timeout = timeout
         self.max_retries = max_retries
         self.retry_backoff = retry_backoff
+
+        # Use robust connection handler with optimized defaults
+        if connection_handler is None:
+            config = ConnectionConfig(
+                request_timeout=timeout,
+                max_retries=max_retries,
+                retry_backoff_base=retry_backoff,
+            )
+            self.connection_handler = MCPConnectionHandler(config)
+        else:
+            self.connection_handler = connection_handler
+
+        self.server_name = endpoint.split("/")[-2] if "/" in endpoint else endpoint
         self._client: Optional[httpx.AsyncClient] = None
         self._headers = {"Content-Type": "application/json"}
 
@@ -82,16 +103,23 @@ class AsyncMCPClient:
         await self.close()
 
     async def connect(self) -> None:
-        """Establish connection pool."""
+        """Establish connection pool with robust settings."""
         if self._client is None:
+            # Get optimized connection parameters from handler
+            conn_params = self.connection_handler.get_connection_params(self.server_name)
+
             self._client = httpx.AsyncClient(
-                timeout=httpx.Timeout(self.timeout),
+                timeout=httpx.Timeout(
+                    connect=conn_params["connection_timeout"],
+                    read=conn_params["read_timeout"],
+                    write=conn_params["read_timeout"],
+                ),
                 limits=httpx.Limits(
-                    max_keepalive_connections=5,
-                    max_connections=10,
+                    max_keepalive_connections=conn_params["max_keepalive_connections"],
+                    max_connections=conn_params["max_connections"],
                 ),
             )
-            logger.info(f"AsyncMCPClient connected to {self.endpoint}")
+            logger.info(f"AsyncMCPClient connected to {self.endpoint} with robust settings")
 
     async def close(self) -> None:
         """Close connection pool."""
@@ -153,11 +181,21 @@ class AsyncMCPClient:
             "id": request_id,
         }
 
-        last_exception: MCPTimeoutError | MCPConnectionError | MCPClientError | None = None
-        backoff = self.retry_backoff
+        last_exception: Exception | None = None
 
         for attempt in range(self.max_retries):
             try:
+                # Check if should retry based on connection handler
+                if last_exception and attempt > 0:
+                    should_retry, retry_backoff = self.connection_handler.should_retry(
+                        self.server_name, last_exception
+                    )
+                    if not should_retry:
+                        raise last_exception
+
+                    # Use connection handler's backoff calculation
+                    await asyncio.sleep(retry_backoff)
+
                 logger.debug(f"MCP request {method} (attempt {attempt + 1}/{self.max_retries})")
 
                 response = await self._client.post(
@@ -176,38 +214,54 @@ class AsyncMCPClient:
                 response_payload = response.json()
                 self._validate_response(response_payload)
 
+                # Record success
+                self.connection_handler.record_success(self.server_name)
+
                 logger.debug(f"MCP request {method} succeeded")
                 return response_payload["result"]
 
             except httpx.TimeoutException as exc:
-                last_exception = MCPTimeoutError(f"Request timed out after {self.timeout}s: {exc}")
+                timeout_error = MCPTimeoutError(f"Request timed out after {self.timeout}s: {exc}")
+                last_exception = timeout_error
                 logger.warning(f"MCP timeout (attempt {attempt + 1}): {exc}")
 
             except httpx.ConnectError as exc:
-                last_exception = MCPConnectionError(f"Connection failed: {exc}")
+                conn_error = MCPConnectionError(f"Connection failed: {exc}")
+                last_exception = conn_error
                 logger.warning(f"MCP connection error (attempt {attempt + 1}): {exc}")
 
             except httpx.HTTPStatusError as exc:
-                last_exception = MCPClientError(
+                http_error = MCPClientError(
                     f"HTTP error: {exc.response.status_code} {exc.response.reason_phrase}"
                 )
+                last_exception = http_error
                 logger.warning(f"MCP HTTP error (attempt {attempt + 1}): {exc}")
 
-            except MCPConnectionError as exc:
-                last_exception = exc
-                logger.warning(f"MCP connection error (attempt {attempt + 1}): {exc}")
+            except OSError as exc:
+                # Handle Broken pipe (errno 32) specifically
+                if hasattr(exc, "errno") and exc.errno == 32:  # EPIPE
+                    pipe_error = MCPPipeError(f"Broken pipe: {exc}", exc.errno)
+                    last_exception = pipe_error
+                    logger.warning(f"MCP Broken pipe (attempt {attempt + 1}): {exc}")
+                else:
+                    last_exception = exc
+                    logger.warning(f"MCP OS error (attempt {attempt + 1}): {exc}")
 
             except (MCPProtocolError, MCPClientError) as exc:
                 # Don't retry protocol errors
                 logger.error(f"MCP protocol error: {exc}")
                 raise
 
-            # Exponential backoff before retry
-            if attempt < self.max_retries - 1:
-                await asyncio.sleep(backoff)
-                backoff *= 2
+            except Exception as exc:
+                # Catch-all for unexpected errors
+                last_exception = exc
+                logger.warning(f"MCP unexpected error (attempt {attempt + 1}): {exc}")
 
-        # All retries exhausted
+            # If it's the last attempt and we have an exception, raise it
+            if attempt == self.max_retries - 1 and last_exception:
+                raise last_exception
+
+        # This shouldn't be reached, but for safety
         if last_exception:
             raise last_exception
         raise MCPClientError(f"Request failed after {self.max_retries} retries")
@@ -306,14 +360,37 @@ class AsyncMCPClient:
         return dict(result)
 
     async def health_check(self) -> bool:
-        """Check MCP server health.
+        """Check MCP server health with circuit breaker awareness.
 
         Returns:
             True if server is healthy, False otherwise
         """
         try:
+            # Check circuit breaker status first
+            status = self.connection_handler.get_status(self.server_name)
+            if status["circuit_open"]:
+                logger.warning(f"MCP circuit breaker open for {self.server_name}")
+                return False
+
             await self.get_metrics()
             return True
         except Exception as exc:
             logger.warning(f"MCP health check failed: {exc}")
             return False
+
+    def get_connection_status(self) -> Dict[str, Any]:
+        """Get detailed connection status including circuit breaker info.
+
+        Returns:
+            Dict with connection and circuit breaker status
+        """
+        return {
+            "endpoint": self.endpoint,
+            "server_name": self.server_name,
+            "circuit_breaker": self.connection_handler.get_status(self.server_name),
+            "config": {
+                "timeout": self.timeout,
+                "max_retries": self.max_retries,
+                "retry_backoff": self.retry_backoff,
+            },
+        }

@@ -4,13 +4,13 @@ CONTROLE DO MONITOR CONTÍNUO
 Iniciar, parar e verificar status do monitoramento.
 """
 
-import subprocess
-import signal
-import os
-import sys
-from pathlib import Path
 import json
+import os
+import signal
+import subprocess
+import sys
 import time
+from pathlib import Path
 
 
 class MonitorController:

@@ -1,0 +1,244 @@
+
+Dsrc.observability.performance_analyzer.PerformanceBottleneck.to_dictT
+J/home/fahbrain/projects/omnimind/src/observability/performance_analyzer.pyJ J("2*¯
+2K K($
+L W(	
+%1"dictŠ
+‡
+M M(*
+%2"__id*o
+
+__unknown_file (S*Q>
+<src.observability.performance_analyzer.PerformanceBottleneck"
+function_name
+Œ
+M M(*
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+function*"
+
+__unknown_file (
+
+%2…
+‚
+N N(!
+%4"__id*j
+
+__unknown_file (N*L>
+<src.observability.performance_analyzer.PerformanceBottleneck"
+
+filename‹
+ˆ
+N N(!
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+file*"
+
+__unknown_file (
+
+%4…
+‚
+O O(%
+%6"__id*j
+
+__unknown_file (N*L>
+<src.observability.performance_analyzer.PerformanceBottleneck"
+
+categoryG
+E
+O O(+
+%7"__id*-
+
+__unknown_file (*
+
+%6"
+value
+Œ
+O O(+
+%8"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+category*"
+
+__unknown_file (
+
+%7…
+‚
+P P(%
+%9"__id*j
+
+__unknown_file (N*L>
+<src.observability.performance_analyzer.PerformanceBottleneck"
+
+severityH
+F
+P P(+
+%10"__id*-
+
+__unknown_file (*
+
+%9"
+value‘
+Ž
+P P(+
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+severity*#
+
+__unknown_file (
+
+%10
+
+Q" Q(9
+%12"__id*t
+
+__unknown_file (X*V>
+<src.observability.performance_analyzer.PerformanceBottleneck"
+cumulative_time_ms›
+˜
+Q Q(9
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*2
+
+__unknown_file (
+cumulative_time_ms*#
+
+__unknown_file (
+
+%12ˆ
+…
+R R()
+%14"__id*l
+
+__unknown_file (P*N>
+<src.observability.performance_analyzer.PerformanceBottleneck"
+
+call_count“
+
+R R()
+%15"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+call_count*#
+
+__unknown_file (
+
+%14Ž
+‹
+S  S(5
+%16"__id*r
+
+__unknown_file (V*T>
+<src.observability.performance_analyzer.PerformanceBottleneck"
+per_call_time_ms™
+–
+S S(5
+%17"__mapSet*"
+
+__unknown_file (
+
+%1*0
+
+__unknown_file (
+per_call_time_ms*#
+
+__unknown_file (
+
+%16‘
+Ž
+T# T(;
+%18"__id*u
+
+__unknown_file (Y*W>
+<src.observability.performance_analyzer.PerformanceBottleneck"
+percentage_of_totalœ
+™
+T T(;
+%19"__mapSet*"
+
+__unknown_file (
+
+%1*3
+
+__unknown_file (
+percentage_of_total*#
+
+__unknown_file (
+
+%18Œ
+‰
+U U(1
+%20"__id*p
+
+__unknown_file (T*R>
+<src.observability.performance_analyzer.PerformanceBottleneck"
+recommendation—
+”
+U U(1
+%21"__mapSet*"
+
+__unknown_file (
+
+%1*.
+
+__unknown_file (
+recommendation*#
+
+__unknown_file (
+
+%20…
+‚
+V V(#
+%22"__id*i
+
+__unknown_file (M*K>
+<src.observability.performance_analyzer.PerformanceBottleneck"	
+details
+
+V V(#
+%23"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+details*#
+
+__unknown_file (
+
+%22"
+L W(	
+
+%1B@>
+<src.observability.performance_analyzer.PerformanceBottleneckH

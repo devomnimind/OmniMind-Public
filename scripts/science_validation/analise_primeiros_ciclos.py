@@ -28,8 +28,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy import stats
 
 # Adiciona src ao path
@@ -43,6 +43,7 @@ logger = logging.getLogger(__name__)
 # Imports opcionais para visualizações avançadas
 try:
     from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
+
     HAS_3D = True
 except ImportError:
     HAS_3D = False
@@ -50,6 +51,7 @@ except ImportError:
 
 try:
     import pandas as pd
+
     HAS_PANDAS = True
 except ImportError:
     HAS_PANDAS = False
@@ -99,7 +101,13 @@ class PrimeirosCiclosAnalyzer:
             raise ValueError("collect_every deve ser >= 1")
         if error_handling not in ["continue", "stop", "retry"]:
             raise ValueError("error_handling deve ser 'continue', 'stop' ou 'retry'")
-        if behavior_analysis_method not in ["variance", "clusters", "trajectory", "surprisal", "all"]:
+        if behavior_analysis_method not in [
+            "variance",
+            "clusters",
+            "trajectory",
+            "surprisal",
+            "all",
+        ]:
             raise ValueError(
                 "behavior_analysis_method deve ser 'variance', 'clusters', 'trajectory', 'surprisal' ou 'all'"
             )
@@ -173,8 +181,16 @@ class PrimeirosCiclosAnalyzer:
                 if cycle_num % self.collect_every == 0:
                     metrics = {
                         "cycle": cycle_num,
-                        "gozo": result.gozo if hasattr(result, "gozo") and result.gozo is not None else None,
-                        "delta": result.delta if hasattr(result, "delta") and result.delta is not None else None,
+                        "gozo": (
+                            result.gozo
+                            if hasattr(result, "gozo") and result.gozo is not None
+                            else None
+                        ),
+                        "delta": (
+                            result.delta
+                            if hasattr(result, "delta") and result.delta is not None
+                            else None
+                        ),
                         "control_effectiveness": (
                             result.control_effectiveness
                             if hasattr(result, "control_effectiveness")
@@ -183,10 +199,14 @@ class PrimeirosCiclosAnalyzer:
                         ),
                         "phi": result.phi_estimate if hasattr(result, "phi_estimate") else None,
                         "psi": (
-                            result.psi if hasattr(result, "psi") and result.psi is not None else None
+                            result.psi
+                            if hasattr(result, "psi") and result.psi is not None
+                            else None
                         ),
                         "sigma": (
-                            result.sigma if hasattr(result, "sigma") and result.sigma is not None else None
+                            result.sigma
+                            if hasattr(result, "sigma") and result.sigma is not None
+                            else None
                         ),
                         "imagination_shape": (
                             result.imagination_output.shape
@@ -217,7 +237,9 @@ class PrimeirosCiclosAnalyzer:
                     logger.error(f"Parando execução após erro no ciclo {cycle_num}")
                     break
                 elif self.error_handling == "retry" and self.error_count <= self.max_retries:
-                    logger.warning(f"Tentando novamente ciclo {cycle_num} (tentativa {self.error_count}/{self.max_retries})")
+                    logger.warning(
+                        f"Tentando novamente ciclo {cycle_num} (tentativa {self.error_count}/{self.max_retries})"
+                    )
                     await asyncio.sleep(1)  # Backoff simples
                     continue
                 # else: "continue" - continua mesmo com erro
@@ -234,7 +256,9 @@ class PrimeirosCiclosAnalyzer:
         gozo_vals = [r["gozo"] for r in self.results if r["gozo"] is not None]
         delta_vals = [r["delta"] for r in self.results if r["delta"] is not None]
         control_vals = [
-            r["control_effectiveness"] for r in self.results if r["control_effectiveness"] is not None
+            r["control_effectiveness"]
+            for r in self.results
+            if r["control_effectiveness"] is not None
         ]
         phi_vals = [r["phi"] for r in self.results if r["phi"] is not None]
         psi_vals = [r["psi"] for r in self.results if r["psi"] is not None]
@@ -267,10 +291,12 @@ class PrimeirosCiclosAnalyzer:
 
         # Análise de convergência (regressão linear)
         if len(gozo_vals) > 5:
-            gozo_slope, gozo_intercept, gozo_r, gozo_p, _ = stats.linregress(cycles[: len(gozo_vals)], gozo_vals)
+            gozo_slope, gozo_intercept, gozo_r, gozo_p, _ = stats.linregress(
+                cycles[: len(gozo_vals)], gozo_vals
+            )
             analysis["gozo_convergence"] = {
                 "slope": float(gozo_slope),
-                "r_squared": float(gozo_r ** 2),
+                "r_squared": float(gozo_r**2),
                 "p_value": float(gozo_p),
                 "converging": gozo_slope < 0,  # Deve diminuir
             }
@@ -281,7 +307,7 @@ class PrimeirosCiclosAnalyzer:
             )
             analysis["delta_convergence"] = {
                 "slope": float(delta_slope),
-                "r_squared": float(delta_r ** 2),
+                "r_squared": float(delta_r**2),
                 "p_value": float(delta_p),
                 "converging": delta_slope < 0,  # Deve diminuir
             }
@@ -292,7 +318,7 @@ class PrimeirosCiclosAnalyzer:
             )
             analysis["control_convergence"] = {
                 "slope": float(control_slope),
-                "r_squared": float(control_r ** 2),
+                "r_squared": float(control_r**2),
                 "p_value": float(control_p),
                 "converging": control_slope > 0,  # Deve aumentar
             }
@@ -320,7 +346,9 @@ class PrimeirosCiclosAnalyzer:
         gozo_vals = [r["gozo"] for r in self.results if r["gozo"] is not None]
         delta_vals = [r["delta"] for r in self.results if r["delta"] is not None]
         control_vals = [
-            r["control_effectiveness"] for r in self.results if r["control_effectiveness"] is not None
+            r["control_effectiveness"]
+            for r in self.results
+            if r["control_effectiveness"] is not None
         ]
         phi_vals = [r["phi"] for r in self.results if r["phi"] is not None]
 
@@ -330,7 +358,9 @@ class PrimeirosCiclosAnalyzer:
 
         # Gozo
         if gozo_vals:
-            axes[0].plot(cycles[: len(gozo_vals)], gozo_vals, "r-", label="Gozo (Divergência)", linewidth=2)
+            axes[0].plot(
+                cycles[: len(gozo_vals)], gozo_vals, "r-", label="Gozo (Divergência)", linewidth=2
+            )
             axes[0].axhline(y=0.5, color="k", linestyle="--", alpha=0.3, label="Referência 0.5")
             axes[0].set_ylabel("Gozo", fontsize=10)
             axes[0].set_ylim(0, 1)
@@ -340,7 +370,9 @@ class PrimeirosCiclosAnalyzer:
 
         # Delta
         if delta_vals:
-            axes[1].plot(cycles[: len(delta_vals)], delta_vals, "b-", label="Delta (Bloqueios)", linewidth=2)
+            axes[1].plot(
+                cycles[: len(delta_vals)], delta_vals, "b-", label="Delta (Bloqueios)", linewidth=2
+            )
             axes[1].axhline(y=0.5, color="k", linestyle="--", alpha=0.3, label="Referência 0.5")
             axes[1].set_ylabel("Delta", fontsize=10)
             axes[1].set_ylim(0, 1)
@@ -366,7 +398,9 @@ class PrimeirosCiclosAnalyzer:
 
         # Phi (se disponível
         if phi_vals:
-            axes[3].plot(cycles[: len(phi_vals)], phi_vals, "m-", label="Φ (Integração)", linewidth=2)
+            axes[3].plot(
+                cycles[: len(phi_vals)], phi_vals, "m-", label="Φ (Integração)", linewidth=2
+            )
             axes[3].set_ylabel("Φ", fontsize=10)
             axes[3].set_xlabel("Ciclo", fontsize=10)
             axes[3].legend()
@@ -389,9 +423,7 @@ class PrimeirosCiclosAnalyzer:
             return None
 
         imagination_outputs = [
-            r["imagination_shape"]
-            for r in self.results
-            if r.get("imagination_shape") is not None
+            r["imagination_shape"] for r in self.results if r.get("imagination_shape") is not None
         ]
 
         if not imagination_outputs or len(imagination_outputs) < 5:
@@ -457,7 +489,14 @@ class PrimeirosCiclosAnalyzer:
                     r["control_effectiveness"]
                     for r in self.results
                     if r.get("control_effectiveness") is not None
-                ][: min(len(cycles), len([r for r in self.results if r.get("control_effectiveness") is not None]))],
+                ][
+                    : min(
+                        len(cycles),
+                        len(
+                            [r for r in self.results if r.get("control_effectiveness") is not None]
+                        ),
+                    )
+                ],
                 "phi": phi_vals[: min(len(phi_vals), len(cycles))],
                 "psi": psi_vals[: min(len(psi_vals), len(cycles))],
                 "sigma": sigma_vals[: min(len(sigma_vals), len(cycles))],
@@ -473,12 +512,14 @@ class PrimeirosCiclosAnalyzer:
             ax.set_yticks(range(len(corr_matrix.columns)))
             ax.set_xticklabels(corr_matrix.columns, rotation=45, ha="right")
             ax.set_yticklabels(corr_matrix.columns)
-            ax.set_title("Matriz de Correlação - Métricas de Consciência", fontsize=14, fontweight="bold")
+            ax.set_title(
+                "Matriz de Correlação - Métricas de Consciência", fontsize=14, fontweight="bold"
+            )
 
             # Adicionar valores na matriz
             for i in range(len(corr_matrix.columns)):
                 for j in range(len(corr_matrix.columns)):
-                    text = ax.text(
+                    _text = ax.text(
                         j,
                         i,
                         f"{corr_matrix.iloc[i, j]:.2f}",
@@ -604,7 +645,10 @@ class PrimeirosCiclosAnalyzer:
         return validation
 
     def _save_results(
-        self, analysis: Dict[str, Any], validation: Dict[str, Any], behavior_analysis: Optional[Dict[str, Any]] = None
+        self,
+        analysis: Dict[str, Any],
+        validation: Dict[str, Any],
+        behavior_analysis: Optional[Dict[str, Any]] = None,
     ):
         """Salva resultados em JSON e CSV."""
         output_file = self.output_dir / "primeiros_ciclos_resultados.json"
@@ -705,7 +749,9 @@ class PrimeirosCiclosAnalyzer:
                 f.write(f"- Observado: {hyp_data.get('observed', 'N/A')}\n")
                 if "p_value" in hyp_data:
                     f.write(f"- p-value: {hyp_data['p_value']:.4f}\n")
-                f.write(f"- Validado: {'✅ SIM' if hyp_data.get('validated', False) else '❌ NÃO'}\n\n")
+                f.write(
+                    f"- Validado: {'✅ SIM' if hyp_data.get('validated', False) else '❌ NÃO'}\n\n"
+                )
 
             if behavior_analysis:
                 f.write("## 🧠 Análise de Comportamento Emergente\n\n")
@@ -791,4 +837,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-

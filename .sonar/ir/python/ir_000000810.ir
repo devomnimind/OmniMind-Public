@@ -1,0 +1,67 @@
+
+tk"
+        Get alerting statistics.
+
+        Returns:
+            Dict containing alert statistics
+        "str
+"total_alerts"str
+"active_alerts"str
+"by_category"str
+"by_severity"str
+"critical_active"strself
+é é("›&
+$
+
+ð ü(	"#new-object#Bdict(
+&
+
+ñ ñ(&"#get-field# stats:$
+"
+
+ñ ñ(6"#array-read#:"
+ 
+
+ñ ñ(6"	#map-set#:0
+.
+
+ò! ò(3	"#get-field# active_alerts:,
+*
+
+ò ò(4
+"
+builtinslen*:	Bint"
+ 
+
+ò ò(4"	#map-set#:
+(
+&
+
+ó ó(%"#get-field# stats:$
+"
+
+ó ó(4"#array-read#:"
+ 
+
+ó ó(4"	#map-set#:(
+&
+
+ô ô(%"#get-field# stats:$
+"
+
+ô ô(4"#array-read#:"
+ 
+
+ô ô(4"	#map-set#:-
++
+
+ö ú("?python-unknown?:Blist,
+*
+
+õ û("
+builtinslen*:Bint"
+ 
+
+õ û("	#map-set#:
+
+ð ü(	*=/home/fahbrain/projects/omnimind/src/audit/alerting_system.py

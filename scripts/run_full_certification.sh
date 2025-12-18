@@ -1,0 +1,1 @@
+canonical/test/run_full_certification.sh

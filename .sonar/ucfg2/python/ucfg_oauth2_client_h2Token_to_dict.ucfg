@@ -1,0 +1,140 @@
+
+2src.integrations.oauth2_client.OAuth2Token.to_dictL
+B/home/fahbrain/projects/omnimind/src/integrations/oauth2_client.pyF F("2*û
+2G G($
+H O(	
+%1"dictv
+t
+I I(-
+%2"__id*\
+
+__unknown_file (@*>,
+*src.integrations.oauth2_client.OAuth2Token"
+access_token“
+
+I I(-
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*,
+
+__unknown_file (
+access_token*"
+
+__unknown_file (
+
+%2t
+r
+J J()
+%4"__id*Z
+
+__unknown_file (>*<,
+*src.integrations.oauth2_client.OAuth2Token"
+
+token_type‘
+Ž
+J J()
+%5"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+token_type*"
+
+__unknown_file (
+
+%4t
+r
+K K()
+%6"__id*Z
+
+__unknown_file (>*<,
+*src.integrations.oauth2_client.OAuth2Token"
+
+expires_in‘
+Ž
+K K()
+%7"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+expires_in*"
+
+__unknown_file (
+
+%6w
+u
+L L(/
+%8"__id*]
+
+__unknown_file (A*?,
+*src.integrations.oauth2_client.OAuth2Token"
+refresh_token”
+‘
+L L(/
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*-
+
+__unknown_file (
+refresh_token*"
+
+__unknown_file (
+
+%8p
+n
+M M(
+%10"__id*U
+
+__unknown_file (9*7,
+*src.integrations.oauth2_client.OAuth2Token"
+scopeŽ
+‹
+M M(
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*%
+
+__unknown_file (	
+scope*#
+
+__unknown_file (
+
+%10t
+r
+N N('
+%12"__id*Y
+
+__unknown_file (=*;,
+*src.integrations.oauth2_client.OAuth2Token"
+	issued_at’
+
+N N('
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	issued_at*#
+
+__unknown_file (
+
+%12"
+H O(	
+
+%1B.,
+*src.integrations.oauth2_client.OAuth2TokenH

@@ -1,0 +1,343 @@
+
+1.0PythonFrontend"1763831825947*py2.Bì
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+'
+"src/lacanian/computational_lack.py9
+%
+src.lacanian.computational_lack11
+
+
+__future__12
+
+typing14
+
+dataclasses16
+
+
+enum18
+
+random20
+
+torch22
+
+logging24
+7
+1src.lacanian.computational_lack.FrustrationSignal26
+I
+Csrc.lacanian.computational_lack.FrustrationSignal.productive_energy28
+
+float30
+>
+8src.lacanian.computational_lack.ComputationalFrustration32
+O
+Isrc.lacanian.computational_lack.ComputationalFrustration._select_strategy34
+	
+str36
+
+
+list38
+G
+Asrc.lacanian.computational_lack.ComputationalFrustration.__init__40
+Y
+Ssrc.lacanian.computational_lack.ComputationalFrustration.generate_creative_response42
+
+
+dict44
+Q
+Ksrc.lacanian.computational_lack.ComputationalFrustration.detect_frustration46
+	
+int48
+2
+,src.lacanian.computational_lack.ObjectSmallA50
+@
+:src.lacanian.computational_lack.ObjectSmallA.__post_init__52
+E
+?src.lacanian.computational_lack.ObjectSmallA._proximity_to_lack54
+G
+Asrc.lacanian.computational_lack.ObjectSmallA.generates_desire_for56
+4
+.src.lacanian.computational_lack.StructuralLack58
+>
+8src.lacanian.computational_lack.StructuralLack.symbolize60
+F
+@src.lacanian.computational_lack.StructuralLack.add_impossibility62
+=
+7src.lacanian.computational_lack.StructuralLack.__init__64
+H
+Bsrc.lacanian.computational_lack.StructuralLack.compute_lack_energy66
+C
+=src.lacanian.computational_lack.ComputationalLackArchitecture68
+L
+Fsrc.lacanian.computational_lack.ComputationalLackArchitecture.__init__70
+S
+Msrc.lacanian.computational_lack.ComputationalLackArchitecture._compute_desire72
+
+torch.Tensor74
+V
+Psrc.lacanian.computational_lack.ComputationalLackArchitecture.process_experience76
+6
+0src.lacanian.computational_lack.LacanianRegister78
+
+	enum.Enum80
+5
+/src.lacanian.computational_lack.RSIArchitecture82
+$
+torch.nn.modules.module.Module84
+=
+7src.lacanian.computational_lack.RSIArchitecture.forward86
+B
+<src.lacanian.computational_lack.RSIArchitecture.compute_lack88
+>
+8src.lacanian.computational_lack.RSIArchitecture.__init__90J
+
+8
+89j°
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27266 210
+
+29
+29287 227
+
+31
+31306
+
+33
+33326 210
+
+35
+35347 233
+
+37
+37366
+
+39
+39386
+
+41
+41407 233
+
+43
+43427 233
+
+45
+45446
+
+47
+47467 233
+
+49
+49486
+
+51
+51506 210
+
+53
+53527 251
+
+55
+55547 251
+
+57
+57567 251
+
+59
+59586 210
+
+61
+61607 259
+
+63
+63627 259
+
+65
+65647 259
+
+67
+67667 259
+
+69
+69686 210
+
+71
+71707 269
+
+73
+73727 269
+
+75
+75746
+
+77
+77767 269
+
+79
+79786 210
+
+81
+81806
+
+83
+83826 210
+
+85
+85846
+
+87
+87867 283
+
+89
+89887 283
+
+91
+91907 283rø
+
+10131*
+8 (#
+
+10151*
+8 (J
+
+10171*
+8 ()
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (
+
+10251*
+8 (
+
+29313*
+8Ü	 Ü(
+
+35373*
+8Ø	 Ø(
+
+35394*
+8Ø	 Ø(
+
+41314*
+8õ	 õ(
+
+43453*
+8¦	 ¦(#
+
+43274*
+8¦	 ¦(#
+
+47374*
+8‚	 ‚(
+
+47494*
+8‚	 ‚(
+
+47314*
+8‚	 ‚(
+
+55313*
+8Z	 Z(
+
+57313*
+8H	 H(
+
+61374*
+8‘	 ‘(
+
+63374*
+8„	 „(
+
+67313*
+8°	 °(
+
+71494*
+8ù	 ù(
+
+71494*
+8ù	 ù(
+
+71494*
+8ù	 ù(
+
+73313*
+8á	 á(
+
+73754*
+8á	 á(
+
+77453*
+8”	 ”(
+
+77454*
+8”	 ”(
+
+79812*
+8   (
+
+83852*
+8Å Å(
+
+87453*
+8ˆ	 ˆ(
+
+87754*
+8ˆ	 ˆ(
+
+89753*
+8®	 ®(
+
+89454*
+8®	 ®(
+
+91494*
+8Ö	 Ö(
+
+91494*
+8Ö	 Ö(
+
+91494*
+8Ö	 Ö(

@@ -1,0 +1,80 @@
+
+Hsrc.metrics.consciousness_metrics.ConsciousnessMetrics.add_feedback_loopQ
+E/home/fahbrain/projects/omnimind/src/metrics/consciousness_metrics.pyÁ Á("2*®
+2
+Â Æ(‡
+„
+
+Ç Ç(
+%1"__id*j
+
+__unknown_file (N*L8
+6src.metrics.consciousness_metrics.ConsciousnessMetrics"
+feedback_loopsfd
+
+Ç Ç((
+%2*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+
+loop2appendM
+K
+
+Ê Ê( 
+%3"__id*1
+
+__unknown_file (*
+
+loop"	
+loop_idU
+S
+
+Ë Ë('
+%4"__id*9
+
+__unknown_file (*
+
+loop"
+agents_involvedO
+M
+
+Ì Ì(
+%5"__id*3
+
+__unknown_file (*
+
+loop"
+	loop_type®«
+
+È Í(	
+%6*&
+
+__unknown_file (
+
+
+logger*3
+
+__unknown_file (
+feedback_loop_added2debug:
+loop_id
+
+%3:
+agents
+
+%4:
+type
+
+%5*
+3*@
+3
+consciousness_metrics.py"
+Ï Ï(
+implicit return:
+
+Á  Á(2
+loopB:8
+6src.metrics.consciousness_metrics.ConsciousnessMetricsH

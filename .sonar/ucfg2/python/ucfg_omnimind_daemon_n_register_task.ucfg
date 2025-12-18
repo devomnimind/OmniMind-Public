@@ -1,0 +1,90 @@
+
+7src.daemon.omnimind_daemon.OmniMindDaemon.register_taskJ
+>/home/fahbrain/projects/omnimind/src/daemon/omnimind_daemon.py¨ ¨("2*Ñ
+2
+© ©(0p
+n
+
+ª ª(
+%1"__id*T
+
+__unknown_file (8*6+
+)src.daemon.omnimind_daemon.OmniMindDaemon"
+tasksfd
+
+ª ª(
+%2*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+
+task2appendM
+K
+
+­ ­( 
+%3"__id*1
+
+__unknown_file (*
+
+task"	
+task_idJ
+H
+
+® ®(
+%4"__id*.
+
+__unknown_file (*
+
+task"
+nameN
+L
+
+¯ ¯("
+%5"__id*2
+
+__unknown_file (*
+
+task"
+
+priorityH
+F
+
+¯ ¯('
+%6"__id*,
+
+__unknown_file (*
+
+%5"
+name«¨
+
+« °(	
+%7*&
+
+__unknown_file (
+
+
+logger*/
+
+__unknown_file (
+task.registered2info:
+task_id
+
+%3:
+name
+
+%4:
+priority
+
+%6*
+3*:
+3
+omnimind_daemon.py"
+² ²(
+implicit return:
+
+¨ ¨(,
+taskB-+
+)src.daemon.omnimind_daemon.OmniMindDaemonH

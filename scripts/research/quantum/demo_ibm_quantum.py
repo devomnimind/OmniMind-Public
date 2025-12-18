@@ -36,6 +36,7 @@ Uso:
 
 import os
 import sys
+
 from dotenv import load_dotenv
 
 # Adicionar root ao path
@@ -43,9 +44,10 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from src.quantum_consciousness.qpu_interface import QPUInterface, BackendType
-from qiskit import QuantumCircuit
 import structlog
+from qiskit import QuantumCircuit
+
+from src.quantum_consciousness.qpu_interface import QPUInterface
 
 # Configurar logging
 logger = structlog.get_logger(__name__)
@@ -108,8 +110,8 @@ def main():
 
         # Calcular estatísticas
         total_shots = sum(counts_sim.values())
-        prob_00 = counts_sim.get("00 00", 0) / total_shots
-        prob_11 = counts_sim.get("11 00", 0) / total_shots
+        _prob_00 = counts_sim.get("00 00", 0) / total_shots
+        _prob_11 = counts_sim.get("11 00", 0) / total_shots
         print(".1%")
         print(".1%")
 

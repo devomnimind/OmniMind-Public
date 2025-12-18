@@ -1,0 +1,27 @@
+
+‘‡"Read file contents from MCP server.
+
+        Args:
+            path: File path to read
+            encoding: File encoding (default: utf-8)
+
+        Returns:
+            File contents as string
+
+        Raises:
+            MCPClientError: If read fails
+        "strself
+Ú Ú(path
+Ú Ú('encoding
+Ú) Ú(@"–#
+!
+
+ç é(	"#unknown-value#+
+)
+
+ç é(	result"#unknown-value#0
+.
+
+ê ê("#dependent-value#*:Bstr
+
+ê ê(*E/home/fahbrain/projects/omnimind/src/integrations/mcp_client_async.py

@@ -1,0 +1,146 @@
+
+0src.scaling.multi_level_cache.CacheStats.to_dictK
+A/home/fahbrain/projects/omnimind/src/scaling/multi_level_cache.py{ {("2*·
+2| |($
+	} Ñ(	
+%1"dictl
+j
+~ ~(
+%2"__id*R
+
+__unknown_file (6*4*
+(src.scaling.multi_level_cache.CacheStats"
+hitsã
+à
+~ ~(
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+hits*"
+
+__unknown_file (
+
+%2n
+l
+ (!
+%4"__id*T
+
+__unknown_file (8*6*
+(src.scaling.multi_level_cache.CacheStats"
+missesç
+ä
+ (!
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+misses*"
+
+__unknown_file (
+
+%4s
+q
+
+Ä Ä('
+%6"__id*W
+
+__unknown_file (;*9*
+(src.scaling.multi_level_cache.CacheStats"
+	evictionsí
+è
+
+Ä Ä('
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	evictions*"
+
+__unknown_file (
+
+%6t
+r
+
+Å Å()
+%8"__id*X
+
+__unknown_file (<*:*
+(src.scaling.multi_level_cache.CacheStats"
+
+size_bytesì
+ê
+
+Å Å()
+%9"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+size_bytes*"
+
+__unknown_file (
+
+%8v
+t
+
+Ç Ç(+
+%10"__id*Y
+
+__unknown_file (=*;*
+(src.scaling.multi_level_cache.CacheStats"
+entry_countñ
+ì
+
+Ç Ç(+
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+entry_count*#
+
+__unknown_file (
+
+%10ig
+
+É É('
+%12*H
+
+__unknown_file (,*
+(src.scaling.multi_level_cache.CacheStats2hit_rateì
+ê
+
+É É('
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+hit_rate*#
+
+__unknown_file (
+
+%12"
+	} Ñ(	
+
+%1B,*
+(src.scaling.multi_level_cache.CacheStatsH

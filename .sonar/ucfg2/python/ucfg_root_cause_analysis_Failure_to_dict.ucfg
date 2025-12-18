@@ -1,0 +1,175 @@
+
+5src.metacognition.root_cause_analysis.Failure.to_dictS
+I/home/fahbrain/projects/omnimind/src/metacognition/root_cause_analysis.pyQ Q("2*É
+2R R($
+S [(	
+%1"dictw
+u
+T T()
+%2"__id*]
+
+__unknown_file (A*?/
+-src.metacognition.root_cause_analysis.Failure"
+
+failure_id‘
+Ž
+T T()
+%3"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+failure_id*"
+
+__unknown_file (
+
+%2y
+w
+U U(-
+%4"__id*_
+
+__unknown_file (C*A/
+-src.metacognition.root_cause_analysis.Failure"
+component_id“
+
+U U(-
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*,
+
+__unknown_file (
+component_id*"
+
+__unknown_file (
+
+%4y
+w
+V V(-
+%6"__id*_
+
+__unknown_file (C*A/
+-src.metacognition.root_cause_analysis.Failure"
+failure_typeG
+E
+V V(3
+%7"__id*-
+
+__unknown_file (*
+
+%6"
+value“
+
+V V(3
+%8"__mapSet*"
+
+__unknown_file (
+
+%1*,
+
+__unknown_file (
+failure_type*"
+
+__unknown_file (
+
+%7v
+t
+W W('
+%9"__id*\
+
+__unknown_file (@*>/
+-src.metacognition.root_cause_analysis.Failure"
+	timestamp_]
+W W(3
+%10"datetime.datetime.isoformat*"
+
+__unknown_file (
+
+%92	isoformat’
+
+W W(3
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	timestamp*#
+
+__unknown_file (
+
+%10y
+w
+X X(+
+%12"__id*^
+
+__unknown_file (B*@/
+-src.metacognition.root_cause_analysis.Failure"
+description”
+‘
+X X(+
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+description*#
+
+__unknown_file (
+
+%12u
+s
+Y Y(#
+%14"__id*Z
+
+__unknown_file (>*</
+-src.metacognition.root_cause_analysis.Failure"	
+metrics
+
+Y Y(#
+%15"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+metrics*#
+
+__unknown_file (
+
+%14v
+t
+Z Z(%
+%16"__id*[
+
+__unknown_file (?*=/
+-src.metacognition.root_cause_analysis.Failure"
+
+symptoms‘
+Ž
+Z Z(%
+%17"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+symptoms*#
+
+__unknown_file (
+
+%16"
+S [(	
+
+%1B1/
+-src.metacognition.root_cause_analysis.FailureH

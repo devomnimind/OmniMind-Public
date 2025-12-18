@@ -1,0 +1,76 @@
+
+<src.lacanian.desire_graph.SymbolicMatrix.add_production_ruleI
+=/home/fahbrain/projects/omnimind/src/lacanian/desire_graph.py© ©("2*æ
+2
+¬ ²(z
+x
+
+³ ³(
+%1"__id*^
+
+__unknown_file (B*@*
+(src.lacanian.desire_graph.SymbolicMatrix"
+production_rulesyw
+
+³ ³('
+%2"__mapGet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+
+category2__getitem__fd
+
+³ ³(4
+%3*"
+
+__unknown_file (
+
+%2*$
+
+__unknown_file (
+
+rule2append‡
+„
+
+´ ´(F
+%4"__concat*5
+
+´ ´(:'%
+#Added production rule to category '*
+
+´; ´(C
+
+
+category*
+
+´D ´(E
+'ge
+
+´ ´(G
+%5*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%42debug*
+3*7
+3
+desire_graph.py"
+¶ ¶(
+implicit return:
+
+ª ª(
+
+category:
+
+ª ª(A
+ruleB,*
+(src.lacanian.desire_graph.SymbolicMatrixH

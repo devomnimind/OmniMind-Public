@@ -1,0 +1,17 @@
+
+%"Generate a unique span ID."str"»*
+(
+
+¢ ¢("
+uuiduuid4B	uuid.UUID&
+$
+
+¢ ¢("#get-field# hex:.
+,
+
+¢ ¢("?python-partial-apply?:#
+!
+
+¢ ¢($"#unknown-value#
+
+¢ ¢($*I/home/fahbrain/projects/omnimind/src/observability/distributed_tracing.py

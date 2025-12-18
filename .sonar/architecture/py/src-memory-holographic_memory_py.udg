@@ -1,0 +1,306 @@
+
+1.0PythonFrontend"1763831828932*py2.B¯
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+%
+ src/memory/holographic_memory.py9
+#
+src.memory.holographic_memory11
+
+
+__future__12
+
+logging14
+
+dataclasses16
+
+typing18
+
+
+math20
+
+
+statistics22
+
+torch24
+6
+0src.memory.holographic_memory.HolographicSurface26
+D
+>src.memory.holographic_memory.HolographicSurface.__post_init__28
+9
+3src.memory.holographic_memory.HolographicProjection30
+B
+<src.memory.holographic_memory.HolographicProjection.__init__32
+	
+int34
+G
+Asrc.memory.holographic_memory.HolographicProjection._tensor_depth36
+P
+Jsrc.memory.holographic_memory.HolographicProjection._information_to_tensor38
+
+
+dict40
+I
+Csrc.memory.holographic_memory.HolographicProjection._downsample_fft42
+
+
+list44
+
+typing.Sequence46
+M
+Gsrc.memory.holographic_memory.HolographicProjection.project_to_boundary48
+K
+Esrc.memory.holographic_memory.HolographicProjection._radon_projection50
+D
+>src.memory.holographic_memory.HolographicProjection._ensure_2d52
+6
+0src.memory.holographic_memory.EventHorizonMemory54
+E
+?src.memory.holographic_memory.EventHorizonMemory.get_statistics56
+E
+?src.memory.holographic_memory.EventHorizonMemory._get_max_depth58
+H
+Bsrc.memory.holographic_memory.EventHorizonMemory._bekenstein_limit60
+
+float62
+?
+9src.memory.holographic_memory.EventHorizonMemory.retrieve64
+
+
+bool66
+I
+Csrc.memory.holographic_memory.EventHorizonMemory._calculate_entropy68
+<
+6src.memory.holographic_memory.EventHorizonMemory.store70
+F
+@src.memory.holographic_memory.EventHorizonMemory._merge_surfaces72
+K
+Esrc.memory.holographic_memory.EventHorizonMemory._compute_correlation74
+?
+9src.memory.holographic_memory.EventHorizonMemory.__init__76
+J
+Dsrc.memory.holographic_memory.EventHorizonMemory._spawn_child_memory78J
+
+8
+89j¦
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27266 210
+
+29
+29287 227
+
+31
+31306 210
+
+33
+33327 231
+
+35
+35346
+
+37
+37367 231
+
+39
+39387 231
+
+41
+41406
+
+43
+43427 231
+
+45
+45446
+
+47
+47466
+
+49
+49487 231
+
+51
+51507 231
+
+53
+53527 231
+
+55
+55546 210
+
+57
+57567 255
+
+59
+59587 255
+
+61
+61607 255
+
+63
+63626
+
+65
+65647 255
+
+67
+67666
+
+69
+69687 255
+
+71
+71707 255
+
+73
+73727 255
+
+75
+75747 255
+
+77
+77767 255
+
+79
+79787 255r¤
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 ("
+
+10191*
+8 (M
+
+10211*
+8 (
+
+10231*
+8 (
+
+10251*
+8   (
+
+10251*
+81 1(
+
+33354*
+8g	 g(
+
+37353*
+8q	 q(
+
+39414*
+8³	 ³(
+
+43453*
+8­	 ­(
+
+43474*
+8­	 ­(
+
+43354*
+8­	 ­(
+
+49414*
+8€	 €(
+
+51453*
+8ü	 ü(
+
+51474*
+8ü	 ü(
+
+53453*
+8Ñ	 Ñ(
+
+53474*
+8Ñ	 Ñ(
+
+57413*
+8Ë	 Ë(
+
+59353*
+8ä	 ä(
+
+61633*
+8ˆ	 ˆ(
+
+65414*
+8Ú	 Ú(
+
+65674*
+8Ú	 Ú(
+
+69633*
+8è	 è(
+
+71413*
+8—	 —(
+
+71414*
+8—	 —(
+
+73453*
+8‰	 ‰(
+
+75633*
+8”	 ”(
+
+77634*
+8á	 á(
+
+77354*
+8á	 á(
+
+77634*
+8á	 á(
+
+77634*
+8á	 á(
+
+79553*
+8½	 ½(

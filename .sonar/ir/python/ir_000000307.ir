@@ -1,0 +1,12 @@
+
+,#"Get number of registered metrics."strself
+é é("m+
+)
+
+ë ë( "#get-field# _metrics:,
+*
+
+ë ë(!"
+builtinslen*:Bint
+
+ë ë(!*F/home/fahbrain/projects/omnimind/src/observability/metrics_exporter.py

@@ -1,0 +1,37 @@
+
+".venv"str
+
+0int
+".git"str
+3*"Get list of exclude patterns for backup."str
+"node_modules"str
+"venv"str
+	".pytest_cache"str
+"__pycache__"str
+".DS_Store"str
+
+".mypy_cache"str
+"*.log"str
+"*.pyc"str
+"tmp"str
+".omnimind/backups"strself
+– –("list"ó)
+'
+
+˜ ¥(	"#unknown-value#Blist(
+&
+
+˜ ¥(	"
+#is-exact#:Bbool
+
+
+˜ ¥(	"
+#assume#::
+8
+
+˜ ¥(	"#set-field# __collection_size:Bint-
++
+
+˜ ¥(	"?python-unknown?*Blist
+
+˜ ¥(	*G/home/fahbrain/projects/omnimind/src/security/geo_distributed_backup.py

@@ -1,76 +1,36 @@
 # ============================================================================
-# CORE QUANTUM SYSTEM REQUIREMENTS - OMNIMIND (16 DEC 2025)
+# CORE QUANTUM SYSTEM REQUIREMENTS - OMNIMIND
 # ============================================================================
 # Sistema quântico é CORE e FUNCIONAL - NÃO REMOVER
 #
-# ✅ VERSÕES ATUAIS VALIDADAS (16 DEC 2025 - FUNCIONAL):
-# - PyTorch 2.5.1+cu121 (CUDA 12.1 - compatible com CUDA 12.2 do sistema)
-# - Qiskit 1.2.4 + Aer-GPU 0.15.1 (GPU acelerado FUNCIONAL, testado GTX 1650)
-# - cuQuantum cu12 ONLY (sem cu11 - evita DLL Hell)
-# - CuPy 13.6.0, cuStatevec 1.11.0, cuTensor 2.4.1
+# Dependências essenciais para:
+# - quantum_unconscious.py (inconsciente irredutível)
+# - quantum_consciousness/* (cognição quântica)
+# - expectation_module.py (integração quântica)
+# - quantum_backend.py (backend unificado)
+# - quantum_memory.py (memória quântica)
+# - qpu_interface.py (interface QPU)
 #
-# ❌ VERSÕES ANTIGAS (DEPRECATED - não usar):
-# ❌ PyTorch 2.9.1 (cu128 ou cu122 - não funciona bem)
-# ❌ PyTorch 3.0+ (incompatível com Qiskit 1.2.4)
-# ❌ Qiskit-Aer (sem GPU - CPU only, LENTO)
-# ❌ cuQuantum cu11 (DLL Hell, linkage errors)
-#
-# INSTALAÇÃO CORRETA (16 DEC 2025):
-#   pip install "torch==2.5.1" --index-url https://download.pytorch.org/whl/cu121
-#   pip install "torchvision==0.20.1" "torchaudio==2.5.1" --index-url https://download.pytorch.org/whl/cu121
-#   pip install "qiskit==1.2.4" "qiskit-aer-gpu==0.15.1"
-#   pip install "cupy-cuda12x"
-#   pip install cuquantum-cu12==25.11.0 custatevec-cu12==1.11.0 cutensor-cu12==2.4.1
-#
-# VALIDAÇÃO:
-#   python validate_gpu_quantum.py
+# CRITICAL: Estas dependências são OBRIGATÓRIAS para o sistema funcionar
 # ============================================================================
 
-# PyTorch GPU (CUDA 12.1 - compatible com CUDA 12.2 do sistema)
-torch==2.5.1
-torchvision==0.20.1
-torchaudio==2.5.1
-
-# Qiskit Core (Framework quântico principal - GPU ACELERADO)
-qiskit==1.2.4
-qiskit-aer-gpu==0.15.1  # ✅ CURRENT: GPU acceleration (não usar qiskit-aer sem gpu!)
-qiskit-ibm-runtime==0.19.1  # Compatível com qiskit 1.2.4
+# Qiskit Core (Framework quântico principal)
+# CRITICAL: qiskit-aer-gpu 0.15.x requer Qiskit 1.3.x (não 2.0+)
+# convert_to_target foi removido em Qiskit 2.0, quebrando compatibilidade
+# Usar Qiskit 1.3.x (LTS) para compatibilidade com GPU
+qiskit>=1.3.0,<2.0.0
+qiskit-aer>=0.15.0
+qiskit-aer-gpu>=0.15.0  # CRITICAL: GPU support para quantum_unconscious
+qiskit-algorithms>=0.4.0
+qiskit-ibm-runtime>=0.25.0  # Para backend IBM Quantum (opcional mas recomendado)
 
 # Quantum Optimization
-qiskit-optimization==0.7.0
-
-# GPU Acceleration
-cupy-cuda12x>=12.0
+qiskit-optimization>=0.7.0
 
 # ============================================================================
-# GPU ACCELERATION - CUDA 12 ONLY (validado 16 DEC 2025)
+# NOTAS:
+# - qiskit-aer-gpu é OBRIGATÓRIO para suporte GPU no quantum_unconscious
+# - Sem qiskit-aer-gpu, sistema usa CPU (performance degradada)
+# - qiskit-ibm-runtime permite uso de hardware quântico real (opcional)
 # ============================================================================
-# cuQuantum + components: State vector acceleration + tensor operations
-# Versões cu12 ONLY - sem cu11 (evita DLL Hell / Linkage Errors)
-#
-# ✅ CURRENT: cuQuantum cu12 versions
-# ❌ DEPRECATED: cuQuantum cu11 (não usar - conflita com cu12)
-#
-# ⚠️ NUNCA instalar cu11 versions junto com cu12!
-# ⚠️ Para usar estes componentes, consulte OmniMind code (não fazer import direto)
-#
-cuquantum-cu12==25.11.0
-custatevec-cu12==1.11.0
-cutensor-cu12==2.4.1
-
-# ============================================================================
-# CHANGELOG:
-# 14 DEC 2025: PyTorch 2.9.1 cu128 (❌ GPU não funciona bem)
-# 15 DEC 2025: PyTorch 2.5.1 cu121 (✅ GPU funcional, testado)
-# 16 DEC 2025: VALIDADO COMPLETO - All tests passing (✅ CURRENT)
-# ============================================================================
-#
-# VALIDAÇÃO:
-# python validate_gpu_quantum.py
-#
-# Verificar: torch.cuda.is_available() == True
-#            qiskit.__version__ == 1.2.4
-#            AerSimulator pode ser instanciado
-# ============================================================================
-
 

@@ -18,11 +18,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from src.audit.immutable_audit import (
-    ImmutableAuditSystem,
-    get_audit_system,
-    log_action,
-)
+from src.audit.immutable_audit import ImmutableAuditSystem, get_audit_system, log_action
 
 
 class TestImmutableAuditSystem:
@@ -231,7 +227,7 @@ class TestImmutableAuditSystem:
         result = audit.repair_chain_integrity()
 
         assert result["repaired"] is False
-        assert "Log não existe" in result["message"]
+        assert "Arquivo de log não existe" in result["message"]
 
     def test_repair_chain_integrity_with_valid_chain(self, temp_log_dir: Path) -> None:
         """Testa reparo com cadeia válida."""

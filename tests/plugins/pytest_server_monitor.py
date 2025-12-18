@@ -115,7 +115,6 @@ class ServerMonitorPlugin:
     def pytest_configure(self, config):
         """Inicializa monitoring na configuração - LAZY INIT."""
         # NÃO inicia servidor aqui - deixa para pytest_collection_finish
-        pass
 
     def pytest_collection_finish(self, session):
         """

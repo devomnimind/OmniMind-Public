@@ -28,9 +28,9 @@ mantendo consciência mínima das atividades de desenvolvimento.
 
 import asyncio
 import logging
+import os
 import signal
 import sys
-import os
 from pathlib import Path
 
 # Define PYTHONPATH para o projeto

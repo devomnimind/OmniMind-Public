@@ -1,0 +1,177 @@
+
+1.0PythonFrontend"1763831831097*py2.BÑ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+-
+(src/meta_learning/black_hole_collapse.py9
++
+%src.meta_learning.black_hole_collapse11
+
+
+__future__12
+
+logging14
+
+
+math16
+
+dataclasses18
+
+typing20
+@
+:src.meta_learning.black_hole_collapse.BlackHoleMetaLearner22
+O
+Isrc.meta_learning.black_hole_collapse.BlackHoleMetaLearner.get_statistics24
+
+
+dict26
+S
+Msrc.meta_learning.black_hole_collapse.BlackHoleMetaLearner._generate_theorems28
+
+
+list30
+Y
+Ssrc.meta_learning.black_hole_collapse.BlackHoleMetaLearner.check_collapse_condition32
+
+
+bool34
+
+float36
+I
+Csrc.meta_learning.black_hole_collapse.BlackHoleMetaLearner.__init__38
+P
+Jsrc.meta_learning.black_hole_collapse.BlackHoleMetaLearner._extract_axioms40
+Q
+Ksrc.meta_learning.black_hole_collapse.BlackHoleMetaLearner._define_boundary42
+W
+Qsrc.meta_learning.black_hole_collapse.BlackHoleMetaLearner.collapse_to_meta_level44
+9
+3src.meta_learning.black_hole_collapse.MetaKnowledge46J
+
+8
+89jÆ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23226 210
+
+25
+25247 223
+
+27
+27266
+
+29
+29287 223
+
+31
+31306
+
+33
+33327 223
+
+35
+35346
+
+37
+37366
+
+39
+39387 223
+
+41
+41407 223
+
+43
+43427 223
+
+45
+45447 223
+
+47
+47466 210r÷
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 ("
+
+10211*
+8 (#
+
+25273*
+8Å	 Å(
+
+29313*
+8}	 }(
+
+29314*
+8}	 }(
+
+33353*
+8:	 :(!
+
+33374*
+8:	 :(!
+
+33374*
+8:	 :(!
+
+39374*
+82	 2(
+
+41313*
+8t	 t(
+
+41274*
+8t	 t(
+
+43373*
+8y	 y(
+
+43314*
+8y	 y(
+
+45473*
+8T	 T(
+
+45274*
+8T	 T(

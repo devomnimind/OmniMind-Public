@@ -19,13 +19,10 @@ Contact: fabricioslv@hotmail.com.br
 """
 
 import asyncio
-import random
-import time
 import logging
-import sys
 import os
-from datetime import datetime
-from typing import List, Dict, Any
+import sys
+import time
 
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -69,7 +66,7 @@ class TribunalDoDiabo:
             )
 
         start = time.time()
-        results = await self.executor.execute_workflow(tasks)
+        _results = await self.executor.execute_workflow(tasks)
         duration = time.time() - start
 
         avg_latency = duration / 20

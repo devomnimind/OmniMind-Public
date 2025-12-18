@@ -1,0 +1,340 @@
+
+1.0PythonFrontend"1763831843366*py2.B›
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+5
+0src/metacognition/intelligent_goal_generation.py9
+3
+-src.metacognition.intelligent_goal_generation11
+
+
+__future__12
+	
+ast14
+
+logging16
+
+collections18
+
+dataclasses20
+
+datetime22
+
+pathlib24
+
+typing26
+'
+!src.metacognition.proactive_goals28
+C
+=src.metacognition.intelligent_goal_generation.ImpactPredictor30
+R
+Lsrc.metacognition.intelligent_goal_generation.ImpactPredictor.predict_impact32
+A
+;src.metacognition.intelligent_goal_generation.ImpactMetrics34
+	
+str36
+F
+@src.metacognition.intelligent_goal_generation.RepositoryAnalysis38
+S
+Msrc.metacognition.intelligent_goal_generation.ImpactPredictor.learn_from_goal40
+
+
+dict42
+L
+Fsrc.metacognition.intelligent_goal_generation.ImpactPredictor.__init__44
+T
+Nsrc.metacognition.intelligent_goal_generation.ImpactPredictor._estimate_effort46
+
+float48
+R
+Lsrc.metacognition.intelligent_goal_generation.ImpactMetrics.get_total_impact50
+I
+Csrc.metacognition.intelligent_goal_generation.ImpactMetrics.to_dict52
+@
+:src.metacognition.intelligent_goal_generation.CodeAnalyzer54
+S
+Msrc.metacognition.intelligent_goal_generation.CodeAnalyzer.analyze_repository56
+V
+Psrc.metacognition.intelligent_goal_generation.CodeAnalyzer._calculate_complexity58
+	
+int60
+
+_ast.AST62
+I
+Csrc.metacognition.intelligent_goal_generation.CodeAnalyzer.__init__64
+
+pathlib.Path66
+M
+Gsrc.metacognition.intelligent_goal_generation.CodeAnalyzer.analyze_file68
+I
+Csrc.metacognition.intelligent_goal_generation.IntelligentGoalEngine70
+R
+Lsrc.metacognition.intelligent_goal_generation.IntelligentGoalEngine.__init__72
+d
+^src.metacognition.intelligent_goal_generation.IntelligentGoalEngine.analyze_and_generate_goals74
+
+
+list76
+l
+fsrc.metacognition.intelligent_goal_generation.IntelligentGoalEngine._generate_security_hardening_goals78
+g
+asrc.metacognition.intelligent_goal_generation.IntelligentGoalEngine._generate_test_coverage_goals80
+n
+hsrc.metacognition.intelligent_goal_generation.IntelligentGoalEngine._generate_complexity_reduction_goals82
+V
+Psrc.metacognition.intelligent_goal_generation.IntelligentGoalEngine._generate_id84
+g
+asrc.metacognition.intelligent_goal_generation.IntelligentGoalEngine._detect_circular_dependencies86
+r
+lsrc.metacognition.intelligent_goal_generation.IntelligentGoalEngine._generate_architecture_improvement_goals88J
+
+8
+89j‘
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31306 210
+
+33
+33327 231
+
+35
+35346 210
+
+37
+37366
+
+39
+39386 210
+
+41
+41407 231
+
+43
+43426
+
+45
+45447 231
+
+47
+47467 231
+
+49
+49486
+
+51
+51507 235
+
+53
+53527 235
+
+55
+55546 210
+
+57
+57567 255
+
+59
+59587 255
+
+61
+61606
+
+63
+63626
+
+65
+65647 255
+
+67
+67666
+
+69
+69687 255
+
+71
+71706 210
+
+73
+73727 271
+
+75
+75747 271
+
+77
+77766
+
+79
+79787 271
+
+81
+81807 271
+
+83
+83827 271
+
+85
+85847 271
+
+87
+87867 271
+
+89
+89887 271rŒ
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 ($
+
+10211*
+8 ()
+
+10231*
+8 (
+
+10251*
+8 (
+
+10271*
+8 (9
+
+10291*
+8 (G
+
+33353*
+8à	 à(
+
+33374*
+8à	 à(
+
+33374*
+8à	 à(
+
+33394*
+8à	 à(
+
+41434*
+8Ê	 Ê(
+
+41434*
+8Ê	 Ê(
+
+47493*
+8«	 «(
+
+47374*
+8«	 «(
+
+51493*
+8'	 '(
+
+53433*
+88	 8(
+
+57393*
+8¨	 ¨(
+
+59613*
+8—	 —(
+
+59634*
+8—	 —(
+
+65674*
+8W	 W(
+
+69433*
+8`	 `(
+
+69674*
+8`	 `(
+
+73374*
+8Ý	 Ý(
+
+75773*
+8í	 í(#
+
+79773*
+8¸	 ¸(+
+
+79394*
+8¸	 ¸(+
+
+81773*
+8Ì	 Ì(&
+
+81394*
+8Ì	 Ì(&
+
+83773*
+8˜	 ˜(-
+
+83394*
+8˜	 ˜(-
+
+85373*
+8è	 è(
+
+87773*
+8ó	 ó(&
+
+87434*
+8ó	 ó(&
+
+89773*
+8†	 †(1
+
+89394*
+8†	 †(1

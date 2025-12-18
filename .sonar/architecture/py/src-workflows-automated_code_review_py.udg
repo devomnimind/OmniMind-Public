@@ -1,0 +1,431 @@
+
+1.0PythonFrontend"1763831838219*py2.B‡
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
++
+&src/workflows/automated_code_review.py9
+)
+#src.workflows.automated_code_review11
+
+
+__future__12
+	
+ast14
+
+logging16
+
+re18
+
+dataclasses20
+
+datetime22
+
+
+enum24
+
+pathlib26
+
+typing28
+	
+sys30
+5
+/src.workflows.automated_code_review.CodeMetrics32
+=
+7src.workflows.automated_code_review.CodeMetrics.to_dict34
+
+
+dict36
+3
+-src.workflows.automated_code_review.CodeIssue38
+;
+5src.workflows.automated_code_review.CodeIssue.to_dict40
+7
+1src.workflows.automated_code_review.IssueCategory42
+	
+str44
+
+	enum.Enum46
+6
+0src.workflows.automated_code_review.ReviewResult48
+@
+:src.workflows.automated_code_review.ReviewResult.add_issue50
+	
+int52
+7
+1src.workflows.automated_code_review.IssueSeverity54
+>
+8src.workflows.automated_code_review.ReviewResult.to_dict56
+5
+/src.workflows.automated_code_review.review_code58
+
+pathlib.Path60
+
+float62
+?
+9src.workflows.automated_code_review.AutomatedCodeReviewer64
+T
+Nsrc.workflows.automated_code_review.AutomatedCodeReviewer._check_documentation66
+Q
+Ksrc.workflows.automated_code_review.AutomatedCodeReviewer._check_complexity68
+K
+Esrc.workflows.automated_code_review.AutomatedCodeReviewer.review_file70
+R
+Lsrc.workflows.automated_code_review.AutomatedCodeReviewer._check_performance72
+^
+Xsrc.workflows.automated_code_review.AutomatedCodeReviewer._calculate_function_complexity74
+
+_ast.FunctionDef76
+U
+Osrc.workflows.automated_code_review.AutomatedCodeReviewer._check_error_handling78
+O
+Isrc.workflows.automated_code_review.AutomatedCodeReviewer._check_security80
+U
+Osrc.workflows.automated_code_review.AutomatedCodeReviewer._check_best_practices82
+R
+Lsrc.workflows.automated_code_review.AutomatedCodeReviewer._calculate_metrics84
+U
+Osrc.workflows.automated_code_review.AutomatedCodeReviewer._calculate_complexity86
+H
+Bsrc.workflows.automated_code_review.AutomatedCodeReviewer.__init__88
+P
+Jsrc.workflows.automated_code_review.AutomatedCodeReviewer._calculate_score90
+Q
+Ksrc.workflows.automated_code_review.AutomatedCodeReviewer._check_type_hints92
+O
+Isrc.workflows.automated_code_review.AutomatedCodeReviewer.generate_report94
+]
+Wsrc.workflows.automated_code_review.AutomatedCodeReviewer._calculate_type_hint_coverage96
+]
+Wsrc.workflows.automated_code_review.AutomatedCodeReviewer._calculate_docstring_coverage98
+M
+Fsrc.workflows.automated_code_review.AutomatedCodeReviewer._check_style100J
+
+8
+89j§
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33326 210
+
+35
+35347 233
+
+37
+37366
+
+39
+39386 210
+
+41
+41407 239
+
+43
+43426 210
+
+45
+45446
+
+47
+47466
+
+49
+49486 210
+
+51
+51507 249
+
+53
+53526
+
+55
+55546 210
+
+57
+57567 249
+
+59
+59587 210
+
+61
+61606
+
+63
+63626
+
+65
+65646 210
+
+67
+67667 265
+
+69
+69687 265
+
+71
+71707 265
+
+73
+73727 265
+
+75
+75747 265
+
+77
+77766
+
+79
+79787 265
+
+81
+81807 265
+
+83
+83827 265
+
+85
+85847 265
+
+87
+87867 265
+
+89
+89887 265
+
+91
+91907 265
+
+93
+93927 265
+
+95
+95947 265
+
+97
+97967 265
+
+99
+99987 265
+
+101
+1011007 265r¥
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+
+10211*
+8 ()
+
+10231*
+8 (
+
+10251*
+8 (
+
+10271*
+8 (
+
+10291*
+8 (-
+
+10311*
+8Ÿ Ÿ(
+
+35373*
+8X	 X(
+
+41373*
+8>	 >(
+
+43452*
+8% %(
+
+43472*
+8% %(
+
+51534*
+8q	 q(
+
+51554*
+8q	 q(
+
+51434*
+8q	 q(
+
+51454*
+8q	 q(
+
+57373*
+8á	 á(
+
+59493*
+8¿ ¿(
+
+59614*
+8¿ ¿(
+
+59634*
+8¿ ¿(
+
+67454*
+8À	 À(
+
+67494*
+8À	 À(
+
+69454*
+8ù	 ù(
+
+69494*
+8ù	 ù(
+
+71493*
+8Æ	 Æ(
+
+71614*
+8Æ	 Æ(
+
+73454*
+8¥	 ¥(
+
+73494*
+8¥	 ¥(
+
+75533*
+8∑	 ∑('
+
+75774*
+8∑	 ∑('
+
+79454*
+8ì	 ì(
+
+79494*
+8ì	 ì(
+
+81454*
+8»	 »(
+
+81494*
+8»	 »(
+
+83454*
+8»	 »(
+
+83494*
+8»	 »(
+
+85333*
+8‰	 ‰(
+
+85454*
+8‰	 ‰(
+
+87533*
+8Ö	 Ö(
+
+87454*
+8Ö	 Ö(
+
+89634*
+8£	 £(
+
+89534*
+8£	 £(
+
+91633*
+8ÿ	 ÿ(
+
+91494*
+8ÿ	 ÿ(
+
+93454*
+8Ò	 Ò(
+
+93494*
+8Ò	 Ò(
+
+95453*
+8Û	 Û(
+
+95494*
+8Û	 Û(
+
+97633*
+8†	 †(&
+
+97454*
+8†	 †(&
+
+99633*
+8∂	 ∂(&
+
+99454*
+8∂	 ∂(&
+
+101454*
+8Ç	 Ç(
+
+101494*
+8Ç	 Ç(
+
+55452*
+8 (
+
+55472*
+8 (

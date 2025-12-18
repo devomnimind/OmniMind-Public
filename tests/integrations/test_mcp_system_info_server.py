@@ -55,14 +55,10 @@ class TestSystemInfoMCPServer:
         """Testa estrutura dos dados da GPU."""
         server = SystemInfoMCPServer()
         result = server.get_gpu_info()
-        # GPU pode estar disponível ou não - apenas verificar estrutura
-        assert isinstance(result, dict)
-        if result.get("name"):  # Se houver GPU
-            assert isinstance(result["name"], str)
-            assert len(result["name"]) > 0
-        if result.get("vram_gb"):  # Se houver VRAM info
-            assert isinstance(result["vram_gb"], (int, float))
-            assert result["vram_gb"] >= 0
+        assert isinstance(result["name"], str)
+        assert isinstance(result["vram_gb"], int)
+        assert len(result["name"]) > 0
+        assert result["vram_gb"] > 0
 
     def test_get_cpu_info_basic(self) -> None:
         """Testa recuperação de informações da CPU.

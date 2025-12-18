@@ -5,13 +5,15 @@ echo "🚀 Instalando todos os serviços OmniMind via systemd..."
 echo ""
 
 PROJECT_ROOT="/home/fahbrain/projects/omnimind"
-SERVICES_DIR="${PROJECT_ROOT}/scripts/production/deploy"
+SERVICES_DIR="${PROJECT_ROOT}/scripts/systemd"
 SYSTEMD_DIR="/etc/systemd/system"
 
 # Lista de serviços a instalar (em ordem de dependência)
 # NOTA: omnimind.service já inclui o backend, então não instalamos omnimind-backend.service separadamente
 SERVICES=(
-    "qdrant.service"
+    "omnimind-qdrant.service"
+    "omnimind-daemon.service"
+    "omnimind-mcp.service"
     "omnimind.service"
 )
 
@@ -34,10 +36,10 @@ for service_entry in "${SERVICES[@]}"; do
         source="$service_entry"
         target="$service_entry"
     fi
-
+    
     source_file="${SERVICES_DIR}/${source}"
     target_file="${SYSTEMD_DIR}/${target}"
-
+    
     if [ -f "$source_file" ]; then
         echo "   📄 Processando ${source} -> ${target}"
         # Substituir placeholders
@@ -66,7 +68,7 @@ for service_entry in "${SERVICES[@]}"; do
     else
         target="$service_entry"
     fi
-
+    
     if sudo systemd-analyze verify "${SYSTEMD_DIR}/${target}" 2>/dev/null; then
         echo "   ✅ ${target} OK"
     else
@@ -84,7 +86,7 @@ for service_entry in "${SERVICES[@]}"; do
     else
         target="$service_entry"
     fi
-
+    
     service_name=$(basename "$target")
     echo "   🔧 Habilitando ${service_name}..."
     sudo systemctl enable "${service_name}" || echo "   ⚠️  Falha ao habilitar ${service_name}"
@@ -127,7 +129,7 @@ for service_entry in "${SERVICES[@]}"; do
     else
         target="$service_entry"
     fi
-
+    
     service_name=$(basename "$target")
     echo ""
     echo "🔍 ${service_name}:"

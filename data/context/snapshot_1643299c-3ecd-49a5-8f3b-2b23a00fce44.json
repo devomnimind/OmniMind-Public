@@ -1,0 +1,25 @@
+{
+  "snapshot_id": "1643299c-3ecd-49a5-8f3b-2b23a00fce44",
+  "timestamp": "2025-12-10T13:11:03.332797+00:00",
+  "metadata": {
+    "total_entries": 0,
+    "levels": [
+      "project",
+      "session",
+      "task",
+      "code",
+      "memory",
+      "audit",
+      "ephemeral"
+    ]
+  },
+  "contexts": {
+    "project": [],
+    "session": [],
+    "task": [],
+    "code": [],
+    "memory": [],
+    "audit": [],
+    "ephemeral": []
+  }
+}

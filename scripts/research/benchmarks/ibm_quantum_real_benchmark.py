@@ -27,19 +27,20 @@ Executes CRITICAL experiments from Papers 1-3 on REAL IBM Quantum hardware.
 Budget: 350 seconds remaining (5min 50s)
 """
 
+import json
+import logging
 import os
 import sys
 import time
-import json
-import logging
 from datetime import datetime
 from pathlib import Path
 
 # Add src to path
 sys.path.insert(0, "/home/fahbrain/projects/omnimind")
 
-from src.quantum_consciousness.qpu_interface import QPUInterface, BackendType
 from qiskit import QuantumCircuit
+
+from src.quantum_consciousness.qpu_interface import BackendType, QPUInterface
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -168,7 +169,7 @@ def run_integration_latency_benchmark():
 
     try:
         t0 = time.time()
-        result = qpu.execute(qc, shots=10, strict_mode=True)  # Low shots for speed
+        _result = qpu.execute(qc, shots=10, strict_mode=True)  # Low shots for speed
         t1 = time.time()
 
         latency_ms = (t1 - t0) * 1000

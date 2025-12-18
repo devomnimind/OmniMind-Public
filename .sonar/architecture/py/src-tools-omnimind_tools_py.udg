@@ -1,0 +1,980 @@
+
+1.0PythonFrontend"1763831833398*py2.BÀ+
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+ 
+src/tools/omnimind_tools.py9
+
+src.tools.omnimind_tools11
+
+
+__future__12
+
+src.tools.tool_base14
+
+asyncio16
+
+
+json18
+
+os20
+
+hashlib22
+
+
+subprocess24
+
+
+time26
+
+	threading28
+
+datetime30
+
+typing32
+
+pathlib34
+
+logging36
+
+psutil38
+
+src.audit.immutable_audit40
+!
+src.security.security_agent42
+*
+$src.tools.omnimind_tools.NewTaskTool44
+%
+src.tools.tool_base.AuditedTool46
+3
+-src.tools.omnimind_tools.NewTaskTool.__init__48
+2
+,src.tools.omnimind_tools.NewTaskTool.execute50
+
+
+dict52
+	
+str54
++
+%src.tools.omnimind_tools.PlanTaskTool56
+3
+-src.tools.omnimind_tools.PlanTaskTool.execute58
+4
+.src.tools.omnimind_tools.PlanTaskTool.__init__60
+2
+,src.tools.omnimind_tools.CollectFeedbackTool62
+;
+5src.tools.omnimind_tools.CollectFeedbackTool.__init__64
+:
+4src.tools.omnimind_tools.CollectFeedbackTool.execute66
+
+
+bool68
+4
+.src.tools.omnimind_tools.AccessMCPResourceTool70
+<
+6src.tools.omnimind_tools.AccessMCPResourceTool.execute72
+=
+7src.tools.omnimind_tools.AccessMCPResourceTool.__init__74
+0
+*src.tools.omnimind_tools.SecurityAgentTool76
+A
+;src.tools.omnimind_tools.SecurityAgentTool._stop_monitoring78
+8
+2src.tools.omnimind_tools.SecurityAgentTool.execute80
+6
+0src.tools.omnimind_tools.SecurityAgentTool.agent82
+@
+:src.tools.omnimind_tools.SecurityAgentTool._run_monitoring84
+B
+<src.tools.omnimind_tools.SecurityAgentTool._start_monitoring86
+9
+3src.tools.omnimind_tools.SecurityAgentTool.__init__88
+6
+0src.tools.omnimind_tools.ListCodeDefinitionsTool90
+?
+9src.tools.omnimind_tools.ListCodeDefinitionsTool.__init__92
+>
+8src.tools.omnimind_tools.ListCodeDefinitionsTool.execute94
+
+
+list96
+1
++src.tools.omnimind_tools.ExecuteCommandTool98
+;
+4src.tools.omnimind_tools.ExecuteCommandTool.__init__100
+:
+3src.tools.omnimind_tools.ExecuteCommandTool.execute102
+
+
+int104
+.
+'src.tools.omnimind_tools.ToolsFramework106
+D
+=src.tools.omnimind_tools.ToolsFramework.get_tools_by_category108
+'
+ src.tools.tool_base.ToolCategory110
+7
+0src.tools.omnimind_tools.ToolsFramework.__init__112
+B
+;src.tools.omnimind_tools.ToolsFramework._register_all_tools114
+=
+6src.tools.omnimind_tools.ToolsFramework.get_tool_stats116
+;
+4src.tools.omnimind_tools.ToolsFramework.execute_tool118
+
+tuple120
+A
+:src.tools.omnimind_tools.ToolsFramework.verify_audit_chain122
+B
+;src.tools.omnimind_tools.ToolsFramework.get_available_tools124
+-
+&src.tools.omnimind_tools.ApplyDiffTool126
+5
+.src.tools.omnimind_tools.ApplyDiffTool.execute128
+6
+/src.tools.omnimind_tools.ApplyDiffTool.__init__130
+2
++src.tools.omnimind_tools.InspectContextTool132
+;
+4src.tools.omnimind_tools.InspectContextTool.__init__134
+:
+3src.tools.omnimind_tools.InspectContextTool.execute136
+1
+*src.tools.omnimind_tools.AuditSecurityTool138
+:
+3src.tools.omnimind_tools.AuditSecurityTool.__init__140
+9
+2src.tools.omnimind_tools.AuditSecurityTool.execute142
+-
+&src.tools.omnimind_tools.ListFilesTool144
+6
+/src.tools.omnimind_tools.ListFilesTool.__init__146
+5
+.src.tools.omnimind_tools.ListFilesTool.execute148
+/
+(src.tools.omnimind_tools.AnalyzeCodeTool150
+8
+1src.tools.omnimind_tools.AnalyzeCodeTool.__init__152
+7
+0src.tools.omnimind_tools.AnalyzeCodeTool.execute154
+.
+'src.tools.omnimind_tools.SwitchModeTool156
+7
+0src.tools.omnimind_tools.SwitchModeTool.__init__158
+6
+/src.tools.omnimind_tools.SwitchModeTool.execute160
+1
+*src.tools.omnimind_tools.InsertContentTool162
+9
+2src.tools.omnimind_tools.InsertContentTool.execute164
+:
+3src.tools.omnimind_tools.InsertContentTool.__init__166
+-
+&src.tools.omnimind_tools.WriteFileTool168
+6
+/src.tools.omnimind_tools.WriteFileTool.__init__170
+5
+.src.tools.omnimind_tools.WriteFileTool.execute172
+6
+/src.tools.omnimind_tools._current_utc_timestamp174
+2
++src.tools.omnimind_tools.EpisodicMemoryTool176
+;
+4src.tools.omnimind_tools.EpisodicMemoryTool.__init__178
+:
+3src.tools.omnimind_tools.EpisodicMemoryTool.execute180
+1
+*src.tools.omnimind_tools.DiagnoseErrorTool182
+9
+2src.tools.omnimind_tools.DiagnoseErrorTool.execute184
+:
+3src.tools.omnimind_tools.DiagnoseErrorTool.__init__186
+.
+'src.tools.omnimind_tools.UpdateFileTool188
+6
+/src.tools.omnimind_tools.UpdateFileTool.execute190
+7
+0src.tools.omnimind_tools.UpdateFileTool.__init__192
+2
++src.tools.omnimind_tools.CodebaseSearchTool194
+;
+4src.tools.omnimind_tools.CodebaseSearchTool.__init__196
+:
+3src.tools.omnimind_tools.CodebaseSearchTool.execute198
+/
+(src.tools.omnimind_tools.SearchFilesTool200
+7
+0src.tools.omnimind_tools.SearchFilesTool.execute202
+8
+1src.tools.omnimind_tools.SearchFilesTool.__init__204
++
+$src.tools.omnimind_tools.MCPToolTool206
+4
+-src.tools.omnimind_tools.MCPToolTool.__init__208
+3
+,src.tools.omnimind_tools.MCPToolTool.execute210
+.
+'src.tools.omnimind_tools.AdaptStyleTool212
+6
+/src.tools.omnimind_tools.AdaptStyleTool.execute214
+7
+0src.tools.omnimind_tools.AdaptStyleTool.__init__216
+,
+%src.tools.omnimind_tools.ReadFileTool218
+4
+-src.tools.omnimind_tools.ReadFileTool.execute220
+5
+.src.tools.omnimind_tools.ReadFileTool.__init__222
+5
+.src.tools.omnimind_tools.AttemptCompletionTool224
+>
+7src.tools.omnimind_tools.AttemptCompletionTool.__init__226
+=
+6src.tools.omnimind_tools.AttemptCompletionTool.execute228
+0
+)src.tools.omnimind_tools.TrackMetricsTool230
+9
+2src.tools.omnimind_tools.TrackMetricsTool.__init__232
+8
+1src.tools.omnimind_tools.TrackMetricsTool.execute234
+
+float236J
+
+8
+89jè
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33325
+
+35
+35345
+
+37
+37365
+
+39
+39385
+
+41
+41405
+
+43
+43425
+
+45
+45446 210
+
+47
+47466
+
+49
+49487 245
+
+51
+51507 245
+
+53
+53526
+
+55
+55546
+
+57
+57566 210
+
+59
+59587 257
+
+61
+61607 257
+
+63
+63626 210
+
+65
+65647 263
+
+67
+67667 263
+
+69
+69686
+
+71
+71706 210
+
+73
+73727 271
+
+75
+75747 271
+
+77
+77766 210
+
+79
+79787 277
+
+81
+81807 277
+
+83
+83827 277
+
+85
+85847 277
+
+87
+87867 277
+
+89
+89887 277
+
+91
+91906 210
+
+93
+93927 291
+
+95
+95947 291
+
+97
+97966
+
+99
+99986 210
+
+101
+1011007 299
+
+103
+1031027 299
+
+105
+1051046
+
+107
+1071066 210
+
+109
+1091087 2107
+
+111
+1111106
+
+113
+1131127 2107
+
+115
+1151147 2107
+
+117
+1171167 2107
+
+119
+1191187 2107
+
+121
+1211206
+
+123
+1231227 2107
+
+125
+1251247 2107
+
+127
+1271266 210
+
+129
+1291287 2127
+
+131
+1311307 2127
+
+133
+1331326 210
+
+135
+1351347 2133
+
+137
+1371367 2133
+
+139
+1391386 210
+
+141
+1411407 2139
+
+143
+1431427 2139
+
+145
+1451446 210
+
+147
+1471467 2145
+
+149
+1491487 2145
+
+151
+1511506 210
+
+153
+1531527 2151
+
+155
+1551547 2151
+
+157
+1571566 210
+
+159
+1591587 2157
+
+161
+1611607 2157
+
+163
+1631626 210
+
+165
+1651647 2163
+
+167
+1671667 2163
+
+169
+1691686 210
+
+171
+1711707 2169
+
+173
+1731727 2169
+
+175
+1751747 210
+
+177
+1771766 210
+
+179
+1791787 2177
+
+181
+1811807 2177
+
+183
+1831826 210
+
+185
+1851847 2183
+
+187
+1871867 2183
+
+189
+1891886 210
+
+191
+1911907 2189
+
+193
+1931927 2189
+
+195
+1951946 210
+
+197
+1971967 2195
+
+199
+1991987 2195
+
+201
+2012006 210
+
+203
+2032027 2201
+
+205
+2052047 2201
+
+207
+2072066 210
+
+209
+2092087 2207
+
+211
+2112107 2207
+
+213
+2132126 210
+
+215
+2152147 2213
+
+217
+2172167 2213
+
+219
+2192186 210
+
+221
+2212207 2219
+
+223
+2232227 2219
+
+225
+2252246 210
+
+227
+2272267 2225
+
+229
+2292287 2225
+
+231
+2312306 210
+
+233
+2332327 2231
+
+235
+2352347 2231
+
+237
+2372366rÌ
+
+10131*
+8 (#
+
+10151*
+8 (1
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (
+
+
+10231*
+8 (
+
+10251*
+8 (
+
+10271*
+8 (
+
+10291*
+8 (
+
+10311*
+8 ((
+
+10331*
+8   (-
+
+10351*
+8! !(
+
+10371*
+8" "(
+
+10391*
+8´ ´(
+
+10411*
+8Ñ Ñ(E
+
+10431*
+8£ £(@
+
+45472*
+8ã ã(
+
+51533*
+8ë	 ë(
+
+51554*
+8ë	 ë(
+
+51554*
+8ë	 ë(
+
+51554*
+8ë	 ë(
+
+57472*
+8Û Û(
+
+59533*
+8˘	 ˘(
+
+59554*
+8˘	 ˘(
+
+59554*
+8˘	 ˘(
+
+63472*
+8≈ ≈(
+
+67693*
+8À	 À(
+
+67554*
+8À	 À(
+
+67534*
+8À	 À(
+
+71472*
+8à à(
+
+73554*
+8é	 é(
+
+73554*
+8é	 é(
+
+77472*
+8î î(
+
+79533*
+8Ã	 Ã(
+
+81533*
+8®	 ®(
+
+81554*
+8®	 ®(
+
+87533*
+8√	 √(
+
+89554*
+8ó	 ó(
+
+91472*
+8Ù Ù(
+
+95973*
+8˙	 ˙(
+
+95554*
+8˙	 ˙(
+
+99472*
+8Ê Ê(
+
+103533*
+8Å	 Å(
+
+103554*
+8Å	 Å(
+
+1031054*
+8Å	 Å(
+
+109973*
+8Ã	 Ã(
+
+1091114*
+8Ã	 Ã(
+
+117533*
+8Ó	 Ó(
+
+119554*
+8ø	 ø(
+
+1191214*
+8ø	 ø(
+
+119534*
+8ø	 ø(
+
+123693*
+8–	 –(
+
+125533*
+8»	 »(
+
+127472*
+8≠ ≠(
+
+129693*
+8≥	 ≥(
+
+129554*
+8≥	 ≥(
+
+129974*
+8≥	 ≥(
+
+133472*
+8¢ ¢(
+
+137533*
+8®	 ®(
+
+139472*
+8„ „(
+
+143533*
+8È	 È(
+
+143554*
+8È	 È(
+
+145472*
+8l l(
+
+149973*
+8r	 r(
+
+149554*
+8r	 r(
+
+149694*
+8r	 r(
+
+151472*
+8‚ ‚(
+
+155533*
+8Ë	 Ë(
+
+155554*
+8Ë	 Ë(
+
+157472*
+8© ©(
+
+161533*
+8∞	 ∞(
+
+161554*
+8∞	 ∞(
+
+161554*
+8∞	 ∞(
+
+163472*
+8“ “(
+
+165693*
+8ÿ	 ÿ(
+
+165554*
+8ÿ	 ÿ(
+
+165554*
+8ÿ	 ÿ(
+
+1651054*
+8ÿ	 ÿ(
+
+169472*
+8® ®(
+
+173693*
+8Æ	 Æ(
+
+173554*
+8Æ	 Æ(
+
+173554*
+8Æ	 Æ(
+
+173554*
+8Æ	 Æ(
+
+175553*
+8( ((
+
+177472*
+8¶ ¶(
+
+181554*
+8Æ	 Æ(
+
+183472*
+8Ñ Ñ(
+
+185533*
+8ä	 ä(
+
+185554*
+8ä	 ä(
+
+189472*
+8¿ ¿(
+
+191693*
+8∆	 ∆(
+
+191554*
+8∆	 ∆(
+
+191554*
+8∆	 ∆(
+
+191554*
+8∆	 ∆(
+
+195472*
+8√ √(
+
+199973*
+8…	 …(
+
+199554*
+8…	 …(
+
+199554*
+8…	 …(
+
+199974*
+8…	 …(
+
+1991054*
+8…	 …(
+
+201472*
+8M M(
+
+203973*
+8S	 S(
+
+203554*
+8S	 S(
+
+203554*
+8S	 S(
+
+2031054*
+8S	 S(
+
+207472*
+8È È(
+
+211554*
+8Ô	 Ô(
+
+211554*
+8Ô	 Ô(
+
+211534*
+8Ô	 Ô(
+
+213472*
+8≠ ≠(
+
+215533*
+8≥	 ≥(
+
+215554*
+8≥	 ≥(
+
+215554*
+8≥	 ≥(
+
+219472*
+81 1(
+
+221553*
+87	 7(
+
+221554*
+87	 7(
+
+221554*
+87	 7(
+
+225472*
+8Œ Œ(
+
+229533*
+8‘	 ‘(
+
+229554*
+8‘	 ‘(
+
+229554*
+8‘	 ‘(
+
+229694*
+8‘	 ‘(
+
+231472*
+8Â Â(
+
+235693*
+8Î	 Î(
+
+235554*
+8Î	 Î(
+
+2352374*
+8Î	 Î(

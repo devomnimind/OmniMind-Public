@@ -37,7 +37,7 @@ import subprocess
 import sys
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict, List, Tuple, Set, Optional
+from typing import Dict, List, Optional, Tuple
 
 
 # Cores para output
@@ -253,7 +253,7 @@ def analyze_test_coverage(project_root: Path) -> Optional[Dict]:
         coverage_file.unlink()
 
     # Try to run coverage
-    result = subprocess.run(
+    _result = subprocess.run(
         [
             sys.executable,
             "-m",

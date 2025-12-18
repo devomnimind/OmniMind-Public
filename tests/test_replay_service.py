@@ -59,4 +59,3 @@ class TestReplayService:
         # Let's rely on the fact that t1 is after the first delta was logged (approx).
         # Actually, log_event uses time.time() internally.
         # To test precisely, we should probably allow passing timestamp to log_event or mock time.
-        pass

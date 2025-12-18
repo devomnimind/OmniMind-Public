@@ -1,0 +1,47 @@
+
+5src.observability.distributed_tracing.Span.set_statusS
+I/home/fahbrain/projects/omnimind/src/observability/distributed_tracing.pyy y("2*‹
+2z z("t
+r
+{ {(8,
+*src.observability.distributed_tracing.Span"
+status"__id*&
+
+__unknown_file (
+
+
+status*
+3
+4*<
+3
+distributed_tracing.py"
+ (
+implicit return*Â
+4} }(?t
+r
+} }(
+%2"__id*Z
+
+__unknown_file (>*<,
+*src.observability.distributed_tracing.Span"
+
+attributes·´
+} }(?
+%1"dict.__setitem__*"
+
+__unknown_file (
+
+%2*2
+
+__unknown_file (
+status_description*+
+
+__unknown_file (
+
+description2__setitem__*
+3:
+y y(+
+status:
+y- y(B
+descriptionB.,
+*src.observability.distributed_tracing.SpanH

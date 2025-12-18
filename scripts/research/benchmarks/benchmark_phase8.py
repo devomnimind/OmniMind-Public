@@ -28,8 +28,7 @@ from pathlib import Path
 from time import perf_counter
 from typing import Dict, List, Tuple
 
-from src.integrations import DBusSystemController, MCPClient, MCPServer, MCPConfig
-
+from src.integrations import DBusSystemController, MCPClient, MCPConfig, MCPServer
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)

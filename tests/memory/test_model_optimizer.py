@@ -70,7 +70,6 @@ class TestModelOptimizer:
     def test_quantize_model_int8(self):
         """Testa quantização INT8 (requer PyTorch e modelo real)."""
         # Test would require actual PyTorch model
-        pass
 
     def test_optimize_embedding_model(self):
         """Testa otimização de modelo de embeddings."""

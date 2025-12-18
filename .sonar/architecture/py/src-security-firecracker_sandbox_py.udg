@@ -1,0 +1,197 @@
+
+1.0PythonFrontend"1763831841691*py2.BË
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+(
+#src/security/firecracker_sandbox.py9
+&
+ src.security.firecracker_sandbox11
+
+
+__future__12
+
+os14
+
+logging16
+
+
+time18
+
+dataclasses20
+
+datetime22
+
+pathlib24
+
+typing26
+
+src.audit.immutable_audit28
+9
+3src.security.firecracker_sandbox.FirecrackerSandbox30
+B
+<src.security.firecracker_sandbox.FirecrackerSandbox.__init__32
+
+
+bool34
+L
+Fsrc.security.firecracker_sandbox.FirecrackerSandbox._summarize_payload36
+	
+str38
+G
+Asrc.security.firecracker_sandbox.FirecrackerSandbox._record_event40
+4
+.src.security.firecracker_sandbox.SandboxResult42
+=
+7src.security.firecracker_sandbox.FirecrackerSandbox.run44
+	
+int46
+3
+-src.security.firecracker_sandbox.SandboxEvent48
+<
+6src.security.firecracker_sandbox.AutonomyObservability50
+Q
+Ksrc.security.firecracker_sandbox.AutonomyObservability.record_sandbox_event52
+
+
+dict54J
+
+8
+89jú
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31306 210
+
+33
+33327 231
+
+35
+35346
+
+37
+37367 231
+
+39
+39386
+
+41
+41407 231
+
+43
+43426 210
+
+45
+45447 231
+
+47
+47466
+
+49
+49486 210
+
+51
+51506 210
+
+53
+53527 251
+
+55
+55546rÔ
+
+10131*
+8 (#
+
+10151*
+8 (
+
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 ()
+
+10231*
+8 ((
+
+10251*
+8 (
+
+10271*
+8	 	(.
+
+10291*
+8 (/
+
+33354*
+80	 0(
+
+37393*
+8m	 m(
+
+41394*
+8w	 w(
+
+41434*
+8w	 w(
+
+41394*
+8w	 w(
+
+45433*
+8N	 N(
+
+45474*
+8N	 N(
+
+45394*
+8N	 N(
+
+53554*
+8	 (

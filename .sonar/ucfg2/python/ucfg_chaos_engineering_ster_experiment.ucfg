@@ -1,0 +1,59 @@
+
+=src.testing.chaos_engineering.ChaosMonkey.register_experimentK
+A/home/fahbrain/projects/omnimind/src/testing/chaos_engineering.pyA A("2*‹
+2B G(t
+r
+H H(
+%1"__id*Z
+
+__unknown_file (>*<+
+)src.testing.chaos_engineering.ChaosMonkey"
+experimentsjh
+H H(+
+%2*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+
+experiment2appendN
+L
+I4 I(C
+%3"__id*4
+
+__unknown_file (*
+
+
+experiment"
+name_
+]
+I I(E
+%4"__concat*-
+I I(3!
+Registered chaos experiment: *
+I4 I(C
+
+%3db
+I I(F
+%5*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%42info*
+3*:
+3
+chaos_engineering.py"
+K K(
+implicit return:
+A" A(=
+
+experimentB-+
+)src.testing.chaos_engineering.ChaosMonkeyH

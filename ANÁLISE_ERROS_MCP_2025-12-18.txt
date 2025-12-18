@@ -1,0 +1,98 @@
+ANÁLISE GLOBAL DOS ERROS MCP - 18 de Dezembro de 2025 (ATUALIZADO)
+=================================================================
+
+## RESUMO EXECUTIVO
+
+✅ **PROBLEMA IDENTIFICADO E CORRIGIDO**:
+   Subclasses de MCPServer chamam `_methods.update()` que sobrescrevia o dicionário,
+   removendo o método `initialize` registrado pela classe base.
+
+✅ **SOLUÇÃO IMPLEMENTADA**:
+   Adicionado método `register_methods()` na classe base MCPServer que preserva
+   métodos existentes (como initialize) enquanto adiciona novos.
+
+## STATUS DAS CORREÇÕES
+
+### ✅ CORRIGIDOS (Funcionando):
+1. **omnimind-git** (porta 4332): OK - Wrapper MCP funcional
+2. **Servidor Base (MCPServer)**:
+   - Adicionado método `initialize()`
+   - Adicionado decorator `@tool()`
+   - Adicionado método `register_methods()`
+
+### ✅ SERVIDORES ATUALIZADOS (Preservam initialize):
+1. **mcp_logging_server.py** (porta 4336):
+   - Alterado: `_methods.update()` → `register_methods()`
+   - Status: Corrigido ✓
+
+2. **mcp_python_server.py** (porta 4333):
+   - Alterado: `_methods.update()` → `register_methods()`
+   - Status: Corrigido ✓
+
+3. **mcp_system_info_server.py** (porta 4335):
+   - Alterado: `_methods.update()` → `register_methods()`
+   - Status: Corrigido ✓
+
+4. **mcp_context_server.py** (porta 4323):
+   - Alterado: `_methods.update()` → `register_methods()`
+   - Status: Corrigido ✓
+
+5. **mcp_memory_server.py** (porta 4321):
+   - Alterado: `_methods.update()` → `register_methods()`
+   - Status: Corrigido ✓
+
+6. **mcp_thinking_server.py** (porta 4322):
+   - Alterado: `_methods.update()` → `register_methods()`
+   - Status: Corrigido ✓
+
+### ✅ FILESYSTEM MCP (porta 4331) - CORRIGIDO:
+   - Problema anterior: Retornava erro JSON "Expecting value"
+   - Causa: Não chamava `register_tools()`
+   - Solução: Adicionada chamada a `register_tools()` no __init__
+   - Status: Corrigido ✓
+   - Configuração: Atualizado start_mcp_external.sh e mcp_servers.json
+
+### ⚠️ SUPABASE MCP (porta 4337) - REQUER CONFIG:
+   - Erro: 401 Unauthorized
+   - Solução: Adicionar no .env:
+     SUPABASE_PROJECT_ID=noetzkgvyqcrycdsfnib
+     SUPABASE_API_KEY=<chave-da-api>
+   - Ou deixar desabilitado se não usar
+
+## ARQUIVOS MODIFICADOS
+
+1. ✏️ src/integrations/mcp_server.py:
+   - Adicionado método `initialize()`
+   - Adicionado método `register_methods()`
+   - Adicionado decorator `@tool()`
+
+2. ✏️ src/integrations/mcp_*_server.py (6 arquivos):
+   - Alteração: `_methods.update()` → `register_methods()`
+   - Preserva método `initialize` da classe base
+
+3. ✏️ src/integrations/mcp_filesystem_server.py:
+   - Adicionada chamada a `register_tools()` no __init__
+   - Corrigido erro de JSON response
+
+4. ✏️ scripts/production/start_mcp_external.sh:
+   - Alterado para usar `mcp_filesystem_server` em vez de wrapper
+
+5. ✏️ config/mcp_servers.json:
+   - Alterado para usar `mcp_filesystem_server` em vez de wrapper
+
+## PRÓXIMOS TESTES
+
+Execute para validar:
+```bash
+# Reiniciar todos os MCPs
+bash scripts/production/start_mcp_external.sh
+bash scripts/production/start_mcp_internal.sh
+
+# Testar no VS Code: F1 > "Connect MCP" ou iniciar MCP servers
+```
+
+## RESULTADOS ESPERADOS
+
+Todos os 10 servidores MCP devem responder ao método `initialize` sem erros
+-32601 (Unknown method initialize) ou -32000 (JSON errors).
+

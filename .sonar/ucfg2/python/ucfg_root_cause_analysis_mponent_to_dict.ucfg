@@ -1,0 +1,172 @@
+
+7src.metacognition.root_cause_analysis.Component.to_dictS
+I/home/fahbrain/projects/omnimind/src/metacognition/root_cause_analysis.py9 9("2*Ï
+2: :($
+; B(	
+%1"dict{
+y
+< <(-
+%2"__id*a
+
+__unknown_file (E*C1
+/src.metacognition.root_cause_analysis.Component"
+component_idì
+ê
+< <(-
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*,
+
+__unknown_file (
+component_id*"
+
+__unknown_file (
+
+%2}
+{
+= =(1
+%4"__id*c
+
+__unknown_file (G*E1
+/src.metacognition.root_cause_analysis.Component"
+component_typeG
+E
+= =(7
+%5"__id*-
+
+__unknown_file (*
+
+%4"
+valueï
+í
+= =(7
+%6"__mapSet*"
+
+__unknown_file (
+
+%1*.
+
+__unknown_file (
+component_type*"
+
+__unknown_file (
+
+%5s
+q
+> >(
+%7"__id*Y
+
+__unknown_file (=*;1
+/src.metacognition.root_cause_analysis.Component"
+nameã
+à
+> >(
+%8"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+name*"
+
+__unknown_file (
+
+%7
+? ?(3
+%9"list|
+z
+?! ?(2
+%10"__id*a
+
+__unknown_file (E*C1
+/src.metacognition.root_cause_analysis.Component"
+dependenciesfd
+? ?(3
+%11*"
+
+__unknown_file (
+
+%9*#
+
+__unknown_file (
+
+%102__init__î
+ë
+? ?(3
+%12"__mapSet*"
+
+__unknown_file (
+
+%1*,
+
+__unknown_file (
+dependencies*"
+
+__unknown_file (
+
+%9
+@ @(/
+%13"listz
+x
+@ @(.
+%14"__id*_
+
+__unknown_file (C*A1
+/src.metacognition.root_cause_analysis.Component"
+
+dependentsge
+@ @(/
+%15*#
+
+__unknown_file (
+
+%13*#
+
+__unknown_file (
+
+%142__init__ì
+ê
+@ @(/
+%16"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+dependents*#
+
+__unknown_file (
+
+%13x
+v
+A A(%
+%17"__id*]
+
+__unknown_file (A*?1
+/src.metacognition.root_cause_analysis.Component"
+
+metadataë
+é
+A A(%
+%18"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+metadata*#
+
+__unknown_file (
+
+%17"
+; B(	
+
+%1B31
+/src.metacognition.root_cause_analysis.ComponentH

@@ -26,6 +26,7 @@ Demonstra cache inteligente com hit rate tracking.
 
 import logging
 import sys
+
 from src.neurosymbolic.neural_component import NeuralComponent
 from src.neurosymbolic.response_cache import get_response_cache
 

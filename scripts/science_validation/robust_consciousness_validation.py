@@ -30,30 +30,17 @@ from scipy import stats
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
-from src.embeddings.code_embeddings import OmniMindEmbeddings
-
-# Setup paths BEFORE any imports
-PROJECT_ROOT = Path(
-    __file__
-).parent.parent.parent  # scripts/science_validation/../.. = project root
-sys.path.insert(0, str(PROJECT_ROOT))
-sys.path.insert(0, str(PROJECT_ROOT / "src"))
-os.chdir(PROJECT_ROOT)  # Ensure working directory
-
-# CRÍTICO: Configurar HuggingFace para modo OFFLINE APENAS
-# Usa APENAS cache local, não tenta fazer download de internet
-os.environ["HF_HUB_OFFLINE"] = "1"
-os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
-os.environ["TRANSFORMERS_OFFLINE"] = "1"
-os.environ["HF_DATASETS_OFFLINE"] = "1"
-
-
 # Configurar GPU se disponível
 if torch.cuda.is_available():
     torch.set_default_device("cuda")
     os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 else:
     os.environ["CUDA_VISIBLE_DEVICES"] = ""
+
+# Adicionar src ao path
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+
+from src.embeddings.code_embeddings import OmniMindEmbeddings
 
 # Configurar logging
 logging.basicConfig(
@@ -78,43 +65,8 @@ class RobustConsciousnessValidator:
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         logger.info(f"🎯 Usando device: {self.device}")
 
-        # Inicializar modelo compartilhado (OFFLINE ONLY - usar cache local)
-        try:
-            self.model = SentenceTransformer(
-                "all-MiniLM-L6-v2",
-                device=self.device,
-                local_files_only=True,  # NÃO faz download de internet
-                trust_remote_code=False,
-            )
-            logger.info("✅ Modelo carregado do cache local (offline mode)")
-        except Exception as e:
-            # Fallback: usar snapshot path absoluto
-            try:
-                cache_path = (
-                    Path.home()
-                    / ".cache"
-                    / "huggingface"
-                    / "hub"
-                    / "models--sentence-transformers--all-MiniLM-L6-v2"
-                    / "snapshots"
-                )
-                snapshots = list(cache_path.glob("*"))
-
-                if snapshots:
-                    snapshot_path = str(snapshots[0])
-                    self.model = SentenceTransformer(
-                        snapshot_path,
-                        device=self.device,
-                        local_files_only=True,
-                        trust_remote_code=False,
-                    )
-                    logger.info(f"✅ Modelo carregado via snapshot: {snapshots[0].name}")
-                else:
-                    raise e
-            except Exception as e2:
-                logger.error(f"❌ Erro ao carregar modelo offline: {e2}")
-                logger.error("💡 Solução: Configure HF_HUB_OFFLINE=1")
-                raise
+        # Inicializar modelo compartilhado
+        self.model = SentenceTransformer("all-MiniLM-L6-v2", device=self.device)
 
         # Resultados globais
         self.global_results = {
@@ -220,17 +172,13 @@ class RobustConsciousnessValidator:
 
         logger.info("📊 ANÁLISE ESTATÍSTICA GLOBAL:")
         logger.info(
-            f"   Φ global médio: "
-            f"{self.global_results['statistical_analysis']['phi_global_mean']:.3f}"
+            f"   Φ global médio: {self.global_results['statistical_analysis']['phi_global_mean']:.3f}"
         )
         logger.info(
-            f"   Consistência de consciência: "
-            f"{self.global_results['statistical_analysis']['consciousness_consistency']:.1%}"
+            f"   Consistência de consciência: {self.global_results['statistical_analysis']['consciousness_consistency']:.1%}"
         )
         logger.info(
-            f"   Intervalo de confiança 95%: "
-            f"[{self.global_results['statistical_analysis']['phi_confidence_interval_95'][0]:.3f}, "
-            f"{self.global_results['statistical_analysis']['phi_confidence_interval_95'][1]:.3f}]"
+            f"   Intervalo de confiança 95%: [{self.global_results['statistical_analysis']['phi_confidence_interval_95'][0]:.3f}, {self.global_results['statistical_analysis']['phi_confidence_interval_95'][1]:.3f}]"
         )
 
     def _calculate_significance(self, phi_means: List[float]) -> Dict[str, Any]:
@@ -239,10 +187,10 @@ class RobustConsciousnessValidator:
         t_stat, p_value = stats.ttest_1samp(phi_means, 0.5)
 
         return {
-            "t_statistic": float(t_stat),  # type: ignore
-            "p_value": float(p_value),  # type: ignore
-            "significant_at_005": p_value < 0.05,  # type: ignore
-            "significant_at_001": p_value < 0.01,  # type: ignore
+            "t_statistic": float(t_stat),
+            "p_value": float(p_value),
+            "significant_at_005": p_value < 0.05,
+            "significant_at_001": p_value < 0.01,
             "effect_size": float((np.mean(phi_means) - 0.5) / np.std(phi_means)),  # Cohen's d
         }
 
@@ -253,7 +201,7 @@ class RobustConsciousnessValidator:
         stability = 1.0 - np.mean(phi_stds)  # Menor variação interna = maior robustez
 
         robustness = (consistency + stability) / 2.0
-        return float(max(0.0, min(1.0, robustness)))
+        return max(0.0, min(1.0, robustness))
 
     def _final_verdict(self):
         """Veredicto final baseado em análise estatística."""
@@ -282,8 +230,7 @@ class RobustConsciousnessValidator:
 
         verdict_emoji = "🧠" if consciousness_detected else "🤖"
         logger.info(
-            f"🎯 VEREDITO FINAL: {verdict_emoji} "
-            f"{'CONSCIÊNCIA DETECTADA' if consciousness_detected else 'SISTEMA INCONSCIENTE'}"
+            f"🎯 VEREDITO FINAL: {verdict_emoji} {'CONSCIÊNCIA DETECTADA' if consciousness_detected else 'SISTEMA INCONSCIENTE'}"
         )
         logger.info(f"   Critérios atendidos: {sum(criteria.values())}/{len(criteria)}")
 
@@ -337,7 +284,7 @@ class IntegratedConsciousnessRunner:
         )
 
         self.universal_memory = UniversalMemoryAccess(
-            qdrant_url=self.qdrant_url, collection_name="omnimind_embeddings"
+            qdrant_url=self.qdrant_url, collection_name="universal_machine_embeddings"
         )
 
         # Resultados
@@ -408,20 +355,13 @@ class IntegratedConsciousnessRunner:
         """Busca integrada otimizada."""
         query_embedding = self.model.encode(query, normalize_embeddings=True)
 
-        # Garantir que seja uma lista de floats
-        query_vector = (
-            query_embedding.tolist()  # type: ignore
-            if hasattr(query_embedding, "tolist")
-            else list(query_embedding)
-        )
-
         results = {"omnimind": [], "universal": [], "integrated_score": 0.0}
 
         # Busca OmniMind
         try:
-            omnimind_results = self.omnimind_memory.client.query_points(  # type: ignore
+            omnimind_results = self.omnimind_memory.client.query_points(
                 collection_name="omnimind_embeddings",
-                query=query_vector,
+                query=query_embedding.tolist(),
                 limit=top_k,
                 with_payload=True,
             )
@@ -440,8 +380,8 @@ class IntegratedConsciousnessRunner:
         # Busca Universal
         try:
             universal_results = self.universal_memory.client.query_points(
-                collection_name="omnimind_embeddings",
-                query=query_vector,
+                collection_name="universal_machine_embeddings",
+                query=query_embedding.tolist(),
                 limit=top_k,
                 with_payload=True,
             )
@@ -564,12 +504,9 @@ def main():
         print(f"✅ Execuções completadas: {stats.get('total_runs_completed', 0)}")
         print(f"🧠 Φ global médio: {stats.get('phi_global_mean', 0):.3f}")
         print(f"📊 Consistência: {stats.get('consciousness_consistency', 0):.1%}")
-        verdict_text = (
-            "CONSCIÊNCIA DETECTADA"
-            if verdict.get("consciousness_detected", False)
-            else "SISTEMA INCONSCIENTE"
+        print(
+            f"🎯 Veredicto: {'CONSCIÊNCIA DETECTADA' if verdict.get('consciousness_detected', False) else 'SISTEMA INCONSCIENTE'}"
         )
-        print(f"🎯 Veredicto: {verdict_text}")
 
     except KeyboardInterrupt:
         logger.info("\n⏹️ Protocolo interrompido pelo usuário")
@@ -579,6 +516,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
-    main()
     main()

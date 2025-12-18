@@ -1,0 +1,197 @@
+
+1.0PythonFrontend"1763831830153*py2.Bþ	
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+2
+-src/metacognition/optimization_suggestions.py9
+0
+*src.metacognition.optimization_suggestions11
+
+
+__future__12
+
+logging14
+
+datetime16
+
+typing18
+H
+Bsrc.metacognition.optimization_suggestions.OptimizationSuggestions20
+^
+Xsrc.metacognition.optimization_suggestions.OptimizationSuggestions.analyze_bias_patterns22
+
+
+list24
+
+
+dict26
+d
+^src.metacognition.optimization_suggestions.OptimizationSuggestions.analyze_performance_metrics28
+a
+[src.metacognition.optimization_suggestions.OptimizationSuggestions.analyze_failure_patterns30
+U
+Osrc.metacognition.optimization_suggestions.OptimizationSuggestions._generate_id32
+	
+str34
+]
+Wsrc.metacognition.optimization_suggestions.OptimizationSuggestions.generate_suggestions36
+Q
+Ksrc.metacognition.optimization_suggestions.OptimizationSuggestions.__init__38
+	
+int40
+_
+Ysrc.metacognition.optimization_suggestions.OptimizationSuggestions.analyze_resource_usage42
+G
+Asrc.metacognition.optimization_suggestions.OptimizationSuggestion44
+O
+Isrc.metacognition.optimization_suggestions.OptimizationSuggestion.to_dict46
+P
+Jsrc.metacognition.optimization_suggestions.OptimizationSuggestion.__init__48J
+
+8
+89jÍ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21206 210
+
+23
+23227 221
+
+25
+25246
+
+27
+27266
+
+29
+29287 221
+
+31
+31307 221
+
+33
+33327 221
+
+35
+35346
+
+37
+37367 221
+
+39
+39387 221
+
+41
+41406
+
+43
+43427 221
+
+45
+45446 210
+
+47
+47467 245
+
+49
+49487 245rà
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8	 	(
+
+10191*
+8
+ 
+(-
+
+23253*
+8¨	 ¨(
+
+23274*
+8¨	 ¨(
+
+29253*
+8S	 S($
+
+29274*
+8S	 S($
+
+31253*
+8}	 }(!
+
+31274*
+8}	 }(!
+
+33353*
+8N	 N(
+
+37253*
+8•	 •(
+
+39414*
+8E	 E(
+
+43253*
+8Õ	 Õ(
+
+43274*
+8Õ	 Õ(
+
+47273*
+83	 3(
+
+49354*
+8	 (
+
+49354*
+8	 (
+
+49354*
+8	 (
+
+49354*
+8	 (
+
+49354*
+8	 (
+
+49354*
+8	 (
+
+49354*
+8	 (

@@ -1,0 +1,150 @@
+
+Esrc.security.api_documentation.APIDocumentationGenerator.add_endpointN
+B/home/fahbrain/projects/omnimind/src/security/api_documentation.py‹ ‹("2* 
+2
+Œ ‘(…
+‚
+
+’  ’(.
+%10"__id*g
+
+__unknown_file (K*I:
+8src.security.api_documentation.APIDocumentationGenerator"
+	endpointsO
+M
+
+’ ’(
+%11"__id*2
+
+__unknown_file (*
+
+
+endpoint"
+pathmk
+
+’ ’(.
+%12*#
+
+__unknown_file (
+
+%10*#
+
+__unknown_file (
+
+%112__contains__?
+=
+
+’ ’(.
+%13"not*#
+
+__unknown_file (
+
+%12*
+4
+5*<
+3
+api_documentation.py"
+– –(
+implicit return*Û
+4
+” ”(A„
+
+
+” ”(
+%2"__id*g
+
+__unknown_file (K*I:
+8src.security.api_documentation.APIDocumentationGenerator"
+	endpointsN
+L
+
+” ”($
+%3"__id*2
+
+__unknown_file (*
+
+
+endpoint"
+pathsq
+
+” ”(%
+%4"__mapGet*"
+
+__unknown_file (
+
+%2*"
+
+__unknown_file (
+
+%32__getitem__P
+N
+
+”& ”(5
+%5"__id*4
+
+__unknown_file (*
+
+
+endpoint"
+method¦£
+
+” ”(A
+%1"dict.__setitem__*"
+
+__unknown_file (
+
+%4*"
+
+__unknown_file (
+
+%5*(
+
+__unknown_file (
+
+
+endpoint2__setitem__*
+3*ª
+5
+“ “(.
+
+“, “(.
+%6"dict„
+
+
+“ “(
+%8"__id*g
+
+__unknown_file (K*I:
+8src.security.api_documentation.APIDocumentationGenerator"
+	endpointsN
+L
+
+“ “((
+%9"__id*2
+
+__unknown_file (*
+
+
+endpoint"
+path 
+
+“ “(.
+%7"dict.__setitem__*"
+
+__unknown_file (
+
+%8*"
+
+__unknown_file (
+
+%9*"
+
+__unknown_file (
+
+%62__setitem__*
+4:
+
+‹ ‹(0
+
+endpointB<:
+8src.security.api_documentation.APIDocumentationGeneratorH

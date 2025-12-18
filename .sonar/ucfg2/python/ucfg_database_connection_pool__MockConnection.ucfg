@@ -1,0 +1,47 @@
+
+3src.scaling.database_connection_pool.MockConnectionT
+H/home/fahbrain/projects/omnimind/src/scaling/database_connection_pool.py« «("2*®
+2
+» Õ(Å
+
+
+Œ Œ(B5
+3src.scaling.database_connection_pool.MockConnection"	
+conn_id"__id*'
+
+__unknown_file (
+	
+conn_idå
+â
+
+œ œ((G5
+3src.scaling.database_connection_pool.MockConnection"
+database_url"__id*,
+
+__unknown_file (
+
+database_url
+}
+
+– –(B5
+3src.scaling.database_connection_pool.MockConnection"	
+_closed"__id*%
+
+__unknown_file (	
+
+False*
+3*
+3
+database_connection_pool.pyGE
+“ “(
+%1"3src.scaling.database_connection_pool.MockConnection"
+“ “(
+
+%1:
+
+« «(#	
+conn_id:
+
+«% «(6
+database_urlB75
+3src.scaling.database_connection_pool.MockConnectionH

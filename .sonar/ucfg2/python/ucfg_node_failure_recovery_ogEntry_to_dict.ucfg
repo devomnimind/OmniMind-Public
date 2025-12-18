@@ -1,0 +1,131 @@
+
+2src.scaling.node_failure_recovery.LogEntry.to_dictO
+E/home/fahbrain/projects/omnimind/src/scaling/node_failure_recovery.py2 2("2*þ
+23 3($
+4 :(	
+%1"dictn
+l
+5 5(
+%2"__id*T
+
+__unknown_file (8*6,
+*src.scaling.node_failure_recovery.LogEntry"
+term‹
+ˆ
+5 5(
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+term*"
+
+__unknown_file (
+
+%2o
+m
+6 6(
+%4"__id*U
+
+__unknown_file (9*7,
+*src.scaling.node_failure_recovery.LogEntry"
+indexŒ
+‰
+6 6(
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*%
+
+__unknown_file (	
+index*"
+
+__unknown_file (
+
+%4t
+r
+7 7()
+%6"__id*Z
+
+__unknown_file (>*<,
+*src.scaling.node_failure_recovery.LogEntry"
+
+entry_typeG
+E
+7 7(/
+%7"__id*-
+
+__unknown_file (*
+
+%6"
+value‘
+Ž
+7 7(/
+%8"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+entry_type*"
+
+__unknown_file (
+
+%7q
+o
+8 8(#
+%9"__id*W
+
+__unknown_file (;*9,
+*src.scaling.node_failure_recovery.LogEntry"	
+command
+Œ
+8 8(#
+%10"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+command*"
+
+__unknown_file (
+
+%9t
+r
+9 9('
+%11"__id*Y
+
+__unknown_file (=*;,
+*src.scaling.node_failure_recovery.LogEntry"
+	timestamp`^
+9 9(3
+%12"datetime.datetime.isoformat*#
+
+__unknown_file (
+
+%112	isoformat’
+
+9 9(3
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	timestamp*#
+
+__unknown_file (
+
+%12"
+4 :(	
+
+%1B.,
+*src.scaling.node_failure_recovery.LogEntryH

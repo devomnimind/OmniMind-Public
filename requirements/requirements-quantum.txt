@@ -1,13 +1,29 @@
-# ❌ DEPRECATED - Use requirements_core_quantum.txt instead
-# This file is obsolete and conflicts with locked versions
-#
-# All quantum dependencies are now LOCKED in requirements_core_quantum.txt:
-# - qiskit==1.2.4
-# - qiskit-aer-gpu==0.15.1
-# - qiskit-ibm-runtime==0.19.1
-# - qiskit-optimization==0.7.0
-# - cuquantum-cu12==25.11.0
-# - custatevec-cu12==1.11.0
-# - cutensor-cu12==2.4.1
-#
-# DO NOT use this file - it will BREAK the system!
+# Quantum computing dependencies for OmniMind
+# Install with: pip install -r requirements-quantum.txt
+# Requires: IBM Quantum account (free tier available)
+
+# ============================================================================
+# CORE QUANTUM SYSTEM - OBRIGATÓRIO (NÃO REMOVER)
+# Sistema quântico é CORE e FUNCIONAL
+# ============================================================================
+# IBM Qiskit (Primary)
+# CRITICAL: qiskit-aer-gpu 0.15.x requer Qiskit 1.3.x (não 2.0+)
+# convert_to_target foi removido em Qiskit 2.0, quebrando compatibilidade
+qiskit>=1.3.0,<2.0.0
+qiskit-aer>=0.17.0
+qiskit-aer-gpu>=0.15.0  # CRITICAL: GPU support para quantum_unconscious
+qiskit-ibm-runtime>=0.24.0
+qiskit-algorithms>=0.3.0
+qiskit-optimization>=0.6.0
+# ============================================================================
+
+# Alternative Quantum Frameworks
+cirq>=1.6.0
+
+# Quantum Annealing (D-Wave)
+dwave-system>=1.23.0
+dimod>=0.12.14
+
+# Additional Quantum Libraries
+# pennylane>=0.37.0     # Optional: Quantum ML framework
+# qutip>=5.0.0         # Optional: Quantum simulations

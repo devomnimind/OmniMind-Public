@@ -1,0 +1,22 @@
+
+"timestamp"str
+"value"str
+
+"labels"str
+!"Convert to dictionary."strself- -("™$
+"
+/ 3(	"#new-object#Bdict&
+$
+0 0("#get-field# value: 
+
+0 0("	#map-set#:*
+(
+1 1('"#get-field# timestamp: 
+
+1 1('	"	#map-set#:'
+%
+2 2(!"#get-field# labels: 
+
+2 2(!"	#map-set#:
+
+/ 3(	*F/home/fahbrain/projects/omnimind/src/observability/metrics_exporter.py

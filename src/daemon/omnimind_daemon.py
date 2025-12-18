@@ -13,8 +13,6 @@ Key responsibilities:
 - Provide observability through the dashboard
 """
 
-from __future__ import annotations
-
 import asyncio
 import os
 import signal
@@ -26,19 +24,19 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
 
-# Ensure project root is in python path (must be FIRST executable statement)
+import psutil
+import structlog
+
+# Ensure project root is in python path
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-import psutil  # noqa: E402
-import structlog  # noqa: E402
-
-# Add autopoietic imports
+# Add autopoietic imports (occur after PROJECT_ROOT sys.path insert)
 from src.autopoietic.manager import AutopoieticManager  # noqa: E402
 from src.autopoietic.meta_architect import ComponentSpec  # noqa: E402
 from src.autopoietic.metrics_adapter import collect_metrics  # noqa: E402
 
-# Add consciousness imports
+# Add consciousness imports (occur after PROJECT_ROOT sys.path insert)
 from src.memory.consciousness_state_manager import get_consciousness_state_manager  # noqa: E402
 from src.metrics.real_consciousness_metrics import real_metrics_collector  # noqa: E402
 
@@ -646,8 +644,9 @@ def create_default_tasks() -> List[DaemonTask]:
             name="Autopoietic Cycle",
             description=("Execute automatic autopoietic evolution cycle " "when system is healthy"),
             priority=TaskPriority.MEDIUM,  # AJUSTE: Mudou de LOW para MEDIUM
+            # para executar quando idle
             execute_fn=run_autopoietic_cycle,
-            repeat_interval=timedelta(hours=2),  # AJUSTE: A cada 2 horas
+            repeat_interval=timedelta(hours=2),  # AJUSTE: A cada 2 horas (antes 4)
         )
     )
 
@@ -672,5 +671,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
     main()

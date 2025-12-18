@@ -1,0 +1,747 @@
+
+“1int
+"failed"str
+’"items"str
+Ï"Event description"str
+"error"str
+y"Agent type"str
+"string"str
+Y"Task"str
+€"busy"str
+1"high"str
+l"orchestrator"str
+&¶"Detailed error description"str
+Ç"Error"str
+'š"Additional insight metadata"str
+/"low"str
+	"running"str
+Ò
+"metadata"str
+"description"str
+"type"str
+		"task_id"str
+Œ"confidence"str
+,
+"priority"str
+n"ethics"str
+"Task description"str
+Ç
+"category"str
+~"active"str
+³"Event timestamp"str
+"enum"str
+¼"Error code"str
+?"created_at"str
+°"Error message"str
+Ä"Event severity"str
+^
+"agent_id"str
+ú"goal"str
+"E"Task creation timestamp"str
+<"Task priority level"str
+"a"Unique agent identifier"str
+¶
+"severity"str
+#¬"Unique event identifier"str
+	"pending"str
+ø	"anomaly"str
+O
+"required"str
+¯"timestamp"str
+d"name"str
+"object"str
+"properties"str
+ ©"MetacognitionInsight"str
+%ì"Unique insight identifier"str
+"array"str
+ä"SecurityEvent"str
+0"medium"str
+	"minimum"str
+÷	"pattern"str
+©
+"event_id"str
+(ò"Insight generation timestamp"str
+NoneNoneType
+ù"optimization"str
+³"detail"str
+¹"info"str
+m
+"security"str
+é"insight_id"str
+"•"Confidence score (0-1)"str
+ )"Task execution status"str
+B"format"str
+„"Insight type"str
+¤"Agent"str
+"idle"str
+¹"code"str
+2
+"critical"str
+’	"maximum"str
+‹"Agent status"str
+%Õ"Additional event metadata"str
+"capabilities"str
+–"Agent capabilities"str
+
+"0int
+"number"str
+DÊ:"Event category (e.g., 'authentication', 'authorization')"str
+C"date-time"str
+) "Initialize common API schemas."str
+‰"Insight description"str
+H"result"str
+"completed"str
+g"Agent name"str
+"status"str
+!"Unique task identifier"str
+o"metacognition"str
+1K("Task execution result (when completed)"strselfN N( list"·K$
+"
+Q k(	"#new-object#Bdict 
+
+R R("	#map-set#:$
+"
+S i("#new-object#Bdict$
+"
+T T(V
+"#new-object#Bdict 
+
+T T(,"	#map-set#:
+ 
+
+T. T(U"	#map-set#:
+ 
+
+T T(V"	#map-set#:	
+$
+"
+U U(T"#new-object#Bdict 
+
+U  U(0"	#map-set#: 
+
+U2 U(S"	#map-set#: 
+
+U U(T"	#map-set#:$
+"
+V Z("#new-object#Bdict 
+
+W W($"	#map-set#:'
+%
+X X(I"#unknown-value#Blist&
+$
+X X(I "
+#is-exact#:Bbool
+
+X X(I!"
+#assume#: 8
+6
+X X(I#"#set-field# __collection_size:"Bint&
+$
+X X(I$"#array-add-last#:&
+$
+X X(I%"#array-add-last#:&
+$
+X X(I&"#array-add-last#:&
+$
+X X(I'"#array-add-last#: 
+
+X X(I("	#map-set#: 
+
+Y Y(:*"	#map-set#:) 
+
+V Z(+"	#map-set#:$
+"
+[ _(-"#new-object#Bdict 
+
+\ \($."	#map-set#:-'
+%
+] ](A3"#unknown-value#Blist&
+$
+] ](A4"
+#is-exact#:3Bbool
+
+] ](A5"
+#assume#:48
+6
+] ](A6"#set-field# __collection_size:3"Bint&
+$
+] ](A7"#array-add-last#:3/&
+$
+] ](A8"#array-add-last#:30&
+$
+] ](A9"#array-add-last#:31&
+$
+] ](A:"#array-add-last#:32 
+
+] ](A;"	#map-set#:-3 
+
+^ ^(8="	#map-set#:-< 
+
+[ _(>"	#map-set#:,-$
+"
+` d(@"#new-object#Bdict 
+
+a a($A"	#map-set#:@ 
+
+b b()D"	#map-set#:@BC 
+
+c c(<F"	#map-set#:@E 
+
+` d(G"	#map-set#:?@$
+"
+e h(I"#new-object#Bdict 
+
+f f($J"	#map-set#:I 
+
+g g(KL"	#map-set#:IK 
+
+e h(M"	#map-set#:HI 
+
+S i(N"	#map-set#:'
+%
+j j(<P"#unknown-value#Blist&
+$
+j j(<Q"
+#is-exact#:PBbool
+
+j j(<R"
+#assume#:Q8
+6
+j j(<S"#set-field# __collection_size:P"Bint&
+$
+j j(<T"#array-add-last#:P	&
+$
+j j(<U"#array-add-last#:P&
+$
+j j(<V"#array-add-last#:P 
+
+j j(<W"	#map-set#:OP(
+&
+Q Q(X"#get-field# schemas:$
+"
+Q k(	Z"#array-write#:XY%
+#
+	n  ‡(	["#new-object#Bdict 
+
+o o(\"	#map-set#:[%
+#
+	p …(]"#new-object#Bdict$
+"
+q t(_"#new-object#Bdict 
+
+r r($`"	#map-set#:_ 
+
+s s(<b"	#map-set#:_a 
+
+q t(c"	#map-set#:]^_$
+"
+u u(Ge"#new-object#Bdict 
+
+u u()f"	#map-set#:e 
+
+u+ u(Fh"	#map-set#:eg 
+
+u u(Gi"	#map-set#:]de$
+"
+v z(j"#new-object#Bdict 
+
+w w($k"	#map-set#:j'
+%
+x x(Sp"#unknown-value#Blist&
+$
+x x(Sq"
+#is-exact#:pBbool
+
+x x(Sr"
+#assume#:q8
+6
+x x(Ss"#set-field# __collection_size:p"Bint&
+$
+x x(St"#array-add-last#:pl&
+$
+x x(Su"#array-add-last#:pm&
+$
+x x(Sv"#array-add-last#:pn&
+$
+x x(Sw"#array-add-last#:po 
+
+x x(Sx"	#map-set#:jp 
+
+y y(/z"	#map-set#:jy 
+
+v z({"	#map-set#:]j$
+"
+{ (|"#new-object#Bdict 
+
+| |($}"	#map-set#:|(
+&
+} }(?‚"#unknown-value#Blist(
+&
+} }(?ƒ"
+#is-exact#:‚Bbool
+
+} }(?„"
+#assume#:ƒ:
+8
+} }(?…"#set-field# __collection_size:‚"Bint(
+&
+} }(?†"#array-add-last#:‚~(
+&
+} }(?‡"#array-add-last#:‚)
+'
+} }(?ˆ"#array-add-last#:‚€)
+'
+} }(?‰"#array-add-last#:‚"
+ 
+} }(?Š"	#map-set#:|‚"
+ 
+~ ~(1Œ"	#map-set#:|‹!
+
+{ ("	#map-set#:]|'
+%
+
+€  „("#new-object#Bdict%
+#
+
+ (#‘"	#map-set#:'
+%
+
+‚ ‚(/“"#new-object#Bdict$
+"
+
+‚ ‚(.”"	#map-set#:“&
+$
+
+‚ ‚(/•"	#map-set#:’“%
+#
+
+ƒ ƒ(7—"	#map-set#:–%
+#
+
+€ „(˜"	#map-set#:]"
+ 
+	p …(™"	#map-set#:[]*
+(
+
+† †(>š"#unknown-value#Blist*
+(
+
+† †(>›"
+#is-exact#:šBbool!
+
+
+† †(>œ"
+#assume#:›<
+:
+
+† †(>"#set-field# __collection_size:š"Bint*
+(
+
+† †(>"#array-add-last#:š^*
+(
+
+† †(>Ÿ"#array-add-last#:šd*
+(
+
+† †(> "#array-add-last#:š*
+(
+
+† †(>¡"#array-add-last#:š$
+"
+
+† †(>¢"	#map-set#:[Oš)
+'
+n n(£"#get-field# schemas:(
+&
+	n ‡(	¥"#array-write#:£¤['
+%
+
+Š( ¬(	¦"#new-object#Bdict$
+"
+
+‹ ‹(§"	#map-set#:¦'
+%
+
+Œ ¤(¨"#new-object#Bdict'
+%
+
+ (ª"#new-object#Bdict$
+"
+
+ ($«"	#map-set#:ª%
+#
+
+ (<­"	#map-set#:ª¬&
+$
+
+ (®"	#map-set#:¨©ª'
+%
+
+‘ •(°"#new-object#Bdict$
+"
+
+’ ’($±"	#map-set#:°$
+"
+
+“ “()²"	#map-set#:°BC%
+#
+
+” ”(4´"	#map-set#:°³&
+$
+
+‘ •(µ"	#map-set#:¨¯°'
+%
+
+– š(·"#new-object#Bdict$
+"
+
+— —($¸"	#map-set#:·*
+(
+
+˜ ˜(Iº"#unknown-value#Blist*
+(
+
+˜ ˜(I»"
+#is-exact#:ºBbool!
+
+
+˜ ˜(I¼"
+#assume#:»<
+:
+
+˜ ˜(I½"#set-field# __collection_size:º"Bint*
+(
+
+˜ ˜(I¾"#array-add-last#:º2*
+(
+
+˜ ˜(I¿"#array-add-last#:º1*
+(
+
+˜ ˜(IÀ"#array-add-last#:º0*
+(
+
+˜ ˜(IÁ"#array-add-last#:º/+
+)
+
+˜ ˜(IÂ"#array-add-last#:º¹%
+#
+
+˜ ˜(IÃ"	#map-set#:·º%
+#
+
+™ ™(3Å"	#map-set#:·Ä&
+$
+
+– š(Æ"	#map-set#:¨¶·'
+%
+
+› (È"#new-object#Bdict$
+"
+
+œ œ($É"	#map-set#:È%
+#
+
+ (]Ë"	#map-set#:ÈÊ&
+$
+
+› (Ì"	#map-set#:¨ÇÈ'
+%
+
+Ÿ Ÿ(UÍ"#new-object#Bdict$
+"
+
+Ÿ  Ÿ(0Î"	#map-set#:Í%
+#
+
+Ÿ2 Ÿ(TĞ"	#map-set#:ÍÏ%
+#
+
+Ÿ Ÿ(UÑ"	#map-set#:¨Í'
+%
+
+  £(Ó"#new-object#Bdict$
+"
+
+¡ ¡($Ô"	#map-set#:Ó%
+#
+
+¢ ¢(>Ö"	#map-set#:ÓÕ&
+$
+
+  £(×"	#map-set#:¨ÒÓ%
+#
+
+Œ ¤(Ø"	#map-set#:¦¨*
+(
+
+¥ «(Ù"#unknown-value#Blist*
+(
+
+¥ «(Ú"
+#is-exact#:ÙBbool!
+
+
+¥ «(Û"
+#assume#:Ú<
+:
+
+¥ «(Ü"#set-field# __collection_size:Ù"Bint+
+)
+
+¥ «(İ"#array-add-last#:Ù©+
+)
+
+¥ «(Ş"#array-add-last#:Ù¯+
+)
+
+¥ «(ß"#array-add-last#:Ù¶+
+)
+
+¥ «(à"#array-add-last#:ÙÇ*
+(
+
+¥ «(á"#array-add-last#:Ù%
+#
+
+¥ «(â"	#map-set#:¦OÙ+
+)
+
+Š Š(ã"#get-field# schemas:*
+(
+
+Š ¬(	å"#array-write#:ãä¦'
+%
+
+¯/ Ó(	æ"#new-object#Bdict$
+"
+
+° °(ç"	#map-set#:æ'
+%
+
+± Ë(è"#new-object#Bdict'
+%
+
+² µ(ê"#new-object#Bdict$
+"
+
+³ ³($ë"	#map-set#:ê%
+#
+
+´ ´(>í"	#map-set#:êì&
+$
+
+² µ(î"	#map-set#:èéê'
+%
+
+¶ º(ï"#new-object#Bdict$
+"
+
+· ·($ğ"	#map-set#:ï$
+"
+
+¸ ¸()ñ"	#map-set#:ïBC%
+#
+
+¹ ¹(Aó"	#map-set#:ïò&
+$
+
+¶ º(ô"	#map-set#:è¯ï'
+%
+
+» ¿(õ"#new-object#Bdict$
+"
+
+¼ ¼($ö"	#map-set#:õ*
+(
+
+½ ½(Jû"#unknown-value#Blist*
+(
+
+½ ½(Jü"
+#is-exact#:ûBbool!
+
+
+½ ½(Jı"
+#assume#:ü<
+:
+
+½ ½(Jş"#set-field# __collection_size:û"Bint+
+)
+
+½ ½(Jÿ"#array-add-last#:û÷+
+)
+
+½ ½(J€"#array-add-last#:ûø+
+)
+
+½ ½(J"#array-add-last#:ûù+
+)
+
+½ ½(J‚"#array-add-last#:ûú%
+#
+
+½ ½(Jƒ"	#map-set#:õû%
+#
+
+¾ ¾(1…"	#map-set#:õ„%
+#
+
+» ¿(†"	#map-set#:èõ'
+%
+
+À À(W‡"#new-object#Bdict$
+"
+
+À  À(0ˆ"	#map-set#:‡%
+#
+
+À2 À(VŠ"	#map-set#:‡‰%
+#
+
+À À(W‹"	#map-set#:è‡'
+%
+
+Á Æ("#new-object#Bdict%
+#
+
+Â Â($"	#map-set#:%
+#
+
+Ã Ã( ‘"	#map-set#:"&
+$
+
+Ä Ä( ”"	#map-set#:’“%
+#
+
+Å Å(;–"	#map-set#:•&
+$
+
+Á Æ(—"	#map-set#:èŒ'
+%
+
+Ç Ê(˜"#new-object#Bdict$
+"
+
+È È($™"	#map-set#:˜%
+#
+
+É É(@›"	#map-set#:˜š&
+$
+
+Ç Ê(œ"	#map-set#:èÒ˜%
+#
+
+± Ë("	#map-set#:æè*
+(
+
+Ì Ò("#unknown-value#Blist*
+(
+
+Ì Ò(Ÿ"
+#is-exact#:Bbool!
+
+
+Ì Ò( "
+#assume#:Ÿ<
+:
+
+Ì Ò(¡"#set-field# __collection_size:"Bint+
+)
+
+Ì Ò(¢"#array-add-last#:é+
+)
+
+Ì Ò(£"#array-add-last#:¯*
+(
+
+Ì Ò(¤"#array-add-last#:*
+(
+
+Ì Ò(¥"#array-add-last#:+
+)
+
+Ì Ò(¦"#array-add-last#:Œ%
+#
+
+Ì Ò(§"	#map-set#:æO+
+)
+
+¯ ¯(¨"#get-field# schemas:*
+(
+
+¯ Ó(	ª"#array-write#:¨©æ'
+%
+
+Ö  á(	«"#new-object#Bdict$
+"
+
+× ×(¬"	#map-set#:«'
+%
+
+Ø ß(­"#new-object#Bdict'
+%
+
+Ù Ù(K®"#new-object#Bdict$
+"
+
+Ù Ù(*¯"	#map-set#:®%
+#
+
+Ù, Ù(J±"	#map-set#:®°&
+$
+
+Ù Ù(K²"	#map-set#:­®'
+%
+
+Ú İ(´"#new-object#Bdict$
+"
+
+Û Û($µ"	#map-set#:´%
+#
+
+Ü Ü(?·"	#map-set#:´¶&
+$
+
+Ú İ(¸"	#map-set#:­³´'
+%
+
+Ş Ş(Gº"#new-object#Bdict$
+"
+
+Ş Ş()»"	#map-set#:º%
+#
+
+Ş+ Ş(F½"	#map-set#:º¼&
+$
+
+Ş Ş(G¾"	#map-set#:­¹º%
+#
+
+Ø ß(¿"	#map-set#:«­*
+(
+
+à à(!À"#unknown-value#Blist*
+(
+
+à à(!Á"
+#is-exact#:ÀBbool!
+
+
+à à(!Â"
+#assume#:Á<
+:
+
+à à(!Ã"#set-field# __collection_size:À"Bint+
+)
+
+à à(!Ä"#array-add-last#:À%
+#
+
+à à(!Å"	#map-set#:«OÀ+
+)
+
+Ö Ö(Æ"#get-field# schemas:*
+(
+
+Ö á(	È"#array-write#:ÆÇ« *B/home/fahbrain/projects/omnimind/src/security/api_documentation.py

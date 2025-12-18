@@ -1,0 +1,31 @@
+
+"division by zero"bool
+
+"S3518"bool
+-$"Get the success rate of this node."str
+
+0int
+"a"bool
+0.5floatselfP P("x,
+*
+R R("#get-field# visit_count:*
+(
+R R( "
+#binop ==#2==:Bbool"
+R R(  *R R(
+"
+S S("ñ.
+,
+T T(!"#get-field# success_count:,
+*
+T$ T(4"#get-field# visit_count:*
+(
+T T(4	"
+#binop !=#2!=:Bbool 
+
+T T(4"
+#assert#:	
+1
+/
+T T(4"#dependent-value#*:Bfloat
+T T(4*F/home/fahbrain/projects/omnimind/src/decision_making/decision_trees.py

@@ -1,0 +1,327 @@
+
+1.0PythonFrontend"1763831842330*py2.BÕ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+*
+%src/metacognition/issue_prediction.py9
+(
+"src.metacognition.issue_prediction11
+
+
+__future__12
+
+logging14
+
+
+statistics16
+
+collections18
+
+dataclasses20
+
+datetime22
+
+
+enum24
+
+typing26
+3
+-src.metacognition.issue_prediction.MetricType28
+	
+str30
+
+	enum.Enum32
+;
+5src.metacognition.issue_prediction.PredictionSeverity34
+8
+2src.metacognition.issue_prediction.IssuePrediction36
+@
+:src.metacognition.issue_prediction.IssuePrediction.to_dict38
+
+
+dict40
+;
+5src.metacognition.issue_prediction.TimeSeriesAnalyzer42
+E
+?src.metacognition.issue_prediction.TimeSeriesAnalyzer.get_trend44
+J
+Dsrc.metacognition.issue_prediction.TimeSeriesAnalyzer.add_data_point46
+
+float48
+D
+>src.metacognition.issue_prediction.TimeSeriesAnalyzer.__init__50
+	
+int52
+J
+Dsrc.metacognition.issue_prediction.TimeSeriesAnalyzer.get_statistics54
+J
+Dsrc.metacognition.issue_prediction.TimeSeriesAnalyzer.detect_anomaly56
+
+tuple58
+W
+Qsrc.metacognition.issue_prediction.TimeSeriesAnalyzer.predict_resource_exhaustion60
+>
+8src.metacognition.issue_prediction.IssuePredictionEngine62
+[
+Usrc.metacognition.issue_prediction.IssuePredictionEngine._predict_resource_exhaustion64
+U
+Osrc.metacognition.issue_prediction.IssuePredictionEngine.get_prediction_history66
+
+
+list68
+R
+Lsrc.metacognition.issue_prediction.IssuePredictionEngine.get_metrics_summary70
+_
+Ysrc.metacognition.issue_prediction.IssuePredictionEngine._predict_performance_degradation72
+V
+Psrc.metacognition.issue_prediction.IssuePredictionEngine.get_current_predictions74
+O
+Isrc.metacognition.issue_prediction.IssuePredictionEngine._predict_anomaly76
+P
+Jsrc.metacognition.issue_prediction.IssuePredictionEngine.clear_predictions78
+M
+Gsrc.metacognition.issue_prediction.IssuePredictionEngine.predict_issues80
+G
+Asrc.metacognition.issue_prediction.IssuePredictionEngine.__init__82
+L
+Fsrc.metacognition.issue_prediction.IssuePredictionEngine.update_metric84
+8
+2src.metacognition.issue_prediction.MetricDataPoint86J
+
+8
+89j˛
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29286 210
+
+31
+31306
+
+33
+33326
+
+35
+35346 210
+
+37
+37366 210
+
+39
+39387 237
+
+41
+41406
+
+43
+43426 210
+
+45
+45447 243
+
+47
+47467 243
+
+49
+49486
+
+51
+51507 243
+
+53
+53526
+
+55
+55547 243
+
+57
+57567 243
+
+59
+59586
+
+61
+61607 243
+
+63
+63626 210
+
+65
+65647 263
+
+67
+67667 263
+
+69
+69686
+
+71
+71707 263
+
+73
+73727 263
+
+75
+75747 263
+
+77
+77767 263
+
+79
+79787 263
+
+81
+81807 263
+
+83
+83827 263
+
+85
+85847 263
+
+87
+87866 210rñ
+
+10131*
+8
+ 
+(#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 ()
+
+10231*
+8 ()
+
+10251*
+8 (
+
+10271*
+8 (;
+
+29312*
+8 (
+
+29332*
+8 (
+
+35312*
+8# #(
+
+35332*
+8# #(
+
+39413*
+8A	 A(
+
+45294*
+8t	 t(
+
+47294*
+8_	 _(
+
+47494*
+8_	 _(
+
+51534*
+8T	 T(
+
+55413*
+8‘	 ‘(
+
+55294*
+8‘	 ‘(
+
+57593*
+8ì	 ì(
+
+57294*
+8ì	 ì(
+
+57494*
+8ì	 ì(
+
+61294*
+8∞	 ∞($
+
+61494*
+8∞	 ∞($
+
+65294*
+8±	 ±(%
+
+67693*
+8≈	 ≈(
+
+71413*
+8—	 —(
+
+73294*
+8ç	 ç()
+
+75693*
+8Ω	 Ω( 
+
+77294*
+8Á	 Á(
+
+81693*
+8î	 î(
+
+83534*
+8	 (
+
+85294*
+8Ä	 Ä(
+
+85494*
+8Ä	 Ä(

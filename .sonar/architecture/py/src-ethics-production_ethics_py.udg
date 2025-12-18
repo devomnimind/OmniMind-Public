@@ -1,0 +1,193 @@
+
+1.0PythonFrontend"1763831837255*py2.B¹
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+$
+src/ethics/production_ethics.py9
+"
+src.ethics.production_ethics11
+
+
+__future__12
+
+typing14
+
+pathlib16
+
+logging18
+ 
+src.metrics.ethics_metrics20
+
+datetime22
+@
+:src.ethics.production_ethics.demonstrate_production_ethics24
+9
+3src.ethics.production_ethics.ProductionEthicsSystem26
+O
+Isrc.ethics.production_ethics.ProductionEthicsSystem.check_lgpd_compliance28
+
+
+dict30
+O
+Isrc.ethics.production_ethics.ProductionEthicsSystem.evaluate_transparency32
+7
+1src.metrics.ethics_metrics.TransparencyComponents34
+	
+int36
+R
+Lsrc.ethics.production_ethics.ProductionEthicsSystem.evaluate_moral_alignment38
+B
+<src.ethics.production_ethics.ProductionEthicsSystem.__init__40
+N
+Hsrc.ethics.production_ethics.ProductionEthicsSystem.log_ethical_decision42
+	
+str44
+
+
+list46
+
+float48
+
+
+bool50
+K
+Esrc.ethics.production_ethics.ProductionEthicsSystem.get_ethics_report52
+G
+Asrc.ethics.production_ethics.ProductionEthicsSystem.save_snapshot54J
+
+8
+89jú
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25247 210
+
+27
+27266 210
+
+29
+29287 227
+
+31
+31306
+
+33
+33327 227
+
+35
+35346
+
+37
+37366
+
+39
+39387 227
+
+41
+41407 227
+
+43
+43427 227
+
+45
+45446
+
+47
+47466
+
+49
+49486
+
+51
+51506
+
+53
+53527 227
+
+55
+55547 227rÄ
+
+10131*
+8 (#
+
+10151*
+8 (-
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8~ ~(
+
+29313*
+8ß	 ß(
+
+33353*
+8	 (
+
+33374*
+8	 (
+
+43454*
+8j	 j(
+
+43454*
+8j	 j(
+
+43454*
+8j	 j(
+
+43474*
+8j	 j(
+
+43494*
+8j	 j(
+
+43514*
+8j	 j(
+
+53313*
+8¦	 ¦(
+
+55454*
+8‚	 ‚(

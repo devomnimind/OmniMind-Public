@@ -1,7 +1,7 @@
 import argparse
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any, Dict
 
 import structlog
 from rich import print as rprint

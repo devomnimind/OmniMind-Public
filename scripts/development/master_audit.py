@@ -18,15 +18,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import os
-import sys
 import json
 import subprocess
-import pkg_resources
-import re
-from pathlib import Path
 from datetime import datetime, timedelta
-from typing import Dict, List, Any
+from pathlib import Path
+from typing import Any, Dict
+
+import pkg_resources
 
 # Configuration
 PROJECT_ROOT = Path("/home/fahbrain/projects/omnimind")

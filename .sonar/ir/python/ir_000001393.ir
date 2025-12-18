@@ -1,0 +1,28 @@
+
+"confidence"str
+"score"str
+!"Convert to dictionary."str
+"reasoning"str
+"framework"strself8 8("“$
+"
+: ?(	"#new-object#Bdict*
+(
+; ;('"#get-field# framework:&
+$
+; ;(-"#get-field# value: 
+
+; ;(-"	#map-set#:&
+$
+< <(	"#get-field# score: 
+
+< <(
+"	#map-set#:	+
+)
+= =()"#get-field# confidence: 
+
+= =()"	#map-set#:*
+(
+> >('"#get-field# reasoning: 
+
+> >('"	#map-set#:
+: ?(	*?/home/fahbrain/projects/omnimind/src/ethics/ml_ethics_engine.py

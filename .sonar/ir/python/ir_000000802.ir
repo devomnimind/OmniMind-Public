@@ -1,0 +1,64 @@
+
+	"details"str
+!
+"resolved"str
+'"Convert alert to dictionary."str
+"timestamp"str
+
+
+"severity"str
+	"message"str
+"title"str
+"source"str
+
+"category"str
+"acknowledged"str
+"id"strself< <("€$
+"
+> I(	"#new-object#Bdict#
+!
+? ?("#get-field# id: 
+
+? ?("	#map-set#:*
+(
+@ @('"#get-field# timestamp: 
+
+@ @('	"	#map-set#:)
+'
+A A(%"#get-field# severity:&
+$
+A A(+"#get-field# value: 
+
+A A(+"	#map-set#:
+)
+'
+B B(%"#get-field# category:&
+$
+B B(+"#get-field# value: 
+
+B B(+"	#map-set#:&
+$
+C C("#get-field# title: 
+
+C C("	#map-set#:(
+&
+D D(#"#get-field# message: 
+
+D D(#"	#map-set#:(
+&
+E E(#"#get-field# details: 
+
+E E(#"	#map-set#:'
+%
+F F(!"#get-field# source: 
+
+F F(!"	#map-set#:-
++
+G G(-"#get-field# acknowledged: 
+
+G G(- "	#map-set#:)
+'
+H H(%""#get-field# resolved: 
+
+H H(%#"	#map-set#:!"
+> I(	*=/home/fahbrain/projects/omnimind/src/audit/alerting_system.py

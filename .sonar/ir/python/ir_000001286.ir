@@ -1,0 +1,39 @@
+
+
+0int
+
+2int
+2)"Calculate center point of bounding box."strselfP P(	tuple"Ä"
+ 
+R R("#get-field# x:&
+$
+R R(#"#get-field# width:*
+(
+R R('"#dependent-value#*:"
+ 
+R R('"	#binop +#2+:"
+ 
+R) R(/"#get-field# y:'
+%
+R2 R(=	"#get-field# height:*
+(
+R2 R(A
+"#dependent-value#*:	"
+ 
+R) R(A"	#binop +#2+:
+(
+&
+R R(B"#unknown-value#Btuple&
+$
+R R(B"
+#is-exact#:Bbool
+
+R R(B"
+#assume#:8
+6
+R R(B"#set-field# __collection_size:Bint&
+$
+R R(B"#array-add-last#:&
+$
+R R(B"#array-add-last#:
+R R(B*C/home/fahbrain/projects/omnimind/src/multimodal/vision_processor.py

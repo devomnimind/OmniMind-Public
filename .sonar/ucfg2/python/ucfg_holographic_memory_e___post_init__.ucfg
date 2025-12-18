@@ -1,0 +1,97 @@
+
+>src.memory.holographic_memory.HolographicSurface.__post_init__K
+A/home/fahbrain/projects/omnimind/src/memory/holographic_memory.pyU U("2*—
+2V V(?w
+u
+W W(
+%6"__id*]
+
+__unknown_file (A*?2
+0src.memory.holographic_memory.HolographicSurface"	
+entropy{
+y
+W W(*
+%7"__id*a
+
+__unknown_file (E*C2
+0src.memory.holographic_memory.HolographicSurface"
+max_entropy‰
+†
+W W(*
+%8"	__compare*!
+
+__unknown_file (
+>*"
+
+__unknown_file (
+
+%6*"
+
+__unknown_file (
+
+%7*
+3
+4*9
+3
+holographic_memory.py"
+_ _
+implicit return*
+4X [(w
+u
+Y Y('
+%1"__id*]
+
+__unknown_file (A*?2
+0src.memory.holographic_memory.HolographicSurface"	
+entropy{
+y
+Z Z(#
+%2"__id*a
+
+__unknown_file (E*C2
+0src.memory.holographic_memory.HolographicSurface"
+max_entropy³
+°
+Y Z(?
+%3"__concat*
+Y Y(
+
+Entropy *
+Y Y('
+
+%1**
+Y, Y(F
+ exceeds Bekenstein bound *
+Z Z(#
+
+%2*&
+Z( Z(>
+ - clamping to maximumge
+X [(
+%4*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%32warning{
+y
+\ \(+
+%5"__id*a
+
+__unknown_file (E*C2
+0src.memory.holographic_memory.HolographicSurface"
+max_entropyw
+u
+\ \(+?2
+0src.memory.holographic_memory.HolographicSurface"	
+entropy"__id*"
+
+__unknown_file (
+
+%5*
+3B42
+0src.memory.holographic_memory.HolographicSurfaceH

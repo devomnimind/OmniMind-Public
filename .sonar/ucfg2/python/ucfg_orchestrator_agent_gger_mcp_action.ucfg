@@ -1,0 +1,143 @@
+
+Bsrc.agents.orchestrator_agent.OrchestratorAgent.trigger_mcp_actionM
+A/home/fahbrain/projects/omnimind/src/agents/orchestrator_agent.py¨ ¨("2*Á	
+2
+≤ µ(	
+
+≤ µ(	
+%1"dictà
+Ö
+
+≥ ≥(;
+%2"__concat*
+
+≥ ≥((
+Manual MCP *
+
+≥) ≥(/
+
+
+action*
+
+≥0 ≥(4
+ on *
+
+≥5 ≥(9
+
+pathî
+ë
+
+≥ ≥(;
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+description*"
+
+__unknown_file (
+
+%2
+
+¥ ¥(T
+%4"dictó
+î
+
+¥ ¥(-
+%5"__mapSet*"
+
+__unknown_file (
+
+%4**
+
+__unknown_file (
+
+mcp_action*&
+
+__unknown_file (
+
+
+actionè
+å
+
+¥/ ¥(;
+%6"__mapSet*"
+
+__unknown_file (
+
+%4*$
+
+__unknown_file (
+path*$
+
+__unknown_file (
+
+pathô
+ñ
+
+¥= ¥(S
+%7"__mapSet*"
+
+__unknown_file (
+
+%4*)
+
+__unknown_file (
+	recursive*)
+
+__unknown_file (
+
+	recursiveë
+é
+
+¥ ¥(T
+%8"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+metadata*"
+
+__unknown_file (
+
+%4C
+A
+
+≤ µ(		
+subtask"__id*"
+
+__unknown_file (
+
+%1ƒ¡
+
+∂ ∂(K
+%9*O
+
+__unknown_file (31
+/src.agents.orchestrator_agent.OrchestratorAgent*'
+
+__unknown_file (
+	
+subtask2_execute_mcp_subtask:
+metric_name
+
+mcp_manual"
+
+∂ ∂(K
+
+%9:
+
+Æ Æ(
+action:
+
+Ø Ø(.
+path:
+
+∞ ∞(
+	recursiveB31
+/src.agents.orchestrator_agent.OrchestratorAgentH

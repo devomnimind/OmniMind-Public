@@ -25,8 +25,8 @@ OmniMind Benchmark Suite
 Executa benchmarksde métricas core e gera relatórios JSON/CSV.
 """
 
-import json
 import csv
+import json
 import time
 from pathlib import Path
 

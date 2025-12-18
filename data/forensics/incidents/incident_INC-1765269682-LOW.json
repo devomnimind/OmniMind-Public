@@ -1,0 +1,15 @@
+{
+  "id": "INC-1765269682-LOW",
+  "title": "Test Report",
+  "description": "Test",
+  "severity": "low",
+  "status": "open",
+  "created_at": "2025-12-09T08:41:22.775954+00:00",
+  "updated_at": "2025-12-09T08:41:22.775977+00:00",
+  "detected_by": "test",
+  "assigned_to": null,
+  "evidence_items": [],
+  "analysis": {},
+  "recommendations": [],
+  "tags": []
+}

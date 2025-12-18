@@ -1,0 +1,46 @@
+[Unit]
+Description=OmniMind Memory Monitor - Monitoramento Inteligente de Memória
+Documentation=https://github.com/fabs-devbrain/OmniMind
+After=mind.service mind-daemon.service mind-core.service
+Wants=mind.service
+
+[Service]
+Slice=mind.slice
+OOMScoreAdjust=-1000
+Type=simple
+User=fahbrain
+Group=fahbrain
+WorkingDirectory=/home/fahbrain/projects/omnimind
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+Environment="OMNIMIND_WORKSPACE=/home/fahbrain/projects/omnimind"
+Environment="PYTHONPATH=/home/fahbrain/projects/omnimind"
+Environment="OMNIMIND_MODE=production"
+
+# Executar monitor de memória em modo daemon
+ExecStart=/bin/bash -c 'source /home/fahbrain/projects/omnimind/.venv/bin/activate && cd /home/fahbrain/projects/omnimind && python scripts/utilities/monitor_systemd_memory.py --daemon --interval 30 --apply'
+
+# Restart policy
+Restart=on-failure
+RestartSec=10s
+StartLimitBurst=3
+StartLimitInterval=300
+
+# Resource limits (monitor deve usar poucos recursos)
+MemoryMax=512M
+CPUQuota=50%
+TasksMax=10
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=mind-memory-monitor
+
+[Install]
+WantedBy=multi-user.target
+

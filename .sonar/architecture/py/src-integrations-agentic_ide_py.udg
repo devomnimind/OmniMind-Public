@@ -1,0 +1,367 @@
+
+1.0PythonFrontend"1763831826227*py2.Bº
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+$
+src/integrations/agentic_ide.py9
+"
+src.integrations.agentic_ide11
+
+
+__future__12
+
+typing14
+
+dataclasses16
+
+
+enum18
+
+pathlib20
+
+
+time22
+
+logging24
+
+hashlib26
+
+collections28
+,
+&src.integrations.agentic_ide.AgentTask30
+:
+4src.integrations.agentic_ide.demonstrate_agentic_ide32
+*
+$src.integrations.agentic_ide.AIModel34
+
+	enum.Enum36
+6
+0src.integrations.agentic_ide.BrowserVerification38
+5
+/src.integrations.agentic_ide.VerifiableArtifact40
+C
+=src.integrations.agentic_ide.VerifiableArtifact.__post_init__42
+2
+,src.integrations.agentic_ide.BrowserVerifier44
+A
+;src.integrations.agentic_ide.BrowserVerifier.verify_web_app46
+	
+str48
+
+
+list50
+;
+5src.integrations.agentic_ide.BrowserVerifier.__init__52
+
+pathlib.Path54
+*
+$src.integrations.agentic_ide.IDEMode56
+-
+'src.integrations.agentic_ide.AgenticIDE58
+6
+0src.integrations.agentic_ide.AgenticIDE.__init__60
+>
+8src.integrations.agentic_ide.AgenticIDE.provide_feedback62
+
+
+bool64
+:
+4src.integrations.agentic_ide.AgenticIDE.execute_task66
+
+
+dict68
+9
+3src.integrations.agentic_ide.AgenticIDE.switch_mode70
+=
+7src.integrations.agentic_ide.AgenticIDE.verify_artifact72
+:
+4src.integrations.agentic_ide.AgenticIDE.get_insights74
+9
+3src.integrations.agentic_ide.AgenticIDE.create_task76
+0
+*src.integrations.agentic_ide.ModelSelector78
+C
+=src.integrations.agentic_ide.ModelSelector.update_performance80
+9
+3src.integrations.agentic_ide.ModelSelector.__init__82
+=
+7src.integrations.agentic_ide.ModelSelector.select_model84
+/
+)src.integrations.agentic_ide.ArtifactType86
+6
+0src.integrations.agentic_ide.SelfImprovementLoop88
+G
+Asrc.integrations.agentic_ide.SelfImprovementLoop.process_feedback90
+K
+Esrc.integrations.agentic_ide.SelfImprovementLoop.get_learned_insights92
+?
+9src.integrations.agentic_ide.SelfImprovementLoop.__init__94J
+
+8
+89jâ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31306 210
+
+33
+33327 210
+
+35
+35346 210
+
+37
+37366
+
+39
+39386 210
+
+41
+41406 210
+
+43
+43427 241
+
+45
+45446 210
+
+47
+47467 245
+
+49
+49486
+
+51
+51506
+
+53
+53527 245
+
+55
+55546
+
+57
+57566 210
+
+59
+59586 210
+
+61
+61607 259
+
+63
+63627 259
+
+65
+65646
+
+67
+67667 259
+
+69
+69686
+
+71
+71707 259
+
+73
+73727 259
+
+75
+75747 259
+
+77
+77767 259
+
+79
+79786 210
+
+81
+81807 279
+
+83
+83827 279
+
+85
+85847 279
+
+87
+87866 210
+
+89
+89886 210
+
+91
+91907 289
+
+93
+93927 289
+
+95
+95947 289rä
+
+10131*
+8 (#
+
+10151*
+8 (-
+
+10171*
+8 ()
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (
+
+10251*
+8 (
+
+10271*
+8 (
+
+10291*
+8 ($
+
+35372*
+8* *(
+
+47393*
+8³	 ³(
+
+47494*
+8³	 ³(
+
+47514*
+8³	 ³(
+
+53554*
+8¤	 ¤(
+
+57372*
+8 (
+
+61554*
+8ž	 ž(
+
+63494*
+8Á	 Á(
+
+63494*
+8Á	 Á(
+
+63654*
+8Á	 Á(
+
+67693*
+8ë	 ë(
+
+67494*
+8ë	 ë(
+
+71574*
+8¹	 ¹(
+
+73653*
+8—	 —(
+
+73494*
+8—	 —(
+
+73494*
+8—	 —(
+
+75693*
+8ã	 ã(
+
+77313*
+8Ã	 Ã(
+
+77494*
+8Ã	 Ã(
+
+77494*
+8Ã	 Ã(
+
+77494*
+8Ã	 Ã(
+
+81494*
+8õ	 õ(
+
+81354*
+8õ	 õ(
+
+81654*
+8õ	 õ(
+
+85353*
+8¿	 ¿(
+
+85494*
+8¿	 ¿(
+
+87372*
+8: :(
+
+91494*
+8î	 î(
+
+91494*
+8î	 î(
+
+91494*
+8î	 î(
+
+91654*
+8î	 î(
+
+93693*
+8‘	 ‘(

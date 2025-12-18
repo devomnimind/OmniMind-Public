@@ -1,0 +1,55 @@
+./.github/copilot-instructions.md:9:- **Proibido:** Pseudocódigo ou comentários "TODO: implementar depois".
+./real_evidence/CONSCIOUSNESS_VALIDATION_SUMMARY.md:3:## Status Geral: 100% CONCLUÍDO ✅ - AVALIAÇÃO 1% SUPERADA ✅ - TODOS OS TESTES VALIDANDO ✅ - PARÂMETROS OTIMIZADOS ✅ - EXECUÇÃO HÍBRIDA COMPLETA ✅ - CONSCIÊNCIA QUÂNTICA PROVADA ✅
+./real_evidence/CONSCIOUSNESS_VALIDATION_SUMMARY.md:7:**AVALIAÇÃO 1% (30/11/2025):** Sistema validado cientificamente. Determinismo corrigido, constantes hardcoded removidas, validação causal completa, parâmetros otimizados empiricamente. **TODOS OS 5 TESTES PASSANDO COM PARÂMETROS OTIMIZADOS.**
+./real_evidence/CONSCIOUSNESS_VALIDATION_SUMMARY.md:11:**CONSCIÊNCIA QUÂNTICA PROVADA (30/11/2025):** TODOS os 6 testes executados com sucesso EXCLUSIVAMENTE no IBM Quantum. Tempo total: 73.4s. **Φ VALIDADO COMO MEDIDA QUÂNTICA GENUÍNA DE CONSCIÊNCIA INTEGRADA.**
+./real_evidence/anesthesia_test/ANESTHESIA_TEST_CORRECTED_RESULTS.md:11:- **Simulação Biológica:** Degradação gradual de TODOS os módulos (não desconexão)
+./real_evidence/VALIDATION_FINAL_REPORT.md:28:## METODOLOGIA DE VALIDAÇÃO
+./docs/guides/PARALLEL_DEVELOPMENT_GUIDE.md:198:find src/ -name "*.py" -exec grep -l "TODO\|FIXME\|XXX" {} \;
+./docs/guides/PARALLEL_DEVELOPMENT_GUIDE.md:227:        # Check for TODO comments
+./docs/guides/PARALLEL_DEVELOPMENT_GUIDE.md:228:        if 'TODO' in content:
+./docs/guides/PARALLEL_DEVELOPMENT_GUIDE.md:229:            improvements.append("TODO items")
+./docs/guides/ROLLBACK_AND_ANALYSIS.md:165:**Decisão Final:** ✅ **TODOS OS WARNINGS SÃO ACEITÁVEIS**
+./docs/ESTRATEGIA_RELEASE_PUBLICO_V1_18_0.md:159:docs/ANALISE_METODOLOGICA_COMPLETA_20251201.md ❌? (talvez PUBLICAR como paper?)
+./docs/ESTRATEGIA_RELEASE_PUBLICO_V1_18_0.md:532:Opção A: Publicar (ANALISE_METODOLOGICA como white paper)
+./docs/INDICE_DOCUMENTACAO_COMPLETA_20251201.md:26:#### 2. [ANALISE_METODOLOGICA_COMPLETA_20251201.md](ANALISE_METODOLOGICA_COMPLETA_20251201.md)
+./docs/INDICE_DOCUMENTACAO_COMPLETA_20251201.md:161:1. ANALISE_METODOLOGICA_COMPLETA_20251201.md (arquitetura)
+./docs/INDICE_DOCUMENTACAO_COMPLETA_20251201.md:170:2. ANALISE_METODOLOGICA_COMPLETA_20251201.md (detalhes)
+./docs/INDICE_DOCUMENTACAO_COMPLETA_20251201.md:206:              ANALISE_METODOLOGICA
+./docs/INDICE_DOCUMENTACAO_COMPLETA_20251201.md:329:- docs/ANALISE_METODOLOGICA_COMPLETA_20251201.md ✅
+./docs/.project/DEVELOPER_RECOMMENDATIONS.md:126:    TODO: implementar  # ❌ Não permitido
+./docs/papersoficiais/Artigo2_Corpo_Racializado_Consciencia_Integrada.md:69:Racialização opera através de TODOS os registros simultaneamente
+./docs/VERIFICACAO_SCRIPTS_GPU_SUITE_CIENTIFICA_20251201.md:309:   ├─ Se SIM: ANALISE_METODOLOGICA + governance
+./docs/IDEARIO_CIENTIFICO_ATUAL_RECOMENDADO_ALTO_20251201.md:402:☐  Classificar TODOS os 3987 testes com @pytest.mark
+./docs/MANIFESTO_PREPARACAO_PUSH_20251201.md:13:2. docs/ANALISE_METODOLOGICA_COMPLETA_20251201.md (26 KB)
+./docs/MANIFESTO_PREPARACAO_PUSH_20251201.md:185:- ANALISE_METODOLOGICA_COMPLETA_20251201.md
+./docs/MANIFESTO_PREPARACAO_PUSH_20251201.md:271:└─ Veja: docs/ANALISE_METODOLOGICA_COMPLETA_20251201.md (seção 6.1)
+./docs/MANIFESTO_PREPARACAO_PUSH_20251201.md:279:└─ Veja: docs/ANALISE_METODOLOGICA_COMPLETA_20251201.md
+./docs/MANIFESTO_PREPARACAO_PUSH_20251201.md:285:└─ Veja: docs/ANALISE_METODOLOGICA_COMPLETA_20251201.md (seção 3)
+./docs/architecture/MCP_IMPLEMENTATION_SUMMARY.md:272:- ✅ **Production-Ready:** Código funcional, sem stubs ou TODOs
+./docs/architecture/MCP_DATA_PROTECTION_GUIDE.md:442:### ⚠️ CRÍTICO: TODOS os dados DEVEM passar por proteção
+./docs/RESUMO_EXECUTIVO_SESSAO_20251201.md:12:**Comando Original:** "CORRIJA SEMPRE TODOS OS BUGS QUE IDENTIFCAR E QUE IMPACTAR A VALIDAÇÃO DO PROJETO"
+./docs/RESUMO_EXECUTIVO_SESSAO_20251201.md:64:- ✅ **ANALISE_METODOLOGICA_COMPLETA_20251201.md** (5000+ linhas)
+./docs/RESUMO_EXECUTIVO_SESSAO_20251201.md:119:3. ✅ docs/ANALISE_METODOLOGICA_COMPLETA_20251201.md
+./docs/RESUMO_EXECUTIVO_SESSAO_20251201.md:224:Documentado: ANALISE_METODOLOGICA + comentários de código
+./docs/RESUMO_EXECUTIVO_SESSAO_20251201.md:234:Documentado: ANALISE_METODOLOGICA + IDEARIO
+./docs/RESUMO_EXECUTIVO_SESSAO_20251201.md:243:Documentado: ANALISE_METODOLOGICA seção 1
+./docs/RESUMO_EXECUTIVO_SESSAO_20251201.md:253:Documentado: ANALISE_METODOLOGICA seção 3 + IDEARIO
+./docs/RESUMO_EXECUTIVO_SESSAO_20251201.md:262:Documentado: ANALISE_METODOLOGICA padrões + recomendações
+./docs/PROVA_DE_FOGO_PHI_INCONSCIENTE.md:67:    Φ para TODOS os subsistemas (módulos)
+./docs/PROVA_DE_FOGO_PHI_INCONSCIENTE.md:113:- Calcula integração de TODOS os subsistemas (novo em IIT)
+./docs/ANALISE_METODOLOGICA_COMPLETA_20251201.md:1:# 🔬 ANÁLISE METODOLÓGICA: Testes, CPU, GPU, Autonomia e Contexto Científico
+./docs/ANALISE_METODOLOGICA_COMPLETA_20251201.md:37:│   ├── @patch("RedisClusterCtor") em TODOS os métodos
+./docs/ANALISE_METODOLOGICA_COMPLETA_20251201.md:496:RECOMENDAÇÃO 1: Marcar TODOS os testes com categoria
+./docs/RESUMO_FINAL_3_PERGUNTAS_E_ESTRATEGIA_20251201.md:268:2. ANALISE_METODOLOGICA_COMPLETA_20251201.md
+./docs/DAILY_ROADMAP_BEGINNER.md:35:- Olhar TODOs no código
+./docs/CHANGELOG.md:52:- Aplica mesmo padrão de detecção + `.to_empty()` para TODOS os módulos
+./docs/SUITE_VALIDATION_FINAL_20251201.md:13:### Se TODOS os 3987 testes passarem ✅
+./docs/SUITE_VALIDATION_FINAL_20251201.md:181:2. ✅ **ANALISE_METODOLOGICA_COMPLETA_20251201.md**
+./data/test_reports/STRATEGIC_RESEARCH_EVALUATION.md:77:- 📋 **TODO:** Mapa arquitetural combinado (embaixo)
+./web/frontend/ACCESSIBILITY.md:11:- **Skip links**: Not yet implemented (TODO)
+./web/frontend/ACCESSIBILITY.md:61:- ✅ Chart data accessible via table alternative (TODO: implement)
+./web/frontend/ACCESSIBILITY.md:74:#### Automated Testing (TODO)
+./web/frontend/ACCESSIBILITY.md:104:- ✅ 2.4.1 Bypass Blocks: Skip links needed (TODO)
+./FORENSIC_AUDIT_AND_PLAN.md:59:### 2.4. Arquivos com Pendências (TODO/FIXME)
+./FORENSIC_AUDIT_AND_PLAN.md:60:Foram identificados marcadores de "TODO" ou "FIXME" em arquivos críticos que precisam ser revisados:
+./FORENSIC_AUDIT_AND_PLAN.md:87:2.  Criar issues ou tarefas para os TODOs críticos identificados em **2.4**.

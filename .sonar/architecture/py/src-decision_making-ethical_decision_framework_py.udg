@@ -1,0 +1,297 @@
+
+1.0PythonFrontend"1763831844579*py2.B–
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+6
+1src/decision_making/ethical_decision_framework.py9
+4
+.src.decision_making.ethical_decision_framework11
+
+
+time12
+
+dataclasses14
+
+
+enum16
+
+typing18
+C
+=src.decision_making.ethical_decision_framework.EthicalOutcome20
+Q
+Ksrc.decision_making.ethical_decision_framework.EthicalOutcome.__post_init__22
+E
+?src.decision_making.ethical_decision_framework.EthicalPrinciple24
+
+	enum.Enum26
+E
+?src.decision_making.ethical_decision_framework.EthicalFramework28
+I
+Csrc.decision_making.ethical_decision_framework.EthicalDecisionMaker30
+a
+[src.decision_making.ethical_decision_framework.EthicalDecisionMaker._generate_justification32
+	
+str34
+
+
+dict36
+C
+=src.decision_making.ethical_decision_framework.EthicalDilemma38
+P
+Jsrc.decision_making.ethical_decision_framework.EthicalDecisionMaker.decide40
+d
+^src.decision_making.ethical_decision_framework.EthicalDecisionMaker._evaluate_consequentialist42
+a
+[src.decision_making.ethical_decision_framework.EthicalDecisionMaker._evaluate_deontological44
+\
+Vsrc.decision_making.ethical_decision_framework.EthicalDecisionMaker.get_ethics_metrics46
+R
+Lsrc.decision_making.ethical_decision_framework.EthicalDecisionMaker.__init__48
+Z
+Tsrc.decision_making.ethical_decision_framework.EthicalDecisionMaker._evaluate_hybrid50
+Z
+Tsrc.decision_making.ethical_decision_framework.EthicalDecisionMaker._default_weights52
+Z
+Tsrc.decision_making.ethical_decision_framework.EthicalDecisionMaker._evaluate_option54
+Z
+Tsrc.decision_making.ethical_decision_framework.EthicalDecisionMaker._evaluate_virtue56
+X
+Rsrc.decision_making.ethical_decision_framework.EthicalDecisionMaker._evaluate_care58
+]
+Wsrc.decision_making.ethical_decision_framework.EthicalDecisionMaker._compute_confidence60
+
+float62
+`
+Zsrc.decision_making.ethical_decision_framework.EthicalDecisionMaker._check_rule_compliance64
+e
+_src.decision_making.ethical_decision_framework.EthicalDecisionMaker._assess_stakeholder_impacts66J
+
+8
+89j®
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21206 210
+
+23
+23227 221
+
+25
+25246 210
+
+27
+27266
+
+29
+29286 210
+
+31
+31306 210
+
+33
+33327 231
+
+35
+35346
+
+37
+37366
+
+39
+39386 210
+
+41
+41407 231
+
+43
+43427 231
+
+45
+45447 231
+
+47
+47467 231
+
+49
+49487 231
+
+51
+51507 231
+
+53
+53527 231
+
+55
+55547 231
+
+57
+57567 231
+
+59
+59587 231
+
+61
+61607 231
+
+63
+63626
+
+65
+65647 231
+
+67
+67667 231r„	
+
+10131*
+8 (
+
+10151*
+8 ()
+
+10171*
+8 (
+
+10191*
+8 (-
+
+25272*
+8! !(
+
+29272*
+8 (
+
+33353*
+8”	 ”( 
+
+33354*
+8”	 ”( 
+
+33374*
+8”	 ”( 
+
+33394*
+8”	 ”( 
+
+41213*
+8}	 }(
+
+41394*
+8}	 }(
+
+43373*
+8Ü	 Ü(#
+
+43354*
+8Ü	 Ü(#
+
+43394*
+8Ü	 Ü(#
+
+45373*
+8Å	 Å( 
+
+45354*
+8Å	 Å( 
+
+45394*
+8Å	 Å( 
+
+47373*
+8É	 É(
+
+49294*
+8\	 \(
+
+51373*
+8¸	 ¸(
+
+51354*
+8¸	 ¸(
+
+51394*
+8¸	 ¸(
+
+53373*
+8p	 p(
+
+55373*
+8¸	 ¸(
+
+55354*
+8¸	 ¸(
+
+55394*
+8¸	 ¸(
+
+57373*
+8ù	 ù(
+
+57354*
+8ù	 ù(
+
+57394*
+8ù	 ù(
+
+59373*
+8š	 š(
+
+59354*
+8š	 š(
+
+59394*
+8š	 š(
+
+61633*
+8º	 º(
+
+61374*
+8º	 º(
+
+65633*
+8Ù	 Ù(
+
+65354*
+8Ù	 Ù(
+
+65254*
+8Ù	 Ù(
+
+65394*
+8Ù	 Ù(
+
+67373*
+8÷	 ÷($
+
+67354*
+8÷	 ÷($
+
+67394*
+8÷	 ÷($

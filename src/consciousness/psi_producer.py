@@ -281,10 +281,12 @@ class PsiProducer:
         if self.embedding_model is not None:
             try:
                 # Gerar embeddings
-                model = self.embedding_model.model
-                if model is not None:
-                    step_embedding = model.encode(step_content)  # type: ignore[union-attr]
-                    goal_embedding = model.encode(goal)  # type: ignore[union-attr]
+                step_embedding = self.embedding_model.model.encode(  # type: ignore[attr-defined]
+                    step_content
+                )
+                goal_embedding = self.embedding_model.model.encode(  # type: ignore[attr-defined]
+                    goal
+                )
 
                 # Calcular similaridade cosseno
                 step_norm = np.linalg.norm(step_embedding)

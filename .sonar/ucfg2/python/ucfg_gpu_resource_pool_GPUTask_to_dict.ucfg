@@ -1,0 +1,198 @@
+
+-src.scaling.gpu_resource_pool.GPUTask.to_dictM
+A/home/fahbrain/projects/omnimind/src/scaling/gpu_resource_pool.pyö ö("2*¬
+2
+õ õ($
+
+ú •(	
+%1"dictn
+l
+
+ù ù(#
+%2"__id*R
+
+__unknown_file (6*4'
+%src.scaling.gpu_resource_pool.GPUTask"	
+task_idê
+ç
+
+ù ù(#
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+task_id*"
+
+__unknown_file (
+
+%2y
+w
+
+û" û(9
+%4"__id*]
+
+__unknown_file (A*?'
+%src.scaling.gpu_resource_pool.GPUTask"
+required_memory_mbõ
+ò
+
+û û(9
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*2
+
+__unknown_file (
+required_memory_mb*"
+
+__unknown_file (
+
+%4}
+{
+
+ü& ü(A
+%6"__id*a
+
+__unknown_file (E*C'
+%src.scaling.gpu_resource_pool.GPUTask"
+min_compute_capabilityü
+ú
+
+ü ü(A
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*6
+
+__unknown_file (
+min_compute_capability*"
+
+__unknown_file (
+
+%6y
+w
+
+†" †(9
+%8"__id*]
+
+__unknown_file (A*?'
+%src.scaling.gpu_resource_pool.GPUTask"
+assigned_device_idõ
+ò
+
+† †(9
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*2
+
+__unknown_file (
+assigned_device_id*"
+
+__unknown_file (
+
+%8ig
+
+° °((
+%10*E
+
+__unknown_file ()'
+%src.scaling.gpu_resource_pool.GPUTask2_get_statusë
+é
+
+° °((
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+status*#
+
+__unknown_file (
+
+%10t
+r
+
+¢ ¢(-
+%12"__id*W
+
+__unknown_file (;*9'
+%src.scaling.gpu_resource_pool.GPUTask"
+submitted_ató
+î
+
+¢ ¢(-
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*,
+
+__unknown_file (
+submitted_at*#
+
+__unknown_file (
+
+%12r
+p
+
+£ £()
+%14"__id*U
+
+__unknown_file (9*7'
+%src.scaling.gpu_resource_pool.GPUTask"
+
+started_atï
+í
+
+£ £()
+%15"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+started_at*#
+
+__unknown_file (
+
+%14t
+r
+
+§ §(-
+%16"__id*W
+
+__unknown_file (;*9'
+%src.scaling.gpu_resource_pool.GPUTask"
+completed_ató
+î
+
+§ §(-
+%17"__mapSet*"
+
+__unknown_file (
+
+%1*,
+
+__unknown_file (
+completed_at*#
+
+__unknown_file (
+
+%16"
+
+ú •(	
+
+%1B)'
+%src.scaling.gpu_resource_pool.GPUTaskH

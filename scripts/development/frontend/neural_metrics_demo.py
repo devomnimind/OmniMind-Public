@@ -26,8 +26,9 @@ Demonstra coleta de métricas de latência e health tracking.
 
 import logging
 import sys
-from src.neurosymbolic.neural_component import NeuralComponent
+
 from src.neurosymbolic.metrics_collector import get_metrics_collector
+from src.neurosymbolic.neural_component import NeuralComponent
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message)s")
 logger = logging.getLogger("MetricsDemo")

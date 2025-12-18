@@ -1,0 +1,138 @@
+
+Msrc.collective_intelligence.emergent_behaviors.SelfOrganization._apply_action^
+R/home/fahbrain/projects/omnimind/src/collective_intelligence/emergent_behaviors.py† †("2*»
+2
+‡ ‡( A?
+
+ˆ ˆ( 
+%6*%
+
+__unknown_file (	
+
+state2copyE
+C
+
+ˆ ˆ( 
+	new_state"__id*"
+
+__unknown_file (
+
+%6—
+”
+
+Š Š( 
+%7"	__compare*"
+
+__unknown_file (
+==*&
+
+__unknown_file (
+
+
+action*)
+
+__unknown_file (
+	cooperate*
+5
+9*,
+4
+‘ ‘("
+
+‘ ‘(
+
+	new_state*Í
+5
+‹ ‹(1¶³
+
+‹ ‹(1
+%1"dict.__setitem__*)
+
+__unknown_file (
+
+	new_state*(
+
+__unknown_file (
+
+behavior*+
+
+__unknown_file (
+cooperative2__setitem__*
+4*É
+6
+ (-²¯
+
+ (-
+%2"dict.__setitem__*)
+
+__unknown_file (
+
+	new_state*$
+
+__unknown_file (
+mode*+
+
+__unknown_file (
+exploration2__setitem__*
+4*¯
+7
+Ž Ž( •
+’
+
+Ž Ž( 
+%3"	__compare*"
+
+__unknown_file (
+==*&
+
+__unknown_file (
+
+
+action*'
+
+__unknown_file (	
+explore*
+4
+6*Í
+8
+ (1¶³
+
+ (1
+%4"dict.__setitem__*)
+
+__unknown_file (
+
+	new_state*(
+
+__unknown_file (
+
+behavior*+
+
+__unknown_file (
+competitive2__setitem__*
+4*¯
+9
+Œ Œ( •
+’
+
+Œ Œ( 
+%5"	__compare*"
+
+__unknown_file (
+==*&
+
+__unknown_file (
+
+
+action*'
+
+__unknown_file (	
+compete*
+7
+8:
+
+† †('
+action:
+
+†) †(>
+stateBCA
+?src.collective_intelligence.emergent_behaviors.SelfOrganizationH

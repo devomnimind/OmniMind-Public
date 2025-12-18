@@ -1,0 +1,15 @@
+{
+  "id": "INC-1764540389-HIGH",
+  "title": "High Severity",
+  "description": "Test high",
+  "severity": "high",
+  "status": "open",
+  "created_at": "2025-11-30T22:06:29.113652+00:00",
+  "updated_at": "2025-11-30T22:06:29.113667+00:00",
+  "detected_by": "test",
+  "assigned_to": null,
+  "evidence_items": [],
+  "analysis": {},
+  "recommendations": [],
+  "tags": []
+}

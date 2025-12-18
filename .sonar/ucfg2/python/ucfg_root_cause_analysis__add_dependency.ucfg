@@ -1,0 +1,261 @@
+
+Dsrc.metacognition.root_cause_analysis.DependencyGraph.add_dependencyU
+I/home/fahbrain/projects/omnimind/src/metacognition/root_cause_analysis.pyž ž("2*‹
+2
+Ÿ ¤(„
+
+
+¥ ¥(*
+%18"__id*f
+
+__unknown_file (J*H7
+5src.metacognition.root_cause_analysis.DependencyGraph"
+_componentsqo
+
+¥ ¥(*
+%19*#
+
+__unknown_file (
+
+%18*'
+
+__unknown_file (
+	
+from_id2__contains__?
+=
+
+¥ ¥(*
+%20"not*#
+
+__unknown_file (
+
+%19„
+
+
+¥; ¥(K
+%21"__id*f
+
+__unknown_file (J*H7
+5src.metacognition.root_cause_analysis.DependencyGraph"
+_componentsom
+
+¥. ¥(K
+%22*#
+
+__unknown_file (
+
+%21*%
+
+__unknown_file (	
+
+to_id2__contains__?
+=
+
+¥. ¥(K
+%23"not*#
+
+__unknown_file (
+
+%22*
+4
+5*>
+3
+root_cause_analysis.py"
+± ±(
+implicit return*Û
+4
+© ©(+
+
+
+© ©(
+%1"__id*e
+
+__unknown_file (I*G7
+5src.metacognition.root_cause_analysis.DependencyGraph"
+
+_adjacencyxv
+
+© ©( 
+%2"__mapGet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (
+	
+from_id2__getitem__db
+
+© ©(+
+%3*"
+
+__unknown_file (
+
+%2*%
+
+__unknown_file (	
+
+to_id2addŠ
+‡
+
+ª ª(
+%4"__id*m
+
+__unknown_file (Q*O7
+5src.metacognition.root_cause_analysis.DependencyGraph"
+_reverse_adjacencyvt
+
+ª ª(&
+%5"__mapGet*"
+
+__unknown_file (
+
+%4*%
+
+__unknown_file (	
+
+to_id2__getitem__fd
+
+ª ª(3
+%6*"
+
+__unknown_file (
+
+%5*'
+
+__unknown_file (
+	
+from_id2addƒ
+€
+
+¬ ¬(
+%7"__id*f
+
+__unknown_file (J*H7
+5src.metacognition.root_cause_analysis.DependencyGraph"
+_componentsxv
+
+¬ ¬(!
+%8"__mapGet*"
+
+__unknown_file (
+
+%7*'
+
+__unknown_file (
+	
+from_id2__getitem__P
+N
+
+¬ ¬(.
+%9"__id*4
+
+__unknown_file (*
+
+%8"
+dependenciesec
+
+¬ ¬(9
+%10*"
+
+__unknown_file (
+
+%9*%
+
+__unknown_file (	
+
+to_id2add„
+
+
+­ ­(
+%11"__id*f
+
+__unknown_file (J*H7
+5src.metacognition.root_cause_analysis.DependencyGraph"
+_componentsxv
+
+­ ­(
+%12"__mapGet*#
+
+__unknown_file (
+
+%11*%
+
+__unknown_file (	
+
+to_id2__getitem__P
+N
+
+­ ­(*
+%13"__id*3
+
+__unknown_file (*
+
+%12"
+
+dependentshf
+
+­ ­(7
+%14*#
+
+__unknown_file (
+
+%13*'
+
+__unknown_file (
+	
+from_id2add’
+
+
+¯ ¯(>
+%15"__concat*$
+
+¯ ¯()
+Added dependency: *
+
+¯* ¯(1
+	
+from_id*
+
+¯2 ¯(6
+ -> *
+
+¯7 ¯(<	
+
+to_idig
+
+¯ ¯(?
+%16*&
+
+__unknown_file (
+
+
+logger*#
+
+__unknown_file (
+
+%152debug*
+3*½
+5
+¦ ¦(H“
+
+¦ ¦(H
+%17*&
+
+__unknown_file (
+
+
+logger*J
+
+__unknown_file (.,
+*Cannot add dependency: component not found2warning"
+
+§ §(
+void:
+
+ž ž()	
+from_id:
+
+ž+ ž(5
+to_idB97
+5src.metacognition.root_cause_analysis.DependencyGraphH

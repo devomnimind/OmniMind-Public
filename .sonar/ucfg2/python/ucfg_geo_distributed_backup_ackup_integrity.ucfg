@@ -1,0 +1,341 @@
+
+Wsrc.security.geo_distributed_backup.GeoDistributedBackupManager.verify_backup_integrityS
+G/home/fahbrain/projects/omnimind/src/security/geo_distributed_backup.pyè è("2*Ü
+2
+é ñ(Œ
+‰
+
+ò ò(*
+%21"__id*n
+
+__unknown_file (R*PA
+?src.security.geo_distributed_backup.GeoDistributedBackupManager"
+	manifestssq
+
+ò ò(*
+%22*#
+
+__unknown_file (
+
+%21*)
+
+__unknown_file (
+
+	backup_id2__contains__?
+=
+
+ò ò(*
+%23"not*#
+
+__unknown_file (
+
+%22*
+8
+9*û
+4
+ˆ ˆ(>j
+h
+
+ˆ ˆ(=
+%1"__concat*-
+
+ˆ ˆ(1
+Backup integrity verified: *
+
+ˆ2 ˆ(;
+
+	backup_idfd
+
+ˆ ˆ(>
+%2*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%12info"
+
+‰ ‰(
+
+True*Õ
+5
+‚ …(R
+P
+
+„ „(-
+%3"__id*6
+
+__unknown_file (*
+
+
+manifest"
+
+checksumí
+ê
+
+ƒ „(G
+%4"__concat*(
+
+ƒ ƒ((
+Checksum mismatch for *
+
+ƒ) ƒ(2
+
+	backup_id*
+
+ƒ3 ƒ(5
+: *
+
+„ „(
+	expected *
+
+„ „(-
+
+%3*
+
+„. „(4
+
+, got *"
+
+„5 „(E
+
+current_checksumge
+
+‚ …(
+%5*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%42error"
+
+† †(	
+
+False*—
+6
+ÿ ÿ(F¾»
+
+ÿ ÿ(F
+%6*_
+
+__unknown_file (CA
+?src.security.geo_distributed_backup.GeoDistributedBackupManager**
+
+__unknown_file (
+
+
+backup_dir2_calculate_backup_checksumL
+J
+
+ÿ ÿ(F
+current_checksum"__id*"
+
+__unknown_file (
+
+%6R
+P
+
+ (0
+%7"__id*6
+
+__unknown_file (*
+
+
+manifest"
+
+checksumš
+—
+
+ (0
+%8"	__compare*"
+
+__unknown_file (
+!=*0
+
+__unknown_file (
+
+current_checksum*"
+
+__unknown_file (
+
+%7*
+4
+5*€
+7
+û û(El
+j
+
+û û(D
+%9"__concat*.
+
+û û(7 
+Backup directory not found: *
+
+û8 û(B
+
+
+backup_dirhf
+
+û û(E
+%10*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%92error"
+
+ü ü(	
+
+False*å
+8
+ö ö(,Œ
+‰
+
+ö ö(!
+%11"__id*n
+
+__unknown_file (R*PA
+?src.security.geo_distributed_backup.GeoDistributedBackupManager"
+	manifests|z
+
+ö ö(,
+%12"__mapGet*#
+
+__unknown_file (
+
+%11*)
+
+__unknown_file (
+
+	backup_id2__getitem__E
+C
+
+ö ö(,
+
+manifest"__id*#
+
+__unknown_file (
+
+%12Œ
+‰
+
+÷ ÷(!
+%13"__id*n
+
+__unknown_file (R*PA
+?src.security.geo_distributed_backup.GeoDistributedBackupManager"
+	locationsQ
+O
+
+÷" ÷(1
+%14"__id*4
+
+__unknown_file (*
+
+
+manifest"
+regionvt
+
+÷ ÷(2
+%15"__mapGet*#
+
+__unknown_file (
+
+%13*#
+
+__unknown_file (
+
+%142__getitem__E
+C
+
+÷ ÷(2
+
+location"__id*#
+
+__unknown_file (
+
+%15O
+M
+
+ø ø("
+%16"__id*2
+
+__unknown_file (*
+
+
+location"
+pathrp
+
+ø ø(.
+%17*#
+
+__unknown_file (
+
+%16*)
+
+__unknown_file (
+
+	backup_id2__truediv__G
+E
+
+ø ø(.
+
+backup_dir"__id*#
+
+__unknown_file (
+
+%17IG
+
+ú ú("
+%18**
+
+__unknown_file (
+
+
+backup_dir2exists*
+6
+7*÷
+9
+ó ó(:b
+`
+
+ó ó(9
+%19"__concat*$
+
+ó ó(-
+Backup not found: *
+
+ó. ó(7
+
+	backup_idig
+
+ó ó(:
+%20*&
+
+__unknown_file (
+
+
+logger*#
+
+__unknown_file (
+
+%192error"
+
+ô ô(	
+
+False:
+
+è& è(4
+	backup_idBCA
+?src.security.geo_distributed_backup.GeoDistributedBackupManagerH

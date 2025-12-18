@@ -1,0 +1,412 @@
+
+1.0PythonFrontend"1763831830230*py2.B∂
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+%
+ src/security/security_monitor.py9
+#
+src.security.security_monitor11
+
+
+__future__12
+
+asyncio14
+
+hashlib16
+
+
+json18
+
+logging20
+
+os22
+
+psutil24
+
+
+time26
+
+dataclasses28
+
+datetime30
+
+pathlib32
+
+typing34
+
+
+enum36
+
+src.audit.immutable_audit38
+
+src.audit.alerting_system40
+3
+-src.security.security_monitor.SecurityMonitor42
+E
+?src.security.security_monitor.SecurityMonitor._snapshot_network44
+C
+=src.security.security_monitor.SecurityMonitor.stop_monitoring46
+E
+?src.security.security_monitor.SecurityMonitor._monitoring_cycle48
+H
+Bsrc.security.security_monitor.SecurityMonitor._monitor_file_system50
+
+
+list52
+M
+Gsrc.security.security_monitor.SecurityMonitor._is_suspicious_connection54
+
+
+bool56
+
+
+dict58
+D
+>src.security.security_monitor.SecurityMonitor.start_monitoring60
+S
+Msrc.security.security_monitor.SecurityMonitor._calculate_process_threat_level62
+/
+)src.security.security_monitor.ThreatLevel64
+3
+-src.security.security_monitor.ProcessSnapshot66
+G
+Asrc.security.security_monitor.SecurityMonitor._log_security_event68
+1
++src.security.security_monitor.SecurityEvent70
+I
+Csrc.security.security_monitor.SecurityMonitor._get_process_snapshot72
+L
+Fsrc.security.security_monitor.SecurityMonitor._get_network_connections74
+D
+>src.security.security_monitor.SecurityMonitor._monitor_network76
+L
+Fsrc.security.security_monitor.SecurityMonitor._establish_file_baseline78
+J
+Dsrc.security.security_monitor.SecurityMonitor._is_suspicious_process80
+G
+Asrc.security.security_monitor.SecurityMonitor._snapshot_processes82
+E
+?src.security.security_monitor.SecurityMonitor.get_recent_events84
+	
+int86
+<
+6src.security.security_monitor.SecurityMonitor.__init__88
+G
+Asrc.security.security_monitor.SecurityMonitor._establish_baseline90
+F
+@src.security.security_monitor.SecurityMonitor._monitor_processes92
+H
+Bsrc.security.security_monitor.SecurityMonitor._calculate_file_hash94
+	
+str96
+I
+Csrc.security.security_monitor.SecurityMonitor.get_monitoring_status98
+N
+Gsrc.security.security_monitor.SecurityMonitor._monitor_system_resources100
+K
+Dsrc.security.security_monitor.SecurityMonitor._handle_security_event102
+)
+"src.security.security_monitor.main104
+
+	enum.Enum106
+>
+7src.security.security_monitor.start_security_monitoring108
+9
+2src.security.security_monitor.get_security_monitor110
+=
+6src.security.security_monitor.stop_security_monitoring112
+0
+)src.security.security_monitor.AnomalyType114J
+
+8
+89j–	
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33325
+
+35
+35345
+
+37
+37365
+
+39
+39385
+
+41
+41405
+
+43
+43426 210
+
+45
+45447 243
+
+47
+47467 243
+
+49
+49487 243
+
+51
+51507 243
+
+53
+53526
+
+55
+55547 243
+
+57
+57566
+
+59
+59586
+
+61
+61607 243
+
+63
+63627 243
+
+65
+65646 210
+
+67
+67666 210
+
+69
+69687 243
+
+71
+71706 210
+
+73
+73727 243
+
+75
+75747 243
+
+77
+77767 243
+
+79
+79787 243
+
+81
+81807 243
+
+83
+83827 243
+
+85
+85847 243
+
+87
+87866
+
+89
+89887 243
+
+91
+91907 243
+
+93
+93927 243
+
+95
+95947 243
+
+97
+97966
+
+99
+99987 243
+
+101
+1011007 243
+
+103
+1031027 243
+
+105
+1051047 210
+
+107
+1071066
+
+109
+1091087 210
+
+111
+1111107 210
+
+113
+1131127 210
+
+115
+1151146 210rä
+
+10131*
+8 (#
+
+10151*
+8
+ 
+(
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (
+
+
+10251*
+8 (
+
+10271*
+8 (
+
+10291*
+8 ()
+
+10311*
+8 ((
+
+10331*
+8 (
+
+10351*
+8 (9
+
+10371*
+8 (
+
+10391*
+8 (7
+
+10411*
+8 (S
+
+51533*
+8à à(#
+
+55573*
+8¡	 ¡("
+
+55594*
+8¡	 ¡("
+
+63653*
+8‡	 ‡((
+
+63674*
+8‡	 ‡((
+
+69714*
+8ä	 ä(
+
+73593*
+8À À($
+
+75533*
+8í	 í(!
+
+77533*
+8· ·(
+
+81573*
+8¨	 ¨(
+
+81674*
+8¨	 ¨(
+
+85533*
+8•	 •(
+
+85874*
+8•	 •(
+
+89874*
+8]	 ](
+
+93533*
+8ê ê(!
+
+95973*
+8å	 å(
+
+95974*
+8å	 å(
+
+99593*
+8î	 î(
+
+101533*
+8Æ Æ((
+
+103714*
+8Ÿ Ÿ(%
+
+651072*
+8( ((
+
+111433*
+8π π(
+
+1151072*
+8 (

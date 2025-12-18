@@ -1,0 +1,334 @@
+
+1.0PythonFrontend"1763831823584*py2.B
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+&
+!src/integrations/oauth2_client.py9
+$
+src.integrations.oauth2_client11
+
+
+__future__12
+
+base6414
+
+hashlib16
+
+
+json18
+
+secrets20
+
+
+time22
+
+urllib.error24
+
+urllib.parse26
+
+urllib.request28
+
+dataclasses30
+
+
+enum32
+
+typing34
+1
++src.integrations.oauth2_client.OAuth2Client36
+I
+Csrc.integrations.oauth2_client.OAuth2Client.exchange_code_for_token38
+0
+*src.integrations.oauth2_client.OAuth2Token40
+	
+str42
+
+
+bool44
+F
+@src.integrations.oauth2_client.OAuth2Client.refresh_access_token46
+A
+;src.integrations.oauth2_client.OAuth2Client._generate_state48
+>
+8src.integrations.oauth2_client.OAuth2Client.revoke_token50
+A
+;src.integrations.oauth2_client.OAuth2Client.get_valid_token52
+:
+4src.integrations.oauth2_client.OAuth2Client.__init__54
+1
++src.integrations.oauth2_client.OAuth2Config56
+G
+Asrc.integrations.oauth2_client.OAuth2Client.get_authorization_url58
+N
+Hsrc.integrations.oauth2_client.OAuth2Client.get_client_credentials_token60
+B
+<src.integrations.oauth2_client.OAuth2Client.get_auth_headers62
+
+
+dict64
+I
+Csrc.integrations.oauth2_client.OAuth2Client._generate_code_verifier66
+@
+:src.integrations.oauth2_client.OAuth2Client.get_token_info68
+@
+:src.integrations.oauth2_client.OAuth2Client._request_token70
+J
+Dsrc.integrations.oauth2_client.OAuth2Client._generate_code_challenge72
+:
+4src.integrations.oauth2_client.OAuth2Token.from_dict74
+8
+2src.integrations.oauth2_client.OAuth2Token.to_dict76
+;
+5src.integrations.oauth2_client.OAuth2Token.is_expired78
+	
+int80
+0
+*src.integrations.oauth2_client.OAuth2Error82
+
+	Exception84
+4
+.src.integrations.oauth2_client.OAuth2GrantType86
+
+	enum.Enum88J
+
+8
+89j…
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33325
+
+35
+35345
+
+37
+37366 210
+
+39
+39387 237
+
+41
+41406 210
+
+43
+43426
+
+45
+45446
+
+47
+47467 237
+
+49
+49487 237
+
+51
+51507 237
+
+53
+53527 237
+
+55
+55547 237
+
+57
+57566 210
+
+59
+59587 237
+
+61
+61607 237
+
+63
+63627 237
+
+65
+65646
+
+67
+67667 237
+
+69
+69687 237
+
+71
+71707 237
+
+73
+73727 237
+
+75
+75747 241
+
+77
+77767 241
+
+79
+79787 241
+
+81
+81806
+
+83
+83826 210
+
+85
+85846
+
+87
+87866 210
+
+89
+89886r°
+
+10131*
+8	 	(#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (
+
+10251*
+8 (
+
+10271*
+8 (
+
+10291*
+8 (
+
+10311*
+8 ()
+
+10331*
+8 (
+
+10351*
+8 ('
+
+39413*
+8Á	 Á( 
+
+39434*
+8Á	 Á( 
+
+39454*
+8Á	 Á( 
+
+47413*
+8æ	 æ(
+
+49433*
+8ç	 ç(
+
+53413*
+8¢	 ¢(
+
+55574*
+8“	 “(
+
+59433*
+8¤	 ¤(
+
+59454*
+8¤	 ¤(
+
+61413*
+8„	 „(%
+
+63653*
+8´	 ´(
+
+67433*
+8ì	 ì( 
+
+71653*
+8À	 À(
+
+71654*
+8À	 À(
+
+73433*
+8õ	 õ(!
+
+73434*
+8õ	 õ(!
+
+75413*
+8R	 R(
+
+75654*
+8R	 R(
+
+77653*
+8F	 F(
+
+79453*
+8:	 :(
+
+79814*
+8:	 :(
+
+83852*
+8¤ ¤(
+
+87892*
+8 (

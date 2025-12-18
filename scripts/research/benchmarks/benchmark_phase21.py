@@ -23,7 +23,6 @@ import json
 import logging
 import time
 from pathlib import Path
-from typing import Dict, Any
 
 from src.optimization.benchmarking import PerformanceBenchmark, RegressionDetector
 
@@ -52,8 +51,9 @@ async def run_production_benchmark():
 
     # 1. Backend API Benchmark (Native)
     logger.info("Benchmarking Native Backend API...")
-    import httpx
     import os
+
+    import httpx
 
     # Detect environment and set appropriate backend URL
     if os.path.exists("/.dockerenv") or os.environ.get("DOCKER_CONTAINER", "").lower() == "true":

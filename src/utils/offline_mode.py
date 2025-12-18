@@ -55,39 +55,26 @@ def setup_offline_mode() -> None:
         for model in sorted(local_models)[:5]:
             logger.info(f"    • {model}")
 
-    # Buscar modelos críticos com normalização de caminho
+    # Buscar modelos críticos
     critical_models: dict[str, Optional[str]] = {
         "phi": None,
-        "all-MiniLM-L6-v2": None,  # Normalized name
+        "sentence-transformers/all-MiniLM-L6-v2": None,
+        "all-MiniLM-L6-v2": None,
     }
 
-    # Normalizar nomes de modelo para busca
-    def normalize_model_name(name: str) -> str:
-        """Normalizar nome do modelo removendo prefixos."""
-        # Remove 'sentence-transformers/' prefix
-        return name.split("/")[-1].lower()
-
     for model_name in critical_models.keys():
-        normalized_search = normalize_model_name(model_name)
-        found = False
-
-        # Buscar no cache com matching flexível
-        for cached_model in cache_models:
-            if normalized_search in normalize_model_name(cached_model):
-                critical_models[model_name] = "cache"
-                found = True
-                break
-
-        # Se não encontrou no cache, buscar localmente
-        if not found:
-            for local_model in local_models:
-                if normalized_search in normalize_model_name(local_model):
-                    critical_models[model_name] = "local"
-                    break
+        if any(model_name in m for m in cache_models):
+            critical_models[model_name] = "cache"
+        elif any(model_name in m for m in local_models):
+            critical_models[model_name] = "local"
 
     logger.info("📦 Modelos Críticos:")
     for model, location in critical_models.items():
-        status = f"✅ {location}" if location else "❌ Não encontrado"
+        status = (
+            f"✅ {location}"
+            if location
+            else "⚠️  Não detectado no topo do cache (será buscado recursivamente)"
+        )
         logger.info(f"  {model}: {status}")
 
     return
@@ -98,27 +85,23 @@ def get_model_path(model_name: str) -> Optional[str]:
     Get local path for a model if it exists.
 
     Args:
-        model_name: Nome do modelo (ex: 'all-MiniLM-L6-v2', 'phi',
-                'sentence-transformers/all-MiniLM-L6-v2')
+        model_name: Nome do modelo (ex: 'all-MiniLM-L6-v2', 'phi')
 
     Returns:
         Path to model if found locally, None otherwise
     """
-    # Normalizar nome do modelo (remover prefixos)
-    normalized_name = model_name.split("/")[-1].lower()
-
     # Procurar no cache do HuggingFace
     hf_cache = Path.home() / ".cache" / "huggingface" / "hub"
     if hf_cache.exists():
         for model_dir in hf_cache.iterdir():
-            if normalized_name in model_dir.name.lower():
+            if model_name in model_dir.name:
                 return str(model_dir)
 
     # Procurar no diretório local do projeto
     local_models_dir = Path("models")
     if local_models_dir.exists():
         for model_dir in local_models_dir.iterdir():
-            if normalized_name in model_dir.name.lower():
+            if model_name in model_dir.name:
                 return str(model_dir)
 
     return None
@@ -177,11 +160,10 @@ def resolve_sentence_transformer_name(short_name: str) -> str:
 
     Args:
         short_name: Short name like 'all-MiniLM-L6-v2' or full name like
-            'sentence-transformers/all-MiniLM-L6-v2'
+        'sentence-transformers/all-MiniLM-L6-v2'
 
     Returns:
-        Absolute path to model snapshot (if found locally) or full model name
-        for HuggingFace
+        Absolute path to model snapshot (if found locally) or full model name for HuggingFace
     """
     # If already has prefix, use as provided
     if "/" in short_name and not short_name.startswith("/"):
@@ -213,5 +195,5 @@ def resolve_sentence_transformer_name(short_name: str) -> str:
 
     # Return mapped name if available, otherwise return original
     result = name_mapping.get(short_name, short_name)
-    logger.debug(f"🔍 Model name: {short_name} → {result} (not found in local cache)")
+    logger.debug(f"🔍 Model name: {short_name} → {result} " f"(not found in local cache)")
     return result

@@ -18,9 +18,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import os
 import ast
-import collections
+import os
 
 
 def get_imports(root_dir):

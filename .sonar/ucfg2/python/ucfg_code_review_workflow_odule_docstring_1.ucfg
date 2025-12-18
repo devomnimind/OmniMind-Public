@@ -1,0 +1,69 @@
+
+Ksrc.workflows.code_review_workflow.CodeReviewWorkflow._add_module_docstringR
+F/home/fahbrain/projects/omnimind/src/workflows/code_review_workflow.py¦ ¦("2*ÿ
+2
+§ ©(	¡
+ž
+
+¨ ¨(U
+%1"__concat*@
+
+¨ ¨(:20
+."""ImplementaÃ§Ã£o gerada pelo workflow para: *"
+
+¨; ¨(K
+
+task_description*
+
+¨L ¨(T
+
+."""\n\nE
+C
+
+§ ©(	
+	docstring"__id*"
+
+__unknown_file (
+
+%1NL
+
+ª ª( 
+%2"
+str.lstrip*$
+
+__unknown_file (
+
+code2lstripD
+B
+
+ª ª( 
+
+stripped"__id*"
+
+__unknown_file (
+
+%2W
+U
+
+« «(#
+%3"__concat*
+
+« «(
+
+	docstring*
+
+« «(#
+
+
+stripped"
+
+« «(#
+
+%3: 
+
+¦$ ¦(9
+task_description:
+
+¦; ¦(D
+codeB97
+5src.workflows.code_review_workflow.CodeReviewWorkflowH

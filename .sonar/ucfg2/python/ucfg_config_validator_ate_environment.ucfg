@@ -1,0 +1,308 @@
+
+Jsrc.security.config_validator.ConfigurationValidator._validate_environmentM
+A/home/fahbrain/projects/omnimind/src/security/config_validator.py® ®("2*®
+2
+± ±(9ƒ
+€
+
+³ ³(
+%17"__id*e
+
+__unknown_file (I*G6
+4src.security.config_validator.ConfigurationValidator"
+environment|
+z
+
+³ ³(;
+%18"__id*_
+
+__unknown_file (C*A1
+/src.security.config_validator.ConfigEnvironment"
+
+PRODUCTION
+Œ
+
+³ ³(;
+%19"	__compare*"
+
+__unknown_file (
+==*#
+
+__unknown_file (
+
+%17*#
+
+__unknown_file (
+
+%18*
+9
+12*;
+3
+config_validator.py"
+ß ß(
+implicit return*Ó
+4
+Ë Ñ(y
+w
+
+Í Í(7
+%1"__id*]
+
+__unknown_file (A*?2
+0src.security.config_validator.ValidationSeverity"	
+WARNINGÁ¾
+
+Ë Ñ(
+%2"8src.security.config_validator.ValidationResult.add_issue*&
+
+__unknown_file (
+
+
+result2	add_issue:
+path
+backup_enabled:
+severity
+
+%1:5
+message*(
+&Backup should be enabled in production:@
+
+suggestion20
+.Enable automated backups for disaster recovery:
+auto_fix
+
+True*
+3*³
+5
+Ê Ê(6™–
+
+Ê Ê(6
+%3*&
+
+__unknown_file (
+
+
+config*.
+
+__unknown_file (
+backup_enabled*%
+
+__unknown_file (	
+
+False2get*
+3
+4*À
+6
+Á Ç(y
+w
+
+Ã Ã(7
+%4"__id*]
+
+__unknown_file (A*?2
+0src.security.config_validator.ValidationSeverity"	
+WARNING®«
+
+Á Ç(
+%5"8src.security.config_validator.ValidationResult.add_issue*&
+
+__unknown_file (
+
+
+result2	add_issue:
+path
+
+debug_mode:
+severity
+
+%4::
+message/-
++Debug mode should be disabled in production:+
+
+suggestion
+Set 'debug_mode' to false:
+auto_fix	
+
+False*
+5*¯
+7
+À À(.•’
+
+À À(.
+%6*&
+
+__unknown_file (
+
+
+config**
+
+__unknown_file (
+
+debug_mode*%
+
+__unknown_file (	
+
+False2get*
+5
+6*—
+8
+¶ ¼(w
+u
+
+¸ ¸(5
+%7"__id*[
+
+__unknown_file (?*=2
+0src.security.config_validator.ValidationSeverity"
+ERROR¤¡
+
+¶ ¼(
+%8"8src.security.config_validator.ValidationResult.add_issue*&
+
+__unknown_file (
+
+
+result2	add_issue:
+path
+ssl_enabled:
+severity
+
+%7:0
+message%#
+!SSL must be enabled in production:+
+
+suggestion
+Set 'ssl_enabled' to true:
+auto_fix
+
+Truea
+_
+
+½ ½(5$
+
+result"
+environment_compatible"__id*%
+
+__unknown_file (	
+
+False*
+7*°
+9
+µ µ(3–“
+
+µ µ(3
+%9*&
+
+__unknown_file (
+
+
+config*+
+
+__unknown_file (
+ssl_enabled*%
+
+__unknown_file (	
+
+False2get*
+7
+8*ò
+10
+× Ý(w
+u
+
+Ù Ù(4
+%10"__id*Z
+
+__unknown_file (>*<2
+0src.security.config_validator.ValidationSeverity"
+INFOáÞ
+
+× Ý(
+%11"8src.security.config_validator.ValidationResult.add_issue*&
+
+__unknown_file (
+
+
+result2	add_issue:
+path
+allow_self_signed:
+severity
+
+%10:H
+message=;
+9Consider allowing self-signed certificates in development:H
+
+suggestion:8
+6Set 'allow_self_signed' to true for easier development:
+auto_fix
+
+True*
+3*
+11
+Ö Ö(Pom
+
+Ö Ö((
+%12*&
+
+__unknown_file (
+
+
+config*+
+
+__unknown_file (
+ssl_enabled2getus
+
+Ö1 Ö(P
+%13*&
+
+__unknown_file (
+
+
+config*1
+
+__unknown_file (
+allow_self_signed2get*
+3
+10*°
+12
+Ô Ô(>ƒ
+€
+
+Ô Ô(
+%14"__id*e
+
+__unknown_file (I*G6
+4src.security.config_validator.ConfigurationValidator"
+environment}
+{
+
+Ô! Ô(>
+%15"__id*`
+
+__unknown_file (D*B1
+/src.security.config_validator.ConfigEnvironment"
+DEVELOPMENT
+Œ
+
+Ô Ô(>
+%16"	__compare*"
+
+__unknown_file (
+==*#
+
+__unknown_file (
+
+%14*#
+
+__unknown_file (
+
+%15*
+3
+11:
+
+¯ ¯($
+config:
+
+¯& ¯(>
+resultB86
+4src.security.config_validator.ConfigurationValidatorH

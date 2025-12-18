@@ -1,0 +1,15 @@
+{
+  "id": "INC-1765123814-MEDIUM",
+  "title": "Open Incident",
+  "description": "Test open",
+  "severity": "medium",
+  "status": "open",
+  "created_at": "2025-12-07T16:10:14.231240+00:00",
+  "updated_at": "2025-12-07T16:10:14.231259+00:00",
+  "detected_by": "test",
+  "assigned_to": null,
+  "evidence_items": [],
+  "analysis": {},
+  "recommendations": [],
+  "tags": []
+}

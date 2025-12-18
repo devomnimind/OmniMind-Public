@@ -20,10 +20,11 @@ Contact: fabricioslv@hotmail.com.br
 
 import asyncio
 import json
-import time
-import psutil
 import os
+import time
 from datetime import datetime
+
+import psutil
 from playwright.async_api import async_playwright
 
 # Configuration

@@ -32,7 +32,7 @@ import platform
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 
 class DiagnosticTool:

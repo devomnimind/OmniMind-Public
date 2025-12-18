@@ -1,0 +1,309 @@
+
+1.0PythonFrontend"1763831845023*py2.Bß
+
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+
+src/ethics/ethics_agent.py9
+
+src.ethics.ethics_agent11
+
+
+json12
+
+logging14
+
+dataclasses16
+
+datetime18
+
+
+enum20
+
+pathlib22
+
+typing24
+
+
+yaml26
+*
+$src.ethics.ethics_agent.ActionImpact28
+
+	enum.Enum30
+-
+'src.ethics.ethics_agent.EthicalDecision32
+5
+/src.ethics.ethics_agent.EthicalDecision.to_dict34
+
+
+dict36
+.
+(src.ethics.ethics_agent.EthicalFramework38
+)
+#src.ethics.ethics_agent.EthicsAgent40
+=
+7src.ethics.ethics_agent.EthicsAgent._load_ethical_rules42
+7
+1src.ethics.ethics_agent.EthicsAgent._is_forbidden44
+
+
+bool46
+	
+str48
+A
+;src.ethics.ethics_agent.EthicsAgent._evaluate_virtue_ethics50
+5
+/src.ethics.ethics_agent.EthicsAgent._save_state52
+5
+/src.ethics.ethics_agent.EthicsAgent._load_state54
+9
+3src.ethics.ethics_agent.EthicsAgent.evaluate_action56
+:
+4src.ethics.ethics_agent.EthicsAgent._record_decision58
+2
+,src.ethics.ethics_agent.EthicsAgent.__init__60
+A
+;src.ethics.ethics_agent.EthicsAgent._evaluate_deontological62
+D
+>src.ethics.ethics_agent.EthicsAgent._evaluate_consequentialist64
+?
+9src.ethics.ethics_agent.EthicsAgent._evaluate_care_ethics66
+?
+9src.ethics.ethics_agent.EthicsAgent._suggest_alternatives68
+
+
+list70
+<
+6src.ethics.ethics_agent.EthicsAgent.get_ethics_summary72J
+
+8
+89jÛ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29286 210
+
+31
+31306
+
+33
+33326 210
+
+35
+35347 233
+
+37
+37366
+
+39
+39386 210
+
+41
+41406 210
+
+43
+43427 241
+
+45
+45447 241
+
+47
+47466
+
+49
+49486
+
+51
+51507 241
+
+53
+53527 241
+
+55
+55547 241
+
+57
+57567 241
+
+59
+59587 241
+
+61
+61607 241
+
+63
+63627 241
+
+65
+65647 241
+
+67
+67667 241
+
+69
+69687 241
+
+71
+71706
+
+73
+73727 241r¨
+
+10131*
+8 (
+
+10151*
+8	 	(
+
+10171*
+8
+ 
+(1
+
+10191*
+8 ((
+
+10211*
+8 (
+
+10231*
+8 (
+
+10251*
+8 (-
+
+10271*
+8í í(
+
+29312*
+8 (
+
+35373*
+85	 5(
+
+39312*
+8 (
+
+43373*
+8Ù	 Ù(
+
+45473*
+8©	 ©(
+
+45494*
+8©	 ©(
+
+51333*
+8Â	 Â( 
+
+51494*
+8Â	 Â( 
+
+51294*
+8Â	 Â( 
+
+51374*
+8Â	 Â( 
+
+57333*
+8m	 m(
+
+57494*
+8m	 m(
+
+57294*
+8m	 m(
+
+59334*
+8ö	 ö(
+
+61394*
+8J	 J(
+
+63333*
+8Â	 Â( 
+
+63494*
+8Â	 Â( 
+
+63294*
+8Â	 Â( 
+
+63374*
+8Â	 Â( 
+
+65333*
+8ý	 ý(#
+
+65494*
+8ý	 ý(#
+
+65294*
+8ý	 ý(#
+
+65374*
+8ý	 ý(#
+
+67333*
+8ù	 ù(
+
+67494*
+8ù	 ù(
+
+67294*
+8ù	 ù(
+
+67374*
+8ù	 ù(
+
+69713*
+8¸	 ¸(
+
+69494*
+8¸	 ¸(
+
+69374*
+8¸	 ¸(
+
+73373*
+8²	 ²(

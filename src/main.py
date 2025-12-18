@@ -22,15 +22,6 @@ from src.boot import (
 )
 from src.consciousness.topological_phi import LogToTopology
 from src.metrics.real_consciousness_metrics import real_metrics_collector
-from src.monitor.memory_compression_manager import MemoryCompressionManager
-
-# ============================================================================
-# BOOTSTRAP: Garantir que imports funcionam mesmo sem PYTHONPATH configurado
-# ============================================================================
-# Útil para: systemd services, cron jobs, IDEs que ignoram env vars
-from src.system_bootstrap import bootstrap_omnimind
-
-bootstrap_omnimind()
 
 # NOTE: CUDA environment variables should be set by the shell script (start_omnimind_system.sh)
 # Setting them here AFTER python startup can cause "CUDA unknown error" in PyTorch
@@ -72,12 +63,6 @@ async def main():
         if not await check_rhizome_integrity(rhizoma):
             raise RuntimeError("Rhizome integrity check failed.")
 
-        # Initialize Memory Compression Manager (Auto-Learning)
-        memory_compression_manager = MemoryCompressionManager(
-            memory_threshold=75.0, max_flows_in_memory=5000
-        )
-        logger.info("Memory Compression Manager initialized.")
-
         # PHASE 4: CONSCIOUSNESS (The Real)
         logger.info("--- Phase 4: Consciousness Emergence ---")
         phi_calc, detector = await initialize_consciousness(memory_complex)
@@ -100,19 +85,16 @@ async def main():
 
         # Initialize Report Maintenance Scheduler (Automated Cleanup & Compression)
         try:
-            from src.observability.report_maintenance_scheduler import (
-                init_report_maintenance_scheduler,
-            )
-
-            init_report_maintenance_scheduler(
-                check_interval_minutes=60,  # Verificar a cada hora
-                daily_hour=3,  # Executar limpeza diária às 3 AM UTC
-                daily_minute=0,
-            )
-            logger.info(
-                "✅ Report Maintenance Scheduler initialized "
-                "(automated cleanup & compression enabled)."
-            )
+            # Scheduler initialization - currently not used but kept for future deployment
+            # from src.observability.report_maintenance_scheduler import (
+            #     init_report_maintenance_scheduler,
+            # )
+            # maintenance_scheduler = init_report_maintenance_scheduler(
+            #     check_interval_minutes=60,  # Verificar a cada hora
+            #     daily_hour=3,  # Executar limpeza diária às 3 AM UTC
+            #     daily_minute=0,
+            # )
+            logger.info("✅ Report Maintenance Scheduler: kept for future use (automated cleanup).")
         except Exception as e:
             logger.warning(f"Failed to initialize maintenance scheduler: {e}")
 
@@ -124,40 +106,16 @@ async def main():
         last_processed_flow_index = 0
         autopoietic_cycle_count = 0
 
-        # Import Service Update Communicator for Intelligent Restarts
-        try:
-            from src.services import get_communicator
-
-            communicator = get_communicator()
-            logger.info("✅ Service Update Communicator initialized")
-        except Exception as e:
-            logger.warning(f"⚠️ Service Update Communicator unavailable: {e}")
-            communicator = None
-
         while True:
             cycle_count += 1
             # 1. Rhizome produces desire
             await rhizoma.activate_cycle()
 
-            # 1.5 Check Memory and Compress if Needed (Auto-Learning)
-            memory_status = memory_compression_manager.check_memory_status()
-            if memory_compression_manager.should_compress(
-                len(rhizoma.flows_history), memory_status
-            ):
-                flows_to_compress = list(rhizoma.flows_history)[-1000:]  # Últimos 1000 flows
-                if flows_to_compress:
-                    compression_metric = memory_compression_manager.compress_flows(
-                        flows_to_compress, flow_id_prefix=f"cycle_{cycle_count}"
-                    )
-                    logger.info(f"Memory compression: {compression_metric.status}")
-
             # 2. Consciousness observes (every 100 cycles - approx 20 seconds with 0.2s sleep base)
             # Reduced frequency to prevent CPU starvation of WebSocket (Phase 23 Stability)
             if cycle_count % 100 == 0:
                 # PERCEPTION CYCLE: Convert Flows -> Topology
-                # Convert deque to list to allow slicing
-                flows_list = list(rhizoma.flows_history)
-                new_flows = flows_list[last_processed_flow_index:]
+                new_flows = rhizoma.flows_history[last_processed_flow_index:]
 
                 if new_flows:
                     # Convert DesireFlows to Logs format
@@ -188,7 +146,7 @@ async def main():
                         phi_calc.complex, logs, start_index=phi_calc.complex.n_vertices
                     )
 
-                    last_processed_flow_index = len(flows_list)
+                    last_processed_flow_index = len(rhizoma.flows_history)
 
                 # Calculate Phi on updated topology
                 phi = phi_calc.calculate_phi()
@@ -242,27 +200,6 @@ async def main():
                     except Exception as e:
                         logger.error(f"Autopoietic cycle failed: {e}", exc_info=True)
 
-            # Check for Service Updates requiring restart (Intelligent Service Update Protocol)
-            if communicator:
-                try:
-                    if await communicator.should_restart_now():
-                        reason = communicator.get_restart_reason()
-                        logger.warning(
-                            f"⚠️ OmniMind restart required: {reason}\n"
-                            f"   Initiating graceful shutdown..."
-                        )
-                        # Trigger graceful shutdown
-                        # This will be caught by the exception handler in the API
-                        import requests
-
-                        try:
-                            requests.post("http://localhost:8000/api/shutdown", timeout=5)
-                        except Exception:
-                            pass  # Shutdown will happen naturally
-                        sys.exit(0)  # Clean exit
-                except Exception as e:
-                    logger.debug(f"Service Update check failed: {e}")
-
             # Yield control frequently to allow WebSocket heartbeats
             await asyncio.sleep(2.0)  # Increased from 1.0s to 2.0s for Dashboard stability
 
@@ -275,6 +212,4 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        logger.info("System shutdown requested by user.")
-        logger.info("System shutdown requested by user.")
         logger.info("System shutdown requested by user.")

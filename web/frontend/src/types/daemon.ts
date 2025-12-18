@@ -5,6 +5,17 @@ export interface SystemMetrics {
   is_user_active: boolean;
   idle_seconds: number;
   is_sleep_hours: boolean;
+  gpu?: GPUMetrics;
+  uptime_seconds?: number;
+}
+
+export interface GPUMetrics {
+  available: boolean;
+  name?: string;
+  memory_total_mb?: number;
+  memory_allocated_mb?: number;
+  memory_reserved_mb?: number;
+  utilization?: number;
 }
 
 export interface TaskStats {
@@ -35,6 +46,8 @@ export interface ConsciousnessMetrics {
   anxiety?: number;
   flow?: number;
   entropy?: number;
+  gozo?: number;
+  psychoanalytic?: PsychoanalyticMetrics;
   ici?: number;
   prs?: number;
   ici_components?: {
@@ -70,6 +83,20 @@ export interface ConsciousnessMetrics {
     timestamps: string[];
   };
   timestamp?: string | null;
+}
+
+export interface PsychoanalyticMetrics {
+  status?: string;
+  id: { libido: number; satisfaction: number };
+  ego: { adaptation: number; active_defenses: string[] };
+  superego: { strictness: number; judgment_balance: number };
+  state: { tension: number; anxiety: number; guilt: number; reality_adaptation: number };
+  recent_conflicts?: Array<{ chosen: string; defense: string | null; quality: number }>;
+}
+
+export interface SentinelStatus {
+  status: 'active' | 'inactive' | 'unknown';
+  protection: 'enabled' | 'disabled';
 }
 
 export interface ModuleActivity {
@@ -110,6 +137,7 @@ export interface DaemonStatus {
   consciousness_metrics?: ConsciousnessMetrics;
   module_activity?: ModuleActivity;
   system_health?: SystemHealth;
+  sentinel_status?: SentinelStatus;
   event_log?: EventLogEntry[];
   baseline_comparison?: {
     phi: { current: number; baseline: number; change: number };

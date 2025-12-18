@@ -1,0 +1,16 @@
+
+of"Get action execution history.
+
+        Returns:
+            List of executed Action objects
+        "strself
+õ õ("v2
+0
+
+û û(("#get-field# _action_history:.
+,
+
+û û()"
+builtinslist*:Blist
+
+û û()*H/home/fahbrain/projects/omnimind/src/multimodal/embodied_intelligence.py

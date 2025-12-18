@@ -63,8 +63,8 @@ class ExpectationModule(nn.Module):
 
     def __init__(
         self,
-        embedding_dim: int = 128,
-        hidden_dim: int = 64,
+        embedding_dim: int = 256,
+        hidden_dim: int = 128,
         num_layers: int = 2,
         learning_rate: float = 0.001,
         nachtraglichkeit_threshold: float = 0.7,

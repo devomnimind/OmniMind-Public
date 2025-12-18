@@ -33,21 +33,21 @@ except ImportError as e:
     print(f"qiskit_aer import failed: {e}")
 
 try:
-    from qiskit import QuantumCircuit
+    pass
 
     print("QuantumCircuit imported")
 except ImportError as e:
     print(f"QuantumCircuit import failed: {e}")
 
 try:
-    from qiskit_aer import AerSimulator
+    pass
 
     print("AerSimulator imported")
 except ImportError as e:
     print(f"AerSimulator import failed: {e}")
 
 try:
-    from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
+    pass
 
     print("generate_preset_pass_manager imported")
 except ImportError as e:

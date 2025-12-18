@@ -1,0 +1,129 @@
+
+5src.security.config_validator.ValidationIssue.to_dictK
+A/home/fahbrain/projects/omnimind/src/security/config_validator.py8 8("2*¯
+29 9($
+: @(	
+%1"dictq
+o
+; ;(
+%2"__id*W
+
+__unknown_file (;*9/
+-src.security.config_validator.ValidationIssue"
+path‹
+ˆ
+; ;(
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+path*"
+
+__unknown_file (
+
+%2u
+s
+< <(%
+%4"__id*[
+
+__unknown_file (?*=/
+-src.security.config_validator.ValidationIssue"
+
+severityG
+E
+< <(+
+%5"__id*-
+
+__unknown_file (*
+
+%4"
+value
+Œ
+< <(+
+%6"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+severity*"
+
+__unknown_file (
+
+%5t
+r
+= =(#
+%7"__id*Z
+
+__unknown_file (>*</
+-src.security.config_validator.ValidationIssue"	
+messageŽ
+‹
+= =(#
+%8"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+message*"
+
+__unknown_file (
+
+%7w
+u
+> >()
+%9"__id*]
+
+__unknown_file (A*?/
+-src.security.config_validator.ValidationIssue"
+
+suggestion’
+
+> >()
+%10"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+suggestion*"
+
+__unknown_file (
+
+%9v
+t
+? ?(%
+%11"__id*[
+
+__unknown_file (?*=/
+-src.security.config_validator.ValidationIssue"
+
+auto_fix‘
+Ž
+? ?(%
+%12"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+auto_fix*#
+
+__unknown_file (
+
+%11"
+: @(	
+
+%1B1/
+-src.security.config_validator.ValidationIssueH

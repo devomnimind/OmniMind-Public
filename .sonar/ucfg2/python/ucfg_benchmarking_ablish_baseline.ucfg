@@ -1,0 +1,88 @@
+
+Esrc.optimization.benchmarking.PerformanceBenchmark.establish_baselineM
+A/home/fahbrain/projects/omnimind/src/optimization/benchmarking.py¿ ¿("2*š
+2
+Å Î(ôñ
+
+Ï Ï(?
+%1*R
+
+__unknown_file (64
+2src.optimization.benchmarking.PerformanceBenchmark*$
+
+__unknown_file (
+
+name*(
+
+__unknown_file (
+
+
+workload**
+
+__unknown_file (
+
+
+iterations2run_benchmarkB
+@
+
+Ï Ï(?
+result"__id*"
+
+__unknown_file (
+
+%1}
+{
+
+Ð Ð(
+%3"__id*a
+
+__unknown_file (E*C4
+2src.optimization.benchmarking.PerformanceBenchmark"
+	baselines¦£
+
+Ð Ð(%
+%2"dict.__setitem__*"
+
+__unknown_file (
+
+%3*$
+
+__unknown_file (
+
+name*&
+
+__unknown_file (
+
+
+result2__setitem__‹ˆ
+
+Ò Ò(6
+%4*&
+
+__unknown_file (
+
+
+logger*4
+
+__unknown_file (
+baseline_established2info:
+name
+
+name"
+
+Ô Ô(
+
+
+result:
+
+Á Á(
+name:
+
+Â Â(#
+
+workload:
+
+Ã Ã(
+
+iterationsB64
+2src.optimization.benchmarking.PerformanceBenchmarkH

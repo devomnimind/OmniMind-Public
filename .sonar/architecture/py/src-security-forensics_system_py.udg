@@ -1,0 +1,528 @@
+
+1.0PythonFrontend"1763831831916*py2.Bí
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+%
+ src/security/forensics_system.py9
+#
+src.security.forensics_system11
+
+
+__future__12
+
+logging14
+
+re16
+
+
+subprocess18
+
+
+json20
+
+
+time22
+
+dataclasses24
+
+datetime26
+
+pathlib28
+
+typing30
+
+
+enum32
+
+src.audit.immutable_audit34
+0
+*src.security.forensics_system.EvidenceType36
+
+	enum.Enum38
+4
+.src.security.forensics_system.IncidentSeverity40
+2
+,src.security.forensics_system.IncidentStatus42
+3
+-src.security.forensics_system.ForensicsSystem44
+L
+Fsrc.security.forensics_system.ForensicsSystem._build_incident_timeline46
+
+
+list48
+,
+&src.security.forensics_system.Incident50
+B
+<src.security.forensics_system.ForensicsSystem._save_incident52
+G
+Asrc.security.forensics_system.ForensicsSystem.get_incident_status54
+	
+str56
+F
+@src.security.forensics_system.ForensicsSystem._generate_findings58
+D
+>src.security.forensics_system.ForensicsSystem.analyze_incident60
+
+
+dict62
+D
+>src.security.forensics_system.ForensicsSystem.collect_evidence64
+@
+:src.security.forensics_system.ForensicsSystem._save_report66
+3
+-src.security.forensics_system.ForensicsReport68
+B
+<src.security.forensics_system.ForensicsSystem.list_incidents70
+M
+Gsrc.security.forensics_system.ForensicsSystem._generate_recommendations72
+I
+Csrc.security.forensics_system.ForensicsSystem._calculate_risk_level74
+	
+int76
+<
+6src.security.forensics_system.ForensicsSystem.__init__78
+C
+=src.security.forensics_system.ForensicsSystem.create_incident80
+B
+<src.security.forensics_system.ForensicsSystem._load_incident82
+C
+=src.security.forensics_system.ForensicsSystem.generate_report84
+8
+2src.security.forensics_system.get_forensics_system86
+=
+7src.security.forensics_system.analyze_security_incident88
+5
+/src.security.forensics_system.EvidenceCollector90
+J
+Dsrc.security.forensics_system.EvidenceCollector.collect_log_evidence92
+L
+Fsrc.security.forensics_system.EvidenceCollector.collect_system_metrics94
+R
+Lsrc.security.forensics_system.EvidenceCollector.collect_file_system_evidence96
+>
+8src.security.forensics_system.EvidenceCollector.__init__98
+O
+Hsrc.security.forensics_system.EvidenceCollector.collect_process_evidence100
+O
+Hsrc.security.forensics_system.EvidenceCollector.collect_network_evidence102
+D
+=src.security.forensics_system.EvidenceCollector.save_evidence104
+=
+6src.security.forensics_system.create_security_incident106
+>
+7src.security.forensics_system.collect_incident_evidence108
+1
+*src.security.forensics_system.EvidenceItem110
+>
+7src.security.forensics_system.generate_forensics_report112
+0
+)src.security.forensics_system.LogAnalyzer114
+9
+2src.security.forensics_system.LogAnalyzer.__init__116
+=
+6src.security.forensics_system.LogAnalyzer.analyze_logs118
+A
+:src.security.forensics_system.LogAnalyzer.correlate_events120
+A
+:src.security.forensics_system.LogAnalyzer._parse_timestamp122
+C
+<src.security.forensics_system.LogAnalyzer._extract_timestamp124J
+
+8
+89jù
+
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33325
+
+35
+35345
+
+37
+37366 210
+
+39
+39386
+
+41
+41406 210
+
+43
+43426 210
+
+45
+45446 210
+
+47
+47467 245
+
+49
+49486
+
+51
+51506 210
+
+53
+53527 245
+
+55
+55547 245
+
+57
+57566
+
+59
+59587 245
+
+61
+61607 245
+
+63
+63626
+
+65
+65647 245
+
+67
+67667 245
+
+69
+69686 210
+
+71
+71707 245
+
+73
+73727 245
+
+75
+75747 245
+
+77
+77766
+
+79
+79787 245
+
+81
+81807 245
+
+83
+83827 245
+
+85
+85847 245
+
+87
+87867 210
+
+89
+89887 210
+
+91
+91906 210
+
+93
+93927 291
+
+95
+95947 291
+
+97
+97967 291
+
+99
+99987 291
+
+101
+1011007 291
+
+103
+1031027 291
+
+105
+1051047 291
+
+107
+1071067 210
+
+109
+1091087 210
+
+111
+1111106 210
+
+113
+1131127 210
+
+115
+1151146 210
+
+117
+1171167 2115
+
+119
+1191187 2115
+
+121
+1211207 2115
+
+123
+1231227 2115
+
+125
+1251247 2115rá
+
+10131*
+8 (#
+
+10151*
+8	 	(
+
+10171*
+8
+ 
+(
+
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (
+
+10251*
+8 ()
+
+10271*
+8 ((
+
+10291*
+8 (
+
+10311*
+8 (2
+
+10331*
+8 (
+
+10351*
+8 (7
+
+37392*
+8 (
+
+41392*
+8$ $(
+
+43392*
+8- -(
+
+47493*
+8Ì	 Ì(!
+
+47514*
+8Ì	 Ì(!
+
+53514*
+8Î	 Î(
+
+55574*
+8 	  (
+
+59493*
+8ê	 ê(
+
+59514*
+8ê	 ê(
+
+61633*
+8‘	 ‘(
+
+61574*
+8‘	 ‘(
+
+65493*
+8Æ	 Æ(
+
+65574*
+8Æ	 Æ(
+
+65494*
+8Æ	 Æ(
+
+67694*
+8„		 „	(
+
+71493*
+8¬	 ¬(
+
+73493*
+8ž	 ž("
+
+73634*
+8ž	 ž("
+
+75573*
+8‘	 ‘(
+
+75774*
+8‘	 ‘(
+
+75774*
+8‘	 ‘(
+
+81513*
+8”	 ”(
+
+81574*
+8”	 ”(
+
+81574*
+8”	 ”(
+
+81414*
+8”	 ”(
+
+81574*
+8”	 ”(
+
+83574*
+8ô	 ô(
+
+85693*
+8è	 è(
+
+85574*
+8è	 è(
+
+87453*
+8£	 £	(
+
+89633*
+8¾	 ¾	(
+
+89574*
+8¾	 ¾	(
+
+93493*
+8	 (
+
+93494*
+8	 (
+
+95493*
+8Ô	 Ô(
+
+97493*
+8³	 ³(%
+
+97494*
+8³	 ³(%
+
+101493*
+8±	 ±(!
+
+103493*
+8ö	 ö(!
+
+105494*
+8ú	 ú(
+
+107513*
+8«	 «	(
+
+107574*
+8«	 «	(
+
+107574*
+8«	 «	(
+
+107574*
+8«	 «	(
+
+109493*
+8¶	 ¶	(
+
+109574*
+8¶	 ¶	(
+
+109494*
+8¶	 ¶	(
+
+113693*
+8Ä	 Ä	(
+
+113574*
+8Ä	 Ä	(
+
+119633*
+8Á	 Á(
+
+119574*
+8Á	 Á(
+
+119574*
+8Á	 Á(
+
+121493*
+8Š	 Š(
+
+121494*
+8Š	 Š(
+
+123574*
+8Ò	 Ò(
+
+125574*
+8Â	 Â(

@@ -3,8 +3,8 @@
 Script para adicionar copyright header AGPL v3 em todos os arquivos Python
 """
 
-import os
 import glob
+import os
 
 COPYRIGHT_HEADER = '''"""
 OmniMind Project - Artificial Consciousness System

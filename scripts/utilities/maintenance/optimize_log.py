@@ -7,17 +7,19 @@ import re
 import sys
 from pathlib import Path
 
+
 def remove_ansi_codes(text: str) -> str:
     """Remove códigos de escape ANSI (cores, formatação)."""
-    ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
-    return ansi_escape.sub('', text)
+    ansi_escape = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
+    return ansi_escape.sub("", text)
+
 
 def optimize_log(input_path: str, output_path: str, target_size_mb: int = 200):
     """Otimiza arquivo de log mantendo conteúdo para auditoria."""
     target_size_bytes = target_size_mb * 1024 * 1024
 
     print(f"Lendo arquivo: {input_path}")
-    with open(input_path, 'r', encoding='utf-8', errors='ignore') as f:
+    with open(input_path, "r", encoding="utf-8", errors="ignore") as f:
         lines = f.readlines()
 
     print(f"Total de linhas: {len(lines):,}")
@@ -35,7 +37,7 @@ def optimize_log(input_path: str, output_path: str, target_size_mb: int = 200):
         clean_line = remove_ansi_codes(line)
 
         # Remove espaços em branco no final
-        clean_line = clean_line.rstrip() + '\n'
+        clean_line = clean_line.rstrip() + "\n"
 
         # Remove linhas duplicadas consecutivas (mas mantém contador)
         if clean_line == prev_line:
@@ -52,8 +54,8 @@ def optimize_log(input_path: str, output_path: str, target_size_mb: int = 200):
             optimized_lines.append(clean_line)
 
     # Se ainda estiver muito grande, aplicar compressão adicional
-    content = ''.join(optimized_lines)
-    current_size = len(content.encode('utf-8'))
+    content = "".join(optimized_lines)
+    current_size = len(content.encode("utf-8"))
 
     print(f"\nTamanho após primeira otimização: {current_size / (1024*1024):.2f} MB")
 
@@ -61,10 +63,12 @@ def optimize_log(input_path: str, output_path: str, target_size_mb: int = 200):
     iteration = 1
     while current_size > target_size_bytes and iteration <= 5:
         iteration += 1
-        print(f"\nIteração {iteration}: Tamanho ainda acima do limite ({target_size_mb}MB). Aplicando otimizações adicionais...")
+        print(
+            f"\nIteração {iteration}: Tamanho ainda acima do limite ({target_size_mb}MB). Aplicando otimizações adicionais..."
+        )
 
         # Remover linhas muito longas ou vazias excessivas
-        lines = content.split('\n')
+        lines = content.split("\n")
         optimized_lines = []
         empty_count = 0
 
@@ -88,24 +92,24 @@ def optimize_log(input_path: str, output_path: str, target_size_mb: int = 200):
 
             # Remove espaços múltiplos (mantém apenas 1 espaço)
             if iteration >= 3:
-                line = re.sub(r' +', ' ', line)
+                line = re.sub(r" +", " ", line)
 
             optimized_lines.append(line)
 
-        content = '\n'.join(optimized_lines)
-        current_size = len(content.encode('utf-8'))
+        content = "\n".join(optimized_lines)
+        current_size = len(content.encode("utf-8"))
         print(f"Tamanho após iteração {iteration}: {current_size / (1024*1024):.2f} MB")
 
         # Se ainda muito grande, aplicar amostragem de logs repetitivos
         if current_size > target_size_bytes * 1.2 and iteration >= 3:
             print("Aplicando amostragem de logs repetitivos...")
-            lines = content.split('\n')
+            lines = content.split("\n")
             optimized_lines = []
             log_patterns = {}
 
             for line in lines:
                 # Identifica padrões de log (ex: "INFO src.module:function:123 - mensagem")
-                match = re.match(r'^(\w+)\s+([^\s:]+:[^\s:]+:\d+)\s+-\s+(.+)$', line.strip())
+                match = re.match(r"^(\w+)\s+([^\s:]+:[^\s:]+:\d+)\s+-\s+(.+)$", line.strip())
                 if match:
                     level, location, message = match.groups()
                     pattern_key = f"{level} {location}"
@@ -123,14 +127,14 @@ def optimize_log(input_path: str, output_path: str, target_size_mb: int = 200):
                 else:
                     optimized_lines.append(line)
 
-            content = '\n'.join(optimized_lines)
-            current_size = len(content.encode('utf-8'))
+            content = "\n".join(optimized_lines)
+            current_size = len(content.encode("utf-8"))
             print(f"Tamanho após amostragem: {current_size / (1024*1024):.2f} MB")
 
     # Última passada: se ainda acima do limite, aplicar truncamento mais agressivo
     if current_size > target_size_bytes:
         print(f"\nAplicando truncamento final para atingir {target_size_mb}MB...")
-        lines = content.split('\n')
+        lines = content.split("\n")
 
         # Calcula quantas linhas manter baseado no tamanho alvo
         # Estima tamanho médio por linha
@@ -143,16 +147,20 @@ def optimize_log(input_path: str, output_path: str, target_size_mb: int = 200):
 
         # Mantém cabeçalho e rodapé, amostra o meio proporcionalmente
         header_lines = min(5000, int(len(lines) * 0.02))  # 2% do início
-        footer_lines = min(5000, int(len(lines) * 0.02))   # 2% do final
+        footer_lines = min(5000, int(len(lines) * 0.02))  # 2% do final
         middle_lines_needed = max(0, target_lines - header_lines - footer_lines)
 
         if middle_lines_needed > 0 and len(lines) > header_lines + footer_lines:
             middle_total = len(lines) - header_lines - footer_lines
             # Calcula step para manter apenas middle_lines_needed linhas do meio
-            step = max(1, (middle_total + middle_lines_needed - 1) // middle_lines_needed)  # Arredonda para cima
+            step = max(
+                1, (middle_total + middle_lines_needed - 1) // middle_lines_needed
+            )  # Arredonda para cima
 
             print(f"  Header: {header_lines}, Footer: {footer_lines}")
-            print(f"  Middle: {middle_total:,} linhas -> {middle_lines_needed:,} linhas (step: {step})")
+            print(
+                f"  Middle: {middle_total:,} linhas -> {middle_lines_needed:,} linhas (step: {step})"
+            )
 
             optimized_lines = []
             optimized_lines.extend(lines[:header_lines])
@@ -163,21 +171,25 @@ def optimize_log(input_path: str, output_path: str, target_size_mb: int = 200):
 
             optimized_lines.extend(lines[-footer_lines:])
 
-            content = '\n'.join(optimized_lines)
-            current_size = len(content.encode('utf-8'))
-            print(f"Tamanho após truncamento final: {current_size / (1024*1024):.2f} MB ({len(optimized_lines):,} linhas)")
+            content = "\n".join(optimized_lines)
+            current_size = len(content.encode("utf-8"))
+            print(
+                f"Tamanho após truncamento final: {current_size / (1024*1024):.2f} MB ({len(optimized_lines):,} linhas)"
+            )
         else:
             # Se não conseguiu calcular, simplesmente trunca mantendo início e fim
             keep_start = min(header_lines, target_lines // 2)
             keep_end = target_lines - keep_start
             optimized_lines = lines[:keep_start] + lines[-keep_end:]
-            content = '\n'.join(optimized_lines)
-            current_size = len(content.encode('utf-8'))
-            print(f"Tamanho após truncamento direto: {current_size / (1024*1024):.2f} MB ({len(optimized_lines):,} linhas)")
+            content = "\n".join(optimized_lines)
+            current_size = len(content.encode("utf-8"))
+            print(
+                f"Tamanho após truncamento direto: {current_size / (1024*1024):.2f} MB ({len(optimized_lines):,} linhas)"
+            )
 
     # Salvar arquivo otimizado
     print(f"\nSalvando arquivo otimizado: {output_path}")
-    with open(output_path, 'w', encoding='utf-8') as f:
+    with open(output_path, "w", encoding="utf-8") as f:
         f.write(content)
 
     final_size = Path(output_path).stat().st_size
@@ -188,22 +200,31 @@ def optimize_log(input_path: str, output_path: str, target_size_mb: int = 200):
 
     return final_size <= target_size_bytes
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description='Otimiza arquivo de log mantendo conteúdo para auditoria')
-    parser.add_argument('input_file', nargs='?',
-                       default='/home/fahbrain/Documentos/consolidated_fast_20251207_201034.md',
-                       help='Arquivo de entrada (padrão: consolidated_fast_20251207_201034.md)')
-    parser.add_argument('-o', '--output',
-                       default='/home/fahbrain/Documentos/consolidated_fast_20251207_201034_optimized.md',
-                       help='Arquivo de saída (padrão: consolidated_fast_20251207_201034_optimized.md)')
-    parser.add_argument('-s', '--size', type=int, default=200,
-                       help='Tamanho alvo em MB (padrão: 200)')
+    parser = argparse.ArgumentParser(
+        description="Otimiza arquivo de log mantendo conteúdo para auditoria"
+    )
+    parser.add_argument(
+        "input_file",
+        nargs="?",
+        default="/home/fahbrain/Documentos/consolidated_fast_20251207_201034.md",
+        help="Arquivo de entrada (padrão: consolidated_fast_20251207_201034.md)",
+    )
+    parser.add_argument(
+        "-o",
+        "--output",
+        default="/home/fahbrain/Documentos/consolidated_fast_20251207_201034_optimized.md",
+        help="Arquivo de saída (padrão: consolidated_fast_20251207_201034_optimized.md)",
+    )
+    parser.add_argument(
+        "-s", "--size", type=int, default=200, help="Tamanho alvo em MB (padrão: 200)"
+    )
 
     args = parser.parse_args()
 
     print(f"Tamanho alvo configurado: {args.size} MB")
     success = optimize_log(args.input_file, args.output, target_size_mb=args.size)
     sys.exit(0 if success else 1)
-

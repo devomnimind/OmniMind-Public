@@ -1,0 +1,57 @@
+
+falsebool
+0.7float
+7."Detect if obstacles are present (simulated)."str
+trueboolself
+Ò Ò(readings
+Ò  Ò(=3/src.multimodal.embodied_intelligence.SensorType"M9
+7
+
+Ö Ö("
+builtinsiter*:Btyping.Iterator
+
+Ö Ö("\4
+2
+
+Ö Ö("
+builtins
+__has_next*:Bbool"" 
+
+Ö Ö( *
+Ö Ö(H"à1
+/
+
+× Ü(reading"
+builtinsnext*:.
+,
+
+× ×(""#get-field# sensor_type:)
+'
+
+×& ×(7	"#get-field# CAMERA:,
+*
+
+× ×(7
+"
+#binop ==#2==:	Bbool "
+
+× ×(7
+ *
+× ×("
+
+Ü Ü("­-
++
+
+Ù Ù(%"#get-field# confidence:+
+)
+
+Ù Ù(+"?python-unknown?*:+
+)
+
+Ù Ù(+"
+__bool__*:BboolH "
+
+Ù Ù(+ *
+Ù Ù(""
+
+Ú Ú("*H/home/fahbrain/projects/omnimind/src/multimodal/embodied_intelligence.py

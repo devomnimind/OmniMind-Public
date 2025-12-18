@@ -1,0 +1,144 @@
+
+0src.metacognition.iit_metrics.PhiMetrics.to_dictK
+A/home/fahbrain/projects/omnimind/src/metacognition/iit_metrics.py4 4("2*Â
+25 5($
+6 =(	
+%1"dictq
+o
+7 7('
+%2"__id*W
+
+__unknown_file (;*9*
+(src.metacognition.iit_metrics.PhiMetrics"
+	phi_valueê
+ç
+7 7('
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	phi_value*"
+
+__unknown_file (
+
+%2r
+p
+8 8()
+%4"__id*X
+
+__unknown_file (<*:*
+(src.metacognition.iit_metrics.PhiMetrics"
+
+complexityë
+é
+8 8()
+%5"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+complexity*"
+
+__unknown_file (
+
+%4s
+q
+9 9(+
+%6"__id*Y
+
+__unknown_file (=*;*
+(src.metacognition.iit_metrics.PhiMetrics"
+integrationí
+è
+9 9(+
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+integration*"
+
+__unknown_file (
+
+%6w
+u
+: :(3
+%8"__id*]
+
+__unknown_file (A*?*
+(src.metacognition.iit_metrics.PhiMetrics"
+differentiationñ
+ì
+: :(3
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*/
+
+__unknown_file (
+differentiation*"
+
+__unknown_file (
+
+%8x
+v
+; ;(3
+%10"__id*]
+
+__unknown_file (A*?*
+(src.metacognition.iit_metrics.PhiMetrics"
+emergence_levelò
+ï
+; ;(3
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*/
+
+__unknown_file (
+emergence_level*#
+
+__unknown_file (
+
+%10r
+p
+< <('
+%12"__id*W
+
+__unknown_file (;*9*
+(src.metacognition.iit_metrics.PhiMetrics"
+	timestamp`^
+< <(3
+%13"datetime.datetime.isoformat*#
+
+__unknown_file (
+
+%122	isoformatí
+è
+< <(3
+%14"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	timestamp*#
+
+__unknown_file (
+
+%13"
+6 =(	
+
+%1B,*
+(src.metacognition.iit_metrics.PhiMetricsH

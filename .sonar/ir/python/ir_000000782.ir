@@ -1,0 +1,31 @@
+
+"division by zero"bool
+
+"S3518"bool
+
+0int
+6-"Calculate current load factor (0.0 to 1.0)."str
+1.0float
+"a"boolself; ;("5
+3
+= =($"" #get-field# max_concurrent_tasks:*
+(
+= =()"
+#binop ==#2==:Bbool"
+= =() *= =(
+"
+> >("ú.
+,
+? ?(!"#get-field# current_tasks:5
+3
+?$ ?(="" #get-field# max_concurrent_tasks:*
+(
+? ?(=	"
+#binop !=#2!=:Bbool 
+
+? ?(="
+#assert#:	
+1
+/
+? ?(="#dependent-value#*:Bfloat
+? ?(=*:/home/fahbrain/projects/omnimind/src/scaling/multi_node.py

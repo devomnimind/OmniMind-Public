@@ -43,7 +43,7 @@ class RNNMetricsExtractor:
         self._logger = logger.getChild(self.__class__.__name__)
 
         # Lazy import para evitar circular dependencies
-        self._metrics_collector: Optional[Any] = None
+        self._metrics_collector = None
 
         self._logger.info("RNNMetricsExtractor inicializado")
 
@@ -58,7 +58,7 @@ class RNNMetricsExtractor:
             try:
                 from src.observability.module_metrics import get_module_metrics
 
-                self._metrics_collector = get_module_metrics()
+                self._metrics_collector = get_module_metrics()  # type: ignore[assignment]
                 self._logger.debug("ModuleMetricsCollector carregado")
             except ImportError as e:
                 self._logger.warning(f"ModuleMetricsCollector não disponível: {e}")
@@ -109,9 +109,9 @@ class RNNMetricsExtractor:
 
             labels = {}
             if cycle_id is not None:
-                labels["cycle"] = str(cycle_id)
+                labels["cycle"] = cycle_id
             if phi_value is not None:
-                labels["phi"] = f"{phi_value:.4f}"
+                labels["phi"] = float(phi_value)  # type: ignore[assignment]
 
             # Extrair métricas de pesos por camada
             for layer_name, weight_tensor in layers.items():

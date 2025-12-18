@@ -1,0 +1,95 @@
+
+
+
+0int
+0.0floatself
+Ä Ä(flat
+Ä Ä(/shape
+Ä1 Ä(Glist"|+
+)
+
+Å Å("
+__bool__*:BboolH+
+)
+
+Å Å("#unaryop !#2!:Bbool "
+
+Å Å( *
+Å Å(
+"∆)
+'
+
+Ç Ç("#unknown-value#Blist(
+&
+
+Ç Ç("
+#is-exact#:Bbool
+
+
+Ç Ç(	"
+#assume#::
+8
+
+Ç Ç("#set-field# __collection_size:
+Bint
+
+Ç Ç("å(
+&
+
+É É( total"
+mathprod:)
+'
+
+Ñ Ñ("#unknown-value#Blist(
+&
+
+Ñ Ñ("
+#is-exact#:Bbool
+
+
+Ñ Ñ("
+#assume#::
+8
+
+Ñ Ñ("#set-field# __collection_size:
+Bint(
+&
+
+Ñ Ñ("#array-add-last#:,
+*
+
+Ñ/ Ñ(8"
+builtinslen*:Bint'
+%
+
+Ñ' Ñ(8"	#binop -#*2-:(
+&
+
+Ñ  Ñ(9"
+builtinsmax*:
+'
+%
+
+Ñ Ñ(9"	#binop *#*2*:,
+*
+
+Ñ Ñ(9padded"	#binop +#2+:2
+0
+
+Ö$ Ö(0iterator"
+builtinsiter*:*
+(
+
+á å(%closure"#new-object#,
+*
+
+á å("#set-field# iterator:-
++
+
+á å("?python-partial-apply?:[
+Y
+
+å å("F
+=src.memory.soft_hair_encoding.SoftHairEncoder._reshape_nestedbuild:
+
+å å(*A/home/fahbrain/projects/omnimind/src/memory/soft_hair_encoding.py

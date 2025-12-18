@@ -1,5 +1,6 @@
-import torch
 import sys
+
+import torch
 
 print(f"Python Version: {sys.version}")
 print(f"PyTorch Version: {torch.__version__}")
@@ -13,7 +14,7 @@ else:
 
 try:
     import networkx as nx
+
     print(f"NetworkX Version: {nx.__version__}")
 except ImportError:
     print("NetworkX not found")
-

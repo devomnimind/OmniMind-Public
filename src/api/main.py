@@ -7,13 +7,10 @@ import psutil
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.middleware_auto_concurrency import add_auto_concurrency_middleware
-from src.api.routes import daemon, health, messages, metrics
+from src.api.routes import chat, daemon, health, messages, metrics
+from src.services.daemon_monitor import daemon_monitor_loop, STATUS_CACHE
 
 app = FastAPI(title="OmniMind API", version="1.0.0")
-
-# Add Auto-Concurrency Detection Middleware (MUST be first for proper detection)
-add_auto_concurrency_middleware(app, validation_mode_manager=None)
 
 # Configure CORS
 app.add_middleware(
@@ -25,10 +22,11 @@ app.add_middleware(
 )
 
 # Include routers
-app.include_router(health.router, prefix="/api/v1/health", tags=["health"])
-app.include_router(daemon.router, prefix="/daemon", tags=["daemon"])
-app.include_router(messages.router, prefix="/api/omnimind", tags=["messages"])
-app.include_router(metrics.router, prefix="/api/omnimind/metrics", tags=["metrics"])
+app.include_router(health.router, prefix="/api/health", tags=["health"])
+app.include_router(chat.router, prefix="/api/chat", tags=["chat"])
+app.include_router(daemon.router, prefix="/api/daemon", tags=["daemon"])
+app.include_router(messages.router, prefix="/api/messages", tags=["messages"])
+app.include_router(metrics.router, prefix="/api/metrics", tags=["metrics"])
 
 
 @app.get("/")
@@ -84,89 +82,80 @@ def get_task_counts() -> tuple:
     return active, completed
 
 
-async def broadcast_metrics():
+async def broadcast_pulse():
     """
-    Background task to broadcast simulated metrics to all connected clients.
+    Background task to broadcast unified metrics (Pulse) to all connected clients.
+    Unifies hardware, tasks, and consciousness correlates into a single stream.
     """
     while True:
         try:
-            # Get real metrics
-            active_tasks, completed_tasks = get_task_counts()
-            agent_count = count_active_agents()
+            # 1. Hardware & Process Metrics (Realtime)
+            cpu = psutil.cpu_percent()
+            mem = psutil.virtual_memory().percent
 
-            # Read Real Metrics from File
+            # 2. Daemon Status & Tasks (Aggregated by DaemonMonitor)
+            daemon_status = STATUS_CACHE
+
+            # 3. Consciousness Metrics (Real-time from file)
             real_metrics_data = {}
             try:
                 with open("data/monitor/real_metrics.json", "r") as f:
                     real_metrics_data = json.load(f)
-            except FileNotFoundError:
-                pass  # File not created yet
-            except Exception as e:
-                print(f"Error reading metrics file: {e}")
+            except (FileNotFoundError, json.JSONDecodeError):
+                pass
 
-            # 1. Broadcast for RealtimeAnalytics (Simple)
+            # UNIFIED PULSE
+            pulse_msg = {
+                "type": "omnimind_pulse",
+                "timestamp": time.time(),
+                "data": {
+                    "hardware": {"cpu": cpu, "memory": mem, "agent_count": count_active_agents()},
+                    "daemon": {
+                        "status": daemon_status.get("system_metrics", {}).get(
+                            "is_user_active", True
+                        ),
+                        "tasks": daemon_status.get("task_info", {}),
+                        "tribunal": daemon_status.get("tribunal_info", {}),
+                    },
+                    "consciousness": {
+                        "phi": real_metrics_data.get("phi", 0.0),
+                        "anxiety": real_metrics_data.get("anxiety", 0.0),
+                        "flow": real_metrics_data.get("flow", 0.0),
+                        "entropy": real_metrics_data.get("entropy", 0.0),
+                        "ici": real_metrics_data.get("ici", 0.0),
+                        "prs": real_metrics_data.get("prs", 0.0),
+                        "interpretation": real_metrics_data.get(
+                            "interpretation",
+                            {"message": "OmniMind Core Pulsing...", "confidence": "Stable"},
+                        ),
+                    },
+                },
+            }
+
+            await manager.broadcast(json.dumps(pulse_msg))
+
+            # Legacy support (deprecated but keeping for intermediate stability)
             metrics_simple = {
                 "type": "metrics_update",
                 "data": {
-                    "cpu_percent": psutil.cpu_percent(),
-                    "memory_percent": psutil.virtual_memory().percent,
-                    "active_tasks": active_tasks,
-                    "completed_tasks": completed_tasks,
-                    "agent_count": agent_count,
+                    "cpu_percent": cpu,
+                    "memory_percent": mem,
                     "timestamp": time.time(),
                 },
             }
             await manager.broadcast(json.dumps(metrics_simple))
 
-            await asyncio.sleep(0.1)  # Small delay to prevent race condition in frontend hook
-
-            # 2. Broadcast for OmniMindSinthome (Complex)
-            # Use real data if available, otherwise fallback to defaults (0.0)
-            metrics_sinthome = {
-                "type": "metrics",
-                "channel": "sinthome",
-                "data": {
-                    "state": "ACTIVE",
-                    "integrity": 1.0,
-                    "raw": {
-                        "cpu": psutil.cpu_percent(),
-                        "memory": psutil.virtual_memory().percent,
-                        "entropy": real_metrics_data.get("entropy", 0.0),
-                    },
-                    "metrics": {
-                        "real_inaccessible": 1.0,
-                        "logical_impasse": 1.0,
-                        "strange_attractor_markers": 1.0,
-                    },
-                    "consciousness": {
-                        "ICI": real_metrics_data.get("ici", 0.0),
-                        "PRS": real_metrics_data.get("prs", 0.0),
-                        "details": {
-                            "ici_components": real_metrics_data.get("ici_components", {}),
-                            "prs_components": real_metrics_data.get("prs_components", {}),
-                        },
-                        "interpretation": real_metrics_data.get(
-                            "interpretation",
-                            {
-                                "message": "Waiting for system metrics...",
-                                "confidence": "Low",
-                                "disclaimer": "System initializing...",
-                            },
-                        ),
-                    },
-                },
-            }
-            await manager.broadcast(json.dumps(metrics_sinthome))
-
-            await asyncio.sleep(2)  # Update every 2 seconds
+            await asyncio.sleep(2)  # Healthy 2s heartbeat
         except Exception as e:
-            print(f"Broadcast error: {e}")
+            print(f"Pulse broadcast error: {e}")
             await asyncio.sleep(2)
 
 
 @app.on_event("startup")
 async def startup_event():
-    asyncio.create_task(broadcast_metrics())
+    # Start Daemon Monitor and Pulse Broadcast
+    asyncio.create_task(daemon_monitor_loop(refresh_interval=5))
+    asyncio.create_task(broadcast_pulse())
 
 
 @app.websocket("/ws")

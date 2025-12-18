@@ -1,0 +1,62 @@
+
+
+"services"str
+
+"hostname"str
+"open_ports"str
+-$"Convert NetworkHost to dictionary."str
+
+"os_guess"str
+"mac_address"str
+"ip"str
+"last_seen"strself
+ì ì(host
+ì ì(-"ñ&
+$
+
+î ö(	"#new-object#Bdict%
+#
+
+ï ï("#get-field# ip:"
+ 
+
+ï ï("	#map-set#:+
+)
+
+ð ð(%	"#get-field# hostname:"
+ 
+
+ð ð(%
+"	#map-set#:	.
+,
+
+ñ ñ(+"#get-field# mac_address:"
+ 
+
+ñ ñ(+"	#map-set#:+
+)
+
+ò ò(%"#get-field# os_guess:"
+ 
+
+ò ò(%"	#map-set#:-
++
+
+ó ó()"#get-field# open_ports:"
+ 
+
+ó ó()"	#map-set#:+
+)
+
+ô ô(%"#get-field# services:"
+ 
+
+ô ô(%"	#map-set#:,
+*
+
+õ õ('"#get-field# last_seen:"
+ 
+
+õ õ('"	#map-set#:
+
+î ö(	*@/home/fahbrain/projects/omnimind/src/security/network_sensors.py

@@ -19,7 +19,6 @@ Contact: fabricioslv@hotmail.com.br
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Adicionar raiz ao path

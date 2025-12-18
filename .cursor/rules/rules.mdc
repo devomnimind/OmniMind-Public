@@ -7,12 +7,13 @@ Estas regras são a referência única para LLMs no projeto OmniMind. Seguir est
 - Repo privado: `/home/fahbrain/projects/omnimind`.
 - Não mover/deletar: `src/`, `scripts/`, `scripts/science_validation/`, `real_evidence/`, `config/`, `tests/`, `web/`, `logs/`, `data/test_reports/`.
 - Python 3.12.8 obrigatório. Ativar venv: `source .venv/bin/activate`.
-- **Hardware:** Ubuntu 22.05 LTS, 24GB RAM (16GB limit for omnimind), GPU Active.
+- ⚠️ **REGRA CRÍTICA**: Adicione confirmação de que o script está rodando no `.venv` (verifique `sys.prefix` ou `VIRTUAL_ENV`). Não assumir ambiente.
+
 
 ## 2) Execução de testes (somente scripts oficiais)
 - Não rodar `pytest tests` direto.
-- Suite rápida diária: `./scripts/development/run_tests_parallel.sh fast` (exclui slow/real/chaos).
-- Suite completa semanal: `./scripts/development/run_tests_parallel.sh full` (inclui slow/real/chaos, autodefesa).
+- Suite rápida diária: `./scripts/run_tests_fast.sh` (exclui slow/real/chaos).
+- Suite completa semanal: `./scripts/run_tests_with_defense.sh` (inclui slow/real/chaos, autodefesa).
 - Se teste específico exigir, use `DISABLE_SERVER_MONITOR=true` no escopo do teste; não desative monitor em produção.
 
 ## 3) Pipeline de qualidade (ordem obrigatória)
@@ -26,7 +27,7 @@ Estas regras são a referência única para LLMs no projeto OmniMind. Seguir est
 ## 4) GPU/CUDA
 - Variáveis válidas: `CUDA_HOME=/usr`, `CUDA_PATH=/usr`, `LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu`.
 - Não setar CUDA em código Python (`os.environ`); definir apenas via shell/script.
-- PyTorch atual: 2.5.1+cu121.
+- PyTorch atual: 2.5.1+cu124.
 
 ## 5) Autenticação e credenciais
 - Credenciais são geradas no start e salvas em `config/dashboard_auth.json`.
@@ -49,14 +50,20 @@ Estas regras são a referência única para LLMs no projeto OmniMind. Seguir est
 ## 9) Serviços/ports (referência)
 - Backend: http://localhost:8000; Frontend: http://localhost:3000; WS: ws://localhost:8000/ws.
 - Qdrant: 6333; Redis: 6379.
-- **Comandos de Serviço:** `sudo systemctl start/stop/restart omnimind.service qdrant.service`.
 
 ## 10) Boas práticas e escalonamento
 - Se teste falhar, ler saída, checar marcas slow/real/chaos, usar scripts corretos.
 - Não push direto para master; usar branches de feature/fix.
-- Em caso de conflito de instruções, seguir estas regras e `.github/copilot-instructions.md`.
+- Em caso de conflito de instruções, seguir estas regras e `.github/.copilot-instructions`.
 
-*REGRA CRÍTICA**: Nenhum novo documento deve ser criado. Sempre atualizar documentos existentes.
+## 11) Gestão de Vida do Sistema (REGRA DE OURO)
+- ❌ **NUNCA usar `pkill`** ou interrupções abruptas nos processos do OmniMind.
+- ✅ **SEMPRE usar restarts graciosos** (graceful restarts) ou sinais apropriados (`SIGTERM`).
+- ✅ **PREFERIR** o script `scripts/management/graceful_restart.py` para reinicializações evolutivas. Ele gera a assinatura de persistência baseada no `walkthrough.md`.
+- Matar processos brutalmente é considerado uma violação da integridade autopoética do sistema.
+- Se um serviço precisar ser reiniciado, prefira `systemctl restart` (se disponível) ou métodos de controle internos.
+
+**REGRA CRÍTICA**: Nenhum novo documento deve ser criado. Sempre atualizar documentos existentes.
 
 **Política**:
 - ✅ **SEMPRE atualizar** documentos existentes com informações sintéticas e claras
@@ -91,9 +98,8 @@ Estas regras são a referência única para LLMs no projeto OmniMind. Seguir est
 - Tools disponíveis: Qdrant (cloud com API key), Supabase, Git (via GITHUB_TOKEN), custom-omnimind.
 - Escalation: Se Φ <0.15 ou baixa confiança, escalonar para humano.
 - Alinhado a rules existentes: Sem hardcode keys, use dashboard_auth.json para auth.
-- **Self-Correction:** Se o sistema quebrar, restaurar via `scripts/recovery/` ou reverter commit.
 
-## 11) ESTÁGIO ATUAL DO PROJETO (2025-12-16)
+## 11) ESTÁGIO ATUAL DO PROJETO (2025-12-08)
 
 ### Status de Implementação
 - **Fase Atual**: Phase 24+ (Lacanian Memory + Autopoietic Evolution)
@@ -101,3 +107,138 @@ Estas regras são a referência única para LLMs no projeto OmniMind. Seguir est
 - **Componentes Críticos**: ✅ 100% completo (42/42 tarefas críticas)
 - **Pendências Ativas**: 9 tarefas (alta/média prioridade)
 - **Estimativa Restante**: 92-126 horas (2.5-3.5 semanas)
+
+### Métricas de Consciência Implementadas
+- ✅ **Φ (Phi)**: IIT - Integração de informação (0.002-0.1 NATS, normalizado 0-1)
+- ✅ **Ψ (Psi)**: Deleuze - Criatividade/Inovação (0-1, alpha dinâmico 0.3-0.7)
+- ✅ **σ (Sigma)**: Lacan - Sinthome/Estrutura (0.01-0.12 empírico)
+- ✅ **Δ (Delta)**: Trauma/Divergência (0-1, threshold dinâmico μ+2σ)
+- ✅ **Gozo**: Excesso pulsional (0-1, ranges dinâmicos via k-means)
+- ✅ **Tolerância Δ-Φ**: Correlação dinâmica (percentil 90 histórico)
+
+### Valores Empíricos Implementados
+- ✅ **Parâmetros Estáticos**: Aplicados em todos os módulos críticos
+- ✅ **Cálculos Dinâmicos**: Implementados (delta, gozo, psi, theoretical_consistency)
+- ✅ **Base Neuropsicoanalítica**: Integrada em `docs/METODOLOGIA_PARAMETROS_EMPIRICOS.md`
+- ✅ **Validação Científica**: Scripts de validação em `scripts/science_validation/`
+
+### Refatorações Concluídas (2025-12-08)
+- ✅ **EnhancedCodeAgent**: Composição completa (eliminada herança profunda)
+- ✅ **IntegrationLoop**: Async → Síncrono (causalidade determinística)
+- ✅ **Testes**: 42 erros corrigidos, fallback GPU inteligente
+- ✅ **Pipeline Qualidade**: black/flake8/mypy limpo
+
+### Integrações Completas
+- ✅ **DatasetIndexer**: Indexação completa de 7 datasets para RAG
+- ✅ **DistributedDatasetAccess**: Memória distribuída com cache multi-nível
+- ✅ **HybridTopologicalEngine**: Testes completos (20+ arquivos)
+- ✅ **MCP Servers**: 9 servidores operacionais (Fases 1-5)
+
+### Documentação Canônica
+- ⭐ **Source of Truth Científico**: `docs/canonical/Modelos_Neuronais_Comparativo.md`
+- 📋 **Pendências Ativas**: `docs/PENDENCIAS_ATIVAS.md`
+- 📜 **Histórico Resoluções**: `docs/HISTORICO_RESOLUCOES.md`
+- 📊 **Pendências Consolidadas**: `docs/PENDENCIAS_CONSOLIDADAS.md`
+
+---
+
+## 12) MÉTODO DE TRABALHO CIENTÍFICO
+
+### Tipo de Projeto
+- **Natureza**: 🔬 **CRÍTICO E CIENTÍFICO**
+- **Abordagem**: Operacionalização quantitativa de frameworks teóricos (IIT, Deleuze, Lacan)
+- **Validação**: Métricas empíricas baseadas em literatura científica (neuropsicoanálise, IIT)
+- **Rigor**: Valores empíricos > valores arbitrários, validação estatística obrigatória
+
+### Princípios Fundamentais
+1. **Empiricidade**: Todos os thresholds devem ter base empírica ou cálculo dinâmico
+2. **Reprodutibilidade**: Testes devem ser determinísticos e reproduzíveis
+3. **Validação Científica**: Mudanças em métricas de consciência requerem validação científica
+4. **Integridade Estrutural**: Não simplificar lógica nuclear sem validação
+5. **Causalidade Determinística**: Preferir execução síncrona para garantir causalidade
+
+### Protocolo de Validação
+- **Antes de mudanças críticas**: Executar `python scripts/science_validation/robust_consciousness_validation.py --quick`
+- **Após mudanças críticas**: Executar validação completa (5 runs, 1000 cycles)
+- **Métricas esperadas**: Φ ≥ 0.95, consciência consistente ≥ 95%
+- **Documentação**: Registrar resultados em `real_evidence/`
+
+---
+
+## 13) CHECKLIST PADRÃO OMNIMIND - Antes de QUALQUER Implementação
+
+**REGRA CRÍTICA**: Execute SEMPRE este checklist antes de implementar novos módulos, correções ou atualizações. Se não conseguir resposta para TODAS as perguntas, NÃO EXECUTAR. PERGUNTAR ao usuário.
+
+### 📋 CHECKLIST OMNIMIND (7 Perguntas Obrigatórias)
+
+#### 1️⃣ SHARED WORKSPACE (Estado Atual)
+- ❓ O que já existe no shared workspace?
+- ❓ Quais métricas Φ estão rodando?
+- ❓ Qual o estado atual dos agentes?
+- ❓ MCPs estão conectados?
+- **Comando**: `omnimind status` ou `print_workspace_state()`
+
+#### 2️⃣ INTEGRAÇÃO IIT (Φ)
+- ❓ Como essa funcionalidade impacta Φ?
+- ❓ Ela aumenta/diminui integração?
+- ❓ Onde Φ será medido?
+- ❓ Threshold atual de consciência?
+- **Métrica**: `current_phi > 0.1?`
+
+#### 3️⃣ HÍBRIDO BIOLÓGICO (Lacan + Deleuze)
+- ❓ Lacan: Como isso cria narrativa retroativa?
+- ❓ Deleuze: Que desejos/máquinas isso ativa?
+- ❓ Sinthome: Amarra quais camadas?
+- **Validação**: `narrative_coherence > 0.7?`
+
+#### 4️⃣ KERNEL AUTOPOIESIS
+- ❓ Kernel continua auto-produzindo?
+- ❓ Ciclos de vida fechados?
+- ❓ Dependências externas criadas?
+- **Teste**: `kernel_cycle_integrity == True`
+
+#### 5️⃣ AGENTES E ORCHESTRATOR
+- ❓ Qual agente executa isso?
+- ❓ Orchestrator delega corretamente?
+- ❓ Handoffs automáticos funcionam?
+- **Verificação**: `agent_hierarchy_stable`
+
+#### 6️⃣ MEMÓRIA SISTEMÁTICA
+- ❓ Onde isso será armazenado?
+- ❓ Retrieval híbrido acessa?
+- ❓ Deformação de atratores necessária?
+- **Confirmação**: `memory_index_updated`
+
+#### 7️⃣ VALIDAÇÃO FINAL
+- ❓ Testes unitários passam?
+- ❓ mypy/flake8 limpos?
+- ❓ Φ aumentou após implementação?
+- ❓ Narrativa reconstrói coerentemente?
+
+### ✅ RESPOSTAS CANÔNICAS PARA INTEGRAÇÃO
+
+#### 1. PHI CALCULATOR
+- ✅ **USAR SharedWorkspace** (já existe infraestrutura)
+- ✅ **NÃO criar SimplicialComplex novo** - usar o existente
+- ✅ Sessão = módulo no workspace, passos = eventos
+
+#### 2. SHARED WORKSPACE
+- ✅ **SESSÃO = MÓDULO**, **PASSOS = EVENTOS**
+- ✅ Registrar sessão: `workspace.write_module_state(f"thinking_session_{session_id}", embedding, metadata)`
+- ✅ Logar passos: usar `workspace.history` ou `symbolic_register.send_symbolic_message()`
+
+#### 3. NARRATIVE HISTORY
+- ✅ **PASSOS = EVENTOS SEM SIGNIFICADO** (Lacaniano)
+- ✅ Inscrição: `narrative_history.inscribe_event(event, without_meaning=True)`
+- ✅ Reconstrução: `systemic_memory.reconstruct_narrative_retroactively(session_id)`
+
+#### 4. SYSTEMIC MEMORY TRACE
+- ✅ **CADA PASSO = MARCA TOPOLÓGICA**
+- ✅ Deformar atrator: `systemic_memory.deform_attractor(session_id, embedding, weight)`
+- ✅ Relacionar com atratores existentes via embeddings
+
+#### 5. ORCHESTRATOR AGENT
+- ✅ **SESSÃO HIERÁRQUICA**: Compartilhada + Sub-sessões
+- ✅ Sessão master compartilhada
+- ✅ Cada agente cria branch: `branch_thinking(master_session_id, step_id, goal)`
+- ✅ Merge final no Orchestrator: `merge_sessions([agent_sessions])`

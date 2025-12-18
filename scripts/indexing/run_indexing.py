@@ -19,13 +19,11 @@ import logging
 import sys
 from pathlib import Path
 
-from embeddings.code_embeddings import OmniMindEmbeddings
-
 # Adicionar src ao path
-project_root = Path(__file__).parent.parent.parent  # scripts/indexing/ -> scripts/ -> project_root
-src_path = project_root / "src"
-sys.path.insert(0, str(src_path))
-sys.path.insert(0, str(project_root))
+project_root = Path(__file__).parent
+sys.path.insert(0, str(project_root / "src"))
+
+from embeddings.code_embeddings import OmniMindEmbeddings
 
 # Configurar logging
 logging.basicConfig(
@@ -99,14 +97,12 @@ def main():
     parser.add_argument(
         "--stages",
         nargs="*",
-        help="""Etapas específicas para executar (ex: core_code tests docs).
-Se não especificado, executa todas""",
+        help="Etapas específicas para executar (ex: core_code tests docs). Se não especificado, executa todas",
     )
     parser.add_argument(
         "--checkpoint-file",
         default=".omnimind_embedding_checkpoint.json",
-        help="""Arquivo de checkpoint para salvar progresso
-(padrão: .omnimind_embedding_checkpoint.json)""",
+        help="Arquivo de checkpoint para salvar progresso (padrão: .omnimind_embedding_checkpoint.json)",
     )
     parser.add_argument(
         "--reset-checkpoint",
@@ -161,9 +157,7 @@ Se não especificado, executa todas""",
         for stage, desc in stages_info.items():
             print(f"  {stage}: {desc}")
         print(
-            "\n💡 Ordem recomendada: core_code tests scripts configs datasets deploy "
-            "docs archive logs_main node_modules_main data_core data_reports "
-            "kernel_files system_metadata data_modules exports tmp"
+            "\n💡 Ordem recomendada: core_code tests scripts configs datasets deploy docs archive logs_main node_modules_main data_core data_reports kernel_files system_metadata data_modules exports tmp"
         )
         return
 
@@ -288,8 +282,7 @@ Se não especificado, executa todas""",
             results = embeddings.search(query, top_k=2)
             if results:
                 logger.info(
-                    f"  Query: '{query}' -> Top result: {results[0]['file_path']} "
-                    f"(score: {results[0]['score']:.3f})"
+                    f"  Query: '{query}' -> Top result: {results[0]['file_path']} (score: {results[0]['score']:.3f})"
                 )
 
     except KeyboardInterrupt:

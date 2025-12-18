@@ -1,0 +1,234 @@
+
+1.0PythonFrontend"1763831835944*py2.B¨
+
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+)
+$src/metacognition/proactive_goals.py9
+'
+!src.metacognition.proactive_goals11
+
+
+__future__12
+
+
+json14
+
+logging16
+
+
+subprocess18
+
+datetime20
+
+pathlib22
+
+typing24
+5
+/src.metacognition.proactive_goals.ProactiveGoal26
+=
+7src.metacognition.proactive_goals.ProactiveGoal.to_dict28
+
+
+dict30
+>
+8src.metacognition.proactive_goals.ProactiveGoal.__init__32
+	
+str34
+
+
+list36
+;
+5src.metacognition.proactive_goals.ProactiveGoalEngine38
+P
+Jsrc.metacognition.proactive_goals.ProactiveGoalEngine.assess_test_coverage40
+D
+>src.metacognition.proactive_goals.ProactiveGoalEngine.__init__42
+J
+Dsrc.metacognition.proactive_goals.ProactiveGoalEngine.generate_goals44
+Z
+Tsrc.metacognition.proactive_goals.ProactiveGoalEngine.detect_performance_bottlenecks46
+T
+Nsrc.metacognition.proactive_goals.ProactiveGoalEngine.check_documentation_gaps48
+H
+Bsrc.metacognition.proactive_goals.ProactiveGoalEngine._generate_id50
+O
+Isrc.metacognition.proactive_goals.ProactiveGoalEngine.assess_code_quality52
+H
+Bsrc.metacognition.proactive_goals.ProactiveGoalEngine._run_command54
+
+tuple56
+4
+.src.metacognition.proactive_goals.GoalCategory58
+4
+.src.metacognition.proactive_goals.GoalPriority60J
+
+8
+89j—
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27266 210
+
+29
+29287 227
+
+31
+31306
+
+33
+33327 227
+
+35
+35346
+
+37
+37366
+
+39
+39386 210
+
+41
+41407 239
+
+43
+43427 239
+
+45
+45447 239
+
+47
+47467 239
+
+49
+49487 239
+
+51
+51507 239
+
+53
+53527 239
+
+55
+55547 239
+
+57
+57566
+
+59
+59586 210
+
+61
+61606 210rî
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (
+
+10251*
+8 (4
+
+29313*
+8R	 R(
+
+33354*
+8.	 .(
+
+33354*
+8.	 .(
+
+33354*
+8.	 .(
+
+33354*
+8.	 .(
+
+33354*
+8.	 .(
+
+33354*
+8.	 .(
+
+33374*
+8.	 .(
+
+33374*
+8.	 .(
+
+41373*
+8â	 â(
+
+43354*
+8e	 e(
+
+45373*
+8í	 í(
+
+47373*
+8Á	 Á('
+
+49373*
+8‹	 ‹(!
+
+51353*
+8n	 n(
+
+53373*
+8§	 §(
+
+55573*
+8s	 s(
+
+55374*
+8s	 s(

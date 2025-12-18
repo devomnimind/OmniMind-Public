@@ -1,0 +1,660 @@
+[vite] connecting... client:733:9
+[vite] connected. client:827:12
+O Firefox não conseguiu estabelecer uma conexão com o servidor ws://localhost:8000/ws. robust-connection.ts:116:17
+[Connection] WebSocket error: 
+error { target: WebSocket, isTrusted: true, srcElement: WebSocket, eventPhase: 0, bubbles: false, cancelable: false, returnValue: true, defaultPrevented: false, composed: false, timeStamp: 3726, … }
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/tasks: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Fetch error: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/status: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /daemon/status: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Fetch error: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/tasks: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+O Firefox não conseguiu estabelecer uma conexão com o servidor ws://localhost:8080/ws. robust-connection.ts:116:17
+[Connection] WebSocket error: 
+error { target: WebSocket, isTrusted: true, srcElement: WebSocket, eventPhase: 0, bubbles: false, cancelable: false, returnValue: true, defaultPrevented: false, composed: false, timeStamp: 5654, … }
+<anonymous code>:1:147461
+O Firefox não conseguiu estabelecer uma conexão com o servidor ws://localhost:3001/ws. robust-connection.ts:116:17
+[Connection] WebSocket error: 
+error { target: WebSocket, isTrusted: true, srcElement: WebSocket, eventPhase: 0, bubbles: false, cancelable: false, returnValue: true, defaultPrevented: false, composed: false, timeStamp: 7985, … }
+<anonymous code>:1:147461
+API Error 401 para /daemon/status: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Fetch error: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/tasks: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/status: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Fetch error: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/tasks: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/status: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Fetch error: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/tasks: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/status: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Fetch error: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/tasks: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+<anonymous code>:1:147461
+XHRGET
+http://localhost:3000/api/omnimind/messages
+[HTTP/1.1 200 OK 3ms]
+
+XHRGET
+http://localhost:3000/api/omnimind/messages
+[HTTP/1.1 200 OK 349ms]
+
+Erro no mapa de código: Error: JSON.parse: unexpected character at line 1 column 1 of the JSON data
+Stack in the worker:parseSourceMapInput@resource://devtools/client/shared/vendor/source-map/lib/util.js:163:15
+_factory@resource://devtools/client/shared/vendor/source-map/lib/source-map-consumer.js:1066:22
+SourceMapConsumer@resource://devtools/client/shared/vendor/source-map/lib/source-map-consumer.js:26:12
+_fetch@resource://devtools/client/shared/source-map-loader/utils/fetchSourceMap.js:83:19
+
+URL do recurso: http://localhost:3000/%3Canonymous%20code%3E
+URL do mapa de código: installHook.js.map
+XHRGET
+http://localhost:8000/daemon/status
+[HTTP/1.1 401 Unauthorized 2ms]
+
+XHRGET
+http://localhost:8000/daemon/tasks
+[HTTP/1.1 401 Unauthorized 3ms]
+
+XHRPOST
+http://localhost:3000/api/omnimind/messages
+[HTTP/1.1 200 OK 4ms]
+
+API Error 401 para /daemon/status: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Fetch error: Error: API Error: 401 Unauthorized
+    request api.ts:85
+    getDaemonStatus api.ts:103
+    fetchData Dashboard.tsx:49
+    interval Dashboard.tsx:90
+<anonymous code>:1:147461
+API Error 401 para /daemon/tasks: {"detail":"Not authenticated"} <anonymous code>:1:147461
+XHRGET
+http://localhost:8000/audit/stats
+[HTTP/1.1 401 Unauthorized 8ms]
+
+XHRGET
+http://localhost:8000/metrics/training
+[HTTP/1.1 401 Unauthorized 9ms]
+
+XHRGET
+http://localhost:8000/api/tribunal/activity
+[HTTP/1.1 401 Unauthorized 11ms]
+
+XHRGET
+http://localhost:8000/api/tribunal/metrics
+[HTTP/1.1 404 Not Found 13ms]
+
+XHRPOST
+http://localhost:3000/api/omnimind/messages
+[HTTP/1.1 200 OK 26ms]
+
+XHRGET
+http://localhost:8000/daemon/agents
+[HTTP/1.1 401 Unauthorized 15ms]
+
+XHRGET
+http://localhost:8000/api/metacognition/insights
+[HTTP/1.1 503 Service Unavailable 16ms]
+
+XHRGET
+http://localhost:8000/api/metacognition/stats
+[HTTP/1.1 503 Service Unavailable 9ms]
+
+XHRPOST
+http://localhost:3000/api/omnimind/messages
+[HTTP/1.1 200 OK 26ms]
+
+XHRGET
+http://localhost:8000/audit/stats
+[HTTP/1.1 401 Unauthorized 10ms]
+
+XHRGET
+http://localhost:8000/metrics/training
+[HTTP/1.1 401 Unauthorized 10ms]
+
+XHRGET
+http://localhost:8000/api/tribunal/activity
+[HTTP/1.1 401 Unauthorized 10ms]
+
+XHRGET
+http://localhost:8000/api/tribunal/metrics
+[HTTP/1.1 404 Not Found 11ms]
+
+XHRPOST
+http://localhost:3000/api/omnimind/messages
+[HTTP/1.1 200 OK 34ms]
+
+XHRGET
+http://localhost:8000/daemon/agents
+[HTTP/1.1 401 Unauthorized 5ms]
+
+XHRGET
+http://localhost:8000/api/metacognition/insights
+[HTTP/1.1 503 Service Unavailable 11ms]
+
+XHRGET
+http://localhost:8000/api/metacognition/stats
+[HTTP/1.1 503 Service Unavailable 6ms]
+
+XHRGET
+http://localhost:3000/api/omnimind/messages
+[HTTP/1.1 200 OK 8ms]
+
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+    get api.ts:92
+    fetchAllMetrics QuickStatsCards.tsx:35
+    QuickStatsCards QuickStatsCards.tsx:59
+    commitHookEffectListMount React
+    commitPassiveMountOnFiber chunk-E22KYI7D.js:18206
+    commitPassiveMountEffects_complete chunk-E22KYI7D.js:18179
+    commitPassiveMountEffects_begin chunk-E22KYI7D.js:18169
+    commitPassiveMountEffects chunk-E22KYI7D.js:18159
+    flushPassiveEffectsImpl chunk-E22KYI7D.js:19543
+    React 10
+    setState vanilla.mjs:9
+    setState vanilla.mjs:9
+    setError daemonStore.ts:49
+    fetchData Dashboard.tsx:55
+    interval Dashboard.tsx:90
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+    get api.ts:92
+    getTribunalActivity api.ts:161
+    fetchTribunal TribunalStatus.tsx:28
+    TribunalStatus TribunalStatus.tsx:37
+    commitHookEffectListMount React
+    commitPassiveMountOnFiber chunk-E22KYI7D.js:18206
+    commitPassiveMountEffects_complete chunk-E22KYI7D.js:18179
+    commitPassiveMountEffects_begin chunk-E22KYI7D.js:18169
+    commitPassiveMountEffects chunk-E22KYI7D.js:18159
+    flushPassiveEffectsImpl chunk-E22KYI7D.js:19543
+    React 10
+    setState vanilla.mjs:9
+    setState vanilla.mjs:9
+    setError daemonStore.ts:49
+    fetchData Dashboard.tsx:55
+    interval Dashboard.tsx:90
+<anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+    get api.ts:92
+    getTribunalMetrics api.ts:164
+    fetchMetrics TribunalMetricsVisual.tsx:28
+    TribunalMetricsVisual TribunalMetricsVisual.tsx:38
+    commitHookEffectListMount React
+    commitPassiveMountOnFiber chunk-E22KYI7D.js:18206
+    commitPassiveMountEffects_complete chunk-E22KYI7D.js:18179
+    commitPassiveMountEffects_begin chunk-E22KYI7D.js:18169
+    commitPassiveMountEffects chunk-E22KYI7D.js:18159
+    flushPassiveEffectsImpl chunk-E22KYI7D.js:19543
+    React 10
+    setState vanilla.mjs:9
+    setState vanilla.mjs:9
+    setError daemonStore.ts:49
+    fetchData Dashboard.tsx:55
+    interval Dashboard.tsx:90
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+    get api.ts:92
+    getAgents api.ts:219
+    fetchAgents AgentStatus.tsx:38
+    AgentStatus AgentStatus.tsx:49
+    commitHookEffectListMount React
+    commitPassiveMountOnFiber chunk-E22KYI7D.js:18206
+    commitPassiveMountEffects_complete chunk-E22KYI7D.js:18179
+    commitPassiveMountEffects_begin chunk-E22KYI7D.js:18169
+    commitPassiveMountEffects chunk-E22KYI7D.js:18159
+    flushPassiveEffectsImpl chunk-E22KYI7D.js:19543
+    React 10
+    setState vanilla.mjs:9
+    setState vanilla.mjs:9
+    setError daemonStore.ts:49
+    fetchData Dashboard.tsx:55
+    interval Dashboard.tsx:90
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+    get api.ts:92
+    getDecisions api.ts:216
+    fetchDecisions DecisionsDashboard.tsx:37
+    DecisionsDashboard DecisionsDashboard.tsx:88
+    commitHookEffectListMount React
+    commitPassiveMountOnFiber chunk-E22KYI7D.js:18206
+    commitPassiveMountEffects_complete chunk-E22KYI7D.js:18179
+    commitPassiveMountEffects_begin chunk-E22KYI7D.js:18169
+    commitPassiveMountEffects chunk-E22KYI7D.js:18159
+    flushPassiveEffectsImpl chunk-E22KYI7D.js:19543
+    React 10
+    setState vanilla.mjs:9
+    setState vanilla.mjs:9
+    setError daemonStore.ts:49
+    fetchData Dashboard.tsx:55
+    interval Dashboard.tsx:90
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+    get api.ts:92
+    getDecisionStats api.ts:222
+    fetchStats DecisionsDashboard.tsx:53
+    DecisionsDashboard DecisionsDashboard.tsx:89
+    commitHookEffectListMount React
+    commitPassiveMountOnFiber chunk-E22KYI7D.js:18206
+    commitPassiveMountEffects_complete chunk-E22KYI7D.js:18179
+    commitPassiveMountEffects_begin chunk-E22KYI7D.js:18169
+    commitPassiveMountEffects chunk-E22KYI7D.js:18159
+    flushPassiveEffectsImpl chunk-E22KYI7D.js:19543
+    React 10
+    setState vanilla.mjs:9
+    setState vanilla.mjs:9
+    setError daemonStore.ts:49
+    fetchData Dashboard.tsx:55
+    interval Dashboard.tsx:90
+<anonymous code>:1:147461
+API Error 401 para /audit/stats: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch metrics: Error: API Error: 401 Unauthorized
+    request api.ts:85
+    get api.ts:92
+    fetchAllMetrics QuickStatsCards.tsx:35
+    QuickStatsCards QuickStatsCards.tsx:59
+    React 15
+    setState vanilla.mjs:9
+    setState vanilla.mjs:9
+    setError daemonStore.ts:49
+    fetchData Dashboard.tsx:55
+    interval Dashboard.tsx:90
+<anonymous code>:1:147461
+API Error 404 para /api/tribunal/metrics: {"detail":"Not Found"} <anonymous code>:1:147461
+Error: API Error: 404 Not Found
+    request api.ts:85
+    get api.ts:92
+    getTribunalMetrics api.ts:164
+    fetchMetrics TribunalMetricsVisual.tsx:28
+    TribunalMetricsVisual TribunalMetricsVisual.tsx:38
+    React 15
+    setState vanilla.mjs:9
+    setState vanilla.mjs:9
+    setError daemonStore.ts:49
+    fetchData Dashboard.tsx:55
+    interval Dashboard.tsx:90
+<anonymous code>:1:147461
+API Error 401 para /metrics/training: {"detail":"Not authenticated"} <anonymous code>:1:147461
+API Error 503 para /api/metacognition/insights: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching decisions: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+    get api.ts:92
+    getDecisions api.ts:216
+    fetchDecisions DecisionsDashboard.tsx:37
+    DecisionsDashboard DecisionsDashboard.tsx:88
+    React 15
+    setState vanilla.mjs:9
+    setState vanilla.mjs:9
+    setError daemonStore.ts:49
+    fetchData Dashboard.tsx:55
+    interval Dashboard.tsx:90
+<anonymous code>:1:147461
+API Error 401 para /api/tribunal/activity: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Error: API Error: 401 Unauthorized
+    request api.ts:85
+    get api.ts:92
+    getTribunalActivity api.ts:161
+    fetchTribunal TribunalStatus.tsx:28
+    TribunalStatus TribunalStatus.tsx:37
+    React 15
+    setState vanilla.mjs:9
+    setState vanilla.mjs:9
+    setError daemonStore.ts:49
+    fetchData Dashboard.tsx:55
+    interval Dashboard.tsx:90
+<anonymous code>:1:147461
+API Error 503 para /api/metacognition/stats: {"detail":"Orchestrator not available"} <anonymous code>:1:147461
+Error fetching stats: Error: API Error: 503 Service Unavailable
+    request api.ts:85
+    get api.ts:92
+    getDecisionStats api.ts:222
+    fetchStats DecisionsDashboard.tsx:53
+    DecisionsDashboard DecisionsDashboard.tsx:89
+    React 15
+    setState vanilla.mjs:9
+    setState vanilla.mjs:9
+    setError daemonStore.ts:49
+    fetchData Dashboard.tsx:55
+    interval Dashboard.tsx:90
+<anonymous code>:1:147461
+API Error 401 para /daemon/agents: {"detail":"Not authenticated"} <anonymous code>:1:147461
+Failed to fetch agents: Error: API Error: 401 Unauthorized
+    request api.ts:85
+    get api.ts:92
+    getAgents api.ts:219
+    fetchAgents AgentStatus.tsx:38
+    AgentStatus AgentStatus.tsx:49
+    React 15
+    setState vanilla.mjs:9
+    setState vanilla.mjs:9
+    setError daemonStore.ts:49
+    fetchData Dashboard.tsx:55
+    interval Dashboard.tsx:90
+<anonymous code>:1:147461
+XHRGET
+http://localhost:3000/api/omnimind/messages
+[HTTP/1.1 200 OK 5ms]
+

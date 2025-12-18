@@ -29,10 +29,10 @@ Author: This work was conceived by Fabrício da Silva and implemented with AI as
 Date: November 2025
 """
 
-import sys
-import os
-import time
 import logging
+import os
+import sys
+import time
 
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

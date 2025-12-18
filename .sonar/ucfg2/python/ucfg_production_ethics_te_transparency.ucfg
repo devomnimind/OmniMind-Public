@@ -1,0 +1,93 @@
+
+Isrc.ethics.production_ethics.ProductionEthicsSystem.evaluate_transparencyL
+@/home/fahbrain/projects/omnimind/src/ethics/production_ethics.pyê ê("2*º
+2
+ì õ(Ñ
+Å
+
+ú ú(*
+%1"__id*g
+
+__unknown_file (K*I5
+3src.ethics.production_ethics.ProductionEthicsSystem"
+ethics_metricsÄ~
+
+ú û(	
+%2*"
+
+__unknown_file (
+
+%12calculate_transparency_score:(
+recent_decisions
+
+recent_decisionsH
+F
+
+ú û(	
+transparency"__id*"
+
+__unknown_file (
+
+%2ä
+á
+
+† †(!
+%3"__id*m
+
+__unknown_file (Q*O5
+3src.ethics.production_ethics.ProductionEthicsSystem"
+transparency_historynl
+
+† †(6
+%4*"
+
+__unknown_file (
+
+%3*,
+
+__unknown_file (
+
+transparency2append[
+Y
+
+¢/ ¢(I
+%5"__id*?
+
+__unknown_file (#*!
+
+transparency"
+overall_scoreu
+s
+
+¢ ¢(P
+%6"__concat**
+
+¢ ¢(.
+Transparency evaluated: *
+
+¢/ ¢(I
+
+%5*
+
+¢N ¢(O
+%fd
+
+¢ ¢(Q
+%7*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%62info"
+
+§ §(
+
+transparency: 
+
+ë ë((
+recent_decisionsB75
+3src.ethics.production_ethics.ProductionEthicsSystemH

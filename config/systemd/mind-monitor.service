@@ -1,0 +1,63 @@
+[Unit]
+Description=OmniMind Continuous Monitor - Security & System Sensors (Always Active)
+Documentation=file:///home/fahbrain/projects/omnimind/scripts/monitoring/README.md
+After=network-online.target
+Wants=network-online.target
+
+# Monitor é um SENSOR CRÍTICO - inicia antes do daemon principal
+# Sem o monitor, OmniMind fica CEGO na segurança
+Before=mind-daemon.service
+Before=mind-frontend.service
+
+[Service]
+Slice=mind.slice
+OOMScoreAdjust=-1000
+Type=simple
+User=fahbrain
+Group=fahbrain
+WorkingDirectory=/home/fahbrain/projects/omnimind
+
+# Python environment
+Environment="PATH=/home/fahbrain/projects/omnimind/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin"
+Environment="PYTHONPATH=/home/fahbrain/projects/omnimind"
+Environment="PYTHONUNBUFFERED=1"
+
+# Main command: Run continuous monitor (processes, resources, network, alerts)
+ExecStart=/home/fahbrain/projects/omnimind/.venv/bin/python scripts/monitoring/continuous_monitor.py
+
+# RESTART POLICY: Always restart on failure
+# Não há motivo para parar este serviço - ele é CRÍTICO para segurança
+Restart=always
+RestartSec=10
+
+# Graceful shutdown
+KillMode=process
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+# Logging to systemd journal
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=mind-monitor
+
+# Resource limits (monitor deve ser light - sensores não consomem muito)
+MemoryMax=256M
+CPUQuota=20%
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/fahbrain/projects/omnimind/logs /home/fahbrain/projects/omnimind/data
+
+# Capabilities needed for system monitoring
+AmbientCapabilities=CAP_NET_ADMIN CAP_SYS_RESOURCE
+
+# NOTE: Este serviço só pode ser parado manualmente pelo usuário:
+# sudo systemctl stop mind-monitor
+# Ele SEMPRE reiniciará automaticamente após reboot ou crash
+
+[Install]
+# Multi-user.target garante que inicia no boot com o sistema
+WantedBy=multi-user.target

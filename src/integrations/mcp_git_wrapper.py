@@ -19,7 +19,6 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 from src.audit.immutable_audit import get_audit_system
-from src.integrations.mcp_cache import get_mcp_cache
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +28,7 @@ class MCPGitConfig:
     """Configuração do wrapper git MCP."""
 
     host: str = "127.0.0.1"
-    port: int = 4328
+    port: int = 4332
     repository_path: str = "."
     audit_category: str = "git_mcp"
 
@@ -123,6 +122,7 @@ class MCPStdioBridge:
             try:
                 # Enviar requisição
                 request_json = json.dumps(request) + "\n"
+                logger.debug(f"Enviando para stdio: {request_json.strip()}")
                 if self.process.stdin:
                     self.process.stdin.write(request_json)
                     self.process.stdin.flush()
@@ -130,12 +130,13 @@ class MCPStdioBridge:
                 # Ler resposta
                 if self.process.stdout:
                     response_line = self.process.stdout.readline()
+                    logger.debug(f"Resposta stdio: {response_line.strip()}")
                     response = json.loads(response_line)
 
                     if "error" in response:
-                        raise RuntimeError(
-                            f"MCP error: {response['error'].get('message', 'Unknown error')}"
-                        )
+                        error_msg = response["error"].get("message", "Unknown error")
+                        logger.error(f"MCP error response: {error_msg}")
+                        raise RuntimeError(f"MCP error: {error_msg}")
 
                     return response.get("result", {})
             except Exception as e:
@@ -157,7 +158,7 @@ class MCPGitWrapper:
             config: Configuração do wrapper. Se None, usa valores de ambiente ou defaults.
         """
         if config is None:
-            port = int(os.environ.get("MCP_PORT", "4328"))
+            port = int(os.environ.get("MCP_PORT", "4332"))
             repo = os.environ.get("MCP_GIT_REPOSITORY", ".")
             config = MCPGitConfig(
                 host="127.0.0.1",
@@ -168,7 +169,6 @@ class MCPGitWrapper:
 
         self.config = config
         self.audit_system = get_audit_system()
-        self.cache = get_mcp_cache()
         self.project_root = Path(__file__).resolve().parents[2]
 
         # Resolver caminho do repositório
@@ -190,11 +190,6 @@ class MCPGitWrapper:
         ]
         env_clean = os.environ.copy()
         env_clean.pop("DISPLAY", None)
-
-        # Configurar PATH para usar o ambiente virtual correto
-        venv_python = self.project_root / ".venv" / "bin" / "python"
-        env_clean["PATH"] = f"{str(venv_python.parent)}:{env_clean.get('PATH', '')}"
-
         self.bridge = MCPStdioBridge(command, cwd=self.repository_path, env=env_clean)
 
         self._server: Optional[ThreadingHTTPServer] = None
@@ -255,34 +250,18 @@ class MCPGitWrapper:
                     method = request.get("method")
                     params = request.get("params", {})
 
-                    # Check cache first
-                    cache_key = f"git_{method}_{hash(str(params)) % 10000}"
-                    try:
-                        if hasattr(parent.cache, "_get_sync"):
-                            cached = parent.cache._get_sync(cache_key)
-                            if cached:
-                                response = {
-                                    "jsonrpc": "2.0",
-                                    "id": request.get("id"),
-                                    "result": cached,
-                                }
-                                self.send_response(200)
-                                self.send_header("Content-type", "application/json")
-                                self.end_headers()
-                                self.wfile.write(json.dumps(response).encode("utf-8"))
-                                return
-                    except Exception:
-                        pass
+                    # Para initialize, adicionar parâmetros completos se não presente
+                    if method == "initialize" and "protocolVersion" not in params:
+                        params = {
+                            "protocolVersion": "2024-11-05",
+                            "capabilities": params.get("capabilities", {}),
+                            "clientInfo": params.get(
+                                "clientInfo", {"name": "omnimind-git-wrapper", "version": "1.0"}
+                            ),
+                        }
 
                     # Enviar para o MCP via stdio
                     result = parent.bridge.send_request(method, params)
-
-                    # Cache result
-                    try:
-                        if hasattr(parent.cache, "_put_sync"):
-                            parent.cache._put_sync(cache_key, result)
-                    except Exception:
-                        pass
 
                     # Auditoria
                     parent.audit_system.log_action(

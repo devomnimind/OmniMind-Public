@@ -1,0 +1,102 @@
+
+Asrc.security.security_monitor.SecurityMonitor._establish_baselineM
+A/home/fahbrain/projects/omnimind/src/security/security_monitor.pyã ã(!"2*‘
+2
+ä ä(.u
+s
+
+å å(
+%9"__id*Y
+
+__unknown_file (=*;/
+-src.security.security_monitor.SecurityMonitor"
+loggerƒ€
+
+å å(=
+%10*"
+
+__unknown_file (
+
+%9*A
+
+__unknown_file (%#
+!Establishing security baseline...2info*
+6*;
+3
+security_monitor.py"
+ö ö(
+implicit return*×
+4
+ô ô(Cu
+s
+
+ô ô(
+%1"__id*Y
+
+__unknown_file (=*;/
+-src.security.security_monitor.SecurityMonitor"
+loggere
+c
+
+ô ô(B
+%2"__concat*0
+
+ô  ô(>" 
+Failed to establish baseline: *
+
+ô? ô(@
+
+eca
+
+ô ô(C
+%3*"
+
+__unknown_file (
+
+%1*"
+
+__unknown_file (
+
+%22error*
+3*þ
+6
+é é(,xv
+
+é é(,
+%4*M
+
+__unknown_file (1/
+-src.security.security_monitor.SecurityMonitor2_snapshot_processesvt
+
+ì ì($
+%5*M
+
+__unknown_file (1/
+-src.security.security_monitor.SecurityMonitor2_snapshot_network}{
+
+ï ï(1
+%6*M
+
+__unknown_file (1/
+-src.security.security_monitor.SecurityMonitor2_establish_file_baselineu
+s
+
+ñ ñ(
+%7"__id*Y
+
+__unknown_file (=*;/
+-src.security.security_monitor.SecurityMonitor"
+logger}{
+
+ñ ñ(=
+%8*"
+
+__unknown_file (
+
+%7*=
+
+__unknown_file (!
+Security baseline established2info*
+3
+4B1/
+-src.security.security_monitor.SecurityMonitorH

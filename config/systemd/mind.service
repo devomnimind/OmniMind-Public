@@ -1,0 +1,47 @@
+[Unit]
+Description=OmniMind MCP System - Core Infrastructure
+Documentation=https://omnimind.local/docs
+After=network.target
+Wants=mind-mcp-internal.service
+
+[Service]
+Type=notify
+User=omnimind
+Group=omnimind
+WorkingDirectory=/opt/omnimind
+Environment="PYTHONPATH=/opt/omnimind:/opt/omnimind/src"
+Environment="OMNIMIND_ENV=production"
+Environment="LOG_LEVEL=INFO"
+
+# Core MCPs startup
+ExecStart=/opt/omnimind/scripts/production/start_mcp_servers.sh
+
+# Restart policy
+Restart=on-failure
+RestartSec=10
+StartLimitInterval=300
+StartLimitBurst=3
+
+# Process management
+KillMode=process
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+# Security
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=true
+ReadWritePaths=/opt/omnimind/logs /opt/omnimind/data
+
+# Resource limits
+MemoryMax=4G
+CPUQuota=80%
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=omnimind
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,258 @@
+
+Msrc.security.api_documentation.APIDocumentationGenerator._generate_python_sdkN
+B/home/fahbrain/projects/omnimind/src/security/api_documentation.pyÅ Å("2*ó!
+2
+Æ Æ(+…
+‚
+
+Ç Ç(%
+%4"__id*h
+
+__unknown_file (L*J:
+8src.security.api_documentation.APIDocumentationGenerator"
+
+output_dirvt
+
+Ç Ç(9
+%5*"
+
+__unknown_file (
+
+%4*/
+
+__unknown_file (
+omnimind_sdk.py2__truediv__G
+E
+
+Ç Ç(9
+output_path"__id*"
+
+__unknown_file (
+
+%5å
+â
+
+É â(
+
+sdk_code"__id*Á
+
+__unknown_file (¤¡
+ž"""
+OmniMind Python SDK
+
+Official Python client for the OmniMind API.
+"""
+
+import requests
+from typing import Any, Dict, List, Optional
+
+
+class OmniMindClient:
+    """OmniMind API client."""
+
+    def __init__(
+        self,
+        base_url: str = "http://localhost:8000",
+        username: str = "",
+        password: str = "",
+    ):
+        """
+        Initialize OmniMind client.
+
+        Args:
+            base_url: API base URL
+            username: Basic auth username
+            password: Basic auth password
+        """
+        self.base_url = base_url.rstrip("/")
+        self.auth = (username, password) if username else None
+
+    def submit_task(self, description: str, priority: str = "medium") -> Dict[str, Any]:
+        """
+        Submit a new task.
+
+        Args:
+            description: Task description
+            priority: Task priority (low, medium, high, critical)
+
+        Returns:
+            Task object
+        """
+        response = requests.post(
+            f"{self.base_url}/tasks",
+            json={"description": description, "priority": priority},
+            auth=self.auth,
+        )
+        response.raise_for_status()
+        return response.json()
+
+    def get_task(self, task_id: str) -> Dict[str, Any]:
+        """
+        Get task status.
+
+        Args:
+            task_id: Task identifier
+
+        Returns:
+            Task object
+        """
+        response = requests.get(
+            f"{self.base_url}/tasks/{task_id}",
+            auth=self.auth,
+        )
+        response.raise_for_status()
+        return response.json()
+
+    def list_tasks(
+        self, status: Optional[str] = None, limit: int = 10
+    ) -> List[Dict[str, Any]]:
+        """
+        List tasks.
+
+        Args:
+            status: Filter by status
+            limit: Maximum number of tasks
+
+        Returns:
+            List of task objects
+        """
+        params = {"limit": limit}
+        if status:
+            params["status"] = status
+
+        response = requests.get(
+            f"{self.base_url}/tasks",
+            params=params,
+            auth=self.auth,
+        )
+        response.raise_for_status()
+        return response.json()
+
+    def list_agents(self) -> List[Dict[str, Any]]:
+        """
+        List agents.
+
+        Returns:
+            List of agent objects
+        """
+        response = requests.get(
+            f"{self.base_url}/agents",
+            auth=self.auth,
+        )
+        response.raise_for_status()
+        return response.json()
+
+    def get_security_events(
+        self, severity: Optional[str] = None, limit: int = 10
+    ) -> List[Dict[str, Any]]:
+        """
+        Get security events.
+
+        Args:
+            severity: Filter by severity
+            limit: Maximum number of events
+
+        Returns:
+            List of security event objects
+        """
+        params = {"limit": limit}
+        if severity:
+            params["severity"] = severity
+
+        response = requests.get(
+            f"{self.base_url}/security/events",
+            params=params,
+            auth=self.auth,
+        )
+        response.raise_for_status()
+        return response.json()
+
+    def get_metacognition_insights(
+        self, insight_type: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
+        """
+        Get metacognition insights.
+
+        Args:
+            insight_type: Filter by type
+
+        Returns:
+            List of insight objects
+        """
+        params = {}
+        if insight_type:
+            params["type"] = insight_type
+
+        response = requests.get(
+            f"{self.base_url}/metacognition/insights",
+            params=params,
+            auth=self.auth,
+        )
+        response.raise_for_status()
+        return response.json()
+jh
+
+ä ä("
+%6*+
+
+__unknown_file (
+
+output_path*!
+
+__unknown_file (
+w2open=
+;
+
+ä ä('
+f"__id*"
+
+__unknown_file (
+
+%6*
+4
+5*ÿ
+4
+ç ç(;g
+e
+
+ç ç(:
+%1"__concat*(
+
+ç ç(,
+Python SDK generated: *
+
+ç- ç(8
+
+output_pathfd
+
+ç ç(;
+%2*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%12info"
+
+è è(
+
+output_path*~
+5
+å å(hf
+
+å å(
+%3*!
+
+__unknown_file (
+
+f*(
+
+__unknown_file (
+
+
+sdk_code2write*
+4B<:
+8src.security.api_documentation.APIDocumentationGeneratorH

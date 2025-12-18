@@ -1,0 +1,264 @@
+
+1.0PythonFrontend"1763831825684*py2.B›
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+6
+1src/collective_intelligence/emergent_behaviors.py9
+4
+.src.collective_intelligence.emergent_behaviors11
+
+
+time12
+
+dataclasses14
+
+
+enum16
+
+typing18
+@
+:src.collective_intelligence.emergent_behaviors.PatternType20
+
+	enum.Enum22
+F
+@src.collective_intelligence.emergent_behaviors.EmergenceDetector24
+^
+Xsrc.collective_intelligence.emergent_behaviors.EmergenceDetector._detect_synchronization26
+
+
+list28
+S
+Msrc.collective_intelligence.emergent_behaviors.EmergenceDetector._are_similar30
+
+
+bool32
+
+
+dict34
+V
+Psrc.collective_intelligence.emergent_behaviors.EmergenceDetector.detect_patterns36
+]
+Wsrc.collective_intelligence.emergent_behaviors.EmergenceDetector._detect_specialization38
+O
+Isrc.collective_intelligence.emergent_behaviors.EmergenceDetector.__init__40
+Y
+Ssrc.collective_intelligence.emergent_behaviors.EmergenceDetector._detect_clustering42
+D
+>src.collective_intelligence.emergent_behaviors.EmergentPattern44
+E
+?src.collective_intelligence.emergent_behaviors.SelfOrganization46
+S
+Msrc.collective_intelligence.emergent_behaviors.SelfOrganization._apply_action48
+	
+str50
+L
+Fsrc.collective_intelligence.emergent_behaviors.SelfOrganization.update52
+N
+Hsrc.collective_intelligence.emergent_behaviors.SelfOrganization.add_rule54
+A
+;src.collective_intelligence.emergent_behaviors.BehaviorRule56
+N
+Hsrc.collective_intelligence.emergent_behaviors.SelfOrganization.__init__58
+Y
+Ssrc.collective_intelligence.emergent_behaviors.SelfOrganization._evaluate_condition60
+C
+=src.collective_intelligence.emergent_behaviors.AdaptiveSystem62
+I
+Csrc.collective_intelligence.emergent_behaviors.AdaptiveSystem.adapt64
+
+float66
+L
+Fsrc.collective_intelligence.emergent_behaviors.AdaptiveSystem.__init__68
+U
+Osrc.collective_intelligence.emergent_behaviors.AdaptiveSystem.get_configuration70J
+
+8
+89jÔ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21206 210
+
+23
+23226
+
+25
+25246 210
+
+27
+27267 225
+
+29
+29286
+
+31
+31307 225
+
+33
+33326
+
+35
+35346
+
+37
+37367 225
+
+39
+39387 225
+
+41
+41407 225
+
+43
+43427 225
+
+45
+45446 210
+
+47
+47466 210
+
+49
+49487 247
+
+51
+51506
+
+53
+53527 247
+
+55
+55547 247
+
+57
+57566 210
+
+59
+59587 247
+
+61
+61607 247
+
+63
+63626 210
+
+65
+65647 263
+
+67
+67666
+
+69
+69687 263
+
+71
+71707 263rä
+
+10131*
+8 (
+
+10151*
+8 ()
+
+10171*
+8 (
+
+10191*
+8 (-
+
+21232*
+8 (
+
+27294*
+8ˆ	 ˆ( 
+
+31333*
+8½	 ½(
+
+31354*
+8½	 ½(
+
+31354*
+8½	 ½(
+
+37293*
+8D	 D(
+
+37294*
+8D	 D(
+
+39294*
+8¢	 ¢(
+
+43294*
+8f	 f(
+
+49353*
+8†	 †(
+
+49514*
+8†	 †(
+
+49354*
+8†	 †(
+
+53353*
+8à	 à(
+
+53514*
+8à	 à(
+
+53354*
+8à	 à(
+
+55574*
+8Û	 Û(
+
+61333*
+8û	 û(
+
+61514*
+8û	 û(
+
+61354*
+8û	 û(
+
+65674*
+8¥	 ¥(
+
+65354*
+8¥	 ¥(
+
+69674*
+8ž	 ž(
+
+71353*
+8Ê	 Ê(

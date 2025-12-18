@@ -1,0 +1,16 @@
+
+4+"Calculate days until certificate expires."strselfP P(datetime.timezone"‰,
+*
+R R( "#get-field# valid_until:'
+%
+R# R(="#unknown-value#Btype$
+"
+R0 R(<"#get-field# utc:,
+*
+R# R(="
+datetime.datetimenow:%
+#
+R R(="	#binop -#*2-:%
+#
+R R(C	"#get-field# days:
+R R(C	*</home/fahbrain/projects/omnimind/src/security/ssl_manager.py

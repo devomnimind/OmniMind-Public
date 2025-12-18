@@ -31,18 +31,17 @@ Este script executa o sistema OmniMind por 24 horas coletando métricas de:
 Resultado: Dados científicos para análise e publicação.
 """
 
-import time
 import json
-import threading
-from datetime import datetime, timedelta
-from pathlib import Path
-import psutil
-import torch
-from typing import Dict, List, Any
 
 # Adicionar src ao path
 import sys
+import threading
+import time
+from datetime import datetime, timedelta
 from pathlib import Path
+
+import psutil
+import torch
 
 script_dir = Path(__file__).parent
 project_dir = script_dir.parent
@@ -52,9 +51,10 @@ if str(project_dir) not in sys.path:
 if str(src_dir) not in sys.path:
     sys.path.insert(0, str(src_dir))
 
-# Importar componentes do OmniMind
-from src.lacanian.freudian_metapsychology import FreudianMind, Action
 from src.audit.robust_audit_system import RobustAuditSystem
+
+# Importar componentes do OmniMind
+from src.lacanian.freudian_metapsychology import Action, FreudianMind
 from src.quantum_consciousness.quantum_backend import QuantumBackend
 
 

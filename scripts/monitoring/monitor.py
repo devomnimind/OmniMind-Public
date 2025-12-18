@@ -5,11 +5,11 @@ Verificação rápida de processos, recursos e segurança.
 """
 
 import json
-import psutil
+import subprocess
 from datetime import datetime
 from pathlib import Path
-import subprocess
-import os
+
+import psutil
 
 
 def monitor_processes():

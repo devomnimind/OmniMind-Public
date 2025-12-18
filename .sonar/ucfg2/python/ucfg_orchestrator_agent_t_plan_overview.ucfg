@@ -1,0 +1,94 @@
+
+=src.agents.orchestrator_agent.OrchestratorAgent.plan_overviewM
+A/home/fahbrain/projects/omnimind/src/agents/orchestrator_agent.py• •("2*õ
+2
+¶ ™(	
+
+¶ ™(	
+%1"dict}
+{
+
+ß ß(%
+%2"__id*a
+
+__unknown_file (E*C1
+/src.agents.orchestrator_agent.OrchestratorAgent"
+current_planç
+ä
+
+ß ß(%
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+plan*"
+
+__unknown_file (
+
+%2}
+{
+
+®, ®(=
+%4"__id*a
+
+__unknown_file (E*C1
+/src.agents.orchestrator_agent.OrchestratorAgent"
+current_planöó
+
+® ®(>
+%5*O
+
+__unknown_file (31
+/src.agents.orchestrator_agent.OrchestratorAgent*"
+
+__unknown_file (
+
+%42_plan_progressë
+é
+
+® ®(>
+%6"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+progress*"
+
+__unknown_file (
+
+%5Ñ
+Å
+
+© ©(/
+%7"__id*g
+
+__unknown_file (K*I1
+/src.agents.orchestrator_agent.OrchestratorAgent"
+dashboard_snapshotë
+é
+
+© ©(/
+%8"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+snapshot*"
+
+__unknown_file (
+
+%7"
+
+¶ ™(	
+
+%1B31
+/src.agents.orchestrator_agent.OrchestratorAgentH

@@ -1,0 +1,15 @@
+
++""Check if certificate is expired."strselfU U(datetime.timezone"ç'
+%
+W W()"#unknown-value#Btype$
+"
+W W(("#get-field# utc:,
+*
+W W()"
+datetime.datetimenow:,
+*
+W- W(="#get-field# valid_until:*
+(
+W W(="
+#binop >=#2>=:Bbool
+W W(=*</home/fahbrain/projects/omnimind/src/security/ssl_manager.py

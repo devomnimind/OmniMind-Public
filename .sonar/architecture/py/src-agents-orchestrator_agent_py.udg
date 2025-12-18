@@ -1,0 +1,558 @@
+
+1.0PythonFrontend"1763831830478*py2.B«
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+%
+ src/agents/orchestrator_agent.py9
+#
+src.agents.orchestrator_agent11
+
+
+__future__12
+
+logging14
+
+re16
+
+
+time18
+
+datetime20
+
+typing22
+
+
+enum24
+
+src.agents.react_agent26
+
+src.agents.code_agent28
+ 
+src.agents.architect_agent30
+
+src.agents.debug_agent32
+
+src.agents.reviewer_agent34
+
+src.tools.omnimind_tools36
+!
+src.integrations.mcp_client38
+&
+ src.integrations.dbus_controller40
+'
+!src.integrations.supabase_adapter42
+%
+src.integrations.qdrant_adapter44
+%
+src.agents.orchestrator_metrics46
+!
+src.security.security_agent48
+'
+!src.agents.psychoanalytic_analyst50
++
+%src.metacognition.metacognition_agent52
+
+asyncio54
+5
+/src.agents.orchestrator_agent.OrchestratorAgent56
+'
+!src.agents.react_agent.ReactAgent58
+R
+Lsrc.agents.orchestrator_agent.OrchestratorAgent._infer_path_from_description60
+	
+str62
+O
+Isrc.agents.orchestrator_agent.OrchestratorAgent._init_metacognition_agent64
+I
+Csrc.agents.orchestrator_agent.OrchestratorAgent._synthesize_results66
+
+
+dict68
+K
+Esrc.agents.orchestrator_agent.OrchestratorAgent._execute_dbus_subtask70
+P
+Jsrc.agents.orchestrator_agent.OrchestratorAgent.check_metacognition_health72
+S
+Msrc.agents.orchestrator_agent.OrchestratorAgent._init_dbus_session_controller74
+D
+>src.agents.orchestrator_agent.OrchestratorAgent.decompose_task76
+J
+Dsrc.agents.orchestrator_agent.OrchestratorAgent._init_qdrant_adapter78
+J
+Dsrc.agents.orchestrator_agent.OrchestratorAgent._init_security_agent80
+O
+Isrc.agents.orchestrator_agent.OrchestratorAgent._execute_security_subtask82
+N
+Hsrc.agents.orchestrator_agent.OrchestratorAgent._build_dashboard_context84
+D
+>src.agents.orchestrator_agent.OrchestratorAgent._plan_progress86
+F
+@src.agents.orchestrator_agent.OrchestratorAgent._init_mcp_client88
+H
+Bsrc.agents.orchestrator_agent.OrchestratorAgent.trigger_mcp_action90
+
+
+bool92
+W
+Qsrc.agents.orchestrator_agent.OrchestratorAgent.should_run_metacognition_analysis94
+>
+8src.agents.orchestrator_agent.OrchestratorAgent.__init__96
+A
+;src.agents.orchestrator_agent.OrchestratorAgent._parse_plan98
+S
+Lsrc.agents.orchestrator_agent.OrchestratorAgent._init_dbus_system_controller100
+A
+:src.agents.orchestrator_agent.OrchestratorAgent._get_agent102
+.
+'src.agents.orchestrator_agent.AgentMode104
+M
+Fsrc.agents.orchestrator_agent.OrchestratorAgent._init_supabase_adapter106
+F
+?src.agents.orchestrator_agent.OrchestratorAgent.metrics_summary108
+Q
+Jsrc.agents.orchestrator_agent.OrchestratorAgent.run_metacognition_analysis110
+
+
+int112
+C
+<src.agents.orchestrator_agent.OrchestratorAgent.execute_plan114
+A
+:src.agents.orchestrator_agent.OrchestratorAgent._timestamp116
+J
+Csrc.agents.orchestrator_agent.OrchestratorAgent._finalize_operation118
+
+float120
+D
+=src.agents.orchestrator_agent.OrchestratorAgent.plan_overview122
+L
+Esrc.agents.orchestrator_agent.OrchestratorAgent.run_orchestrated_task124
+H
+Asrc.agents.orchestrator_agent.OrchestratorAgent._record_operation126
+J
+Csrc.agents.orchestrator_agent.OrchestratorAgent.trigger_dbus_action128
+Q
+Jsrc.agents.orchestrator_agent.OrchestratorAgent.refresh_dashboard_snapshot130
+K
+Dsrc.agents.orchestrator_agent.OrchestratorAgent._execute_mcp_subtask132
+
+	enum.Enum134J
+
+8
+89j¸
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33325
+
+35
+35345
+
+37
+37365
+
+39
+39385
+
+41
+41405
+
+43
+43425
+
+45
+45445
+
+47
+47465
+
+49
+49485
+
+51
+51505
+
+53
+53525
+
+55
+55545
+
+57
+57566 210
+
+59
+59586
+
+61
+61607 257
+
+63
+63626
+
+65
+65647 257
+
+67
+67667 257
+
+69
+69686
+
+71
+71707 257
+
+73
+73727 257
+
+75
+75747 257
+
+77
+77767 257
+
+79
+79787 257
+
+81
+81807 257
+
+83
+83827 257
+
+85
+85847 257
+
+87
+87867 257
+
+89
+89887 257
+
+91
+91907 257
+
+93
+93926
+
+95
+95947 257
+
+97
+97967 257
+
+99
+99987 257
+
+101
+1011007 257
+
+103
+1031027 257
+
+105
+1051046 210
+
+107
+1071067 257
+
+109
+1091087 257
+
+111
+1111107 257
+
+113
+1131126
+
+115
+1151147 257
+
+117
+1171167 257
+
+119
+1191187 257
+
+121
+1211206
+
+123
+1231227 257
+
+125
+1251247 257
+
+127
+1271267 257
+
+129
+1291287 257
+
+131
+1311307 257
+
+133
+1331327 257
+
+135
+1351346r¶
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+
+10191*
+8 (
+
+10211*
+8 ((
+
+10231*
+8 (-
+
+10251*
+8 (
+
+10271*
+8 ($
+
+10291*
+8 ("
+
+10311*
+8 (,
+
+10331*
+8 ($
+
+10351*
+8 (*
+
+10371*
+8 (2
+
+10391*
+8 (@
+
+10411*
+8  (
+
+10431*
+8" %(
+
+10451*
+8' *(
+
+10471*
+8, ,(?
+
+10491*
+8- -(4
+
+10511*
+8. .(:
+
+10531*
+8/ /(C
+
+10551*
+8­ ­(
+
+57592*
+8D D(
+
+61634*
+8Ô	 Ô(%
+
+67693*
+8š	 š(
+
+67694*
+8š	 š(
+
+71693*
+8’	 ’(
+
+71694*
+8’	 ’(
+
+71634*
+8’	 ’(
+
+73693*
+8×	 ×(#
+
+77693*
+8Þ	 Þ(
+
+77634*
+8Þ	 Þ(
+
+83693*
+8	 ("
+
+83694*
+8	 ("
+
+85693*
+8Ó	 Ó(!
+
+87693*
+8Ë	 Ë(
+
+91693*
+8¬	 ¬(
+
+91634*
+8¬	 ¬(
+
+91634*
+8¬	 ¬(
+
+91934*
+8¬	 ¬(
+
+95933*
+8é	 é(*
+
+97634*
+8T	 T(
+
+99693*
+8™	 ™(
+
+99634*
+8™	 ™(
+
+103593*
+8Ì	 Ì(
+
+1031054*
+8Ì	 Ì(
+
+109693*
+8¢	 ¢(
+
+111693*
+8³	 ³(#
+
+1111134*
+8³	 ³(#
+
+115693*
+8­	 ­(
+
+1151134*
+8­	 ­(
+
+117633*
+8Ï	 Ï(
+
+119693*
+8š	 š(
+
+119634*
+8š	 š(
+
+1191214*
+8š	 š(
+
+119694*
+8š	 š(
+
+123693*
+8¥	 ¥(
+
+125693*
+8Ê	 Ê(
+
+125634*
+8Ê	 Ê(
+
+1251134*
+8Ê	 Ê(
+
+127634*
+8•	 •(
+
+1271214*
+8•	 •(
+
+127934*
+8•	 •(
+
+129693*
+8¸	 ¸(
+
+129634*
+8¸	 ¸(
+
+129634*
+8¸	 ¸(
+
+131693*
+8Å	 Å(#
+
+133693*
+8Ú	 Ú(
+
+133694*
+8Ú	 Ú(
+
+133634*
+8Ú	 Ú(
+
+1051352*
+85 5(

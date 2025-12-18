@@ -1,0 +1,28 @@
+
+truebool
+0
+'"Data used only for specified purposes"str
+("No purpose deviation detected"str
+	"description"str
+	"details"str
+"compliant"str
+/&"Check purpose limitation compliance."strself
+„ „(
+start_date
+„ „("end_date
+„$ „(6"¦&
+$
+
+‡ ‹(	"#new-object#Bdict"
+ 
+
+ˆ ˆ("	#map-set#:"
+ 
+
+‰ ‰(B"	#map-set#:	
+"
+ 
+
+Š Š(6"	#map-set#:
+
+‡ ‹(	*A/home/fahbrain/projects/omnimind/src/audit/compliance_reporter.py

@@ -1,0 +1,302 @@
+
+1.0PythonFrontend"1763831831812*py2.BÄ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+'
+"src/economics/marketplace_agent.py9
+%
+src.economics.marketplace_agent11
+
+
+json12
+
+logging14
+
+dataclasses16
+
+datetime18
+
+
+enum20
+
+pathlib22
+
+typing24
+6
+0src.economics.marketplace_agent.MarketplaceAgent26
+K
+Esrc.economics.marketplace_agent.MarketplaceAgent.publish_to_platforms28
+
+
+dict30
+8
+2src.economics.marketplace_agent.PublicationRequest32
+C
+=src.economics.marketplace_agent.MarketplaceAgent.publish_tool34
+	
+str36
+F
+@src.economics.marketplace_agent.MarketplaceAgent.suggest_pricing38
+
+float40
+L
+Fsrc.economics.marketplace_agent.MarketplaceAgent.evaluate_tool_quality42
+D
+>src.economics.marketplace_agent.MarketplaceAgent.generate_docs44
+C
+=src.economics.marketplace_agent.MarketplaceAgent.improve_tool46
+B
+<src.economics.marketplace_agent.MarketplaceAgent._save_state48
+I
+Csrc.economics.marketplace_agent.MarketplaceAgent.distribute_revenue50
+M
+Gsrc.economics.marketplace_agent.MarketplaceAgent.request_human_approval52
+
+
+bool54
+Q
+Ksrc.economics.marketplace_agent.MarketplaceAgent.monitor_sales_and_feedback56
+F
+@src.economics.marketplace_agent.MarketplaceAgent._record_revenue58
+B
+<src.economics.marketplace_agent.MarketplaceAgent._load_state60
+?
+9src.economics.marketplace_agent.MarketplaceAgent.__init__62
+9
+3src.economics.marketplace_agent.MarketplacePlatform64
+
+	enum.Enum66
+9
+3src.economics.marketplace_agent.RevenueDistribution68
+G
+Asrc.economics.marketplace_agent.RevenueDistribution.__post_init__70
+D
+>src.economics.marketplace_agent.RevenueDistribution.distribute72
+@
+:src.economics.marketplace_agent.PublicationRequest.to_dict74J
+
+8
+89jú
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27266 210
+
+29
+29287 227
+
+31
+31306
+
+33
+33326 210
+
+35
+35347 227
+
+37
+37366
+
+39
+39387 227
+
+41
+41406
+
+43
+43427 227
+
+45
+45447 227
+
+47
+47467 227
+
+49
+49487 227
+
+51
+51507 227
+
+53
+53527 227
+
+55
+55546
+
+57
+57567 227
+
+59
+59587 227
+
+61
+61607 227
+
+63
+63627 227
+
+65
+65646 210
+
+67
+67666
+
+69
+69686 210
+
+71
+71707 269
+
+73
+73727 269
+
+75
+75747 233rØ
+
+10131*
+8 (
+
+10151*
+8	 	(
+
+10171*
+8
+ 
+(1
+
+10191*
+8 ((
+
+10211*
+8 (
+
+10231*
+8 (
+
+10251*
+8 (-
+
+29313*
+8— —(#
+
+29334*
+8— —(#
+
+35374*
+8ƒ ƒ(
+
+35374*
+8ƒ ƒ(
+
+39413*
+8Ó	 Ó(
+
+39374*
+8Ó	 Ó(
+
+39414*
+8Ó	 Ó(
+
+39314*
+8Ó	 Ó(
+
+43413*
+8Õ	 Õ(
+
+43374*
+8Õ	 Õ(
+
+43314*
+8Õ	 Õ(
+
+45373*
+8¡	 ¡(
+
+45374*
+8¡	 ¡(
+
+45374*
+8¡	 ¡(
+
+45314*
+8¡	 ¡(
+
+47374*
+8… …(
+
+47414*
+8… …(
+
+51313*
+8Ö	 Ö(
+
+51414*
+8Ö	 Ö(
+
+53553*
+8ò ò(%
+
+53334*
+8ò ò(%
+
+57314*
+8Ä	 Ä(#
+
+59414*
+8ó	 ó(
+
+59314*
+8ó	 ó(
+
+63414*
+8[	 [(
+
+65672*
+8 (
+
+73313*
+8A	 A(
+
+73414*
+8A	 A(
+
+75313*
+8,	 ,(

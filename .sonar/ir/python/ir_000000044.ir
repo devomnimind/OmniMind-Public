@@ -1,0 +1,23 @@
+
+¾´"Check if token is expired.
+
+        Args:
+            buffer_seconds: Safety buffer in seconds
+
+        Returns:
+            True if token is expired or will expire soon
+        "strself: :(buffer_seconds: :(1"œ#
+!
+C C("
+timetimeBfloat*
+(
+C  C(."#get-field# issued_at::
+8
+C C(.elapsed"#dependent-value#*:Bfloat+
+)
+D D(*"#get-field# expires_in:%
+#
+D D(;"	#binop -#*2-:)
+'
+D D(<	"?python-unknown?*:
+D D(<	*B/home/fahbrain/projects/omnimind/src/integrations/oauth2_client.py

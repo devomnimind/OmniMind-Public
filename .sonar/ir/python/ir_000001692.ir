@@ -1,0 +1,62 @@
+
+1.0float
+
+2int
+
+truebool
+0.0float
+
+1int
+.%"Compute confidence in the decision."str
+0.5floatself
+º º( option_scores
+º" º(J"|,
+*
+
+¼ ¼("
+builtinslen*:Bint*
+(
+
+¼ ¼(!"	#binop <#2<:Bbool "
+
+¼ ¼(! *
+¼ ¼(
+"
+
+½ ½("Ù5
+3
+
+¿ ¿(Jscores"?python-unknown?:Blist2
+0
+
+À À(		max_score"
+builtinsmax*:1
+/
+
+Á Á(1"
+builtinssorted*:
+Blist0
+.
+
+Á Á(4
+second_max"#array-read#:,
+*
+
+Ä Ä($gap"	#binop -#*2-:	3
+1
+
+Å Å($"#dependent-value#*:Bfloat<
+:
+
+Å Å($
+confidence"#dependent-value#:Bfloat(
+&
+
+Ç Ç(,"
+builtinsmax*:(
+&
+
+Ç Ç(-"
+builtinsmin*:
+
+Ç Ç(-*R/home/fahbrain/projects/omnimind/src/decision_making/ethical_decision_framework.py

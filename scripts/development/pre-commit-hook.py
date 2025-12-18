@@ -95,8 +95,8 @@ def main():
 
     # Check if sandbox is operational
     try:
-        from pathlib import Path
         import os
+        from pathlib import Path
 
         kernel_path = os.environ.get("OMNIMIND_FIRECRACKER_KERNEL", "/opt/firecracker/vmlinux.bin")
         rootfs_path = os.environ.get("OMNIMIND_FIRECRACKER_ROOTFS", "/opt/firecracker/rootfs.ext4")

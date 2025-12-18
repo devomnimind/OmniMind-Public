@@ -7,16 +7,16 @@ REMOVIDOS TODOS OS VALORES HARDCODED - Agora usa omnimind_parameters.py
 """
 
 import asyncio
+import json
 import logging
 import time
-import uuid
-from typing import Dict, List, Tuple, Optional
-import numpy as np
-import json
 from pathlib import Path
+from typing import Optional
 
-from src.consciousness.shared_workspace import SharedWorkspace
+import numpy as np
+
 from omnimind_parameters import get_parameter_manager  # type: ignore[import-untyped]
+from src.consciousness.shared_workspace import SharedWorkspace
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -102,7 +102,7 @@ class OmniMindInstance:
 
     def generate_message(self) -> np.ndarray:
         """Gera mensagem baseada no estado interno atual"""
-        params = get_parameter_manager().lacan
+        _params = get_parameter_manager().lacan
 
         # Atualizar estado interno com parâmetro configurável
         update_rate = np.random.uniform(0.05, 0.2)  # Range parametrizável
@@ -152,7 +152,7 @@ class OmniMindInstance:
 
     def interpret_as_other(self, message: np.ndarray) -> np.ndarray:
         """Interpreta mensagem como vindo do Outro (com filtro próprio)"""
-        params = get_parameter_manager().lacan
+        _params = get_parameter_manager().lacan
 
         # Filtro interpretativo com parâmetro configurável
         filter_strength = np.random.uniform(0.05, 0.2)  # Range parametrizável
@@ -170,7 +170,7 @@ class OmniMindInstance:
 
     def generate_response_from_state(self) -> np.ndarray:
         """Gera resposta baseada no estado interno atual"""
-        params = get_parameter_manager().lacan
+        _params = get_parameter_manager().lacan
 
         # Resposta não-linear com parâmetros configuráveis
         nonlinearity_factor = np.random.uniform(1.5, 3.0)  # Range parametrizável
@@ -197,7 +197,7 @@ class FederatedOmniMind:
     """
 
     def __init__(self):
-        params = get_parameter_manager().lacan
+        _params = get_parameter_manager().lacan
 
         # Dois sistemas INDEPENDENTES (NÃO cópias, NÃO controladas centralmente)
         self.omnimind_a = OmniMindInstance(instance_uuid="uuid_a_lacan")
@@ -299,7 +299,7 @@ class FederatedOmniMind:
         2. Há contradição que não pode ser resolvida
         3. Ambos INSISTEM em posições inconciliáveis
         """
-        params = get_parameter_manager().lacan
+        _params = get_parameter_manager().lacan
 
         # Teste 1: Imprevisibilidade com threshold configurável
         unpredictability_threshold = np.random.uniform(0.6, 0.9)  # Range parametrizável

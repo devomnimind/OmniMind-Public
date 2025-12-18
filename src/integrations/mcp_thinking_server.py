@@ -22,7 +22,6 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-from src.integrations.mcp_cache import get_mcp_cache
 from src.integrations.mcp_server import MCPServer
 
 logger = logging.getLogger(__name__)
@@ -83,9 +82,6 @@ class ThinkingMCPServer(MCPServer):
         """
         super().__init__()
 
-        # Initialize cache
-        self.cache = get_mcp_cache()
-
         # Armazenamento em memória
         self._sessions: Dict[str, ThinkingSession] = {}
         self._session_counter = 0
@@ -115,8 +111,8 @@ class ThinkingMCPServer(MCPServer):
         # SigmaSinthomeCalculator para cálculo de σ (Lacan)
         self._sigma_calculator: Optional[Any] = None
 
-        # Registrar métodos MCP
-        self._methods.update(
+        # Registrar métodos MCP (preserva initialize())
+        self.register_methods(
             {
                 "start_session": self.start_session,
                 "add_step": self.add_step,
@@ -318,16 +314,6 @@ class ThinkingMCPServer(MCPServer):
             Informações do passo criado
         """
         try:
-            # Check cache first
-            cache_key = f"think_step_{session_id}_{content[:50]}"
-            try:
-                if hasattr(self.cache, "_get_sync"):
-                    cached_result = self.cache._get_sync(cache_key)
-                    if cached_result:
-                        return cached_result
-            except Exception:
-                pass
-
             if session_id not in self._sessions:
                 raise ValueError(f"Sessão não encontrada: {session_id}")
 

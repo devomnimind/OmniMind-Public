@@ -1,0 +1,219 @@
+
+9src.scaling.node_failure_recovery.RaftNode._apply_commandQ
+E/home/fahbrain/projects/omnimind/src/scaling/node_failure_recovery.pyª ª("2*ì
+2
+º ¿(nl
+
+¬ ¬(,
+%12*'
+
+__unknown_file (
+	
+command*)
+
+__unknown_file (
+	operation2getF
+D
+
+¬ ¬(,
+	operation"__id*#
+
+__unknown_file (
+
+%12hf
+
+√ √( 
+%13*'
+
+__unknown_file (
+	
+command*#
+
+__unknown_file (
+key2get@
+>
+
+√ √( 
+key"__id*#
+
+__unknown_file (
+
+%13ï
+í
+
+≈ ≈(
+%14"	__compare*"
+
+__unknown_file (
+==*)
+
+__unknown_file (
+
+	operation*#
+
+__unknown_file (
+set*
+5
+8*@
+3
+node_failure_recovery.py"
+œ œ(
+implicit return*Ø
+4
+» »(/y
+w
+
+» »("
+%2"__id*]
+
+__unknown_file (A*?,
+*src.scaling.node_failure_recovery.RaftNode"
+state_machine§°
+
+» »(/
+%1"dict.__setitem__*"
+
+__unknown_file (
+
+%2*#
+
+__unknown_file (
+
+key*%
+
+__unknown_file (	
+
+value2__setitem__ç
+ä
+
+… …(B
+%3"__concat*%
+
+… …(2
+State machine: SET *
+
+…3 …(6
+
+key*
+
+…7 …(:
+ = *
+
+…; …(@	
+
+valuege
+
+… …(C
+%4*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%32debug*
+3*≈
+5
+∆ ∆((ig
+
+∆ ∆((
+%5*'
+
+__unknown_file (
+	
+command*%
+
+__unknown_file (	
+value2getA
+?
+
+∆ ∆((
+value"__id*"
+
+__unknown_file (
+
+%5*
+3
+4*Ÿ
+6
+Ã Ã(+y
+w
+
+Ã Ã(&
+%6"__id*]
+
+__unknown_file (A*?,
+*src.scaling.node_failure_recovery.RaftNode"
+state_machine_
+]
+
+Õ Õ(;
+%7"__concat*(
+
+Õ Õ(5
+State machine: DELETE *
+
+Õ6 Õ(9
+
+keyge
+
+Õ Õ(<
+%8*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%72debug*
+3*Ä
+7
+À À(<y
+w
+
+À* À(<
+%9"__id*]
+
+__unknown_file (A*?,
+*src.scaling.node_failure_recovery.RaftNode"
+state_machinelj
+
+À# À(<
+%10*"
+
+__unknown_file (
+
+%9*#
+
+__unknown_file (
+
+key2__contains__*
+3
+6*≤
+8
+   ("ò
+ï
+
+   ("
+%11"	__compare*"
+
+__unknown_file (
+==*)
+
+__unknown_file (
+
+	operation*&
+
+__unknown_file (
+
+delete*
+3
+7:
+
+ª ª(4	
+commandB.,
+*src.scaling.node_failure_recovery.RaftNodeH

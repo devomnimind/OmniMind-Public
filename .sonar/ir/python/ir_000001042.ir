@@ -1,0 +1,12 @@
+
+
+1int
+#"Generate unique goal ID."str
+LC"GOAL-{datetime.now().strftime('%Y%m%d')}-{self._goal_counter:03d}"strselfn n("˜.
+,
+p p("#get-field# _goal_counter:%
+#
+p p("	#binop +#*2+:/
+-
+p p("#set-field# _goal_counter:
+q q(S*E/home/fahbrain/projects/omnimind/src/metacognition/proactive_goals.py

@@ -1,0 +1,48 @@
+
+
+"severity"str
+"line"str
+"suggestion"str
+	"rule_id"str
+!"Convert to dictionary."str
+
+"auto_fix"str
+
+"category"str
+	"message"strself> >("¤$
+"
+@ H(	"#new-object#Bdict,
+*
+A A($"#get-field# line_number: 
+
+A A($"	#map-set#:)
+'
+B B(%"#get-field# severity:&
+$
+B B(+	"#get-field# value: 
+
+B B(+
+"	#map-set#:	)
+'
+C C(%"#get-field# category:&
+$
+C C(+"#get-field# value: 
+
+C C(+"	#map-set#:(
+&
+D D(#"#get-field# message: 
+
+D D(#"	#map-set#:+
+)
+E E()"#get-field# suggestion: 
+
+E E()"	#map-set#:)
+'
+F F(%"#get-field# auto_fix: 
+
+F F(%"	#map-set#:(
+&
+G G(#"#get-field# rule_id: 
+
+G G(#"	#map-set#:
+@ H(	*G/home/fahbrain/projects/omnimind/src/workflows/automated_code_review.py

@@ -1,0 +1,33 @@
+
+³©"Get sensor reading history.
+
+        Args:
+            sensor_type: Optional filter by sensor type
+
+        Returns:
+            List of SensorReading objects
+        "strself
+ç ç(sensor_type
+ç ç(6"O+
+)
+
+ñ ñ("
+__bool__*:BboolH "
+
+ñ ñ( *
+ñ ñ(
+"D.
+,
+
+ò ò(T"?python-unknown?:Blist
+
+ò ò(T"x2
+0
+
+ó ó(("#get-field# _sensor_history:.
+,
+
+ó ó()"
+builtinslist*:Blist
+
+ó ó()*H/home/fahbrain/projects/omnimind/src/multimodal/embodied_intelligence.py

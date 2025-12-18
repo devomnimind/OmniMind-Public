@@ -1,0 +1,155 @@
+
+1.0PythonFrontend"1763831838033*py2.Bü
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+-
+(src/attention/thermodynamic_attention.py9
++
+%src.attention.thermodynamic_attention11
+
+
+__future__12
+
+logging14
+
+typing16
+
+
+math18
+
+torch20
+K
+Esrc.attention.thermodynamic_attention.MultiHeadThermodynamicAttention22
+T
+Nsrc.attention.thermodynamic_attention.MultiHeadThermodynamicAttention.__init__24
+	
+int26
+
+float28
+S
+Msrc.attention.thermodynamic_attention.MultiHeadThermodynamicAttention.forward30
+B
+<src.attention.thermodynamic_attention.ThermodynamicAttention32
+Q
+Ksrc.attention.thermodynamic_attention.ThermodynamicAttention._local_entropy34
+K
+Esrc.attention.thermodynamic_attention.ThermodynamicAttention.__init__36
+J
+Dsrc.attention.thermodynamic_attention.ThermodynamicAttention.forward38
+U
+Osrc.attention.thermodynamic_attention.ThermodynamicAttention.adjust_temperature40
+]
+Wsrc.attention.thermodynamic_attention.ThermodynamicAttention._compute_entropy_gradients42J
+
+8
+89jˆ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23226 210
+
+25
+25247 223
+
+27
+27266
+
+29
+29286
+
+31
+31307 223
+
+33
+33326 210
+
+35
+35347 233
+
+37
+37367 233
+
+39
+39387 233
+
+41
+41407 233
+
+43
+43427 233r
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (6
+
+10191*
+8 (
+
+10211*
+8 (
+
+10211*
+8 (,
+
+10211*
+8# #(
+
+25274*
+8è	 è(
+
+25274*
+8è	 è(
+
+25294*
+8è	 è(
+
+25294*
+8è	 è(
+
+37274*
+8B	 B(
+
+37294*
+8B	 B(
+
+37294*
+8B	 B(
+
+41294*
+8Ó	 Ó(

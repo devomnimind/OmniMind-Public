@@ -31,12 +31,11 @@ Este script automatiza correções para:
 Uso: python scripts/auto_fix_security.py
 """
 
-import os
 import re
 import subprocess
 import sys
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict
 
 # Configurações
 SCRIPT_DIR = Path(__file__).parent
@@ -313,7 +312,7 @@ def main():
             print(f"\n{GREEN}[SUCCESS]{RESET} Correções automáticas concluídas!")
 
             # Executar validação
-            scan_result = fixer.run_security_scan()
+            _scan_result = fixer.run_security_scan()
 
             # Gerar relatório
             fixer.save_report()

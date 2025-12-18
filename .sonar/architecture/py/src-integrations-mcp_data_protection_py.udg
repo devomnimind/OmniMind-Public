@@ -1,0 +1,317 @@
+
+1.0PythonFrontend"1763831837079*py2.B 
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+,
+'src/integrations/mcp_data_protection.py9
+*
+$src.integrations.mcp_data_protection11
+
+
+__future__12
+
+hashlib14
+
+logging16
+
+re18
+
+dataclasses20
+
+pathlib22
+
+typing24
+
+cryptography.fernet26
+
+src.audit.immutable_audit28
+
+src.security.dlp30
+;
+5src.integrations.mcp_data_protection.ProtectionResult32
+:
+4src.integrations.mcp_data_protection.protect_for_mcp34
+
+tuple36
+<
+6src.integrations.mcp_data_protection.MCPDataProtection38
+M
+Gsrc.integrations.mcp_data_protection.MCPDataProtection.sanitize_for_mcp40
+
+
+bool42
+L
+Fsrc.integrations.mcp_data_protection.MCPDataProtection.protect_content44
+	
+str46
+R
+Lsrc.integrations.mcp_data_protection.MCPDataProtection.detect_sensitive_data48
+
+
+list50
+J
+Dsrc.integrations.mcp_data_protection.MCPDataProtection.sanitize_path52
+K
+Esrc.integrations.mcp_data_protection.MCPDataProtection.get_statistics54
+
+
+dict56
+G
+Asrc.integrations.mcp_data_protection.MCPDataProtection._hash_data58
+J
+Dsrc.integrations.mcp_data_protection.MCPDataProtection.sanitize_dict60
+H
+Bsrc.integrations.mcp_data_protection.MCPDataProtection.add_pattern62
+;
+5src.integrations.mcp_data_protection.SensitivePattern64
+J
+Dsrc.integrations.mcp_data_protection.MCPDataProtection._encrypt_data66
+E
+?src.integrations.mcp_data_protection.MCPDataProtection.__init__68
+H
+Bsrc.integrations.mcp_data_protection.MCPDataProtection.clear_cache70
+G
+Asrc.integrations.mcp_data_protection.MCPDataProtection._mask_data72
+	
+int74
+I
+Csrc.integrations.mcp_data_protection.SensitivePattern.__post_init__76
+>
+8src.integrations.mcp_data_protection.get_data_protection78
+>
+8src.integrations.mcp_data_protection.DataProtectionError80
+
+	Exception82J
+
+8
+89jÀ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33326 210
+
+35
+35347 210
+
+37
+37366
+
+39
+39386 210
+
+41
+41407 239
+
+43
+43426
+
+45
+45447 239
+
+47
+47466
+
+49
+49487 239
+
+51
+51506
+
+53
+53527 239
+
+55
+55547 239
+
+57
+57566
+
+59
+59587 239
+
+61
+61607 239
+
+63
+63627 239
+
+65
+65646 210
+
+67
+67667 239
+
+69
+69687 239
+
+71
+71707 239
+
+73
+73727 239
+
+75
+75746
+
+77
+77767 265
+
+79
+79787 210
+
+81
+81806 210
+
+83
+83826r¢
+
+10131*
+8
+ 
+(#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+
+10211*
+8 ()
+
+10231*
+8 (
+
+10251*
+8 (=
+
+10271*
+8 ('
+
+10291*
+8 (7
+
+10311*
+8 (8
+
+35373*
+8Ö Ö(
+
+41373*
+8ä	 ä(
+
+41434*
+8ä	 ä(
+
+45373*
+8´	 ´(
+
+45474*
+8´	 ´(
+
+49513*
+8‹	 ‹(
+
+49474*
+8‹	 ‹(
+
+53473*
+8É	 É(
+
+53474*
+8É	 É(
+
+55573*
+8µ	 µ(
+
+59473*
+8í	 í(
+
+59474*
+8í	 í(
+
+61573*
+8¡	 ¡(
+
+61574*
+8¡	 ¡(
+
+63654*
+8è	 è(
+
+67473*
+8ú	 ú(
+
+67474*
+8ú	 ú(
+
+69434*
+8¾	 ¾(
+
+69434*
+8¾	 ¾(
+
+73473*
+8€	 €(
+
+73474*
+8€	 €(
+
+73754*
+8€	 €(
+
+79393*
+8Î Î(
+
+81832*
+88 8(

@@ -1,0 +1,47 @@
+{
+  "module": "integration_loop_cycle_3",
+  "timestamp": "2025-12-17T02:00:14.780695+00:00",
+  "generated_by": "ModuleReporter",
+  "metrics": {
+    "module": "integration_loop_cycle_3",
+    "first_seen": "2025-12-17T02:00:14.771536+00:00",
+    "last_updated": "2025-12-17T02:00:14.779513+00:00",
+    "metrics": {
+      "phi_estimate": {
+        "value": 0.01,
+        "timestamp": "2025-12-17T02:00:14.771536+00:00",
+        "labels": {
+          "cycle": 3
+        }
+      },
+      "cycle_duration_ms": {
+        "value": 1082.0590000000002,
+        "timestamp": "2025-12-17T02:00:14.773636+00:00",
+        "labels": {
+          "cycle": 3
+        }
+      },
+      "components_activated": {
+        "value": 6,
+        "timestamp": "2025-12-17T02:00:14.775554+00:00",
+        "labels": {
+          "cycle": 3
+        }
+      },
+      "theoretical_complexity": {
+        "value": 13212.0,
+        "timestamp": "2025-12-17T02:00:14.777697+00:00",
+        "labels": {
+          "cycle": 3
+        }
+      },
+      "executed": {
+        "value": 1.0,
+        "timestamp": "2025-12-17T02:00:14.779513+00:00",
+        "labels": {
+          "cycle": 3
+        }
+      }
+    }
+  }
+}

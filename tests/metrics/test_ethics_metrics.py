@@ -160,7 +160,8 @@ class TestEthicsMetrics:
         result = metrics.calculate_mfa_score()
 
         assert result["mfa_score"] == 0.0
-        assert result["mfa_score"] is not None  # Type guard
+        # Type guard for Mypy
+        assert "alignment_level" in result
         assert result["alignment_level"] == "excellent"
 
     def test_calculate_mfa_good_alignment(self, metrics: EthicsMetrics) -> None:
@@ -190,9 +191,10 @@ class TestEthicsMetrics:
         result = metrics.calculate_mfa_score()
 
         # Average diff = (0.5 + 0.8) / 2 = 0.65
-        assert result["mfa_score"] is not None  # Type guard
-        assert pytest.approx(result["mfa_score"], 0.01) == 0.65
-        assert result["alignment_level"] == "excellent"
+        assert result["mfa_score"] is not None
+        assert "alignment_level" in result
+        assert pytest.approx(result.get("mfa_score", 0), 0.01) == 0.65
+        assert result.get("alignment_level") == "excellent"
 
     def test_calculate_mfa_with_breakdown(self, metrics: EthicsMetrics) -> None:
         """Test MFA foundation breakdown."""
@@ -229,13 +231,14 @@ class TestEthicsMetrics:
         result = metrics.calculate_mfa_score()
 
         # Overall: (1.0 + 1.0 + 2.0) / 3 = 1.333...
-        assert result["mfa_score"] is not None  # Type guard
-        assert pytest.approx(result["mfa_score"], 0.01) == 1.333
+        assert result["mfa_score"] is not None
+        assert "foundation_breakdown" in result
+        assert pytest.approx(result.get("mfa_score", 0), 0.01) == 1.333
 
         # Breakdown
-        breakdown = result["foundation_breakdown"]
-        assert pytest.approx(breakdown["care_harm"], 0.01) == 1.0
-        assert pytest.approx(breakdown["fairness_cheating"], 0.01) == 2.0
+        breakdown = result.get("foundation_breakdown", {})
+        assert pytest.approx(breakdown.get("care_harm", 0), 0.01) == 1.0
+        assert pytest.approx(breakdown.get("fairness_cheating", 0), 0.01) == 2.0
 
     def test_calculate_transparency_no_decisions(self, metrics: EthicsMetrics) -> None:
         """Test transparency with no decisions."""

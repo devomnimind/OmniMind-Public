@@ -1,7 +1,5 @@
 import argparse
 import json
-import logging
-import os
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -11,8 +9,6 @@ import scipy.stats as stats  # type: ignore
 import structlog
 from pydantic import BaseModel, field_validator
 from rich import print as rprint
-from rich.console import Console
-from rich.markdown import Markdown
 from rich.table import Table
 
 # Configuração de logging com structlog (alinhado a pyproject.toml)

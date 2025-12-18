@@ -1,0 +1,24 @@
+
+	truebool
+%"Lazy load embedding model."str
+"all-MiniLM-L6-v2"strselfu u(!"§1
+/
+w w($"#get-field# _model_attempted:)
+'
+w w($"
+__bool__*:BboolH)
+'
+w w($"#unaryop !#2!:Bbool"
+w w($ *w w(
+"¸F
+D
+x$ x(M"3
+src.memory.episodic_memory_load_embedding_model:2
+0
+x x(!"#set-field# _embedding_model:2
+0
+y y(!
+"#set-field# _model_attempted:	"E1
+/
+z z($"#get-field# _embedding_model:
+z z($*>/home/fahbrain/projects/omnimind/src/memory/episodic_memory.py

@@ -18,9 +18,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import os
 import asyncio
-from supabase import create_client, Client
+import os
+
+from supabase import Client, create_client
 
 
 async def test_supabase():
@@ -48,7 +49,7 @@ async def test_supabase():
             print(f"⚠️  Supabase Auth check failed: {e}")
             # Tenta listar uma tabela 'memories' se existir
             try:
-                data = supabase.table("memories").select("*").limit(1).execute()
+                _data = supabase.table("memories").select("*").limit(1).execute()
                 print("✅ Supabase Table 'memories' access OK")
             except Exception as e2:
                 print(f"❌ Supabase Table access failed: {e2}")

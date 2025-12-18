@@ -26,9 +26,9 @@ Este script configura e inicializa o sistema de embeddings locais para busca
 semântica no código fonte do projeto OmniMind.
 """
 
+import logging
 import os
 import sys
-import logging
 from pathlib import Path
 
 # Adicionar src ao path

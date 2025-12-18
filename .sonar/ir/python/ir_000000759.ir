@@ -1,0 +1,28 @@
+
+��"
+# RELATÓRIO DE ANÁLISE PSICANALÍTICA
+
+**Framework Teórico:** {analysis.get('framework_used', 'N/A')}
+
+## 1. Hipótese Interpretativa Principal
+{analysis.get('hypothesis', 'Nenhuma hipótese gerada.')}
+
+## 2. Pontos de Resistência Identificados
+{analysis.get('resistance', 'Nenhum ponto de resistência identificado.')}
+
+## 3. Elementos-Chave da Sessão
+{analysis.get('key_elements', 'Nenhum elemento-chave identificado.')}
+
+## 4. Observações Adicionais
+{analysis.get('observations', 'Nenhuma observação adicional.')}
+
+---
+*Este é um relatório gerado automaticamente pelo OmniMind.*
+"str
+��"
+        Gera um relatório estruturado a partir da análise (placeholder).
+        NOTA: ABNT completo é complexo. Isto é uma simulação estruturada.
+        "strselfA A(!analysisA# A(;"8&
+$
+F Y(report"#id#:Bstr
+Z Z(*E/home/fahbrain/projects/omnimind/src/agents/psychoanalytic_analyst.py

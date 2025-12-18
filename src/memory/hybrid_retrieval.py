@@ -128,9 +128,40 @@ class HybridRetrievalSystem:
 
             device = get_sentence_transformer_device()
             logger.info(f"Carregando modelo de embeddings: {resolved_model_name} (device={device})")
-            self.embedding_model = SentenceTransformer(resolved_model_name, device=device)
+
+            # CORREÇÃO (2025-12-17): Carregar SEMPRE em CPU primeiro para evitar meta tensor
+            embedding_model = SentenceTransformer(resolved_model_name, device="cpu")
+
             # Garantir que o modelo está em dispositivo real (não meta)
-            ensure_tensor_on_real_device(self.embedding_model)
+            ensure_tensor_on_real_device(embedding_model)
+
+            # Se device desejado não é CPU, tentar mover
+            if device != "cpu":
+                try:
+                    # Verificação explícita de meta tensors
+                    has_meta_tensors = any(
+                        p.device.type == "meta" for p in embedding_model.parameters()
+                    )
+
+                    if has_meta_tensors:
+                        logger.warning("Meta tensors detectados, usando to_empty()")
+                        embedding_model = embedding_model.to_empty(device=device)
+                    else:
+                        embedding_model = embedding_model.to(device)
+
+                    logger.debug(f"✓ Modelo movido para {device}")
+                except Exception as e:
+                    logger.warning(f"Erro ao mover para {device}: {e}, mantendo em CPU")
+                    # Se falhou ao mover (ex: meta tensor não resolvido), tenta recuperar em CPU
+                    if "meta" in str(e).lower():
+                        try:
+                            embedding_model = embedding_model.to_empty(device="cpu")
+                        except Exception:
+                            pass
+                    else:
+                        embedding_model = embedding_model.to("cpu")
+
+            self.embedding_model = embedding_model
             embedding_dim_raw = self.embedding_model.get_sentence_embedding_dimension()
             self.embedding_dim = int(embedding_dim_raw) if embedding_dim_raw is not None else 384
             logger.info(f"Modelo carregado. Dimensões: {self.embedding_dim}, Device: {device}")
@@ -461,23 +492,11 @@ class HybridRetrievalSystem:
             pairs = [(query, result.content) for result in results]
 
             # Rerankear
-            scores: Any = self.reranker_model.predict(pairs)  # type: ignore
+            scores = self.reranker_model.predict(pairs)
 
             # Atualizar scores e ordenar
-            for i, result in enumerate(results):  # type: ignore
-                try:
-                    if hasattr(scores, "__getitem__"):
-                        score_item: Any = scores[i]  # type: ignore
-                        # Se for Tensor, converter com item(), senão float direto
-                        if hasattr(score_item, "item"):
-                            score_value = float(score_item.item())
-                        else:
-                            score_value = float(score_item)
-                    else:
-                        score_value = float(scores)
-                except (IndexError, TypeError, AttributeError):
-                    score_value = float(scores)
-                result.score = score_value
+            for i, result in enumerate(results):
+                result.score = float(scores[i]) if hasattr(scores, "__getitem__") else float(scores)
                 result.retrieval_method = "reranked"
 
             results_sorted = sorted(results, key=lambda x: x.score, reverse=True)

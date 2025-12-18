@@ -1,0 +1,205 @@
+
+1.0PythonFrontend"1763831844191*py2.BÇ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+-
+(src/metacognition/metacognition_agent.py9
++
+%src.metacognition.metacognition_agent11
+
+
+__future__12
+
+logging14
+
+datetime16
+
+typing18
+0
+*src.metacognition.optimization_suggestions20
++
+%src.metacognition.pattern_recognition22
+%
+src.metacognition.self_analysis24
+>
+8src.metacognition.metacognition_agent.MetacognitionAgent26
+S
+Msrc.metacognition.metacognition_agent.MetacognitionAgent._extract_suggestions28
+
+
+list30
+
+
+dict32
+G
+Asrc.metacognition.metacognition_agent.MetacognitionAgent.__init__34
+	
+str36
+	
+int38
+
+float40
+Q
+Ksrc.metacognition.metacognition_agent.MetacognitionAgent.get_analysis_stats42
+R
+Lsrc.metacognition.metacognition_agent.MetacognitionAgent.get_top_suggestions44
+R
+Lsrc.metacognition.metacognition_agent.MetacognitionAgent.should_run_analysis46
+
+
+bool48
+U
+Osrc.metacognition.metacognition_agent.MetacognitionAgent.get_quick_health_check50
+K
+Esrc.metacognition.metacognition_agent.MetacognitionAgent.run_analysis52J
+
+8
+89já
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27266 210
+
+29
+29287 227
+
+31
+31306
+
+33
+33326
+
+35
+35347 227
+
+37
+37366
+
+39
+39386
+
+41
+41406
+
+43
+43427 227
+
+45
+45447 227
+
+47
+47467 227
+
+49
+49486
+
+51
+51507 227
+
+53
+53527 227rÌ
+
+10131*
+8
+ 
+(#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (-
+
+10211*
+8 (O
+
+10231*
+8 (E
+
+10251*
+8 (9
+
+10171*
+8R R(/
+
+10171*
+8ñ	 ñ('
+
+29313*
+8È	 È(
+
+29334*
+8È	 È(
+
+35374*
+8	 (
+
+35394*
+8	 (
+
+35414*
+8	 (
+
+35394*
+8	 (
+
+43333*
+8ö	 ö(
+
+45313*
+8Ô	 Ô(
+
+45394*
+8Ô	 Ô(
+
+47493*
+8è	 è(
+
+51333*
+8°	 °(
+
+53333*
+89	 9(
+
+53394*
+89	 9(

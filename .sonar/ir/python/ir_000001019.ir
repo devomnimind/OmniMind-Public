@@ -1,0 +1,22 @@
+
+Ÿ•"Get MCP server metrics.
+
+        Returns:
+            Server metrics
+
+        Raises:
+            MCPClientError: If metrics request fails
+        "strself
+¢ ¢("”#
+!
+
+« «(B"#unknown-value#+
+)
+
+« «(Bresult"#unknown-value#.
+,
+
+¬ ¬("
+builtinsdict*:Bdict
+
+¬ ¬(*E/home/fahbrain/projects/omnimind/src/integrations/mcp_client_async.py

@@ -1,0 +1,248 @@
+
+1.0PythonFrontend"1763831833646*py2.BÆ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+*
+%src/security/security_orchestrator.py9
+(
+"src.security.security_orchestrator11
+
+asyncio12
+
+datetime14
+
+typing16
+
+dataclasses18
+
+
+enum20
+
+src.audit.immutable_audit22
+
+src.audit.alerting_system24
+"
+src.security.network_sensors26
+
+src.security.web_scanner28
+=
+7src.security.security_orchestrator.SecurityOrchestrator30
+F
+@src.security.security_orchestrator.SecurityOrchestrator.__init__32
+N
+Hsrc.security.security_orchestrator.SecurityOrchestrator._monitor_network34
+
+
+list36
+V
+Psrc.security.security_orchestrator.SecurityOrchestrator._monitor_system_security38
+W
+Qsrc.security.security_orchestrator.SecurityOrchestrator._monitor_web_applications40
+Y
+Ssrc.security.security_orchestrator.SecurityOrchestrator.start_continuous_monitoring42
+X
+Rsrc.security.security_orchestrator.SecurityOrchestrator.stop_continuous_monitoring44
+U
+Osrc.security.security_orchestrator.SecurityOrchestrator.run_full_security_audit46
+7
+1src.security.security_orchestrator.SecurityReport48
+S
+Msrc.security.security_orchestrator.SecurityOrchestrator._calculate_risk_score50
+
+float52
+
+
+dict54
+W
+Qsrc.security.security_orchestrator.SecurityOrchestrator._generate_recommendations56
+O
+Isrc.security.security_orchestrator.SecurityOrchestrator._determine_status58
+7
+1src.security.security_orchestrator.SecurityStatus60
+
+	enum.Enum62
+;
+5src.security.security_orchestrator.run_security_audit64
+B
+<src.security.security_orchestrator.start_security_monitoring66J
+
+8
+89j
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31306 210
+
+33
+33327 231
+
+35
+35347 231
+
+37
+37366
+
+39
+39387 231
+
+41
+41407 231
+
+43
+43427 231
+
+45
+45447 231
+
+47
+47467 231
+
+49
+49486 210
+
+51
+51507 231
+
+53
+53526
+
+55
+55546
+
+57
+57567 231
+
+59
+59587 231
+
+61
+61606 210
+
+63
+63626
+
+65
+65647 210
+
+67
+67667 210r¨
+
+10131*
+8
+ 
+(
+
+10151*
+8 ((
+
+10171*
+8 (-
+
+10191*
+8 ("
+
+10211*
+8 (
+
+10231*
+8 (K
+
+10251*
+8 (Q
+
+10271*
+8 (2
+
+10291*
+8 ()
+
+35374*
+8œ œ(
+
+41374*
+8Â Â((
+
+47493*
+8‰	 ‰( 
+
+51533*
+8û	 û(
+
+51554*
+8û	 û(
+
+51374*
+8û	 û(
+
+51374*
+8û	 û(
+
+51374*
+8û	 û(
+
+57373*
+8£	 £("
+
+57374*
+8£	 £("
+
+57374*
+8£	 £("
+
+57374*
+8£	 £("
+
+59613*
+8˜	 ˜(
+
+59534*
+8˜	 ˜(
+
+61632*
+8 (
+
+65493*
+8Í Í(

@@ -27,7 +27,6 @@ Execute com: python scripts/run_tests.py
 """
 
 import os
-import sys
 
 
 def main():

@@ -1,0 +1,133 @@
+
+:src.metacognition.iit_metrics.IITAnalyzer.detect_emergenceM
+A/home/fahbrain/projects/omnimind/src/metacognition/iit_metrics.py™ ™("2*µ
+2
+š ¡(¤¡
+
+¢ ¢(9
+%5*I
+
+__unknown_file (-+
+)src.metacognition.iit_metrics.IITAnalyzer*+
+
+__unknown_file (
+
+window_size2analyze_consciousnessC
+A
+
+¢ ¢(9	
+metrics"__id*"
+
+__unknown_file (
+
+%5X
+V
+
+¤ ¤(-
+%6"__id*<
+
+__unknown_file ( *
+	
+metrics"
+emergence_level~
+|
+
+¤1 ¤(I
+%7"__id*b
+
+__unknown_file (F*D+
+)src.metacognition.iit_metrics.IITAnalyzer"
+emergence_thresholdŒ
+‰
+
+¤ ¤(I
+%8"	__compare*"
+
+__unknown_file (
+>=*"
+
+__unknown_file (
+
+%6*"
+
+__unknown_file (
+
+%7G
+E
+
+¤ ¤(I
+is_emergent"__id*"
+
+__unknown_file (
+
+%8*
+4
+5*.
+4
+­ ­("
+
+­ ­(
+
+is_emergent*ý
+5
+§ «(X
+V
+
+© ©(0
+%1"__id*<
+
+__unknown_file ( *
+	
+metrics"
+emergence_levelR
+P
+
+ª ª(&
+%2"__id*6
+
+__unknown_file (*
+	
+metrics"
+	phi_valueÍ
+Ê
+
+¨ ª(,
+%3"__concat*9
+
+¨ ¨(7+)
+'ðŸ§  CONSCIOUSNESS EMERGENCE DETECTED: *
+
+© ©(
+
+level=*
+
+© ©(0
+
+%1*
+
+©5 ©(7
+, *
+
+ª ª(
+Î¦=*
+
+ª ª(&
+
+%2ig
+
+§ «(
+%4*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%32warning*
+4:
+
+™ ™(4
+window_sizeB-+
+)src.metacognition.iit_metrics.IITAnalyzerH

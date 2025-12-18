@@ -1,0 +1,27 @@
+
+"autonomy_level"str
+
+"learning_depth"str
+""task_completion_quality"str
+!"Convert to dictionary."str
+"self_correction_rate"strself   ("‘$
+"
+" '(	"#new-object#Bdict8
+6
+#' #(C"%##get-field# task_completion_quality: 
+
+# #(C"	#map-set#:5
+3
+$$ $(="" #get-field# self_correction_rate: 
+
+$ $(=	"	#map-set#:/
+-
+% %(1"#get-field# learning_depth: 
+
+% %(1"	#map-set#:
+/
+-
+& &(1"#get-field# autonomy_level: 
+
+& &(1"	#map-set#:
+" '(	*D/home/fahbrain/projects/omnimind/src/motivation/intrinsic_rewards.py

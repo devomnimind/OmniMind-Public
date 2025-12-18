@@ -1,0 +1,82 @@
+
+"description"str
+"type"str
+	"scanner"str
+"timestamp"str
+"remediation"str
+/&"Convert vulnerability to dictionary."str
+"url"str
+	"details"str
+
+"severity"str
+
+"evidence"strself
+ã ã(#vuln
+ã% ã(;"&
+$
+
+ç ó(	"#new-object#Bdict&
+$
+
+é é("#get-field# url:"
+ 
+
+é é("	#map-set#:5
+3
+
+è è(+	" #get-field# vulnerability_type:(
+&
+
+è è(1
+"#get-field# value:	"
+ 
+
+è è(1"	#map-set#:
++
+)
+
+ê ê(%"#get-field# severity:'
+%
+
+ê ê(*"#get-field# name:"
+ 
+
+ê ê(*"	#map-set#:.
+,
+
+ë ë(+"#get-field# description:"
+ 
+
+ë ë(+"	#map-set#:+
+)
+
+í í(%"#get-field# evidence:"
+ 
+
+í í(%"	#map-set#:.
+,
+
+ì ì(+"#get-field# remediation:"
+ 
+
+ì ì(+"	#map-set#:*
+(
+
+î î(#"#get-field# scanner:"
+ 
+
+î î(#"	#map-set#:,
+*
+
+ï ï('"#get-field# timestamp:"
+ 
+
+ï ï('"	#map-set#:*
+(
+
+ñ ñ(# "#get-field# details:"
+ 
+
+ñ ñ(#!"	#map-set#: 
+
+ç ó(	*</home/fahbrain/projects/omnimind/src/security/web_scanner.py

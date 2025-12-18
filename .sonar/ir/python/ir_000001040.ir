@@ -1,0 +1,59 @@
+
+"acceptance_criteria"str
+
+"priority"str
+"title"str
+	"metrics"str
+	"goal_id"str
+"estimated_effort"str
+!"Convert to dictionary."str
+"created_at"str
+"implementation_steps"str
+
+"description"str
+
+"category"strselfR R("×$
+"
+T _(	"#new-object#Bdict(
+&
+U U(#"#get-field# goal_id: 
+
+U U(#"	#map-set#:&
+$
+V V("#get-field# title: 
+
+V V(	"	#map-set#:,
+*
+W W(+"#get-field# description: 
+
+W W(+"	#map-set#:
+)
+'
+X X(%"#get-field# category: 
+
+X X(%"	#map-set#:)
+'
+Y Y(%"#get-field# priority: 
+
+Y Y(%"	#map-set#:1
+/
+Z  Z(5"#get-field# estimated_effort: 
+
+Z Z(5"	#map-set#:4
+2
+[# [(;"!#get-field# acceptance_criteria: 
+
+[ [(;"	#map-set#:5
+3
+\$ \(="" #get-field# implementation_steps: 
+
+\ \(="	#map-set#:(
+&
+] ](#"#get-field# metrics: 
+
+] ](#"	#map-set#:+
+)
+^ ^() "#get-field# created_at: 
+
+^ ^()!"	#map-set#: 
+T _(	*E/home/fahbrain/projects/omnimind/src/metacognition/proactive_goals.py

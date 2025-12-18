@@ -1,0 +1,72 @@
+
+"S3518"bool
+"division by zero"bool
+öê"
+        Calculate evaporation rate from Hawking temperature.
+
+        Hawking radiation rate increases with temperature.
+        Smaller black holes (less mass) are hotter and evaporate faster.
+
+        Returns:
+            Evaporation rate (0-1 per time unit)
+        "str
+0.0float
+1.0float
+"a"bool
+
+0intself
+Å Å("Â#
+!
+
+å å(""#unknown-value#.
+,
+
+å( å(8"#get-field# temperature:#
+!
+
+å: å(I"#unknown-value#(
+&
+
+å$ å(J"
+builtinsmin*:.
+,
+
+å å(Ktemp"
+builtinsmax*:#
+!
+
+è è("#unknown-value#'
+%
+
+è è(&	"	#binop *#*2*:#
+!
+
+è) è(8
+"#unknown-value#,
+*
+
+è è(8"
+#binop !=#2!=:
+Bbool"
+ 
+
+è è(8"
+#assert#:2
+0
+
+è è(8rate"#dependent-value#*:	
+(
+&
+
+ë ë(,"
+builtinsmin*:(
+&
+
+ë ë(-"
+builtinsmax*:0
+.
+
+ë ë(."
+builtinsfloat*:Bfloat
+
+ë ë(.*E/home/fahbrain/projects/omnimind/src/motivation/hawking_motivation.py

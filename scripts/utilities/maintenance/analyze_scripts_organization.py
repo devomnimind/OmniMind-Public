@@ -6,10 +6,9 @@ e mapeia scripts por fase nas documentações.
 """
 
 import os
-import re
-from pathlib import Path
-from typing import Dict, List, Set, Tuple
 from collections import defaultdict
+from pathlib import Path
+from typing import List
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent.resolve()
 
@@ -52,11 +51,11 @@ def find_script_references(script_name: str) -> List[str]:
     references = []
     script_base = script_name.replace(".sh", "").replace(".py", "")
 
-    for ext in ['*.md', '*.sh', '*.py', '*.tsx', '*.ts', '*.txt']:
+    for ext in ["*.md", "*.sh", "*.py", "*.tsx", "*.ts", "*.txt"]:
         for file in PROJECT_ROOT.rglob(ext):
             if file.is_file() and file.name != script_name:
                 try:
-                    content = file.read_text(encoding='utf-8', errors='ignore')
+                    content = file.read_text(encoding="utf-8", errors="ignore")
                     if script_name in content or script_base in content:
                         references.append(str(file.relative_to(PROJECT_ROOT)))
                 except:
@@ -108,11 +107,11 @@ def analyze_scripts():
         print(f"📄 {script}")
         print(f"   Fases: {', '.join(data['phases']) if data['phases'] else 'N/A'}")
         print(f"   Referências: {len(data['references'])}")
-        if data['references']:
+        if data["references"]:
             print(f"   ✅ Usado em:")
-            for ref in data['references'][:3]:
+            for ref in data["references"][:3]:
                 print(f"      - {ref}")
-            if len(data['references']) > 3:
+            if len(data["references"]) > 3:
                 print(f"      ... e mais {len(data['references']) - 3}")
         else:
             print(f"   ⚠️  NÃO REFERENCIADO (candidato a arquivar)")
@@ -170,7 +169,10 @@ def analyze_scripts():
         print(f"      → optimize_log.py")
 
     print("\n   📁 scripts/archive/deprecated/")
-    if "TRIBUNAL_FIX_VISUAL.sh" in root_analysis and root_analysis["TRIBUNAL_FIX_VISUAL.sh"]["exists"]:
+    if (
+        "TRIBUNAL_FIX_VISUAL.sh" in root_analysis
+        and root_analysis["TRIBUNAL_FIX_VISUAL.sh"]["exists"]
+    ):
         print(f"      → TRIBUNAL_FIX_VISUAL.sh (script de documentação visual)")
 
     # 5. Resumo
@@ -185,4 +187,3 @@ def analyze_scripts():
 if __name__ == "__main__":
     os.chdir(PROJECT_ROOT)
     analyze_scripts()
-

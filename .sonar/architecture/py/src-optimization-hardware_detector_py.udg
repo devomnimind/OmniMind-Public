@@ -1,0 +1,266 @@
+
+1.0PythonFrontend"1763831839717*py2.B°
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+*
+%src/optimization/hardware_detector.py9
+(
+"src.optimization.hardware_detector11
+
+platform12
+
+psutil14
+
+
+json16
+
+pathlib18
+
+typing20
+
+dataclasses22
+
+datetime24
+
+torch26
+>
+8src.optimization.hardware_detector.load_hardware_profile28
+8
+2src.optimization.hardware_detector.HardwareProfile30
+
+pathlib.Path32
+9
+3src.optimization.hardware_detector.HardwareDetector34
+N
+Hsrc.optimization.hardware_detector.HardwareDetector.detect_and_configure36
+
+tuple38
+
+
+bool40
+E
+?src.optimization.hardware_detector.HardwareDetector.save_config42
+	
+str44
+B
+<src.optimization.hardware_detector.HardwareDetector.__init__46
+I
+Csrc.optimization.hardware_detector.HardwareDetector.detect_hardware48
+Q
+Ksrc.optimization.hardware_detector.HardwareDetector.generate_optimal_config50
+;
+5src.optimization.hardware_detector.OptimizationConfig52
+7
+1src.optimization.hardware_detector.auto_configure54
+@
+:src.optimization.hardware_detector.HardwareProfile.to_dict56
+
+
+dict58
+F
+@src.optimization.hardware_detector.HardwareProfile.__post_init__60
+@
+:src.optimization.hardware_detector.HardwareProfile.to_json62
+C
+=src.optimization.hardware_detector.OptimizationConfig.to_json64
+C
+=src.optimization.hardware_detector.OptimizationConfig.to_dict66
+A
+;src.optimization.hardware_detector.load_optimization_config68J
+
+8
+89j©
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29287 210
+
+31
+31306 210
+
+33
+33326
+
+35
+35346 210
+
+37
+37367 235
+
+39
+39386
+
+41
+41406
+
+43
+43427 235
+
+45
+45446
+
+47
+47467 235
+
+49
+49487 235
+
+51
+51507 235
+
+53
+53526 210
+
+55
+55547 210
+
+57
+57567 231
+
+59
+59586
+
+61
+61607 231
+
+63
+63627 231
+
+65
+65647 253
+
+67
+67667 253
+
+69
+69687 210r°
+
+10131*
+8 (
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (?
+
+10151*
+8 (A
+
+10231*
+8   (*
+
+10251*
+8! !(
+
+10271*
+8® ®(
+
+29313*
+8 (
+
+29334*
+8 (
+
+37393*
+8õ	 õ(
+
+37414*
+8õ	 õ(
+
+37414*
+8õ	 õ(
+
+43393*
+8×	 ×(
+
+43334*
+8×	 ×(
+
+43454*
+8×	 ×(
+
+43454*
+8×	 ×(
+
+49313*
+8Ž	 Ž(
+
+51533*
+8Ó	 Ó( 
+
+51414*
+8Ó	 Ó( 
+
+55393*
+8š š(
+
+55414*
+8š š(
+
+55414*
+8š š(
+
+57593*
+8G	 G(
+
+63453*
+8K	 K(
+
+65453*
+8|	 |(
+
+67593*
+8x	 x(
+
+69533*
+8“ “(
+
+69334*
+8“ “(

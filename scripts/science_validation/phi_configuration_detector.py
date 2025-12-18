@@ -9,15 +9,15 @@ alertando para problemas de implementação vs teoria.
 
 import asyncio
 import json
+import sys
 import time
 from pathlib import Path
-from typing import Dict, List, Any, Callable
+from typing import Any, Dict, List
+
 import numpy as np
 from rich import print as rprint
-from rich.table import Table
 from rich.panel import Panel
-
-import sys
+from rich.table import Table
 
 sys.path.append(".")
 from scripts.science_validation.run_scientific_ablations import IntegrationLoopSimulator

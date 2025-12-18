@@ -125,34 +125,3 @@ def get_cuda_status() -> dict:
         result["torch_error"] = str(e)
 
     return result
-
-
-def setup_cuda_isolation():
-    """
-    Configurar isolamento de GPU baseado em contexto.
-
-    Determina CUDA_VISIBLE_DEVICES apropriado baseado em:
-    - OMNIMIND_VALIDATION_MODE: Validação científica (GPU exclusive via signaling)
-    - OMNIMIND_TEST_MODE: Testes unitários (GPU desabilitada, CPU only)
-    - Normal (produção): GPU compartilhada com pausagem de auxiliares
-
-    Deve ser chamado ANTES de inicializar torch/cuda, idealmente no início
-    de src/main.py.
-
-    Behavior:
-    - VALIDATION_MODE=true: CUDA_VISIBLE_DEVICES=0 (exclusivo via pausagem)
-    - TEST_MODE=true: CUDA_VISIBLE_DEVICES="" (CPU only)
-    - Normal: CUDA_VISIBLE_DEVICES=0 (com pausagem de coleta/monitor)
-    """
-    validation_mode = os.getenv("OMNIMIND_VALIDATION_MODE", "false").lower() == "true"
-    test_mode = os.getenv("OMNIMIND_TEST_MODE", "false").lower() == "true"
-
-    if test_mode:
-        os.environ["CUDA_VISIBLE_DEVICES"] = ""
-        logger.info("🧪 TEST_MODE active: GPU disabled (CPU only for tests)")
-    elif validation_mode:
-        os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-        logger.info("🔬 VALIDATION_MODE active: GPU exclusive (via graceful signaling)")
-    else:
-        os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-        logger.info("📊 PRODUCTION_MODE: GPU shared (auxiliary services paused during validation)")

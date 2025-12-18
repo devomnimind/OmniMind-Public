@@ -1,13 +1,12 @@
 import argparse
+import json
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Any
-
-import json
-from rich import print as rprint
-from rich.markdown import Markdown
+from typing import Any, Dict
 
 import structlog
+from rich import print as rprint
+from rich.markdown import Markdown
 
 logger = structlog.get_logger(__name__)  # Config anterior
 

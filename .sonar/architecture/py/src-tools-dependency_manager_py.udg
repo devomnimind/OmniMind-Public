@@ -1,0 +1,354 @@
+
+1.0PythonFrontend"1763831833593*py2.B®
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+$
+src/tools/dependency_manager.py9
+"
+src.tools.dependency_manager11
+
+
+__future__12
+
+
+json14
+
+logging16
+
+
+subprocess18
+
+dataclasses20
+
+datetime22
+
+
+enum24
+
+pathlib26
+
+typing28
+
+requests30
+
+platform32
+	
+sys34
+4
+.src.tools.dependency_manager.DependencyManager36
+M
+Gsrc.tools.dependency_manager.DependencyManager.generate_security_report38
+	
+str40
+D
+>src.tools.dependency_manager.DependencyManager.verify_lockfile42
+
+
+bool44
+A
+;src.tools.dependency_manager.DependencyManager._scan_safety46
+
+
+list48
+B
+<src.tools.dependency_manager.DependencyManager.save_lockfile50
+5
+/src.tools.dependency_manager.DependencyLockfile52
+I
+Csrc.tools.dependency_manager.DependencyManager.scan_vulnerabilities54
+>
+8src.tools.dependency_manager.DependencyManager._scan_osv56
+E
+?src.tools.dependency_manager.DependencyManager.detect_conflicts58
+D
+>src.tools.dependency_manager.DependencyManager.suggest_updates60
+
+
+dict62
+B
+<src.tools.dependency_manager.DependencyManager.load_lockfile64
+=
+7src.tools.dependency_manager.DependencyManager.__init__66
+
+pathlib.Path68
+F
+@src.tools.dependency_manager.DependencyManager._get_package_info70
+.
+(src.tools.dependency_manager.PackageInfo72
+F
+@src.tools.dependency_manager.DependencyManager.generate_lockfile74
+/
+)src.tools.dependency_manager.ConflictInfo76
+=
+7src.tools.dependency_manager.DependencyLockfile.to_dict78
+?
+9src.tools.dependency_manager.DependencyLockfile.from_dict80
+4
+.src.tools.dependency_manager.scan_dependencies82
+
+tuple84
+0
+*src.tools.dependency_manager.Vulnerability86
+8
+2src.tools.dependency_manager.VulnerabilitySeverity88
+
+	enum.Enum90
+2
+,src.tools.dependency_manager.create_lockfile92J
+
+8
+89j±
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33325
+
+35
+35345
+
+37
+37366 210
+
+39
+39387 237
+
+41
+41406
+
+43
+43427 237
+
+45
+45446
+
+47
+47467 237
+
+49
+49486
+
+51
+51507 237
+
+53
+53526 210
+
+55
+55547 237
+
+57
+57567 237
+
+59
+59587 237
+
+61
+61607 237
+
+63
+63626
+
+65
+65647 237
+
+67
+67667 237
+
+69
+69686
+
+71
+71707 237
+
+73
+73726 210
+
+75
+75747 237
+
+77
+77766 210
+
+79
+79787 253
+
+81
+81807 253
+
+83
+83827 210
+
+85
+85846
+
+87
+87866 210
+
+89
+89886 210
+
+91
+91906
+
+93
+93927 210r†
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 ()
+
+10231*
+8 (
+
+10251*
+8 (
+
+10271*
+8 (
+
+10291*
+8 (4
+
+10311*
+8 (
+
+10331*
+8« «(
+
+10351*
+8¬ ¬(
+
+39413*
+8‡	 ‡(!
+
+43453*
+8ÿ	 ÿ(
+
+47493*
+8˜	 ˜(
+
+51534*
+8í	 í(
+
+55493*
+8²	 ²(
+
+55454*
+8²	 ²(
+
+55454*
+8²	 ²(
+
+57493*
+8Ô	 Ô(
+
+59493*
+8Á	 Á(
+
+61633*
+8ë	 ë(
+
+67694*
+8}	 }(
+
+67694*
+8}	 }(
+
+71733*
+8¼	 ¼(
+
+71414*
+8¼	 ¼(
+
+71414*
+8¼	 ¼(
+
+75533*
+8	 (
+
+79633*
+8T	 T(
+
+81533*
+8f	 f(
+
+81634*
+8f	 f(
+
+83853*
+8Æ Æ(
+
+83694*
+8Æ Æ(
+
+89412*
+8 (
+
+89912*
+8 (
+
+93533*
+8Ù Ù(
+
+93694*
+8Ù Ù(
+
+93694*
+8Ù Ù(

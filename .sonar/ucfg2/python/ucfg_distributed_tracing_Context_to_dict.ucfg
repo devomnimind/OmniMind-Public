@@ -1,0 +1,117 @@
+
+9src.observability.distributed_tracing.SpanContext.to_dictS
+I/home/fahbrain/projects/omnimind/src/observability/distributed_tracing.py< <("2*‘
+2= =(6
+> D(	
+%1"dicty
+w
+? ?(%
+%2"__id*_
+
+__unknown_file (C*A3
+1src.observability.distributed_tracing.SpanContext"
+
+trace_id
+Œ
+? ?(%
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+trace_id*"
+
+__unknown_file (
+
+%2x
+v
+@ @(#
+%4"__id*^
+
+__unknown_file (B*@3
+1src.observability.distributed_tracing.SpanContext"	
+span_idŽ
+‹
+@ @(#
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+span_id*"
+
+__unknown_file (
+
+%4
+}
+A A(1
+%6"__id*e
+
+__unknown_file (I*G3
+1src.observability.distributed_tracing.SpanContext"
+parent_span_id•
+’
+A A(1
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*.
+
+__unknown_file (
+parent_span_id*"
+
+__unknown_file (
+
+%6|
+z
+B B(+
+%8"__id*b
+
+__unknown_file (F*D3
+1src.observability.distributed_tracing.SpanContext"
+trace_state’
+
+B B(+
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+trace_state*"
+
+__unknown_file (
+
+%8{
+y
+C C('
+%10"__id*`
+
+__unknown_file (D*B3
+1src.observability.distributed_tracing.SpanContext"
+	is_remote’
+
+C C('
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	is_remote*#
+
+__unknown_file (
+
+%10"
+> D(	
+
+%1B53
+1src.observability.distributed_tracing.SpanContextH

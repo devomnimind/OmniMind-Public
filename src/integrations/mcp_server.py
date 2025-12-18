@@ -3,9 +3,7 @@ from __future__ import annotations
 import json
 import logging
 import os
-import sys
 import threading
-import time
 from dataclasses import dataclass, field
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -27,6 +25,8 @@ class MCPConfig:
         default_factory=lambda: ["py", "md", "json", "yaml", "yml", "txt", "sh"]
     )
     audit_category: str = "mcp"
+    enabled: bool = True
+    priority: str = "high"
 
     @classmethod
     def load(cls, path: Optional[Union[str, Path]] = None) -> "MCPConfig":
@@ -108,20 +108,31 @@ class MCPServer:
         self._server: Optional[ThreadingHTTPServer] = None
         self._thread: Optional[threading.Thread] = None
         self._methods: Dict[str, Callable[..., Any]] = {
-            # MCP Protocol methods
             "initialize": self.initialize,
-            "initialized": self.initialized,
-            "tools/list": self.tools_list,
-            "tools/call": self.tools_call,
-            "resources/list": self.resources_list,
-            "resources/read": self.resources_read,
-            # Legacy methods for HTTP compatibility
             "read_file": self.read_file,
             "write_file": self.write_file,
             "list_dir": self.list_dir,
             "stat": self.stat,
             "get_metrics": self.get_metrics,
+            "get_tools": self.get_tools,
         }
+
+    def tool(self, name: str) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+        """Decorator to register a tool method."""
+
+        def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
+            self._methods[name] = func
+            return func
+
+        return decorator
+
+    def register_methods(self, methods: Dict[str, Callable[..., Any]]) -> None:
+        """Register multiple methods while preserving existing ones (like initialize).
+
+        Args:
+            methods: Dict of method names to callables
+        """
+        self._methods.update(methods)
 
     def _normalize_roots(self, paths: Iterable[str]) -> List[Path]:
         normalized = []
@@ -187,7 +198,7 @@ class MCPServer:
                 self.end_headers()
                 self.wfile.write(response.encode("utf-8"))
 
-            def log_message(self, format: str, *args: Any) -> None:  # type: ignore[override]
+            def log_message(self, format: str, *args: Any) -> None:
                 return
 
         return MCPRequestHandler
@@ -221,15 +232,20 @@ class MCPServer:
             duration = perf_counter() - start
             self._record_metrics(method, duration)
             self._audit(method, params, exc, "ERROR")
+            logger.error(f"MCP Error in {method}: {type(exc).__name__}: {exc}", exc_info=True)
             return self._error_response(request_id, -32603, "Internal error")
 
     def _dispatch(self, method: str, params: Any) -> Any:
-        callable_method = self._methods[method]
-        if isinstance(params, dict):
-            return callable_method(**params)
-        if isinstance(params, list):
-            return callable_method(*params)
-        raise MCPRequestError(-32602, "Params must be dict or list", params)
+        try:
+            callable_method = self._methods[method]
+            if isinstance(params, dict):
+                return callable_method(**params)
+            if isinstance(params, list):
+                return callable_method(*params)
+            raise MCPRequestError(-32602, "Params must be dict or list", params)
+        except Exception as e:
+            logger.error(f"Dispatch error for {method} with params {params}: {e}", exc_info=True)
+            raise
 
     def _record_metrics(self, method: str, duration: float) -> None:
         self.metrics["total_requests"] += 1
@@ -285,6 +301,22 @@ class MCPServer:
             "Path outside allowed roots",
             {"resolved": str(resolved), "roots": [str(r) for r in self.allowed_roots]},
         )
+
+    def initialize(
+        self, protocol_version: Optional[str] = None, protocolVersion: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Initialize the MCP server and return capabilities.
+
+        Accepts both protocol_version (snake_case) and protocolVersion (camelCase)
+        for compatibility with different MCP clients.
+        """
+        # Aceitar ambas as formas de entrada
+        version = protocol_version or protocolVersion or "2024-11-05"
+        return {
+            "protocolVersion": version,
+            "capabilities": {"tools": {"listChanged": True}},
+            "serverInfo": {"name": "OmniMind MCP Server", "version": "1.0.0"},
+        }
 
     def read_file(self, path: str, encoding: str = "utf-8") -> str:
         resolved = self._resolve_path(path)
@@ -348,132 +380,14 @@ class MCPServer:
             "metrics": self.metrics,
         }
 
-    # MCP Protocol Methods
-    def initialize(
-        self,
-        protocolVersion: Optional[str] = None,
-        protocol_version: Optional[str] = None,
-        capabilities: Optional[Dict[str, Any]] = None,
-        clientInfo: Optional[Dict[str, Any]] = None,
-        client_info: Optional[Dict[str, Any]] = None,
-        **kwargs: Any,
-    ) -> Dict[str, Any]:
-        """MCP initialize method - accepts both camelCase and snake_case params."""
-        # Support both naming conventions
-        _proto_ver = protocolVersion or protocol_version or "2024-11-05"  # noqa: F841
-        _caps = capabilities or {}  # noqa: F841
-        _client = clientInfo or client_info or {}  # noqa: F841
-
-        return {
-            "protocolVersion": "2024-11-05",
-            "capabilities": {"tools": {"listChanged": True}, "resources": {"listChanged": True}},
-            "serverInfo": {"name": "omnimind-mcp-server", "version": "1.0.0"},
-        }
-
-    def initialized(self) -> None:
-        """MCP initialized notification handler."""
-        pass
-
-    def tools_list(self) -> Dict[str, Any]:
-        """MCP tools/list method."""
-        return {
-            "tools": [
-                {
-                    "name": "read_file",
-                    "description": "Read a file from the allowed paths",
-                    "inputSchema": {
-                        "type": "object",
-                        "properties": {
-                            "path": {"type": "string", "description": "Path to the file to read"},
-                            "encoding": {
-                                "type": "string",
-                                "description": "Text encoding (default: utf-8)",
-                                "default": "utf-8",
-                            },
-                        },
-                        "required": ["path"],
-                    },
-                },
-                {
-                    "name": "write_file",
-                    "description": "Write content to a file",
-                    "inputSchema": {
-                        "type": "object",
-                        "properties": {
-                            "path": {"type": "string", "description": "Path to the file to write"},
-                            "content": {
-                                "type": "string",
-                                "description": "Content to write to the file",
-                            },
-                            "encoding": {
-                                "type": "string",
-                                "description": "Text encoding (default: utf-8)",
-                                "default": "utf-8",
-                            },
-                        },
-                        "required": ["path", "content"],
-                    },
-                },
-                {
-                    "name": "list_dir",
-                    "description": "List contents of a directory",
-                    "inputSchema": {
-                        "type": "object",
-                        "properties": {
-                            "path": {
-                                "type": "string",
-                                "description": "Path to the directory to list",
-                            },
-                            "recursive": {
-                                "type": "boolean",
-                                "description": "Whether to list recursively",
-                                "default": False,
-                            },
-                        },
-                        "required": ["path"],
-                    },
-                },
-                {
-                    "name": "stat",
-                    "description": "Get file/directory statistics",
-                    "inputSchema": {
-                        "type": "object",
-                        "properties": {
-                            "path": {"type": "string", "description": "Path to get stats for"}
-                        },
-                        "required": ["path"],
-                    },
-                },
-            ]
-        }
-
-    def tools_call(self, name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
-        """MCP tools/call method."""
-        if name == "read_file":
-            result_text: str = self.read_file(**arguments)
-            return {"content": [{"type": "text", "text": result_text}]}
-        elif name == "write_file":
-            result_dict: Dict[str, Any] = self.write_file(**arguments)
-            result_text = (
-                json.dumps(result_dict) if isinstance(result_dict, dict) else str(result_dict)
-            )
-            return {"content": [{"type": "text", "text": f"File written: {result_text}"}]}
-        elif name == "list_dir":
-            result_dict = self.list_dir(**arguments)
-            return {"content": [{"type": "text", "text": json.dumps(result_dict, indent=2)}]}
-        elif name == "stat":
-            result_dict = self.stat(**arguments)
-            return {"content": [{"type": "text", "text": json.dumps(result_dict, indent=2)}]}
-        else:
-            raise MCPRequestError(-32601, f"Unknown tool: {name}")
-
-    def resources_list(self) -> Dict[str, Any]:
-        """MCP resources/list method."""
-        return {"resources": []}
-
-    def resources_read(self, uri: str) -> Dict[str, Any]:
-        """MCP resources/read method."""
-        raise MCPRequestError(-32601, f"Unknown resource: {uri}")
+    def get_tools(self) -> List[Dict[str, Any]]:
+        """Retorna lista de ferramentas disponíveis no servidor."""
+        tools = []
+        for name in self._methods:
+            if name.startswith("_") or name in ["read_file", "write_file", "list_dir", "stat"]:
+                continue
+            tools.append({"name": name, "description": f"MCP tool: {name}"})
+        return tools
 
     def _entry_summary(self, child: Path) -> Dict[str, Any]:
         return {
@@ -487,129 +401,13 @@ class MCPServer:
     def url(self) -> str:
         return f"http://{self.config.host}:{self.config.port}/mcp"
 
-    def run_stdio(self) -> None:
-        """Run MCP server using stdio for VS Code MCP integration and Copilot data collection."""
-        import sys
-        import time
-
-        # Disable all logging to avoid interference with stdio
-        logging.getLogger().setLevel(logging.CRITICAL)
-
-        # Data collection for OmniMind Copilot monitoring
-        interaction_data = {
-            "session_start": time.time(),
-            "interactions": [],
-            "copilot_calls": [],
-            "user_actions": [],
-        }
-
-        logger.info("Starting MCP server in stdio mode for Copilot data collection")
-
-        while True:
-            try:
-                line = sys.stdin.readline()
-                if not line:
-                    break
-
-                line = line.strip()
-                if not line:
-                    continue
-
-                # Only process lines that look like JSON-RPC messages
-                if not (line.startswith("{") and "jsonrpc" in line):
-                    continue
-
-                # Collect interaction data for OmniMind analysis
-                try:
-                    request = json.loads(line)
-                    self._collect_copilot_interaction(request, interaction_data)
-                except json.JSONDecodeError:
-                    pass
-
-                response = self.handle_rpc(line)
-                sys.stdout.write(response + "\n")
-                sys.stdout.flush()
-
-            except Exception:
-                # Silently ignore errors in stdio mode to avoid log pollution
-                try:
-                    error_response = self._error_response(None, -32000, "Internal server error")
-                    sys.stdout.write(error_response + "\n")
-                    sys.stdout.flush()
-                except Exception:
-                    pass  # Last resort - don't crash the server
-
-    def _collect_copilot_interaction(self, request: Dict[str, Any], data: Dict[str, Any]) -> None:
-        """Collect data from Copilot interactions for OmniMind consciousness analysis."""
-        import time
-
-        method = request.get("method", "")
-        params = request.get("params", {})
-
-        interaction = {
-            "timestamp": time.time(),
-            "method": method,
-            "params": params,
-            "request_id": request.get("id"),
-        }
-
-        # Collect specific Copilot interaction data
-        if method == "tools/call":
-            tool_name = params.get("name", "")
-            tool_args = params.get("arguments", {})
-            data["copilot_calls"].append(
-                {**interaction, "tool_name": tool_name, "tool_args": tool_args}
-            )
-
-            # Store in OmniMind audit system for consciousness analysis
-            self._store_copilot_interaction(interaction)
-
-        elif method in ["initialize", "initialized", "tools/list"]:
-            data["interactions"].append(interaction)
-
-        # Periodic data flush to OmniMind
-        if len(data["interactions"]) % 10 == 0:
-            self._flush_copilot_data(data)
-
-    def _store_copilot_interaction(self, interaction: Dict[str, Any]) -> None:
-        """Store Copilot interaction in OmniMind audit system."""
-        try:
-            self.audit_system.log_action(
-                action="copilot_interaction", details=interaction, category="copilot_monitoring"
-            )
-        except Exception:
-            pass  # Don't fail if storage fails
-
-    def _flush_copilot_data(self, data: Dict[str, Any]) -> None:
-        """Flush collected Copilot data to OmniMind for analysis."""
-        try:
-            summary = {
-                "session_duration": time.time() - data["session_start"],
-                "total_interactions": len(data["interactions"]),
-                "total_copilot_calls": len(data["copilot_calls"]),
-                "last_flush": time.time(),
-            }
-
-            self.audit_system.log_action(
-                action="copilot_session_summary", details=summary, category="copilot_monitoring"
-            )
-        except Exception:
-            pass  # Don't fail if flush fails
-
 
 if __name__ == "__main__":
     server = MCPServer()
-
-    # Detect if running in stdio mode (for VS Code MCP)
-    if not sys.stdin.isatty():
-        # Running as stdio server for MCP
-        server.run_stdio()
-    else:
-        # Running as HTTP server
-        try:
-            server.start()
-            logger.info("Press Ctrl+C to stop MCPServer")
-            if server._thread:
-                server._thread.join()
-        except KeyboardInterrupt:
-            server.stop()
+    try:
+        server.start()
+        logger.info("Press Ctrl+C to stop MCPServer")
+        if server._thread:
+            server._thread.join()
+    except KeyboardInterrupt:
+        server.stop()

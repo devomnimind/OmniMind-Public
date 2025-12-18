@@ -1,0 +1,208 @@
+
+1.0PythonFrontend"1763831844641*py2.Bã
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+&
+!src/security/api_documentation.py9
+$
+src.security.api_documentation11
+
+
+__future__12
+
+
+json14
+
+logging16
+
+dataclasses18
+
+pathlib20
+
+typing22
+>
+8src.security.api_documentation.APIDocumentationGenerator24
+Z
+Tsrc.security.api_documentation.APIDocumentationGenerator.generate_postman_collection26
+
+pathlib.Path28
+G
+Asrc.security.api_documentation.APIDocumentationGenerator.__init__30
+T
+Nsrc.security.api_documentation.APIDocumentationGenerator.generate_sdk_template32
+	
+str34
+K
+Esrc.security.api_documentation.APIDocumentationGenerator.add_endpoint36
+0
+*src.security.api_documentation.APIEndpoint38
+T
+Nsrc.security.api_documentation.APIDocumentationGenerator.generate_openapi_spec40
+
+
+dict42
+U
+Osrc.security.api_documentation.APIDocumentationGenerator.generate_markdown_docs44
+R
+Lsrc.security.api_documentation.APIDocumentationGenerator._initialize_schemas46
+Y
+Ssrc.security.api_documentation.APIDocumentationGenerator.generate_all_documentation48
+T
+Nsrc.security.api_documentation.APIDocumentationGenerator._initialize_endpoints50
+R
+Lsrc.security.api_documentation.APIDocumentationGenerator.export_openapi_json52
+S
+Msrc.security.api_documentation.APIDocumentationGenerator._generate_python_sdk54
+W
+Qsrc.security.api_documentation.APIDocumentationGenerator._generate_javascript_sdk56
+;
+5src.security.api_documentation.APIEndpoint.to_openapi58J
+
+8
+89jÄ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25246 210
+
+27
+27267 225
+
+29
+29286
+
+31
+31307 225
+
+33
+33327 225
+
+35
+35346
+
+37
+37367 225
+
+39
+39386 210
+
+41
+41407 225
+
+43
+43426
+
+45
+45447 225
+
+47
+47467 225
+
+49
+49487 225
+
+51
+51507 225
+
+53
+53527 225
+
+55
+55547 225
+
+57
+57567 225
+
+59
+59587 239r„
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 ()
+
+10211*
+8 (
+
+10231*
+8 (-
+
+27293*
+8ñ	 ñ($
+
+31294*
+8<	 <(
+
+33293*
+8´	 ´(
+
+33354*
+8´	 ´(
+
+37394*
+8‹	 ‹(
+
+41433*
+8–	 –(
+
+45293*
+8í	 í(
+
+49433*
+8¶	 ¶(#
+
+53293*
+8Ú	 Ú(
+
+53354*
+8Ú	 Ú(
+
+55293*
+8Å	 Å(
+
+57293*
+8ê	 ê(!
+
+59433*
+8&	 &(

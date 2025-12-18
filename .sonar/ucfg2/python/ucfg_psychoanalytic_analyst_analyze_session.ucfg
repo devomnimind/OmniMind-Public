@@ -1,0 +1,138 @@
+
+Gsrc.agents.psychoanalytic_analyst.PsychoanalyticAnalyst.analyze_sessionO
+E/home/fahbrain/projects/omnimind/src/agents/psychoanalytic_analyst.py' '("1*ñ
+2, 5(ﬁ€
+6 6(F
+%2*W
+
+__unknown_file (;9
+7src.agents.psychoanalytic_analyst.PsychoanalyticAnalyst*-
+
+__unknown_file (
+
+session_notes*)
+
+__unknown_file (
+
+	framework2_build_analysis_prompt@
+>
+6 6(F
+prompt"__id*"
+
+__unknown_file (
+
+%2N
+L
+89 8(H
+%3"__id*4
+
+__unknown_file (*
+
+	framework"
+valuez
+x
+8 8(M
+%4"__concat*3
+8 8(8'%
+#Iniciando an√°lise com o framework *
+89 8(H
+
+%3*
+8I 8(L
+...db
+8 8(N
+%5*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%42infoz
+x
+: :(
+%6"__id*`
+
+__unknown_file (D*B9
+7src.agents.psychoanalytic_analyst.PsychoanalyticAnalyst"
+llmfd
+: :(*
+%7*"
+
+__unknown_file (
+
+%6*&
+
+__unknown_file (
+
+
+prompt2invokeB
+@
+: :(*
+
+response"__id*"
+
+__unknown_file (
+
+%7ß§
+< <(1
+%8*W
+
+__unknown_file (;9
+7src.agents.psychoanalytic_analyst.PsychoanalyticAnalyst*(
+
+__unknown_file (
+
+
+response2_parse_analysisB
+@
+< <(1
+
+analysis"__id*"
+
+__unknown_file (
+
+%8N
+L
+=% =(4
+%9"__id*4
+
+__unknown_file (*
+
+	framework"
+value±Æ
+= =(4
+%10"dict.__setitem__*(
+
+__unknown_file (
+
+
+analysis*.
+
+__unknown_file (
+framework_used*"
+
+__unknown_file (
+
+%92__setitem__"
+? ?(
+
+
+analysis*ñ
+1* *(MÅ
+
+*- *(M
+%1"__id*g
+
+__unknown_file (K*I;
+9src.agents.psychoanalytic_analyst.PsychoanalyticFramework"
+
+FREUDIAN*
+2:
+) )(
+session_notes:
+* *(M
+	frameworkB;9
+7src.agents.psychoanalytic_analyst.PsychoanalyticAnalystH

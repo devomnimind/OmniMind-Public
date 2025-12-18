@@ -1,0 +1,10 @@
+
+&"Check if quota is exceeded."strself: :("”.
+,
+< <(!"#get-field# current_usage:&
+$
+<% <(/"#get-field# limit:*
+(
+< <(/"
+#binop >=#2>=:Bbool
+< <(/*F/home/fahbrain/projects/omnimind/src/scaling/multi_tenant_isolation.py

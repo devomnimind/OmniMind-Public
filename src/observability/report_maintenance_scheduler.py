@@ -59,8 +59,8 @@ class ReportMaintenanceScheduler:
 
         logger.info(
             f"ReportMaintenanceScheduler inicializado "
-            f"(intervalo: {check_interval_minutes}min, "
-            f"execução diária às {daily_execution_hour:02d}:{daily_execution_minute:02d} UTC)"
+            f"(intervalo: {check_interval_minutes}min, execução diária às "
+            f"{daily_execution_hour:02d}:{daily_execution_minute:02d} UTC)"
         )
 
         if enable_auto_start:
@@ -156,8 +156,8 @@ class ReportMaintenanceScheduler:
             logger.info(
                 f"✅ Manutenção concluída em {elapsed:.1f}s\n"
                 f"  📦 Compressão: {stats['compression']['files_processed']} arquivos, "
-                f"{stats['compression']['size_before_mb']:.1f}MB "
-                f"→ {stats['compression']['size_after_mb']:.1f}MB\n"
+                f"{stats['compression']['size_before_mb']:.1f}MB → "
+                f"{stats['compression']['size_after_mb']:.1f}MB\n"
                 f"  🗑️  Limpeza: {stats['cleanup']['files_deleted']} arquivos removidos, "
                 f"{stats['cleanup']['size_freed_mb']:.1f}MB liberados\n"
                 f"  📊 Status: {stats['total_files_active']} ativos, "

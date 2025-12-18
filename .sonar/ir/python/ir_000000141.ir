@@ -1,0 +1,42 @@
+
+0.0float
+	1.0float
+
+1.5float
+óé"
+        Converte frustraÃ§Ã£o em energia produtiva.
+
+        FrustraÃ§Ã£o moderada Ã© Ã³tima (Yerkes-Dodson law).
+        Zona de desenvolvimento proximal: 0.5-0.7
+
+        Returns:
+            Energia produtiva (0.0-1.0)
+        "str
+0.6floatself
+Ü Ü("ð1
+/
+
+ç ç(optimal_point"#id#:Bfloat,
+*
+
+è è(&"#get-field# intensity:3
+1
+
+è è(6"#dependent-value#*:Bfloat2
+0
+
+è è(7	deviation"
+builtinsabs*:3
+1
+
+ê ê(."#dependent-value#*:
+Bfloat3
+1
+
+ê ê(/"#dependent-value#*:	Bfloat(
+&
+
+ê ê(0"
+builtinsmax*:
+
+ê ê(0*C/home/fahbrain/projects/omnimind/src/lacanian/computational_lack.py

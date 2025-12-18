@@ -1,0 +1,45 @@
+
+"component_type"str
+"dependents"str
+"name"str
+"dependencies"str
+!"Convert to dictionary."str
+"component_id"str
+
+"metadata"strself9 9("”$
+"
+; B(	"#new-object#Bdict-
++
+< <(-"#get-field# component_id: 
+
+< <(-"	#map-set#:/
+-
+= =(1"#get-field# component_type:&
+$
+= =(7	"#get-field# value: 
+
+= =(7
+"	#map-set#:	%
+#
+> >("#get-field# name: 
+
+> >("	#map-set#:-
++
+?! ?(2"#get-field# dependencies:,
+*
+? ?(3"
+builtinslist*:Blist 
+
+? ?(3"	#map-set#:+
+)
+@ @(."#get-field# dependents:,
+*
+@ @(/"
+builtinslist*:Blist 
+
+@ @(/"	#map-set#:)
+'
+A A(%"#get-field# metadata: 
+
+A A(%"	#map-set#:
+; B(	*I/home/fahbrain/projects/omnimind/src/metacognition/root_cause_analysis.py

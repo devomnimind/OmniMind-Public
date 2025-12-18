@@ -1,0 +1,60 @@
+
+Esrc.integrations.graphql_supabase.GraphQLSupabaseHelper.collect_nodesQ
+E/home/fahbrain/projects/omnimind/src/integrations/graphql_supabase.py   ("2*Ý
+2
+§ ©(	
+
+§ ©(	
+%1"list±®
+
+¨ ¨(R
+%2*W
+
+__unknown_file (;9
+7src.integrations.graphql_supabase.GraphQLSupabaseHelper**
+
+__unknown_file (
+
+
+collection*+
+
+__unknown_file (
+
+node_fields*)
+
+__unknown_file (
+
+	page_size*)
+
+__unknown_file (
+
+	max_pages2iterate_collectionfd
+
+§ ©(	
+%3*"
+
+__unknown_file (
+
+%1*"
+
+__unknown_file (
+
+%22__init__"
+
+§ ©(	
+
+%1:
+
+¢ ¢(
+
+collection:
+
+£ £("
+node_fields:
+
+¤ ¤(
+	page_size:
+
+¥ ¥('
+	max_pagesB;9
+7src.integrations.graphql_supabase.GraphQLSupabaseHelperH

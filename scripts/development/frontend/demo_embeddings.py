@@ -24,12 +24,12 @@ Script de demonstração do sistema de embeddings OmniMind.
 Mostra como usar o sistema para consultas semânticas no projeto.
 """
 
-import sys
 import os
+import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
-from src.embeddings.code_embeddings import OmniMindEmbeddings, ContentType
+from src.embeddings.code_embeddings import ContentType, OmniMindEmbeddings
 
 
 def demo_search():

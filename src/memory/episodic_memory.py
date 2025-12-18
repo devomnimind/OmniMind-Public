@@ -98,7 +98,34 @@ def _load_embedding_model(model_name: str) -> Optional["SentenceTransformer"]:
         device = get_sentence_transformer_device()
 
         try:
-            return SentenceTransformer(resolved_model_name, token=hf_token, device=device)
+            # CORREÇÃO (2025-12-17): Carregar SEMPRE em CPU primeiro para evitar meta tensor
+            # SentenceTransformer pode inicializar modelos em meta device, causando erro
+            model = SentenceTransformer(resolved_model_name, token=hf_token, device="cpu")
+
+            # Se device desejado não é CPU, tentar mover após carregamento
+            if device != "cpu":
+                try:
+                    # Verificar se há meta tensors antes de tentar mover
+                    has_meta = False
+                    for module in model.modules():
+                        for param in module.parameters():
+                            if param.device.type == "meta":
+                                has_meta = True
+                                break
+                        if has_meta:
+                            break
+
+                    if has_meta:
+                        logger.warning("Meta tensors detectados, usando to_empty()")
+                        model = model.to_empty(device=device)
+                    else:
+                        model = model.to(device)
+                    logger.info(f"✓ Modelo movido para {device}")
+                except Exception as move_exc:
+                    logger.warning(f"Erro ao mover para {device}: {move_exc}, mantendo em CPU")
+                    model = model.to("cpu")
+
+            return model
         except Exception as oom_exc:
             # Se OOM, tentar consolidar memórias antes de fallback
             if "out of memory" in str(oom_exc).lower() or "OOM" in str(oom_exc):
@@ -119,6 +146,7 @@ def _load_embedding_model(model_name: str) -> Optional["SentenceTransformer"]:
                 logger.info(f"Usando CPU para {resolved_model_name} (fallback após consolidação)")
                 return SentenceTransformer(resolved_model_name, token=hf_token, device="cpu")
             else:
+                # Re-raise se não for OOM
                 raise
     except Exception as exc:
         logger.warning(
@@ -199,13 +227,24 @@ class EpisodicMemory:
                 return [float(x) for x in encoded]  # type: ignore[arg-type,union-attr]
             except Exception as exc:
                 logger.warning(
-                    (
-                        "Embedding model error for text snippet '%s': %s. "
-                        "Using deterministic fallback."
-                    ),
-                    text[:32],
-                    exc,
+                    f"GPU Embedding inference failed for text snippet '{text[:32]}...': {exc}. "
+                    "Attempting fallback to CPU..."
                 )
+                try:
+                    # Tentar mover para CPU e executar novamente
+                    model = model.to("cpu")
+                    encoded = model.encode(text, normalize_embeddings=True, device="cpu")
+                    logger.info("✓ CPU fallback successful for embedding generation")
+                    return [float(x) for x in encoded]  # type: ignore
+                except Exception as cpu_exc:
+                    logger.warning(
+                        (
+                            "CPU fallback also failed for text snippet '%s': %s. "
+                            "Using deterministic fallback."
+                        ),
+                        text[:32],
+                        cpu_exc,
+                    )
         # Phase 8: replace deterministic hash fallback with a resilient
         # hybrid embedding pipeline to avoid semantic drift when primary
         # models become unavailable.

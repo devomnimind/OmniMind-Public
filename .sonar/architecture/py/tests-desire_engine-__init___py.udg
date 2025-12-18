@@ -1,0 +1,176 @@
+
+1.0PythonFrontend"1763831837618*py2.BÖ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+$
+tests/desire_engine/__init__.py9
+
+desire_engine11
+
+src.desire_engine12
+0
+*desire_engine.TestDesireDrivenMetaLearning14
+O
+Idesire_engine.TestDesireDrivenMetaLearning.test_learning_goals_generation16
+D
+>desire_engine.TestDesireDrivenMetaLearning.test_initialization18
+K
+Edesire_engine.TestDesireDrivenMetaLearning.test_desire_identification20
+,
+&desire_engine.TestValueEvolutionSystem22
+@
+:desire_engine.TestValueEvolutionSystem.test_initialization24
+>
+8desire_engine.TestValueEvolutionSystem.test_value_update26
+E
+?desire_engine.TestValueEvolutionSystem.test_new_value_emergence28
+1
++desire_engine.TestArtificialCuriosityEngine30
+E
+?desire_engine.TestArtificialCuriosityEngine.test_initialization32
+K
+Edesire_engine.TestArtificialCuriosityEngine.test_compression_progress34
+K
+Edesire_engine.TestArtificialCuriosityEngine.test_curiosity_evaluation36
+3
+-desire_engine.TestArtificialEmotionWithDesire38
+L
+Fdesire_engine.TestArtificialEmotionWithDesire.test_emotion_computation40
+G
+Adesire_engine.TestArtificialEmotionWithDesire.test_initialization42
+L
+Fdesire_engine.TestArtificialEmotionWithDesire.test_emotional_influence44
+.
+(desire_engine.TestDigitalMaslowHierarchy46
+?
+9desire_engine.TestDigitalMaslowHierarchy.test_need_levels48
+A
+;desire_engine.TestDigitalMaslowHierarchy.test_prerequisites50
+B
+<desire_engine.TestDigitalMaslowHierarchy.test_initialization52
+@
+:desire_engine.TestDigitalMaslowHierarchy.test_active_needs54
+G
+Adesire_engine.TestDigitalMaslowHierarchy.test_satisfaction_update56
+/
+)desire_engine.TestSelfTranscendenceEngine58
+P
+Jdesire_engine.TestSelfTranscendenceEngine.test_transcendence_opportunities60
+C
+=desire_engine.TestSelfTranscendenceEngine.test_initialization62
+$
+desire_engine.TestDesireEngine64
+7
+1desire_engine.TestDesireEngine.test_engine_status66
+9
+3desire_engine.TestDesireEngine.test_cognitive_cycle68J
+
+8
+89jñ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15146 210
+
+17
+17167 215
+
+19
+19187 215
+
+21
+21207 215
+
+23
+23226 210
+
+25
+25247 223
+
+27
+27267 223
+
+29
+29287 223
+
+31
+31306 210
+
+33
+33327 231
+
+35
+35347 231
+
+37
+37367 231
+
+39
+39386 210
+
+41
+41407 239
+
+43
+43427 239
+
+45
+45447 239
+
+47
+47466 210
+
+49
+49487 247
+
+51
+51507 247
+
+53
+53527 247
+
+55
+55547 247
+
+57
+57567 247
+
+59
+59586 210
+
+61
+61607 259
+
+63
+63627 259
+
+65
+65646 210
+
+67
+67667 265
+
+69
+69687 265r
+
+10131*
+8 (

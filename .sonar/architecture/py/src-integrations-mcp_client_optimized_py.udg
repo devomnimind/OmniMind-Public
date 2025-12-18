@@ -1,0 +1,370 @@
+
+1.0PythonFrontend"1763831835306*py2.BÄ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+-
+(src/integrations/mcp_client_optimized.py9
++
+%src.integrations.mcp_client_optimized11
+
+
+__future__12
+
+hashlib14
+
+
+json16
+
+logging18
+
+
+time20
+
+dataclasses22
+
+typing24
+
+src.audit.immutable_audit26
+!
+src.integrations.mcp_client28
+*
+$src.integrations.mcp_data_protection30
+=
+7src.integrations.mcp_client_optimized.RateLimitExceeded32
+
+	Exception34
+8
+2src.integrations.mcp_client_optimized.ContextEntry36
+F
+@src.integrations.mcp_client_optimized.ContextEntry.__post_init__38
+=
+7src.integrations.mcp_client_optimized.EnhancedMCPClient40
+F
+@src.integrations.mcp_client_optimized.EnhancedMCPClient.list_dir42
+
+
+dict44
+	
+str46
+
+
+bool48
+I
+Csrc.integrations.mcp_client_optimized.EnhancedMCPClient.clear_cache50
+M
+Gsrc.integrations.mcp_client_optimized.EnhancedMCPClient._get_from_cache52
+I
+Csrc.integrations.mcp_client_optimized.EnhancedMCPClient.get_metrics54
+K
+Esrc.integrations.mcp_client_optimized.EnhancedMCPClient._protect_data56
+
+tuple58
+\
+Vsrc.integrations.mcp_client_optimized.EnhancedMCPClient.call_with_context_optimization60
+	
+int62
+H
+Bsrc.integrations.mcp_client_optimized.EnhancedMCPClient._evict_lru64
+O
+Isrc.integrations.mcp_client_optimized.EnhancedMCPClient._compress_context66
+G
+Asrc.integrations.mcp_client_optimized.EnhancedMCPClient.read_file68
+O
+Isrc.integrations.mcp_client_optimized.EnhancedMCPClient._check_rate_limit70
+H
+Bsrc.integrations.mcp_client_optimized.EnhancedMCPClient.write_file72
+W
+Qsrc.integrations.mcp_client_optimized.EnhancedMCPClient.get_data_protection_stats74
+L
+Fsrc.integrations.mcp_client_optimized.EnhancedMCPClient._get_cache_key76
+I
+Csrc.integrations.mcp_client_optimized.EnhancedMCPClient._audit_call78
+K
+Esrc.integrations.mcp_client_optimized.EnhancedMCPClient._add_to_cache80
+F
+@src.integrations.mcp_client_optimized.EnhancedMCPClient.__init__82
+
+float84
+7
+1src.integrations.mcp_client_optimized.CallMetrics86
+;
+5src.integrations.mcp_client_optimized.RateLimitConfig88J
+
+8
+89j‹
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33326 210
+
+35
+35346
+
+37
+37366 210
+
+39
+39387 237
+
+41
+41406 210
+
+43
+43427 241
+
+45
+45446
+
+47
+47466
+
+49
+49486
+
+51
+51507 241
+
+53
+53527 241
+
+55
+55547 241
+
+57
+57567 241
+
+59
+59586
+
+61
+61607 241
+
+63
+63626
+
+65
+65647 241
+
+67
+67667 241
+
+69
+69687 241
+
+71
+71707 241
+
+73
+73727 241
+
+75
+75747 241
+
+77
+77767 241
+
+79
+79787 241
+
+81
+81807 241
+
+83
+83827 241
+
+85
+85846
+
+87
+87866 210
+
+89
+89886 210r€
+
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 ("
+
+10251*
+8 (:
+
+10271*
+8 (7
+
+10291*
+8 (B
+
+10311*
+8 (W
+
+33352*
+8C C(
+
+43453*
+8¬	 ¬(
+
+43474*
+8¬	 ¬(
+
+43494*
+8¬	 ¬(
+
+53474*
+8±	 ±(
+
+55453*
+8´	 ´(
+
+57593*
+8í	 í(
+
+61474*
+8À	 À('
+
+61454*
+8À	 À('
+
+61494*
+8À	 À('
+
+61634*
+8À	 À('
+
+67473*
+8”	 ”(
+
+67474*
+8”	 ”(
+
+67634*
+8”	 ”(
+
+69473*
+8–	 –(
+
+69474*
+8–	 –(
+
+69474*
+8–	 –(
+
+69494*
+8–	 –(
+
+73453*
+8£	 £(
+
+73474*
+8£	 £(
+
+73474*
+8£	 £(
+
+73474*
+8£	 £(
+
+75453*
+8Ü	 Ü("
+
+77473*
+8¬	 ¬(
+
+77474*
+8¬	 ¬(
+
+77454*
+8¬	 ¬(
+
+79474*
+8û	 û(
+
+79454*
+8û	 û(
+
+79494*
+8û	 û(
+
+81474*
+8Ì	 Ì(
+
+83474*
+8U	 U(
+
+83854*
+8U	 U(
+
+83494*
+8U	 U(
+
+83634*
+8U	 U(
+
+83634*
+8U	 U(
+
+83494*
+8U	 U(
+
+83494*
+8U	 U(

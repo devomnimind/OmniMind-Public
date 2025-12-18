@@ -1,0 +1,12 @@
+
+XO"Get cache statistics.
+
+        Returns:
+            Cache statistics
+        "strself
+ð ð("=)
+'
+
+ö ö("#get-field# _stats:
+
+ö ö(*A/home/fahbrain/projects/omnimind/src/scaling/multi_level_cache.py

@@ -1,0 +1,1 @@
+canonical/install/setup_security_privileges.sh

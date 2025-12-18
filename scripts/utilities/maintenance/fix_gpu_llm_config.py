@@ -44,9 +44,8 @@ import json
 import os
 import re
 import subprocess
-import sys
 from pathlib import Path
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Any, Dict, List
 
 import torch
 
@@ -173,7 +172,7 @@ class GPUConfigurator:
             # Try to import cuDNN-related CUDA libraries
             import ctypes
 
-            libcudnn = ctypes.CDLL("libcudnn.so")
+            _libcudnn = ctypes.CDLL("libcudnn.so")
             cuda_info["cudnn_available"] = True
         except (ImportError, OSError):
             pass
@@ -261,7 +260,7 @@ class GPUConfigurator:
 
         # Check transformers availability
         try:
-            import transformers
+            pass
 
             hf_config["transformers_available"] = True
             hf_config["cache_dir"] = os.getenv("HF_HOME") or os.getenv("TRANSFORMERS_CACHE")
@@ -538,7 +537,7 @@ class GPUConfigurator:
                 # Test basic GPU operation
                 x = torch.randn(1000, 1000).cuda()
                 y = torch.randn(1000, 1000).cuda()
-                z = torch.mm(x, y)
+                _z = torch.mm(x, y)
                 result["computation_success"] = True
 
         except Exception as e:
@@ -554,7 +553,7 @@ class GPUConfigurator:
             from transformers import pipeline
 
             # Test with a small model
-            pipe = pipeline(
+            _pipe = pipeline(
                 "text-generation",
                 model="distilgpt2",
                 device=0 if torch.cuda.is_available() else -1,

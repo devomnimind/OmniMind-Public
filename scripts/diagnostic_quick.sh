@@ -1,0 +1,1 @@
+canonical/diagnose/diagnostic_quick.sh

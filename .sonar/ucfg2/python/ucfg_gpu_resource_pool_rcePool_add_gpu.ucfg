@@ -1,0 +1,81 @@
+
+5src.scaling.gpu_resource_pool.GPUResourcePool.add_gpuM
+A/home/fahbrain/projects/omnimind/src/scaling/gpu_resource_pool.py… …("2*¯
+2
+† Š(t
+r
+
+‹ ‹(
+%2"__id*X
+
+__unknown_file (<*:/
+-src.scaling.gpu_resource_pool.GPUResourcePool"
+_gpusN
+L
+
+‹ ‹( 
+%3"__id*2
+
+__unknown_file (*
+
+gpu"
+	device_id¡ž
+
+‹ ‹('
+%1"dict.__setitem__*"
+
+__unknown_file (
+
+%2*"
+
+__unknown_file (
+
+%3*#
+
+__unknown_file (
+
+gpu2__setitem__N
+L
+
+Œ+ Œ(8
+%4"__id*2
+
+__unknown_file (*
+
+gpu"
+	device_idI
+G
+
+Œ? Œ(G
+%5"__id*-
+
+__unknown_file (*
+
+gpu"
+name“
+
+Œ Œ(H
+%6*&
+
+__unknown_file (
+
+
+logger*)
+
+__unknown_file (
+	gpu_added2info:
+	device_id
+
+%4:
+name
+
+%5*
+3*<
+3
+gpu_resource_pool.py"
+Ž Ž(
+implicit return:
+
+… …($
+gpuB1/
+-src.scaling.gpu_resource_pool.GPUResourcePoolH

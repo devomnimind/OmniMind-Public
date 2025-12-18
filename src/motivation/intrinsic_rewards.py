@@ -57,7 +57,6 @@ class DriveCirculation:
     def circulate(self) -> None:
         """Execute one circuit of the drive."""
         # Drive never reaches the object, it circles it.
-        pass
 
 
 class DesireEngine:

@@ -8,11 +8,11 @@ tune parameter ranges for maximum causal sensitivity while maintaining biologica
 """
 
 import json
-import numpy as np
-from dataclasses import dataclass, asdict
-from typing import Dict, List, Tuple, Any
-import scipy.stats as stats
+from dataclasses import asdict, dataclass
 from pathlib import Path
+from typing import Any, Dict, List, Tuple
+
+import numpy as np
 
 
 @dataclass

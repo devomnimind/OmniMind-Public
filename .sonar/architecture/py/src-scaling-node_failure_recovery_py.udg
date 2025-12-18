@@ -1,0 +1,405 @@
+
+1.0PythonFrontend"1763831838438*py2.B÷
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+)
+$src/scaling/node_failure_recovery.py9
+'
+!src.scaling.node_failure_recovery11
+
+
+__future__12
+
+asyncio14
+
+logging16
+
+random18
+
+dataclasses20
+
+datetime22
+
+
+enum24
+
+typing26
+;
+5src.scaling.node_failure_recovery.FailoverCoordinator28
+Q
+Ksrc.scaling.node_failure_recovery.FailoverCoordinator._handle_node_recovery30
+	
+str32
+@
+:src.scaling.node_failure_recovery.FailoverCoordinator.stop34
+D
+>src.scaling.node_failure_recovery.FailoverCoordinator.__init__36
+
+
+list38
+
+float40
+N
+Hsrc.scaling.node_failure_recovery.FailoverCoordinator._check_node_health42
+A
+;src.scaling.node_failure_recovery.FailoverCoordinator.start44
+N
+Hsrc.scaling.node_failure_recovery.FailoverCoordinator.get_cluster_status46
+
+
+dict48
+P
+Jsrc.scaling.node_failure_recovery.FailoverCoordinator._handle_node_failure50
+1
++src.scaling.node_failure_recovery.RaftState52
+9
+3src.scaling.node_failure_recovery.RaftState.to_dict54
+0
+*src.scaling.node_failure_recovery.RaftNode56
+6
+0src.scaling.node_failure_recovery.RaftNode.start58
+E
+?src.scaling.node_failure_recovery.RaftNode._update_commit_index60
+=
+7src.scaling.node_failure_recovery.RaftNode.append_entry62
+
+
+bool64
+0
+*src.scaling.node_failure_recovery.LogEntry66
+?
+9src.scaling.node_failure_recovery.RaftNode._apply_command68
+5
+/src.scaling.node_failure_recovery.RaftNode.stop70
+>
+8src.scaling.node_failure_recovery.RaftNode._request_vote72
+J
+Dsrc.scaling.node_failure_recovery.RaftNode._election_timeout_handler74
+D
+>src.scaling.node_failure_recovery.RaftNode._append_entries_rpc76
+?
+9src.scaling.node_failure_recovery.RaftNode.submit_command78
+F
+@src.scaling.node_failure_recovery.RaftNode.handle_append_entries80
+	
+int82
+:
+4src.scaling.node_failure_recovery.RaftNode.get_state84
+I
+Csrc.scaling.node_failure_recovery.RaftNode._apply_committed_entries86
+F
+@src.scaling.node_failure_recovery.RaftNode._get_election_timeout88
+F
+@src.scaling.node_failure_recovery.RaftNode._reset_election_timer90
+?
+9src.scaling.node_failure_recovery.RaftNode._become_leader92
+@
+:src.scaling.node_failure_recovery.RaftNode._start_election94
+A
+;src.scaling.node_failure_recovery.RaftNode._send_heartbeats96
+9
+3src.scaling.node_failure_recovery.RaftNode.__init__98
+1
+*src.scaling.node_failure_recovery.NodeRole100
+
+	enum.Enum102
+5
+.src.scaling.node_failure_recovery.LogEntryType104
+9
+2src.scaling.node_failure_recovery.LogEntry.to_dict106J
+
+8
+89j„	
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29286 210
+
+31
+31307 229
+
+33
+33326
+
+35
+35347 229
+
+37
+37367 229
+
+39
+39386
+
+41
+41406
+
+43
+43427 229
+
+45
+45447 229
+
+47
+47467 229
+
+49
+49486
+
+51
+51507 229
+
+53
+53526 210
+
+55
+55547 253
+
+57
+57566 210
+
+59
+59587 257
+
+61
+61607 257
+
+63
+63627 257
+
+65
+65646
+
+67
+67666 210
+
+69
+69687 257
+
+71
+71707 257
+
+73
+73727 257
+
+75
+75747 257
+
+77
+77767 257
+
+79
+79787 257
+
+81
+81807 257
+
+83
+83826
+
+85
+85847 257
+
+87
+87867 257
+
+89
+89887 257
+
+91
+91907 257
+
+93
+93927 257
+
+95
+95947 257
+
+97
+97967 257
+
+99
+99987 257
+
+101
+1011006 210
+
+103
+1031026
+
+105
+1051046 210
+
+107
+1071067 267r¯	
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 ()
+
+10231*
+8 (
+
+10251*
+8 (
+
+10271*
+8 (2
+
+31334*
+8§ §($
+
+37334*
+8ß	 ß(
+
+37394*
+8ß	 ß(
+
+37414*
+8ß	 ß(
+
+47493*
+8Ì	 Ì(
+
+51334*
+8• •(#
+
+55493*
+8G	 G(
+
+63653*
+8Ï Ï(
+
+63674*
+8Ï Ï(
+
+69494*
+8»	 »(
+
+73653*
+8µ µ(
+
+73334*
+8µ µ(
+
+75414*
+8Ž Ž((
+
+77653*
+8ø ø("
+
+77334*
+8ø ø("
+
+79653*
+8¡ ¡(
+
+79494*
+8¡ ¡(
+
+81653*
+8æ æ($
+
+81834*
+8æ æ($
+
+81334*
+8æ æ($
+
+81834*
+8æ æ($
+
+81834*
+8æ æ($
+
+81394*
+8æ æ($
+
+81834*
+8æ æ($
+
+85493*
+8¸	 ¸(
+
+89413*
+8	 (
+
+99334*
+8U	 U(
+
+99394*
+8U	 U(
+
+99414*
+8U	 U(
+
+99414*
+8U	 U(
+
+99414*
+8U	 U(
+
+101332*
+8 (
+
+1011032*
+8 (
+
+105332*
+8   (
+
+1051032*
+8   (
+
+107493*
+82	 2(

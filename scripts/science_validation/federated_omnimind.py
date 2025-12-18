@@ -4,11 +4,12 @@ Federação Lacaniana Simplificada para Testes
 Implementa sujeitos mútuos com desacordos irredutíveis
 """
 
-import numpy as np
 import random
 import time
-from typing import Dict, List, Any
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from typing import Any, Dict, List
+
+import numpy as np
 
 
 @dataclass

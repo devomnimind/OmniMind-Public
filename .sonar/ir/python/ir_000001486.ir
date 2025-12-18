@@ -1,0 +1,60 @@
+
+ìâ"
+        Retorna contexto para assistÃªncia IDE.
+
+        Args:
+            file_path: Caminho do arquivo atual
+            cursor_position: (linha, coluna) do cursor
+
+        Returns:
+            Contexto relevante
+        "str
+"recent_operations"str
+"file_path"str
+
+"available_tools"str
+"cursor_position"str
+("{file_path}:{cursor_position}"strself
+£ £(	file_path
+¤ ¤('cursor_position
+¥ ¥(9"–/
+-
+
+± ½(	context"#new-object#Bdict"
+ 
+
+² ²(""	#map-set#:"
+ 
+
+³ ³(.	"	#map-set#:-
++
+
+´ »("?python-unknown?:Blist"
+ 
+
+´ »("	#map-set#:
++
+)
+
+¼% ¼(2"#get-field# security:0
+.
+
+¼% ¼(@"#get-field# audit_entries:,
+*
+
+¼! ¼(A"
+builtinslen*:Bint"
+ 
+
+¼ ¼(A"	#map-set#:+
+)
+
+À À(4	cache_key"#id#:Bstr0
+.
+
+Á Á("#get-field# context_cache:&
+$
+
+Á Á(/"#array-write#:
+
+Ã Ã(*G/home/fahbrain/projects/omnimind/src/integrations/mcp_agentic_client.py

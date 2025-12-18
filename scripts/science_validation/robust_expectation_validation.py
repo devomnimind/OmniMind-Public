@@ -9,16 +9,16 @@ para validar teoria lacaniana da falta-a-ser estrutural.
 
 import asyncio
 import json
+import sys
 import time
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Any, Dict
+
 import numpy as np
 from rich import print as rprint
 from rich.progress import Progress
 from rich.table import Table
 from scipy import stats
-
-import sys
 
 sys.path.append(".")
 from scripts.science_validation.run_scientific_ablations import IntegrationLoopSimulator

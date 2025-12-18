@@ -1,0 +1,75 @@
+{
+  "timestamp": "2025-12-06T19:03:09.760232+00:00",
+  "project_root": "/home/fahbrain/projects/omnimind/scripts",
+  "audits": {
+    "consciousness_metrics": {
+      "module": "consciousness_metrics",
+      "expected_files": [
+        "/home/fahbrain/projects/omnimind/scripts/data/monitor/consciousness_metrics/phi_history.jsonl",
+        "/home/fahbrain/projects/omnimind/scripts/data/monitor/consciousness_metrics/psi_history.jsonl",
+        "/home/fahbrain/projects/omnimind/scripts/data/monitor/consciousness_metrics/sigma_history.jsonl"
+      ],
+      "actual_files": [],
+      "status": "missing_directory",
+      "issues": [
+        "Diret\u00f3rio n\u00e3o existe: /home/fahbrain/projects/omnimind/scripts/data/monitor/consciousness_metrics"
+      ]
+    },
+    "consciousness_snapshots": {
+      "module": "consciousness_snapshots",
+      "expected_files": [
+        "/home/fahbrain/projects/omnimind/scripts/data/consciousness/snapshots.jsonl"
+      ],
+      "actual_files": [],
+      "status": "missing",
+      "issues": [
+        "Arquivo de snapshots n\u00e3o encontrado"
+      ]
+    },
+    "autopoietic_data": {
+      "module": "autopoietic",
+      "expected_files": [
+        "/home/fahbrain/projects/omnimind/scripts/data/autopoietic/cycle_history.jsonl",
+        "/home/fahbrain/projects/omnimind/scripts/data/autopoietic/art_gallery.json",
+        "/home/fahbrain/projects/omnimind/scripts/data/autopoietic/narrative_history.json"
+      ],
+      "actual_files": [],
+      "status": "missing_directory",
+      "issues": [
+        "Diret\u00f3rio n\u00e3o existe: /home/fahbrain/projects/omnimind/scripts/data/autopoietic"
+      ]
+    },
+    "memory_data": {
+      "module": "memory",
+      "expected_storage": [],
+      "actual_storage": [],
+      "status": "missing",
+      "issues": [
+        "Nenhum armazenamento de mem\u00f3ria encontrado"
+      ]
+    },
+    "agent_data": {
+      "module": "agents",
+      "expected_logs": [],
+      "actual_logs": [],
+      "status": "missing",
+      "issues": []
+    },
+    "module_logs": {
+      "module": "module_logs",
+      "expected_logs": [],
+      "actual_logs": [],
+      "status": "missing",
+      "issues": [
+        "Nenhum log de m\u00f3dulo encontrado"
+      ]
+    }
+  },
+  "summary": {
+    "total_modules": 6,
+    "ok": 0,
+    "partial": 0,
+    "missing": 4,
+    "issues_found": 5
+  }
+}

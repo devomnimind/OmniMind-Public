@@ -1,0 +1,64 @@
+
+Tsrc.collective_intelligence.collective_learning.ConsensusLearning.update_agent_model_
+S/home/fahbrain/projects/omnimind/src/collective_intelligence/collective_learning.pyç ç("2*Ú
+2
+é î(ê
+ç
+
+ï ï(
+%2"__id*s
+
+__unknown_file (W*UC
+Asrc.collective_intelligence.collective_learning.ConsensusLearning"
+agent_models©¶
+
+ï ï(+
+%1"dict.__setitem__*"
+
+__unknown_file (
+
+%2*(
+
+__unknown_file (
+
+
+agent_id*%
+
+__unknown_file (	
+
+model2__setitem__ä
+á
+
+ñ ñ(
+%3"__id*m
+
+__unknown_file (Q*OC
+Asrc.collective_intelligence.collective_learning.ConsensusLearning"
+loggerèå
+
+ñ ñ(C
+%4*"
+
+__unknown_file (
+
+%3*3
+
+__unknown_file (
+agent_model_updated2debug:
+agent_id
+
+
+agent_id*
+3*<
+3
+collective_learning.py"
+ô ô
+implicit return:
+
+ç! ç(.
+
+agent_id:
+
+ç0 ç(E
+modelBEC
+Asrc.collective_intelligence.collective_learning.ConsensusLearningH

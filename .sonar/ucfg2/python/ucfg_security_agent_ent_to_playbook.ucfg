@@ -1,0 +1,138 @@
+
+@src.security.security_agent.SecurityAgent._map_event_to_playbookK
+?/home/fahbrain/projects/omnimind/src/security/security_agent.pyÂ Â("2*­
+2
+Ã Ë(	
+
+Ã Ë(	
+%1"dict¢
+Ÿ
+
+Ä Ä(-
+%2"__mapSet*"
+
+__unknown_file (
+
+%1*2
+
+__unknown_file (
+suspicious_process*)
+
+__unknown_file (
+	intrusionž
+›
+
+Å Å()
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*0
+
+__unknown_file (
+rootkit_detected*'
+
+__unknown_file (	
+rootkit¢
+Ÿ
+
+Æ Æ(-
+%4"__mapSet*"
+
+__unknown_file (
+
+%1*2
+
+__unknown_file (
+suspicious_network*)
+
+__unknown_file (
+	intrusionž
+›
+
+Ç Ç()
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*0
+
+__unknown_file (
+malware_detected*'
+
+__unknown_file (	
+malware©
+¦
+
+È È(4
+%6"__mapSet*"
+
+__unknown_file (
+
+%1*1
+
+__unknown_file (
+data_exfiltration*1
+
+__unknown_file (
+data_exfiltration¦
+£
+
+É É(1
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+log_anomaly*4
+
+__unknown_file (
+privilege_escalationœ
+™
+
+Ê Ê('
+%8"__mapSet*"
+
+__unknown_file (
+
+%1*.
+
+__unknown_file (
+file_integrity*'
+
+__unknown_file (	
+malwareC
+A
+
+Ã Ë(		
+mapping"__id*"
+
+__unknown_file (
+
+%1¤¡
+
+Ì Ì(3
+%9"dict.get*'
+
+__unknown_file (
+	
+mapping**
+
+__unknown_file (
+
+
+event_type*)
+
+__unknown_file (
+	intrusion2get"
+
+Ì Ì(3
+
+%9:
+
+Â% Â(4
+
+event_typeB-+
+)src.security.security_agent.SecurityAgentH

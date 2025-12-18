@@ -1,0 +1,75 @@
+
+0.0float
+"a"bool
+"errors_total"str
+
+"success_rate"str
+"division by zero"bool
+cZ"Get sender statistics.
+
+        Returns:
+            Dictionary with statistics
+        "str
+
+0int
+"sent_total"str
+"S3518"boolself
+¶ ¶("Û&
+$
+
+¼ Ä(	"#new-object#Bdict.
+,
+
+½ ½(*"#get-field# _sent_count:"
+ 
+
+½ ½(*"	#map-set#:/
+-
+
+¾ ¾(-"#get-field# _error_count:"
+ 
+
+¾ ¾(-	"	#map-set#:.
+,
+
+Á Á(#"#get-field# _sent_count:*
+(
+
+Á Á('"	#binop >#2>:Bbool,"*
+
+Á Á(' *
+Á Á(2
+Â Â("Õ.
+,
+
+À À(!"#get-field# _sent_count:/
+-
+
+À$ À(5"#get-field# _error_count:'
+%
+
+À À(5"	#binop -#*2-:.
+,
+
+À9 À(I"#get-field# _sent_count:,
+*
+
+À À(I"
+#binop !=#2!=:Bbool"
+ 
+
+À À(I"
+#assert#:3
+1
+
+À À(I"#dependent-value#*:Bfloat
+
+À Â("
+
+À Â("J*"
+ 
+
+¿ Ã("	#map-set#:
+
+
+¼ Ä(	*F/home/fahbrain/projects/omnimind/src/integrations/webhook_framework.py

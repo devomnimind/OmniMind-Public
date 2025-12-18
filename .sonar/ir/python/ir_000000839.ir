@@ -1,0 +1,4 @@
+
+!"String representation."str
+5,"({self.x:.2f}, {self.y:.2f}, {self.z:.2f})"strselfN N("
+P P(<*H/home/fahbrain/projects/omnimind/src/multimodal/embodied_intelligence.py

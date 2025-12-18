@@ -1,0 +1,47 @@
+
+
+"blank_lines"str
+"lines_of_code"str
+"test_coverage"str
+"comment_lines"str
+"docstring_coverage"str
+ "maintainability_index"str
+!"Convert to dictionary."str
+"complexity"str
+"type_hint_coverage"strselfX X("Ó$
+"
+Z c(	"#new-object#Bdict.
+,
+[ [(/"#get-field# lines_of_code: 
+
+[ [(/"	#map-set#:.
+,
+\ \(/"#get-field# comment_lines: 
+
+\ \(/	"	#map-set#:,
+*
+] ](+"#get-field# blank_lines: 
+
+] ](+"	#map-set#:
++
+)
+^ ^()"#get-field# complexity: 
+
+^ ^()"	#map-set#:6
+4
+_% _(?"#!#get-field# maintainability_index: 
+
+_ _(?"	#map-set#:.
+,
+` `(/"#get-field# test_coverage: 
+
+` `(/"	#map-set#:3
+1
+a" a(9" #get-field# type_hint_coverage: 
+
+a a(9"	#map-set#:3
+1
+b" b(9" #get-field# docstring_coverage: 
+
+b b(9"	#map-set#:
+Z c(	*G/home/fahbrain/projects/omnimind/src/workflows/automated_code_review.py

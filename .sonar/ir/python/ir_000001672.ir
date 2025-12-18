@@ -1,0 +1,28 @@
+
+"division by zero"bool
+	"S3518"bool
+
+"a"bool
+
+0int
+"Mean execution time."strself/ /("Ç3
+1
+1 1(*" #get-field# execution_times_ms:%
+#
+1 1(+"
+builtinssum*:3
+1
+12 1(I" #get-field# execution_times_ms:*
+(
+1. 1(J"
+builtinslen*:Bint*
+(
+1 1(J"
+#binop !=#2!=:Bbool 
+
+1 1(J"
+#assert#:	
+*
+(
+1 1(J"#dependent-value#*:
+1 1(J*A/home/fahbrain/projects/omnimind/src/optimization/benchmarking.py

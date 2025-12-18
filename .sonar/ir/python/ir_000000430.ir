@@ -1,0 +1,35 @@
+
+
+"severity"str
+"suggestion"str
+	"message"str
+"path"str
+
+"auto_fix"str
+!"Convert to dictionary."strself8 8("Ü$
+"
+: @(	"#new-object#Bdict%
+#
+; ;("#get-field# path: 
+
+; ;("	#map-set#:)
+'
+< <(%"#get-field# severity:&
+$
+< <(+	"#get-field# value: 
+
+< <(+
+"	#map-set#:	(
+&
+= =(#"#get-field# message: 
+
+= =(#"	#map-set#:+
+)
+> >()"#get-field# suggestion: 
+
+> >()"	#map-set#:)
+'
+? ?(%"#get-field# auto_fix: 
+
+? ?(%"	#map-set#:
+: @(	*A/home/fahbrain/projects/omnimind/src/security/config_validator.py

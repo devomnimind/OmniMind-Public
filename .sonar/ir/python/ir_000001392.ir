@@ -1,0 +1,13 @@
+
+"impact_level"str
+!"Convert to dictionary."strself( (("½.
+,
+* *(data"
+dataclassesasdict:-
++
++ +(0"#get-field# impact_level:&
+$
++ +(6"#get-field# value:$
+"
++ +(6"#array-write#:
+, ,(*?/home/fahbrain/projects/omnimind/src/ethics/ml_ethics_engine.py

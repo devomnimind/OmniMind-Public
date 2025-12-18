@@ -34,9 +34,13 @@ def print_report(report: dict) -> None:
     # Status do sistema
     system = report["system"]
     print("💻 SISTEMA:")
-    print(f"   RAM: {system['ram_used_gb']:.2f}GB / {system['ram_total_gb']:.2f}GB ({system['ram_percent']*100:.1f}%)")
+    print(
+        f"   RAM: {system['ram_used_gb']:.2f}GB / {system['ram_total_gb']:.2f}GB ({system['ram_percent']*100:.1f}%)"
+    )
     print(f"   Disponível: {system['ram_available_gb']:.2f}GB")
-    print(f"   Swap: {system['swap_used_gb']:.2f}GB / {system['swap_total_gb']:.2f}GB ({system['swap_percent']*100:.1f}%)")
+    print(
+        f"   Swap: {system['swap_used_gb']:.2f}GB / {system['swap_total_gb']:.2f}GB ({system['swap_percent']*100:.1f}%)"
+    )
     print()
 
     # Serviços
@@ -51,7 +55,9 @@ def print_report(report: dict) -> None:
         emoji = priority_emoji.get(service_info["priority"], "⚪")
         print(f"   {emoji} {service_name}:")
         print(f"      PID: {service_info['pid']}")
-        print(f"      RAM: {service_info['memory_rss_mb']:.1f}MB ({service_info['memory_percent']:.1f}%)")
+        print(
+            f"      RAM: {service_info['memory_rss_mb']:.1f}MB ({service_info['memory_percent']:.1f}%)"
+        )
         if service_info["swap_used_mb"] > 0:
             print(f"      ⚠️  Swap: {service_info['swap_used_mb']:.1f}MB")
         print(f"      Crítico: {service_info['critical_memory_mb']:.1f}MB")
@@ -82,7 +88,9 @@ def main() -> None:
     parser.add_argument("--report", action="store_true", help="Gerar relatório")
     parser.add_argument("--apply", action="store_true", help="Aplicar estratégias automaticamente")
     parser.add_argument("--daemon", action="store_true", help="Rodar em modo daemon")
-    parser.add_argument("--interval", type=int, default=30, help="Intervalo em segundos (modo daemon)")
+    parser.add_argument(
+        "--interval", type=int, default=30, help="Intervalo em segundos (modo daemon)"
+    )
     parser.add_argument("--json", action="store_true", help="Saída em JSON")
 
     args = parser.parse_args()
@@ -132,4 +140,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

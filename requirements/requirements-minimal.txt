@@ -1,44 +1,14 @@
-# Minimal Docker Image Dependencies (Backend only)
-# Used by: web/backend/Dockerfile
-# Purpose: Production FastAPI backend WITHOUT quantum/GPU
-#
-# ⚠️ WARNING: torch version is OPEN (>=2.9.0) for flexibility
-# For GPU + Quantum development: Use requirements_core_quantum.txt
-# torch==2.5.1+cu124 is LOCKED for GPU work (local development only)
-
-# Web Framework (Production)
+# Minimal requirements for backend
 fastapi>=0.122.0
 uvicorn>=0.38.0
-
-# Core ML (Flexible for Docker - CPU or GPU)
-torch>=2.9.0  # Docker backend can use any version
-transformers>=4.57.0
-sentence-transformers>=3.0.0
-
-# Vector Database
-qdrant-client>=1.16.0,<2.0.0
-
-# Data Models & Config
 pydantic>=2.12.0
 python-dotenv>=1.2.0
+requests>=2.32.0
 PyYAML>=6.0.3
-
-# Data Processing
-numpy>=2.3.0
-
-# Observability
-opentelemetry-api>=1.38.0
-prometheus-client>=0.23.0
-
-# Database
-redis>=7.0.0
-
-# Utils
+structlog>=25.0.0
+# Additional required
+cryptography>=46.0.0
 rich>=14.0.0
 psutil>=7.0.0
-requests>=2.32.5
-structlog>=25.0.0
-
-# System dependencies (for Docker)
-aiohttp
-cryptography
+langchain-ollama>=0.1.0
+langgraph>=0.1.0

@@ -1,0 +1,57 @@
+
+"parameters"str
+"description"str
+"responses"str
+
+"security"str
+	"summary"str
+3*"Convert to OpenAPI specification format."str
+
+"tags"str
+"requestBody"strself& &("¦*
+(
+( .(	spec"#new-object#Bdict(
+&
+) )(#"#get-field# summary: 
+
+) )(#"	#map-set#:,
+*
+* *(+"#get-field# description: 
+
+* *(+	"	#map-set#:%
+#
++ +("#get-field# tags: 
+
++ +("	#map-set#:
++
+)
+, ,()"#get-field# parameters: 
+
+, ,()"	#map-set#:*
+(
+- -('"#get-field# responses: 
+
+- -('"	#map-set#:-
++
+0 0("#get-field# request_body:)
+'
+0 0("
+__bool__*:BboolH"
+0 0( *0 0(
+"]-
++
+1" 1(3"#get-field# request_body:$
+"
+1 1(3"#array-write#:"v)
+'
+3 3("#get-field# security:)
+'
+3 3("
+__bool__*:BboolH"
+3 3( *3 3(
+"Y)
+'
+4 4(,"#get-field# security:$
+"
+4 4(,"#array-write#:"
+6 6(*B/home/fahbrain/projects/omnimind/src/security/api_documentation.py

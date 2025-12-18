@@ -1,0 +1,45 @@
+
+"live_objects_by_type"str
+f]"Get comprehensive leak report.
+
+        Returns:
+            Leak detection report
+        "str
+"total_tracked"str
+"potential_leaks"str
+"allocations_checked"strself
+² ²("Ä&
+$
+
+¸ À(	"#new-object#Bdict2
+0
+
+¹! ¹(5"#get-field# tracked_objects:,
+*
+
+¹ ¹(6"
+builtinslen*:Bint"
+ 
+
+¹ ¹(6"	#map-set#:3
+1
+
+º# º(8	"#get-field# allocation_count:"
+ 
+
+º º(8
+"	#map-set#:	2
+0
+
+» »(3"#get-field# potential_leaks:"
+ 
+
+» »(3"	#map-set#:-
++
+
+¼$ ¿("?python-unknown?:Bdict"
+ 
+
+¼ ¿("	#map-set#:
+
+¸ À(	*H/home/fahbrain/projects/omnimind/src/optimization/memory_optimization.py

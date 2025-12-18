@@ -1,0 +1,259 @@
+
+1.0PythonFrontend"1763831834325*py2.B€	
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+
+src/audit/log_analyzer.py9
+
+src.audit.log_analyzer11
+
+
+json12
+
+re14
+
+collections16
+
+datetime18
+
+typing20
+
+dataclasses22
+
+src.audit.immutable_audit24
+
+
+statistics26
+-
+'src.audit.log_analyzer.AuditLogAnalyzer28
+6
+0src.audit.log_analyzer.AuditLogAnalyzer.__init__30
+A
+;src.audit.log_analyzer.AuditLogAnalyzer.generate_statistics32
+
+
+dict34
+3
+-src.audit.log_analyzer.AuditLogAnalyzer.query36
+
+
+list38
+=
+7src.audit.log_analyzer.AuditLogAnalyzer.detect_patterns40
+	
+int42
+=
+7src.audit.log_analyzer.AuditLogAnalyzer._matches_filter44
+
+
+bool46
+(
+"src.audit.log_analyzer.QueryFilter48
+?
+9src.audit.log_analyzer.AuditLogAnalyzer._detect_sequences50
+@
+:src.audit.log_analyzer.AuditLogAnalyzer.get_event_timeline52
+=
+7src.audit.log_analyzer.AuditLogAnalyzer.forensic_search54
+	
+str56
+?
+9src.audit.log_analyzer.AuditLogAnalyzer._detect_anomalies58
+,
+&src.audit.log_analyzer.detect_patterns60
+0
+*src.audit.log_analyzer.generate_statistics62
+-
+'src.audit.log_analyzer.query_audit_logs64J
+
+8
+89j÷
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29286 210
+
+31
+31307 229
+
+33
+33327 229
+
+35
+35346
+
+37
+37367 229
+
+39
+39386
+
+41
+41407 229
+
+43
+43426
+
+45
+45447 229
+
+47
+47466
+
+49
+49486 210
+
+51
+51507 229
+
+53
+53527 229
+
+55
+55547 229
+
+57
+57566
+
+59
+59587 229
+
+61
+61607 210
+
+63
+63627 210
+
+65
+65647 210r²
+
+10131*
+8 (
+
+10151*
+8 (
+
+
+10171*
+8 (-
+
+10191*
+8 (3
+
+10211*
+8 (-
+
+10231*
+8 ("
+
+10251*
+8 (D
+
+10271*
+8û û(
+
+33353*
+8ª	 ª(
+
+37393*
+88	 8(
+
+41353*
+8ˆ	 ˆ(
+
+41434*
+8ˆ	 ˆ(
+
+41434*
+8ˆ	 ˆ(
+
+45473*
+8g	 g(
+
+45354*
+8g	 g(
+
+45494*
+8g	 g(
+
+51393*
+8Ì	 Ì(
+
+51394*
+8Ì	 Ì(
+
+51434*
+8Ì	 Ì(
+
+53393*
+8ž	 ž(
+
+53434*
+8ž	 ž(
+
+55393*
+8ö	 ö(
+
+55574*
+8ö	 ö(
+
+55434*
+8ö	 ö(
+
+59393*
+8è	 è(
+
+59394*
+8è	 è(
+
+61353*
+8Ì Ì(
+
+61434*
+8Ì Ì(
+
+63353*
+8Ò Ò(
+
+65393*
+8Ã Ã(

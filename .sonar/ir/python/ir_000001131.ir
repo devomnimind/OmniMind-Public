@@ -1,0 +1,29 @@
+
+"status"str
+
+"backup_type"str
+"region"str
+!"Convert to dictionary."strself` `("ª.
+,
+b b(data"
+dataclassesasdict:'
+%
+c c($"#get-field# region:&
+$
+c c(*"#get-field# value:$
+"
+c c(*"#array-write#:,
+*
+d d(."#get-field# backup_type:&
+$
+d d(4	"#get-field# value:$
+"
+d d(4"#array-write#:
+	'
+%
+e e($"#get-field# status:&
+$
+e e(*"#get-field# value:$
+"
+e e(*"#array-write#:
+f f(*G/home/fahbrain/projects/omnimind/src/security/geo_distributed_backup.py

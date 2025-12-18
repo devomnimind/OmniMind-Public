@@ -1,0 +1,26 @@
+
+ÚÐ"Get file/directory statistics from MCP server.
+
+        Args:
+            path: Path to stat
+
+        Returns:
+            File statistics
+
+        Raises:
+            MCPClientError: If stat fails
+        "strself
+“ “(path
+“ “(""”#
+!
+
+Ÿ Ÿ(G"#unknown-value#+
+)
+
+Ÿ Ÿ(Gresult"#unknown-value#.
+,
+
+   ("
+builtinsdict*:Bdict
+
+   (*E/home/fahbrain/projects/omnimind/src/integrations/mcp_client_async.py

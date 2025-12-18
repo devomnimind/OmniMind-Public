@@ -1,0 +1,203 @@
+
+ïå"Calculate trend in consciousness metrics.
+
+        Args:
+            window: Number of recent snapshots to analyze
+
+        Returns:
+            TrendAnalysis with trend data or InsufficientDataTrend if not enough data
+        "str
+3"change_pct"str
+	"trend"str
+"a"bool
+
+0int
+@"snapshots_analyzed"str
+
+1int
+ "increasing"str
+%"stable"str
+$"decreasing"str
+"division by zero"bool
+
+"insufficient_data"str
+
+2int
++	"avg_phi"str
+"S3518"bool
+-1int
+0"initial_phi"str
+<100int
+"snapshots"str
+-"current_phi"strself
+Þ Þ(window
+Þ Þ("¨*
+(
+
+è è("#get-field# history:,
+*
+
+è è("
+builtinslen*:Bint*
+(
+
+è è( "	#binop <#2<:Bbool "
+
+è è(  *
+è è(
+"Þ&
+$
+
+é é(Q"#new-object#Bdict"
+ 
+
+é é(0"	#map-set#:	
+*
+(
+
+éC é(O"#get-field# history:,
+*
+
+é? é(P"
+builtinslen*:Bint"
+ 
+
+é2 é(P"	#map-set#:
+
+é é(Q"÷+
+)
+
+ë ë('recent"#unknown-value#9
+7
+
+ì ì(5
+phi_values"?python-unknown?:Blist'
+%
+
+î î(!"
+builtinssum*:,
+*
+
+î$ î(3"
+builtinslen*:Bint,
+*
+
+î î(3"
+#binop !=#2!=:Bbool"
+ 
+
+î î(3"
+#assert#:<
+:
+
+î î(3avg_phi"#dependent-value#*:Bfloat$
+"
+
+ñ ñ("#array-read#:$
+"
+
+ñ  ñ(-"#array-read#:*
+(
+
+ñ ñ(-"	#binop >#2>:Bbool,"*
+
+ñ ñ(- *
+ñ ñ(2
+ò ò("
+
+ð ò(M"¨$
+"
+
+ò! ò(/!"#array-read#:$
+"
+
+ò2 ò(?""#array-read#:*
+(
+
+ò! ò(?#"	#binop <#2<:!"Bbool,"*
+
+ò! ò(?# *
+ò ò( 2
+ò@ ò(D"Ë*' &1
+/
+
+ï ó(	(trend_direction"#id#:'Bstr&
+$
+
+õ þ(	)"#new-object#Bdict"
+ 
+
+ö ö($*"	#map-set#:)	("
+ 
+
+÷ ÷(,"	#map-set#:)+$
+"
+
+ø ø()."#array-read#:"
+ 
+
+ø ø()/"	#map-set#:)-.$
+"
+
+ù ù((1"#array-read#:"
+ 
+
+ù ù((2"	#map-set#:)01$
+"
+
+û@ û(M4"#array-read#:*
+(
+
+û@ û(Q5"	#binop >#2>:4Bbool,"*
+
+û@ û(Q5	 
+*
+û= û(?2
+ûR û(V"
+
+ò ò(M"
+
+ò ò(M"&*&$%
+
+ð ò(M"Ñ	$
+"
+
+û û( 6"#array-read#:$
+"
+
+û# û(07"#array-read#:,
+*
+
+û û(08"
+#binop !=#2!=:7Bbool"
+ 
+
+û û(09"
+#assert#:83
+1
+
+û û(0:"#dependent-value#*:67Bfloat3
+1
+
+û û(5;"#dependent-value#*::Bfloat3
+1
+
+û û(<="#dependent-value#*:;<Bfloat
+
+û û(X"
+
+
+û û(X"œ*>	=
+"
+ 
+
+ú ü(?"	#map-set#:)3>,
+*
+
+ý" ý(-A"
+builtinslen*:Bint"
+ 
+
+ý ý(-B"	#map-set#:)@A
+
+õ þ(	)*E/home/fahbrain/projects/omnimind/src/metrics/consciousness_metrics.py

@@ -1,0 +1,253 @@
+
+1.0PythonFrontend"1763831840000*py2.B•
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+$
+src/security/network_sensors.py9
+"
+src.security.network_sensors11
+
+
+subprocess12
+
+datetime14
+
+typing16
+
+dataclasses18
+
+
+enum20
+
+re22
+
+src.audit.immutable_audit24
+
+src.audit.alerting_system26
+7
+1src.security.network_sensors.NetworkSensorGanglia28
+H
+Bsrc.security.network_sensors.NetworkSensorGanglia.detect_anomalies30
+
+
+list32
+J
+Dsrc.security.network_sensors.NetworkSensorGanglia.get_network_health34
+
+
+dict36
+J
+Dsrc.security.network_sensors.NetworkSensorGanglia._parse_nmap_output38
+	
+str40
+D
+>src.security.network_sensors.NetworkSensorGanglia.scan_network42
+
+
+bool44
+J
+Dsrc.security.network_sensors.NetworkSensorGanglia.establish_baseline46
+M
+Gsrc.security.network_sensors.NetworkSensorGanglia._check_nmap_available48
+@
+:src.security.network_sensors.NetworkSensorGanglia.__init__50
+E
+?src.security.network_sensors.NetworkSensorGanglia._host_to_dict52
+.
+(src.security.network_sensors.NetworkHost54
+5
+/src.security.network_sensors.scan_local_network56
+<
+6src.security.network_sensors.NetworkHost.__post_init__58
+1
++src.security.network_sensors.NetworkAnomaly60
+?
+9src.security.network_sensors.NetworkAnomaly.__post_init__62
+1
++src.security.network_sensors.ThreatSeverity64
+
+	enum.Enum66
+;
+5src.security.network_sensors.detect_network_anomalies68J
+
+8
+89j©
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29286 210
+
+31
+31307 229
+
+33
+33326
+
+35
+35347 229
+
+37
+37366
+
+39
+39387 229
+
+41
+41406
+
+43
+43427 229
+
+45
+45446
+
+47
+47467 229
+
+49
+49487 229
+
+51
+51507 229
+
+53
+53527 229
+
+55
+55546 210
+
+57
+57567 210
+
+59
+59587 255
+
+61
+61606 210
+
+63
+63627 261
+
+65
+65646 210
+
+67
+67666
+
+69
+69687 210r„
+
+10131*
+8
+ 
+(
+
+10151*
+8 ((
+
+10171*
+8 (-
+
+10191*
+8 ()
+
+10211*
+8 (
+
+10231*
+8 (
+
+
+10251*
+8 (K
+
+10271*
+8 (Q
+
+31333*
+8ø	 ø(
+
+35373*
+8Ö	 Ö(
+
+39333*
+8·	 ·(
+
+39414*
+8·	 ·(
+
+43373*
+8m	 m(
+
+43414*
+8m	 m(
+
+43414*
+8m	 m(
+
+43454*
+8m	 m(
+
+47453*
+8…	 …(
+
+47414*
+8…	 …(
+
+49453*
+8a	 a(
+
+53373*
+8ì	 ì(
+
+53554*
+8ì	 ì(
+
+57373*
+8§ §(
+
+65672*
+8 (
+
+69333*
+8­ ­(

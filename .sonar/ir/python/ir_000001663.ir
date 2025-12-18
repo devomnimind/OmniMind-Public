@@ -1,0 +1,28 @@
+
+truebool
+,#"Automatic data purging configured"str
+2)"Check data retention policy compliance."str
+)
+ "Data retention policy enforced"str
+	"description"str
+	"details"str
+"compliant"strself
+ï ï(
+start_date
+ï ï("end_date
+ï$ ï(6"¦&
+$
+
+ó ÷(	"#new-object#Bdict"
+ 
+
+ô ô("	#map-set#:"
+ 
+
+õ õ(;"	#map-set#:	
+"
+ 
+
+ö ö(:"	#map-set#:
+
+ó ÷(	*A/home/fahbrain/projects/omnimind/src/audit/compliance_reporter.py

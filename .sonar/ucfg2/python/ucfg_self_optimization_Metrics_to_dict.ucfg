@@ -1,0 +1,184 @@
+
+>src.metacognition.self_optimization.PerformanceMetrics.to_dictQ
+G/home/fahbrain/projects/omnimind/src/metacognition/self_optimization.pyi i("2*Ó
+2j j($
+k t(	
+%1"dict
+}
+l l('
+%2"__id*e
+
+__unknown_file (I*G8
+6src.metacognition.self_optimization.PerformanceMetrics"
+	timestamp^\
+l l(3
+%3"datetime.datetime.isoformat*"
+
+__unknown_file (
+
+%22	isoformatê
+ç
+l l(3
+%4"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	timestamp*"
+
+__unknown_file (
+
+%3á
+Ñ
+m  m(5
+%5"__id*l
+
+__unknown_file (P*N8
+6src.metacognition.self_optimization.PerformanceMetrics"
+response_time_msó
+î
+m m(5
+%6"__mapSet*"
+
+__unknown_file (
+
+%1*0
+
+__unknown_file (
+response_time_ms*"
+
+__unknown_file (
+
+%5Ö
+Ç
+n n(1
+%7"__id*j
+
+__unknown_file (N*L8
+6src.metacognition.self_optimization.PerformanceMetrics"
+throughput_rpsï
+í
+n n(1
+%8"__mapSet*"
+
+__unknown_file (
+
+%1*.
+
+__unknown_file (
+throughput_rps*"
+
+__unknown_file (
+
+%7Ä
+~
+o o()
+%9"__id*f
+
+__unknown_file (J*H8
+6src.metacognition.self_optimization.PerformanceMetrics"
+
+error_rateí
+è
+o o()
+%10"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+error_rate*"
+
+__unknown_file (
+
+%9Ä
+~
+p p('
+%11"__id*e
+
+__unknown_file (I*G8
+6src.metacognition.self_optimization.PerformanceMetrics"
+	cpu_usageí
+è
+p p('
+%12"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	cpu_usage*#
+
+__unknown_file (
+
+%11Ñ
+Å
+q q(-
+%13"__id*h
+
+__unknown_file (L*J8
+6src.metacognition.self_optimization.PerformanceMetrics"
+memory_usageï
+í
+q q(-
+%14"__mapSet*"
+
+__unknown_file (
+
+%1*,
+
+__unknown_file (
+memory_usage*#
+
+__unknown_file (
+
+%13Ü
+É
+r r(1
+%15"__id*j
+
+__unknown_file (N*L8
+6src.metacognition.self_optimization.PerformanceMetrics"
+custom_metricsó
+î
+r r(1
+%16"__mapSet*"
+
+__unknown_file (
+
+%1*.
+
+__unknown_file (
+custom_metrics*#
+
+__unknown_file (
+
+%15vt
+s s(%
+%17*V
+
+__unknown_file (:8
+6src.metacognition.self_optimization.PerformanceMetrics2	get_scoreé
+ã
+s s(%
+%18"__mapSet*"
+
+__unknown_file (
+
+%1*%
+
+__unknown_file (	
+score*#
+
+__unknown_file (
+
+%17"
+k t(	
+
+%1B:8
+6src.metacognition.self_optimization.PerformanceMetricsH

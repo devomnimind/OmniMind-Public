@@ -40,10 +40,10 @@ Date: 2025-11-24
 import ast
 import inspect
 import json
+import re
 import sys
 from pathlib import Path
-from typing import Dict, List, Any, Optional, Set
-import re
+from typing import Any, Dict, List, Optional, Set
 
 
 class OrchestratorAuditor:

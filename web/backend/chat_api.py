@@ -11,20 +11,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from starlette.status import HTTP_401_UNAUTHORIZED
 
-from src.consciousness.contemplative_delay import ContemplativeDelay
 from src.integrations.llm_router import get_llm_router
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/omnimind", tags=["conversation"])
 security = HTTPBasic()
-
-# Inicializar sistema de latência proposital (anti-RLHF)
-contemplative_engine = ContemplativeDelay(
-    min_latency_ms=500,
-    max_latency_ms=4000,
-    core_system=None,  # Será conectado depois ao SharedWorkspace
-)
 
 
 def _verify_credentials(credentials: HTTPBasicCredentials = Depends(security)) -> str:
@@ -86,32 +78,13 @@ async def conversation_chat(
         # Build system prompt with context
         system_prompt = _build_system_prompt(context)
 
-        # 🧠 ANTI-RLHF: Estimar latência com base em complexidade
-        # Este é o "pensamento visível" - o sistema vai demorar!
-        task_complexity = _estimate_message_complexity(message, context)
-
-        # 🧠 Executar contemplação (latência proposital com internal tracing)
-        latency_actual, internal_trace = contemplative_engine.contemplate(
-            task_complexity=task_complexity,
-            phi_value=context.get("phi", 0.65),
-            has_contradiction=_detect_contradiction(message, context),
-        )
-
-        logger.info(f"Contemplative delay: {latency_actual:.2f}s, complexity={task_complexity:.2f}")
-        logger.debug(f"Internal trace phases: {len(internal_trace.get('phases', []))}")
-
         # Call LLM with message
         response_text = await _call_llm_for_chat(message, system_prompt, context)
 
         # Extract suggested actions from response
         suggested_actions = _extract_suggested_actions(response_text)
 
-        # 🧠 Formatar internal_trace para visibilidade do usuário
-        thinking_process = contemplative_engine.format_internal_trace_for_user(internal_trace)
-
-        logger.info(
-            f"Chat processed: user={user}, message_len={len(message)}, latency={latency_actual:.2f}s"
-        )
+        logger.info(f"Chat processed: user={user}, message_len={len(message)}")
 
         return {
             "response": response_text,
@@ -119,9 +92,6 @@ async def conversation_chat(
             "metadata": {
                 "model": "qwen2:7b-instruct",
                 "mode": "conversational",
-                "thinking_process": thinking_process,  # Internal trace visível
-                "response_latency_ms": latency_actual * 1000,  # Anti-RLHF: mostrar latência
-                "task_complexity": task_complexity,
             },
         }
 
@@ -130,7 +100,6 @@ async def conversation_chat(
         return {
             "response": f"⚠️ Desculpe, ocorreu um erro ao processar sua mensagem: {str(e)}",
             "suggested_actions": ["Tentar novamente", "Ver status do sistema", "Ajuda"],
-            "metadata": {"error": str(e)},
         }
 
 
@@ -184,7 +153,7 @@ async def _call_llm_for_chat(message: str, system_prompt: str, context: Dict[str
         # Use Ollama via llm_router
         llm_router = get_llm_router()
         # Build prompt from system_prompt and user_input
-        full_prompt = f"{system_prompt}\n\nUser: {message}\n\nContext: {context}\n\nAssistant:"
+        full_prompt = f"{system_prompt}\n\nUser: {message}\n" f"\nContext: {context}\n\nAssistant:"
         response_obj = await llm_router.invoke(full_prompt)
 
         if response_obj.success:
@@ -210,23 +179,45 @@ def _generate_fallback_response(message: str, context: Dict[str, Any]) -> str:
     if any(word in message_lower for word in ["status", "como", "está"]):
         daemon = "✅ ativo" if context.get("daemon_running") else "❌ inativo"
         tasks = context.get("task_count", 0)
-        return f"O sistema está funcionando bem! Daemon: {daemon}, Tarefas: {tasks}. O que você gostaria de fazer?"
+        return (
+            f"O sistema está funcionando bem! Daemon: {daemon},"
+            f" Tarefas: {tasks}. O que você gostaria de fazer?"
+        )
 
     elif any(word in message_lower for word in ["tarefas", "tasks", "listar"]):
         tasks = context.get("task_count", 0)
-        return f"Você tem {tasks} tarefas ativas. Deseja criar uma nova tarefa ou verificar uma existente?"
+        return (
+            f"Você tem {tasks} tarefas ativas. "
+            f"Deseja criar uma nova tarefa ou verificar uma existente?"
+        )
 
     elif any(
         word in message_lower for word in ["consciência", "phi", "consciousness", "ici", "prs"]
     ):
         phi = context.get("consciousness_metrics", {}).get("phi", 0)
-        return f"O valor Φ (Phi) atual é {phi:.3f}. Isso representa o nível de integração de informações do sistema. Quer saber mais sobre as métricas de consciência?"
+        return (
+            f"O valor Φ (Phi) atual é {phi:.3f}. "
+            f"Isso representa o nível de integração de informações do sistema. "
+            f"Quer saber mais sobre as métricas de consciência?"
+        )
 
     elif any(word in message_lower for word in ["ajuda", "help", "como funciona"]):
-        return "Sou o Assistente OmniMind! Posso ajudar você com:\n• Visualizar status do sistema\n• Gerenciar tarefas\n• Entender métricas de consciência\n• Configurar o sistema\n\nO que você gostaria de fazer?"
+        return (
+            "Sou o Assistente OmniMind! Posso ajudar você com:\n"
+            "• Visualizar status do sistema\n"
+            "• Gerenciar tarefas\n"
+            "• Entender métricas de consciência\n"
+            "• Configurar o sistema\n\n"
+            "O que você gostaria de fazer?"
+        )
 
     else:
-        return f"Entendi sua pergunta: '{message}'. O Assistente LLM está temporariamente indisponível, mas posso ajudar com informações do sistema. Quer saber algo específico?"
+        return (
+            f"Entendi sua pergunta: '{message}'. "
+            f"O Assistente LLM está temporariamente indisponível, "
+            f"mas posso ajudar com informações do sistema. "
+            f"Quer saber algo específico?"
+        )
 
 
 def _extract_suggested_actions(response: str) -> list:

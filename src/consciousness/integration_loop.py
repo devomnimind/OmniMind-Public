@@ -321,37 +321,37 @@ class IntegrationLoop:
     STANDARD_SPECS = {
         "sensory_input": ModuleInterfaceSpec(
             module_name="sensory_input",
-            embedding_dim=384,  # Atualizado: all-MiniLM-L6-v2 usa 384 dims
+            embedding_dim=768,
             required_inputs=[],
             produces_output=True,
         ),
         "qualia": ModuleInterfaceSpec(
             module_name="qualia",
-            embedding_dim=384,  # Atualizado: all-MiniLM-L6-v2 usa 384 dims
+            embedding_dim=768,
             required_inputs=["sensory_input"],
             produces_output=True,
         ),
         "narrative": ModuleInterfaceSpec(
             module_name="narrative",
-            embedding_dim=384,  # Atualizado: all-MiniLM-L6-v2 usa 384 dims
+            embedding_dim=768,
             required_inputs=["qualia"],
             produces_output=True,
         ),
         "meaning_maker": ModuleInterfaceSpec(
             module_name="meaning_maker",
-            embedding_dim=384,  # Atualizado: all-MiniLM-L6-v2 usa 384 dims
+            embedding_dim=768,
             required_inputs=["narrative"],
             produces_output=True,
         ),
         "expectation": ModuleInterfaceSpec(
             module_name="expectation",
-            embedding_dim=384,  # Atualizado: all-MiniLM-L6-v2 usa 384 dims
+            embedding_dim=768,
             required_inputs=["meaning_maker"],
             produces_output=True,
         ),
         "imagination": ModuleInterfaceSpec(
             module_name="imagination",
-            embedding_dim=384,  # Atualizado: all-MiniLM-L6-v2 usa 384 dims
+            embedding_dim=768,
             required_inputs=["narrative", "expectation"],
             produces_output=True,
         ),
@@ -425,6 +425,9 @@ class IntegrationLoop:
             if self.enable_logging:
                 logger.warning(f"LacanianDiscourseAnalyzer não disponível: {e}")
 
+        # Componentes de psicanálise e motivação
+        self._desire_engine: Optional[Any] = None
+
         # Extended results components (lazy initialization)
         self._extended_components: Optional[Dict[str, Any]] = None
         if self.enable_extended_results:
@@ -457,9 +460,6 @@ class IntegrationLoop:
 
         # NOVO: GozoCalculator para cálculo de Jouissance
         self._gozo_calculator: Optional[Any] = None
-
-        # NOVO: DesireEngine para cálculo de Epsilon (motivação)
-        self._desire_engine: Optional[Any] = None
 
     def execute_cycle_sync(self, collect_metrics: bool = True) -> LoopCycleResult:
         """
@@ -615,9 +615,9 @@ class IntegrationLoop:
                             alpha = self._bion_alpha_function.transform(beta)
 
                             if alpha is not None:
-                                # Converter α-element para embedding.
-                                # Usar symbolic_potential para modificar embedding
-                                # e incorporar narrative_form como semântica
+                                # Converter α-element para embedding
+                                # Estratégia: usar symbolic_potential para modificar
+                                # embedding original e incorporar narrative_form
                                 alpha_embedding = sensory_state.copy()
 
                                 # Aplicar transformação baseada em symbolic_potential
@@ -676,8 +676,8 @@ class IntegrationLoop:
                             )
                         # Continuar mesmo se Bion falhar
 
-                # PHASE 6 INTEGRATION (2025-12-10):
-                # Analisar narrativa via Lacanian Discourse Analyzer
+                # PHASE 6 INTEGRATION (2025-12-10): Analisar narrativa
+                # via Lacanian Discourse Analyzer
                 elif module_name == "narrative" and self._lacanian_discourse_analyzer is not None:
                     # Executar narrative normalmente primeiro
                     executor.execute_sync(self.workspace)
@@ -688,16 +688,16 @@ class IntegrationLoop:
                         narrative_state = self.workspace.read_module_state("narrative")
                         if isinstance(narrative_state, np.ndarray):
                             # Converter embedding para análise de discurso
-                            # Estratégia: usar propriedades do embedding e
-                            # histórico para criar contexto textual
+                            # Estratégia: usar propriedades do embedding e histórico
+                            # para criar contexto textual
                             narrative_magnitude = float(np.linalg.norm(narrative_state))
                             narrative_sparsity = float(np.mean(np.abs(narrative_state) < 0.1))
                             narrative_max = float(np.max(np.abs(narrative_state)))
 
                             # CORREÇÃO (2025-12-10): Buscar narrative_form de sensory_input
                             # (onde Bion salva)
-                            # e melhorar geração de texto simbólico com
-                            # marcadores baseados em propriedades
+                            # e melhorar geração de texto simbólico com marcadores
+                            # baseados em propriedades
                             narrative_form = ""
                             try:
                                 # Buscar em sensory_input (onde Bion salva narrative_form)
@@ -718,7 +718,6 @@ class IntegrationLoop:
                             # Sempre usar método melhorado que gera texto com marcadores
                             # baseados em propriedades
                             # Se narrative_form disponível, combinar com marcadores
-                            # gerados
                             if narrative_form:
                                 # Combinar narrative_form com marcadores gerados para melhor análise
                                 generated_text = self._generate_symbolic_text_from_embedding(
@@ -784,9 +783,7 @@ class IntegrationLoop:
                                 }
                             )
 
-                            #
                             # Atualizar metadata no workspace
-                            # (reescrever estado com metadata atualizado)
                             self.workspace.write_module_state(
                                 module_name="narrative",
                                 embedding=narrative_state,
@@ -891,17 +888,29 @@ class IntegrationLoop:
                     result.phi_estimate = phi_returned
                     if result.phi_estimate == 0.0 and len(self.workspace.cross_predictions) > 0:
                         logger.warning(
-                            f"Cycle {self.cycle_count}: phi_estimate is 0.0 "
-                            f"despite {len(self.workspace.cross_predictions)} "
-                            "cross-predictions"
+                            f"Cycle {self.cycle_count}: phi_estimate is 0.0 despite "
+                            f"{len(self.workspace.cross_predictions)} cross-predictions"
                         )
                 else:
-                    logger.error(
-                        f"Cycle {self.cycle_count}: "
-                        f"Unknown return type from compute_phi_from_integrations: "
-                        f"{type(phi_returned)}"
-                    )
-                    result.phi_estimate = 0.0
+                    # Might be a PhiValue object
+                    if hasattr(phi_returned, "normalized"):
+                        result.phi_estimate = phi_returned.normalized
+                        logger.debug(
+                            f"Cycle {self.cycle_count}: Extracted phi_estimate="
+                            f"{result.phi_estimate} from PhiValue.normalized"
+                        )
+                    elif hasattr(phi_returned, "nats"):
+                        result.phi_estimate = phi_returned.nats
+                        logger.debug(
+                            f"Cycle {self.cycle_count}: Extracted phi_estimate="
+                            f"{result.phi_estimate} from PhiValue.nats"
+                        )
+                    else:
+                        logger.error(
+                            f"Cycle {self.cycle_count}: Unknown return type from "
+                            f"compute_phi_from_integrations: {type(phi_returned)}"
+                        )
+                        result.phi_estimate = 0.0
 
                 # CORREÇÃO CRÍTICA (2025-12-08): Atualizar repressão APÓS cálculo de Φ
                 # Repressão não atualizada estava bloqueando acesso ao Real (Rho_U congelado)
@@ -951,7 +960,8 @@ class IntegrationLoop:
             logger.info(
                 f"Cycle {self.cycle_count} Complexity: "
                 f"~{theoretical_complexity['total'] / 1e6:.1f}M ops "
-                f"in {actual_time_ms:.1f}ms ({ops_per_ms / 1e3:.1f}GOps/s)"
+                f"in {actual_time_ms:.1f}ms "
+                f"({ops_per_ms / 1e3:.1f}GOps/s)"
             )
 
         # Finalize timing
@@ -996,13 +1006,22 @@ class IntegrationLoop:
                     labels={"cycle": self.cycle_count},
                 )
 
-                # Registrar métricas de módulo executado
-                metrics_collector.record_metric(
-                    module_name=module_name,
-                    metric_name="executed",
-                    value=1.0,
-                    labels={"cycle": self.cycle_count},
-                )
+                # Registrar métricas de cada qualia
+                if hasattr(result, "qualia") and result.qualia:
+                    for qname, qvalue in result.qualia.items():
+                        try:
+                            metrics_collector.record_metric(
+                                module_name=module_name,
+                                metric_name=f"qualia_{qname}",
+                                value=(
+                                    float(qvalue)
+                                    if isinstance(qvalue, (int, float))
+                                    else len(str(qvalue))
+                                ),
+                                labels={"cycle": self.cycle_count},
+                            )
+                        except Exception:
+                            pass
 
                 logger.debug(f"Métricas do ciclo {self.cycle_count} registradas")
 
@@ -1242,13 +1261,17 @@ class IntegrationLoop:
         from src.consciousness.cycle_result_builder import LoopCycleResultBuilder
         from src.consciousness.embedding_narrative import EmbeddingNarrativeAnalyzer
         from src.consciousness.embedding_psi_adapter import PsiProducerAdapter
-        from src.consciousness.embedding_sigma_adapter import SigmaSinthomeCalculatorAdapter
+        from src.consciousness.embedding_sigma_adapter import (
+            SigmaSinthomeCalculatorAdapter,
+        )
         from src.consciousness.embedding_validator import EmbeddingNarrativeValidator
 
         # CORREÇÃO (2025-12-08): Inicializar sigma_calculator no adapter
         # Sem isso, adapter sempre usa fallback e retorna 0.5
         from src.consciousness.sigma_sinthome import SigmaSinthomeCalculator
-        from src.consciousness.theoretical_consistency_guard import TheoreticalConsistencyGuard
+        from src.consciousness.theoretical_consistency_guard import (
+            TheoreticalConsistencyGuard,
+        )
 
         sigma_calculator = SigmaSinthomeCalculator(
             integration_trainer=None,  # Não temos trainer no loop básico
@@ -1501,8 +1524,7 @@ class IntegrationLoop:
         phi_raw = base_result.phi_estimate  # Assumir que já está normalizado [0,1]
         phi_raw_nats = denormalize_phi(phi_raw)
 
-        # 5. Calcular Δ primeiro (depende principalmente de Φ, secundariamente de trauma)
-        # CORREÇÃO (2025-12-14): Se embeddings não disponíveis, usar apenas Φ
+        # 5. Calcular Δ primeiro (depende apenas de Φ)
         try:
             from src.consciousness.delta_calculator import DeltaCalculator
 
@@ -1511,7 +1533,6 @@ class IntegrationLoop:
                 expectation_emb = extended_result.module_outputs.get("expectation")
                 reality_emb = extended_result.module_outputs.get("sensory_input")
                 if expectation_emb is not None and reality_emb is not None:
-                    # Temos embeddings: calcular delta completo com componente de trauma
                     delta_result = delta_calc.calculate_delta(
                         expectation_embedding=expectation_emb,
                         reality_embedding=reality_emb,
@@ -1520,28 +1541,9 @@ class IntegrationLoop:
                         phi_raw=phi_raw_nats,
                     )
                     extended_result.delta = delta_result.delta_value
-                else:
-                    # Embeddings não disponíveis: usar apenas correlação Δ-Φ (IIT clássico)
-                    # Δ = 1.0 - Φ (relação fundamental entre consciência e defesa)
-                    extended_result.delta = 1.0 - phi_raw
-                    logger.debug(
-                        f"Cycle {base_result.cycle_number}: "
-                        f"Embeddings indisponíveis (expectation ou sensory_input). "
-                        f"Usando delta_from_phi: Δ = 1.0 - Φ = {extended_result.delta:.4f}"
-                    )
-            else:
-                # Sem module_outputs: usar apenas correlação Δ-Φ
-                extended_result.delta = 1.0 - phi_raw
-                logger.debug(
-                    f"Cycle {base_result.cycle_number}: "
-                    f"Sem module_outputs. "
-                    f"Usando delta_from_phi: Δ = 1.0 - Φ = {extended_result.delta:.4f}"
-                )
         except Exception as e:
             logger.warning(f"Erro ao calcular δ: {e}")
-            # Fallback: usar apenas Φ ao invés de None
-            extended_result.delta = 1.0 - phi_raw
-            logger.debug(f"Fallback delta (exceção): Δ = 1.0 - Φ = {extended_result.delta:.4f}")
+            extended_result.delta = None
 
         # 6. Calcular Ψ (depende apenas de Φ)
         try:
@@ -1860,7 +1862,10 @@ class IntegrationLoop:
         Returns:
             snapshot_id
         """
-        from src.backup.consciousness_snapshot import ConsciousnessSnapshotManager, SnapshotTag
+        from src.backup.consciousness_snapshot import (
+            ConsciousnessSnapshotManager,
+            SnapshotTag,
+        )
 
         snapshot_manager = ConsciousnessSnapshotManager()
         snapshot_tag = None

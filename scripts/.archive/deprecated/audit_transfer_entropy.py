@@ -5,10 +5,12 @@ Auditoria Total: Transfer Entropy e Vieses nos Testes
 Investiga por que Transfer Entropy deu 0.0 e identifica vieses metodológicos.
 """
 
-import numpy as np
-import sys
 import os
+import sys
 from typing import Dict, List, Tuple
+
+import numpy as np
+
 from omnimind_parameters import get_parameter_manager  # type: ignore[import-untyped]
 
 # Add src to path
@@ -216,7 +218,7 @@ def main():
     print("=" * 80)
 
     # Testes detalhados
-    results = test_transfer_entropy_detailed()
+    _results = test_transfer_entropy_detailed()
 
     # Consistência
     test_granger_vs_transfer_consistency()

@@ -1,0 +1,87 @@
+
+"total_decisions"str
+"default_framework"str
+"division by zero"bool
+"vetoed_actions"str
+
+"S3518"bool
+"approved_actions"str
+
+0int
+"a"bool
+0.0float
+"approval_rate"str
+~u"
+        Get summary of ethical decisions.
+
+        Returns:
+            Dictionary with ethics statistics
+        "strself
+² ²("þ3
+1
+
+¹ ¹(%"#get-field# approved_actions:1
+/
+
+¹( ¹(;"#get-field# vetoed_actions:+
+)
+
+¹ ¹(;total"	#binop +#2+:9
+7
+
+º9 º(Bapproval_rate"	#binop >#2>:Bbool,"*
+
+º9 º(B *
+º6 º(82
+ºC º(G"Ð3
+1
+
+º º(-"#get-field# approved_actions:,
+*
+
+º º(5	"
+#binop !=#2!=:Bbool"
+ 
+
+º º(5"
+#assert#:	
+3
+1
+
+º º(5"#dependent-value#*:Bfloat
+
+º º(K"
+
+º º(K"Ù*approval_rate&
+$
+
+¼ Â(	"#new-object#Bdict"
+ 
+
+½ ½($"	#map-set#:3
+1
+
+¾  ¾(5"#get-field# approved_actions:"
+ 
+
+¾ ¾(5"	#map-set#:1
+/
+
+¿ ¿(1"#get-field# vetoed_actions:"
+ 
+
+¿ ¿(1"	#map-set#:"
+ 
+
+À À(*"	#map-set#:4
+2
+
+Á! Á(7"#get-field# default_framework:(
+&
+
+Á! Á(="#get-field# value:"
+ 
+
+Á Á(="	#map-set#:
+
+¼ Â(	*;/home/fahbrain/projects/omnimind/src/ethics/ethics_agent.py

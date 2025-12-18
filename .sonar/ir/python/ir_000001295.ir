@@ -1,0 +1,30 @@
+
+) "Simulate scene type detection."strself
+µ µ(
+image_data
+µ! µ(2-)src.multimodal.vision_processor.SceneType"¤#
+!
+
+¸ ¸('"#unknown-value#1
+/
+
+¸ ¸((data_sum"
+builtinssum*:;
+9
+
+¹ ¹(%scene_types"
+builtinslist*:Blist,
+*
+
+º& º(6"
+builtinslen*:Bint'
+%
+
+º º(6	"	#binop %#*2%:$
+"
+
+º º(7
+"#array-read#:	
+
+º º(7
+*C/home/fahbrain/projects/omnimind/src/multimodal/vision_processor.py

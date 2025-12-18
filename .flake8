@@ -1,6 +1,8 @@
 [flake8]
 max-line-length = 100
-extend-ignore = E203,W503
+extend-ignore = E203, W503
+
+# Exclude large/third-party and virtualenv folders
 exclude =
     .git,
     __pycache__,
@@ -10,14 +12,24 @@ exclude =
     tests/legacy,
     DEVBRAIN_V23,
     third_party,
-    archive/examples/*,
-    archive/legacy_scripts/*,
+    archive,
+    backups_compressed,
     data,
     venv,
     src/agents/react_agent_broken.py,
     src/agents/react_agent.py.backup,
     src/integrations,
-    src/onboarding
-    */sympy/*
-# Excluído sympy/** do flake8 por erro recursivo em dependência externa (não faz parte do core OmniMind)
-# Excluído archive/legacy_scripts/* - scripts legados arquivados do desenvolvimento
+    src/onboarding,
+    */sympy/*,
+    scripts,
+    models,
+    docs,
+    deploy,
+    .vscode,
+    web/frontend/node_modules,
+    node_modules,
+    web
+
+# Many scripts intentionally modify sys.path before imports; allow E402 in scripts and web
+per-file-ignores =
+    src/consciousness/*:E501

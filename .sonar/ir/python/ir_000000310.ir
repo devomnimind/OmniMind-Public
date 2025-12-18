@@ -1,0 +1,12 @@
+
+'"Calculate frustration level."str
+1.0floatselfI I("Ï(
+&
+K K("#get-field# urgency:-
++
+K% K(6"#get-field# satisfaction:1
+/
+K K(6"#dependent-value#*:Bfloat1
+/
+K K(7"#dependent-value#*:Bfloat
+K K(7*:/home/fahbrain/projects/omnimind/src/desire_engine/core.py

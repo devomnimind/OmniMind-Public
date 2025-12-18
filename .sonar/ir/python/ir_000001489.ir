@@ -1,0 +1,59 @@
+
+%"Lazy import of submodules."str
+"GodelianAI"str
+"ObjectSmallA"str
+8/"module {__name__!r} has no attribute {name!r}"str
+"StructuralLack"str
+"RSIArchitecture"str
+("ComputationalLackArchitecture"strname   ("m!
+
+" "("#unknown-value#*
+(
+" "("
+#binop in#2in:Bbool"
+" "( *" "("V*
+(
+# #(2"
+#binop ==#2==:Bbool&"$
+# #(2 *# #(
+2' '("J6
+4
+8
+ 8(J"AttributeError*:BAttributeError2
+8 8(J"UA
+?
+$ $(IComputationalLackArchitecture"?python-unknown?
+& &(0"V*
+(
+' '(&	"
+#binop ==#2==:Bbool&"$
+' '(&	 *' '(2+ +("G3
+1
+( ((;
+RSIArchitecture"?python-unknown?
+* *("
+"V*
+(
++ +(!"
+#binop ==#2==:Bbool&"$
++ +(! *+ +(2/ /("B.
+,
+, ,(/
+GodelianAI"?python-unknown?
+. .("V*
+(
+/ /(%"
+#binop ==#2==:Bbool&"$
+/ /(%	 
+*/ /(23 3("F	2
+0
+0 0(:StructuralLack"?python-unknown?
+2 2(!"L
+*
+(
+3 3(#"
+#binop ==#2==:Bbool"
+3 3(# *3 3("D0
+.
+4 4(8ObjectSmallA"?python-unknown?
+6 6("*9/home/fahbrain/projects/omnimind/src/lacanian/__init__.py

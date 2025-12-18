@@ -1,0 +1,237 @@
+
+Ssrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.update_tenant_statusR
+F/home/fahbrain/projects/omnimind/src/scaling/multi_tenant_isolation.py° °("2*¡
+2
+± º(‡
+„
+
+» »(
+%18"__id*i
+
+__unknown_file (M*K@
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManager"
+_lock*
+3
+6*A
+3
+multi_tenant_isolation.py"
+Ð Ð(
+implicit return*ú
+4
+¿ ¿(7ˆ
+…
+
+¿ ¿(%
+%1"__id*k
+
+__unknown_file (O*M@
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManager"	
+tenantszx
+
+¿ ¿(0
+%2"__mapGet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+
+	tenant_id2__getitem__J
+H
+
+¿ ¿(7
+%3"__id*.
+
+__unknown_file (*
+
+%2"
+statusF
+D
+
+¿ ¿(7
+
+old_status"__id*"
+
+__unknown_file (
+
+%3ˆ
+…
+
+À À(
+%4"__id*k
+
+__unknown_file (O*M@
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManager"	
+tenantszx
+
+À À(#
+%5"__mapGet*"
+
+__unknown_file (
+
+%4*)
+
+__unknown_file (
+
+	tenant_id2__getitem__N
+L
+
+À À(3
+
+%5"
+status"__id*&
+
+__unknown_file (
+
+
+status„
+
+Á Á( 
+%6*^
+
+__unknown_file (B@
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManager2_save_tenants
+Š
+
+Ä Ä(
+%7"__id*p
+
+__unknown_file (T*R@
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManager"
+audit_system
+
+Æ Ê(
+%8"dict™
+–
+
+Ç Ç(*
+%9"__mapSet*"
+
+__unknown_file (
+
+%8*)
+
+__unknown_file (
+	tenant_id*)
+
+__unknown_file (
+
+	tenant_idR
+P
+
+È" È(2
+%10"__id*5
+
+__unknown_file (*
+
+
+old_status"
+value•
+’
+
+È È(2
+%11"__mapSet*"
+
+__unknown_file (
+
+%8**
+
+__unknown_file (
+
+old_status*#
+
+__unknown_file (
+
+%10N
+L
+
+É" É(.
+%12"__id*1
+
+__unknown_file (*
+
+status"
+value•
+’
+
+É É(.
+%13"__mapSet*"
+
+__unknown_file (
+
+%8**
+
+__unknown_file (
+
+new_status*#
+
+__unknown_file (
+
+%12»¸
+
+Ä Ì(
+%14*"
+
+__unknown_file (
+
+%7*5
+
+__unknown_file (
+tenant_status_changed*"
+
+__unknown_file (
+
+%82
+log_action:
+category
+
+security"
+
+Î Î(
+
+True*(
+5
+½ ½("
+
+½ ½(	
+
+False*Ù
+6
+¼ ¼(,‰
+†
+
+¼  ¼(,
+%15"__id*k
+
+__unknown_file (O*M@
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManager"	
+tenantssq
+
+¼ ¼(,
+%16*#
+
+__unknown_file (
+
+%15*)
+
+__unknown_file (
+
+	tenant_id2__contains__?
+=
+
+¼ ¼(,
+%17"not*#
+
+__unknown_file (
+
+%16*
+4
+5:
+
+°# °(1
+	tenant_id:
+
+°3 °(G
+statusBB@
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManagerH

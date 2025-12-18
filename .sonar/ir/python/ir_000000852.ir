@@ -1,0 +1,12 @@
+
+cZ"Get current physical state.
+
+        Returns:
+            Current PhysicalState
+        "strself
+Ú Ú("D0
+.
+
+à à(!"#get-field# current_state:
+
+à à(!*H/home/fahbrain/projects/omnimind/src/multimodal/embodied_intelligence.py

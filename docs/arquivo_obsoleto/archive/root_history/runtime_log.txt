@@ -1,0 +1,480 @@
+2025-12-04 18:31:46,446 [INFO] OmniMind: === OmniMind System Startup ===
+2025-12-04 18:31:46,446 [INFO] OmniMind: --- Phase 1: Hardware Initialization ---
+2025-12-04 18:31:46,446 [INFO] src.boot.hardware: Phase 1: Checking Hardware...
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/torch/cuda/__init__.py:129: UserWarning: CUDA initialization: CUDA unknown error - this may be due to an incorrectly set up environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero. (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:109.)
+  return torch._C._cuda_getDeviceCount() > 0
+2025-12-04 18:31:46,454 [INFO] src.boot.hardware: Hardware Profile: HardwareProfile(gpu_available=False, gpu_name='None', memory_total=24931745792, cpu_count=8, tpu_available=False)
+2025-12-04 18:31:46,454 [INFO] OmniMind: Hardware Profile: HardwareProfile(gpu_available=False, gpu_name='None', memory_total=24931745792, cpu_count=8, tpu_available=False)
+2025-12-04 18:31:46,454 [INFO] OmniMind: --- Phase 2: Memory Loading ---
+2025-12-04 18:31:46,454 [INFO] src.boot.memory: Phase 2: Loading Memory & Topology...
+2025-12-04 18:31:46,455 [WARNING] src.boot.memory: No persistent memory found. Initializing fresh topology.
+2025-12-04 18:31:46,455 [INFO] OmniMind: Memory loaded successfully.
+2025-12-04 18:31:46,455 [INFO] OmniMind: --- Phase 3: Rhizome Construction ---
+2025-12-04 18:31:46,455 [INFO] src.boot.rhizome: Initializing Rhizome (Desiring Machines Network)...
+2025-12-04 18:31:46,455 [INFO] src.boot.rhizome: Rhizome initialized with 3 core machines.
+2025-12-04 18:31:46,455 [INFO] src.boot.rhizome: Rhizome integrity check passed.
+2025-12-04 18:31:46,456 [INFO] OmniMind: --- Phase 4: Consciousness Emergence ---
+2025-12-04 18:31:46,456 [INFO] src.boot.consciousness: Initializing Consciousness Systems...
+2025-12-04 18:31:46,456 [INFO] src.boot.consciousness: Phi Calculator (IIT 3.0) initialized.
+2025-12-04 18:31:46,456 [INFO] src.boot.consciousness: Lacanian-D&G Detector initialized.
+2025-12-04 18:31:46,456 [INFO] src.boot.consciousness: Baseline Integrated Information (Phi): 0.0
+2025-12-04 18:31:46,456 [INFO] src.consciousness.symbolic_register: SymbolicRegister initialized with max_messages=1000
+2025-12-04 18:31:46,457 [INFO] src.consciousness.shared_workspace: Shared Workspace initialized: embedding_dim=768, max_history=10000, dir=data/consciousness/workspace
+2025-12-04 18:31:46,457 [INFO] src.metrics.real_consciousness_metrics: IntegrationLoop initialized for real metrics collection
+2025-12-04 18:31:46,457 [INFO] OmniMind: Real Metrics Collector initialized.
+2025-12-04 18:31:46,457 [INFO] OmniMind: Autopoietic Manager initialized (Phase 22).
+2025-12-04 18:31:46,457 [INFO] OmniMind: === Boot Sequence Complete. System is ALIVE. ===
+2025-12-04 18:31:46,457 [INFO] OmniMind: Starting Desiring-Production Cycles...
+2025-12-04 18:31:46,785 [INFO] qiskit.passmanager.base_tasks: Pass: UnrollCustomDefinitions - 0.21505 (ms)
+2025-12-04 18:31:46,786 [INFO] qiskit.passmanager.base_tasks: Pass: BasisTranslator - 0.10943 (ms)
+2025-12-04 18:31:48,436 [INFO] src.quantum_consciousness.quantum_backend: ✅ CUDA initialization fixed: 📊 torch.cuda.device_count() = 1 | 📊 torch.cuda.is_available() = False | 🔄 CUDA devices detected but initialization failed - forcing reset... | ❌ torch.cuda.init() failed: CUDA unknown error - this may be due to an incorrectly set up environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero.
+2025-12-04 18:31:49,268 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:31:49,268 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:31:49,268 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:31:50,120 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.8371851444244385 seconds.
+Found opt_params [7.52557313 2.23718086].
+2025-12-04 18:31:50,259 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:31:50,259 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:31:50,260 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:31:51,091 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.8001983165740967 seconds.
+Found opt_params [5.88748141 1.96693921].
+2025-12-04 18:31:51,231 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:31:51,232 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:31:51,232 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:31:52,236 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9766132831573486 seconds.
+Found opt_params [ 3.46952922 -3.0303015 ].
+2025-12-04 18:31:52,377 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:31:52,378 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:31:52,378 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:31:53,505 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.1090307235717773 seconds.
+Found opt_params [ 6.76974339 -4.27989912].
+2025-12-04 18:31:53,651 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:31:53,652 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:31:53,652 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:31:54,536 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.8698515892028809 seconds.
+Found opt_params [4.5660541  2.23472991].
+2025-12-04 18:31:54,677 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:31:54,678 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:31:54,678 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:31:56,044 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.3510406017303467 seconds.
+Found opt_params [5.86835957 2.39963221].
+2025-12-04 18:31:56,188 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:31:56,191 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:31:56,192 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:31:56,966 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.7557902336120605 seconds.
+Found opt_params [ 5.11096271 -2.35585909].
+2025-12-04 18:31:57,110 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:31:57,110 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:31:57,111 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:31:57,913 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.7815179824829102 seconds.
+Found opt_params [ 0.54347105 -1.18669854].
+2025-12-04 18:31:58,059 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:31:58,059 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:31:58,059 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:31:59,048 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9732787609100342 seconds.
+Found opt_params [ 6.71531644 -1.88904677].
+2025-12-04 18:31:59,192 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:31:59,192 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:31:59,192 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:00,154 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9462118148803711 seconds.
+Found opt_params [2.67814596 2.45409981].
+2025-12-04 18:32:00,298 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:00,298 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:00,298 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:01,311 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9969558715820312 seconds.
+Found opt_params [ 2.15517227 -5.13453067].
+2025-12-04 18:32:01,453 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:01,453 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:01,454 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:02,376 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9040279388427734 seconds.
+Found opt_params [ 3.66773068 -1.91617238].
+2025-12-04 18:32:02,517 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:02,517 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:02,518 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:03,527 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9848623275756836 seconds.
+Found opt_params [ 5.17218759 -3.87488329].
+2025-12-04 18:32:03,667 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:03,667 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:03,668 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:04,725 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.0389049053192139 seconds.
+Found opt_params [ 5.2442391  -6.26206602].
+2025-12-04 18:32:04,870 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:04,871 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:04,871 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:05,775 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.8771452903747559 seconds.
+Found opt_params [ 0.46673479 -1.51270314].
+2025-12-04 18:32:05,913 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:05,914 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:05,914 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:06,877 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9348657131195068 seconds.
+Found opt_params [ 1.93068473 -3.39529853].
+2025-12-04 18:32:07,021 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:07,021 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:07,022 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:07,867 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.8322844505310059 seconds.
+Found opt_params [7.25008253 5.4731414 ].
+2025-12-04 18:32:08,010 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:08,010 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:08,010 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:08,854 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.8309206962585449 seconds.
+Found opt_params [ 3.52833366 -2.59471332].
+2025-12-04 18:32:08,995 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:08,995 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:08,995 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:09,935 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9240267276763916 seconds.
+Found opt_params [ 8.16947707 -1.74601111].
+2025-12-04 18:32:10,076 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:10,076 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:10,076 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:11,145 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.0542542934417725 seconds.
+Found opt_params [0.98380244 5.45510488].
+2025-12-04 18:32:11,289 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:11,289 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:11,290 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:12,066 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.7575488090515137 seconds.
+Found opt_params [1.36491926 0.02754772].
+2025-12-04 18:32:12,208 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:12,208 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:12,209 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:13,141 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9156205654144287 seconds.
+Found opt_params [2.71259359 3.15510711].
+2025-12-04 18:32:13,287 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:13,287 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:13,288 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:14,190 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.8766610622406006 seconds.
+Found opt_params [5.812022   2.87066016].
+2025-12-04 18:32:14,331 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:14,331 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:14,332 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:15,275 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9183802604675293 seconds.
+Found opt_params [1.03238299 5.37579103].
+2025-12-04 18:32:15,426 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:15,427 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:15,427 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:16,339 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.8849895000457764 seconds.
+Found opt_params [ 0.38851714 -2.88205155].
+2025-12-04 18:32:16,479 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:16,479 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:16,480 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:17,442 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9322769641876221 seconds.
+Found opt_params [1.0717729  4.67635706].
+2025-12-04 18:32:17,585 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:17,585 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:17,586 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:18,513 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9044387340545654 seconds.
+Found opt_params [ 3.4707685  -3.77611448].
+2025-12-04 18:32:18,655 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:18,655 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:18,656 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:19,760 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.0794270038604736 seconds.
+Found opt_params [ 6.65545956 -3.01546295].
+2025-12-04 18:32:19,902 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:19,903 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:19,903 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:20,794 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.8615071773529053 seconds.
+Found opt_params [5.86777959 1.3316443 ].
+2025-12-04 18:32:20,936 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:20,937 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:20,937 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:22,014 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.053267002105713 seconds.
+Found opt_params [ 1.9168184  -1.99746599].
+2025-12-04 18:32:22,197 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:22,198 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:22,198 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:23,466 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.2378337383270264 seconds.
+Found opt_params [ 6.08597303 -5.41378452].
+2025-12-04 18:32:23,609 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:23,610 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:23,610 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:24,756 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.1327073574066162 seconds.
+Found opt_params [7.4028162  6.61149169].
+2025-12-04 18:32:24,904 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:24,904 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:24,904 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:25,833 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9153974056243896 seconds.
+Found opt_params [5.88302513 2.46016612].
+2025-12-04 18:32:25,974 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:25,974 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:25,975 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:26,761 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.7705671787261963 seconds.
+Found opt_params [5.75424401 1.97029352].
+2025-12-04 18:32:26,915 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:26,915 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:26,916 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:27,908 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9721322059631348 seconds.
+Found opt_params [ 3.57057481 -1.17862323].
+2025-12-04 18:32:28,049 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:28,049 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:28,050 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:29,009 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9323587417602539 seconds.
+Found opt_params [ 0.45989941 -1.84982957].
+2025-12-04 18:32:29,150 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:29,150 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:29,151 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:30,248 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.0849967002868652 seconds.
+Found opt_params [ 0.30308494 -0.57051939].
+2025-12-04 18:32:30,387 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:30,387 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:30,388 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:31,455 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.0502421855926514 seconds.
+Found opt_params [ 6.73856103 -1.29216425].
+2025-12-04 18:32:31,595 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:31,596 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:31,596 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:32,637 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.012824535369873 seconds.
+Found opt_params [4.30691965 4.02218841].
+2025-12-04 18:32:32,777 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:32,783 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:32,784 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:34,026 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.2167468070983887 seconds.
+Found opt_params [ 6.80177428 -0.89684623].
+2025-12-04 18:32:34,170 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:34,170 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:34,170 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:35,070 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.8828263282775879 seconds.
+Found opt_params [ 5.01125163 -2.13554742].
+2025-12-04 18:32:35,212 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:35,212 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:35,213 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:36,228 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9857592582702637 seconds.
+Found opt_params [-0.49980053  1.69553653].
+2025-12-04 18:32:36,368 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:36,368 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:36,369 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:37,319 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9307219982147217 seconds.
+Found opt_params [2.68214181 1.78798266].
+2025-12-04 18:32:37,464 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:37,464 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:37,465 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:38,347 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.8571486473083496 seconds.
+Found opt_params [ 0.39844678 -2.71171226].
+2025-12-04 18:32:38,487 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:38,488 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:38,488 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:39,314 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.7979118824005127 seconds.
+Found opt_params [2.71740609 2.58258019].
+2025-12-04 18:32:39,466 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:39,467 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:39,467 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:41,071 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.5900697708129883 seconds.
+Found opt_params [ 0.37430378 -2.73171141].
+2025-12-04 18:32:41,216 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:41,216 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:41,217 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:42,252 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.9999723434448242 seconds.
+Found opt_params [4.26692457 4.37098642].
+2025-12-04 18:32:42,395 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:42,395 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:42,396 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:43,578 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.1457328796386719 seconds.
+Found opt_params [ 3.6104414  -1.94230533].
+2025-12-04 18:32:43,721 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:43,722 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:43,722 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:44,718 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 0.981367826461792 seconds.
+Found opt_params [1.08468341 4.55028199].
+2025-12-04 18:32:44,865 [WARNING] src.quantum_consciousness.quantum_backend: CUDA is_available() = False but device_count = 1. GPU hardware detected. Will attempt GPU operations anyway.
+2025-12-04 18:32:44,866 [INFO] src.quantum_consciousness.quantum_backend: Initializing Quantum Backend. Requested provider: auto, Prefer Local: True, GPU Available: True
+2025-12-04 18:32:44,866 [INFO] src.quantum_consciousness.quantum_backend: ✅ Quantum Backend: LOCAL GPU (qiskit-aer-gpu)
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve/linsolve.py:606: SparseEfficiencyWarning: splu converted its input to CSC format
+  return splu(A).solve
+/home/fahbrain/projects/omnimind/.venv/lib/python3.12/site-packages/scipy/sparse/linalg/_matfuncs.py:707: SparseEfficiencyWarning: spsolve is more efficient when sparse b is in the CSC matrix format
+  return spsolve(Q, P)
+2025-12-04 18:32:45,944 [INFO] qiskit_algorithms.minimum_eigensolvers.sampling_vqe: Optimization complete in 1.0440804958343506 seconds.
+Found opt_params [ 3.5731039  -1.97761498].

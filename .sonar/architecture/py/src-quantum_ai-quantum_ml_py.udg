@@ -1,0 +1,273 @@
+
+1.0PythonFrontend"1763831826047*py2.Bê
+
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+!
+src/quantum_ai/quantum_ml.py9
+
+src.quantum_ai.quantum_ml11
+
+
+math12
+
+random14
+
+dataclasses16
+
+typing18
+-
+'src.quantum_ai.quantum_ml.QuantumKernel20
+;
+5src.quantum_ai.quantum_ml.QuantumKernel.kernel_matrix22
+
+
+list24
+<
+6src.quantum_ai.quantum_ml.QuantumKernel.compute_kernel26
+
+float28
+6
+0src.quantum_ai.quantum_ml.QuantumKernel.__init__30
+	
+int32
+1
++src.quantum_ai.quantum_ml.QuantumClassifier34
+5
+/src.quantum_ai.quantum_ml.QuantumClassifier.fit36
+:
+4src.quantum_ai.quantum_ml.QuantumClassifier.__init__38
+9
+3src.quantum_ai.quantum_ml.QuantumClassifier.predict40
+?
+9src.quantum_ai.quantum_ml.QuantumClassifier.predict_proba42
+
+tuple44
+2
+,src.quantum_ai.quantum_ml.VariationalCircuit46
+;
+5src.quantum_ai.quantum_ml.VariationalCircuit.__init__48
+:
+4src.quantum_ai.quantum_ml.VariationalCircuit.forward50
+D
+>src.quantum_ai.quantum_ml.VariationalCircuit.update_parameters52
+4
+.src.quantum_ai.quantum_ml.QuantumNeuralNetwork54
+?
+9src.quantum_ai.quantum_ml.QuantumNeuralNetwork.train_step56
+=
+7src.quantum_ai.quantum_ml.QuantumNeuralNetwork.__init__58
+<
+6src.quantum_ai.quantum_ml.QuantumNeuralNetwork.predict60
+1
++src.quantum_ai.quantum_ml.QuantumFeatureMap62
+8
+2src.quantum_ai.quantum_ml.QuantumFeatureMap.encode64J
+
+8
+89j•
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21206 210
+
+23
+23227 221
+
+25
+25246
+
+27
+27267 221
+
+29
+29286
+
+31
+31307 221
+
+33
+33326
+
+35
+35346 210
+
+37
+37367 235
+
+39
+39387 235
+
+41
+41407 235
+
+43
+43427 235
+
+45
+45446
+
+47
+47466 210
+
+49
+49487 247
+
+51
+51507 247
+
+53
+53527 247
+
+55
+55546 210
+
+57
+57567 255
+
+59
+59587 255
+
+61
+61607 255
+
+63
+63626 210
+
+65
+65647 263r¼
+
+10131*
+8
+ 
+(
+
+10151*
+8 (
+
+10171*
+8 ("
+
+10191*
+8 (
+
+23253*
+8c	 c(
+
+23254*
+8c	 c(
+
+27293*
+8K	 K(
+
+27254*
+8K	 K(
+
+27254*
+8K	 K(
+
+31334*
+8B	 B(
+
+37254*
+8—	 —(
+
+37254*
+8—	 —(
+
+39334*
+8	 (
+
+41333*
+8¬	 ¬(
+
+41254*
+8¬	 ¬(
+
+43453*
+8Á	 Á(
+
+43254*
+8Á	 Á(
+
+49334*
+8†	 †(
+
+49334*
+8†	 †(
+
+51293*
+8–	 –(
+
+51254*
+8–	 –(
+
+53254*
+8°	 °(
+
+53294*
+8°	 °(
+
+57293*
+8Ö	 Ö(
+
+57254*
+8Ö	 Ö(
+
+57294*
+8Ö	 Ö(
+
+57294*
+8Ö	 Ö(
+
+59334*
+8Å	 Å(
+
+59334*
+8Å	 Å(
+
+59334*
+8Å	 Å(
+
+59334*
+8Å	 Å(
+
+61293*
+8Ò	 Ò(
+
+61254*
+8Ò	 Ò(
+
+65253*
+8	 (
+
+65254*
+8	 (

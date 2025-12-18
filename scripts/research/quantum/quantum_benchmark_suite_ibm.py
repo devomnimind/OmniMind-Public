@@ -41,14 +41,15 @@ Shots: 1024-8192 por experimento
 Métricas: Fidelity, speedup, accuracy, noise impact
 """
 
+import json
 import os
 import sys
-import json
 import time
-import numpy as np
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any, Dict, List
+
+import numpy as np
 from dotenv import load_dotenv
 
 # Adicionar root ao path
@@ -56,14 +57,14 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from src.quantum_consciousness.qpu_interface import QPUInterface, BackendType
+import structlog
+from qiskit import QuantumCircuit
+
+from src.quantum_consciousness.qpu_interface import BackendType, QPUInterface
 from src.quantum_consciousness.quantum_cognition import (
     QuantumDecisionMaker,
-    QuantumCognitionEngine,
 )
 from src.quantum_consciousness.quantum_memory import QuantumMemorySystem
-from qiskit import QuantumCircuit
-import structlog
 
 # Configurar logging
 logger = structlog.get_logger(__name__)
@@ -306,7 +307,7 @@ class QuantumBenchmarkSuite:
         search_spaces = [4, 8, 16]  # 2^2, 2^3, 2^4
 
         for search_space in search_spaces:
-            num_qubits = int(np.log2(search_space))
+            _num_qubits = int(np.log2(search_space))
 
             logger.info(f"Testing Grover search in space of {search_space} items")
 

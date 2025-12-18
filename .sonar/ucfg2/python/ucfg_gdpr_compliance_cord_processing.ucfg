@@ -1,0 +1,78 @@
+
+6gdpr_compliance.DataProcessingRecord.record_processingN
+B/home/fahbrain/projects/omnimind/src/compliance/gdpr_compliance.py¤ ¤("2*ò
+2
+¥ ¥(2€
+~
+
+¦ ¦(,?&
+$gdpr_compliance.DataProcessingRecord"
+processed_data_hash"__id*)
+
+__unknown_file (
+
+	data_hasho
+m
+
+© ©($
+%1"__id*S
+
+__unknown_file (7*5&
+$gdpr_compliance.DataProcessingRecord"
+	record_idp
+n
+
+ª ª(&
+%2"__id*T
+
+__unknown_file (8*6&
+$gdpr_compliance.DataProcessingRecord"
+
+subject_idm
+k
+
+« «( 
+%3"__id*Q
+
+__unknown_file (5*3&
+$gdpr_compliance.DataProcessingRecord"	
+purposeI
+G
+
+« «(&
+%4"__id*-
+
+__unknown_file (*
+
+%3"
+value»¸
+
+§ ¬(	
+%5*&
+
+__unknown_file (
+
+
+logger*8
+
+__unknown_file (
+Data processing recorded2info:
+	record_id
+
+%1:
+
+subject_id
+
+%2:
+purpose
+
+%4*
+3*8
+3
+gdpr_compliance.py"
+¯ ¯
+implicit return:
+
+¤  ¤(.
+	data_hashB(&
+$gdpr_compliance.DataProcessingRecordH

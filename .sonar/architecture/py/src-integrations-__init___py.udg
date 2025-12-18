@@ -1,0 +1,84 @@
+
+1.0PythonFrontend"1763831827699*py2.B°
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+!
+src/integrations/__init__.py9
+
+src.integrations11
+&
+ src.integrations.dbus_controller12
+!
+src.integrations.mcp_client14
+*
+$src.integrations.mcp_client_enhanced16
+'
+!src.integrations.graphql_supabase18
+!
+src.integrations.mcp_server20
+$
+src.integrations.oauth2_client22
+(
+"src.integrations.webhook_framework24J
+
+8
+89j§
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245r¶
+
+10131*
+8 (I
+
+10151*
+8 (2
+
+10171*
+8 (U
+
+10191*
+8 (J
+
+10211*
+8 (>
+
+10231*
+8 (P
+
+10251*
+8 (

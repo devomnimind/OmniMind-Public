@@ -27,6 +27,7 @@ Testa diferentes formas de usar a nova API do Qiskit IBM Runtime.
 
 import os
 import sys
+
 from dotenv import load_dotenv
 from qiskit import QuantumCircuit, transpile
 from qiskit_ibm_runtime import QiskitRuntimeService, Sampler

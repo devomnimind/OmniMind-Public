@@ -1,0 +1,55 @@
+
+Csrc.quantum_ai.superposition_computing.SuperpositionState.add_stateT
+J/home/fahbrain/projects/omnimind/src/quantum_ai/superposition_computing.py% %("2*Ù
+2& &(+
+}
+' '(
+%1"__id*e
+
+__unknown_file (I*G;
+9src.quantum_ai.superposition_computing.SuperpositionState"
+statesec
+' '(!
+%2*"
+
+__unknown_file (
+
+%1*%
+
+__unknown_file (	
+
+state2appendÑ
+Å
+( ((
+%3"__id*i
+
+__unknown_file (M*K;
+9src.quantum_ai.superposition_computing.SuperpositionState"
+
+amplitudesvt
+( (()
+%4"list.append*"
+
+__unknown_file (
+
+%3*)
+
+__unknown_file (
+
+	amplitude2appendyw
+) )(
+%5*Y
+
+__unknown_file (=;
+9src.quantum_ai.superposition_computing.SuperpositionState2
+_normalize*
+3*@
+3
+superposition_computing.py"
++ +(
+implicit return:
+% %("
+state:
+%$ %(<
+	amplitudeB=;
+9src.quantum_ai.superposition_computing.SuperpositionStateH

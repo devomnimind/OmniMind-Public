@@ -1,0 +1,332 @@
+
+1.0PythonFrontend"1763831844960*py2.B’
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+&
+!src/multimodal/audio_processor.py9
+$
+src.multimodal.audio_processor11
+
+
+__future__12
+
+hashlib14
+
+dataclasses16
+
+datetime18
+
+
+enum20
+
+typing22
+2
+,src.multimodal.audio_processor.SpeechEmotion24
+
+	enum.Enum26
+2
+,src.multimodal.audio_processor.SpeechSegment28
+;
+5src.multimodal.audio_processor.SpeechSegment.duration30
+
+float32
+@
+:src.multimodal.audio_processor.SpeechSegment.__post_init__34
+6
+0src.multimodal.audio_processor.SynthesizedSpeech36
+D
+>src.multimodal.audio_processor.SynthesizedSpeech.__post_init__38
+<
+6src.multimodal.audio_processor.SpeechRecognitionResult40
+J
+Dsrc.multimodal.audio_processor.SpeechRecognitionResult.__post_init__42
+2
+,src.multimodal.audio_processor.AudioFeatures44
+@
+:src.multimodal.audio_processor.AudioFeatures.__post_init__46
+3
+-src.multimodal.audio_processor.AudioProcessor48
+N
+Hsrc.multimodal.audio_processor.AudioProcessor._simulate_speech_synthesis50
+
+bytes52
+	
+str54
+?
+9src.multimodal.audio_processor.AudioProcessor.clear_cache56
+J
+Dsrc.multimodal.audio_processor.AudioProcessor.extract_audio_features58
+P
+Jsrc.multimodal.audio_processor.AudioProcessor._simulate_speech_recognition60
+
+
+list62
+D
+>src.multimodal.audio_processor.AudioProcessor.register_speaker64
+3
+-src.multimodal.audio_processor.SpeakerProfile66
+B
+<src.multimodal.audio_processor.AudioProcessor.detect_emotion68
+Q
+Ksrc.multimodal.audio_processor.AudioProcessor._calculate_speaker_similarity70
+
+
+dict72
+E
+?src.multimodal.audio_processor.AudioProcessor.synthesize_speech74
+0
+*src.multimodal.audio_processor.AudioFormat76
+D
+>src.multimodal.audio_processor.AudioProcessor.identify_speaker78
+D
+>src.multimodal.audio_processor.AudioProcessor.recognize_speech80
+<
+6src.multimodal.audio_processor.AudioProcessor.__init__82
+	
+int84
+H
+Bsrc.multimodal.audio_processor.AudioProcessor.get_speaker_profiles86
+A
+;src.multimodal.audio_processor.SpeakerProfile.__post_init__88J
+
+8
+89j£
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25246 210
+
+27
+27266
+
+29
+29286 210
+
+31
+31307 229
+
+33
+33326
+
+35
+35347 229
+
+37
+37366 210
+
+39
+39387 237
+
+41
+41406 210
+
+43
+43427 241
+
+45
+45446 210
+
+47
+47467 245
+
+49
+49486 210
+
+51
+51507 249
+
+53
+53526
+
+55
+55546
+
+57
+57567 249
+
+59
+59587 249
+
+61
+61607 249
+
+63
+63626
+
+65
+65647 249
+
+67
+67666 210
+
+69
+69687 249
+
+71
+71707 249
+
+73
+73726
+
+75
+75747 249
+
+77
+77766 210
+
+79
+79787 249
+
+81
+81807 249
+
+83
+83827 249
+
+85
+85846
+
+87
+87867 249
+
+89
+89887 267rÂ
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 ()
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (-
+
+25272*
+8" "(
+
+31333*
+8r	 r(
+
+51533*
+8×	 ×(#
+
+51554*
+8×	 ×(#
+
+51554*
+8×	 ×(#
+
+59453*
+8ç	 ç(
+
+59534*
+8ç	 ç(
+
+61633*
+8®	 ®(%
+
+61534*
+8®	 ®(%
+
+61554*
+8®	 ®(%
+
+65673*
+8Ë	 Ë(
+
+65634*
+8Ë	 Ë(
+
+65554*
+8Ë	 Ë(
+
+69253*
+8†	 †(
+
+69534*
+8†	 †(
+
+71333*
+8ä	 ä(&
+
+71734*
+8ä	 ä(&
+
+71734*
+8ä	 ä(&
+
+75373*
+8´	 ´(
+
+75554*
+8´	 ´(
+
+75554*
+8´	 ´(
+
+75774*
+8´	 ´(
+
+79534*
+8˜	 ˜(
+
+81413*
+8î	 î(
+
+81534*
+8î	 î(
+
+83854*
+8Ø	 Ø(
+
+83554*
+8Ø	 Ø(
+
+87633*
+8†	 †(
+
+77272*
+8 (

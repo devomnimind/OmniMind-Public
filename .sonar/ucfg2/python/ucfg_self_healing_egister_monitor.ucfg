@@ -1,0 +1,57 @@
+
+?src.metacognition.self_healing.SelfHealingLoop.register_monitorL
+B/home/fahbrain/projects/omnimind/src/metacognition/self_healing.pyw w("2*ƒ
+2x |(w
+u
+} }(
+%1"__id*]
+
+__unknown_file (A*?0
+.src.metacognition.self_healing.SelfHealingLoop"
+	_monitorsge
+} }(&
+%2*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (
+	
+monitor2appendO
+M
+~+ ~(;
+%3"__id*5
+
+__unknown_file (*
+	
+monitor"
+
+__name__V
+T
+~ ~(=
+%4"__concat*$
+~ ~(*
+Registered monitor: *
+~+ ~(;
+
+%3db
+~ ~(>
+%5*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%42info*
+3*7
+3
+self_healing.py"
+€ €(
+implicit return:
+w w(9	
+monitorB20
+.src.metacognition.self_healing.SelfHealingLoopH

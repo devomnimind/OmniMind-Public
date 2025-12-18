@@ -26,9 +26,11 @@ from the environment variables and runs a simple Bell state experiment on a simu
 """
 
 import os
+
 from dotenv import load_dotenv
-from qiskit_ibm_runtime import QiskitRuntimeService, SamplerV2 as Sampler
 from qiskit import QuantumCircuit
+from qiskit_ibm_runtime import QiskitRuntimeService
+from qiskit_ibm_runtime import SamplerV2 as Sampler
 
 # Load environment variables
 load_dotenv()

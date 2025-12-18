@@ -1,0 +1,102 @@
+
+Msrc.metacognition.intelligent_goal_generation.ImpactPredictor.learn_from_goal]
+Q/home/fahbrain/projects/omnimind/src/metacognition/intelligent_goal_generation.pyÊ Ê("2*
+2
+Í Ò(
+
+
+Ó Ó(
+%1"__id*s
+
+__unknown_file (W*U?
+=src.metacognition.intelligent_goal_generation.ImpactPredictor"
+historical_goals
+
+Ó% Ó(S
+%2"dict
+Œ
+
+Ó& Ó(2
+%3"__mapSet*"
+
+__unknown_file (
+
+%2*$
+
+__unknown_file (
+goal*$
+
+__unknown_file (
+
+goal¡
+
+
+Ó4 Ó(R
+%4"__mapSet*"
+
+__unknown_file (
+
+%2*-
+
+__unknown_file (
+actual_impact*-
+
+__unknown_file (
+
+actual_impactdb
+
+Ó Ó(T
+%5*"
+
+__unknown_file (
+
+%1*"
+
+__unknown_file (
+
+%22appendxv
+
+×* ×(7
+%6"__mapGet*$
+
+__unknown_file (
+
+goal*%
+
+__unknown_file (	
+title2__getitem__[
+Y
+
+× ×(9
+%7"__concat*%
+
+× ×()
+Learned from goal: *
+
+×* ×(7
+
+%6fd
+
+× ×(:
+%8*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%72info*
+3*D
+3 
+intelligent_goal_generation.py"
+Ú Ú
+implicit return:
+
+Ë Ë("
+goal:
+
+Ë$ Ë(C
+actual_impactBA?
+=src.metacognition.intelligent_goal_generation.ImpactPredictorH

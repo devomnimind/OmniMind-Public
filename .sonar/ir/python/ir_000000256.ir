@@ -1,0 +1,51 @@
+
+ÑÇ"
+        Calculate Bekenstein entropy bound.
+
+        Formula: S = A/(4 ln 2) in natural units
+        where A is area in Planck units
+
+        Returns:
+            Maximum entropy in bits
+        "str
+"division by zero"bool
+
+2int
+"S3518"bool
+4.0float
+"a"bool
+
+
+0intself
+ˆ ˆ("”'
+%
+
+“ “( "#get-field# area:A
+?
+
+“ “(&entropy_nats"#dependent-value#*:Bfloat#
+!
+
+”& ”(1"#unknown-value#(
+&
+
+”& ”(1"
+mathlog:Bfloat,
+*
+
+” ”(1	"
+#binop !=#2!=:
+Bbool"
+ 
+
+” ”(1"
+#assert#:	A
+?
+
+” ”(1entropy_bits"#dependent-value#*:Bfloat0
+.
+
+• •(""
+builtinsfloat*:Bfloat
+
+• •("*A/home/fahbrain/projects/omnimind/src/memory/holographic_memory.py

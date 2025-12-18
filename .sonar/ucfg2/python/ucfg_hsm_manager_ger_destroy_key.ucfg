@@ -1,0 +1,66 @@
+
+/src.security.hsm_manager.HSMManager.destroy_keyH
+</home/fahbrain/projects/omnimind/src/security/hsm_manager.pyŸ Ÿ("2*ò
+2
+  ¨(i
+g
+
+© ©(
+%3"__id*M
+
+__unknown_file (1*/%
+#src.security.hsm_manager.HSMManager"
+keysnl
+
+© ©(
+%4*"
+
+__unknown_file (
+
+%3*&
+
+__unknown_file (
+
+
+key_id2__contains__*
+4
+5*(
+4
+¯ ¯("
+
+¯ ¯(	
+
+False*
+5
+« «(!i
+g
+
+« «(
+%1"__id*M
+
+__unknown_file (1*/%
+#src.security.hsm_manager.HSMManager"
+keysˆ…
+
+¬ ¬(7
+%2*&
+
+__unknown_file (
+
+
+logger*-
+
+__unknown_file (
+Key destroyed2info:
+key_id
+
+
+key_id"
+
+­ ­(
+
+True:
+
+Ÿ Ÿ(%
+key_idB'%
+#src.security.hsm_manager.HSMManagerH

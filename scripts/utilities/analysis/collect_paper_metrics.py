@@ -24,16 +24,16 @@ Sistema de Coleta de Métricas para Publicações Científicas - OmniMind
 Coleta métricas essenciais para validação de papers científicos por 2 horas.
 """
 
-import time
 import json
-import psutil
-import threading
+import logging
+import subprocess
+import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, Any, List
-import subprocess
-import logging
-import sys
+from typing import Any, Dict, List
+
+import psutil
 
 # Adicionar diretório raiz ao path para permitir imports de src
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -298,7 +298,7 @@ class MetricsCollector:
 
             # Log de progresso
             elapsed = sample["elapsed_seconds"]
-            progress = (elapsed / self.collection_duration) * 100
+            _progress = (elapsed / self.collection_duration) * 100
             logger.info(".1f")
 
         except Exception as e:
@@ -312,7 +312,7 @@ class MetricsCollector:
         logger.info(f"Arquivo de saída: {self.output_file}")
 
         sample_count = 0
-        max_samples = self.collection_duration // self.interval
+        _max_samples = self.collection_duration // self.interval
 
         while time.time() - self.start_time < self.collection_duration:
             try:

@@ -1,0 +1,33 @@
+
+¶¬"Get modality input history.
+
+        Args:
+            modality: Optional filter by specific modality
+
+        Returns:
+            List of ModalityInput objects
+        "strself
+Ä Ä(modality
+Ä Ä(1"O+
+)
+
+Î Î("
+__bool__*:BboolH "
+
+Î Î( *
+Î Î(
+"D.
+,
+
+Ï Ï(V"?python-unknown?:Blist
+
+Ï Ï(V"z4
+2
+
+Ð Ð(*"#get-field# _modality_history:.
+,
+
+Ð Ð(+"
+builtinslist*:Blist
+
+Ð Ð(+*E/home/fahbrain/projects/omnimind/src/multimodal/multi_modal_fusion.py

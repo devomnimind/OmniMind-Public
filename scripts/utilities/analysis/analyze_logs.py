@@ -44,14 +44,10 @@ Date: 2025-11-24
 import argparse
 import json
 import re
-import sys
-from collections import defaultdict, Counter
-from datetime import datetime, timedelta
+from collections import Counter, defaultdict
+from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Any, Optional, Tuple
-
-import matplotlib.pyplot as plt
-import pandas as pd
+from typing import Any, Dict, List
 
 
 class LogAnalyzer:
@@ -77,22 +73,22 @@ class LogAnalyzer:
             # Entropy warnings - detecta quando entropia excede limites
             "entropy_warning": re.compile(
                 r"entropy.*exceeds.*bekenstein.*bound|entropy.*warning|WARNING.*entropy|entropy.*threshold.*exceeded",
-                re.IGNORECASE
+                re.IGNORECASE,
             ),
             # Meta cognition failures - CRÍTICO: não executar testes
             "metacognition_failure": re.compile(
                 r"meta.*cogn.*(?:analysis|action).*failed|metacognition.*(?:analysis|action).*failed|failed.*load.*hash.*chain",
-                re.IGNORECASE
+                re.IGNORECASE,
             ),
             # Insufficient history - dados insuficientes para cálculos
             "insufficient_history": re.compile(
                 r"insufficient.*history|history.*insufficient|insufficient.*data|insufficient.*aligned.*history|insufficient.*valid.*causal.*predictions",
-                re.IGNORECASE
+                re.IGNORECASE,
             ),
             # Padrões numéricos de insufficient history (ex: "4<10", "7<70")
             "insufficient_history_numeric": re.compile(
                 r"(\d+)\s*<\s*(\d+).*insufficient|insufficient.*\((\d+)\s*<\s*(\d+)\)|insufficient.*history.*\((\d+)\s*<\s*(\d+)\)",
-                re.IGNORECASE
+                re.IGNORECASE,
             ),
         }
 

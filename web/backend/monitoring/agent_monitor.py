@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Optional
 
 import psutil
 
-from web.backend.routes.enums import AgentStatus, AgentType
+from web.backend.routes.agents import AgentStatus, AgentType
 
 logger = logging.getLogger(__name__)
 

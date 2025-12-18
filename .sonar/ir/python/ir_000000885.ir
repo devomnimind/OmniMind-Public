@@ -1,0 +1,12 @@
+
+'"Get number of active traces."strself
+’  ’($"k)
+'
+
+” ”("#get-field# _spans:,
+*
+
+” ”("
+builtinslen*:Bint
+
+” ”(*I/home/fahbrain/projects/omnimind/src/observability/distributed_tracing.py

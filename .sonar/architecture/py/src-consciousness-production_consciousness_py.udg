@@ -1,0 +1,181 @@
+
+1.0PythonFrontend"1763831834766*py2.BÇ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+2
+-src/consciousness/production_consciousness.py9
+0
+*src.consciousness.production_consciousness11
+
+
+__future__12
+
+typing14
+
+pathlib16
+
+logging18
+'
+!src.metrics.consciousness_metrics20
+N
+Hsrc.consciousness.production_consciousness.ProductionConsciousnessSystem22
+\
+Vsrc.consciousness.production_consciousness.ProductionConsciousnessSystem.save_snapshot24
+
+pathlib.Path26
+	
+str28
+W
+Qsrc.consciousness.production_consciousness.ProductionConsciousnessSystem.__init__30
+g
+asrc.consciousness.production_consciousness.ProductionConsciousnessSystem.get_consciousness_report32
+
+
+dict34
+Z
+Tsrc.consciousness.production_consciousness.ProductionConsciousnessSystem.measure_phi36
+
+float38
+
+
+list40
+
+
+bool42
+e
+_src.consciousness.production_consciousness.ProductionConsciousnessSystem.measure_self_awareness44
+<
+6src.metrics.consciousness_metrics.SelfAwarenessMetrics46
+U
+Osrc.consciousness.production_consciousness.demonstrate_production_consciousness48J
+
+8
+89jµ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23226 210
+
+25
+25247 223
+
+27
+27266
+
+29
+29286
+
+31
+31307 223
+
+33
+33327 223
+
+35
+35346
+
+37
+37367 223
+
+39
+39386
+
+41
+41406
+
+43
+43426
+
+45
+45447 223
+
+47
+47466
+
+49
+49487 210ræ
+
+10131*
+8 (#
+
+10151*
+8 (-
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (
+
+25273*
+8ß	 ß(
+
+25294*
+8ß	 ß(
+
+33353*
+8¸	 ¸(!
+
+37393*
+8;	 ;(
+
+37414*
+8;	 ;(
+
+37434*
+8;	 ;(
+
+37434*
+8;	 ;(
+
+45473*
+8’	 ’(
+
+45294*
+8’	 ’(
+
+45434*
+8’	 ’(
+
+45434*
+8’	 ’(
+
+45394*
+8’	 ’(
+
+45394*
+8’	 ’(

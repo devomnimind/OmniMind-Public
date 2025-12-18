@@ -29,17 +29,18 @@ import { BaselineComparison } from './BaselineComparison';
 import { ActionButtons } from './ActionButtons';
 import { ConversationAssistant } from './ConversationAssistant';
 import { DecisionsDashboard } from './DecisionsDashboard';
+import { PsychoanalyticDashboard } from './PsychoanalyticDashboard';
 
 export function Dashboard() {
   const logout = useAuthStore((state) => state.logout);
   const username = useAuthStore((state) => state.username);
-  const { setStatus, setTasks, setLoading, setError, loading } = useDaemonStore();
+  const { status, setStatus, updateStatus, setTasks, setLoading, setError, loading } = useDaemonStore();
   const { lastMessage } = useWebSocket();
 
   const fetchData = useCallback(async () => {
     // Se não estiver autenticado, não faz requests para evitar spam de 401
     if (!useAuthStore.getState().isAuthenticated) {
-       return;
+      return;
     }
 
     setLoading(true);
@@ -96,11 +97,34 @@ export function Dashboard() {
         // Metrics updates handled automatically by RealtimeAnalytics
         // Não atualizar status aqui para evitar loops - RealtimeAnalytics já processa
         break;
+      case 'omnimind_pulse':
+        const pulse = messageData;
+        updateStatus({
+          system_metrics: status ? {
+            ...status.system_metrics,
+            cpu_percent: pulse.hardware.cpu,
+            memory_percent: pulse.hardware.memory,
+          } : undefined,
+          task_count: pulse.daemon.tasks.task_count,
+          completed_tasks: pulse.daemon.tasks.completed_tasks,
+          failed_tasks: pulse.daemon.tasks.failed_tasks,
+          consciousness_metrics: status ? {
+            ...status.consciousness_metrics,
+            phi: pulse.consciousness.phi,
+            anxiety: pulse.consciousness.anxiety,
+            flow: pulse.consciousness.flow,
+            entropy: pulse.consciousness.entropy,
+            ici: pulse.consciousness.ici,
+            prs: pulse.consciousness.prs,
+            interpretation: pulse.consciousness.interpretation,
+          } : undefined
+        } as any);
+        break;
       default:
         // Ignorar mensagens desconhecidas silenciosamente
         break;
     }
-  }, [lastMessage?.type, lastMessage?.id]); // CORREÇÃO: Remover setStatus (função estável do zustand)
+  }, [lastMessage?.type, lastMessage?.id, status]); // Adicionado status para garantir mapeamento correto
 
   useEffect(() => {
     // Verificar autenticação antes de fazer fetch
@@ -249,6 +273,11 @@ export function Dashboard() {
           <div className="animate-slide-up" style={{ animationDelay: '0.35s' }}>
             <MetricsTimeline />
           </div>
+        </div>
+
+        {/* Psychoanalytic Dashboard (V3 Consolidation) */}
+        <div className="mb-6 animate-slide-up" style={{ animationDelay: '0.38s' }}>
+          <PsychoanalyticDashboard />
         </div>
 
         {/* Autopoietic Metrics (Phase 22) */}

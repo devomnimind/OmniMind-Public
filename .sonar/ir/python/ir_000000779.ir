@@ -1,0 +1,28 @@
+
+		"metrics"str
+"allowed_roots"str
+"server"str
+0'"{self.config.host}:{self.config.port}"strself
+¸ ¸("&
+$
+
+¹ ½(	"#new-object#Bdict"
+ 
+
+º º(>"	#map-set#:-
++
+
+» »(A"?python-unknown?:Blist"
+ 
+
+» »(A"	#map-set#:*
+(
+
+¼ ¼(#
+"#get-field# metrics:"
+ 
+
+¼ ¼(#"	#map-set#:	
+
+
+¹ ½(	*?/home/fahbrain/projects/omnimind/src/integrations/mcp_server.py

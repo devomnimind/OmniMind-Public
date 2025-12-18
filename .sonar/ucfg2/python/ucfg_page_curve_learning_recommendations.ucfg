@@ -1,0 +1,465 @@
+
+Ksrc.learning.page_curve_learning.PageCurveLearner._generate_recommendationsP
+D/home/fahbrain/projects/omnimind/src/learning/page_curve_learning.pyÜ Ü(!"2*ª	
+2
+İ â(
+
+ã* è(	
+%30"dict
+›
+
+ä ä(%
+%31"__mapSet*#
+
+__unknown_file (
+
+%30*1
+
+__unknown_file (
+continue_training*$
+
+__unknown_file (
+
+True¢
+Ÿ
+
+å å()
+%32"__mapSet*#
+
+__unknown_file (
+
+%30*4
+
+__unknown_file (
+adjust_learning_rate*%
+
+__unknown_file (	
+
+False¥
+¢
+
+æ æ(,
+%33"__mapSet*#
+
+__unknown_file (
+
+%30*7
+
+__unknown_file (
+increase_regularization*%
+
+__unknown_file (	
+
+False¤
+¡
+
+ç ç(+
+%34"__mapSet*#
+
+__unknown_file (
+
+%30*6
+
+__unknown_file (
+focus_on_consolidation*%
+
+__unknown_file (	
+
+FalseL
+J
+
+ã è(	
+recommendations"__id*#
+
+__unknown_file (
+
+%30
+
+
+ê ê(
+%35"__id*d
+
+__unknown_file (H*F3
+1src.learning.page_curve_learning.PageCurveLearner"
+current_phasez
+x
+
+ê! ê(8
+%36"__id*]
+
+__unknown_file (A*?0
+.src.learning.page_curve_learning.LearningPhase"
+	CONFUSION
+Œ
+
+ê ê(8
+%37"	__compare*"
+
+__unknown_file (
+==*#
+
+__unknown_file (
+
+%35*#
+
+__unknown_file (
+
+%36*
+5
+11*2
+4
+ ("!
+
+ (
+
+recommendations*·
+5
+ë ğ(
+
+ì ï(
+%1"dict»
+¸
+
+í í(N
+%2"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+message*M
+
+__unknown_file (1/
+-Exploration phase - entropy rising (expected)³
+°
+
+î î(F
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+action*F
+
+__unknown_file (*(
+&Continue training, system is exploring
+
+ë ğ(
+%4"typing.MutableMapping.update*/
+
+__unknown_file (
+
+recommendations*"
+
+__unknown_file (
+
+%12update*
+4*Ù
+6
+† Œ(
+
+‡ ‹(
+%5"dict´
+±
+
+ˆ ˆ(G
+%6"__mapSet*"
+
+__unknown_file (
+
+%5*'
+
+__unknown_file (	
+message*F
+
+__unknown_file (*(
+&Learning saturated - consider stopping¼
+¹
+
+‰ ‰(O
+%7"__mapSet*"
+
+__unknown_file (
+
+%5*&
+
+__unknown_file (
+
+action*O
+
+__unknown_file (31
+/Minimal gains expected, consider early stopping
+š
+
+Š Š(.
+%8"__mapSet*"
+
+__unknown_file (
+
+%5*1
+
+__unknown_file (
+continue_training*%
+
+__unknown_file (	
+
+False
+
+† Œ(
+%9"typing.MutableMapping.update*/
+
+__unknown_file (
+
+recommendations*"
+
+__unknown_file (
+
+%52update*
+4*©
+7
+… …(:
+
+
+… …(
+%10"__id*d
+
+__unknown_file (H*F3
+1src.learning.page_curve_learning.PageCurveLearner"
+current_phasez
+x
+
+…# …(:
+%11"__id*]
+
+__unknown_file (A*?0
+.src.learning.page_curve_learning.LearningPhase"
+	SATURATED
+Œ
+
+… …(:
+%12"	__compare*"
+
+__unknown_file (
+==*#
+
+__unknown_file (
+
+%10*#
+
+__unknown_file (
+
+%11*
+4
+6*‰
+8
+ü ƒ(
+
+ı ‚(
+%13"dictÀ
+½
+
+ş ş(Q
+%14"__mapSet*#
+
+__unknown_file (
+
+%13*'
+
+__unknown_file (	
+message*P
+
+__unknown_file (42
+0Information recovery - entropy declining (good!)°
+­
+
+ÿ ÿ(A
+%15"__mapSet*#
+
+__unknown_file (
+
+%13*&
+
+__unknown_file (
+
+action*A
+
+__unknown_file (%#
+!System is consolidating knowledge£
+ 
+
+€ €(2
+%16"__mapSet*#
+
+__unknown_file (
+
+%13*6
+
+__unknown_file (
+focus_on_consolidation*$
+
+__unknown_file (
+
+True¤
+¡
+
+ (3
+%17"__mapSet*#
+
+__unknown_file (
+
+%13*7
+
+__unknown_file (
+increase_regularization*$
+
+__unknown_file (
+
+True’
+
+ü ƒ(
+%18"typing.MutableMapping.update*/
+
+__unknown_file (
+
+recommendations*#
+
+__unknown_file (
+
+%132update*
+4*­
+9
+û û(>
+
+
+û û(
+%19"__id*d
+
+__unknown_file (H*F3
+1src.learning.page_curve_learning.PageCurveLearner"
+current_phase~
+|
+
+û# û(>
+%20"__id*a
+
+__unknown_file (E*C0
+.src.learning.page_curve_learning.LearningPhase"
+CONSOLIDATION
+Œ
+
+û û(>
+%21"	__compare*"
+
+__unknown_file (
+==*#
+
+__unknown_file (
+
+%19*#
+
+__unknown_file (
+
+%20*
+7
+8*ê
+10
+ó ù(
+
+ô ø(
+%22"dict¹
+¶
+
+õ õ(J
+%23"__mapSet*#
+
+__unknown_file (
+
+%22*'
+
+__unknown_file (	
+message*I
+
+__unknown_file (-+
+)Critical transition - Page time detected!À
+½
+
+ö ö(Q
+%24"__mapSet*#
+
+__unknown_file (
+
+%22*&
+
+__unknown_file (
+
+action*Q
+
+__unknown_file (53
+1Consider reducing learning rate for consolidation¡
+
+
+÷ ÷(0
+%25"__mapSet*#
+
+__unknown_file (
+
+%22*4
+
+__unknown_file (
+adjust_learning_rate*$
+
+__unknown_file (
+
+True’
+
+ó ù(
+%26"typing.MutableMapping.update*/
+
+__unknown_file (
+
+recommendations*#
+
+__unknown_file (
+
+%222update*
+4*«
+11
+ò ò(:
+
+
+ò ò(
+%27"__id*d
+
+__unknown_file (H*F3
+1src.learning.page_curve_learning.PageCurveLearner"
+current_phasez
+x
+
+ò# ò(:
+%28"__id*]
+
+__unknown_file (A*?0
+.src.learning.page_curve_learning.LearningPhase"
+	PAGE_TIME
+Œ
+
+ò ò(:
+%29"	__compare*"
+
+__unknown_file (
+==*#
+
+__unknown_file (
+
+%27*#
+
+__unknown_file (
+
+%28*
+9
+10B53
+1src.learning.page_curve_learning.PageCurveLearnerH

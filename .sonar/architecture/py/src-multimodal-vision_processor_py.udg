@@ -1,0 +1,328 @@
+
+1.0PythonFrontend"1763831838552*py2.Bæ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+'
+"src/multimodal/vision_processor.py9
+%
+src.multimodal.vision_processor11
+
+
+__future__12
+
+hashlib14
+
+dataclasses16
+
+datetime18
+
+
+enum20
+
+typing22
+/
+)src.multimodal.vision_processor.SceneType24
+
+	enum.Enum26
+4
+.src.multimodal.vision_processor.VisionFeatures28
+B
+<src.multimodal.vision_processor.VisionFeatures.__post_init__30
+5
+/src.multimodal.vision_processor.VisionProcessor32
+Q
+Ksrc.multimodal.vision_processor.VisionProcessor._generate_scene_description34
+	
+str36
+
+
+list38
+I
+Csrc.multimodal.vision_processor.VisionProcessor.get_cached_analysis40
+N
+Hsrc.multimodal.vision_processor.VisionProcessor._extract_dominant_colors42
+
+bytes44
+D
+>src.multimodal.vision_processor.VisionProcessor.compare_images46
+
+float48
+H
+Bsrc.multimodal.vision_processor.VisionProcessor._detect_scene_type50
+A
+;src.multimodal.vision_processor.VisionProcessor.clear_cache52
+F
+@src.multimodal.vision_processor.VisionProcessor.extract_features54
+>
+8src.multimodal.vision_processor.VisionProcessor.__init__56
+	
+int58
+C
+=src.multimodal.vision_processor.VisionProcessor.analyze_image60
+3
+-src.multimodal.vision_processor.SceneAnalysis62
+C
+=src.multimodal.vision_processor.VisionProcessor.process_video64
+E
+?src.multimodal.vision_processor.VisionProcessor._detect_objects66
+4
+.src.multimodal.vision_processor.DetectedObject68
+B
+<src.multimodal.vision_processor.DetectedObject.__post_init__70
+A
+;src.multimodal.vision_processor.SceneAnalysis.__post_init__72
+0
+*src.multimodal.vision_processor.VideoFrame74
+>
+8src.multimodal.vision_processor.VideoFrame.__post_init__76
+4
+.src.multimodal.vision_processor.ObjectCategory78
+1
++src.multimodal.vision_processor.BoundingBox80
+?
+9src.multimodal.vision_processor.BoundingBox.__post_init__82
+6
+0src.multimodal.vision_processor.BoundingBox.area84
+8
+2src.multimodal.vision_processor.BoundingBox.center86
+
+tuple88J
+
+8
+89j£
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25246 210
+
+27
+27266
+
+29
+29286 210
+
+31
+31307 229
+
+33
+33326 210
+
+35
+35347 233
+
+37
+37366
+
+39
+39386
+
+41
+41407 233
+
+43
+43427 233
+
+45
+45446
+
+47
+47467 233
+
+49
+49486
+
+51
+51507 233
+
+53
+53527 233
+
+55
+55547 233
+
+57
+57567 233
+
+59
+59586
+
+61
+61607 233
+
+63
+63626 210
+
+65
+65647 233
+
+67
+67667 233
+
+69
+69686 210
+
+71
+71707 269
+
+73
+73727 263
+
+75
+75746 210
+
+77
+77767 275
+
+79
+79786 210
+
+81
+81806 210
+
+83
+83827 281
+
+85
+85847 281
+
+87
+87867 281
+
+89
+89886r¤
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 ()
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (4
+
+25272*
+8% %(
+
+35373*
+8ò	 ò($
+
+35254*
+8ò	 ò($
+
+35394*
+8ò	 ò($
+
+41374*
+8ü	 ü(
+
+43393*
+8à	 à(!
+
+43454*
+8à	 à(!
+
+47493*
+8”	 ”(
+
+47454*
+8”	 ”(
+
+47454*
+8”	 ”(
+
+51253*
+8µ	 µ(
+
+51454*
+8µ	 µ(
+
+55293*
+8é	 é(
+
+55454*
+8é	 é(
+
+57594*
+8Ñ	 Ñ(
+
+57494*
+8Ñ	 Ñ(
+
+61633*
+8å	 å(
+
+61454*
+8å	 å(
+
+65393*
+8¢	 ¢(
+
+65454*
+8¢	 ¢(
+
+65594*
+8¢	 ¢(
+
+65594*
+8¢	 ¢(
+
+67393*
+8¼	 ¼(
+
+67454*
+8¼	 ¼(
+
+67374*
+8¼	 ¼(
+
+79272*
+8 (
+
+85493*
+8L	 L(
+
+87893*
+8P	 P(

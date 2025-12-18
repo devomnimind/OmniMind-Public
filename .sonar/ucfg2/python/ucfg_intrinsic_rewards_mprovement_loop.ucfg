@@ -1,0 +1,115 @@
+
+Tsrc.motivation.intrinsic_rewards.IntrinsicMotivationEngine._trigger_improvement_loopP
+D/home/fahbrain/projects/omnimind/src/motivation/intrinsic_rewards.pyÅ Å(!"2*”	
+2
+Æ Ì(ú
+÷
+
+Î Ï(.
+%1"__concat*;
+
+Î Î(3-+
+)âš ï¸ Improvement loop triggered: Task '*
+
+Î4 Î(8
+
+task*
+
+Î9 Î(B
+	' scored *
+
+ÎC Î(O
+
+satisfaction*
+
+ÎT Î(V
+. *1
+
+Ï Ï(-#!
+Analysis and learning required.ig
+
+Í Ð(	
+%2*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%12warningŠ
+
+Ó Ó(I
+%3*Z
+
+__unknown_file (><
+:src.motivation.intrinsic_rewards.IntrinsicMotivationEngine*$
+
+__unknown_file (
+
+task*,
+
+__unknown_file (
+
+satisfaction*1
+
+__unknown_file (
+needs_improvement2_record_achievementèå
+
+Ö Ö(P
+%4*Z
+
+__unknown_file (><
+:src.motivation.intrinsic_rewards.IntrinsicMotivationEngine*$
+
+__unknown_file (
+
+task*,
+
+__unknown_file (
+
+satisfaction2!_generate_improvement_suggestionsG
+E
+
+Ö Ö(P
+suggestions"__id*"
+
+__unknown_file (
+
+%4j
+h
+
+× ×(=
+%5"__concat*+
+
+× ×(/
+Improvement suggestions: *
+
+×0 ×(;
+
+suggestionsfd
+
+× ×(>
+%6*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%52info*
+3*<
+3
+intrinsic_rewards.py"
+Ù Ù(
+implicit return:
+
+Å( Å(1
+task:
+
+Å3 Å(F
+satisfactionB><
+:src.motivation.intrinsic_rewards.IntrinsicMotivationEngineH

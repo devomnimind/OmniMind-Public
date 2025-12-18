@@ -1,684 +1,175 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "omnimind-cleanup",
-            "type": "shell",
-            "command": "pkill -9 -f 'simple_backend|uvicorn|vite.*frontend' 2>/dev/null || true; sleep 1; echo '✅ Cleanup complete'",
-            "problemMatcher": [],
-            "isBackground": false,
-            "presentation": {
-                "reveal": "silent",
-                "panel": "shared"
-            }
-        },
-        {
-            "label": "🚀 Start Development (Backend + Frontend)",
-            "type": "shell",
-            "command": "bash ./start_development.sh",
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            },
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": true,
-                "panel": "shared",
-                "showReuseMessage": false,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Inicia Backend (8000) + Frontend (3000) com .env injetado"
-        },
-        {
-            "label": "🧪 Test Backend Endpoint",
-            "type": "shell",
-            "command": "curl -s -u admin:omnimind2025! http://127.0.0.1:8000/audit/stats | python -m json.tool",
-            "problemMatcher": [],
-            "presentation": {
-                "reveal": "always",
-                "panel": "shared"
-            },
-            "detail": "Testa endpoint /audit/stats com dados reais"
-        },
-        {
-            "label": "🏥 Health Check",
-            "type": "shell",
-            "command": "curl -i http://127.0.0.1:8000/health",
-            "problemMatcher": [],
-            "presentation": {
-                "reveal": "always",
-                "panel": "shared"
-            },
-            "detail": "Verifica status do backend"
-        },
-        {
-            "label": "� Inicializar Ambiente OmniMind",
-            "type": "shell",
-            "command": "./scripts/init_environment.sh",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Inicializa ambiente virtual e serviços essenciais do OmniMind"
-        },
-        {
-            "label": "🛡️ Monitoramento de Segurança AI",
-            "type": "shell",
-            "command": "python -m src.security.security_monitor",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Executa monitoramento completo de segurança contra ameaças AI"
-        },
-        {
-            "label": "✅ Validação Manual de Código",
-            "type": "shell",
-            "command": "./scripts/canonical/validate/validate_code.sh",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Executa validações manuais completas (Black, Flake8, MyPy) - Ubuntu/Bash"
-        },
-        {
-            "label": "🔧 Correção Automática de Código",
-            "type": "shell",
-            "command": "black src/ tests/ && isort src/ tests/",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Aplica formatação Black e ordenação de imports automaticamente"
-        },
-        {
-            "label": "🧹 Limpeza de Cache e Arquivos Temporários",
-            "type": "shell",
-            "command": "find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && find . -name '*.pyc' -delete && find . -name '*.pyo' -delete && rm -rf .pytest_cache/ .mypy_cache/ .coverage",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Remove caches Python e arquivos temporários"
-        },
-        {
-            "label": "📦 Instalar/Atualizar Dependências",
-            "type": "shell",
-            "command": "pip install -r requirements.txt && pip install -r requirements-dev.txt",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Instala todas as dependências do projeto"
-        },
-        {
-            "label": "🧪 Executar Todos os Testes",
-            "type": "shell",
-            "command": "./scripts/development/run_tests_parallel.sh full",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Executa suite completa de testes com paralelização e cobertura - Ubuntu/Bash"
-        },
-        {
-            "label": "⚡ Testes Rápidos Paralelos",
-            "type": "shell",
-            "command": "./scripts/development/run_tests_parallel.sh fast",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Executa testes rápidos em paralelo (sem cobertura) - Ubuntu/Bash"
-        },
-        {
-            "label": "📊 Testes com Cobertura Detalhada",
-            "type": "shell",
-            "command": "./scripts/development/run_tests_parallel.sh coverage",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Executa testes com análise detalhada de cobertura - Ubuntu/Bash"
-        },
-        {
-            "label": "🚨 Testes Críticos (Smoke Test)",
-            "type": "shell",
-            "command": "./scripts/development/run_tests_parallel.sh smoke",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Executa apenas testes críticos de segurança e core - Ubuntu/Bash"
-        },
-        {
-            "label": "🔄 Testes Seriais (Sem Paralelização)",
-            "type": "shell",
-            "command": "./scripts/development/run_tests_parallel.sh serial",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Executa testes que requerem execução serial - Ubuntu/Bash"
-        },
-        {
-            "label": "🔍 Verificar Tipos (MyPy)",
-            "type": "shell",
-            "command": "mypy src/ --ignore-missing-imports --show-error-codes",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": "$mypy",
-            "detail": "Verifica tipos estáticos com MyPy"
-        },
-        {
-            "label": "🎨 Verificar Linting (Flake8)",
-            "type": "shell",
-            "command": "flake8 src/ tests/ --max-line-length=88 --extend-ignore=E203,W503",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": "$flake8",
-            "detail": "Verifica qualidade de código com Flake8"
-        },
-        {
-            "label": "⚡ Verificar Formatação (Black)",
-            "type": "shell",
-            "command": "black --check --diff src/ tests/",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Verifica se código está formatado com Black"
-        },
-        {
-            "label": "🔒 Verificar Segurança de Dependências",
-            "type": "shell",
-            "command": "pip-audit --requirement requirements.txt --requirement requirements-dev.txt",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Audita vulnerabilidades em dependências"
-        },
-        {
-            "label": "📊 Gerar Relatório de Cobertura",
-            "type": "shell",
-            "command": "./scripts/development/run_tests_parallel.sh coverage && echo '📈 Abrir relatório: python -m http.server 8000 -d htmlcov'",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Gera relatório detalhado de cobertura de testes com servidor local - Ubuntu/Bash"
-        },
-        {
-            "label": "🔄 Git Status Seguro",
-            "type": "shell",
-            "command": "git status --porcelain && echo '--- Arquivos modificados ---' && git diff --name-only",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Verifica status do Git de forma segura"
-        },
-        {
-            "label": "💾 Criar Backup de Segurança",
-            "type": "shell",
-            "command": "tar -czf backup_$(date +%Y%m%d_%H%M%S).tar.gz --exclude='*.pyc' --exclude='__pycache__' --exclude='.git' --exclude='logs' --exclude='temp' .",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Cria backup completo do projeto (excluindo caches)"
-        },
-        {
-            "label": "🔙 Restaurar de Backup",
-            "type": "shell",
-            "command": "echo 'Backups disponíveis:' && ls -la backup_*.tar.gz 2>/dev/null || echo 'Nenhum backup encontrado'",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Lista backups disponíveis para restauração"
-        },
-        {
-            "label": "🚀 Iniciar Ambiente de Desenvolvimento",
-            "type": "shell",
-            "command": "source scripts/production/start_dashboard.sh",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Inicia dashboard e serviços de desenvolvimento - Ubuntu/Bash"
-        },
-        {
-            "label": "🐳 Verificar Status Docker",
-            "type": "shell",
-            "command": "docker-compose ps && echo '--- Containers ---' && docker ps",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Verifica status dos containers Docker"
-        },
-        {
-            "label": "📈 Verificar Métricas do Sistema",
-            "type": "shell",
-            "command": "echo '=== USO DE DISCO ===' && df -h && echo '=== USO DE MEMÓRIA ===' && free -h && echo '=== PROCESSOS PYTHON ===' && ps aux | grep python | head -10",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Verifica métricas de sistema e recursos"
-        },
-        {
-            "label": "🔧 Verificar Configurações do Ambiente",
-            "type": "shell",
-            "command": "echo 'Python:' $(python --version) && echo 'Pip:' $(pip --version) && echo 'Git:' $(git --version) && echo 'Docker:' $(docker --version 2>/dev/null || echo 'Não instalado')",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Verifica versões das ferramentas essenciais"
-        },
-        {
-            "label": "🧠 Verificar Status do OmniMind",
-            "type": "shell",
-            "command": "echo '=== STATUS DO SISTEMA ===' && ps aux | grep -E '(omnimind|dashboard|agent)' | grep -v grep && echo '=== PORTAS ABERTAS ===' && netstat -tlnp 2>/dev/null | grep -E ':(3000|8000|5000)' || ss -tlnp | grep -E ':(3000|8000|5000)'",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Verifica status dos serviços OmniMind"
-        },
-        {
-            "label": "�️ Verificar Integridade de Arquivos",
-            "type": "shell",
-            "command": "find . -name '*.py' -exec python -m py_compile {} \\; 2>&1 | head -20",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Verifica se todos os arquivos Python compilam corretamente"
-        },
-        {
-            "label": "🚨 Detectar Arquivos Suspeitos",
-            "type": "shell",
-            "command": "echo 'Procurando arquivos suspeitos...' && find . -name '.roo*' -o -name '.omnimind*' -o -name '.cursor*' -o -name '.ai-assistant*' 2>/dev/null || echo 'Nenhum arquivo suspeito encontrado'",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Procura por arquivos ou diretórios relacionados a extensões AI suspeitas"
-        },
-        {
-            "label": "🔍 Auditoria de Commits Recentes",
-            "type": "shell",
-            "command": "git log --oneline -10 && echo '--- Estatísticas ---' && git shortlog -sn --no-merges | head -5",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Audita commits recentes e estatísticas de contribuição"
-        },
-        {
-            "label": "🧹 Limpeza Profunda de Artefatos",
-            "type": "shell",
-            "command": "rm -rf .roo* .omnimind* .cursor* .ai-assistant* .autonomous-ai* 2>/dev/null || true && find . -name '*.log' -mtime +7 -delete 2>/dev/null || true && echo 'Limpeza concluída'",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Remove artefatos suspeitos e logs antigos"
-        },
-        {
-            "label": "📋 Checklist de Segurança Pré-Commit",
-            "type": "shell",
-            "command": "echo '=== CHECKLIST DE SEGURANÇA ===' && echo '✅ 1. Extensões proibidas removidas?' && code --list-extensions | grep -E '(roo|autonomous|ai-assistant)' || echo '   ✅ Nenhuma extensão proibida encontrada' && echo '✅ 2. Arquivos suspeitos removidos?' && ls -la .roo* .omnimind* .cursor* 2>/dev/null || echo '   ✅ Nenhum arquivo suspeito encontrado' && echo '✅ 3. Validações passando?' && ./scripts/canonical/validate/validate_code.sh --quiet && echo '✅ 4. Pre-commit hook ativo?' && ls -la .git/hooks/pre-commit",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Executa checklist completo de segurança antes de commits"
-        },
-        {
-            "label": "🌿 Criar Branch de Desenvolvimento Seguro",
-            "type": "shell",
-            "command": "branch_name=\"dev_$(date +%Y%m%d_%H%M%S)\" && git checkout -b \"$branch_name\" && echo \"Branch seguro criado: $branch_name\"",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Cria nova branch de desenvolvimento com timestamp"
-        },
-        {
-            "label": "🔄 Sincronizar com Branch Principal",
-            "type": "shell",
-            "command": "current_branch=$(git branch --show-current) && echo \"Branch atual: $current_branch\" && git fetch origin && git rebase origin/master",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Sincroniza branch atual com master via rebase seguro"
-        },
-        {
-            "label": "🐛 Debug: Executar com Logs Detalhados",
-            "type": "shell",
-            "command": "export PYTHONPATH=$PWD/src && python -m src.main --debug --log-level DEBUG 2>&1 | tee debug_$(date +%Y%m%d_%H%M%S).log",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Executa aplicação com logs detalhados para debugging"
-        },
-        {
-            "label": "📊 Analisar Performance",
-            "type": "shell",
-            "command": "python -m cProfile -s time src/main.py 2>&1 | head -50 > perf_$(date +%Y%m%d_%H%M%S).txt && echo 'Análise de performance salva em perf_*.txt'",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Executa análise de performance com cProfile"
-        },
-        {
-            "label": "🔧 Corrigir Imports Automáticos",
-            "type": "shell",
-            "command": "isort src/ tests/",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Aplica ordenação automática de imports com isort"
-        },
-        {
-            "label": "📦 Verificar Dependências Desatualizadas",
-            "type": "shell",
-            "command": "pip list --outdated --format=columns",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Lista dependências que podem ser atualizadas"
-        },
-        {
-            "label": "🧠 Testes Inteligentes (Smart)",
-            "type": "shell",
-            "command": "./scripts/run_tests_smart.sh",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Executa testes apenas dos módulos afetados pelas mudanças recentes"
-        },
-        {
-            "label": "� Testes Ultra-Rápidos (Imports)",
-            "type": "shell",
-            "command": "./scripts/run_tests_smart.sh ultra",
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Verifica apenas se os módulos podem ser importados (muito rápido)"
-        },
-        {
-            "label": "🔄 Sincronização com Repositório Remoto",
-            "type": "shell",
-            "command": "git pull origin master && echo 'Sincronização concluída'",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Sincroniza com mudanças remotas autorizadas"
-        },
-        {
-            "label": "🎯 Configurar Ambiente CUDA para Testes",
-            "type": "shell",
-            "command": "source scripts/setup_cuda_test_env.sh",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "problemMatcher": [],
-            "detail": "Configura variáveis CUDA otimizadas para Ubuntu 24.04 (execução assíncrona, múltiplas threads)"
-        }
-    ]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "⚡ FAST TEST SUITE (~15-20 min, 4500+ testes)",
+      "type": "shell",
+      "command": "bash",
+      "args": ["./scripts/run_tests_fast.sh"],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "detail": "Suite rápida diária: GPU forçada, logs verbosos, coverage, sem chaos",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "🧠 DEFENSE TEST SUITE (~45-90 min, 3952+ testes com chaos)",
+      "type": "shell",
+      "command": "bash",
+      "args": ["./scripts/run_tests_with_defense.sh"],
+      "group": {
+        "kind": "test"
+      },
+      "detail": "Suite semanal PESADA: autodefense ativada, chaos engineering, testes destrutivos",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "🧪 Testes por Categoria",
+      "type": "shell",
+      "command": "bash",
+      "args": ["./scripts/canonical/test/run_tests_by_category.sh"],
+      "group": {
+        "kind": "test"
+      },
+      "detail": "Executa testes agrupados por categoria/módulo"
+    },
+    {
+      "label": "🎯 Testes Inteligentes (Smart)",
+      "type": "shell",
+      "command": "bash",
+      "args": ["./scripts/development/run_tests_smart.sh"],
+      "group": {
+        "kind": "test"
+      },
+      "detail": "Executa apenas testes dos módulos afetados pelas mudanças recentes"
+    },
+    {
+      "label": "📊 Testes Completos com Certificação",
+      "type": "shell",
+      "command": "bash",
+      "args": ["./scripts/canonical/test/run_full_certification.sh"],
+      "group": {
+        "kind": "test"
+      },
+      "detail": "Suite completa com validação de certificação"
+    },
+    {
+      "label": "🔄 Monitorar Testes em Tempo Real",
+      "type": "shell",
+      "command": "bash",
+      "args": ["./scripts/canonical/monitor/monitor_tests_live.sh"],
+      "group": {
+        "kind": "test"
+      },
+      "detail": "Monitora execução de testes em tempo real com live updates",
+      "isBackground": true
+    },
+    {
+      "label": "🔧 Corrigir Formatação (Black + isort)",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "black src/ tests/ && isort src/ tests/"],
+      "group": {
+        "kind": "build"
+      },
+      "detail": "Aplica formatação automática com Black e ordena imports"
+    },
+    {
+      "label": "🎨 Verificar Linting (Flake8)",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "flake8 src/ tests/ --max-line-length=88 --extend-ignore=E203,W503"],
+      "group": {
+        "kind": "build"
+      },
+      "detail": "Verifica qualidade de código com Flake8"
+    },
+    {
+      "label": "🔍 Verificar Tipos (MyPy)",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "mypy src/ --ignore-missing-imports --show-error-codes"],
+      "group": {
+        "kind": "build"
+      },
+      "detail": "Verifica tipos estáticos com MyPy"
+    },
+    {
+      "label": "🧹 Limpeza de Cache Python",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && find . -name '*.pyc' -delete && rm -rf .pytest_cache/ .mypy_cache/"],
+      "group": {
+        "kind": "build"
+      },
+      "detail": "Remove caches Python e temporários"
+    },
+    {
+      "label": "📦 Instalar/Atualizar Dependências",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "pip install -r requirements.txt && pip install -r requirements-dev.txt"],
+      "group": {
+        "kind": "build"
+      },
+      "detail": "Instala todas as dependências do projeto"
+    },
+    {
+      "label": "🔒 Verificar Segurança (pip-audit)",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "pip-audit --requirement requirements.txt --requirement requirements-dev.txt"],
+      "group": {
+        "kind": "build"
+      },
+      "detail": "Audita vulnerabilidades em dependências"
+    },
+    {
+      "label": "📈 Verificar Métricas do Sistema",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "echo '=== USO DE DISCO ===' && df -h && echo '=== MEMÓRIA ===' && free -h && echo '=== PROCESSOS PYTHON ===' && ps aux | grep python | head -10"],
+      "group": {
+        "kind": "build"
+      },
+      "detail": "Verifica uso de disco, memória e processos"
+    },
+    {
+      "label": "🧠 Verificar Integridade de Código",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "find . -name '*.py' -path './src/*' -o -name '*.py' -path './tests/*' | xargs python -m py_compile 2>&1 | head -20"],
+      "group": {
+        "kind": "build"
+      },
+      "detail": "Verifica se todos os arquivos Python compilam corretamente"
+    },
+    {
+      "label": "🔄 Git Status",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "git status --short && echo '--- Arquivos modificados ---' && git diff --name-only"],
+      "group": {
+        "kind": "build"
+      },
+      "detail": "Mostra status do git e arquivos modificados"
+    },
+    {
+      "label": "✅ Preparar para Commit",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "echo '1. Black formatting...' && black src/ tests/ && echo '2. isort imports...' && isort src/ tests/ && echo '3. Flake8 check...' && flake8 src/ tests/ --max-line-length=88 && echo '✅ Pronto para commit!'"],
+      "group": {
+        "kind": "build"
+      },
+      "detail": "Executa todas as verificações de código antes de commit"
+    }
+  ]
 }

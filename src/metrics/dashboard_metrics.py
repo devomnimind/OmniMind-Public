@@ -64,6 +64,7 @@ def _collect_system_metrics_default() -> Dict[str, Any]:
         "is_user_active": True,  # Placeholder: integrar com detecção real
         "idle_seconds": 0,
         "is_sleep_hours": False,
+        "gpu": _collect_gpu_metrics(),
         "details": {
             "cpu": {
                 "count": psutil.cpu_count(),
@@ -84,6 +85,51 @@ def _collect_system_metrics_default() -> Dict[str, Any]:
             },
         },
     }
+
+
+def _collect_gpu_metrics() -> Dict[str, Any]:
+    """Coleta métricas da GPU se disponível."""
+    try:
+        import torch
+
+        if not torch.cuda.is_available():
+            return {"available": False}
+
+        props = torch.cuda.get_device_properties(0)
+        allocated = torch.cuda.memory_allocated(0)
+        reserved = torch.cuda.memory_reserved(0)
+
+        return {
+            "available": True,
+            "name": props.name,
+            "memory_total_mb": round(props.total_memory / (1024**2), 1),
+            "memory_allocated_mb": round(allocated / (1024**2), 1),
+            "memory_reserved_mb": round(reserved / (1024**2), 1),
+            "utilization": (
+                round((allocated / props.total_memory) * 100, 1) if props.total_memory > 0 else 0.0
+            ),
+        }
+    except Exception:
+        return {"available": False}
+
+
+def _collect_sentinel_status() -> Dict[str, Any]:
+    """Verifica se o Sentinel Watchdog está rodando."""
+    if psutil is None:
+        return {"status": "unknown"}
+
+    try:
+        for proc in psutil.process_iter(["cmdline"]):
+            try:
+                cmdline = proc.info.get("cmdline") or []
+                if any("sentinel_watchdog.py" in str(arg) for arg in cmdline):
+                    return {"status": "active", "protection": "enabled"}
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                continue
+    except Exception:
+        pass
+
+    return {"status": "inactive", "protection": "disabled"}
 
 
 class DashboardMetricsAggregator:
@@ -226,6 +272,7 @@ class DashboardMetricsAggregator:
             "baseline_comparison": baseline_comparison,
             "module_metrics": module_metrics_data,  # FASE 3.2: Métricas dos módulos
             "before_after_comparison": before_after_comparison,  # FASE 3.2: Comparação antes/depois
+            "sentinel_status": _collect_sentinel_status(),
             "errors": errors,
         }
 

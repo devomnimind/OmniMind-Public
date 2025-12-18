@@ -1,0 +1,81 @@
+
+
+
+"self_ref"str
+‚y"Calculate overall self-awareness score.
+
+        Returns:
+            Weighted average of all component scores
+        "str
+0.3float
+
+"temporal"str
+"limitation"str
+"goal"str
+0.25float
+0.2floatself
+€ €("Š/
+-
+
+† ‹(	weights"#new-object#Bdict"
+ 
+
+‡ ‡("	#map-set#:"
+ 
+
+ˆ ˆ(	"	#map-set#:"
+ 
+
+‰ ‰("	#map-set#:
+"
+ 
+
+Š Š("	#map-set#:<
+:
+
+Ž Ž(*"'%#get-field# temporal_continuity_score:$
+"
+
+Ž- Ž(@"#array-read#:'
+%
+
+Ž Ž(@"	#binop *#*2*:6
+4
+
+ (&"!#get-field# goal_autonomy_score:$
+"
+
+) (8"#array-read#:'
+%
+
+ (8"	#binop *#*2*:7
+5
+
+ ('"" #get-field# self_reference_score:$
+"
+
+* (="#array-read#:
+'
+%
+
+ (="	#binop *#*2*:=
+;
+
+‘ ‘(-"(&#get-field# limitation_awareness_score:$
+"
+
+‘0 ‘(E"#array-read#:'
+%
+
+‘ ‘(E"	#binop *#*2*:&
+$
+
+Ž ‘(E"	#binop +#2+:1
+/
+
+ ("#set-field# overall_score:0
+.
+
+” ”(!"#get-field# overall_score:
+
+” ”(!*E/home/fahbrain/projects/omnimind/src/metrics/consciousness_metrics.py

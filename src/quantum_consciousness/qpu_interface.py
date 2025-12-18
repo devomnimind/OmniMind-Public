@@ -345,7 +345,6 @@ class QPUBackend(ABC):
         - Manages job submission and result retrieval
         - Provides comprehensive error handling
         """
-        pass
 
     @abstractmethod
     def get_info(self) -> BackendInfo:
@@ -361,7 +360,6 @@ class QPUBackend(ABC):
         - Current availability
         - Performance characteristics
         """
-        pass
 
     @abstractmethod
     def is_available(self) -> bool:
@@ -377,7 +375,6 @@ class QPUBackend(ABC):
         - Hardware operational status
         - Resource allocation
         """
-        pass
 
     def validate_circuit(self, circuit: Any) -> List[str]:
         """

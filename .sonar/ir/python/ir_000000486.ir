@@ -1,0 +1,32 @@
+
+"total_meta_levels"str
+"current_level"str
+'"Get meta-learner statistics."strself
+Å Å("æ&
+$
+
+É Ü(	"#new-object#Bdict.
+,
+
+Ñ% Ñ(5"#get-field# meta_levels:,
+*
+
+Ñ! Ñ(6"
+builtinslen*:Bint"
+ 
+
+Ñ Ñ(6"	#map-set#:.
+,
+
+Ö! Ö(1	"#get-field# meta_levels:,
+*
+
+Ö Ö(2
+"
+builtinslen*:	Bint"
+ 
+
+Ö Ö(2"	#map-set#:
+
+
+É Ü(	*I/home/fahbrain/projects/omnimind/src/meta_learning/black_hole_collapse.py

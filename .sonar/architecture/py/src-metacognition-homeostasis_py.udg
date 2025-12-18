@@ -1,0 +1,295 @@
+
+1.0PythonFrontend"1763831834447*py2.Bø
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+%
+ src/metacognition/homeostasis.py9
+#
+src.metacognition.homeostasis11
+
+
+__future__12
+
+asyncio14
+
+logging16
+
+
+time18
+
+dataclasses20
+
+
+enum22
+
+typing24
+
+psutil26
+0
+*src.metacognition.homeostasis.TaskPriority28
+	
+str30
+
+	enum.Enum32
+3
+-src.metacognition.homeostasis.ResourceMetrics34
+;
+5src.metacognition.homeostasis.ResourceMetrics.to_dict36
+
+
+dict38
+E
+?src.metacognition.homeostasis.ResourceMetrics.get_overall_state40
+1
++src.metacognition.homeostasis.ResourceState42
+9
+3src.metacognition.homeostasis.HomeostaticController44
+M
+Gsrc.metacognition.homeostasis.HomeostaticController.get_current_metrics46
+M
+Gsrc.metacognition.homeostasis.HomeostaticController.get_metrics_history48
+
+
+list50
+	
+int52
+T
+Nsrc.metacognition.homeostasis.HomeostaticController.get_recommended_batch_size54
+?
+9src.metacognition.homeostasis.HomeostaticController.start56
+F
+@src.metacognition.homeostasis.HomeostaticController.is_throttled58
+
+
+bool60
+J
+Dsrc.metacognition.homeostasis.HomeostaticController._collect_metrics62
+C
+=src.metacognition.homeostasis.HomeostaticController.get_stats64
+B
+<src.metacognition.homeostasis.HomeostaticController.__init__66
+
+float68
+P
+Jsrc.metacognition.homeostasis.HomeostaticController._deactivate_throttling70
+J
+Dsrc.metacognition.homeostasis.HomeostaticController._monitoring_loop72
+Q
+Ksrc.metacognition.homeostasis.HomeostaticController.register_state_callback74
+N
+Hsrc.metacognition.homeostasis.HomeostaticController._activate_throttling76
+>
+8src.metacognition.homeostasis.HomeostaticController.stop78
+M
+Gsrc.metacognition.homeostasis.HomeostaticController.should_execute_task80J
+
+8
+89j³
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29286 210
+
+31
+31306
+
+33
+33326
+
+35
+35346 210
+
+37
+37367 235
+
+39
+39386
+
+41
+41407 235
+
+43
+43426 210
+
+45
+45446 210
+
+47
+47467 245
+
+49
+49487 245
+
+51
+51506
+
+53
+53526
+
+55
+55547 245
+
+57
+57567 245
+
+59
+59587 245
+
+61
+61606
+
+63
+63627 245
+
+65
+65647 245
+
+67
+67667 245
+
+69
+69686
+
+71
+71707 245
+
+73
+73727 245
+
+75
+75747 245
+
+77
+77767 245
+
+79
+79787 245
+
+81
+81807 245rê
+
+10131*
+8
+ 
+(#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 ("
+
+10231*
+8 (
+
+10251*
+8 (7
+
+10271*
+8 (
+
+29312*
+8$ $(
+
+29332*
+8$ $(
+
+37393*
+8G	 G(
+
+41433*
+88	 8(
+
+49513*
+8€	 €(
+
+49534*
+8€	 €(
+
+55533*
+8±	 ±(#
+
+55534*
+8±	 ±(#
+
+59613*
+8Œ	 Œ(
+
+63353*
+8„	 „(
+
+65393*
+8É	 É(
+
+67694*
+8V	 V(
+
+67694*
+8V	 V(
+
+67694*
+8V	 V(
+
+67694*
+8V	 V(
+
+67694*
+8V	 V(
+
+81613*
+8”	 ”(
+
+81294*
+8”	 ”(
+
+43312*
+8 (
+
+43332*
+8 (

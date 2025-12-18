@@ -1,0 +1,115 @@
+
+Usrc.scaling.distributed_transactions.TwoPhaseCommitCoordinator.register_node_handlersT
+H/home/fahbrain/projects/omnimind/src/scaling/distributed_transactions.py… …("2*À	
+2
+Œ “(’
+
+
+” ”(
+%2"__id*u
+
+__unknown_file (Y*W@
+>src.scaling.distributed_transactions.TwoPhaseCommitCoordinator"
+_prepare_handlers²¯
+
+” ”(9
+%1"dict.__setitem__*"
+
+__unknown_file (
+
+%2*'
+
+__unknown_file (
+	
+node_id*/
+
+__unknown_file (
+
+prepare_handler2__setitem__‘
+Ž
+
+• •(
+%4"__id*t
+
+__unknown_file (X*V@
+>src.scaling.distributed_transactions.TwoPhaseCommitCoordinator"
+_commit_handlers±®
+
+• •(7
+%3"dict.__setitem__*"
+
+__unknown_file (
+
+%4*'
+
+__unknown_file (
+	
+node_id*.
+
+__unknown_file (
+
+commit_handler2__setitem__
+
+
+– –(
+%6"__id*s
+
+__unknown_file (W*U@
+>src.scaling.distributed_transactions.TwoPhaseCommitCoordinator"
+_abort_handlers°­
+
+– –(5
+%5"dict.__setitem__*"
+
+__unknown_file (
+
+%6*'
+
+__unknown_file (
+	
+node_id*-
+
+__unknown_file (
+
+abort_handler2__setitem__j
+h
+
+— —(=
+%7"__concat*/
+
+— —(3!
+Registered handlers for node *
+
+—4 —(;
+	
+node_idfd
+
+— —(>
+%8*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%72info*
+3*C
+3
+distributed_transactions.py"
+™ ™(
+implicit return:
+
+‡ ‡(	
+node_id:
+
+ˆ ˆ(I
+prepare_handler:
+
+‰ ‰(8
+commit_handler:
+
+Š Š(7
+abort_handlerBB@
+>src.scaling.distributed_transactions.TwoPhaseCommitCoordinatorH

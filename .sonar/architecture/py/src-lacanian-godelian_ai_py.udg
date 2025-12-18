@@ -1,0 +1,330 @@
+
+1.0PythonFrontend"1763831835449*py2.B 
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+ 
+src/lacanian/godelian_ai.py9
+
+src.lacanian.godelian_ai11
+
+typing12
+
+dataclasses14
+
+logging16
+4
+.src.lacanian.godelian_ai.SimpleAxiomaticSystem18
+;
+5src.lacanian.godelian_ai.SimpleAxiomaticSystem.axioms20
+	
+set22
+>
+8src.lacanian.godelian_ai.SimpleAxiomaticSystem.can_prove24
+
+
+bool26
+	
+str28
+=
+7src.lacanian.godelian_ai.SimpleAxiomaticSystem.__init__30
+D
+>src.lacanian.godelian_ai.SimpleAxiomaticSystem.inference_rules32
+
+
+list34
+>
+8src.lacanian.godelian_ai.SimpleAxiomaticSystem.add_axiom36
+0
+*src.lacanian.godelian_ai.GodelianStatement38
+8
+2src.lacanian.godelian_ai.ImpossibilityMetaStrategy40
+O
+Isrc.lacanian.godelian_ai.ImpossibilityMetaStrategy._embrace_contradiction42
+
+
+dict44
+J
+Dsrc.lacanian.godelian_ai.ImpossibilityMetaStrategy.handle_impossible46
+Q
+Ksrc.lacanian.godelian_ai.ImpossibilityMetaStrategy._decompose_impossibility48
+A
+;src.lacanian.godelian_ai.ImpossibilityMetaStrategy.__init__50
+I
+Csrc.lacanian.godelian_ai.ImpossibilityMetaStrategy._reframe_problem52
+O
+Isrc.lacanian.godelian_ai.ImpossibilityMetaStrategy._initialize_strategies54
+I
+Csrc.lacanian.godelian_ai.ImpossibilityMetaStrategy._transcend_level56
+N
+Hsrc.lacanian.godelian_ai.ImpossibilityMetaStrategy._select_best_strategy58
+)
+#src.lacanian.godelian_ai.GodelianAI60
+2
+,src.lacanian.godelian_ai.GodelianAI.__init__62
++
+%src.lacanian.godelian_ai.FormalSystem64
+<
+6src.lacanian.godelian_ai.GodelianAI.get_current_axioms66
+>
+8src.lacanian.godelian_ai.GodelianAI.get_godelian_history68
+A
+;src.lacanian.godelian_ai.GodelianAI.get_transcendence_depth70
+	
+int72
+>
+8src.lacanian.godelian_ai.GodelianAI.recognize_limitation74
+>
+8src.lacanian.godelian_ai.GodelianAI.generate_meta_system76
+B
+<src.lacanian.godelian_ai.GodelianAI.creative_evolution_cycle78
+;
+5src.lacanian.godelian_ai.FormalSystem.inference_rules80
+5
+/src.lacanian.godelian_ai.FormalSystem.can_prove82
+2
+,src.lacanian.godelian_ai.FormalSystem.axioms84J
+
+8
+89j‰
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19186 210
+
+21
+21207 219
+
+23
+23226
+
+25
+25247 219
+
+27
+27266
+
+29
+29286
+
+31
+31307 219
+
+33
+33327 219
+
+35
+35346
+
+37
+37367 219
+
+39
+39386 210
+
+41
+41406 210
+
+43
+43427 241
+
+45
+45446
+
+47
+47467 241
+
+49
+49487 241
+
+51
+51507 241
+
+53
+53527 241
+
+55
+55547 241
+
+57
+57567 241
+
+59
+59587 241
+
+61
+61606 210
+
+63
+63627 261
+
+65
+65646 210
+
+67
+67667 261
+
+69
+69687 261
+
+71
+71707 261
+
+73
+73726
+
+75
+75747 261
+
+77
+77767 261
+
+79
+79787 261
+
+81
+81807 265
+
+83
+83827 265
+
+85
+85847 265r
+
+10131*
+8 (F
+
+10151*
+8 ("
+
+10171*
+8 (
+
+21233*
+8B	 B(
+
+25273*
+8W	 W(
+
+25294*
+8W	 W(
+
+33353*
+8F	 F(
+
+37294*
+8m	 m(
+
+43453*
+8Ù	 Ù(
+
+43294*
+8Ù	 Ù(
+
+43354*
+8Ù	 Ù(
+
+47453*
+8ñ	 ñ(
+
+47294*
+8ñ	 ñ(
+
+47354*
+8ñ	 ñ(
+
+49453*
+8«	 «(!
+
+49294*
+8«	 «(!
+
+49354*
+8«	 «(!
+
+53453*
+8˜	 ˜(
+
+53294*
+8˜	 ˜(
+
+53354*
+8˜	 ˜(
+
+57453*
+8Å	 Å(
+
+57294*
+8Å	 Å(
+
+57354*
+8Å	 Å(
+
+59293*
+8î	 î(
+
+59454*
+8î	 î(
+
+63654*
+8›	 ›(
+
+67233*
+8Å	 Å(
+
+69353*
+8Î	 Î(
+
+71733*
+8º	 º( 
+
+75273*
+8©	 ©(
+
+75294*
+8©	 ©(
+
+77653*
+8Ë	 Ë(
+
+79733*
+8”	 ”(!
+
+79734*
+8”	 ”(!
+
+81353*
+8$	 $(
+
+83273*
+8(	 ((
+
+83294*
+8(	 ((
+
+85233*
+8 	  (

@@ -19,7 +19,7 @@ import time
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 # Add project root to path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -86,9 +86,7 @@ class DataGenerationAuditor:
                                     findings[f"{filename}_last_entry"] = data
                                     findings[f"{filename}_count"] = len(lines)
                                 except json.JSONDecodeError:
-                                    findings["issues"].append(
-                                        f"JSON inválido em {filename}"
-                                    )
+                                    findings["issues"].append(f"JSON inválido em {filename}")
                         else:
                             findings["issues"].append(f"{filename} está vazio")
                 except Exception as e:
@@ -336,12 +334,8 @@ class DataGenerationAuditor:
         # Resumo
         total_audits = len(results["audits"])
         ok_count = sum(1 for a in results["audits"].values() if a.get("status") == "ok")
-        partial_count = sum(
-            1 for a in results["audits"].values() if a.get("status") == "partial"
-        )
-        missing_count = sum(
-            1 for a in results["audits"].values() if a.get("status") == "missing"
-        )
+        partial_count = sum(1 for a in results["audits"].values() if a.get("status") == "partial")
+        missing_count = sum(1 for a in results["audits"].values() if a.get("status") == "missing")
 
         results["summary"] = {
             "total_modules": total_audits,
@@ -455,4 +449,3 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
-

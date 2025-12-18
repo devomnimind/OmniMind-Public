@@ -18,8 +18,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import json
 import hashlib
+import json
 from pathlib import Path
 
 

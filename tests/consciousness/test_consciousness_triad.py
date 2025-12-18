@@ -16,7 +16,10 @@ from unittest.mock import MagicMock
 import numpy as np
 import pytest
 
-from src.consciousness.consciousness_triad import ConsciousnessTriad, ConsciousnessTriadCalculator
+from src.consciousness.consciousness_triad import (
+    ConsciousnessTriad,
+    ConsciousnessTriadCalculator,
+)
 
 
 class TestConsciousnessTriad:
@@ -24,30 +27,28 @@ class TestConsciousnessTriad:
 
     def test_initialization(self):
         """Testa inicialização da tríade."""
-        triad = ConsciousnessTriad(phi=0.6, psi=0.7, sigma=0.5, epsilon=0.4, step_id="test_step")
+        triad = ConsciousnessTriad(phi=0.6, psi=0.7, sigma=0.5, epsilon=0.5, step_id="test_step")
         assert triad.phi == 0.6
         assert triad.psi == 0.7
         assert triad.sigma == 0.5
-        assert triad.epsilon == 0.4
         assert triad.step_id == "test_step"
         assert triad.timestamp > 0
 
     def test_to_dict(self):
         """Testa conversão para dicionário."""
-        triad = ConsciousnessTriad(phi=0.6, psi=0.7, sigma=0.5, epsilon=0.4, step_id="test_step")
+        triad = ConsciousnessTriad(phi=0.6, psi=0.7, sigma=0.5, epsilon=0.5, step_id="test_step")
         result = triad.to_dict()
 
         assert result["phi"] == 0.6
         assert result["psi"] == 0.7
         assert result["sigma"] == 0.5
-        assert result["epsilon"] == 0.4
         assert result["step_id"] == "test_step"
         assert "timestamp" in result
         assert "metadata" in result
 
     def test_validate_valid_triad(self):
         """Testa validação de tríade válida."""
-        triad = ConsciousnessTriad(phi=0.6, psi=0.7, sigma=0.5, epsilon=0.4, step_id="test_step")
+        triad = ConsciousnessTriad(phi=0.6, psi=0.7, sigma=0.5, epsilon=0.5, step_id="test_step")
         validation = triad.validate()
 
         assert validation["valid"] is True
@@ -56,7 +57,7 @@ class TestConsciousnessTriad:
 
     def test_validate_invalid_ranges(self):
         """Testa validação com ranges inválidos."""
-        triad = ConsciousnessTriad(phi=1.5, psi=-0.1, sigma=0.5, epsilon=0.4, step_id="test_step")
+        triad = ConsciousnessTriad(phi=1.5, psi=-0.1, sigma=0.5, epsilon=0.5, step_id="test_step")
         validation = triad.validate()
 
         assert validation["valid"] is False
@@ -64,14 +65,14 @@ class TestConsciousnessTriad:
 
     def test_validate_warnings(self):
         """Testa avisos para valores extremos."""
-        triad = ConsciousnessTriad(phi=0.05, psi=0.05, sigma=0.01, epsilon=0.1, step_id="test_step")
+        triad = ConsciousnessTriad(phi=0.05, psi=0.05, sigma=0.01, epsilon=0.5, step_id="test_step")
         validation = triad.validate()
 
         assert len(validation["warnings"]) > 0
 
     def test_get_magnitude(self):
         """Testa cálculo de magnitude."""
-        triad = ConsciousnessTriad(phi=0.6, psi=0.8, sigma=0.5, epsilon=0.4, step_id="test_step")
+        triad = ConsciousnessTriad(phi=0.6, psi=0.8, sigma=0.5, epsilon=0.5, step_id="test_step")
         magnitude = triad.get_magnitude()
 
         # Magnitude = sqrt(0.6² + 0.8² + 0.5²) = sqrt(0.36 + 0.64 + 0.25) = sqrt(1.25) ≈ 1.118
@@ -81,7 +82,7 @@ class TestConsciousnessTriad:
 
     def test_get_normalized_magnitude(self):
         """Testa magnitude normalizada."""
-        triad = ConsciousnessTriad(phi=0.6, psi=0.8, sigma=0.5, epsilon=0.4, step_id="test_step")
+        triad = ConsciousnessTriad(phi=0.6, psi=0.8, sigma=0.5, epsilon=0.5, step_id="test_step")
         norm_magnitude = triad.get_normalized_magnitude()
 
         assert 0.0 <= norm_magnitude <= 1.0
@@ -183,10 +184,8 @@ class TestConsciousnessTriadCalculator:
             psi = 0.5 + 0.1 * np.cos(i * 0.7)
             # σ varia independentemente
             sigma = 0.5 + 0.1 * np.sin(i * 0.9)
-            # ϵ (epsilon) varia independentemente
-            epsilon = 0.5 + 0.1 * np.cos(i * 1.1)
             triad = ConsciousnessTriad(
-                phi=phi, psi=psi, sigma=sigma, epsilon=epsilon, step_id=f"step_{i}"
+                phi=phi, psi=psi, sigma=sigma, epsilon=0.5, step_id=f"step_{i}"
             )
             triad_history.append(triad)
 

@@ -30,7 +30,7 @@
     "files.insertFinalNewline": true,
     // Configurações originais preservadas
     "chat.agent.maxRequests": 10000,
-    // PYTHON ENVIRONMENT CONFIGURATION - FORÇADO PYTHON 3.12.8 (atual: 3.12.3)
+    // PYTHON ENVIRONMENT CONFIGURATION - FORÇADO PYTHON 3.12.8
     "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
     "python.pythonPath": "${workspaceFolder}/.venv/bin/python",
     "python.terminal.activateEnvironment": true,
@@ -38,13 +38,11 @@
     "python.terminal.executeInFileDir": true,
     "python.terminal.useEnvFile": true,
     "python.envFile": "${workspaceFolder}/.env",
-    // PYTHON 3.12.8 STRICT - CONFIGURAÇÕES DE FORMATAÇÃO E LINTING
+    // PYTHON 3.12.8 STRICT - NÃO PERMITIR ALTERAÇÃO AUTOMÁTICA
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-            "source.fixAll.pylint": "explicit",
-            "source.fixAll.flake8": "explicit",
             "source.organizeImports": "explicit"
         }
     },
@@ -56,66 +54,21 @@
     "python.interpreterPath": "${workspaceFolder}/.venv/bin/python",
     // DESABILITAR DETECÇÃO AUTOMÁTICA - FORÇAR VENV LOCAL
     "python.autoComplete.extraPaths": [
-        "${workspaceFolder}/src",
-        "${workspaceFolder}/tests"
+        "${workspaceFolder}/src"
+    ],
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/src"
     ],
     "python.linting.pylintPath": "${workspaceFolder}/.venv/bin/pylint",
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintArgs": [
-        "--rcfile=${workspaceFolder}/.pylintrc"
-    ],
     "python.formatting.blackPath": "${workspaceFolder}/.venv/bin/black",
     "python.linting.flake8Path": "${workspaceFolder}/.venv/bin/flake8",
     "python.linting.mypyPath": "${workspaceFolder}/.venv/bin/mypy",
-    "python.linting.mypyArgs": [
-        "--ignore-missing-imports",
-        "--show-error-codes"
-    ],
-    // MYPY TYPE CHECKER - EXTENSION CONFIGURATION
-    "mypy-type-checker.enabled": true,
-    "mypy-type-checker.importStrategy": "fromEnvironment",
-    "mypy-type-checker.serverSourceDirectory": "${workspaceFolder}/.venv/bin",
-    "mypy-type-checker.showNotifications": "onWarning",
-    "mypy-type-checker.args": [
-        "--ignore-missing-imports",
-        "--show-error-codes",
-        "--no-incremental",
-        "--follow-imports=silent"
-    ],
-    // PYLANCE ANALYSIS CONFIGURATION
-    "pylance.analysis.typeCheckingMode": "strict",
-    "pylance.analysis.pythonVersion": "3.12",
-    "pylance.analysis.extraPaths": [
-        "${workspaceFolder}/src",
-        "${workspaceFolder}/tests"
-    ],
-    // CONFIGURAÇÃO DE TERMINAL - GARANTIR COMANDOS ESSENCIAIS SEMPRE DISPONÍVEIS
+    // CONFIGURAÇÃO DE TERMINAL
     "terminal.integrated.shellIntegration.enabled": true,
-    "terminal.integrated.autoRun": "on",
-    "terminal.integrated.inheritEnv": true,
     "terminal.integrated.env.linux": {
-        // ✅ PYTHON ENVIRONMENT - FORÇADO NOVO VENV LIMPO (cu12 ONLY)
-        "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-        "PYTHONPATH": "${workspaceFolder}:${workspaceFolder}/src",
+        "PYTHONPATH": "${workspaceFolder}/src",
         "PYTHONUNBUFFERED": "1",
-        "PYTHON_VENV": "${workspaceFolder}/.venv",
-        "PYTHON_KEYRING_BACKEND": "keyrings.cryptfile.cryptfile.CryptFilekeyring",
-        // ✅ CUDA 12.4 ENVIRONMENT - FORÇADO CUDA 12 (ZERO CUDA 11)
-        "CUDA_HOME": "/usr/local/cuda-12",
-        "CUDA_PATH": "/usr/local/cuda-12",
-        "CUDA_TOOLKIT_ROOT_DIR": "/usr/local/cuda-12",
-        "CUDA_VISIBLE_DEVICES": "0",
-        "CUDA_MODULE_LOADING": "LAZY",
-        // ✅ LD_LIBRARY_PATH - CUDA 12 FIRST (evitar CUDA 11 fallback)
-        "LD_LIBRARY_PATH": "/usr/local/cuda-12/lib64:/usr/local/cuda-12/extras/CUPTI/lib64:/usr/lib/x86_64-linux-gnu:${env:LD_LIBRARY_PATH}",
-        // ✅ PATH - VENV FIRST, depois CUDA 12, depois sistema
-        "PATH": "${workspaceFolder}/.venv/bin:/usr/local/cuda-12/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-        // ✅ PYTORCH/TORCH ENVIRONMENT
-        "TORCH_CUDA_ARCH_LIST": "7.5",
-        "TORCH_HOME": "${workspaceFolder}/.torch",
-        // ✅ CUQUANTUM ENVIRONMENT
-        "CUQUANTUM_ROOT": "/usr/local/cuquantum",
-        "CUQUANTUM_INSTALL_DIR": "/usr/local/cuquantum"
+        "PYTHON_VENV": "${workspaceFolder}/.venv"
     },
     // Terminal sempre visível e auto-revelar
     "terminal.integrated.defaultLocation": "view",
@@ -124,29 +77,11 @@
     "terminal.integrated.cursorBlinking": true,
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.persistentSessionReviveProcess": "onExit",
-    // FORÇAR BASH NO UBUNTU - sobrescrever qualquer configuração global
+    // Auto-revelar terminal quando houver saída (melhor visibilidade)
     "terminal.integrated.automationProfile.linux": {
-        "path": "/usr/bin/bash",
-        "args": [
-            "--rcfile",
-            "${workspaceFolder}/.vscode/bashrc_local"
-        ],
-        "icon": "terminal"
+        "path": "/usr/bin/zsh",
+        "args": []
     },
-    "terminal.integrated.profiles.linux": {
-        "bash": {
-            "path": "/usr/bin/bash",
-            "args": [
-                "--rcfile",
-                "${workspaceFolder}/.vscode/bashrc_local"
-            ],
-            "env": {
-                "PATH": "/usr/bin:/bin:/usr/local/bin:/usr/sbin:/sbin:/usr/local/sbin:${env:PATH}",
-                "OMNIMIND_ROOT": "${workspaceFolder}"
-            }
-        }
-    },
-    "terminal.integrated.defaultProfile.linux": "bash",
     // DESABILITAR SUGESTÕES AUTOMÁTICAS DE INTERPRETADORES
     "python.showStartPage": false,
     "python.showPythonStatusBar": true,
@@ -163,28 +98,34 @@
             "organizationKey": "devomnimind"
         }
     ],
-    "python.testing.unittestArgs": [
-        "-v",
-        "-s",
-        "./tests",
-        "-p",
-        "*_test.py"
-    ],
-    "python.testing.pytestEnabled": false,
-    "python.testing.unittestEnabled": true,
-    // ✅ VENV ACTIVATION FORCED - NEW CLEAN ENVIRONMENT (cu12 ONLY)
-    // Configuration locked to prevent accidental use of old venv with cu11 conflicts
-    // ALL INTEGRATORS: Do NOT use python from system paths - force venv via VIRTUAL_ENV
-    // GPU CUDA 12.4 - Verified working with qiskit 1.2.4 + aer-gpu 0.15.1
-    // Last verified: 2025-12-14 final_check.py - ✅ ALL TESTS PASSED
-    "python.venvPath": "${workspaceFolder}/.venv",
-    // FILE EXCLUSION PATTERNS
-    "files.exclude": {
-        "**/__pycache__": true,
-        "**/*.pyc": true,
-        "**/.pytest_cache": true,
-        "**/.DS_Store": true,
-        "**/Thumbs.db": true,
-        ".venv": false
+    "mcp.servers": {
+        "omnimind-filesystem": {
+            "type": "http",
+            "url": "http://localhost:4331/mcp"
+        },
+        "omnimind-git": {
+            "type": "http",
+            "url": "http://localhost:4332/mcp"
+        },
+        "omnimind-python": {
+            "type": "http",
+            "url": "http://localhost:4333/mcp"
+        },
+        "omnimind-sqlite": {
+            "type": "http",
+            "url": "http://localhost:4334/mcp"
+        },
+        "omnimind-system-info": {
+            "type": "http",
+            "url": "http://localhost:4335/mcp"
+        },
+        "omnimind-logging": {
+            "type": "http",
+            "url": "http://localhost:4336/mcp"
+        },
+        "omnimind-supabase": {
+            "type": "http",
+            "url": "http://localhost:4337/mcp"
+        }
     }
 }

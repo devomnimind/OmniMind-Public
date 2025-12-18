@@ -1,0 +1,22 @@
+
+"impact_level"str
+!"Convert to dictionary."str
+
+"framework_used"strself5 5("¼.
+,
+7 7(data"
+dataclassesasdict:-
++
+8 8(0"#get-field# impact_level:&
+$
+8 8(6"#get-field# value:$
+"
+8 8(6"#array-write#:/
+-
+9! 9(4"#get-field# framework_used:&
+$
+9! 9(:	"#get-field# value:$
+"
+9 9(:"#array-write#:
+	
+: :(*;/home/fahbrain/projects/omnimind/src/ethics/ethics_agent.py

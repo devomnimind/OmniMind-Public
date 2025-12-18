@@ -35,9 +35,8 @@ Uso: python scripts/auto_generate_tests.py
 
 import ast
 import os
-import re
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List
 
 # Configurações
 SCRIPT_DIR = Path(__file__).parent
@@ -110,7 +109,7 @@ class TestGenerator:
     def generate_test_skeleton(self, module_name: str, functions: List[FunctionInfo]) -> str:
         """Gera skeleton de teste pytest."""
         module_parts = module_name.replace(".py", "").split("/")
-        test_module_name = f"test_{module_parts[-1]}"
+        _test_module_name = f"test_{module_parts[-1]}"
         class_name = "".join(word.capitalize() for word in module_parts[-1].split("_"))
 
         # Template do arquivo de teste

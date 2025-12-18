@@ -1,0 +1,73 @@
+
+
+3int
+0.0float
+†"
+        Detecta padrÃµes alÃ©m do princÃ­pio do prazer.
+
+        Comportamentos que repetem apesar de "desprazer".
+
+        Args:
+            action_history: HistÃ³rico de aÃ§Ãµes
+
+        Returns:
+            Intensidade de compulsÃ£o Ã  repetiÃ§Ã£o
+        "str
+"division by zero"bool
+"S3518"bool
+"a"bool
+
+0intself
+î" î(&action_history
+î( î(A"|,
+*
+
+ú ú("
+builtinslen*:Bint*
+(
+
+ú ú(""	#binop <#2<:Bbool "
+
+ú ú(" *
+ú ú(
+"
+
+û û("Â+
+)
+
+ş ş($recent"#unknown-value#,
+*
+
+ÿ ÿ(!	"
+builtinslen*:Bint,
+*
+
+ÿ( ÿ(3
+"
+builtinsset*:Bset,
+*
+
+ÿ$ ÿ(4"
+builtinslen*:
+Bint4
+2
+
+ÿ ÿ(4repetitions"	#binop -#*2-:	,
+*
+
+‚# ‚(."
+builtinslen*:Bint,
+*
+
+‚ ‚(."
+#binop !=#2!=:Bbool"
+ 
+
+‚ ‚(."
+#assert#:?
+=
+
+‚ ‚(.
+compulsion"#dependent-value#*:Bfloat
+
+„ „(*=/home/fahbrain/projects/omnimind/src/lacanian/desire_graph.py

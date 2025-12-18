@@ -1,0 +1,20 @@
+
+0.0float
+2)"Calculate average task completion time."strself4$ 4(("¬6
+4
+6 6()"#!#get-field# task_completion_times:)
+'
+6 6()"
+__bool__*:BboolH)
+'
+6 6()"#unaryop !#2!:Bbool"
+6 6() *6 6(
+"
+7 7("q6
+4
+8 8(9"#!#get-field# task_completion_times:%
+#
+8 8(:"
+
+statisticsmean:
+8 8(:*I/home/fahbrain/projects/omnimind/src/scaling/intelligent_load_balancer.py

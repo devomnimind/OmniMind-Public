@@ -1,0 +1,102 @@
+
+?src.consciousness.creative_problem_solver.CreativeProblemSolverW
+M/home/fahbrain/projects/omnimind/src/consciousness/creative_problem_solver.pyt t("2*Ö
+2	z Ä(≤
+Ø
+
+Å Å(B`A
+?src.consciousness.creative_problem_solver.CreativeProblemSolver"
+max_solutions_per_problem"__id*9
+
+__unknown_file (
+
+max_solutions_per_problem¢
+ü
+
+Ç Ç(2XA
+?src.consciousness.creative_problem_solver.CreativeProblemSolver"
+novelty_threshold"__id*1
+
+__unknown_file (
+
+novelty_thresholdû
+õ
+
+É É(.VA
+?src.consciousness.creative_problem_solver.CreativeProblemSolver"
+min_feasibility"__id*/
+
+__unknown_file (
+
+min_feasibility
+
+Ü1 Ü(3
+%2"listì
+ê
+
+Ü Ü(3XA
+?src.consciousness.creative_problem_solver.CreativeProblemSolver"
+_solution_history"__id*"
+
+__unknown_file (
+
+%2
+
+á7 á(9
+%3"dictì
+ê
+
+á á(9XA
+?src.consciousness.creative_problem_solver.CreativeProblemSolver"
+_problem_patterns"__id*"
+
+__unknown_file (
+
+%3éã
+
+à& à(C
+%4*_
+
+__unknown_file (CA
+?src.consciousness.creative_problem_solver.CreativeProblemSolver2_build_domain_mappingsò
+ï
+
+à à(C]A
+?src.consciousness.creative_problem_solver.CreativeProblemSolver"
+_cross_domain_mappings"__id*"
+
+__unknown_file (
+
+%4‰·
+
+ä é(	
+%5*&
+
+__unknown_file (
+
+
+logger*C
+
+__unknown_file ('%
+#creative_problem_solver_initialized2info:.
+max_solutions
+
+max_solutions_per_problem:*
+novelty_threshold
+
+novelty_threshold*
+3*ä
+3
+creative_problem_solver.pySQ
+ê ê(
+%1"?src.consciousness.creative_problem_solver.CreativeProblemSolver"
+ê ê(
+
+%1:'
+v v(+
+max_solutions_per_problem:
+w w(&
+novelty_threshold:
+x x($
+min_feasibilityBCA
+?src.consciousness.creative_problem_solver.CreativeProblemSolverH

@@ -1,0 +1,38 @@
+
+"source"str
+	"payload"str
+"type"str
+"timestamp"str
+"signature"str
+!"Convert to dictionary."str
+"id"strself9 9("¡$
+"
+; B(	"#new-object#Bdict#
+!
+< <("#get-field# id: 
+
+< <("	#map-set#:%
+#
+= =("#get-field# type:&
+$
+= =(#	"#get-field# value: 
+
+= =(#
+"	#map-set#:	*
+(
+> >('"#get-field# timestamp: 
+
+> >('"	#map-set#:(
+&
+? ?(#"#get-field# payload: 
+
+? ?(#"	#map-set#:'
+%
+@ @(!"#get-field# source: 
+
+@ @(!"	#map-set#:*
+(
+A A('"#get-field# signature: 
+
+A A('"	#map-set#:
+; B(	*F/home/fahbrain/projects/omnimind/src/integrations/webhook_framework.py

@@ -1,0 +1,38 @@
+
+	"utility"str
+œ’"
+        AbraÃ§a contradiÃ§Ã£o - lÃ³gica paraconsistente.
+
+        Permite verdade e falsidade simultÃ¢neas.
+
+        Args:
+            problem: Problema a aceitar
+            attempts: Tentativas anteriores
+
+        Returns:
+            Abordagem paraconsistente
+        "str
+"logic_type"str
+	"acceptance"str
+"paraconsistent"str
+:1"Work with contradiction instead of resolving it"str
+*
+!"Both true and false can coexist"strself
+Ú Ú(problem
+Ú Ú(attempts
+Ú Ú(/"¦&
+$
+
+è ì(	"#new-object#Bdict"
+ 
+
+é é(*"	#map-set#:"
+ 
+
+ê ê(;"	#map-set#:	
+"
+ 
+
+ë ë(H"	#map-set#:
+
+è ì(	*</home/fahbrain/projects/omnimind/src/lacanian/godelian_ai.py

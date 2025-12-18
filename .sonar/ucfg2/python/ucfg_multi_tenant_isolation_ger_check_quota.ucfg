@@ -1,0 +1,118 @@
+
+Jsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.check_quotaR
+F/home/fahbrain/projects/omnimind/src/scaling/multi_tenant_isolation.pyÐ Ð("2*Š
+2
+Ó Ý(¬©
+
+Þ Þ(+
+%6*^
+
+__unknown_file (B@
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManager*)
+
+__unknown_file (
+
+	tenant_id2
+get_tenantB
+@
+
+Þ Þ(+
+tenant"__id*"
+
+__unknown_file (
+
+%6*
+6
+7*€
+4
+æ æ(*FD
+
+æ æ( 
+%1*%
+
+__unknown_file (	
+
+quota2	available
+
+
+æ æ(*
+%2"	__compare*"
+
+__unknown_file (
+>=*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+
+amount"
+
+æ æ(*
+
+%2*(
+5
+ä ä("
+
+ä ä(	
+
+False*ã
+6
+â â(6N
+L
+
+â â(
+%3"__id*2
+
+__unknown_file (*
+
+tenant"
+quotasT
+R
+
+â" â(5
+%4"__id*8
+
+__unknown_file (*
+
+resource_type"
+valuea_
+
+â â(6
+%5*"
+
+__unknown_file (
+
+%3*"
+
+__unknown_file (
+
+%42getA
+?
+
+â â(6
+quota"__id*"
+
+__unknown_file (
+
+%5*
+4
+5*(
+7
+à à("
+
+à à(	
+
+False:
+
+Ñ Ñ(
+	tenant_id:
+
+Ñ Ñ(9
+resource_type:
+
+Ñ; Ñ(L
+amountBB@
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManagerH

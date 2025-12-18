@@ -1,0 +1,368 @@
+
+1.0PythonFrontend"1763831830635*py2.BÃ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+%
+ src/memory/soft_hair_encoding.py9
+#
+src.memory.soft_hair_encoding11
+
+
+__future__12
+
+cmath14
+
+logging16
+
+
+math18
+
+
+statistics20
+
+dataclasses22
+
+typing24
+,
+&src.memory.soft_hair_encoding.SoftHair26
+2
+,src.memory.soft_hair_encoding.SoftHairMemory28
+;
+5src.memory.soft_hair_encoding.SoftHairMemory.__init__30
+8
+2src.memory.soft_hair_encoding.SoftHairMemory.store32
+	
+str34
+
+typing.Sequence36
+;
+5src.memory.soft_hair_encoding.SoftHairMemory.retrieve38
+H
+Bsrc.memory.soft_hair_encoding.SoftHairMemory.get_compression_stats40
+
+
+dict42
+3
+-src.memory.soft_hair_encoding.SoftHairEncoder44
+<
+6src.memory.soft_hair_encoding.SoftHairEncoder.__init__46
+
+float48
+	
+int50
+>
+8src.memory.soft_hair_encoding.SoftHairEncoder._ifftshift52
+
+
+list54
+D
+>src.memory.soft_hair_encoding.SoftHairEncoder.compute_fidelity56
+:
+4src.memory.soft_hair_encoding.SoftHairEncoder._fft2d58
+L
+Fsrc.memory.soft_hair_encoding.SoftHairEncoder._find_dominant_frequency60
+@
+:src.memory.soft_hair_encoding.SoftHairEncoder._infer_shape62
+
+tuple64
+C
+=src.memory.soft_hair_encoding.SoftHairEncoder._reshape_nested66
+E
+?src.memory.soft_hair_encoding.SoftHairEncoder._extract_metadata68
+G
+Asrc.memory.soft_hair_encoding.SoftHairEncoder._extract_soft_modes70
+<
+6src.memory.soft_hair_encoding.SoftHairEncoder._flatten72
+;
+5src.memory.soft_hair_encoding.SoftHairEncoder._ifft2d74
+=
+7src.memory.soft_hair_encoding.SoftHairEncoder._fftshift76
+D
+>src.memory.soft_hair_encoding.SoftHairEncoder._prepare_2d_grid78
+G
+Asrc.memory.soft_hair_encoding.SoftHairEncoder.encode_to_soft_hair80
+9
+3src.memory.soft_hair_encoding.SoftHairEncoder._roll82
+I
+Csrc.memory.soft_hair_encoding.SoftHairEncoder.decode_from_soft_hair84J
+
+8
+89jë
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27266 210
+
+29
+29286 210
+
+31
+31307 229
+
+33
+33327 229
+
+35
+35346
+
+37
+37366
+
+39
+39387 229
+
+41
+41407 229
+
+43
+43426
+
+45
+45446 210
+
+47
+47467 245
+
+49
+49486
+
+51
+51506
+
+53
+53527 245
+
+55
+55546
+
+57
+57567 245
+
+59
+59587 245
+
+61
+61607 245
+
+63
+63627 245
+
+65
+65646
+
+67
+67667 245
+
+69
+69687 245
+
+71
+71707 245
+
+73
+73727 245
+
+75
+75747 245
+
+77
+77767 245
+
+79
+79787 245
+
+81
+81807 245
+
+83
+83827 245
+
+85
+85847 245r²
+
+
+10131*
+8 (#
+
+10151*
+8
+ 
+(
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 ("
+
+10251*
+8 (H
+
+33273*
+8­	 ­(
+
+33354*
+8­	 ­(
+
+33374*
+8­	 ­(
+
+39354*
+8³	 ³(
+
+41433*
+8»	 »(
+
+47494*
+8"	 "(
+
+47514*
+8"	 "(
+
+53553*
+8¥	 ¥(
+
+53554*
+8¥	 ¥(
+
+57493*
+8Ž	 Ž(
+
+57374*
+8Ž	 Ž(
+
+57374*
+8Ž	 Ž(
+
+59553*
+8k	 k(
+
+59554*
+8k	 k(
+
+61493*
+8Ï	 Ï(!
+
+61554*
+8Ï	 Ï(!
+
+63653*
+8L	 L(
+
+63374*
+8L	 L(
+
+67553*
+8€	 €(
+
+67554*
+8€	 €(
+
+67654*
+8€	 €(
+
+69433*
+8¾	 ¾(
+
+69554*
+8¾	 ¾(
+
+69554*
+8¾	 ¾(
+
+71553*
+8¬	 ¬(
+
+71554*
+8¬	 ¬(
+
+73553*
+8>	 >(
+
+73374*
+8>	 >(
+
+75553*
+8{	 {(
+
+75554*
+8{	 {(
+
+77553*
+8ž	 ž(
+
+77554*
+8ž	 ž(
+
+79553*
+8d	 d(
+
+79554*
+8d	 d(
+
+81273*
+8-	 -(
+
+81374*
+8-	 -(
+
+83553*
+8Œ	 Œ(
+
+83554*
+8Œ	 Œ(
+
+83514*
+8Œ	 Œ(
+
+83514*
+8Œ	 Œ(
+
+85373*
+8Ú	 Ú(
+
+85274*
+8Ú	 Ú(

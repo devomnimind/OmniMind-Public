@@ -18,18 +18,18 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import sys
-import os
-import logging
 import json
-import time
+import logging
+import os
 import random
+import sys
+import time
 from datetime import datetime
 
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.lacanian.freudian_metapsychology import FreudianMind, Action
+from src.lacanian.freudian_metapsychology import Action, FreudianMind
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

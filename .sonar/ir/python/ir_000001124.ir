@@ -1,0 +1,80 @@
+
+8/"M√°scara parcial (mant√©m alguns caracteres)."str
+"masked"str
+
+1int
+
+2int
+	"*"strself
+Ä Ä(data
+Ä Ä("
+keep_chars
+Ä$ Ä(7"ß,
+*
+
+Ç Ç("
+builtinslen*:Bint'
+%
+
+Ç Ç(&"	#binop *#*2*:,
+*
+
+Ç Ç(&"
+#binop <=#2<=:Bbool "
+
+Ç Ç(& *
+Ç Ç(
+"k,
+*
+
+É É("
+"
+builtinslen*:Bint'
+%
+
+É É(""	#binop *#*2*:	
+
+
+É É(""û#
+!
+
+Ü Ü("#unknown-value#,
+*
+
+Ü' Ü(0"
+builtinslen*:Bint'
+%
+
+Ü3 Ü(A"	#binop *#*2*:'
+%
+
+Ü' Ü(A"	#binop -#*2-:'
+%
+
+Ü  Ü(B"	#binop *#*2*:	#
+!
+
+ÜE Ü(W"#unknown-value#%
+#
+
+Ü Ü(W"	#binop +#2+:#
+!
+
+Ö á(	masked"#id#:(
+&
+
+à à("#get-field# stats:$
+"
+
+à à("#array-read#:'
+%
+
+à à(!"	#binop +#*2+:(
+&
+
+à à("#get-field# stats:&
+$
+
+à à(!"#array-write#:
+
+â â(*H/home/fahbrain/projects/omnimind/src/integrations/mcp_data_protection.py

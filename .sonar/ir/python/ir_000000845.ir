@@ -1,0 +1,12 @@
+
+/&"Get total number of actions in plan."strself
+Ò Ò("l*
+(
+
+Ô Ô("#get-field# actions:,
+*
+
+Ô Ô( "
+builtinslen*:Bint
+
+Ô Ô( *H/home/fahbrain/projects/omnimind/src/multimodal/embodied_intelligence.py

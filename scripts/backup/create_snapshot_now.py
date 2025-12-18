@@ -12,7 +12,6 @@ from pathlib import Path
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from src.backup.consciousness_snapshot import ConsciousnessSnapshotManager, SnapshotTag
 from src.consciousness.integration_loop import IntegrationLoop
 
 
@@ -21,12 +20,8 @@ async def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="Create consciousness snapshot")
-    parser.add_argument(
-        "--tag", type=str, help="Tag for snapshot (e.g., 'experimento_001')"
-    )
-    parser.add_argument(
-        "--description", type=str, help="Description of snapshot"
-    )
+    parser.add_argument("--tag", type=str, help="Tag for snapshot (e.g., 'experimento_001')")
+    parser.add_argument("--description", type=str, help="Description of snapshot")
     parser.add_argument(
         "--no-loop",
         action="store_true",
@@ -47,9 +42,7 @@ async def main():
 
     # Create snapshot
     print("Creating consciousness snapshot...")
-    snapshot_id = loop.create_full_snapshot(
-        tag=args.tag, description=args.description
-    )
+    snapshot_id = loop.create_full_snapshot(tag=args.tag, description=args.description)
 
     print(f"\n✅ Snapshot created successfully!")
     print(f"Snapshot ID: {snapshot_id}")
@@ -63,4 +56,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-

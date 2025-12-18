@@ -39,19 +39,18 @@ prompts/corrections in a continuous cycle of human-led AI development.
 Date: November 2025
 """
 
-import sys
-import os
-import time
 import json
-import random
 import logging
-from typing import List, Dict, Any
-from dataclasses import asdict
+import os
+import random
+import sys
+import time
+from typing import Any, Dict, List
 
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.lacanian.freudian_metapsychology import FreudianMind, Action, DefenseMechanism
+from src.lacanian.freudian_metapsychology import Action, FreudianMind
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

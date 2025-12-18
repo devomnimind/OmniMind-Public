@@ -1,0 +1,212 @@
+
+7src.scaling.node_failure_recovery.RaftNode.append_entryQ
+E/home/fahbrain/projects/omnimind/src/scaling/node_failure_recovery.pyÏ Ï("2*‘
+2
+Ð ×(q
+o
+
+Ø Ø(
+%14"__id*T
+
+__unknown_file (8*6,
+*src.scaling.node_failure_recovery.RaftNode"
+roles
+q
+
+Ø Ø('
+%15"__id*V
+
+__unknown_file (:*8,
+*src.scaling.node_failure_recovery.NodeRole"
+LEADER
+Œ
+
+Ø Ø('
+%16"	__compare*"
+
+__unknown_file (
+!=*#
+
+__unknown_file (
+
+%14*#
+
+__unknown_file (
+
+%15*
+4
+5*û
+4
+Ý Ý($q
+o
+
+Ý Ý(
+%1"__id*U
+
+__unknown_file (9*7,
+*src.scaling.node_failure_recovery.RaftNode"
+stateG
+E
+
+Ý Ý(
+%2"__id*+
+
+__unknown_file (*
+
+%1"
+logge
+
+Ý Ý($
+%3*"
+
+__unknown_file (
+
+%2*%
+
+__unknown_file (	
+
+entry2appends
+q
+
+ß ß("
+%4"__id*W
+
+__unknown_file (;*9,
+*src.scaling.node_failure_recovery.RaftNode"	
+node_idL
+J
+
+ß4 ß(?
+%5"__id*0
+
+__unknown_file (*
+
+entry"
+indexK
+I
+
+à à(
+%6"__id*/
+
+__unknown_file (*
+
+entry"
+termQ
+O
+
+à( à(8
+%7"__id*5
+
+__unknown_file (*
+
+entry"
+
+entry_typeI
+G
+
+à( à(>
+%8"__id*-
+
+__unknown_file (*
+
+%7"
+value•
+’
+
+ß à(A
+%9"__concat*
+
+ß ß(	
+Leader *
+
+ß ß("
+
+%4*"
+
+ß# ß(3
+ appended entry *
+
+ß4 ß(?
+
+%5*
+
+ß@ ß(A
+ *
+
+à à(
+
+(term=*
+
+à à(
+
+%6*
+
+à  à('	
+, type=*
+
+à( à(>
+
+%8*
+
+à? à(@
+)ge
+
+Þ á(	
+%10*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%92info"
+
+ä ä(
+
+True*•
+5
+Ù Ù(Ut
+r
+
+Ù# Ù(/
+%11"__id*W
+
+__unknown_file (;*9,
+*src.scaling.node_failure_recovery.RaftNode"	
+node_id‡
+„
+
+Ù Ù(T
+%12"__concat*
+
+Ù Ù("	
+Node *
+
+Ù# Ù(/
+
+%11*5
+
+Ù0 Ù(S'%
+# is not leader, cannot append entryki
+
+Ù Ù(U
+%13*&
+
+__unknown_file (
+
+
+logger*#
+
+__unknown_file (
+
+%122warning"
+
+Ú Ú(	
+
+False:
+
+Ï! Ï(0
+entryB.,
+*src.scaling.node_failure_recovery.RaftNodeH

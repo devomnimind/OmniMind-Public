@@ -14,10 +14,10 @@ Data: 2025-12-07
 
 import json
 import re
-from pathlib import Path
-from typing import Dict, List, Tuple, Any
+from dataclasses import dataclass
 from datetime import datetime
-from dataclasses import dataclass, asdict
+from pathlib import Path
+from typing import Dict, List, Tuple
 
 # Configuração
 PROJECT_ROOT = Path(__file__).parent.parent.parent
@@ -29,6 +29,7 @@ TESTS_DIR = PROJECT_ROOT / "tests"
 @dataclass
 class DocumentStatus:
     """Status de um documento."""
+
     path: Path
     title: str
     status: str  # "resolvido", "ativo", "pendente"
@@ -40,6 +41,7 @@ class DocumentStatus:
 @dataclass
 class TestStatus:
     """Status de um teste."""
+
     path: Path
     name: str
     needs_update: bool
@@ -54,22 +56,22 @@ def analyze_document_status(file_path: Path) -> DocumentStatus:
 
         # Detectar status por padrões
         is_resolved = (
-            "✅ 100% COMPLETA" in content or
-            "✅ COMPLETA" in content or
-            "✅ RESOLVIDO" in content or
-            "Status: ✅" in content or
-            "Status: ✅ COMPLETA" in content or
-            "Status: ✅ RESOLVIDO" in content or
-            "**Status**: ✅" in content or
-            "**Status**: ✅ COMPLETA" in content or
-            re.search(r"✅.*100%", content) is not None
+            "✅ 100% COMPLETA" in content
+            or "✅ COMPLETA" in content
+            or "✅ RESOLVIDO" in content
+            or "Status: ✅" in content
+            or "Status: ✅ COMPLETA" in content
+            or "Status: ✅ RESOLVIDO" in content
+            or "**Status**: ✅" in content
+            or "**Status**: ✅ COMPLETA" in content
+            or re.search(r"✅.*100%", content) is not None
         )
 
         is_pending = (
-            "⏳ PENDENTE" in content or
-            "Status: ⏳" in content or
-            "**Status**: ⏳" in content or
-            "PENDENTE" in content.upper()
+            "⏳ PENDENTE" in content
+            or "Status: ⏳" in content
+            or "**Status**: ⏳" in content
+            or "PENDENTE" in content.upper()
         )
 
         # Extrair título
@@ -111,14 +113,11 @@ def analyze_document_status(file_path: Path) -> DocumentStatus:
             status=status,
             resolved_date=resolved_date,
             category=category,
-            notes=""
+            notes="",
         )
     except Exception as e:
         return DocumentStatus(
-            path=file_path,
-            title=file_path.stem,
-            status="erro",
-            notes=f"Erro ao analisar: {e}"
+            path=file_path, title=file_path.stem, status="erro", notes=f"Erro ao analisar: {e}"
         )
 
 
@@ -152,14 +151,11 @@ def analyze_test_status(file_path: Path) -> TestStatus:
             name=file_path.stem,
             needs_update=needs_update,
             reason=reason,
-            related_implementation=related_implementation
+            related_implementation=related_implementation,
         )
     except Exception as e:
         return TestStatus(
-            path=file_path,
-            name=file_path.stem,
-            needs_update=False,
-            reason=f"Erro ao analisar: {e}"
+            path=file_path, name=file_path.stem, needs_update=False, reason=f"Erro ao analisar: {e}"
         )
 
 
@@ -232,9 +228,7 @@ def organize_archive(documents: List[DocumentStatus]) -> List[Path]:
 
 
 def generate_report(
-    documents: List[DocumentStatus],
-    tests: List[TestStatus],
-    archive_list: List[Path]
+    documents: List[DocumentStatus], tests: List[TestStatus], archive_list: List[Path]
 ) -> str:
     """Gera relatório de varredura."""
     report = []
@@ -261,7 +255,9 @@ def generate_report(
     report.append(f"- **Documentos Ativos:** {doc_stats.get('ativo', 0)}")
     report.append(f"- **Documentos Pendentes:** {doc_stats.get('pendente', 0)}")
     report.append(f"- **Testes OK:** {test_stats.get('ok', 0)}")
-    report.append(f"- **Testes que Precisam Atualização:** {test_stats.get('precisa_atualizacao', 0)}")
+    report.append(
+        f"- **Testes que Precisam Atualização:** {test_stats.get('precisa_atualizacao', 0)}"
+    )
     report.append(f"- **Documentos para Arquivar:** {len(archive_list)}")
     report.append("")
 
@@ -294,7 +290,9 @@ def generate_report(
     # Pendências ativas
     report.append("## ⏳ PENDÊNCIAS ATIVAS")
     report.append("")
-    pending_docs = [d for d in documents if d.status == "pendente" and "PENDENCIAS" in d.path.name.upper()]
+    pending_docs = [
+        d for d in documents if d.status == "pendente" and "PENDENCIAS" in d.path.name.upper()
+    ]
     if pending_docs:
         for doc in pending_docs:
             rel_path = doc.path.relative_to(PROJECT_ROOT)
@@ -350,7 +348,7 @@ def main():
                 "status": d.status,
                 "resolved_date": d.resolved_date,
                 "category": d.category,
-                "notes": d.notes
+                "notes": d.notes,
             }
             for d in documents
         ],
@@ -360,15 +358,12 @@ def main():
                 "name": t.name,
                 "needs_update": t.needs_update,
                 "reason": t.reason,
-                "related_implementation": t.related_implementation
+                "related_implementation": t.related_implementation,
             }
             for t in tests
         ],
         "archive_list": [str(p.relative_to(PROJECT_ROOT)) for p in archive_list],
-        "stats": {
-            "documents": doc_stats,
-            "tests": test_stats
-        }
+        "stats": {"documents": doc_stats, "tests": test_stats},
     }
     json_path.write_text(json.dumps(json_data, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"   JSON detalhado salvo em: {json_path}")
@@ -378,4 +373,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

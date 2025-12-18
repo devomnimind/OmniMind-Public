@@ -1,0 +1,47 @@
+
+"value"str
+
+"metadata"str
+
+"children"str
+"name"str
+˜Ž"Convert to dictionary for visualization.
+
+        Returns:
+            Dictionary representation suitable for flame graph libraries
+        "strself] ]("µ,
+*
+c! f(	result"#new-object#Bdict%
+#
+d d("#get-field# name: 
+
+d d("	#map-set#:&
+$
+e e("#get-field# value: 
+
+e e(	"	#map-set#:)
+'
+h h(
+"#get-field# metadata:)
+'
+h h("
+__bool__*:
+BboolH"
+h h( *h h(
+"Y)
+'
+i! i(."#get-field# metadata:$
+"
+i i(."#array-write#:"v)
+'
+k k("#get-field# children:)
+'
+k k("
+__bool__*:BboolH"
+k k( *k k(
+"[+
+)
+l! l(M"?python-unknown?:Blist$
+"
+l l(M"#array-write#:"
+n n(*E/home/fahbrain/projects/omnimind/src/observability/profiling_tools.py

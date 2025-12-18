@@ -138,7 +138,6 @@ class IITResult:
 
     def __post_init__(self) -> None:
         """Ensure fields are initialized."""
-        pass
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization."""
@@ -390,7 +389,6 @@ class PhiCalculator:
                             if torch.cuda.is_available():
                                 torch.cuda.empty_cache()
                             # Fallback: mantém phi sem penalização
-                            pass
             except (RuntimeError, torch.cuda.OutOfMemoryError):
                 # Limpar cache de GPU se disponível
                 if torch.cuda.is_available():

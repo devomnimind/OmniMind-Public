@@ -1,0 +1,67 @@
+
+/src.multimodal.vision_processor.VisionProcessorO
+C/home/fahbrain/projects/omnimind/src/multimodal/vision_processor.pyÑ Ñ("2*Ã
+2
+Ö Û(š
+—
+
+Ü Ü(:L1
+/src.multimodal.vision_processor.VisionProcessor"
+max_objects_per_image"__id*5
+
+__unknown_file (
+
+max_objects_per_image˜
+•
+
+Ý Ý(8K1
+/src.multimodal.vision_processor.VisionProcessor"
+confidence_threshold"__id*4
+
+__unknown_file (
+
+confidence_threshold
+
+Þ; Þ(=
+%2"dictƒ
+€
+
+Þ Þ(=H1
+/src.multimodal.vision_processor.VisionProcessor"
+_processed_images"__id*"
+
+__unknown_file (
+
+%2ÒÏ
+
+ß ã(	
+%3*&
+
+__unknown_file (
+
+
+logger*<
+
+__unknown_file ( 
+vision_processor_initialized2info:(
+max_objects
+
+max_objects_per_image:%
+	threshold
+
+confidence_threshold*
+3*s
+3
+vision_processor.pyCA
+å å(
+%1"/src.multimodal.vision_processor.VisionProcessor"
+å å(
+
+%1:%
+
+Ó Ó('
+max_objects_per_image:$
+
+Ô Ô()
+confidence_thresholdB31
+/src.multimodal.vision_processor.VisionProcessorH

@@ -1,0 +1,32 @@
+
+ûî"
+        Retorna regras de infer√™ncia b√°sicas.
+
+        Regras implementadas:
+        - Modus Ponens simplificado
+        - Conjun√ß√£o
+        "str
+
+0intselfF F(list"Ñ!
+
+U U( "#unknown-value#(
+&
+O U(%closure"#new-object#&
+$
+O U("#set-field# self:+
+)
+O U("?python-partial-apply?:'
+%
+U U(!"#unknown-value#Blist&
+$
+U U(!	"
+#is-exact#:Bbool
+
+U U(!
+"
+#assume#:	8
+6
+U U(!"#set-field# __collection_size:Bint&
+$
+U U(!"#array-add-last#:
+U U(!*</home/fahbrain/projects/omnimind/src/lacanian/godelian_ai.py

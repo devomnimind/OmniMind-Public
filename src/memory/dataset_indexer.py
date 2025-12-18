@@ -22,8 +22,6 @@ from sentence_transformers import SentenceTransformer
 logger = logging.getLogger(__name__)
 
 try:
-    import pandas as pd  # type: ignore[attr-defined]
-
     from datasets import load_dataset, load_from_disk  # type: ignore[attr-defined]
 
     DATASETS_AVAILABLE = True
@@ -37,10 +35,7 @@ except ImportError:
     def load_dataset(*args: Any, **kwargs: Any) -> Any:  # type: ignore[misc]
         raise ImportError("datasets library not available")
 
-    def pd_func(*args: Any, **kwargs: Any) -> Any:  # type: ignore[misc]
-        raise ImportError("pandas library not available")
-
-    pd = pd_func  # type: ignore[assignment] # For backward compatibility
+    logger.warning("HuggingFace datasets não disponível. Indexação de .arrow limitada.")
 
 
 @dataclass
@@ -104,27 +99,43 @@ class DatasetIndexer:
 
             device = get_sentence_transformer_device()
             logger.info(f"Carregando modelo de embeddings: {resolved_model_name} (device={device})")
-            self.embedding_model = SentenceTransformer(resolved_model_name, device=device)
+
+            # CORREÇÃO (2025-12-17): Carregar SEMPRE em CPU primeiro para evitar meta tensor
+            embedding_model = SentenceTransformer(resolved_model_name, device="cpu")
 
             # Garantir que modelo não está em meta device
-            ensure_tensor_on_real_device(self.embedding_model)
+            ensure_tensor_on_real_device(embedding_model)
 
+            # Se device desejado não é CPU, tentar mover
+            if device != "cpu":
+                try:
+                    # Verificação explícita de meta tensors
+                    has_meta_tensors = any(
+                        p.device.type == "meta" for p in embedding_model.parameters()
+                    )
+
+                    if has_meta_tensors:
+                        logger.warning("Meta tensors detectados, usando to_empty()")
+                        embedding_model = embedding_model.to_empty(device=device)
+                    else:
+                        embedding_model = embedding_model.to(device)
+
+                    logger.debug(f"✓ Modelo movido para {device}")
+                except Exception as e:
+                    logger.warning(f"Erro ao mover para {device}: {e}, mantendo em CPU")
+                    # Se falhou ao mover (ex: meta tensor não resolvido), tenta recuperar em CPU
+                    if "meta" in str(e).lower():
+                        try:
+                            embedding_model = embedding_model.to_empty(device="cpu")
+                        except Exception:
+                            pass
+                    else:
+                        embedding_model = embedding_model.to("cpu")
+
+            self.embedding_model = embedding_model
             logger.info("Modelo carregado e validado no device correto")
 
-        # Get embedding dimension - try method first, fallback to 384
-        try:
-            # Tipagem: SentenceTransformer pode ter esse método em runtime
-            get_dim_fn = getattr(self.embedding_model, "get_sentence_embedding_dimension", None)
-            if get_dim_fn and callable(get_dim_fn):
-                dim_val = get_dim_fn()
-                if dim_val and isinstance(dim_val, (int, str, float)):
-                    self.embedding_dim = int(dim_val)
-                else:
-                    self.embedding_dim = 384
-            else:
-                self.embedding_dim = 384
-        except (TypeError, AttributeError, ValueError):
-            self.embedding_dim = 384
+        self.embedding_dim = int(self.embedding_model.get_sentence_embedding_dimension() or 384)
         logger.info(f"Dimensão do embedding: {self.embedding_dim}")
 
         # Inicializar Qdrant
@@ -138,13 +149,6 @@ class DatasetIndexer:
             "dbpedia_ontology": "ontology_knowledge_kb",
             "turing_reasoning": "reasoning_patterns_kb",
             "infllm_v2_data": "training_examples_kb",
-            "gsm8k_gpqa_benchmark": "benchmark_qa_kb",
-            "arxiv_papers_parquet": "arxiv_papers_kb",
-            "turing_open_reasoning_json": "open_reasoning_kb",
-            "arxiv_summarization": "arxiv_summarization_kb",
-            "squad_qa": "squad_qa_kb",
-            "pubmed_rct20k": "pubmed_kb",
-            "gene_ontology": "gene_ontology_kb",
         }
 
         # Status de indexação
@@ -166,18 +170,14 @@ class DatasetIndexer:
 
         if "arxiv" in dataset_name or "paper" in dataset_name:
             return "scientific_papers"
-        elif "qa" in dataset_name or "qasper" in dataset_name or "squad" in dataset_name:
+        elif "qa" in dataset_name or "qasper" in dataset_name:
             return "qa"
-        elif "gsm8k" in dataset_name or "gpqa" in dataset_name or "benchmark" in dataset_name:
-            return "benchmark_qa"
         elif "code" in dataset_name:
             return "code_examples"
-        elif "ontology" in dataset_name or "dbpedia" in dataset_name or "gene" in dataset_name:
+        elif "ontology" in dataset_name or "dbpedia" in dataset_name:
             return "ontology"
         elif "reasoning" in dataset_name or "turing" in dataset_name:
             return "reasoning"
-        elif "pubmed" in dataset_name or "medical" in dataset_name:
-            return "medical"
         elif "train" in dataset_name or "infllm" in dataset_name:
             return "training_examples"
         else:
@@ -233,56 +233,6 @@ class DatasetIndexer:
                             chunk_type="qa_pair",
                         )
                     )
-
-        elif dataset_type == "benchmark_qa":
-            # Chunking para datasets de benchmark como GSM8K/GPQA
-            # Procurar por padrões de pergunta/resposta
-            lines = content.split("\n")
-            current_question = ""
-            current_answer = ""
-            in_question = False
-            in_answer = False
-
-            for line in lines:
-                line = line.strip()
-                if line.startswith("Question:") or line.startswith("Q:"):
-                    if current_question and current_answer:
-                        # Salvar chunk anterior
-                        chunk_content = f"Question: {current_question}\nAnswer: {current_answer}"
-                        chunks.append(
-                            DatasetChunk(
-                                content=chunk_content,
-                                source="benchmark_qa",
-                                chunk_id=f"benchmark_qa_{len(chunks)}",
-                                metadata={"question": current_question, "answer": current_answer},
-                                chunk_type="benchmark_qa_pair",
-                            )
-                        )
-                    current_question = line.replace("Question:", "").replace("Q:", "").strip()
-                    current_answer = ""
-                    in_question = True
-                    in_answer = False
-                elif line.startswith("Answer:") or line.startswith("A:"):
-                    current_answer = line.replace("Answer:", "").replace("A:", "").strip()
-                    in_answer = True
-                    in_question = False
-                elif in_question and line:
-                    current_question += " " + line
-                elif in_answer and line:
-                    current_answer += " " + line
-
-            # Último chunk
-            if current_question and current_answer:
-                chunk_content = f"Question: {current_question}\nAnswer: {current_answer}"
-                chunks.append(
-                    DatasetChunk(
-                        content=chunk_content,
-                        source="benchmark_qa",
-                        chunk_id=f"benchmark_qa_{len(chunks)}",
-                        metadata={"question": current_question, "answer": current_answer},
-                        chunk_type="benchmark_qa_pair",
-                    )
-                )
 
         elif dataset_type == "code_examples":
             # Chunking por exemplo de código
@@ -417,22 +367,8 @@ class DatasetIndexer:
                     dataset = load_from_disk(str(dataset_path_obj))
                     # Converter dataset para texto (pegar primeiras colunas de texto)
                     content_parts = []
-                    # Para datasets do HuggingFace, iterar sobre os splits disponíveis
-                    if hasattr(dataset, "keys") and callable(getattr(dataset, "keys", None)):
-                        split_names = list(dataset.keys())
-                    else:
-                        # Dataset único - tratar como se fosse um split 'train'
-                        split_names = ["train"]
-
-                    num_samples = 0  # Inicializar para evitar unbound variable
-                    for split_name in split_names:
-                        if hasattr(dataset, "keys") and split_name in dataset:
-                            # DatasetDict - acessar split específico
-                            split_data = dataset[split_name]
-                        else:
-                            # Dataset único - usar o dataset diretamente
-                            split_data = dataset
-
+                    for split_name in dataset.keys():
+                        split_data = dataset[split_name]
                         # Pegar primeiras 1000 amostras para não sobrecarregar
                         num_samples = min(1000, len(split_data))
                         for i in range(num_samples):
@@ -450,8 +386,8 @@ class DatasetIndexer:
                                 content_parts.append(str(sample))
                     content = "\n\n".join(content_parts)
                     logger.info(
-                        f"Dataset HuggingFace carregado: {len(split_names)} splits, "
-                        f"usando {num_samples} amostras por split para indexação"
+                        f"Dataset HuggingFace carregado: {len(split_data)} amostras "
+                        f"(usando {num_samples} para indexação)"
                     )
                 except Exception as e:
                     logger.error(f"Erro ao carregar dataset HuggingFace {dataset_path}: {e}")
@@ -516,7 +452,7 @@ class DatasetIndexer:
                 # Gerar embedding
                 embedding = self.embedding_model.encode(
                     chunk.content, normalize_embeddings=True
-                ).tolist()  # type: ignore[attr-defined]
+                ).tolist()
 
                 # Preparar payload
                 payload = {

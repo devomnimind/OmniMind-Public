@@ -1,0 +1,283 @@
+
+1.0PythonFrontend"1763831825526*py2.Bâ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+)
+$src/motivation/hawking_motivation.py9
+'
+!src.motivation.hawking_motivation11
+
+
+__future__12
+
+logging14
+
+random16
+
+dataclasses18
+
+datetime20
+
+typing22
+8
+2src.motivation.hawking_motivation.EvaporationEvent24
+5
+/src.motivation.hawking_motivation.KnowledgeItem26
+C
+=src.motivation.hawking_motivation.KnowledgeItem.__post_init__28
+?
+9src.motivation.hawking_motivation.HawkingMotivationEngine30
+O
+Isrc.motivation.hawking_motivation.HawkingMotivationEngine._calculate_rate32
+
+float34
+^
+Xsrc.motivation.hawking_motivation.HawkingMotivationEngine._identify_at_risk_correlations36
+
+
+list38
+O
+Isrc.motivation.hawking_motivation.HawkingMotivationEngine.add_correlation40
+	
+str42
+
+
+bool44
+N
+Hsrc.motivation.hawking_motivation.HawkingMotivationEngine.get_statistics46
+
+
+dict48
+Q
+Ksrc.motivation.hawking_motivation.HawkingMotivationEngine._generate_urgency50
+M
+Gsrc.motivation.hawking_motivation.HawkingMotivationEngine.use_knowledge52
+Z
+Tsrc.motivation.hawking_motivation.HawkingMotivationEngine.evaporate_unused_knowledge54
+
+tuple56
+T
+Nsrc.motivation.hawking_motivation.HawkingMotivationEngine.get_knowledge_status58
+R
+Lsrc.motivation.hawking_motivation.HawkingMotivationEngine.adjust_temperature60
+M
+Gsrc.motivation.hawking_motivation.HawkingMotivationEngine.add_knowledge62
+H
+Bsrc.motivation.hawking_motivation.HawkingMotivationEngine.__init__64
+U
+Osrc.motivation.hawking_motivation.HawkingMotivationEngine._extract_correlations66
+W
+Qsrc.motivation.hawking_motivation.HawkingMotivationEngine._compute_urgency_factor68
+T
+Nsrc.motivation.hawking_motivation.HawkingMotivationEngine._compute_frustration70
+
+datetime.timedelta72J
+
+8
+89j€
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25246 210
+
+27
+27266 210
+
+29
+29287 227
+
+31
+31306 210
+
+33
+33327 231
+
+35
+35346
+
+37
+37367 231
+
+39
+39386
+
+41
+41407 231
+
+43
+43426
+
+45
+45446
+
+47
+47467 231
+
+49
+49486
+
+51
+51507 231
+
+53
+53527 231
+
+55
+55547 231
+
+57
+57566
+
+59
+59587 231
+
+61
+61607 231
+
+63
+63627 231
+
+65
+65647 231
+
+67
+67667 231
+
+69
+69687 231
+
+71
+71707 231
+
+73
+73726rÓ
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 ()
+
+10211*
+8 (3
+
+10231*
+8 (4
+
+33353*
+8Å	 Å(
+
+37393*
+8â	 â('
+
+41434*
+8º	 º(
+
+41434*
+8º	 º(
+
+41454*
+8º	 º(
+
+47493*
+8´	 ´(
+
+51353*
+8’	 ’(
+
+51394*
+8’	 ’(
+
+53453*
+8¶	 ¶(
+
+53434*
+8¶	 ¶(
+
+55573*
+8”	 ”(#
+
+59434*
+8…	 …(
+
+61354*
+8ú	 ú(
+
+63434*
+8ì	 ì(
+
+63434*
+8ì	 ì(
+
+63354*
+8ì	 ì(
+
+65354*
+8a	 a(
+
+65354*
+8a	 a(
+
+65354*
+8a	 a(
+
+67393*
+8£	 £(
+
+67274*
+8£	 £(
+
+69353*
+8Ô	 Ô( 
+
+69394*
+8Ô	 Ô( 
+
+71353*
+8∏	 ∏(
+
+71274*
+8∏	 ∏(
+
+71734*
+8∏	 ∏(

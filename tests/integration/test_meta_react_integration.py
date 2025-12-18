@@ -14,6 +14,7 @@ import pytest
 from src.agents.orchestrator_agent import OrchestratorAgent
 
 
+@pytest.mark.heavy
 class TestMetaReActIntegration:
     """Testa integração Meta-ReAct no OrchestratorAgent."""
 

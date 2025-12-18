@@ -1,0 +1,32 @@
+
+
+"log"str
+"last_applied"str
+"commit_index"str
+"voted_for"str
+"current_term"str
+!"Convert to dictionary."strselfG G("Æ$
+"
+I O(	"#new-object#Bdict-
++
+J J(-"#get-field# current_term: 
+
+J J(-"	#map-set#:*
+(
+K K('"#get-field# voted_for: 
+
+K K('	"	#map-set#:+
+)
+L L(:"?python-unknown?:Blist 
+
+L L(:"	#map-set#:
+-
++
+M M(-"#get-field# commit_index: 
+
+M M(-"	#map-set#:-
++
+N N(-"#get-field# last_applied: 
+
+N N(-"	#map-set#:
+I O(	*E/home/fahbrain/projects/omnimind/src/scaling/node_failure_recovery.py

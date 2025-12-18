@@ -1,0 +1,7 @@
+organization=devomnimind
+projectKey=devomnimind_OmniMind
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.76733
+dashboardUrl=https://sonarcloud.io/dashboard?id=devomnimind_OmniMind
+ceTaskId=AZqskuG7N6OphBd3mtg2
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZqskuG7N6OphBd3mtg2

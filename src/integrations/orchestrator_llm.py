@@ -7,7 +7,6 @@ import time
 from typing import Optional
 
 from .llm_router import (
-    LLMConfig,
     LLMModelTier,
     LLMProvider,
     LLMResponse,
@@ -85,7 +84,6 @@ class OrchestratorLLMStrategy:
             LLMResponse if successful, None on timeout/error
         """
         try:
-            import ollama
             from ollama import Client
 
             # Create sync client (no asyncio)

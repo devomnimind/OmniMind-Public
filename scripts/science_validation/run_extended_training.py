@@ -24,8 +24,7 @@ import logging
 import statistics
 import sys
 import time
-from dataclasses import dataclass, asdict
-from datetime import datetime
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 

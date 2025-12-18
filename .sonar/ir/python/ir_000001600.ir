@@ -1,0 +1,46 @@
+
+"iteration"str
+"max_iterations"str
+†}"
+        Decide if agent should continue or terminate.
+        âœ… FIX: Only check flags, don't modify state here.
+        "str
+
+"completed"str
+	"end"str
+
+"continue"strself
+Æ Æ(state
+Æ Æ(0"œ$
+"
+
+Ì Ì("#array-read#:$
+"
+
+Ì! Ì(8"#array-read#:,
+*
+
+Ì Ì(8"
+#binop >=#2>=:Bbool "
+
+Ì Ì(8 *
+Ì Ì(
+"
+
+Í Í(	"w$
+"
+
+Ð Ð("#array-read#:
++
+)
+
+Ð Ð("
+__bool__*:BboolH "
+
+Ð Ð( *
+Ð Ð(
+"
+
+Ñ Ñ(	"
+
+Ó Ó(*:/home/fahbrain/projects/omnimind/src/agents/react_agent.py

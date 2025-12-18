@@ -1,0 +1,338 @@
+
+1.0PythonFrontend"1763831844881*py2.B†
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+*
+%src/integrations/webhook_framework.py9
+(
+"src.integrations.webhook_framework11
+
+
+__future__12
+
+hashlib14
+
+
+hmac16
+
+
+json18
+
+
+time20
+
+urllib.error22
+
+urllib.request24
+
+dataclasses26
+
+
+enum28
+
+typing30
+
+
+uuid32
+8
+2src.integrations.webhook_framework.WebhookReceiver34
+A
+;src.integrations.webhook_framework.WebhookReceiver.on_event36
+9
+3src.integrations.webhook_framework.WebhookEventType38
+H
+Bsrc.integrations.webhook_framework.WebhookReceiver._dispatch_event40
+5
+/src.integrations.webhook_framework.WebhookEvent42
+H
+Bsrc.integrations.webhook_framework.WebhookReceiver.process_webhook44
+
+
+dict46
+	
+str48
+A
+;src.integrations.webhook_framework.WebhookReceiver.__init__50
+6
+0src.integrations.webhook_framework.WebhookConfig52
+L
+Fsrc.integrations.webhook_framework.WebhookReceiver._validate_signature54
+
+
+bool56
+L
+Fsrc.integrations.webhook_framework.WebhookReceiver._generate_signature58
+6
+0src.integrations.webhook_framework.WebhookSender60
+?
+9src.integrations.webhook_framework.WebhookSender.__init__62
+D
+>src.integrations.webhook_framework.WebhookSender._make_request64
+C
+=src.integrations.webhook_framework.WebhookSender.send_webhook66
+	
+int68
+
+float70
+@
+:src.integrations.webhook_framework.WebhookSender.get_stats72
+J
+Dsrc.integrations.webhook_framework.WebhookSender._generate_signature74
+5
+/src.integrations.webhook_framework.WebhookError76
+
+	Exception78
+
+	enum.Enum80
+?
+9src.integrations.webhook_framework.WebhookEvent.from_dict82
+=
+7src.integrations.webhook_framework.WebhookEvent.to_dict84J
+
+8
+89j”
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33325
+
+35
+35346 210
+
+37
+37367 235
+
+39
+39386 210
+
+41
+41407 235
+
+43
+43426 210
+
+45
+45447 235
+
+47
+47466
+
+49
+49486
+
+51
+51507 235
+
+53
+53526 210
+
+55
+55547 235
+
+57
+57566
+
+59
+59587 235
+
+61
+61606 210
+
+63
+63627 261
+
+65
+65647 261
+
+67
+67667 261
+
+69
+69686
+
+71
+71706
+
+73
+73727 261
+
+75
+75747 261
+
+77
+77766 210
+
+79
+79786
+
+81
+81806
+
+83
+83827 243
+
+85
+85847 243r§
+
+10131*
+8	 	(#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (
+
+10251*
+8 (
+
+10271*
+8 ()
+
+10291*
+8 (
+
+10311*
+8 (7
+
+10331*
+8 (
+
+37394*
+8ç	 ç(
+
+41434*
+8˙	 ˙(
+
+45473*
+8§	 §(
+
+45494*
+8§	 §(
+
+51534*
+8}	 }(
+
+55573*
+8⁄	 ⁄(
+
+55494*
+8⁄	 ⁄(
+
+55494*
+8⁄	 ⁄(
+
+59493*
+8Î	 Î(
+
+59494*
+8Î	 Î(
+
+63534*
+8£	 £(
+
+65473*
+8˛	 ˛(
+
+65494*
+8˛	 ˛(
+
+65494*
+8˛	 ˛(
+
+65474*
+8˛	 ˛(
+
+67473*
+8Ø	 Ø(
+
+67494*
+8Ø	 Ø(
+
+67434*
+8Ø	 Ø(
+
+67694*
+8Ø	 Ø(
+
+67714*
+8Ø	 Ø(
+
+73473*
+8∂	 ∂(
+
+75493*
+8§	 §(
+
+75494*
+8§	 §(
+
+77792*
+8« «(
+
+39812*
+8 (
+
+83433*
+8E	 E(
+
+83474*
+8E	 E(
+
+85473*
+89	 9(

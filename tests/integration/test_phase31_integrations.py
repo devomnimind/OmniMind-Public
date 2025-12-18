@@ -21,6 +21,7 @@ from src.memory.semantic_cache import SemanticCacheLayer
 from src.orchestrator.rag_fallback import RAGFallbackSystem
 
 
+@pytest.mark.heavy
 class TestSemanticCacheIntegration:
     """Testa integração do SemanticCache no OrchestratorAgent."""
 
@@ -53,8 +54,7 @@ class TestSemanticCacheIntegration:
             == orchestrator.rag_fallback.retrieval_system.embedding_model
         )
 
-    @patch("src.agents.orchestrator_agent.SemanticCacheLayer.get_or_compute")
-    def test_semantic_cache_used_in_subtask_execution(self, mock_get_or_compute):
+    def test_semantic_cache_used_in_subtask_execution(self):
         """Testa se SemanticCache é usado na execução de subtarefas."""
         config_path = "config/agent_config.yaml"
         if not os.path.exists(config_path):
@@ -62,22 +62,51 @@ class TestSemanticCacheIntegration:
 
         orchestrator = OrchestratorAgent(config_path=config_path)
 
-        # Mock do cache retornando resultado
-        mock_get_or_compute.return_value = (
-            '{"completed": True, "final_result": "test", "iteration": 1}'
-        )
+        import json
 
-        # Executar subtarefa (deve usar cache)
-        from src.agents.orchestrator_agent import AgentMode
+        # Patch explicitly on the instance to avoid import path issues
+        with (
+            patch.object(orchestrator.semantic_cache, "get_or_compute") as mock_get_or_compute,
+            patch.object(orchestrator, "_execute_subtask_internal") as mock_internal,
+        ):
 
-        subtask = {"description": "Test task", "agent": "code"}
-        result = orchestrator._execute_subtask_by_agent(
-            subtask=subtask, agent_mode=AgentMode.CODE, max_iterations=1
-        )
+            # Mock do cache retornando resultado (DEVE ser string JSON)
+            mock_get_or_compute.return_value = json.dumps(
+                {
+                    "completed": True,
+                    "final_result": "test",
+                    "iteration": 1,
+                }
+            )
 
-        # Verificar se cache foi chamado
-        assert mock_get_or_compute.called
-        assert result["completed"] is True
+            # Internal execution returns something different to distinguish
+            mock_internal.return_value = {
+                "completed": True,
+                "final_result": "INTERNAL",
+                "iteration": 1,
+            }
+
+            # Executar subtarefa (deve usar cache)
+            from src.agents.orchestrator_agent import AgentMode
+
+            subtask = {"description": "Test task", "agent": "code"}
+            result = orchestrator._execute_subtask_by_agent(
+                subtask=subtask, agent_mode=AgentMode.CODE, max_iterations=1
+            )
+
+            # Debug output
+            if not result.get("completed"):
+                print(f"DEBUG FAILURE RESULT: {result}")
+
+            # Verificar se cache foi chamado
+            assert mock_get_or_compute.called, "SemanticCache.get_or_compute was NOT called"
+
+            # Se cache funcionou, internal NÃO deve ser chamado
+            assert (
+                not mock_internal.called
+            ), "Fallback _execute_subtask_internal WAS called (Cache exception caught?)"
+
+            assert result.get("completed") is True, f"Subtask failed. Result: {result}"
 
 
 class TestModelOptimizerIntegration:

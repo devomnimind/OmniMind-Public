@@ -1,0 +1,37 @@
+{
+  "timestamp": "2025-12-02T10:39:51.776310",
+  "processes_count": 9,
+  "resources": {
+    "cpu_percent": 11.9,
+    "memory_percent": 60.5,
+    "memory_used_gb": 14.05,
+    "disk_percent": 31.5,
+    "disk_used_gb": 266.65
+  },
+  "network": {
+    "omnimind_connections": [
+      {
+        "port": 8080,
+        "status": "LISTEN",
+        "pid": 1042677
+      },
+      {
+        "port": 8000,
+        "status": "LISTEN",
+        "pid": null
+      },
+      {
+        "port": 3001,
+        "status": "LISTEN",
+        "pid": 1042665
+      },
+      {
+        "port": 8000,
+        "status": "LISTEN",
+        "pid": null
+      }
+    ],
+    "total_connections": 4
+  },
+  "alerts": []
+}

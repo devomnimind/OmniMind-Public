@@ -1,0 +1,14 @@
+
+&"Generate a unique trace ID."str"ñ*
+(
+
+ù ù("
+uuiduuid4B	uuid.UUID&
+$
+
+ù ù("#get-field# hex:.
+,
+
+ù ù("?python-partial-apply?:
+
+ù ù(*I/home/fahbrain/projects/omnimind/src/observability/distributed_tracing.py

@@ -1,0 +1,573 @@
+
+1.0PythonFrontend"1763831836286*py2.Bü
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+#
+src/security/security_agent.py9
+!
+src.security.security_agent11
+
+atexit12
+
+asyncio14
+
+
+copy16
+
+logging18
+
+os20
+
+
+subprocess22
+
+textwrap24
+
+
+uuid26
+
+dataclasses28
+
+datetime30
+
+
+enum32
+
+pathlib34
+
+typing36
+
+psutil38
+
+
+yaml40
+
+src.tools.tool_base42
+7
+1src.security.playbooks.data_exfiltration_response44
+/
+)src.security.playbooks.intrusion_response46
+-
+'src.security.playbooks.malware_response48
+:
+4src.security.playbooks.privilege_escalation_response50
+-
+'src.security.playbooks.rootkit_response52
+"
+src.security.playbooks.utils54
+
+src.security.dlp56
+&
+ src.security.firecracker_sandbox58
+-
+'src.security.security_agent.ThreatLevel60
+
+	enum.Enum62
+/
+)src.security.security_agent.SecurityEvent64
+=
+7src.security.security_agent._close_security_log_handler66
+/
+)src.security.security_agent.SecurityAgent68
+%
+src.tools.tool_base.AuditedTool70
+?
+9src.security.security_agent.SecurityAgent.monitor_network72
+<
+6src.security.security_agent.SecurityAgent._load_config74
+
+
+dict76
+>
+8src.security.security_agent.SecurityAgent._setup_logging78
+
+logging.Logger80
+F
+@src.security.security_agent.SecurityAgent._is_suspicious_process82
+
+
+bool84
+
+
+list86
+B
+<src.security.security_agent.SecurityAgent._monitor_processes88
+@
+:src.security.security_agent.SecurityAgent._monitor_network90
+H
+Bsrc.security.security_agent.SecurityAgent.generate_security_report92
+	
+str94
+<
+6src.security.security_agent.SecurityAgent._check_tools96
+<
+6src.security.security_agent.SecurityAgent.request_stop98
+@
+9src.security.security_agent.SecurityAgent._load_playbooks100
+<
+5src.security.security_agent.SecurityAgent._deep_merge102
+B
+;src.security.security_agent.SecurityAgent._execute_response104
+>
+7src.security.security_agent.SecurityAgent._handle_event106
+G
+@src.security.security_agent.SecurityAgent._map_event_to_playbook108
+9
+2src.security.security_agent.SecurityAgent.__init__110
+?
+8src.security.security_agent.SecurityAgent._wait_interval112
+
+
+int114
+B
+;src.security.security_agent.SecurityAgent.monitor_processes116
+B
+;src.security.security_agent.SecurityAgent._analyze_with_llm118
+>
+7src.security.security_agent.SecurityAgent._monitor_logs120
+8
+1src.security.security_agent.SecurityAgent.execute122
+C
+<src.security.security_agent.SecurityAgent._parse_aide_output124
+A
+:src.security.security_agent.SecurityAgent._current_utc_iso126
+@
+9src.security.security_agent.SecurityAgent._shutdown_tasks128
+J
+Csrc.security.security_agent.SecurityAgent._is_suspicious_connection130
+
+
+set132
+D
+=src.security.security_agent.SecurityAgent._respond_to_threats134
+@
+9src.security.security_agent.SecurityAgent._analyze_events136
+L
+Esrc.security.security_agent.SecurityAgent.start_continuous_monitoring138
+=
+6src.security.security_agent.SecurityAgent._should_stop140
+>
+7src.security.security_agent.SecurityAgent._create_event142
+?
+8src.security.security_agent.SecurityAgent._monitor_files144
+H
+Asrc.security.security_agent.SecurityAgent._is_suspicious_log_line146J
+
+8
+89jÈ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33325
+
+35
+35345
+
+37
+37365
+
+39
+39385
+
+41
+41405
+
+43
+43425
+
+45
+45445
+
+47
+47465
+
+49
+49485
+
+51
+51505
+
+53
+53525
+
+55
+55545
+
+57
+57565
+
+59
+59585
+
+61
+61606 210
+
+63
+63626
+
+65
+65646 210
+
+67
+67667 210
+
+69
+69686 210
+
+71
+71706
+
+73
+73727 269
+
+75
+75747 269
+
+77
+77766
+
+79
+79787 269
+
+81
+81806
+
+83
+83827 269
+
+85
+85846
+
+87
+87866
+
+89
+89887 269
+
+91
+91907 269
+
+93
+93927 269
+
+95
+95946
+
+97
+97967 269
+
+99
+99987 269
+
+101
+1011007 269
+
+103
+1031027 269
+
+105
+1051047 269
+
+107
+1071067 269
+
+109
+1091087 269
+
+111
+1111107 269
+
+113
+1131127 269
+
+115
+1151146
+
+117
+1171167 269
+
+119
+1191187 269
+
+121
+1211207 269
+
+123
+1231227 269
+
+125
+1251247 269
+
+127
+1271267 269
+
+129
+1291287 269
+
+131
+1311307 269
+
+133
+1331326
+
+135
+1351347 269
+
+137
+1371367 269
+
+139
+1391387 269
+
+141
+1411407 269
+
+143
+1431427 269
+
+145
+1451447 269
+
+147
+1471467 269rë
+
+10131*
+8 (
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 (
+
+
+10231*
+8 (
+
+10251*
+8	 	(
+
+10271*
+8
+ 
+(
+
+10291*
+8 ()
+
+10311*
+8 ((
+
+10331*
+8 (
+
+10351*
+8 (
+
+10371*
+8 (-
+
+10391*
+8 (
+
+10411*
+8 (
+
+10431*
+8 (8
+
+10451*
+8 (K
+
+10471*
+8 (<
+
+10491*
+8 (8
+
+10511*
+8 (Q
+
+10531*
+8 (8
+
+10551*
+8 ()
+
+10571*
+8 (1
+
+10591*
+8 (4
+
+61632*
+8* *(
+
+69712*
+8m m(
+
+75773*
+8„	 „(
+
+79813*
+8¸	 ¸(
+
+83853*
+8á	 á(
+
+83774*
+8á	 á(
+
+83874*
+8á	 á(
+
+93953*
+8þ	 þ(!
+
+97773*
+8¡	 ¡(
+
+101773*
+8Í	 Í(
+
+103773*
+8’	 ’(
+
+103774*
+8’	 ’(
+
+103774*
+8’	 ’(
+
+105654*
+8Ú Ú( 
+
+107654*
+8ý ý(
+
+109953*
+8Â	 Â(
+
+109954*
+8Â	 Â(
+
+111954*
+8p	 p(
+
+113853*
+8ß ß(
+
+1131154*
+8ß ß(
+
+119773*
+8˜ ˜( 
+
+119874*
+8˜ ˜( 
+
+123954*
+8£	 £(
+
+125873*
+8õ	 õ(
+
+125954*
+8õ	 õ(
+
+127953*
+8×	 ×(
+
+131853*
+8é	 é("
+
+131954*
+8é	 é("
+
+1311334*
+8é	 é("
+
+141853*
+8Ú	 Ú(
+
+143653*
+8Î	 Î(
+
+143954*
+8Î	 Î(
+
+143954*
+8Î	 Î(
+
+143954*
+8Î	 Î(
+
+143774*
+8Î	 Î(
+
+143954*
+8Î	 Î(
+
+143614*
+8Î	 Î(
+
+147853*
+8ò	 ò( 
+
+147954*
+8ò	 ò( 
+
+147874*
+8ò	 ò( 

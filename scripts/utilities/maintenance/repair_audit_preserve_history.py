@@ -18,12 +18,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Contact: fabricioslv@hotmail.com.br
 """
 
-import json
 import hashlib
+import json
 import shutil
-from pathlib import Path
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 
 
 def hash_content(content: bytes) -> str:

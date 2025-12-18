@@ -1,0 +1,83 @@
+
+"{problem}_aspect_2"str
+"solvable_parts"str
+"{problem}_aspect_1"str
+
+1int
+"impossible_core"str
+"{problem}_aspect_3"str
+
+2int
+õë"
+        DecompÃµe problema impossÃ­vel em subproblemas possÃ­veis.
+
+        Args:
+            problem: Problema a decompor
+            attempts: Tentativas anteriores
+
+        Returns:
+            DecomposiÃ§Ã£o do problema
+        "str
+
+0int
+"decomposition"strself
+¬ ¬(problem
+¬ ¬(attempts
+¬ ¬(/	list"Ô6
+4
+
+¹ ½(	subproblems"#unknown-value#Blist(
+&
+
+¹ ½(	
+"
+#is-exact#:	Bbool
+
+
+¹ ½(	"
+#assume#:
+:
+8
+
+¹ ½(	"#set-field# __collection_size:Bint(
+&
+
+¹ ½(	"#array-add-last#:(
+&
+
+¹ ½(	"#array-add-last#:(
+&
+
+¹ ½(	"#array-add-last#:&
+$
+
+¿ Ã(	"#new-object#Bdict"
+ 
+
+À À(("	#map-set#:)
+'
+
+Á Á(-"#unknown-value#Blist$
+"
+
+Á Á(-"#array-read#:(
+&
+
+Á Á(-"#array-add-last#:$
+"
+
+Á Á(-"#array-read#:(
+&
+
+Á Á(-"#array-add-last#:"
+ 
+
+Á Á(-"	#map-set#:$
+"
+
+Â Â(-"#array-read#:"
+ 
+
+Â Â(-"	#map-set#:
+
+¿ Ã(	*</home/fahbrain/projects/omnimind/src/lacanian/godelian_ai.py

@@ -47,7 +47,6 @@ class LLMProvider(Enum):
     HUGGINGFACE = "huggingface"
     HUGGINGFACE_SPACE = "huggingface_space"
     OPENROUTER = "openrouter"
-    GEMINI = "gemini"
 
 
 class LLMModelTier(Enum):
@@ -92,17 +91,14 @@ class LLMProviderInterface(ABC):
     @abstractmethod
     async def invoke(self, prompt: str, config: LLMConfig) -> LLMResponse:
         """Invoca o LLM com o prompt fornecido."""
-        pass
 
     @abstractmethod
     def is_available(self) -> bool:
         """Verifica se o provedor está disponível."""
-        pass
 
     @abstractmethod
     def get_latency_estimate(self) -> int:
         """Retorna estimativa de latência em ms."""
-        pass
 
 
 class OllamaProvider(LLMProviderInterface):
@@ -241,8 +237,7 @@ class HuggingFaceLocalProvider(LLMProviderInterface):
                     try:
                         # Verificar VRAM livre
                         total_mem = torch.cuda.get_device_properties(0).total_memory
-                        # noqa: F841 - não usado, mantido para referência
-                        _ = torch.cuda.memory_allocated(0)
+                        allocated = torch.cuda.memory_allocated(0)
                         reserved = torch.cuda.memory_reserved(0)
                         free_mem = total_mem - reserved
                         free_mem_mb = free_mem / (1024**2)
@@ -292,7 +287,7 @@ class HuggingFaceLocalProvider(LLMProviderInterface):
             except Exception as e:
                 logger.warning(f"Erro ao carregar modelo {model_name}: {e}")
                 # Tentar fallback CPU se GPU falhou
-                if device != -1:  # type: ignore[name-defined]  # Se não estava já tentando CPU
+                if device != -1:  # Se não estava já tentando CPU
                     try:
                         logger.info("Tentando fallback para CPU...")
                         from transformers import pipeline
@@ -349,8 +344,7 @@ class HuggingFaceLocalProvider(LLMProviderInterface):
 
                     logger.debug(f"Gerando texto com prompt: {prompt[:100]}...")
                     logger.debug(
-                        f"Config: max_new_tokens={config.max_tokens}, "
-                        f"temperature={config.temperature}"
+                        f"Config: max_new_tokens={config.max_tokens}, temperature={config.temperature}"
                     )
 
                     # Gera texto
@@ -469,7 +463,6 @@ class HuggingFaceProvider(LLMProviderInterface):
 
     def _load_model(self, model_name: str):
         """Não necessário para Inference API."""
-        pass
 
     async def invoke(self, prompt: str, config: LLMConfig) -> LLMResponse:
         """Invoca HuggingFace Inference API."""
@@ -800,108 +793,6 @@ class OpenRouterProvider(LLMProviderInterface):
         return 2000  # ~2s para API cloud (otimizado)
 
 
-class GeminiProvider(LLMProviderInterface):
-    """Provedor Google Gemini."""
-
-    def __init__(self):
-        self._client = None
-        self._available = False
-        self._check_availability()
-
-    def _check_availability(self):
-        """Verifica disponibilidade do Gemini."""
-        api_key = os.getenv("GEMINI_API_KEY")
-        if not api_key:
-            logger.warning("GEMINI_API_KEY não encontrada")
-            return
-
-        try:
-            import google.generativeai as genai  # type: ignore[import-not-found]
-
-            genai.configure(api_key=api_key)
-            self._client = genai
-            self._available = True
-        except ImportError:
-            logger.warning("google-generativeai não disponível para Gemini")
-            self._available = False
-        except Exception as e:
-            logger.warning(f"Erro na configuração Gemini: {e}")
-            self._available = False
-
-    async def invoke(self, prompt: str, config: LLMConfig) -> LLMResponse:
-        """Invoca Gemini."""
-        if not self.is_available():
-            return LLMResponse(
-                success=False,
-                text="",
-                provider=LLMProvider.GEMINI,
-                model=config.model_name,
-                latency_ms=0,
-                error="Gemini não disponível",
-            )
-
-        start_time = time.time()
-        try:
-            if self._client is None:
-                return LLMResponse(
-                    success=False,
-                    text="",
-                    provider=LLMProvider.GEMINI,
-                    model=config.model_name,
-                    latency_ms=0,
-                    error="Gemini client not initialized",
-                )
-
-            # Store client reference to avoid None check issues in lambda
-            client = self._client
-            model = client.GenerativeModel(config.model_name)
-
-            # Configurar geração
-            generation_config = client.types.GenerationConfig(
-                temperature=config.temperature,
-                max_output_tokens=config.max_tokens,
-            )
-
-            response = await asyncio.get_event_loop().run_in_executor(
-                None,
-                lambda: model.generate_content(
-                    prompt,
-                    generation_config=generation_config,
-                ),
-            )
-
-            latency = int((time.time() - start_time) * 1000)
-            content = response.text if response.text else ""
-
-            return LLMResponse(
-                success=True,
-                text=content,
-                provider=LLMProvider.GEMINI,
-                model=config.model_name,
-                latency_ms=latency,
-            )
-
-        except Exception as e:
-            latency = int((time.time() - start_time) * 1000)
-            logger.error(f"Erro no Gemini: {e}")
-            return LLMResponse(
-                success=False,
-                text="",
-                provider=LLMProvider.GEMINI,
-                model=config.model_name,
-                latency_ms=latency,
-                error=str(e),
-            )
-
-    def is_available(self) -> bool:
-        """Verifica se Gemini está disponível."""
-        return self._available
-
-    def get_latency_estimate(self) -> int:
-        """Estimativa de latência Gemini (cloud) - ajustada para produção."""
-        return 1500  # ~1.5s para Gemini API (otimizado)
-
-
 class LLMRouter:
     """
     Router inteligente de LLMs com fallback automático.
@@ -922,7 +813,6 @@ class LLMRouter:
             LLMProvider.HUGGINGFACE: HuggingFaceProvider(),
             LLMProvider.HUGGINGFACE_SPACE: HuggingFaceSpaceProvider(),
             LLMProvider.OPENROUTER: OpenRouterProvider(),
-            LLMProvider.GEMINI: GeminiProvider(),
         }
 
         # Configurações por tier
@@ -939,39 +829,28 @@ class LLMRouter:
         logger.info("LLM Router inicializado com fallback automático")
 
     def _load_tier_configs(self) -> Dict[LLMModelTier, List[LLMConfig]]:
-        """Carrega configurações de modelos por tier com modelos offline prioritários."""
+        """Carrega configurações de modelos por tier com timeouts realistas para produção."""
         return {
             LLMModelTier.FAST: [
-                # 🔥 PRIORIDADE: Modelos Offline Locais (Ollama)
                 LLMConfig(
                     provider=LLMProvider.OLLAMA,
-                    model_name="phi:latest",  # Modelo Phi-3 baixado localmente
+                    model_name="qwen2:7b-instruct",  # Modelo disponível localmente
                     temperature=0.7,
                     max_tokens=1024,
-                    timeout=60,
+                    timeout=90,  # Timeout reduzido para testes rápidos
                     tier=LLMModelTier.FAST,
                 ),
-                LLMConfig(
-                    provider=LLMProvider.OLLAMA,
-                    model_name="llama3.2:1b",  # Modelo Llama 3.2 1B baixado localmente
-                    temperature=0.7,
-                    max_tokens=1024,
-                    timeout=45,
-                    tier=LLMModelTier.FAST,
-                ),
-                # 🔄 FALLBACK: HuggingFace Local (inferência local)
-                LLMConfig(
-                    provider=LLMProvider.HUGGINGFACE_LOCAL,
-                    model_name="microsoft/Phi-3.5-mini-instruct",  # Modelo baixado localmente
-                    temperature=0.7,
-                    max_tokens=1024,
-                    timeout=120,
-                    tier=LLMModelTier.FAST,
-                ),
-                # ☁️ ÚLTIMO FALLBACK: Cloud APIs (OpenRouter)
                 LLMConfig(
                     provider=LLMProvider.OPENROUTER,
-                    model_name="microsoft/wizardlm-2-8x22b",  # Modelo gratuito similar ao Phi
+                    model_name="z-ai/glm-4.5-air:free",  # GLM-4.5 Air - modelo gratuito rápido
+                    temperature=0.7,
+                    max_tokens=1024,
+                    timeout=60,  # Timeout otimizado para API cloud
+                    tier=LLMModelTier.FAST,
+                ),
+                LLMConfig(
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="qwen/qwen2-7b-instruct",  # Qwen2-7B - modelo leve e rápido
                     temperature=0.7,
                     max_tokens=1024,
                     timeout=60,
@@ -979,44 +858,41 @@ class LLMRouter:
                 ),
                 LLMConfig(
                     provider=LLMProvider.OPENROUTER,
-                    model_name="z-ai/glm-4.5-air:free",  # GLM-4.5 Air gratuito
+                    model_name="qwen/qwen2-1.5b-instruct",  # Qwen2-1.5B - modelo ultra-leve
                     temperature=0.7,
                     max_tokens=1024,
                     timeout=60,
+                    tier=LLMModelTier.FAST,
+                ),
+                LLMConfig(
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="nousresearch/hermes-3-llama-3.1-405b:free",  # Hermes-3 - modelo poderoso gratuito
+                    temperature=0.7,
+                    max_tokens=1024,
+                    timeout=90,
                     tier=LLMModelTier.FAST,
                 ),
             ],
             LLMModelTier.BALANCED: [
-                # 🔥 PRIORIDADE: Modelos Offline Locais (Ollama)
                 LLMConfig(
                     provider=LLMProvider.OLLAMA,
-                    model_name="phi:latest",  # Modelo Phi-3 principal
+                    model_name="qwen2:7b-instruct",  # Modelo atual
                     temperature=0.7,
                     max_tokens=2048,
-                    timeout=90,
+                    timeout=180,  # Timeout aumentado para produção
                     tier=LLMModelTier.BALANCED,
                 ),
-                LLMConfig(
-                    provider=LLMProvider.OLLAMA,
-                    model_name="llama3.2:1b",  # Llama 3.2 como backup
-                    temperature=0.7,
-                    max_tokens=2048,
-                    timeout=75,
-                    tier=LLMModelTier.BALANCED,
-                ),
-                # 🔄 FALLBACK: HuggingFace Local
-                LLMConfig(
-                    provider=LLMProvider.HUGGINGFACE_LOCAL,
-                    model_name="microsoft/Phi-3.5-mini-instruct",  # Phi-3.5 local
-                    temperature=0.7,
-                    max_tokens=2048,
-                    timeout=180,
-                    tier=LLMModelTier.BALANCED,
-                ),
-                # ☁️ ÚLTIMO FALLBACK: Cloud APIs
                 LLMConfig(
                     provider=LLMProvider.OPENROUTER,
-                    model_name="microsoft/wizardlm-2-8x22b",  # WizardLM gratuito
+                    model_name="nousresearch/hermes-3-llama-3.1-405b:free",  # Hermes-3 - modelo poderoso gratuito
+                    temperature=0.7,
+                    max_tokens=2048,
+                    timeout=120,
+                    tier=LLMModelTier.BALANCED,
+                ),
+                LLMConfig(
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="z-ai/glm-4.5-air:free",  # GLM-4.5 Air - modelo gratuito balanceado
                     temperature=0.7,
                     max_tokens=2048,
                     timeout=90,
@@ -1024,63 +900,60 @@ class LLMRouter:
                 ),
                 LLMConfig(
                     provider=LLMProvider.OPENROUTER,
-                    model_name="z-ai/glm-4.5-air:free",  # GLM-4.5 Air
+                    model_name="openai/gpt-oss-20b:free",  # GPT-OSS-20B - modelo gratuito alternativo
                     temperature=0.7,
                     max_tokens=2048,
                     timeout=90,
+                    tier=LLMModelTier.BALANCED,
+                ),
+                LLMConfig(
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="qwen/qwen3-4b:free",  # Qwen3-4B - fallback rápido
+                    temperature=0.7,
+                    max_tokens=2048,
+                    timeout=60,
                     tier=LLMModelTier.BALANCED,
                 ),
             ],
             LLMModelTier.HIGH_QUALITY: [
-                # 🔥 PRIORIDADE: Modelos Offline Locais (Ollama)
+                LLMConfig(
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="nousresearch/hermes-3-llama-3.1-405b:free",  # Hermes-3 405B - modelo poderoso gratuito
+                    temperature=0.7,
+                    max_tokens=4096,
+                    timeout=180,
+                    tier=LLMModelTier.HIGH_QUALITY,
+                ),
+                LLMConfig(
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="z-ai/glm-4.5-air:free",  # GLM-4.5 Air - modelo gratuito de qualidade
+                    temperature=0.7,
+                    max_tokens=4096,
+                    timeout=180,
+                    tier=LLMModelTier.HIGH_QUALITY,
+                ),
+                LLMConfig(
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="qwen/qwen3-max",  # Qwen3-Max - modelo de qualidade máxima
+                    temperature=0.7,
+                    max_tokens=4096,
+                    timeout=180,
+                    tier=LLMModelTier.HIGH_QUALITY,
+                ),
+                LLMConfig(
+                    provider=LLMProvider.OPENROUTER,
+                    model_name="qwen/qwen3-4b:free",  # Qwen3-4B - fallback gratuito
+                    temperature=0.7,
+                    max_tokens=4096,
+                    timeout=120,
+                    tier=LLMModelTier.HIGH_QUALITY,
+                ),
                 LLMConfig(
                     provider=LLMProvider.OLLAMA,
-                    model_name="phi:latest",  # Phi-3 para alta qualidade
+                    model_name="qwen2:72b-instruct",  # Modelo grande se disponível localmente
                     temperature=0.7,
                     max_tokens=4096,
-                    timeout=180,
-                    tier=LLMModelTier.HIGH_QUALITY,
-                ),
-                LLMConfig(
-                    provider=LLMProvider.OLLAMA,
-                    model_name="llama3.2:1b",  # Llama 3.2 como backup
-                    temperature=0.7,
-                    max_tokens=4096,
-                    timeout=150,
-                    tier=LLMModelTier.HIGH_QUALITY,
-                ),
-                # 🔄 FALLBACK: HuggingFace Local
-                LLMConfig(
-                    provider=LLMProvider.HUGGINGFACE_LOCAL,
-                    model_name="microsoft/Phi-3.5-mini-instruct",  # Phi-3.5 local
-                    temperature=0.7,
-                    max_tokens=4096,
-                    timeout=300,
-                    tier=LLMModelTier.HIGH_QUALITY,
-                ),
-                # ☁️ ÚLTIMO FALLBACK: Cloud APIs (modelos premium)
-                LLMConfig(
-                    provider=LLMProvider.OPENROUTER,
-                    model_name="anthropic/claude-3.5-sonnet",  # Claude 3.5 Sonnet (pago)
-                    temperature=0.7,
-                    max_tokens=4096,
-                    timeout=180,
-                    tier=LLMModelTier.HIGH_QUALITY,
-                ),
-                LLMConfig(
-                    provider=LLMProvider.OPENROUTER,
-                    model_name="openai/gpt-4o-mini",  # GPT-4o Mini (pago)
-                    temperature=0.7,
-                    max_tokens=4096,
-                    timeout=180,
-                    tier=LLMModelTier.HIGH_QUALITY,
-                ),
-                LLMConfig(
-                    provider=LLMProvider.OPENROUTER,
-                    model_name="google/gemini-pro-1.5",  # Gemini Pro 1.5 (pago)
-                    temperature=0.7,
-                    max_tokens=4096,
-                    timeout=180,
+                    timeout=300,  # Timeout estendido para modelos grandes
                     tier=LLMModelTier.HIGH_QUALITY,
                 ),
             ],

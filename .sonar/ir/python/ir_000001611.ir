@@ -1,0 +1,17 @@
+
+èÖ"
+        Obt√©m o status de todos os servidores MCP.
+
+        Returns:
+            Dict com nome do servidor e seu status.
+        "strself
+ï ï("m)
+'
+
+ú ú("#get-field# status:.
+,
+
+ú ú( "
+builtinsdict*:Bdict
+
+ú ú( *E/home/fahbrain/projects/omnimind/src/integrations/mcp_orchestrator.py

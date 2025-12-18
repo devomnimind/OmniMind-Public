@@ -30,9 +30,9 @@ Verifica:
 """
 
 import re
-from pathlib import Path
-from typing import List, Dict, Tuple
 from datetime import datetime
+from pathlib import Path
+from typing import Dict, List
 
 
 class Colors:
@@ -187,7 +187,7 @@ def check_coverage_config(coveragerc_path: Path) -> List[Dict]:
         if line.strip() and not line.strip().startswith("[") and not line.strip().startswith("#"):
             if "src/" in line or ".py" in line:
                 # This is a file exclusion
-                file_pattern = line.strip()
+                _file_pattern = line.strip()
                 issues.append(
                     {
                         "file": ".coveragerc",

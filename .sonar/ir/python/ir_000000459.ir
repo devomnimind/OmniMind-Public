@@ -1,0 +1,28 @@
+
+ôè"Decorator to profile a function.
+
+        Args:
+            func: Function to profile
+
+        Returns:
+            Wrapped function
+        "strself
+Õ Õ(func
+Õ Õ("Ê#
+!
+
+Â Â("#unknown-value#*
+(
+
+◊ Â(%closure"#new-object#(
+&
+
+◊ Â("#set-field# self:(
+&
+
+◊ Â("#set-field# func:-
++
+
+◊ Â("?python-partial-apply?:
+
+Â Â(*E/home/fahbrain/projects/omnimind/src/observability/profiling_tools.py

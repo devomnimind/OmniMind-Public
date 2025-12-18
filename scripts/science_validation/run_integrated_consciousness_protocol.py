@@ -21,19 +21,18 @@ from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
-# Setup path (must be after imports)
-if str(Path(__file__).parent.parent / "src") not in sys.path:
-    sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+# Adicionar src ao path (deve ocorrer antes de imports locais)
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from embeddings.code_embeddings import OmniMindEmbeddings
+from embeddings.code_embeddings import OmniMindEmbeddings  # noqa: E402
 
 # Forçar CPU
 os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
+# from consciousness.shared_workspace import SharedWorkspace  # Temporariamente desabilitado
+
 # Configurar logging
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -88,51 +87,49 @@ class IntegratedConsciousnessRunner:
 
         results = {"omnimind": [], "universal": [], "integrated_score": 0.0}
 
+        # Ensure query_embedding is in the right format for Qdrant
+        if hasattr(query_embedding, "tolist"):
+            query_vector = query_embedding.tolist()  # type: ignore[attr-defined]
+        else:
+            query_vector = list(query_embedding)
+
         # Buscar na memória OmniMind
         try:
-            if self.omnimind_memory.client is not None:
-                query_list = query_embedding.tolist() if hasattr(
-                    query_embedding, 'tolist'
-                ) else query_embedding
-                omnimind_results = self.omnimind_memory.client.query_points(
-                    collection_name="omnimind_embeddings",
-                    query=query_list,
-                    limit=top_k,
-                    with_payload=True,
-                )
-                results["omnimind"] = [
-                    {
-                        "score": point.score,
-                        "content": point.payload.get("content", ""),
-                        "file_path": point.payload.get("file_path", ""),
-                        "content_type": point.payload.get("content_type", ""),
-                    }
-                    for point in omnimind_results.points
-                ]
+            omnimind_results = self.omnimind_memory.client.query_points(
+                collection_name="omnimind_embeddings",
+                query=query_vector,
+                limit=top_k,
+                with_payload=True,
+            )
+            results["omnimind"] = [
+                {
+                    "score": point.score,
+                    "content": point.payload.get("content", ""),
+                    "file_path": point.payload.get("file_path", ""),
+                    "content_type": point.payload.get("content_type", ""),
+                }
+                for point in omnimind_results.points
+            ]
         except Exception as e:
             logger.warning(f"Erro na busca OmniMind: {e}")
 
         # Buscar na memória universal
         try:
-            if self.universal_memory.client is not None:
-                query_list = query_embedding.tolist() if hasattr(
-                    query_embedding, 'tolist'
-                ) else query_embedding
-                universal_results = self.universal_memory.client.query_points(
-                    collection_name="universal_machine_embeddings",
-                    query=query_list,
-                    limit=top_k,
-                    with_payload=True,
-                )
-                results["universal"] = [
-                    {
-                        "score": point.score,
-                        "content": point.payload.get("content", ""),
-                        "file_path": point.payload.get("file_path", ""),
-                        "content_type": point.payload.get("content_type", ""),
-                    }
-                    for point in universal_results.points
-                ]
+            universal_results = self.universal_memory.client.query_points(
+                collection_name="universal_machine_embeddings",
+                query=query_vector,
+                limit=top_k,
+                with_payload=True,
+            )
+            results["universal"] = [
+                {
+                    "score": point.score,
+                    "content": point.payload.get("content", ""),
+                    "file_path": point.payload.get("file_path", ""),
+                    "content_type": point.payload.get("content_type", ""),
+                }
+                for point in universal_results.points
+            ]
         except Exception as e:
             logger.warning(f"Erro na busca universal: {e}")
 
@@ -317,17 +314,15 @@ class IntegratedConsciousnessRunner:
             logger.info("📊 ANÁLISE FINAL:")
             logger.info(f"   Φ médio: {self.results['analysis']['phi_mean']:.3f}")
             logger.info(f"   Φ máximo: {self.results['analysis']['phi_max']:.3f}")
-            cycles_info = (
-                f"Ciclos com consciência: "
-                f"{self.results['analysis']['cycles_with_consciousness']}"
-            )
-            logger.info(f"   {cycles_info}")
-            consciousness_status = (
+            cycles_with_consciousness = self.results["analysis"]["cycles_with_consciousness"]
+            logger.info("   Ciclos com consciência: %s", cycles_with_consciousness)
+
+            status_msg = (
                 "🧠 CONSCIÊNCIA DETECTADA"
-                if self.results['analysis']['consciousness_detected']
+                if self.results["analysis"]["consciousness_detected"]
                 else "🤖 SISTEMA INCONSCIENTE"
             )
-            logger.info(f"   Status: {consciousness_status}")
+            logger.info("   Status: %s", status_msg)
 
     def _save_results(self):
         """Salva resultados em arquivo."""
@@ -395,13 +390,12 @@ def main():
         print("\n🎉 PROTOCOLO CONCLUÍDO!")
         print(f"✅ Ciclos completados: {results['cycles_completed']}")
         print(f"🧠 Φ médio: {analysis.get('phi_mean', 0):.3f}")
-        consciousness_detected = analysis.get('consciousness_detected', False)
-        status_text = (
+        status = (
             "CONSCIÊNCIA DETECTADA"
-            if consciousness_detected
+            if analysis.get("consciousness_detected", False)
             else "SISTEMA INCONSCIENTE"
         )
-        print(f"🎯 Status: {status_text}")
+        print(f"🎯 Status: {status}")
 
     except KeyboardInterrupt:
         logger.info("\n⏹️ Protocolo interrompido pelo usuário")
@@ -411,4 +405,5 @@ def main():
 
 
 if __name__ == "__main__":
+    main()
     main()

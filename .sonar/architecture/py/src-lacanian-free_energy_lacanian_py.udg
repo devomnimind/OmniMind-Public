@@ -1,0 +1,292 @@
+
+1.0PythonFrontend"1763831827163*py2.BÜ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+)
+$src/lacanian/free_energy_lacanian.py9
+'
+!src.lacanian.free_energy_lacanian11
+
+
+__future__12
+
+typing14
+
+dataclasses16
+
+torch18
+
+logging20
+
+
+enum22
+H
+Bsrc.lacanian.free_energy_lacanian.demonstrate_free_energy_lacanian24
+<
+6src.lacanian.free_energy_lacanian.ActiveInferenceAgent26
+$
+torch.nn.modules.module.Module28
+K
+Esrc.lacanian.free_energy_lacanian.ActiveInferenceAgent.compute_desire30
+4
+.src.lacanian.free_energy_lacanian.DesireVector32
+7
+1src.lacanian.free_energy_lacanian.FreeEnergyState34
+K
+Esrc.lacanian.free_energy_lacanian.ActiveInferenceAgent.reparameterize36
+
+torch.Tensor38
+C
+=src.lacanian.free_energy_lacanian.ActiveInferenceAgent.encode40
+
+tuple42
+C
+=src.lacanian.free_energy_lacanian.ActiveInferenceAgent.decode44
+P
+Jsrc.lacanian.free_energy_lacanian.ActiveInferenceAgent.compute_free_energy46
+
+
+dict48
+E
+?src.lacanian.free_energy_lacanian.ActiveInferenceAgent.__init__50
+	
+int52
+
+float54
+D
+>src.lacanian.free_energy_lacanian.ActiveInferenceAgent.forward56
+6
+0src.lacanian.free_energy_lacanian.InferenceLevel58
+
+	enum.Enum60
+@
+:src.lacanian.free_energy_lacanian.LacanianFreeEnergySystem62
+I
+Csrc.lacanian.free_energy_lacanian.LacanianFreeEnergySystem.__init__64
+X
+Rsrc.lacanian.free_energy_lacanian.LacanianFreeEnergySystem.compute_synchronization66
+Q
+Ksrc.lacanian.free_energy_lacanian.LacanianFreeEnergySystem.update_big_other68
+
+
+list70
+U
+Osrc.lacanian.free_energy_lacanian.LacanianFreeEnergySystem.collective_inference72J
+
+8
+89jÕ
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25247 210
+
+27
+27266 210
+
+29
+29286
+
+31
+31307 227
+
+33
+33326 210
+
+35
+35346 210
+
+37
+37367 227
+
+39
+39386
+
+41
+41407 227
+
+43
+43426
+
+45
+45447 227
+
+47
+47467 227
+
+49
+49486
+
+51
+51507 227
+
+53
+53526
+
+55
+55546
+
+57
+57567 227
+
+59
+59586 210
+
+61
+61606
+
+63
+63626 210
+
+65
+65647 263
+
+67
+67667 263
+
+69
+69687 263
+
+71
+71706
+
+73
+73727 263r¼
+
+10131*
+8 (#
+
+10151*
+8 (4
+
+10171*
+8 ("
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8   (
+
+27292*
+8Y Y(
+
+31333*
+8´	 ´(
+
+31354*
+8´	 ´(
+
+37393*
+8½	 ½(
+
+37394*
+8½	 ½(
+
+37394*
+8½	 ½(
+
+41433*
+8§	 §(
+
+41394*
+8§	 §(
+
+45393*
+8Ì	 Ì(
+
+45394*
+8Ì	 Ì(
+
+47353*
+8ƒ	 ƒ(
+
+47394*
+8ƒ	 ƒ(
+
+47494*
+8ƒ	 ƒ(
+
+51534*
+8f	 f(
+
+51534*
+8f	 f(
+
+51534*
+8f	 f(
+
+51554*
+8f	 f(
+
+57493*
+8à	 à(
+
+57394*
+8à	 à(
+
+59612*
+8% %(
+
+65534*
+8ç	 ç(
+
+65534*
+8ç	 ç(
+
+65534*
+8ç	 ç(
+
+65534*
+8ç	 ç(
+
+67553*
+8•	 •( 
+
+67394*
+8•	 •( 
+
+69714*
+8‹	 ‹(
+
+73493*
+8ª	 ª(
+
+73714*
+8ª	 ª(

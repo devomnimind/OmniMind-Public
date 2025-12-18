@@ -116,7 +116,7 @@ def update_audit_report(results: dict) -> None:
     logger.info(f"📝 Updating audit report: {report_path}")
 
     # Read current report
-    content = report_path.read_text()
+    _content = report_path.read_text()
 
     # Update progress section
     progress_update = f"""

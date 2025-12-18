@@ -31,10 +31,9 @@ Este script executa benchmarks no simulador para validar:
 Quando IBM Quantum estiver funcionando, substituir por hardware real.
 """
 
+import json
 import os
 import sys
-import json
-import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -43,9 +42,10 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from src.quantum_consciousness.qpu_interface import QPUInterface, BackendType
-from qiskit import QuantumCircuit
 import structlog
+from qiskit import QuantumCircuit
+
+from src.quantum_consciousness.qpu_interface import QPUInterface
 
 # Configurar logging
 logger = structlog.get_logger(__name__)

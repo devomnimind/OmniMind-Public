@@ -21,7 +21,7 @@ Contact: fabricioslv@hotmail.com.br
 import json
 import os
 import platform
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 
 import psutil
 

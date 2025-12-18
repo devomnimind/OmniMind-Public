@@ -1,0 +1,85 @@
+
+Esrc.metrics.consciousness_metrics.ConsciousnessMetrics.add_connectionQ
+E/home/fahbrain/projects/omnimind/src/metrics/consciousness_metrics.py≥ ≥("2*«
+2
+¥ ∏(Ñ
+Å
+
+π π(
+%1"__id*g
+
+__unknown_file (K*I8
+6src.metrics.consciousness_metrics.ConsciousnessMetrics"
+connectionslj
+
+π π(+
+%2*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+
+connection2appendX
+V
+
+º º(*
+%3"__id*<
+
+__unknown_file ( *
+
+
+connection"
+source_agentX
+V
+
+Ω Ω(*
+%4"__id*<
+
+__unknown_file ( *
+
+
+connection"
+target_agent[
+Y
+
+æ æ(+
+%5"__id*?
+
+__unknown_file (#*!
+
+
+connection"
+connection_type™ß
+
+∫ ø(	
+%6*&
+
+__unknown_file (
+
+
+logger*0
+
+__unknown_file (
+connection_added2debug:
+source
+
+%3:
+target
+
+%4:
+type
+
+%5*
+3*@
+3
+consciousness_metrics.py"
+¡ ¡(
+implicit return:
+
+≥ ≥(8
+
+connectionB:8
+6src.metrics.consciousness_metrics.ConsciousnessMetricsH

@@ -1,0 +1,52 @@
+
+9src.observability.log_aggregator.LogAggregator.clear_logsP
+D/home/fahbrain/projects/omnimind/src/observability/log_aggregator.pyÔ Ô("2*ÿ
+2
+Õ Õ(3|
+z
+
+Ö Ö(
+%1"__id*`
+
+__unknown_file (D*B0
+.src.observability.log_aggregator.LogAggregator"
+_log_entries?=
+
+Ö Ö(!
+%2*"
+
+__unknown_file (
+
+%12clearw
+u
+
+× ×(
+%3"__id*[
+
+__unknown_file (?*=0
+.src.observability.log_aggregator.LogAggregator"	
+_alerts?=
+
+× ×(
+%4*"
+
+__unknown_file (
+
+%32clearpn
+
+Ø Ø(#
+%5*&
+
+__unknown_file (
+
+
+logger*,
+
+__unknown_file (
+logs_cleared2info*
+3*9
+3
+log_aggregator.py"
+Ú Ú(
+implicit returnB20
+.src.observability.log_aggregator.LogAggregatorH

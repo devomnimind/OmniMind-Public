@@ -1,0 +1,37 @@
+
+0.0float
+"division by zero"bool
+"S3518"bool
+
+0int
+"a"bool
+aX"Calculate cache hit rate.
+
+        Returns:
+            Hit rate (0.0 to 1.0)
+        "strselfp p("Å%
+#
+v v("#get-field# hits:'
+%
+v v('"#get-field# misses:)
+'
+v v('total"	#binop +#2+:*
+(
+w w("
+#binop ==#2==:Bbool"
+w w( *w w(
+"
+x x("º%
+#
+y y(	"#get-field# hits:*
+(
+y y( 
+"
+#binop !=#2!=:Bbool 
+
+y y( "
+#assert#:
+1
+/
+y y( "#dependent-value#*:	Bfloat
+y y( *A/home/fahbrain/projects/omnimind/src/scaling/multi_level_cache.py

@@ -1,0 +1,38 @@
+
+
+1int
+‚y"
+        Get maximum depth of memory hierarchy.
+
+        Returns:
+            Maximum depth (number of levels)
+        "strself
+ä ä("¯1
+/
+
+ë ë(""#get-field# child_memories:+
+)
+
+ë ë(""
+__bool__*:BboolH+
+)
+
+ë ë(""#unaryop !#2!:Bbool "
+
+ë ë(" *
+ë ë(
+"
+
+ì ì(" ;
+9
+
+î î(Pchild_depths"?python-unknown?:Blist'
+%
+
+ï ï($"
+builtinsmax*:$
+"
+
+ï ï($	"	#binop +#2+:
+
+ï ï($	*A/home/fahbrain/projects/omnimind/src/memory/holographic_memory.py

@@ -15,12 +15,13 @@ Autor: Fabrício da Silva + assistência de IA
 import asyncio
 import json
 import logging
-import psutil
 import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict
+
+import psutil
 
 # Adicionar src ao path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))

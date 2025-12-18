@@ -1,0 +1,24 @@
+
+.%"Generate encryption key for tenant."str
+32int
+16intself
+È! È(%"ƒ6
+4
+
+Ê Ê(&key_id"
+secrets	token_hex:Bstr7
+5
+
+Ë Ë(%key"
+secretstoken_bytes:Bbytes*
+(
+
+Ì Ì("#unknown-value#Btuple(
+&
+
+Ì Ì("#array-add-last#:(
+&
+
+Ì Ì(	"#array-add-last#:
+
+Ì Ì(*F/home/fahbrain/projects/omnimind/src/scaling/multi_tenant_isolation.py

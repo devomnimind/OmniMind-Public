@@ -9,7 +9,6 @@ import asyncio
 import json
 import logging
 import os
-import subprocess
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
@@ -87,8 +86,7 @@ class SequentialServiceInitializer:
         """Register a service for initialization"""
         self.services[config.name] = config
         logger.info(
-            f"Registered service: {config.name} (priority={config.priority.name}, "
-            f"timeout={config.startup_timeout}s)"
+            f"Registered service: {config.name} (priority={config.priority.name}, timeout={config.startup_timeout}s)"
         )
 
     def get_init_order(self) -> List[str]:
@@ -127,15 +125,13 @@ class SequentialServiceInitializer:
                 if is_healthy:
                     result.health_checks_passed += 1
                     logger.info(
-                        f"  ✅ Health check passed for {service_name} "
-                        f"(attempt {attempt}/{max_retries})"
+                        f"  ✅ Health check passed for {service_name} (attempt {attempt}/{max_retries})"
                     )
                     return True
                 else:
                     result.health_checks_failed += 1
                     logger.warning(
-                        f"  ⚠️  Health check failed for {service_name} "
-                        f"(attempt {attempt}/{max_retries})"
+                        f"  ⚠️  Health check failed for {service_name} (attempt {attempt}/{max_retries})"
                     )
             except Exception as e:
                 result.health_checks_failed += 1
@@ -201,7 +197,7 @@ class SequentialServiceInitializer:
             if not config.skip_on_error:
                 return result
 
-            logger.warning("     Continuing anyway (skip_on_error=True)...")
+            logger.warning(f"     Continuing anyway (skip_on_error=True)...")
 
         except Exception as e:
             result.status = ServiceStatus.FAILED
@@ -211,7 +207,7 @@ class SequentialServiceInitializer:
             if not config.skip_on_error:
                 return result
 
-            logger.warning("     Continuing anyway (skip_on_error=True)...")
+            logger.warning(f"     Continuing anyway (skip_on_error=True)...")
 
         # Run health check
         if result.status in [ServiceStatus.INITIALIZING, ServiceStatus.TIMEOUT]:
@@ -229,7 +225,7 @@ class SequentialServiceInitializer:
                     if not config.skip_on_error:
                         return result
 
-                    logger.warning("     Marking as RUNNING anyway (skip_on_error=True)...")
+                    logger.warning(f"     Marking as RUNNING anyway (skip_on_error=True)...")
                     result.status = ServiceStatus.RUNNING
 
         result.completed_at = datetime.now()
@@ -243,7 +239,7 @@ class SequentialServiceInitializer:
         init_order = self.get_init_order()
 
         logger.info(f"\n{'='*60}")
-        logger.info("📋 Initialization Order:")
+        logger.info(f"📋 Initialization Order:")
         for i, name in enumerate(init_order, 1):
             config = self.services[name]
             logger.info(f"   {i}. {name} ({config.priority.name})")
@@ -261,7 +257,7 @@ class SequentialServiceInitializer:
                 break
 
             # Wait between services
-            logger.info("\n⏳ Waiting 5s before next service...")
+            logger.info(f"\n⏳ Waiting 5s before next service...")
             await asyncio.sleep(5)
 
         return self.results
@@ -333,6 +329,8 @@ class SequentialServiceInitializer:
 
 async def check_backend_health(port: int) -> bool:
     """Check if backend is responding on given port"""
+    import subprocess
+
     try:
         result = subprocess.run(
             ["curl", "-s", "-f", f"http://localhost:{port}/health/"], timeout=3, capture_output=True
@@ -443,7 +441,7 @@ def main():
     asyncio.set_event_loop(loop)
 
     try:
-        loop.run_until_complete(initializer.initialize_all())
+        _results = loop.run_until_complete(initializer.initialize_all())
         initializer.print_summary()
         initializer.export_results(f"{project_root}/logs/init_results.json")
     finally:

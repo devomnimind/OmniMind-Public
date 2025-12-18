@@ -1,0 +1,167 @@
+
+@src.optimization.memory_optimization.MemoryUsageSnapshot.to_dictR
+H/home/fahbrain/projects/omnimind/src/optimization/memory_optimization.py) )("2*¡
+2* *($
++ 3(	
+%1"dictÅ
+
+, ,('
+%2"__id*g
+
+__unknown_file (K*I:
+8src.optimization.memory_optimization.MemoryUsageSnapshot"
+	timestamp^\
+, ,(3
+%3"datetime.datetime.isoformat*"
+
+__unknown_file (
+
+%22	isoformatê
+ç
+, ,(3
+%4"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	timestamp*"
+
+__unknown_file (
+
+%3~
+|
+- -(!
+%5"__id*d
+
+__unknown_file (H*F:
+8src.optimization.memory_optimization.MemoryUsageSnapshot"
+rss_mbç
+ä
+- -(!
+%6"__mapSet*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+rss_mb*"
+
+__unknown_file (
+
+%5~
+|
+. .(!
+%7"__id*d
+
+__unknown_file (H*F:
+8src.optimization.memory_optimization.MemoryUsageSnapshot"
+vms_mbç
+ä
+. .(!
+%8"__mapSet*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+vms_mb*"
+
+__unknown_file (
+
+%7
+}
+/ /(#
+%9"__id*e
+
+__unknown_file (I*G:
+8src.optimization.memory_optimization.MemoryUsageSnapshot"	
+percentè
+å
+/ /(#
+%10"__mapSet*"
+
+__unknown_file (
+
+%1*'
+
+__unknown_file (	
+percent*"
+
+__unknown_file (
+
+%9Ü
+É
+0 0(-
+%11"__id*j
+
+__unknown_file (N*L:
+8src.optimization.memory_optimization.MemoryUsageSnapshot"
+available_mbï
+í
+0 0(-
+%12"__mapSet*"
+
+__unknown_file (
+
+%1*,
+
+__unknown_file (
+available_mb*#
+
+__unknown_file (
+
+%11á
+Ñ
+1 1(/
+%13"__id*k
+
+__unknown_file (O*M:
+8src.optimization.memory_optimization.MemoryUsageSnapshot"
+objects_countñ
+ì
+1 1(/
+%14"__mapSet*"
+
+__unknown_file (
+
+%1*-
+
+__unknown_file (
+objects_count*#
+
+__unknown_file (
+
+%13Å
+
+2 2(%
+%15"__id*f
+
+__unknown_file (J*H:
+8src.optimization.memory_optimization.MemoryUsageSnapshot"
+
+gc_statsë
+é
+2 2(%
+%16"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+gc_stats*#
+
+__unknown_file (
+
+%15"
++ 3(	
+
+%1B<:
+8src.optimization.memory_optimization.MemoryUsageSnapshotH

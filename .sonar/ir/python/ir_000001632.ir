@@ -1,0 +1,53 @@
+
+"size_bytes"str
+"age_seconds"str
+"accessed_at"str
+"created_at"str
+"level"str
+"key"str
+!"Convert to dictionary."str
+"access_count"str
+"ttl_seconds"strselfP P("¦$
+"
+R [(	"#new-object#Bdict$
+"
+S S("#get-field# key: 
+
+S S("	#map-set#:&
+$
+T T("#get-field# level:&
+$
+T T(%	"#get-field# value: 
+
+T T(%
+"	#map-set#:	+
+)
+U U()"#get-field# created_at: 
+
+U U()"	#map-set#:,
+*
+V V(+"#get-field# accessed_at: 
+
+V V(+"	#map-set#:-
++
+W W(-"#get-field# access_count: 
+
+W W(-"	#map-set#:,
+*
+X X(+"#get-field# ttl_seconds: 
+
+X X(+"	#map-set#:+
+)
+Y Y()"#get-field# size_bytes: 
+
+Y Y()"	#map-set#:#
+!
+Z Z(&"
+timetimeBfloat+
+)
+Z) Z(8"#get-field# created_at:1
+/
+Z Z(8"#dependent-value#*:Bfloat 
+
+Z Z(8"	#map-set#:
+R [(	*A/home/fahbrain/projects/omnimind/src/scaling/multi_level_cache.py

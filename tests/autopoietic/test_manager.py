@@ -1,9 +1,12 @@
 import json
 from pathlib import Path
+import pytest
 
 from src.autopoietic.architecture_evolution import EvolutionStrategy
 from src.autopoietic.manager import AutopoieticManager
 from src.autopoietic.meta_architect import ComponentSpec
+
+pytestmark = pytest.mark.heavy
 
 
 def test_manager_runs_full_cycle(tmp_path):
@@ -23,7 +26,8 @@ def test_manager_runs_full_cycle(tmp_path):
     log_expand = manager.run_cycle({"error_rate": 0.0, "cpu_usage": 25.0, "latency_ms": 15.0})
     assert log_expand.strategy == EvolutionStrategy.EXPAND
     assert len(log_expand.synthesized_components) == 1
-    assert "expanded_kernel_process" in log_expand.synthesized_components
+    # CORREÇÃO: Manager adiciona prefixo 'auto_' por segurança
+    assert "auto_expanded_kernel_process" in log_expand.synthesized_components
 
     log_stabilize = manager.run_cycle({"error_rate": 0.2, "cpu_usage": 30.0})
     assert log_stabilize.strategy == EvolutionStrategy.STABILIZE
@@ -174,7 +178,10 @@ def test_manager_reads_phi_from_real_metrics(tmp_path):
     try:
         os.chdir(tmp_path)
         manager = AutopoieticManager()
+        # Limpar histórico para evitar média de fallback
+        manager._phi_history = []
         phi = manager._get_current_phi()
+        # Se não há histórico e arquivo existe em data/monitor, ele deve ler do arquivo
         assert phi == 0.75
     finally:
         os.chdir(original_cwd)

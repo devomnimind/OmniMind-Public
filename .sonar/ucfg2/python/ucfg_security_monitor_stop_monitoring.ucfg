@@ -1,0 +1,67 @@
+
+=src.security.security_monitor.SecurityMonitor.stop_monitoringM
+A/home/fahbrain/projects/omnimind/src/security/security_monitor.pyÚ Ú("2*å
+2
+Û Û('
+}
+
+Ü Ü("B/
+-src.security.security_monitor.SecurityMonitor"
+is_monitoring"__id*%
+
+__unknown_file (	
+
+Falseu
+s
+
+Ý Ý(
+%1"__id*Y
+
+__unknown_file (=*;/
+-src.security.security_monitor.SecurityMonitor"
+logger{y
+
+Ý Ý(7
+%2*"
+
+__unknown_file (
+
+%1*;
+
+__unknown_file (
+Security monitoring stopped2info{
+y
+
+ß ß(
+%3"__id*_
+
+__unknown_file (C*A/
+-src.security.security_monitor.SecurityMonitor"
+audit_system
+
+à+ à(-
+%4"dictÀ½
+
+ß á(	
+%5*"
+
+__unknown_file (
+
+%3*;
+
+__unknown_file (
+security_monitoring_stopped*"
+
+__unknown_file (
+
+%42
+log_action:
+category
+
+security*
+3*;
+3
+security_monitor.py"
+ã ã(
+implicit returnB1/
+-src.security.security_monitor.SecurityMonitorH

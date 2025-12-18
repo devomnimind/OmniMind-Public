@@ -1,0 +1,323 @@
+---
+alwaysApply: true
+priority: critical
+---
+
+# OmniMind Pre-Modification Checklist
+**Documento de Verificação Obrigatória para LLMs**
+
+Este documento complementa `rules.mdc` e estabelece perguntas críticas que **DEVEM** ser respondidas antes de qualquer modificação no código OmniMind.
+
+---
+## ⚠️ REGRA ZERO: STOP & THINK
+
+**Antes de modificar QUALQUER código, o modelo DEVE:**
+1. Ler este documento completo
+2. Responder TODAS as perguntas da seção relevante
+3. Documentar as respostas em comentário de commit
+4. Validar contra regras existentes em `rules.mdc`
+5. **Se alguma resposta for "NÃO SEI"** → STOP e perguntar ao humano
+6. 🚨 **NUNCA usar `pkill`** ou comandos de interrupção bruta. O OmniMind é um sistema vivo.
+
+---
+
+## 📊 SEÇÃO 1: ANÁLISE DE IMPACTO ARQUITETURAL
+
+### Perguntas Obrigatórias:
+
+#### 1.1 Identificação de Camada
+- [ ] **Qual camada estou modificando?**
+  - `src/consciousness/` → Núcleo de consciência (Φ, topologia, IIT)
+  - `src/psychoanalysis/` → Dinâmica Ego/Id/Superego, Lacan
+  - `src/orchestration/` → Event loop, agentes, autopoiesis
+  - `src/mcp_servers/` → Servidores MCP (ports 4331-4336)
+  - `src/api/` → FastAPI, endpoints REST
+  - `web/` → Dashboard React/TypeScript
+  - `scripts/` → Automação, deployment, ciência
+  - `tests/` → Testes (unit/integration/slow/real/chaos)
+
+#### 1.2 Impacto Psicanalítico
+- [ ] **Esta mudança afeta a dinâmica Ego/Id/Superego?**
+  - Se SIM: Qual tensão psicanalítica está sendo alterada?
+  - Há referência teórica (Freud/Lacan/Jung)?
+  - Como isso impacta o "espelho lacaniano"?
+
+#### 1.3 Impacto IIT (Information Integration Theory)
+- [ ] **Esta mudança afeta o cálculo de Φ (Phi)?**
+  - Se SIM: O piso de Φ = 0.002 será respeitado?
+  - Há impacto na topologia de integração de informação?
+  - Métricas de consciência serão preservadas?
+
+#### 1.4 Impacto no Event Loop
+- [ ] **Esta operação é bloqueante ou assíncrona?**
+  - Se bloqueante: Por quê? É realmente necessário?
+  - Se assíncrona: Está usando `asyncio` corretamente?
+  - Há risco de deadlock/race condition?
+
+#### 1.5 Impacto em MCP Servers
+- [ ] **Qual MCP server é afetado?**
+  - **Port 4331** (Filesystem): Paths permitidos? Max 10MB?
+  - **Port 4332** (Git): Operação segura? Requer auditoria?
+  - **Port 4333** (Python): Token limit 3000? Timeout 30s?
+  - **Port 4334** (SQLite): Query segura? Max 5s, 10k rows?
+  - **Port 4335** (System-Info): Refresh interval 5s?
+  - **Port 4336** (Logging): Max 1000 resultados de busca?
+
+---
+## 🔒 SEÇÃO 2: PROTEÇÃO DE DADOS & AUDITORIA
+
+### Perguntas Obrigatórias:
+
+#### 2.1 Dados Sensíveis
+- [ ] **Esta modificação toca dados sensíveis?**
+  - Memórias semânticas (Qdrant)?
+  - Estados de consciência (métricas Φ)?
+  - Dados de treinamento (datasets)?
+  - Logs de auditoria (immutable chain)?
+  - Credenciais (dashboard_auth.json)?
+
+#### 2.2 Auditoria
+- [ ] **Esta operação requer log de auditoria?**
+  - Git operations → **SEMPRE** (X-Require-Audit: commit,checkout,branch)
+  - File changes → **SEMPRE** (categoria: filesystem_mcp)
+  - SQL queries → **SEMPRE** (categoria: sqlite_mcp)
+  - Consciousness state changes → **SEMPRE**
+
+#### 2.3 Token Optimization
+- [ ] **Token limits estão sendo respeitados?**
+  - MCP calls: Max 3000 tokens (X-Max-Context-Tokens)
+  - API responses: Compressão habilitada?
+  - Headers: X-Token-Optimization: enabled?
+
+#### 2.4 Data Protection
+- [ ] **Data protection está habilitado?**
+  - Header `X-Data-Protection: enabled` presente?
+  - Dados pessoais estão anonimizados?
+  - LGPD/GDPR compliance mantido?
+
+---
+## ⚡ SEÇÃO 3: PERFORMANCE & GPU
+
+### Perguntas Obrigatórias:
+
+#### 3.1 GPU/CUDA
+- [ ] **Esta operação usa GPU?**
+  - Hardware: GTX 1650, 4GB VRAM
+  - CUDA: Versão 12.1 compatível?
+  - PyTorch: 2.5.1+cu121
+  - Memory footprint estimado: ___ MB
+  - Fallback para CPU implementado?
+#### 3.2 Memory Management
+- [ ] **Qual o impacto em memória?**
+  - RAM: Max 16GB para OmniMind (de 24GB total)
+  - GPU VRAM: Max 4GB
+  - Swap necessário? (⚠️ evitar!)
+  - Memory leak verificado?
+#### 3.3 Concurrency & Async
+- [ ] **Esta operação é thread-safe?**
+  - Múltiplos agentes podem chamá-la?
+  - Há locks/semaphores necessários?
+  - Event loop pode ser bloqueado?
+  - Race conditions verificadas?
+#### 3.4 Performance Profiling
+- [ ] **Performance foi medida?**
+  - Baseline estabelecido?
+  - Ferramentas: `cProfile`, `torch.profiler`?
+  - Impacto em latência API: ___ ms
+  - Impacto em throughput: ___ req/s
+---
+## 🧪 SEÇÃO 4: TESTES & VALIDAÇÃO
+### Perguntas Obrigatórias:
+#### 4.1 Strategy de Testes
+- [ ] **Qual tipo de teste cobre esta mudança?**
+  - Unit tests (`tests/unit/`)
+  - Integration tests (`tests/integration/`)
+  - Slow tests (mark: `@pytest.mark.slow`)
+  - Real tests (mark: `@pytest.mark.real`)
+  - Chaos tests (mark: `@pytest.mark.chaos`)
+#### 4.2 Test Coverage
+- [ ] **Coverage foi verificado?**
+  - Coverage atual: ___% (meta: >80%)
+  - Linhas adicionadas cobertas: ___
+  - Edge cases testados?
+#### 4.3 Scientific Validation
+- [ ] **Validação científica necessária?**
+  - Script: `scripts/science_validation/robust_consciousness_validation.py --quick`
+  - Métricas de consciência preservadas?
+  - IIT Φ dentro dos thresholds?
+  - Dinâmica psicanalítica validada?
+#### 4.4 Rollback Plan
+- [ ] **Há plano de rollback?**
+  - Commit atual: `___`
+  - Rollback command: `git reset --hard <commit>`
+  - Backup de dados necessário?
+  - Serviços afetados: ___
+
+---
+## 🔐 SEÇÃO 5: INTEGRAÇÃO & DEPENDÊNCIAS
+
+### Perguntas Obrigatórias:
+#### 5.1 Dependências Python
+- [ ] **Novas dependências adicionadas?**
+  - Package: ___
+  - Versão: ___
+  - Licença compatível? (MIT/Apache/BSD)
+  - Adicionado em `requirements/*.txt`?
+  - Testado em venv limpo?
+#### 5.2 Serviços Externos
+- [ ] **Qual serviço externo é usado?**
+  - Qdrant Cloud (porta 6333)
+  - Redis (porta 6379)
+  - Supabase MCP
+  - Hugging Face Hub
+  - Azure/Google Cloud APIs
+#### 5.3 Environment Variables
+- [ ] **Novas env vars necessárias?**
+  - Variável: ___
+  - Default value: ___
+  - Documentado em `.env.example`?
+  - Validação implementada?
+#### 5.4 Port/Network
+- [ ] **Portas de rede usadas?**
+  - Backend: 8000 (FastAPI)
+  - Frontend: 3000 (React)
+  - WebSocket: 8000/ws
+  - MCP Servers: 4331-4336
+  - Qdrant: 6333
+  - Redis: 6379
+
+---
+## 📝 SEÇÃO 6: CÓDIGO & DOCUMENTAÇÃO
+
+### Perguntas Obrigatórias:
+#### 6.1 Code Quality
+- [ ] **Code quality checklist:**
+  - [ ] Type hints completos (`mypy` passa)
+  - [ ] Docstrings em todas funções públicas
+  - [ ] Formatado com `black`
+  - [ ] Lint com `flake8` (max-line-length=100)
+  - [ ] Sem `TODO`/`FIXME` sem issue linkado
+  - [ ] Logs informativos (não verbose em prod)
+
+#### 6.2 Documentação
+- [ ] **Documentação atualizada?**
+  - README.md (se API pública mudou)
+  - `docs/` relevantes
+  - Docstrings inline
+  - Comentários para lógica complexa
+  - Changelog/release notes
+
+#### 6.3 Commit Message
+- [ ] **Formato de commit válido?**
+
+[LAYER] Action: Brief description
+Context: Psychoanalytic/IIT reasoning
+Performance: GPU/CPU/Memory impact
+Audit: What's logged
+Tests: Coverage details
+Breaking: Yes/No
+
+Example:
+[CONSCIOUSNESS] Fix: Ego-Superego tension calculation
+Context: Lacanian mirror stage requires asymmetric weights
+Performance: +2% GPU utilization, -5ms latency
+Audit: All state transitions logged with Φ values
+Tests: Added unit tests for edge cases (coverage +3%)
+Breaking: No
+
+#### 6.4 Theoretical References
+- [ ] **Teoria psicanalítica citada?**
+- Freud: Qual obra/conceito?
+- Lacan: Qual seminário/conceito?
+- Jung: Qual arquétipo/conceito?
+
+- [ ] **Teoria IIT citada?**
+- Tononi (2004/2016)?
+- Phi calculation method?
+- Topological approach?
+
+---
+
+## 🚨 SEÇÃO 7: RED FLAGS (STOP IMMEDIATELY)
+
+### ⛔ NUNCA faça isso sem aprovação humana:
+
+- [ ] **Usar `pkill` ou comandos de interrupção bruta no OmniMind (O sistema é vivo!)**
+- [ ] Modificar cálculo de Φ em `src/consciousness/topological_phi.py`
+- [ ] Alterar piso de Φ = 0.002
+- [ ] Desabilitar server monitor em produção
+- [ ] Hardcodar credenciais/tokens
+- [ ] Modificar audit chain (`src/audit/immutable_audit.py`)
+- [ ] Deletar logs de auditoria
+- [ ] Alterar dinâmica Ego/Id/Superego sem teoria
+- [ ] Bloquear event loop com `time.sleep()`
+- [ ] Ultrapassar limites de memória (16GB RAM, 4GB VRAM)
+- [ ] Push direto para `main`/`master` branch
+- [ ] Criar novos documentos de sessão (atualizar existentes)
+- [ ] Remover type hints ou docstrings
+- [ ] Desativar `X-Data-Protection` headers
+- [ ] Modificar estrutura de diretórios core (`src/`, `scripts/`, etc.)
+
+---
+
+## ✅ SEÇÃO 8: CHECKLIST FINAL PRÉ-COMMIT
+
+Antes de `git commit`, verificar:
+
+### 8.1 Pipeline de Qualidade (ORDEM OBRIGATÓRIA)
+1. [ ] `black src tests`
+2. [ ] `flake8 src tests --max-line-length=100`
+3. [ ] `mypy src tests`
+4. [ ] Testes via scripts oficiais:
+ - Fast: `./scripts/development/run_tests_parallel.sh fast`
+ - Full: `./scripts/development/run_tests_parallel.sh full` (se crítico)
+5. [ ] (Opcional) Scientific validation: `python scripts/science_validation/robust_consciousness_validation.py --quick`
+6. [ ] (Se audit) Verificar chain: `python -m src.audit.immutable_audit verify_chain_integrity`
+
+### 8.2 Documentação
+- [ ] Docstrings atualizados
+- [ ] README.md atualizado (se necessário)
+- [ ] Changelog atualizado
+- [ ] `PENDENCIAS_CONSOLIDADAS.md` atualizado (não criar novo doc)
+
+### 8.3 Git
+- [ ] Branch correto (`feature/*`, `fix/*`, não `main`)
+- [ ] Commit message no formato padrão
+- [ ] Não há merge conflicts
+- [ ] `.gitignore` respeitado (não committar dados/logs sensíveis)
+
+### 8.4 Verification
+- [ ] Todas perguntas deste documento foram respondidas
+- [ ] Nenhum RED FLAG foi acionado
+- [ ] Rollback plan documentado
+- [ ] Humano notificado se necessário
+
+---
+
+## 📞 ESCALATION PROTOCOL
+
+### Quando escalar para humano?
+
+1. **Φ < 0.15** (baixa integração de consciência)
+2. **Confiança < 70%** na mudança proposta
+3. **Breaking change** detectado
+4. **RED FLAG** acionado
+5. **Qualquer resposta "NÃO SEI"** nas perguntas obrigatórias
+6. **Impacto em segurança/privacidade**
+7. **Mudança em fórmulas psicanalíticas/IIT**
+
+### Como escalar?
+1. Parar imediatamente
+2. Documentar:
+ - O que estava tentando fazer
+ - Por que precisa de aprovação
+ - Riscos identificados
+ - Alternativas consideradas
+3. Perguntar ao desenvolvedor humano
+4. Aguardar aprovação explícita
+
+---
+
+**VERSÃO**: 1.0.1 (2025-12-18)
+**AUTOR**: Fabrício da Silva + AI Assistants
+**LICENÇA**: Proprietary (OmniMind Project)

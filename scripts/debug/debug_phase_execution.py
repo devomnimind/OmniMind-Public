@@ -6,7 +6,6 @@ This runs just 3 cycles with DETAILED logging of each phase
 import asyncio
 import logging
 import sys
-from datetime import datetime
 
 # Setup logging VERY VERBOSE
 logging.basicConfig(
@@ -17,7 +16,6 @@ logger = logging.getLogger("DEBUG_PHASE")
 # Add src to path
 sys.path.insert(0, "/home/fahbrain/projects/omnimind")
 
-import numpy as np
 
 from src.consciousness.integration_loop import IntegrationLoop
 from src.consciousness.shared_workspace import SharedWorkspace

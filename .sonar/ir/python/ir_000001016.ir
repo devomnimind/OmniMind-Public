@@ -1,0 +1,30 @@
+
+·­"Write file contents to MCP server.
+
+        Args:
+            path: File path to write
+            content: Content to write
+            encoding: File encoding (default: utf-8)
+
+        Returns:
+            Write operation result
+
+        Raises:
+            MCPClientError: If write fails
+        "strself
+í í(path
+í í(content
+í í(%encoding
+í' í(>"”#
+!
+
+ü þ(	"#unknown-value#+
+)
+
+ü þ(	result"#unknown-value#.
+,
+
+ÿ ÿ("
+builtinsdict*:Bdict
+
+ÿ ÿ(*E/home/fahbrain/projects/omnimind/src/integrations/mcp_client_async.py

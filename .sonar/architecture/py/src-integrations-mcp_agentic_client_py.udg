@@ -1,0 +1,345 @@
+
+1.0PythonFrontend"1763831841753*py2.B
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
++
+&src/integrations/mcp_agentic_client.py9
+)
+#src.integrations.mcp_agentic_client11
+
+
+__future__12
+
+typing14
+
+dataclasses16
+
+
+enum18
+
+
+json20
+
+logging22
+
+hashlib24
+
+
+time26
+
+pathlib28
+>
+8src.integrations.mcp_agentic_client.CodeExecutionContext30
+H
+Bsrc.integrations.mcp_agentic_client.demonstrate_mcp_agentic_client32
+1
++src.integrations.mcp_agentic_client.MCPTool34
+9
+3src.integrations.mcp_agentic_client.MCPToolCategory36
+
+	enum.Enum38
+:
+4src.integrations.mcp_agentic_client.MCPSecurityLevel40
+:
+4src.integrations.mcp_agentic_client.MCPAgenticClient42
+L
+Fsrc.integrations.mcp_agentic_client.MCPAgenticClient._handle_file_read44
+
+
+dict46
+	
+str48
+J
+Dsrc.integrations.mcp_agentic_client.MCPAgenticClient.get_audit_trail50
+
+
+list52
+	
+int54
+R
+Lsrc.integrations.mcp_agentic_client.MCPAgenticClient._register_default_tools56
+O
+Isrc.integrations.mcp_agentic_client.MCPAgenticClient.execute_agentic_code58
+
+float60
+N
+Hsrc.integrations.mcp_agentic_client.MCPAgenticClient.get_context_for_ide62
+H
+Bsrc.integrations.mcp_agentic_client.MCPAgenticClient.register_tool64
+K
+Esrc.integrations.mcp_agentic_client.MCPAgenticClient._handle_db_query66
+C
+=src.integrations.mcp_agentic_client.MCPAgenticClient.__init__68
+7
+1src.integrations.mcp_agentic_client.AuditLogEntry70
+>
+8src.integrations.mcp_agentic_client.MCPSecurityFramework72
+G
+Asrc.integrations.mcp_agentic_client.MCPSecurityFramework.__init__74
+N
+Hsrc.integrations.mcp_agentic_client.MCPSecurityFramework.sandbox_execute76
+O
+Isrc.integrations.mcp_agentic_client.MCPSecurityFramework.check_rate_limit78
+
+
+bool80
+S
+Msrc.integrations.mcp_agentic_client.MCPSecurityFramework.validate_code_safety82
+
+tuple84
+I
+Csrc.integrations.mcp_agentic_client.MCPSecurityFramework._audit_log86J
+
+8
+89jò
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31306 210
+
+33
+33327 210
+
+35
+35346 210
+
+37
+37366 210
+
+39
+39386
+
+41
+41406 210
+
+43
+43426 210
+
+45
+45447 243
+
+47
+47466
+
+49
+49486
+
+51
+51507 243
+
+53
+53526
+
+55
+55546
+
+57
+57567 243
+
+59
+59587 243
+
+61
+61606
+
+63
+63627 243
+
+65
+65647 243
+
+67
+67667 243
+
+69
+69687 243
+
+71
+71706 210
+
+73
+73726 210
+
+75
+75747 273
+
+77
+77767 273
+
+79
+79787 273
+
+81
+81806
+
+83
+83827 273
+
+85
+85846
+
+87
+87867 273rÊ
+
+10131*
+8 (#
+
+10151*
+8 (C
+
+10171*
+8 ()
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (
+
+10251*
+8 (
+
+10271*
+8 (
+
+10291*
+8 (
+
+37392*
+81 1(
+
+41392*
+8# #(
+
+45473*
+8Æ	 Æ(
+
+45494*
+8Æ	 Æ(
+
+45494*
+8Æ	 Æ(
+
+51533*
+8Å	 Å(
+
+51554*
+8Å	 Å(
+
+59473*
+8„	 „(
+
+59494*
+8„	 „(
+
+59614*
+8„	 „(
+
+63473*
+8¢	 ¢(
+
+65354*
+8ú	 ú(
+
+67473*
+8á	 á(
+
+67494*
+8á	 á(
+
+69494*
+8ý	 ý(
+
+69414*
+8ý	 ý(
+
+75554*
+8—	 —(
+
+77473*
+8Ù	 Ù(
+
+77494*
+8Ù	 Ù(
+
+77314*
+8Ù	 Ù(
+
+77494*
+8Ù	 Ù(
+
+79813*
+8©	 ©(
+
+79494*
+8©	 ©(
+
+83853*
+8°	 °(
+
+83494*
+8°	 °(
+
+83314*
+8°	 °(
+
+87494*
+8È	 È(
+
+87494*
+8È	 È(
+
+87494*
+8È	 È(
+
+87474*
+8È	 È(
+
+87414*
+8È	 È(

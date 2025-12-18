@@ -1,0 +1,128 @@
+
+Lsrc.optimization.memory_optimization.MemoryOptimizer.get_optimization_reportT
+H/home/fahbrain/projects/omnimind/src/optimization/memory_optimization.pyÏ Ï("2*°
+2
+Ì Ò(
+
+Ú ˜(	
+%1"dictå
+â
+
+Û% Û(?
+%2"__id*o
+
+__unknown_file (S*Q6
+4src.optimization.memory_optimization.MemoryOptimizer"
+optimizations_appliedû
+õ
+
+Û Û(?
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*5
+
+__unknown_file (
+optimizations_applied*"
+
+__unknown_file (
+
+%2~
+|
+
+Ù Ù()
+%4"__id*b
+
+__unknown_file (F*D6
+4src.optimization.memory_optimization.MemoryOptimizer"
+
+profilerHF
+
+Ù Ù(:
+%5*"
+
+__unknown_file (
+
+%42get_statisticsï
+í
+
+Ù Ù(:
+%6"__mapSet*"
+
+__unknown_file (
+
+%1*,
+
+__unknown_file (
+memory_stats*"
+
+__unknown_file (
+
+%5
+}
+
+ı ı((
+%7"__id*c
+
+__unknown_file (G*E6
+4src.optimization.memory_optimization.MemoryOptimizer"
+	allocatorGE
+
+ı ı(8
+%8*"
+
+__unknown_file (
+
+%72get_all_statsì
+ê
+
+ı ı(8
+%9"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+pool_stats*"
+
+__unknown_file (
+
+%8Ö
+Ç
+
+ˆ ˆ(-
+%10"__id*g
+
+__unknown_file (K*I6
+4src.optimization.memory_optimization.MemoryOptimizer"
+leak_detectorKI
+
+ˆ ˆ(?
+%11*#
+
+__unknown_file (
+
+%102get_leak_reportñ
+ì
+
+ˆ ˆ(?
+%12"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+leak_report*#
+
+__unknown_file (
+
+%11"
+
+Ú ˜(	
+
+%1B86
+4src.optimization.memory_optimization.MemoryOptimizerH

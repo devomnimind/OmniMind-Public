@@ -1,0 +1,8 @@
+[Slice]
+Description=OmniMind Critical Infrastructure Slice
+MemoryLow=2G
+MemoryHigh=12G
+MemoryMax=16G
+CPUWeight=200
+TasksMax=infinity
+EOF

@@ -1,0 +1,386 @@
+
+1.0PythonFrontend"1763831834109*py2.Bþ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+#
+src/integrations/mcp_server.py9
+!
+src.integrations.mcp_server11
+
+
+__future__12
+
+
+json14
+
+logging16
+
+	threading18
+
+dataclasses20
+
+http.server22
+
+pathlib24
+
+
+time26
+
+typing28
+
+src.audit.immutable_audit30
++
+%src.integrations.mcp_server.MCPServer32
+4
+.src.integrations.mcp_server.MCPServer.__init__34
+2
+,src.integrations.mcp_server.MCPServer._audit36
+	
+str38
+;
+5src.integrations.mcp_server.MCPServer._error_response40
+	
+int42
+:
+4src.integrations.mcp_server.MCPServer._entry_summary44
+
+
+dict46
+
+pathlib.Path48
+;
+5src.integrations.mcp_server.MCPServer._record_metrics50
+
+float52
+<
+6src.integrations.mcp_server.MCPServer._normalize_roots54
+
+
+list56
+
+typing.Iterable58
+4
+.src.integrations.mcp_server.MCPServer.list_dir60
+
+
+bool62
+0
+*src.integrations.mcp_server.MCPServer.stop64
+9
+3src.integrations.mcp_server.MCPServer._make_handler66
+5
+/src.integrations.mcp_server.MCPServer._dispatch68
+6
+0src.integrations.mcp_server.MCPServer.handle_rpc70
+1
++src.integrations.mcp_server.MCPServer.start72
+5
+/src.integrations.mcp_server.MCPServer.read_file74
+0
+*src.integrations.mcp_server.MCPServer.stat76
+7
+1src.integrations.mcp_server.MCPServer.get_metrics78
+9
+3src.integrations.mcp_server.MCPServer._resolve_path80
+=
+7src.integrations.mcp_server.MCPServer._success_response82
+6
+0src.integrations.mcp_server.MCPServer.write_file84
+/
+)src.integrations.mcp_server.MCPServer.url86
++
+%src.integrations.mcp_server.MCPConfig88
+0
+*src.integrations.mcp_server.MCPConfig.load90
+1
++src.integrations.mcp_server.MCPRequestError92
+
+	Exception94
+:
+4src.integrations.mcp_server.MCPRequestError.__init__96J
+
+8
+89jã
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33326 210
+
+35
+35347 233
+
+37
+37367 233
+
+39
+39386
+
+41
+41407 233
+
+43
+43426
+
+45
+45447 233
+
+47
+47466
+
+49
+49486
+
+51
+51507 233
+
+53
+53526
+
+55
+55547 233
+
+57
+57566
+
+59
+59586
+
+61
+61607 233
+
+63
+63626
+
+65
+65647 233
+
+67
+67667 233
+
+69
+69687 233
+
+71
+71707 233
+
+73
+73727 233
+
+75
+75747 233
+
+77
+77767 233
+
+79
+79787 233
+
+81
+81807 233
+
+83
+83827 233
+
+85
+85847 233
+
+87
+87867 233
+
+89
+89886 210
+
+91
+91907 289
+
+93
+93926 210
+
+95
+95946
+
+97
+97967 293rÌ	
+
+10131*
+8 (#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 ()
+
+10231*
+8 (D
+
+10251*
+8 (
+
+10271*
+8	 	(
+
+10291*
+8
+ 
+(N
+
+10311*
+8 (7
+
+37393*
+8Î	 Î(
+
+37394*
+8Î	 Î(
+
+37394*
+8Î	 Î(
+
+41393*
+8Þ	 Þ(
+
+41434*
+8Þ	 Þ(
+
+41394*
+8Þ	 Þ(
+
+45473*
+8¿	 ¿(
+
+45494*
+8¿	 ¿(
+
+51394*
+8Ã	 Ã(
+
+51534*
+8Ã	 Ã(
+
+55573*
+8W	 W(
+
+55594*
+8W	 W(
+
+61473*
+8 	  (
+
+61394*
+8 	  (
+
+61634*
+8 	  (
+
+69394*
+8»	 »(
+
+71393*
+8œ	 œ(
+
+73634*
+8`	 `(
+
+75393*
+8ü	 ü(
+
+75394*
+8ü	 ü(
+
+75394*
+8ü	 ü(
+
+77473*
+8­	 ­(
+
+77394*
+8­	 ­(
+
+79473*
+8¸	 ¸(
+
+81493*
+8î	 î(
+
+81394*
+8î	 î(
+
+83393*
+8Û	 Û(
+
+85473*
+8‡	 ‡(
+
+85394*
+8‡	 ‡(
+
+85394*
+8‡	 ‡(
+
+85394*
+8‡	 ‡(
+
+87393*
+8È	 È(
+
+93952*
+87 7(
+
+97434*
+88	 8(
+
+97394*
+88	 8(

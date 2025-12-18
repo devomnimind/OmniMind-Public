@@ -1,0 +1,248 @@
+
+>src.agents.orchestrator_agent.OrchestratorAgent.decompose_taskM
+A/home/fahbrain/projects/omnimind/src/agents/orchestrator_agent.pyﬁ ﬁ("2*å
+2
+ﬂ ﬂ(?∞
+≠
+
+‡ ˚(
+%12"__concat*l
+
+‡ ‚(^\
+ZYou are OrchestratorAgent ü™É, a master coordinator of specialist agents.
+
+COMPLEX TASK: *"
+
+‚ ‚(
+
+task_description*˚
+
+‚  ˚(ÏÈ
+Ê
+
+AVAILABLE SPECIALIST AGENTS:
+- CodeAgent (code): Implements features, writes code, runs tests
+- ArchitectAgent (architect): Plans architecture, writes specs/docs
+- DebugAgent (debug): Diagnoses bugs, analyzes errors
+- ReviewerAgent (reviewer): Reviews quality, provides RLAIF feedback
+- PsychoanalyticAnalyst (psychoanalyst): Analyzes text with psychoanalytic theories
+
+Your job is to break this task into sequential subtasks and assign each to the appropriate agent.
+
+Respond with a structured plan:
+
+ANALYSIS: <brief analysis of the task>
+
+SUBTASKS:
+1. [AGENT_MODE] <subtask description>
+2. [AGENT_MODE] <subtask description>
+...
+
+DEPENDENCIES:
+- Task N depends on Task M
+
+ESTIMATED_COMPLEXITY: <low/medium/high>
+
+Your decomposition plan:C
+A
+
+‡ ˚(
+prompt"__id*#
+
+__unknown_file (
+
+%12*
+7*=
+3
+orchestrator_agent.py"
+ô ô(
+implicit return*∑
+
+4
+ã ã()ùö
+
+ã ã()
+%1*O
+
+__unknown_file (31
+/src.agents.orchestrator_agent.OrchestratorAgent*(
+
+__unknown_file (
+
+
+response2_parse_plan@
+>
+
+ã ã()
+plan"__id*"
+
+__unknown_file (
+
+%1ª∏
+
+å å(0
+%2"dict.__setitem__*$
+
+__unknown_file (
+
+plan*-
+
+__unknown_file (
+original_task*0
+
+__unknown_file (
+
+task_description2__setitem__qo
+
+ç ç(.
+%3*O
+
+__unknown_file (31
+/src.agents.orchestrator_agent.OrchestratorAgent2
+_timestamp™ß
+
+ç ç(.
+%4"dict.__setitem__*$
+
+__unknown_file (
+
+plan**
+
+__unknown_file (
+
+created_at*"
+
+__unknown_file (
+
+%32__setitem__
+}
+
+ê ê( C1
+/src.agents.orchestrator_agent.OrchestratorAgent"
+current_plan"__id*$
+
+__unknown_file (
+
+planÄ
+~
+
+ë ë(
+%5"__id*d
+
+__unknown_file (H*F1
+/src.agents.orchestrator_agent.OrchestratorAgent"
+tools_frameworkîë
+
+î î(7
+%6*$
+
+__unknown_file (
+
+plan**
+
+__unknown_file (
+
+complexity*&
+
+__unknown_file (
+
+medium2get≤Ø
+
+ë ï(	
+%7*"
+
+__unknown_file (
+
+%5*)
+
+__unknown_file (
+	plan_task2execute_tool:(
+task_description
+
+task_description:
+
+complexity
+
+%6"
+
+ó ó(
+
+plan*¬
+5
+Ä Ä(Ip
+n
+
+Ä Ä(H
+%8"__concat*;
+
+Ä Ä(D-+
+)LLM invocation failed in decompose_task: *
+
+ÄE Ä(F
+
+ege
+
+Ä Ä(I
+%9*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%82error–
+Õ
+
+Ç à(
+
+response"__id*¨
+
+__unknown_file (èå
+â
+ANALYSIS: LLM unavailable, using fallback plan.
+SUBTASKS:
+1. [CODE] Implement requested feature
+DEPENDENCIES:
+ESTIMATED_COMPLEXITY: low
+*
+4*ƒ
+7
+˛ ˛(.u
+s
+
+˛ ˛(
+%10"__id*X
+
+__unknown_file (<*:1
+/src.agents.orchestrator_agent.OrchestratorAgent"
+llmjh
+
+˛ ˛(.
+%11*#
+
+__unknown_file (
+
+%10*&
+
+__unknown_file (
+
+
+prompt2invokeE
+C
+
+˛ ˛(.
+
+response"__id*#
+
+__unknown_file (
+
+%11*	
+3
+4
+5: 
+
+ﬁ ﬁ(2
+task_descriptionB31
+/src.agents.orchestrator_agent.OrchestratorAgentH

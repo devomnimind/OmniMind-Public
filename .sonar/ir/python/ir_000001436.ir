@@ -1,0 +1,27 @@
+
+ª "
+    Decorator to make a function chaos-aware.
+
+    Args:
+        component: Component name
+        operation: Operation name (defaults to function name)
+    "str	component
+¾ ¾(	operation
+¾  ¾(?"ð#
+!
+
+× ×("#unknown-value#*
+(
+
+Ç ×(%closure"#new-object#-
++
+
+Ç ×("#set-field# operation:-
++
+
+Ç ×("#set-field# component:-
++
+
+Ç ×("?python-partial-apply?:
+
+× ×(*A/home/fahbrain/projects/omnimind/src/testing/chaos_engineering.py

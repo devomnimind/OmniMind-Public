@@ -55,7 +55,7 @@ echo ""
 nohup python -m uvicorn web.backend.main:app \
   --host 0.0.0.0 \
   --port 8000 \
-  --workers "${OMNIMIND_WORKERS:-2}" \
+  --workers 1 \
   > "$PROJECT_ROOT/logs/backend_8000.log" 2>&1 &
 
 BACKEND_PID=$!

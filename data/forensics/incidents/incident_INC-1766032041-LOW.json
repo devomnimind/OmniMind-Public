@@ -1,0 +1,15 @@
+{
+  "id": "INC-1766032041-LOW",
+  "title": "Incident 1",
+  "description": "Test 1",
+  "severity": "low",
+  "status": "open",
+  "created_at": "2025-12-18T04:27:21.673895+00:00",
+  "updated_at": "2025-12-18T04:27:21.673912+00:00",
+  "detected_by": "test",
+  "assigned_to": null,
+  "evidence_items": [],
+  "analysis": {},
+  "recommendations": [],
+  "tags": []
+}

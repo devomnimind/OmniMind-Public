@@ -1,0 +1,46 @@
+
+
+0int
+"params_per_layer"str
+
+1int
+ÏÅ"
+        Recommend layer sizes for target parameter count.
+
+        Args:
+            target_params: Target total parameters
+
+        Returns:
+            Dict with layer recommendations
+        "str
+"num_layers"str
+"total_params"strselfB B(#target_paramsB% B(7"^4
+2
+M6 M(G
+num_layers"	#binop >#2>:Bbool&"$
+M6 M(G *M3 M(52MH M(L"j&
+$
+M M(1"
+mathlog2:Bfloat.
+,
+M M(2"#dependent-value#*:Bint
+M M(N"
+M M(N"Ÿ*	
+num_layers&
+$
+O, O(>
+"
+builtinsmax*:	9
+7
+O O(>params_per_layer"
+#binop //#*2//:
+$
+"
+Q U(	"#new-object#Bdict 
+
+R R($"	#map-set#:	 
+
+S S(0"	#map-set#: 
+
+T T()"	#map-set#:
+Q U(	*H/home/fahbrain/projects/omnimind/src/architecture/bekenstein_capacity.py

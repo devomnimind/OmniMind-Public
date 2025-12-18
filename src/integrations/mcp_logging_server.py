@@ -20,7 +20,6 @@ from typing import Any, Dict, List, Optional
 
 from src.audit.immutable_audit import get_audit_system
 from src.audit.log_analyzer import AuditLogAnalyzer, QueryFilter
-from src.integrations.mcp_cache import get_mcp_cache
 from src.integrations.mcp_server import MCPServer
 
 logger = logging.getLogger(__name__)
@@ -46,9 +45,6 @@ class LoggingMCPServer(MCPServer):
         """
         super().__init__()
 
-        # Initialize cache
-        self.cache = get_mcp_cache()
-
         self.log_sources = log_sources or DEFAULT_LOG_SOURCES
         self.log_paths = [Path(source) for source in self.log_sources]
 
@@ -56,8 +52,8 @@ class LoggingMCPServer(MCPServer):
         self.audit_system = get_audit_system()
         self.log_analyzer = AuditLogAnalyzer(audit_system=self.audit_system)
 
-        # Registrar métodos MCP
-        self._methods.update(
+        # Registrar métodos MCP (preserva initialize())
+        self.register_methods(
             {
                 "search_logs": self.search_logs,
                 "get_recent_logs": self.get_recent_logs,
@@ -90,16 +86,6 @@ class LoggingMCPServer(MCPServer):
             Dict com resultados da busca
         """
         try:
-            # Check cache first
-            cache_key = f"log_search_{query}_{log_source}_{start_date}_{end_date}"
-            try:
-                if hasattr(self.cache, "_get_sync"):
-                    cached = self.cache._get_sync(cache_key)
-                    if cached:
-                        return cached
-            except Exception:
-                pass
-
             results: List[Dict[str, Any]] = []
 
             # Parsear datas se fornecidas

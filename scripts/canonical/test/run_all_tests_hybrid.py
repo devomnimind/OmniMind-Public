@@ -7,11 +7,12 @@ Usa IBM Quantum + processamento local paralelo
 
 import asyncio
 import os
+import subprocess
 import sys
 import time
-import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
+
 from dotenv import load_dotenv
 
 # Configurar ambiente antes de tudo

@@ -1,0 +1,36 @@
+
+8src.observability.distributed_tracing.Span.set_attributeS
+I/home/fahbrain/projects/omnimind/src/observability/distributed_tracing.pyl l("2*­
+2m m(#t
+r
+n n(
+%2"__id*Z
+
+__unknown_file (>*<,
+*src.observability.distributed_tracing.Span"
+
+attributes¢Ÿ
+n n($
+%1"dict.__setitem__*"
+
+__unknown_file (
+
+%2*#
+
+__unknown_file (
+
+key*%
+
+__unknown_file (	
+
+value2__setitem__*
+3*<
+3
+distributed_tracing.py"
+p p(
+implicit return:
+l l($
+key:
+l& l(0
+valueB.,
+*src.observability.distributed_tracing.SpanH

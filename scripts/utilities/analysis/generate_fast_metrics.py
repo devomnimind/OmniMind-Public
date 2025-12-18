@@ -3,10 +3,10 @@
 Fast Metrics Generator - Generate realistic training data for OmniMind Dashboard
 """
 
-import sys
-import os
 import json
+import os
 import random
+import sys
 from datetime import datetime
 
 # Add project root to path

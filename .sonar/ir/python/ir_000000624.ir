@@ -1,0 +1,21 @@
+
+
+0int
+"Fetch all results."strself
+ï ï(list"Ä)
+'
+
+ñ ñ("#unknown-value#Blist(
+&
+
+ñ ñ("
+#is-exact#:Bbool
+
+
+ñ ñ("
+#assume#::
+8
+
+ñ ñ("#set-field# __collection_size:Bint
+
+ñ ñ(*H/home/fahbrain/projects/omnimind/src/scaling/database_connection_pool.py

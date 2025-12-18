@@ -1,0 +1,46 @@
+
+"S3518"bool
+0.0float
+"division by zero"bool
+
+0int
+"a"bool
+0'"Calculate average for a given metric."strself (metric_name (*list"³'
+%
+- (/"#unknown-value#Blist&
+$
+- (/"
+#is-exact#:Bbool
+
+- (/"
+#assume#:8
+6
+- (/	"#set-field# __collection_size:Bint4
+2
+ (0
+metrics"
+builtinsgetattr*:)
+'
+. (5"
+__bool__*:
+BboolH&"$
+. (5 *+ (-26 (:"ß%
+#
+ ("
+builtinssum*:
+*
+(
+ (*"
+builtinslen*:
+Bint*
+(
+ (*"
+#binop !=#2!=:Bbool 
+
+ (*"
+#assert#:*
+(
+ (*"#dependent-value#*:
+ (>"
+ (>"$*
+ (>*D/home/fahbrain/projects/omnimind/src/motivation/intrinsic_rewards.py

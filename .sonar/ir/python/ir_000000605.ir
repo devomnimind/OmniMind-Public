@@ -1,0 +1,22 @@
+
+ "Get training metrics."str
+"num_agents"str
+"training_episodes"strself
+‡ ‡("ç&
+$
+
+‰ Œ(	"#new-object#Bdict-
++
+
+Š Š()"#get-field# num_agents:"
+ 
+
+Š Š()"	#map-set#:4
+2
+
+‹! ‹(7"#get-field# training_episodes:"
+ 
+
+‹ ‹(7	"	#map-set#:
+
+‰ Œ(	*S/home/fahbrain/projects/omnimind/src/collective_intelligence/collective_learning.py

@@ -1,0 +1,29 @@
+
+"python_version"str
+
+"packages"str
+
+
+"platform"str
+"generated_at"str
+!"Convert to dictionary."strselfT T("ö$
+"
+V c(	"#new-object#Bdict-
++
+W W(-"#get-field# generated_at: 
+
+W W(-"	#map-set#:/
+-
+X X(1"#get-field# python_version: 
+
+X X(1	"	#map-set#:)
+'
+Y Y(%"#get-field# platform: 
+
+Y Y(%"	#map-set#:
++
+)
+Z b("?python-unknown?:Bdict 
+
+Z b("	#map-set#:
+V c(	*@/home/fahbrain/projects/omnimind/src/tools/dependency_manager.py

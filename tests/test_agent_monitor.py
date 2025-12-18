@@ -5,7 +5,7 @@ import asyncio
 import pytest
 
 from web.backend.monitoring.agent_monitor import AgentMonitor
-from web.backend.routes.enums import AgentStatus, AgentType
+from web.backend.routes.agents import AgentStatus, AgentType
 
 
 @pytest.fixture

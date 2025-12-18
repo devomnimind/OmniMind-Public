@@ -8,12 +8,12 @@ a teoria lacaniana da falta-a-ser estrutural na IIT.
 """
 
 import json
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
+
 from rich import print as rprint
 from rich.panel import Panel
 from rich.table import Table
-import numpy as np
 
 
 def load_latest_results():

@@ -1,0 +1,861 @@
+
+o	"failure"str
+¬"concerned"str
+/	"success"str
+B"excellent"str
+Ê	"amazing"str
+ú"looking forward"str
+9"great"str
+ß"irritated"str
+Å"unfortunate"str
+0.7float
+ã"angry"str
+Å
+"reliable"str
+¯"confident"str
+ä"expect"str
+0.8float
+f"disappointed"str
+É0.65float
+
+0int
+π	"worried"str
+õë"Build a basic emotion lexicon for text analysis.
+
+        Returns:
+            Dictionary mapping words to (emotion, intensity) tuples
+        "str
+	"pleased"str
+T"sad"str
+ù	"annoyed"str
+K"wonderful"str
+Ô"trust"str
+À	"anxious"str
+›"unexpected"str
+∞"afraid"str
+x"failed"str
+0.9float
+10.75float
+ü0.6float
+	"excited"str
+‘"surprised"str
+î"frustrated"str
+"happy"str
+'0.85float
+]	"unhappy"str
+%"delighted"str
+ì"anticipate"strself
+Ä Ä(#		tuple40src.consciousness.emotional_intelligence.Emotion"¿U&
+$
+
+á Æ(	"#new-object#Bdict&
+$
+
+â â(!"#get-field# JOY:*
+(
+
+â â('"#unknown-value#Btuple(
+&
+
+â â('
+"
+#is-exact#:	Bbool
+
+
+â â('"
+#assume#:
+:
+8
+
+â â('"#set-field# __collection_size:Bint(
+&
+
+â â('"#array-add-last#:(
+&
+
+â â('"#array-add-last#:"
+ 
+
+â â('"	#map-set#:&
+$
+
+ä ä(#"#get-field# JOY:*
+(
+
+ä ä()"#unknown-value#Btuple(
+&
+
+ä ä()"
+#is-exact#:	Bbool
+
+
+ä ä()"
+#assume#::
+8
+
+ä ä()"#set-field# __collection_size:Bint(
+&
+
+ä ä()"#array-add-last#:(
+&
+
+ä ä()"#array-add-last#:"
+ 
+
+ä ä()"	#map-set#:&
+$
+
+ã ã(#"#get-field# JOY:*
+(
+
+ã ã()"#unknown-value#Btuple(
+&
+
+ã ã()"
+#is-exact#:	Bbool
+
+
+ã ã() "
+#assume#::
+8
+
+ã ã()!"#set-field# __collection_size:Bint(
+&
+
+ã ã()""#array-add-last#:(
+&
+
+ã ã()#"#array-add-last#:"
+ 
+
+ã ã()$"	#map-set#:&
+$
+
+å å(%&"#get-field# JOY:*
+(
+
+å å(,("#unknown-value#Btuple(
+&
+
+å å(,)"
+#is-exact#:(	Bbool
+
+
+å å(,*"
+#assume#:):
+8
+
+å å(,+"#set-field# __collection_size:(Bint(
+&
+
+å å(,,"#array-add-last#:(&(
+&
+
+å å(,-"#array-add-last#:('"
+ 
+
+å å(,."	#map-set#:%(&
+$
+
+ç ç(#0"#get-field# JOY:*
+(
+
+ç ç(*2"#unknown-value#Btuple(
+&
+
+ç ç(*3"
+#is-exact#:2	Bbool
+
+
+ç ç(*4"
+#assume#:3:
+8
+
+ç ç(*5"#set-field# __collection_size:2Bint(
+&
+
+ç ç(*6"#array-add-last#:20(
+&
+
+ç ç(*7"#array-add-last#:21"
+ 
+
+ç ç(*8"	#map-set#:/2&
+$
+
+é é(!:"#get-field# JOY:*
+(
+
+é é(';"#unknown-value#Btuple(
+&
+
+é é('<"
+#is-exact#:;	Bbool
+
+
+é é('="
+#assume#:<:
+8
+
+é é('>"#set-field# __collection_size:;Bint(
+&
+
+é é('?"#array-add-last#:;:(
+&
+
+é é('@"#array-add-last#:;"
+ 
+
+é é('A"	#map-set#:9;&
+$
+
+è è(%C"#get-field# JOY:*
+(
+
+è è(+D"#unknown-value#Btuple(
+&
+
+è è(+E"
+#is-exact#:D	Bbool
+
+
+è è(+F"
+#assume#:E:
+8
+
+è è(+G"#set-field# __collection_size:DBint(
+&
+
+è è(+H"#array-add-last#:DC(
+&
+
+è è(+I"#array-add-last#:D"
+ 
+
+è è(+J"	#map-set#:BD&
+$
+
+ê ê(%L"#get-field# JOY:*
+(
+
+ê ê(,M"#unknown-value#Btuple(
+&
+
+ê ê(,N"
+#is-exact#:M	Bbool
+
+
+ê ê(,O"
+#assume#:N:
+8
+
+ê ê(,P"#set-field# __collection_size:MBint(
+&
+
+ê ê(,Q"#array-add-last#:ML(
+&
+
+ê ê(,R"#array-add-last#:M'"
+ 
+
+ê ê(,S"	#map-set#:KM*
+(
+
+í í(#U"#get-field# SADNESS:*
+(
+
+í í()V"#unknown-value#Btuple(
+&
+
+í í()W"
+#is-exact#:V	Bbool
+
+
+í í()X"
+#assume#:W:
+8
+
+í í()Y"#set-field# __collection_size:VBint(
+&
+
+í í()Z"#array-add-last#:VU(
+&
+
+í í()["#array-add-last#:V"
+ 
+
+í í()\"	#map-set#:TV*
+(
+
+ì ì('^"#get-field# SADNESS:*
+(
+
+ì ì(._"#unknown-value#Btuple(
+&
+
+ì ì(.`"
+#is-exact#:_	Bbool
+
+
+ì ì(.a"
+#assume#:`:
+8
+
+ì ì(.b"#set-field# __collection_size:_Bint(
+&
+
+ì ì(.c"#array-add-last#:_^(
+&
+
+ì ì(.d"#array-add-last#:_1"
+ 
+
+ì ì(.e"	#map-set#:]_*
+(
+
+î î(,g"#get-field# SADNESS:*
+(
+
+î î(2h"#unknown-value#Btuple(
+&
+
+î î(2i"
+#is-exact#:h	Bbool
+
+
+î î(2j"
+#assume#:i:
+8
+
+î î(2k"#set-field# __collection_size:hBint(
+&
+
+î î(2l"#array-add-last#:hg(
+&
+
+î î(2m"#array-add-last#:h"
+ 
+
+î î(2n"	#map-set#:fh*
+(
+
+ï ï('p"#get-field# SADNESS:*
+(
+
+ï ï(-q"#unknown-value#Btuple(
+&
+
+ï ï(-r"
+#is-exact#:q	Bbool
+
+
+ï ï(-s"
+#assume#:r:
+8
+
+ï ï(-t"#set-field# __collection_size:qBint(
+&
+
+ï ï(-u"#array-add-last#:qp(
+&
+
+ï ï(-v"#array-add-last#:q"
+ 
+
+ï ï(-w"	#map-set#:oq*
+(
+
+ñ ñ(&y"#get-field# SADNESS:*
+(
+
+ñ ñ(-z"#unknown-value#Btuple(
+&
+
+ñ ñ(-{"
+#is-exact#:z	Bbool
+
+
+ñ ñ(-|"
+#assume#:{:
+8
+
+ñ ñ(-}"#set-field# __collection_size:zBint(
+&
+
+ñ ñ(-~"#array-add-last#:zy(
+&
+
+ñ ñ(-"#array-add-last#:z1#
+!
+
+ñ ñ(-Ä"	#map-set#:xz+
+)
+
+ó ó(+Ç"#get-field# SADNESS:+
+)
+
+ó ó(2Ñ"#unknown-value#Btuple*
+(
+
+ó ó(2Ö"
+#is-exact#:Ñ	Bbool!
+
+
+ó ó(2Ü"
+#assume#:Ö<
+:
+
+ó ó(2á"#set-field# __collection_size:ÑBint+
+)
+
+ó ó(2à"#array-add-last#:ÑÇ+
+)
+
+ó ó(2â"#array-add-last#:ÑÉ%
+#
+
+ó ó(2ä"	#map-set#:ÅÑ)
+'
+
+ô ô(#å"#get-field# ANGER:+
+)
+
+ô ô()ç"#unknown-value#Btuple*
+(
+
+ô ô()é"
+#is-exact#:ç	Bbool!
+
+
+ô ô()è"
+#assume#:é<
+:
+
+ô ô()ê"#set-field# __collection_size:çBint+
+)
+
+ô ô()ë"#array-add-last#:çå*
+(
+
+ô ô()í"#array-add-last#:ç%
+#
+
+ô ô()ì"	#map-set#:ãç)
+'
+
+ö ö((ï"#get-field# ANGER:+
+)
+
+ö ö(/ñ"#unknown-value#Btuple*
+(
+
+ö ö(/ó"
+#is-exact#:ñ	Bbool!
+
+
+ö ö(/ò"
+#assume#:ó<
+:
+
+ö ö(/ô"#set-field# __collection_size:ñBint+
+)
+
+ö ö(/ö"#array-add-last#:ñï*
+(
+
+ö ö(/õ"#array-add-last#:ñ1%
+#
+
+ö ö(/ú"	#map-set#:îñ)
+'
+
+õ õ(%û"#get-field# ANGER:+
+)
+
+õ õ(+†"#unknown-value#Btuple*
+(
+
+õ õ(+°"
+#is-exact#:†	Bbool!
+
+
+õ õ(+¢"
+#assume#:°<
+:
+
+õ õ(+£"#set-field# __collection_size:†Bint+
+)
+
+õ õ(+§"#array-add-last#:†û+
+)
+
+õ õ(+•"#array-add-last#:†ü%
+#
+
+õ õ(+¶"	#map-set#:ù†)
+'
+
+ú ú('®"#get-field# ANGER:+
+)
+
+ú ú(.©"#unknown-value#Btuple*
+(
+
+ú ú(.™"
+#is-exact#:©	Bbool!
+
+
+ú ú(.´"
+#assume#:™<
+:
+
+ú ú(.¨"#set-field# __collection_size:©Bint+
+)
+
+ú ú(.≠"#array-add-last#:©®+
+)
+
+ú ú(.Æ"#array-add-last#:©É%
+#
+
+ú ú(.Ø"	#map-set#:ß©(
+&
+
+û û(#±"#get-field# FEAR:+
+)
+
+û û()≤"#unknown-value#Btuple*
+(
+
+û û()≥"
+#is-exact#:≤	Bbool!
+
+
+û û()¥"
+#assume#:≥<
+:
+
+û û()µ"#set-field# __collection_size:≤Bint+
+)
+
+û û()∂"#array-add-last#:≤±*
+(
+
+û û()∑"#array-add-last#:≤%
+#
+
+û û()∏"	#map-set#:∞≤(
+&
+
+ü ü($∫"#get-field# FEAR:+
+)
+
+ü ü(*ª"#unknown-value#Btuple*
+(
+
+ü ü(*º"
+#is-exact#:ª	Bbool!
+
+
+ü ü(*Ω"
+#assume#:º<
+:
+
+ü ü(*æ"#set-field# __collection_size:ªBint+
+)
+
+ü ü(*ø"#array-add-last#:ª∫*
+(
+
+ü ü(*¿"#array-add-last#:ª%
+#
+
+ü ü(*¡"	#map-set#:πª(
+&
+
+† †(&√"#get-field# FEAR:+
+)
+
+† †(,ƒ"#unknown-value#Btuple*
+(
+
+† †(,≈"
+#is-exact#:ƒ	Bbool!
+
+
+† †(,∆"
+#assume#:≈<
+:
+
+† †(,«"#set-field# __collection_size:ƒBint+
+)
+
+† †(,»"#array-add-last#:ƒ√+
+)
+
+† †(,…"#array-add-last#:ƒü%
+#
+
+† †(, "	#map-set#:¬ƒ(
+&
+
+° °($Ã"#get-field# FEAR:+
+)
+
+° °(+Õ"#unknown-value#Btuple*
+(
+
+° °(+Œ"
+#is-exact#:Õ	Bbool!
+
+
+° °(+œ"
+#assume#:Œ<
+:
+
+° °(+–"#set-field# __collection_size:ÕBint+
+)
+
+° °(+—"#array-add-last#:ÕÃ*
+(
+
+° °(+“"#array-add-last#:Õ1%
+#
+
+° °(+”"	#map-set#:ÀÕ,
+*
+
+£ £(*’"#get-field# SURPRISE:+
+)
+
+£ £(0÷"#unknown-value#Btuple*
+(
+
+£ £(0◊"
+#is-exact#:÷	Bbool!
+
+
+£ £(0ÿ"
+#assume#:◊<
+:
+
+£ £(0Ÿ"#set-field# __collection_size:÷Bint+
+)
+
+£ £(0⁄"#array-add-last#:÷’*
+(
+
+£ £(0€"#array-add-last#:÷%
+#
+
+£ £(0‹"	#map-set#:‘÷,
+*
+
+§ §(+ﬁ"#get-field# SURPRISE:+
+)
+
+§ §(1ﬂ"#unknown-value#Btuple*
+(
+
+§ §(1‡"
+#is-exact#:ﬂ	Bbool!
+
+
+§ §(1·"
+#assume#:‡<
+:
+
+§ §(1‚"#set-field# __collection_size:ﬂBint+
+)
+
+§ §(1„"#array-add-last#:ﬂﬁ*
+(
+
+§ §(1‰"#array-add-last#:ﬂ%
+#
+
+§ §(1Â"	#map-set#:›ﬂ,
+*
+
+• •((Á"#get-field# SURPRISE:+
+)
+
+• •(/Ë"#unknown-value#Btuple*
+(
+
+• •(/È"
+#is-exact#:Ë	Bbool!
+
+
+• •(/Í"
+#assume#:È<
+:
+
+• •(/Î"#set-field# __collection_size:ËBint+
+)
+
+• •(/Ï"#array-add-last#:ËÁ*
+(
+
+• •(/Ì"#array-add-last#:Ë1%
+#
+
+• •(/Ó"	#map-set#:ÊË)
+'
+
+ß ß(#"#get-field# TRUST:+
+)
+
+ß ß()Ò"#unknown-value#Btuple*
+(
+
+ß ß()Ú"
+#is-exact#:Ò	Bbool!
+
+
+ß ß()Û"
+#assume#:Ú<
+:
+
+ß ß()Ù"#set-field# __collection_size:ÒBint+
+)
+
+ß ß()ı"#array-add-last#:Ò*
+(
+
+ß ß()ˆ"#array-add-last#:Ò%
+#
+
+ß ß()˜"	#map-set#:ÔÒ)
+'
+
+® ®('˘"#get-field# TRUST:+
+)
+
+® ®(.˙"#unknown-value#Btuple*
+(
+
+® ®(.˚"
+#is-exact#:˙	Bbool!
+
+
+® ®(.¸"
+#assume#:˚<
+:
+
+® ®(.˝"#set-field# __collection_size:˙Bint+
+)
+
+® ®(.˛"#array-add-last#:˙˘*
+(
+
+® ®(.ˇ"#array-add-last#:˙1%
+#
+
+® ®(.Ä"	#map-set#:¯˙)
+'
+
+© ©(&Ç"#get-field# TRUST:+
+)
+
+© ©(,É"#unknown-value#Btuple*
+(
+
+© ©(,Ñ"
+#is-exact#:É	Bbool!
+
+
+© ©(,Ö"
+#assume#:Ñ<
+:
+
+© ©(,Ü"#set-field# __collection_size:ÉBint+
+)
+
+© ©(,á"#array-add-last#:ÉÇ*
+(
+
+© ©(,à"#array-add-last#:É%
+#
+
+© ©(,â"	#map-set#:ÅÉ0
+.
+
+´ ´(+ã"#get-field# ANTICIPATION:+
+)
+
+´ ´(1å"#unknown-value#Btuple*
+(
+
+´ ´(1ç"
+#is-exact#:å	Bbool!
+
+
+´ ´(1é"
+#assume#:ç<
+:
+
+´ ´(1è"#set-field# __collection_size:åBint+
+)
+
+´ ´(1ê"#array-add-last#:åã*
+(
+
+´ ´(1ë"#array-add-last#:å%
+#
+
+´ ´(1í"	#map-set#:äå0
+.
+
+¨ ¨(/î"#get-field# ANTICIPATION:+
+)
+
+¨ ¨(5ï"#unknown-value#Btuple*
+(
+
+¨ ¨(5ñ"
+#is-exact#:ï	Bbool!
+
+
+¨ ¨(5ó"
+#assume#:ñ<
+:
+
+¨ ¨(5ò"#set-field# __collection_size:ïBint+
+)
+
+¨ ¨(5ô"#array-add-last#:ïî*
+(
+
+¨ ¨(5ö"#array-add-last#:ï%
+#
+
+¨ ¨(5õ"	#map-set#:ìï0
+.
+
+≠  ≠(4ù"#get-field# ANTICIPATION:+
+)
+
+≠ ≠(;û"#unknown-value#Btuple*
+(
+
+≠ ≠(;ü"
+#is-exact#:û	Bbool!
+
+
+≠ ≠(;†"
+#assume#:ü<
+:
+
+≠ ≠(;°"#set-field# __collection_size:ûBint+
+)
+
+≠ ≠(;¢"#array-add-last#:ûù*
+(
+
+≠ ≠(;£"#array-add-last#:û1%
+#
+
+≠ ≠(;§"	#map-set#:úû
+
+á Æ(	*L/home/fahbrain/projects/omnimind/src/consciousness/emotional_intelligence.py

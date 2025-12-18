@@ -19,8 +19,6 @@ Contact: fabricioslv@hotmail.com.br
 """
 
 import json
-import re
-import sys
 from pathlib import Path
 
 

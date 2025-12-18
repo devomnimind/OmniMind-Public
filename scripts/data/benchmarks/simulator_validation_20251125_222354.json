@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "timestamp": "2025-11-25T22:23:54.778830+00:00",
+    "backend": "Qiskit Aer Simulator",
+    "backend_type": "simulator",
+    "shots": 1024,
+    "note": "Dados simulados - aguardando correção IBM Quantum API"
+  },
+  "benchmarks": {
+    "bell_state": {
+      "circuit": "bell_state_phi_plus",
+      "counts": {
+        "11 00": 513,
+        "00 00": 511
+      },
+      "probabilities": {
+        "00": 0.0,
+        "01": 0.0,
+        "10": 0.0,
+        "11": 0.0
+      },
+      "fidelity": 1.0
+    },
+    "randomness": {
+      "circuit": "single_qubit_superposition",
+      "counts": {
+        "1 0": 504,
+        "0 0": 520
+      },
+      "probabilities": {
+        "0": 0.0,
+        "1": 0.0
+      },
+      "quality": 0.0
+    },
+    "superposition": {
+      "circuit": "two_qubit_superposition",
+      "counts": {
+        "01 00": 267,
+        "11 00": 241,
+        "10 00": 245,
+        "00 00": 271
+      },
+      "probabilities": {
+        "00": 0.0,
+        "01": 0.0,
+        "10": 0.0,
+        "11": 0.0
+      },
+      "uniformity": 0.0
+    }
+  },
+  "analysis": {
+    "bell_state_fidelity": 1.0,
+    "randomness_quality": 0.0,
+    "superposition_accuracy": 0.0,
+    "noise_impact": 0.05,
+    "quantum_advantage": "Dados simulados - aguardar hardware real"
+  }
+}

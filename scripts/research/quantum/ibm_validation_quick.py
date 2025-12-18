@@ -38,12 +38,12 @@ Shots: 1024 (baixo custo)
 Tempo estimado: 5-10 minutos
 """
 
+import json
 import os
 import sys
-import json
-import time
 from datetime import datetime, timezone
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 # Adicionar root ao path
@@ -51,9 +51,10 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from src.quantum_consciousness.qpu_interface import QPUInterface, BackendType
-from qiskit import QuantumCircuit
 import structlog
+from qiskit import QuantumCircuit
+
+from src.quantum_consciousness.qpu_interface import BackendType, QPUInterface
 
 # Configurar logging
 logger = structlog.get_logger(__name__)

@@ -122,7 +122,6 @@ class LatencyAttack:
     def _log_metric(self, metric: LatencyAttackMetrics):
         """Log estruturado para análise"""
         # Using print for now as requested by user spec, but will be captured by main logger
-        pass
 
     def summarize(self) -> dict:
         """Resumo do ataque"""

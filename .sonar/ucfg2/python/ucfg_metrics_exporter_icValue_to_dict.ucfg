@@ -1,0 +1,74 @@
+
+6src.observability.metrics_exporter.MetricValue.to_dictP
+F/home/fahbrain/projects/omnimind/src/observability/metrics_exporter.py- -("2*Ñ
+2. .($
+/ 3(	
+%1"dicts
+q
+0 0(
+%2"__id*Y
+
+__unknown_file (=*;0
+.src.observability.metrics_exporter.MetricValue"
+valueŒ
+‰
+0 0(
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*%
+
+__unknown_file (	
+value*"
+
+__unknown_file (
+
+%2w
+u
+1 1('
+%4"__id*]
+
+__unknown_file (A*?0
+.src.observability.metrics_exporter.MetricValue"
+	timestamp
+
+1 1('
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	timestamp*"
+
+__unknown_file (
+
+%4t
+r
+2 2(!
+%6"__id*Z
+
+__unknown_file (>*<0
+.src.observability.metrics_exporter.MetricValue"
+labels
+Š
+2 2(!
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*&
+
+__unknown_file (
+
+labels*"
+
+__unknown_file (
+
+%6"
+/ 3(	
+
+%1B20
+.src.observability.metrics_exporter.MetricValueH

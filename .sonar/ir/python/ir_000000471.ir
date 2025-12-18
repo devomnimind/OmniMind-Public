@@ -1,0 +1,70 @@
+
+	"#ffcc80"str
+Œ‚"Get color for a depth level.
+
+        Args:
+            depth: Depth level
+
+        Returns:
+            Hex color code
+        "str
+	"#ffb74d"str
+	"#fff3e0"str
+
+1int
+	"#fb8c00"str
+	"#ffa726"str
+	"#ffe0b2"str
+
+0intdepth
+Ö Ö(
+list"ï1
+/
+
+à ç(		colors"#unknown-value#Blist(
+&
+
+à ç(	"
+#is-exact#:	
+Bbool
+
+
+à ç(	"
+#assume#::
+8
+
+à ç(	"#set-field# __collection_size:	Bint(
+&
+
+à ç(	"#array-add-last#:	(
+&
+
+à ç(	"#array-add-last#:	(
+&
+
+à ç(	"#array-add-last#:	(
+&
+
+à ç(	"#array-add-last#:	(
+&
+
+à ç(	"#array-add-last#:	(
+&
+
+à ç(	"#array-add-last#:	,
+*
+
+è! è(,"
+builtinslen*:	Bint'
+%
+
+è! è(0"	#binop -#*2-:(
+&
+
+è è(1"
+builtinsmin*:$
+"
+
+è è(2"#array-read#:	
+
+è è(2*E/home/fahbrain/projects/omnimind/src/observability/profiling_tools.py

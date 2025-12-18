@@ -1,0 +1,180 @@
+
+7src.workflows.automated_code_review.CodeMetrics.to_dictQ
+G/home/fahbrain/projects/omnimind/src/workflows/automated_code_review.pyX X("2*è
+2Y Y($
+Z c(	
+%1"dict|
+z
+[ [(/
+%2"__id*b
+
+__unknown_file (F*D1
+/src.workflows.automated_code_review.CodeMetrics"
+lines_of_codeî
+ë
+[ [(/
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*-
+
+__unknown_file (
+lines_of_code*"
+
+__unknown_file (
+
+%2|
+z
+\ \(/
+%4"__id*b
+
+__unknown_file (F*D1
+/src.workflows.automated_code_review.CodeMetrics"
+comment_linesî
+ë
+\ \(/
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*-
+
+__unknown_file (
+comment_lines*"
+
+__unknown_file (
+
+%4z
+x
+] ](+
+%6"__id*`
+
+__unknown_file (D*B1
+/src.workflows.automated_code_review.CodeMetrics"
+blank_linesí
+è
+] ](+
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+blank_lines*"
+
+__unknown_file (
+
+%6y
+w
+^ ^()
+%8"__id*_
+
+__unknown_file (C*A1
+/src.workflows.automated_code_review.CodeMetrics"
+
+complexityë
+é
+^ ^()
+%9"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+complexity*"
+
+__unknown_file (
+
+%8Ü
+É
+_% _(?
+%10"__id*j
+
+__unknown_file (N*L1
+/src.workflows.automated_code_review.CodeMetrics"
+maintainability_indexû
+õ
+_ _(?
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*5
+
+__unknown_file (
+maintainability_index*#
+
+__unknown_file (
+
+%10}
+{
+` `(/
+%12"__id*b
+
+__unknown_file (F*D1
+/src.workflows.automated_code_review.CodeMetrics"
+test_coverageñ
+ì
+` `(/
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*-
+
+__unknown_file (
+test_coverage*#
+
+__unknown_file (
+
+%12É
+Ä
+a" a(9
+%14"__id*g
+
+__unknown_file (K*I1
+/src.workflows.automated_code_review.CodeMetrics"
+type_hint_coverageõ
+ò
+a a(9
+%15"__mapSet*"
+
+__unknown_file (
+
+%1*2
+
+__unknown_file (
+type_hint_coverage*#
+
+__unknown_file (
+
+%14É
+Ä
+b" b(9
+%16"__id*g
+
+__unknown_file (K*I1
+/src.workflows.automated_code_review.CodeMetrics"
+docstring_coverageõ
+ò
+b b(9
+%17"__mapSet*"
+
+__unknown_file (
+
+%1*2
+
+__unknown_file (
+docstring_coverage*#
+
+__unknown_file (
+
+%16"
+Z c(	
+
+%1B31
+/src.workflows.automated_code_review.CodeMetricsH

@@ -11,7 +11,6 @@ Data: 2025-12-06
 import logging
 from typing import Any, Dict, Optional
 
-from src.integrations.mcp_cache import get_mcp_cache
 from src.integrations.mcp_server import MCPServer
 
 logger = logging.getLogger(__name__)
@@ -59,9 +58,6 @@ class MemoryMCPServer(MCPServer):
         """Inicializa o servidor de memória MCP."""
         super().__init__()
 
-        # Inicializar cache
-        self.cache = get_mcp_cache()
-
         # Inicializar sistemas de memória
         SemanticMemory = _get_semantic_memory()
         ProceduralMemory = _get_procedural_memory()
@@ -70,8 +66,8 @@ class MemoryMCPServer(MCPServer):
         self.procedural_memory = ProceduralMemory()
         self.episodic_memory: Optional[Any] = None  # Lazy init se necessário
 
-        # Registrar métodos MCP
-        self._methods.update(
+        # Registrar métodos MCP (preserva initialize())
+        self.register_methods(
             {
                 "store_memory": self.store_memory,
                 "retrieve_memory": self.retrieve_memory,
@@ -125,7 +121,7 @@ class MemoryMCPServer(MCPServer):
             return {"error": str(e), "status": "failed"}
 
     def retrieve_memory(self, query: str, limit: int = 10) -> Dict[str, Any]:
-        """Recupera memórias usando busca semântica com cache.
+        """Recupera memórias usando busca semântica.
 
         Args:
             query: Query de busca
@@ -135,21 +131,6 @@ class MemoryMCPServer(MCPServer):
             Resultados da busca
         """
         try:
-            # Cache key
-            cache_key = f"retrieve_memory:{query}:{limit}"
-
-            # Try cache (sync version)
-            cached = None
-            try:
-                # Cache has async get, but we can try sync alternative
-                if hasattr(self.cache, "_get_sync"):
-                    cached = self.cache._get_sync(cache_key)
-            except Exception:
-                pass
-
-            if cached:
-                return cached
-
             # Buscar conceitos relacionados
             results = []
             query_lower = query.lower()

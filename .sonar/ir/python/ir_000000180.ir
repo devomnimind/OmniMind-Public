@@ -1,0 +1,11 @@
+
+>5"Abstract method - must be overridden by subclasses."str
+NE"{self.__class__.__name__}.{self.name}.execute() must be implemented"strself
+Å Å(args
+Å Å( kwargs
+Å" Å(/"dict"VB
+@
+
+É Ö(	"NotImplementedError*:BNotImplementedError2
+
+É Ö(	*7/home/fahbrain/projects/omnimind/src/tools/tool_base.py

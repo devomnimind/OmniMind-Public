@@ -109,56 +109,9 @@ class ResourceProtector:
         self.protected_processes.append(pid)
         logger.debug(f"Processo {pid} registrado para proteção")
 
-    def _is_dev_script(self, pid: int) -> bool:
-        """Detectar se processo é um script de desenvolvimento.
-
-        Dev scripts NUNCA devem ser matados - são críticos para testing.
-        Inclui: pytest, ciclo tests, scripts recovery, jupyter, etc.
-        """
-        try:
-            proc = psutil.Process(pid)
-            cmdline = proc.cmdline()
-            cmdline_str = " ".join(str(arg) for arg in cmdline) if cmdline else ""
-
-            # Padrões de dev scripts que precisam de proteção
-            dev_patterns = [
-                "pytest",
-                "03_run_500_cycles",
-                "03_test_50_cycles",
-                "MASTER_RECOVERY",
-                "integration_cycles",
-                "jupyter",
-                "python -m unittest",
-                "scripts/recovery",
-                "robust_consciousness_validation",
-                "OMNIMIND_DEV_SCRIPT_MODE",  # Env var set by wrapper
-                "run_dev_safe",
-            ]
-
-            for pattern in dev_patterns:
-                if pattern.lower() in cmdline_str.lower():
-                    return True
-
-            # Verificar env var do wrapper
-            try:
-                env = proc.environ()
-                if env.get("OMNIMIND_DEV_SCRIPT_MODE") == "true":
-                    return True
-            except (psutil.NoSuchProcess, psutil.AccessDenied):
-                pass
-
-        except (psutil.NoSuchProcess, psutil.AccessDenied):
-            pass
-
-        return False
-
     def _is_protected(self, pid: int) -> bool:
         """Verificar se PID é protegido (incluindo filhos)."""
         if pid in self.protected_processes:
-            return True
-
-        # Dev scripts NUNCA são matados
-        if self._is_dev_script(pid):
             return True
 
         try:
@@ -403,8 +356,7 @@ class ResourceProtector:
 
         # Ordenar por memória descendente
         processes.sort(
-            key=lambda x: float(x.get("memory_mb", 0)) or 0,  # type: ignore[arg-type,return-value]
-            reverse=True,
+            key=lambda x: float(str(x["memory_mb"])) if x["memory_mb"] else 0.0, reverse=True
         )
         return processes
 

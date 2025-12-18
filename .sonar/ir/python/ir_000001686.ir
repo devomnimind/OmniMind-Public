@@ -1,0 +1,43 @@
+
+0.20float
+0.10float
+) "Get default principle weights."str
+0.15float
+0.05floatselfp p(C?src.decision_making.ethical_decision_framework.EthicalPrinciple"¯$
+"
+r {(	"#new-object#Bdict)
+'
+s s(%"#get-field# AUTONOMY: 
+
+s s(+"	#map-set#:,
+*
+t t(("#get-field# BENEFICENCE: 
+
+t t(.	"	#map-set#:0
+.
+u u(,
+"#get-field# NON_MALEFICENCE: 
+
+u u(2"	#map-set#:
+(
+&
+v v($"#get-field# JUSTICE: 
+
+v v(*"	#map-set#:(
+&
+w w($"#get-field# PRIVACY: 
+
+w w(*"	#map-set#:-
++
+x x()"#get-field# TRANSPARENCY: 
+
+x x(/"	#map-set#:/
+-
+y y(+"#get-field# ACCOUNTABILITY: 
+
+y y(1"	#map-set#:(
+&
+z z($"#get-field# DIGNITY: 
+
+z z(*"	#map-set#:
+r {(	*R/home/fahbrain/projects/omnimind/src/decision_making/ethical_decision_framework.py

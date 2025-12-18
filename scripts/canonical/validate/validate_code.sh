@@ -50,20 +50,13 @@ fi
 
 # MyPy type checking
 echo "4. Verificando tipos (MyPy)..."
-MYPY_OUTPUT=$(mypy src/ --ignore-missing-imports 2>&1)
-MYPY_ERRORS=$(echo "$MYPY_OUTPUT" | python3 -c "
-import sys
-lines = sys.stdin.read().split('\n')
-error_count = sum(1 for line in lines if 'error:' in line.lower())
-print(error_count)
-" 2>/dev/null || echo "0")
-
+MYPY_ERRORS=$(mypy src/ --ignore-missing-imports 2>&1 | grep -c "error:")
 if [ "$MYPY_ERRORS" -eq 0 ]; then
     print_status 0 "Tipos corretos (0 erros)"
-elif [ "$MYPY_ERRORS" -le 50 ]; then
-    echo -e "${YELLOW}⚠️  $MYPY_ERRORS erros de tipo (aceitável após correções de configuração)${NC}"
+elif [ "$MYPY_ERRORS" -le 25 ]; then
+    echo -e "${YELLOW}⚠️  $MYPY_ERRORS erros de tipo (aceitável)${NC}"
 else
-    echo -e "${RED}❌ Muitos erros de tipo: $MYPY_ERRORS (máximo: 50)${NC}"
+    echo -e "${RED}❌ Muitos erros de tipo: $MYPY_ERRORS (máximo: 25)${NC}"
     exit 1
 fi
 
@@ -100,29 +93,29 @@ from pathlib import Path
 def verify_audit_chain():
     audit_dir = Path('logs')
     hash_chain_file = audit_dir / 'hash_chain.json'
-
+    
     if not hash_chain_file.exists():
         return False, 'Arquivo de cadeia de auditoria não encontrado'
-
+    
     try:
         with open(hash_chain_file, 'r') as f:
             chain_data = json.load(f)
-
+        
         previous_hash = '0' * 64
-
+        
         for entry in chain_data.get('chain', []):
             current_hash = entry.get('hash', '')
             expected_hash = hashlib.sha256(
                 f\"{previous_hash}:{entry.get('timestamp', '')}:{entry.get('action', '')}:{entry.get('data', '')}\".encode()
             ).hexdigest()
-
+            
             if current_hash != expected_hash:
                 return False, f'Corrupção detectada na entrada {entry.get(\"timestamp\", \"desconhecida\")}'
-
+            
             previous_hash = current_hash
-
+        
         return True, 'Cadeia de auditoria válida'
-
+        
     except Exception as e:
         return False, f'Erro na verificação: {e}'
 

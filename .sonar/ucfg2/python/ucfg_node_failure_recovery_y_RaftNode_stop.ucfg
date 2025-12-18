@@ -1,0 +1,116 @@
+
+/src.scaling.node_failure_recovery.RaftNode.stopQ
+E/home/fahbrain/projects/omnimind/src/scaling/node_failure_recovery.pyÐ Ð("2*
+2
+Ñ Ñ(w
+u
+
+Ò Ò(:,
+*src.scaling.node_failure_recovery.RaftNode"
+
+_running"__id*%
+
+__unknown_file (	
+
+False{
+y
+
+Ô Ô(
+%9"__id*_
+
+__unknown_file (C*A,
+*src.scaling.node_failure_recovery.RaftNode"
+_election_timer*
+6
+7*>
+3
+node_failure_recovery.py"
+Ü Ü
+implicit return*à
+4
+Ù Ù(7s
+q
+
+Ù  Ù(,
+%1"__id*W
+
+__unknown_file (;*9,
+*src.scaling.node_failure_recovery.RaftNode"	
+node_idm
+k
+
+Ù Ù(6
+%2"__concat*
+
+Ù Ù(
+	RaftNode *
+
+Ù  Ù(,
+
+%1*
+
+Ù- Ù(5
+
+ stoppedfd
+
+Ù Ù(7
+%3*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%22info*
+3*Ô
+5
+× ×(*|
+z
+
+× ×(!
+%4"__id*`
+
+__unknown_file (D*B,
+*src.scaling.node_failure_recovery.RaftNode"
+_heartbeat_timer@>
+
+× ×(*
+%5*"
+
+__unknown_file (
+
+%42cancel*
+4*•
+6
+Ö Ö( |
+z
+
+Ö Ö( 
+%6"__id*`
+
+__unknown_file (D*B,
+*src.scaling.node_failure_recovery.RaftNode"
+_heartbeat_timer*
+4
+5*Ó
+7
+Õ Õ(){
+y
+
+Õ Õ( 
+%7"__id*_
+
+__unknown_file (C*A,
+*src.scaling.node_failure_recovery.RaftNode"
+_election_timer@>
+
+Õ Õ()
+%8*"
+
+__unknown_file (
+
+%72cancel*
+6B.,
+*src.scaling.node_failure_recovery.RaftNodeH

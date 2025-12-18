@@ -1,0 +1,14 @@
+
+
+0int
+"Get available quota."strself> >("·&
+$
+@ @( "#get-field# limit:.
+,
+@# @(5"#get-field# current_usage:%
+#
+@ @(5"	#binop -#*2-:&
+$
+@ @(6"
+builtinsmax*:
+@ @(6*F/home/fahbrain/projects/omnimind/src/scaling/multi_tenant_isolation.py

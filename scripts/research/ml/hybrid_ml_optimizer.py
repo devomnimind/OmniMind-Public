@@ -24,13 +24,12 @@ Hybrid ML Optimizer - Integração GitHub Models + Hugging Face
 Otimizado para limites mensais e recursos limitados
 """
 
-import os
 import json
+import os
 import time
-import requests
-from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Dict
 
 
 @dataclass

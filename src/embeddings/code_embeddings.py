@@ -16,20 +16,15 @@ import hashlib
 import logging
 import os
 import subprocess
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, cast
 
 from qdrant_client import QdrantClient
 from qdrant_client.http import models as qmodels
-
-# Safe loader para evitar torch._dynamo issues
-from src.embeddings.safe_transformer_loader import (
-    create_fallback_embedding,
-    load_sentence_transformer_safe,
-)
+from sentence_transformers import SentenceTransformer
 
 logger = logging.getLogger(__name__)
 
@@ -78,7 +73,7 @@ class OmniMindEmbeddings:
         qdrant_url: str = "http://localhost:6333",
         collection_name: str = "omnimind_embeddings",
         model_name: str = "all-MiniLM-L6-v2",
-        model: Optional[Any] = None,
+        model: Optional[SentenceTransformer] = None,
         chunk_size_code: int = 100,  # linhas para código
         chunk_size_docs: int = 50,  # linhas para documentos
         overlap: int = 20,  # sobreposição entre chunks
@@ -96,154 +91,77 @@ class OmniMindEmbeddings:
         self.batch_size_embeddings = batch_size_embeddings
         self.enable_async_execution = enable_async_execution
 
-        # Lazy-load torch (evitar import pesado durante __init__)
-        self.torch_available: Optional[bool] = None
-        self._torch_cache: Optional[Any] = None
-
-        # Lazy-load modelo (evitar imports pesados durante __init__)
-        self._model_cache: Optional[Any] = None
-        self._model_failed: bool = False
-        self._embedding_dim_cache: Optional[int] = None
-        self._provided_model = model
-        self._model_name = model_name
-        self._force_cpu = os.getenv("OMNIMIND_FORCE_CPU_EMBEDDINGS", "").lower() in (
-            "true",
-            "1",
-            "yes",
-        )
-
-        # Lazy-load Qdrant (evitar timeout durante __init__)
-        self._client_cache: Optional[QdrantClient] = None
-        self._qdrant_url: str = qdrant_url
-
-        # Estatísticas de uso de GPU
-        self.gpu_memory_cleared_count = 0
-        self.embedding_batches_processed = 0
-
-    @property
-    def torch(self) -> Optional[Any]:
-        """Lazy-load torch para evitar import pesado durante __init__."""
-        if self._torch_cache is not None:
-            return self._torch_cache
-
-        if self.torch_available is False:  # Já testado e falhou
-            return None
-
+        # Verificar se PyTorch está disponível para gerenciamento de GPU
         try:
             import torch
 
+            self.torch = cast(Any, None)
+            self.torch_available = False
+            self.torch = torch
             self.torch_available = True
-            self._torch_cache = torch
-            return torch
         except ImportError:
             self.torch_available = False
+            self.torch = None
             logger.warning("PyTorch não disponível. Gerenciamento de GPU desabilitado.")
-            return None
 
-    @property
-    def model(self) -> Optional[Any]:
-        """Lazy-load modelo SentenceTransformer."""
-        if self._model_failed:
-            return None
+        # Inicializar modelo
+        if model is not None:
+            self.model = model
+            self.embedding_dim = self.model.get_sentence_embedding_dimension()
+        else:
+            from src.utils.device_utils import get_sentence_transformer_device
 
-        if self._model_cache is not None:
-            return self._model_cache
-
-        try:
-            if self._provided_model is not None:
-                self._model_cache = self._provided_model
-                return self._provided_model
-
-            # Carregar modelo - Tentar GPU primeiro
-            import torch
-
-            if not self._force_cpu and torch.cuda.is_available():
+            # Forçar GPU se threshold for atingido ou variável de ambiente
+            force_gpu = os.getenv("OMNIMIND_FORCE_GPU_EMBEDDINGS", "").lower() in (
+                "true",
+                "1",
+                "yes",
+            )
+            if force_gpu:
                 device = "cuda"
-                logger.info(f"🚀 Usando GPU: {torch.cuda.get_device_name(0)}")
+                logger.info("GPU forçado via OMNIMIND_FORCE_GPU_EMBEDDINGS=true")
             else:
-                device = "cpu"
-                if self._force_cpu:
-                    logger.info("CPU forçado via _force_cpu")
-                else:
-                    logger.info("GPU não disponível, usando CPU")
+                device = get_sentence_transformer_device(self.gpu_memory_threshold_mb)
 
+            logger.info(f"Carregando modelo: {model_name} (device={device})")
+
+            # Configurar para usar apenas cache local
+            os.environ["HF_HUB_OFFLINE"] = "1"
             cache_path = (
                 "/home/fahbrain/.cache/huggingface/hub/"
                 "models--sentence-transformers--all-MiniLM-L6-v2/"
                 "snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf"
             )
 
-            logger.info(f"Carregando modelo: {self._model_name}")
-            model, dim = load_sentence_transformer_safe(
-                model_name=self._model_name,
-                device=device,
-                cache_path=cache_path if os.path.exists(cache_path) else None,
-            )
+            if os.path.exists(cache_path):
+                logger.info(f"Usando modelo do cache local: {cache_path}")
+                self.model = SentenceTransformer(cache_path, device=device)
+            else:
+                logger.warning("Modelo não encontrado no cache, tentando com local_files_only...")
+                self.model = SentenceTransformer(model_name, device=device, local_files_only=True)
+            self.embedding_dim = int(
+                self.model.get_sentence_embedding_dimension() or 384
+            )  # type: ignore
+            logger.info(f"Modelo carregado. Dimensões: {self.embedding_dim}")
 
-            if model is None:
-                logger.warning("Modelo falhou. Usando fallback.")
-                self._model_cache = None
-                self._model_failed = True
-                self._embedding_dim_cache = 384
-                return None
+        # Inicializar cliente Qdrant
+        self.client = QdrantClient(url=qdrant_url)
 
-            self._model_cache = model
-            self._embedding_dim_cache = dim
-            return model
-        except Exception as e:
-            logger.error(f"Erro ao carregar modelo: {e}")
-            self._model_failed = True
-            self._embedding_dim_cache = 384
-            return None
+        # Criar coleção se não existir
+        self._ensure_collection()
 
-    @property
-    def embedding_dim(self):
-        """Dimensão dos embeddings."""
-        if self._embedding_dim_cache is not None:
-            return self._embedding_dim_cache
+        # Estatísticas de uso de GPU
+        self.gpu_memory_cleared_count = 0
+        self.embedding_batches_processed = 0
 
-        model = self.model
-        if model is not None:
-            dim = model.get_sentence_embedding_dimension()
-            self._embedding_dim_cache = dim
-            return dim
+        # Inicializar Qdrant
+        self.client = QdrantClient(qdrant_url)
 
-        return 384  # Fallback
-
-    @property
-    def use_fallback(self):
-        """Se estamos usando fallback determinístico."""
-        return self._model_failed or self.model is None
-
-    @property
-    def client(self) -> Optional[QdrantClient]:
-        """Lazy-load Qdrant client para evitar timeout durante __init__."""
-        if self._client_cache is not None:
-            return self._client_cache
-
-        # Se já testou e falhou, retornar None
-        if hasattr(self, "_qdrant_failed"):
-            return None
-
-        try:
-            logger.info(f"Conectando ao Qdrant: {self._qdrant_url}")
-            client = QdrantClient(url=self._qdrant_url, timeout=int(5))
-            # Testar conexão rápida
-            client.get_collections()
-            logger.info("✅ Qdrant conectado")
-            self._client_cache = client
-            return client
-        except Exception as e:
-            logger.error(f"⚠️  Qdrant indisponível: {e}. Usando modo offline.")
-            self._qdrant_failed = True
-            return None
+        # Criar coleção se não existir
+        self._ensure_collection()
 
     def _ensure_collection(self):
         """Cria coleção se não existir."""
-        if not self.client:
-            logger.warning("Cliente Qdrant não disponível. Pulando criação de coleção.")
-            return
-
         try:
             collections = self.client.get_collections().collections or []
             collection_names = [info.name for info in collections]
@@ -260,46 +178,30 @@ class OmniMindEmbeddings:
         except Exception as exc:
             logger.error(f"Erro ao criar coleção: {exc}")
 
-    def _cleanup_gpu_memory(self) -> None:
+    def _cleanup_gpu_memory(self):
         """Limpa cache de memória GPU para prevenir fragmentação."""
-        torch_module = self.torch
-        if (
-            self.torch_available
-            and torch_module is not None
-            and torch_module.cuda.is_available()  # type: ignore[attr-defined]
-        ):
+        if self.torch_available and self.torch.cuda.is_available():
             try:
-                torch_module.cuda.empty_cache()  # type: ignore[attr-defined]
+                self.torch.cuda.empty_cache()
                 self.gpu_memory_cleared_count += 1
                 logger.debug(f"GPU memory cache cleared (count: {self.gpu_memory_cleared_count})")
             except Exception as e:
                 logger.warning(f"Erro ao limpar cache GPU: {e}")
 
     def _should_force_gpu_usage(self) -> bool:
-        """Verifica se deve forçar uso de GPU baseado em threshold."""
+        """Verifica se deve forçar uso de GPU baseado em threshold e variáveis de ambiente."""
         # Verificar variável de ambiente
-        force_gpu = os.getenv("OMNIMIND_FORCE_GPU_EMBEDDINGS", "").lower() in (
-            "true",
-            "1",
-            "yes",
-        )
+        force_gpu = os.getenv("OMNIMIND_FORCE_GPU_EMBEDDINGS", "").lower() in ("true", "1", "yes")
         if force_gpu:
             return True
 
         # Verificar threshold de memória
-        torch_module = self.torch
-        if (
-            not self.torch_available
-            or torch_module is None
-            or not torch_module.cuda.is_available()  # type: ignore[attr-defined]
-        ):
+        if not self.torch_available or not self.torch.cuda.is_available():
             return False
 
         try:
-            total_mem = torch_module.cuda.get_device_properties(
-                0
-            ).total_memory  # type: ignore[attr-defined]
-            allocated = torch_module.cuda.memory_allocated(0)  # type: ignore[attr-defined]
+            total_mem = self.torch.cuda.get_device_properties(0).total_memory
+            allocated = self.torch.cuda.memory_allocated(0)
             free_mem = total_mem - allocated
 
             free_mem_mb = free_mem / (1024 * 1024)
@@ -330,34 +232,22 @@ class OmniMindEmbeddings:
                 batch_texts = texts[i : i + self.batch_size_embeddings]
 
                 # Gerar embeddings do batch
-                if self.use_fallback:
-                    # Usar fallback determinístico
-                    batch_embeddings = [
-                        create_fallback_embedding(text, self.embedding_dim) for text in batch_texts
-                    ]
-                else:
-                    model = self.model
-                    if model is None:
-                        batch_embeddings = []
-                    else:
-                        batch_embeddings = model.encode(
-                            batch_texts,
-                            normalize_embeddings=True,
-                            batch_size=self.batch_size_embeddings,
-                        )
+                batch_embeddings = self.model.encode(
+                    batch_texts, normalize_embeddings=True, batch_size=self.batch_size_embeddings
+                )
 
                 # Converter para lista se necessário
                 if hasattr(batch_embeddings, "tolist"):
-                    batch_embeddings = batch_embeddings.tolist()  # type: ignore
+                    batch_embeddings = batch_embeddings.tolist()
                 elif isinstance(batch_embeddings, list):
                     pass  # Já é lista
                 else:
                     batch_embeddings = [
-                        emb.tolist() if hasattr(emb, "tolist") else list(emb)  # type: ignore
+                        emb.tolist() if hasattr(emb, "tolist") else list(emb)
                         for emb in batch_embeddings
-                    ]
+                    ]  # type: ignore[assignment]
 
-                all_embeddings.extend(batch_embeddings)  # type: ignore
+                all_embeddings.extend(batch_embeddings)
                 self.embedding_batches_processed += 1
 
                 # Limpar cache GPU após cada batch para prevenir fragmentação
@@ -383,33 +273,22 @@ class OmniMindEmbeddings:
             Lista de embeddings (vetores)
         """
         try:
-            if self.use_fallback:
-                # Usar fallback determinístico
-                embeddings = [create_fallback_embedding(text, self.embedding_dim) for text in texts]
-            else:
-                model = self.model
-                if model is None:
-                    embeddings = []
-                else:
-                    embeddings = model.encode(
-                        texts,
-                        normalize_embeddings=True,
-                        batch_size=self.batch_size_embeddings,
-                    )
+            embeddings = self.model.encode(
+                texts, normalize_embeddings=True, batch_size=self.batch_size_embeddings
+            )
 
             # Converter para lista
             if hasattr(embeddings, "tolist"):
-                embeddings = embeddings.tolist()  # type: ignore[attr-defined]
+                embeddings = embeddings.tolist()
             elif isinstance(embeddings, list):
                 pass
             else:
                 embeddings = [
-                    emb.tolist() if hasattr(emb, "tolist") else list(emb)
-                    for emb in embeddings  # type: ignore
-                ]
+                    emb.tolist() if hasattr(emb, "tolist") else list(emb) for emb in embeddings
+                ]  # type: ignore[assignment]  # type: ignore[assignment]
 
             self.embedding_batches_processed += 1
-            return embeddings  # type: ignore
+            return cast(List[List[float]], embeddings)
 
         except Exception as e:
             logger.error(f"Erro ao gerar embeddings: {e}")
@@ -475,11 +354,9 @@ class OmniMindEmbeddings:
 
             # Upsert no Qdrant
             if points:
-                client = self.client
-                if client is not None:
-                    client.upsert(
-                        collection_name=self.collection_name, points=points
-                    )  # type: ignore
+                self.client.upsert(
+                    collection_name=self.collection_name, points=points
+                )  # type: ignore
                 logger.debug(f"Indexado {len(points)} chunks otimizados de {source_id}")
                 return len(points)
 
@@ -488,8 +365,23 @@ class OmniMindEmbeddings:
 
         return 0
 
-    # REMOVIDO: _ensure_collection duplicada (definida em __init__)
-    # A primeira definição (linha 157) é usada
+    def _ensure_collection_backup(self):
+        """Cria coleção se não existir (backup/legacy)."""
+        try:
+            collections = self.client.get_collections().collections or []
+            collection_names = [info.name for info in collections]
+
+            if self.collection_name not in collection_names:
+                self.client.create_collection(
+                    collection_name=self.collection_name,
+                    vectors_config=qmodels.VectorParams(
+                        size=int(self.embedding_dim or 384),
+                        distance=qmodels.Distance.COSINE,
+                    ),
+                )
+                logger.info(f"Coleção criada: {self.collection_name} (dim={self.embedding_dim})")
+        except Exception as exc:
+            logger.error(f"Erro ao criar coleção: {exc}")
 
     def _chunk_file(self, file_path: str) -> List[ContentChunk]:
         """Divide arquivo em chunks baseado no tipo de conteúdo."""
@@ -655,13 +547,9 @@ class OmniMindEmbeddings:
         """Verifica se um arquivo precisa ser reindexado baseado no timestamp."""
         try:
             # Buscar pontos existentes para este arquivo
-            client = self.client
-            if client is None:
-                return False
-
-            search_result = client.query_points(
+            search_result = self.client.query_points(
                 collection_name=self.collection_name,
-                query=[0.0] * self.embedding_dim,  # Query dummy
+                query=[0.0] * (self.embedding_dim or 384),  # Query dummy
                 query_filter=qmodels.Filter(
                     must=[
                         qmodels.FieldCondition(
@@ -679,8 +567,8 @@ class OmniMindEmbeddings:
 
             # Verificar timestamp de modificação
             file_mtime = os.path.getmtime(file_path)
-            point_payload = search_result.points[0].payload
-            stored_mtime = point_payload.get("modified_time", 0) if point_payload is not None else 0
+            payload = cast(Dict[str, Any], search_result.points[0].payload or {})
+            stored_mtime = payload.get("modified_time", 0)
 
             return file_mtime > stored_mtime
 
@@ -688,7 +576,7 @@ class OmniMindEmbeddings:
             logger.warning(f"Erro ao verificar reindexação para {file_path}: {exc}")
             return True  # Em caso de erro, reindexar
 
-    def index_directory(
+    def index_directory_simple(
         self,
         directory: str,
         extensions: Optional[List[str]] = None,
@@ -696,7 +584,7 @@ class OmniMindEmbeddings:
         skip_patterns: Optional[List[str]] = None,
         min_file_size: int = 10,
     ) -> Dict[str, int]:
-        """Indexa todos os arquivos suportados em um diretório."""
+        """Indexa todos os arquivos suportados em um diretório (versão simples)."""
         if extensions is None:
             # Extensões para código
             extensions = [".py", ".js", ".ts", ".java", ".cpp", ".c", ".go", ".rs"]
@@ -798,7 +686,7 @@ class OmniMindEmbeddings:
             cycle_max: Número máximo do ciclo para arquivos integration_loop_cycle_*.json
         """
         project_path = Path(project_root)
-        results = {}
+        results: Dict[str, Dict[str, int]] = {}
 
         # Carregar checkpoint se existir
         checkpoint_path = project_path / checkpoint_file
@@ -820,7 +708,7 @@ class OmniMindEmbeddings:
             logger.info("🚀 Iniciando indexação completa do projeto OmniMind")
 
         # Definir etapas de indexação em ordem de prioridade
-        all_stages: Dict[str, Dict[str, Any]] = {
+        all_stages = {
             # Etapa 1: Arquivos principais do projeto (sem ruídos)
             "core_code": {
                 "name": "Código Principal",
@@ -1087,7 +975,7 @@ class OmniMindEmbeddings:
                 logger.info(f"⏭️ Etapa '{stage_name}' já concluída, pulando...")
                 continue
 
-            stage_config = all_stages[stage_name]
+            stage_config = cast(Dict[str, Any], all_stages[stage_name])
             logger.info(f"📋 Executando etapa: {stage_config['name']} ({stage_name})")
             logger.info(f"   {stage_config['description']}")
 
@@ -1122,14 +1010,17 @@ class OmniMindEmbeddings:
                         stage_results[f"root_{filename}"] = count
 
             # Indexar diretórios da etapa
-            for dir_name in stage_config.get("dirs", []):
+            for dir_name in stage_config["dirs"]:
                 dir_path = project_path / dir_name
                 if dir_path.exists():
                     logger.info(f"  📁 Indexando {dir_name}...")
 
                     # Configurações específicas da etapa
-                    stage_skip_patterns = stage_config.get("skip_patterns", skip_patterns or [])
-                    stage_skip_dirs: list[Any] = stage_config.get("skip_dirs", [])
+                    config_dict = cast(Dict[str, Any], stage_config)
+                    stage_max_workers = config_dict.get("max_workers", max_workers)
+                    stage_batch_size = config_dict.get("batch_size", None)
+                    stage_skip_patterns = config_dict.get("skip_patterns", skip_patterns or [])
+                    stage_skip_dirs = config_dict.get("skip_dirs", [])
 
                     # Aplicar filtros de diretório
                     if any(skip_dir in str(dir_path) for skip_dir in stage_skip_dirs):
@@ -1137,21 +1028,23 @@ class OmniMindEmbeddings:
                         continue
 
                     # Indexar diretório
-                    extensions: list[str] = stage_config.get("extensions", [])  # type: ignore
                     dir_results = self.index_directory(
                         str(dir_path),
-                        extensions,
+                        config_dict["extensions"],
                         incremental,
                         stage_skip_patterns,
                         min_file_size,
+                        max_workers_override=stage_max_workers,
+                        batch_size_override=stage_batch_size,
+                        cycle_min=cycle_min,
+                        cycle_max=cycle_max,
                     )
                     stage_results.update(dir_results)
 
             # Indexar metadados do sistema (apenas na etapa específica)
             if stage_name == "system_metadata":
                 logger.info("🖥️ Indexando metadados do sistema...")
-                # TODO: Implementar coleta de metadados do sistema
-                system_results: dict[str, Any] = {}  # Placeholder
+                system_results = self.index_system_metadata()
                 stage_results.update(system_results)
 
             # Salvar resultados da etapa
@@ -1161,25 +1054,18 @@ class OmniMindEmbeddings:
             should_mark_complete = not (
                 no_mark_complete and stage_name == "data_core_reports_small"
             )
-
-            # Calcular total de chunks robustamente (handle dict values)
-            total_chunks = 0
-            for value in stage_results.values():
-                if isinstance(value, int):
-                    total_chunks += value
-                elif isinstance(value, dict):
-                    total_chunks += sum(v for v in value.values() if isinstance(v, int))
-
             if should_mark_complete:
                 completed_stages.add(stage_name)
                 self._save_checkpoint(checkpoint_path, completed_stages, results)
-                logger.info(f"✅ Etapa '{stage_name}' concluída: {total_chunks} chunks")
+                logger.info(
+                    f"✅ Etapa '{stage_name}' concluída: {sum(stage_results.values())} chunks"
+                )
             else:
                 # Salvar checkpoint sem marcar como concluída
                 self._save_checkpoint(checkpoint_path, completed_stages, results)
                 logger.info(
-                    f"✅ Etapa '{stage_name}' processada (não marcada "
-                    f"como concluída): {total_chunks} chunks"
+                    f"✅ Etapa '{stage_name}' processada "
+                    f"(não marcada como concluída): {sum(stage_results.values())} chunks"
                 )
 
         return results
@@ -1193,36 +1079,23 @@ class OmniMindEmbeddings:
             from datetime import datetime
 
             # Carregar dados existentes se o arquivo existir
-            existing_data: Dict[str, Any] = {}
+            existing_data = {}
             if checkpoint_path.exists():
                 try:
                     with open(checkpoint_path, "r") as f:
-                        loaded_data = json.load(f)
-                        if isinstance(loaded_data, dict):
-                            existing_data = loaded_data
+                        existing_data = json.load(f)
                 except Exception as e:
                     logger.warning(f"Erro ao carregar checkpoint existente: {e}")
 
             # Combinar dados existentes com novos
             all_completed_stages = set(existing_data.get("completed_stages", [])) | completed_stages
             all_results = existing_data.get("results_summary", {})
-
-            # Calcular chunks robustamente para cada etapa
-            for stage, stage_results in results.items():
-                if isinstance(stage_results, dict):
-                    stage_total = 0
-                    for value in stage_results.values():
-                        if isinstance(value, int):
-                            stage_total += value
-                        elif isinstance(value, dict):
-                            stage_total += sum(
-                                v
-                                for v in value.values()  # type: ignore[union-attr]
-                                if isinstance(v, int)
-                            )
-                    all_results[stage] = stage_total
-                else:
-                    all_results[stage] = 0
+            all_results.update(
+                {
+                    stage: sum(stage_results.values()) if isinstance(stage_results, dict) else 0
+                    for stage, stage_results in results.items()
+                }
+            )
 
             checkpoint_data = {
                 "timestamp": datetime.now().isoformat(),
@@ -1235,15 +1108,146 @@ class OmniMindEmbeddings:
                 json.dump(checkpoint_data, f, indent=2, ensure_ascii=False)
 
             logger.info(
-                f"💾 Checkpoint salvo: {len(all_completed_stages)} etapas "
-                f"concluídas, {checkpoint_data['total_chunks']} chunks totais"
+                f"💾 Checkpoint salvo: {len(all_completed_stages)} etapas concluídas, "
+                f"{checkpoint_data['total_chunks']} chunks totais"
             )
+
         except Exception as e:
             logger.warning(f"Erro ao salvar checkpoint: {e}")
 
-    def index_system_metadata(self) -> Dict[str, int]:
+    def index_directory(
+        self,
+        directory: str,
+        extensions: List[str],
+        incremental: bool = False,
+        skip_patterns: Optional[List[str]] = None,
+        min_file_size: int = 10,
+        max_workers_override: Optional[int] = None,
+        batch_size_override: Optional[int] = None,
+        cycle_min: Optional[int] = None,
+        cycle_max: Optional[int] = None,
+    ) -> Dict[str, int]:
+        """
+        Indexa um diretório recursivamente com paralelização intra-diretório.
+        """
+        directory_path = Path(directory)
+        results: Dict[str, int] = {}
 
-        results = {}
+        # Usar overrides se fornecidos
+        max_workers = max_workers_override if max_workers_override is not None else 4
+        batch_size = batch_size_override if batch_size_override is not None else 64
+
+        logger.info(
+            f"🔍 Indexando diretório: {directory} (workers: {max_workers}, batch: {batch_size})"
+        )
+
+        # Coletar todos os arquivos primeiro
+        all_files = []
+        for ext in extensions:
+            for file_path in directory_path.rglob(f"*{ext}"):
+                if file_path.is_file():
+                    # Verificar tamanho mínimo
+                    if file_path.stat().st_size < min_file_size:
+                        continue
+
+                    # Verificar padrões de skip
+                    if skip_patterns:
+                        skip_file = False
+                        file_str = str(file_path)
+                        for pattern in skip_patterns:
+                            if pattern in file_str:
+                                skip_file = True
+                                break
+                        if skip_file:
+                            continue
+
+                    # Verificar se precisa reindexar (incremental)
+                    if incremental and not self._needs_reindexing(str(file_path)):
+                        continue
+
+                    all_files.append(file_path)
+
+        # Aplicar filtro de ciclo se especificado
+        if cycle_min is not None or cycle_max is not None:
+            filtered_files = []
+            for file_path in all_files:
+                file_name = file_path.name
+                if "integration_loop_cycle_" in file_name and file_name.endswith(".json"):
+                    try:
+                        # Extrair número do ciclo do nome do arquivo
+                        # Formato: integration_loop_cycle_{numero}_{timestamp}.json
+                        parts = file_name.split("_")
+                        if (
+                            len(parts) >= 4
+                            and parts[0] == "integration"
+                            and parts[1] == "loop"
+                            and parts[2] == "cycle"
+                        ):
+                            cycle_num = int(parts[3])
+
+                            # Verificar se está dentro do intervalo
+                            if cycle_min is not None and cycle_num < cycle_min:
+                                continue
+                            if cycle_max is not None and cycle_num > cycle_max:
+                                continue
+
+                            filtered_files.append(file_path)
+                        else:
+                            filtered_files.append(file_path)  # Não é arquivo de ciclo, incluir
+                    except (ValueError, IndexError):
+                        filtered_files.append(file_path)  # Erro no parsing, incluir
+                else:
+                    filtered_files.append(file_path)  # Não é arquivo de ciclo, incluir
+
+            all_files = filtered_files
+            logger.info(
+                f"  Após filtro de ciclo ({cycle_min}-{cycle_max}): {len(all_files)} arquivos"
+            )
+
+        if not all_files:
+            logger.info(f"  Nenhum arquivo encontrado em {directory}")
+            return results
+
+        logger.info(f"  Encontrados {len(all_files)} arquivos para indexar")
+
+        # Processar arquivos em batches paralelos dentro do diretório
+        batch_size_files = max(1, len(all_files) // max_workers)
+
+        def process_batch(batch_files: List[Path]) -> Dict[str, int]:
+            batch_results = {}
+            for file_path in batch_files:
+                try:
+                    count = self.index_file(str(file_path))
+                    batch_results[str(file_path)] = count
+                except Exception as e:
+                    logger.warning(f"Erro ao indexar {file_path}: {e}")
+            return batch_results
+
+        # Executar batches em paralelo
+        batches = [
+            all_files[i : i + batch_size_files] for i in range(0, len(all_files), batch_size_files)
+        ]
+
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            future_to_batch = {executor.submit(process_batch, batch): batch for batch in batches}
+
+            for future in as_completed(future_to_batch):
+                batch_results = future.result()
+                results.update(batch_results)
+
+        total_chunks = sum(results.values())
+        logger.info(f"  ✅ Diretório {directory}: {len(results)} arquivos, {total_chunks} chunks")
+
+        return results
+
+    def index_system_metadata(self) -> Dict[str, int]:
+        """
+        Indexa metadados do sistema/kernel da máquina para análise de como
+        o OmniMind interage com configurações reais vs sandbox.
+        """
+        logger.info("🔧 Indexando metadados do sistema/kernel")
+
+        results: Dict[str, int] = {}
 
         # Comandos seguros para coletar informações do sistema
         system_commands = {
@@ -1367,7 +1371,7 @@ class OmniMindEmbeddings:
         # Verificar variáveis de ambiente relevantes
         relevant_env = {}
         for key in ["OMNIMIND_CONFIG", "PYTHONPATH", "CUDA_VISIBLE_DEVICES", "OMP_NUM_THREADS"]:
-            value = os.environ.get(key)  # type: ignore[name-defined]
+            value = os.environ.get(key)
             if value:
                 relevant_env[key] = value
 
@@ -1415,14 +1419,7 @@ class OmniMindEmbeddings:
         points = []
         for idx, chunk in enumerate(chunks):
             # Gerar embedding
-            if self.use_fallback:
-                embedding = create_fallback_embedding(chunk.content, self.embedding_dim)
-            else:
-                model = self.model
-                if model is None:
-                    embedding = create_fallback_embedding(chunk.content, self.embedding_dim)
-                else:
-                    embedding = model.encode(chunk.content, normalize_embeddings=True)
+            embedding = self.model.encode(chunk.content, normalize_embeddings=True)
 
             # Criar ID único
             content_hash = hashlib.sha256(
@@ -1478,14 +1475,7 @@ class OmniMindEmbeddings:
     ) -> List[Dict[str, Any]]:
         """Busca semântica no conteúdo indexado."""
         # Gerar embedding da query
-        if self.use_fallback:
-            query_embedding = create_fallback_embedding(query, self.embedding_dim)
-        else:
-            model = self.model
-            if model is None:
-                query_embedding = create_fallback_embedding(query, self.embedding_dim)
-            else:
-                query_embedding = model.encode(query, normalize_embeddings=True)
+        query_embedding = self.model.encode(query, normalize_embeddings=True)
 
         # Filtro por tipo de conteúdo se especificado
         query_filter = None
@@ -1501,12 +1491,7 @@ class OmniMindEmbeddings:
             )
 
         # Buscar no Qdrant
-        client = self.client
-        if client is None:
-            logger.error("Qdrant client not available")
-            return []
-
-        search_result = client.query_points(
+        search_result = self.client.query_points(
             collection_name=self.collection_name,
             query=query_embedding.tolist(),  # type: ignore
             query_filter=query_filter,
@@ -1536,48 +1521,29 @@ class OmniMindEmbeddings:
     def get_stats(self) -> Dict[str, Any]:
         """Estatísticas da coleção."""
         try:
-            client = self.client
-            if client is None:
-                return {"error": "Qdrant client not available"}
-
-            collection_info = client.get_collection(self.collection_name)
-            gpu_info: Dict[str, Any] = {}
-            torch_module = self.torch
-
-            if self.torch_available and torch_module is not None:
-                if torch_module.cuda.is_available():  # type: ignore[attr-defined]
-                    try:
-                        gpu_info = {
-                            "gpu_memory_threshold_mb": self.gpu_memory_threshold_mb,
-                            "gpu_memory_cleared_count": self.gpu_memory_cleared_count,
-                            "embedding_batches_processed": (self.embedding_batches_processed),
-                            "gpu_device": (torch_module.cuda.get_device_name(0)),  # type: ignore
-                            "gpu_memory_allocated_mb": (
-                                (
-                                    torch_module.cuda.memory_allocated(0)  # type: ignore
-                                    / (1024 * 1024)
-                                )
-                            ),
-                            "gpu_memory_reserved_mb": (
-                                (
-                                    torch_module.cuda.memory_reserved(0)  # type: ignore
-                                    / (1024 * 1024)
-                                )
-                            ),
-                        }
-                    except Exception as e:
-                        gpu_info = {"gpu_error": str(e)}
+            collection_info = self.client.get_collection(self.collection_name)
+            gpu_info = {}
+            if self.torch_available and self.torch.cuda.is_available():
+                try:
+                    gpu_info = {
+                        "gpu_memory_threshold_mb": self.gpu_memory_threshold_mb,
+                        "gpu_memory_cleared_count": self.gpu_memory_cleared_count,
+                        "embedding_batches_processed": self.embedding_batches_processed,
+                        "gpu_device": self.torch.cuda.get_device_name(0),
+                        "gpu_memory_allocated_mb": self.torch.cuda.memory_allocated(0)
+                        / (1024 * 1024),
+                        "gpu_memory_reserved_mb": self.torch.cuda.memory_reserved(0)
+                        / (1024 * 1024),
+                    }
+                except Exception as e:
+                    gpu_info = {"gpu_error": str(e)}
 
             return {
                 "collection_name": self.collection_name,
                 "vector_dim": self.embedding_dim,
                 "total_chunks": collection_info.points_count,
                 "model": self.model_name,
-                "gpu_enabled": (
-                    self.torch_available
-                    and torch_module is not None
-                    and torch_module.cuda.is_available()  # type: ignore[attr-defined]
-                ),
+                "gpu_enabled": self.torch_available and self.torch.cuda.is_available(),
                 "async_execution": self.enable_async_execution,
                 "batch_size_embeddings": self.batch_size_embeddings,
                 **gpu_info,
@@ -1602,7 +1568,9 @@ if __name__ == "__main__":
 
     # Indexar diretório
     print(f"Indexando código em: {directory}")
-    index_results = embeddings.index_directory(directory)
+    index_results = embeddings.index_directory(
+        directory, extensions=[".py", ".md", ".json", ".txt"]
+    )
 
     total_chunks = sum(index_results.values())
     print(f"Total de chunks indexados: {total_chunks}")

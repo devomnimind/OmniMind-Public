@@ -1,0 +1,98 @@
+
+7src.scaling.multi_node.ClusterCoordinator.register_nodeF
+:/home/fahbrain/projects/omnimind/src/scaling/multi_node.pyÅ Å("2*ž
+2
+Æ Æ(1p
+n
+
+Ç Ç(
+%2"__id*T
+
+__unknown_file (8*6+
+)src.scaling.multi_node.ClusterCoordinator"
+nodesM
+K
+
+Ç Ç(
+%3"__id*1
+
+__unknown_file (*
+
+node"	
+node_id¢Ÿ
+
+Ç Ç('
+%1"dict.__setitem__*"
+
+__unknown_file (
+
+%2*"
+
+__unknown_file (
+
+%3*$
+
+__unknown_file (
+
+node2__setitem__M
+K
+
+È' È(3
+%4"__id*1
+
+__unknown_file (*
+
+node"	
+node_idN
+L
+
+È7 È(D
+%5"__id*2
+
+__unknown_file (*
+
+node"
+
+hostnameš
+—
+
+È È(G
+%6"__concat*"
+
+È È(&
+Registered node *
+
+È' È(3
+
+%4*
+
+È4 È(6
+ (*
+
+È7 È(D
+
+%5*
+
+ÈE È(F
+)fd
+
+È È(H
+%7*&
+
+__unknown_file (
+
+
+logger*"
+
+__unknown_file (
+
+%62info*
+3*5
+3
+multi_node.py"
+Ê Ê(
+implicit return:
+
+Å Å(*
+nodeB-+
+)src.scaling.multi_node.ClusterCoordinatorH

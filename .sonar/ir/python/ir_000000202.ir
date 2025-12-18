@@ -1,0 +1,31 @@
+
+0.0float
+0'"Get current memory utilization ratio."str
+"division by zero"bool
+
+"S3518"bool
+
+0int
+"a"boolselfB B("‚6
+4
+D D(%"#!#get-field# total_bytes_allocated:*
+(
+D D(*"
+#binop ==#2==:Bbool"
+D D(* *D D(
+"
+E E("ú-
++
+F F( "#get-field# bytes_in_use:6
+4
+F# F(="#!#get-field# total_bytes_allocated:*
+(
+F F(=	"
+#binop !=#2!=:Bbool 
+
+F F(="
+#assert#:	
+1
+/
+F F(="#dependent-value#*:Bfloat
+F F(=*H/home/fahbrain/projects/omnimind/src/optimization/memory_optimization.py

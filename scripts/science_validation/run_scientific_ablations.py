@@ -82,7 +82,9 @@ class IntegrationLoopSimulator:
                     # Outros módulos: transformação randômica
                     transform_matrix = np.random.rand(self.embedding_dim, self.embedding_dim)
 
-                self.workspace = np.clip(np.dot(transform_matrix, self.workspace), -1e10, 1e10)  # Clip to prevent overflow
+                self.workspace = np.clip(
+                    np.dot(transform_matrix, self.workspace), -1e10, 1e10
+                )  # Clip to prevent overflow
                 executed_modules.append(mod)
 
             # Atualiza histórico do workspace

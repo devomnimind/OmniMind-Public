@@ -20,7 +20,7 @@ Contact: fabricioslv@hotmail.com.br
 
 import json
 import os
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 
 BENCHMARK_FILES = {
     "system": "docs/reports/hardware_audit.json",

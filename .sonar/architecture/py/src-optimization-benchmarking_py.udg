@@ -1,0 +1,306 @@
+
+1.0PythonFrontend"1763831844545*py2.BÜ
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+%
+ src/optimization/benchmarking.py9
+#
+src.optimization.benchmarking11
+
+
+json12
+
+
+time14
+
+dataclasses16
+
+datetime18
+
+pathlib20
+
+typing22
+
+psutil24
+7
+1src.optimization.benchmarking.compare_performance26
+4
+.src.optimization.benchmarking.ComparisonResult28
+	
+int30
+G
+Asrc.optimization.benchmarking.benchmark_with_regression_detection32
+
+
+dict34
+	
+str36
+
+float38
+8
+2src.optimization.benchmarking.PerformanceBenchmark40
+A
+;src.optimization.benchmarking.PerformanceBenchmark.__init__42
+E
+?src.optimization.benchmarking.PerformanceBenchmark.save_results44
+
+pathlib.Path46
+L
+Fsrc.optimization.benchmarking.PerformanceBenchmark.compare_to_baseline48
+F
+@src.optimization.benchmarking.PerformanceBenchmark.run_benchmark50
+3
+-src.optimization.benchmarking.BenchmarkResult52
+K
+Esrc.optimization.benchmarking.PerformanceBenchmark.establish_baseline54
+6
+0src.optimization.benchmarking.RegressionDetector56
+?
+9src.optimization.benchmarking.RegressionDetector.__init__58
+H
+Bsrc.optimization.benchmarking.RegressionDetector.clean_old_history60
+L
+Fsrc.optimization.benchmarking.RegressionDetector.generate_trend_report62
+G
+Asrc.optimization.benchmarking.RegressionDetector.record_benchmark64
+I
+Csrc.optimization.benchmarking.RegressionDetector.detect_regressions66
+D
+>src.optimization.benchmarking.BenchmarkResult.mean_cpu_percent68
+@
+:src.optimization.benchmarking.BenchmarkResult.mean_time_ms70
+B
+<src.optimization.benchmarking.BenchmarkResult.mean_memory_mb72J
+
+8
+89já
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27267 210
+
+29
+29286 210
+
+31
+31306
+
+33
+33327 210
+
+35
+35346
+
+37
+37366
+
+39
+39386
+
+41
+41406 210
+
+43
+43427 241
+
+45
+45447 241
+
+47
+47466
+
+49
+49487 241
+
+51
+51507 241
+
+53
+53526 210
+
+55
+55547 241
+
+57
+57566 210
+
+59
+59587 257
+
+61
+61607 257
+
+63
+63627 257
+
+65
+65647 257
+
+67
+67667 257
+
+69
+69687 253
+
+71
+71707 253
+
+73
+73727 253rÄ
+
+10131*
+8 (
+
+10151*
+8 (
+
+10171*
+8 ()
+
+10191*
+8 (
+
+10211*
+8 (
+
+10231*
+8 (7
+
+10251*
+8 (
+
+10191*
+8Þ	 Þ(1
+
+27293*
+8ß ß(
+
+27314*
+8ß ß(
+
+33353*
+8ù ù((
+
+33374*
+8ù ù((
+
+33314*
+8ù ù((
+
+33394*
+8ù ù((
+
+45473*
+8°	 °(
+
+49293*
+8Ö	 Ö(
+
+49374*
+8Ö	 Ö(
+
+49374*
+8Ö	 Ö(
+
+49314*
+8Ö	 Ö(
+
+51533*
+8n	 n(
+
+51374*
+8n	 n(
+
+51314*
+8n	 n(
+
+51314*
+8n	 n(
+
+55533*
+8¿	 ¿(
+
+55374*
+8¿	 ¿(
+
+55314*
+8¿	 ¿(
+
+59474*
+8ü	 ü(
+
+59394*
+8ü	 ü(
+
+61314*
+8×	 ×(
+
+63373*
+8Ÿ	 Ÿ(
+
+63374*
+8Ÿ	 Ÿ(
+
+65473*
+8’	 ’(
+
+65374*
+8’	 ’(
+
+65534*
+8’	 ’(
+
+67353*
+8¾	 ¾(
+
+67374*
+8¾	 ¾(
+
+67534*
+8¾	 ¾(
+
+69393*
+89	 9(
+
+71393*
+8/	 /(
+
+73393*
+84	 4(

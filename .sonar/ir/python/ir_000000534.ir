@@ -1,0 +1,36 @@
+
+	"agent_development"str
+"agent_operations"str
+"human_share"str
+ÐÆ"
+        Distribute earnings according to configuration.
+
+        Args:
+            total_earnings: Total revenue amount
+
+        Returns:
+            Dictionary with distribution amounts
+        "strselfA A(total_earningsA A(."¦$
+"
+K O(	"#new-object#Bdict1
+/
+L1 L(F"#get-field# agent_operations:%
+#
+L  L(F"	#binop *#*2*: 
+
+L L(F"	#map-set#:2
+0
+M2 M(H
+"#get-field# agent_development:%
+#
+M! M(H"	#binop *#*2*:
+ 
+
+M M(H"	#map-set#:	,
+*
+N, N(<"#get-field# human_share:%
+#
+N N(<"	#binop *#*2*: 
+
+N N(<"	#map-set#:
+K O(	*C/home/fahbrain/projects/omnimind/src/economics/marketplace_agent.py

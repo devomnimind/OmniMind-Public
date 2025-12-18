@@ -1,0 +1,12 @@
+
+\S"Get pool statistics.
+
+        Returns:
+            Allocation statistics
+        "strself
+’ ’("<(
+&
+
+˜ ˜("#get-field# stats:
+
+˜ ˜(*H/home/fahbrain/projects/omnimind/src/optimization/memory_optimization.py

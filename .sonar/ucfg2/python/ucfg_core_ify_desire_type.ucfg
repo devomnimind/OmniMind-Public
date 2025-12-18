@@ -1,0 +1,304 @@
+
+Esrc.desire_engine.core.DesireDrivenMetaLearning._classify_desire_typeF
+:/home/fahbrain/projects/omnimind/src/desire_engine/core.pyñ ñ("2*Ÿ
+2
+ò ò(#K
+I
+
+ô ô(#
+%23"__id*.
+
+__unknown_file (*
+
+need"
+namesq
+
+ô ô(#
+%24*#
+
+__unknown_file (
+
+%23*)
+
+__unknown_file (
+	knowledge2__contains__K
+I
+
+ô9 ô(B
+%25"__id*.
+
+__unknown_file (*
+
+need"
+namevt
+
+ô' ô(B
+%26*#
+
+__unknown_file (
+
+%25*,
+
+__unknown_file (
+contribution2__contains__*
+13
+5*š
+13
+ö ö(=K
+I
+
+ö ö(#
+%19"__id*.
+
+__unknown_file (*
+
+need"
+nameqo
+
+ö ö(#
+%20*#
+
+__unknown_file (
+
+%19*'
+
+__unknown_file (	
+mastery2__contains__K
+I
+
+ö4 ö(=
+%21"__id*.
+
+__unknown_file (*
+
+need"
+nameqo
+
+ö' ö(=
+%22*#
+
+__unknown_file (
+
+%21*'
+
+__unknown_file (	
+problem2__contains__*
+11
+12*—
+4
+ÿ ÿ('p
+n
+
+ÿ ÿ('
+%1"__id*T
+
+__unknown_file (8*6#
+!src.desire_engine.core.DesireType"
+KNOWLEDGE_GAP"
+
+ÿ ÿ('
+
+%1*—
+5
+õ õ(+p
+n
+
+õ õ(+
+%2"__id*T
+
+__unknown_file (8*6#
+!src.desire_engine.core.DesireType"
+KNOWLEDGE_GAP"
+
+õ õ(+
+
+%2*›
+6
+ý ý(/t
+r
+
+ý ý(/
+%3"__id*X
+
+__unknown_file (<*:#
+!src.desire_engine.core.DesireType"
+RESOURCE_SCARCITY"
+
+ý ý(/
+
+%3*—
+7
+ü ü(CJ
+H
+
+ü ü($
+%4"__id*.
+
+__unknown_file (*
+
+need"
+namepn
+
+ü ü($
+%5*"
+
+__unknown_file (
+
+%4*(
+
+__unknown_file (
+
+resource2__contains__J
+H
+
+ü: ü(C
+%6"__id*.
+
+__unknown_file (*
+
+need"
+nametr
+
+ü( ü(C
+%7*"
+
+__unknown_file (
+
+%6*,
+
+__unknown_file (
+preservation2__contains__*
+4
+6*›
+8
+û û(/t
+r
+
+û û(/
+%8"__id*X
+
+__unknown_file (<*:#
+!src.desire_engine.core.DesireType"
+RELATIONSHIP_NEED"
+
+û û(/
+
+%8*
+9
+ú ú(EJ
+H
+
+ú ú('
+%9"__id*.
+
+__unknown_file (*
+
+need"
+nametr
+
+ú ú('
+%10*"
+
+__unknown_file (
+
+%9*+
+
+__unknown_file (
+interaction2__contains__K
+I
+
+ú< ú(E
+%11"__id*.
+
+__unknown_file (*
+
+need"
+nameus
+
+ú+ ú(E
+%12*#
+
+__unknown_file (
+
+%11*+
+
+__unknown_file (
+recognition2__contains__*
+7
+8* 
+10
+ù ù(1w
+u
+
+ù ù(1
+%13"__id*Z
+
+__unknown_file (>*<#
+!src.desire_engine.core.DesireType"
+CREATIVE_LIMITATION"
+
+ù ù(1
+
+%13*
+11
+ø ø(AK
+I
+
+ø ø($
+%14"__id*.
+
+__unknown_file (*
+
+need"
+namerp
+
+ø ø($
+%15*#
+
+__unknown_file (
+
+%14*(
+
+__unknown_file (
+
+creative2__contains__K
+I
+
+ø8 ø(A
+%16"__id*.
+
+__unknown_file (*
+
+need"
+nametr
+
+ø( ø(A
+%17*#
+
+__unknown_file (
+
+%16**
+
+__unknown_file (
+
+expression2__contains__*
+9
+10*
+12
+÷ ÷(.t
+r
+
+÷ ÷(.
+%18"__id*W
+
+__unknown_file (;*9#
+!src.desire_engine.core.DesireType"
+SKILL_DEFICIENCY"
+
+÷ ÷(.
+
+%18:
+
+ñ$ ñ(.
+needB31
+/src.desire_engine.core.DesireDrivenMetaLearningH

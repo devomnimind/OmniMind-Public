@@ -1,0 +1,17 @@
+[Unit]
+Description=OmniMind Qdrant Vector Database
+After=network.target
+
+[Service]
+Slice=mind.slice
+OOMScoreAdjust=-1000
+Type=simple
+User=root
+WorkingDirectory=/home/fahbrain/projects/omnimind
+ExecStart=/usr/bin/docker-compose -f deploy/docker-compose.yml up qdrant
+ExecStop=/usr/bin/docker-compose -f deploy/docker-compose.yml stop qdrant
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

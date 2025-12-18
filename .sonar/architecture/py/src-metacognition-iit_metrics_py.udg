@@ -1,0 +1,321 @@
+
+1.0PythonFrontend"1763831833499*py2.Bð
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+%
+ src/metacognition/iit_metrics.py9
+#
+src.metacognition.iit_metrics11
+
+
+__future__12
+
+logging14
+
+
+math16
+
+
+statistics18
+
+dataclasses20
+
+datetime22
+
+typing24
+/
+)src.metacognition.iit_metrics.SystemState26
+9
+3src.metacognition.iit_metrics.SystemState.to_vector28
+
+
+list30
+@
+:src.metacognition.iit_metrics.SystemState.hamming_distance32
+	
+int34
+/
+)src.metacognition.iit_metrics.IITAnalyzer36
+L
+Fsrc.metacognition.iit_metrics.IITAnalyzer.calculate_mutual_information38
+
+float40
+	
+set42
+A
+;src.metacognition.iit_metrics.IITAnalyzer.calculate_entropy44
+D
+>src.metacognition.iit_metrics.IITAnalyzer.calculate_complexity46
+=
+7src.metacognition.iit_metrics.IITAnalyzer.calculate_phi48
+;
+5src.metacognition.iit_metrics.IITAnalyzer.get_summary50
+
+
+dict52
+E
+?src.metacognition.iit_metrics.IITAnalyzer.calculate_integration54
+I
+Csrc.metacognition.iit_metrics.IITAnalyzer.calculate_emergence_level56
+8
+2src.metacognition.iit_metrics.IITAnalyzer.__init__58
+I
+Csrc.metacognition.iit_metrics.IITAnalyzer.calculate_differentiation60
+E
+?src.metacognition.iit_metrics.IITAnalyzer.analyze_consciousness62
+.
+(src.metacognition.iit_metrics.PhiMetrics64
+G
+Asrc.metacognition.iit_metrics.IITAnalyzer.get_consciousness_trend66
+<
+6src.metacognition.iit_metrics.IITAnalyzer.record_state68
+@
+:src.metacognition.iit_metrics.IITAnalyzer.detect_emergence70
+
+
+bool72
+H
+Bsrc.metacognition.iit_metrics.IITAnalyzer._linear_regression_slope74
+6
+0src.metacognition.iit_metrics.PhiMetrics.to_dict76J
+
+8
+89j
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27266 210
+
+29
+29287 227
+
+31
+31306
+
+33
+33327 227
+
+35
+35346
+
+37
+37366 210
+
+39
+39387 237
+
+41
+41406
+
+43
+43426
+
+45
+45447 237
+
+47
+47467 237
+
+49
+49487 237
+
+51
+51507 237
+
+53
+53526
+
+55
+55547 237
+
+57
+57567 237
+
+59
+59587 237
+
+61
+61607 237
+
+63
+63627 237
+
+65
+65646 210
+
+67
+67667 237
+
+69
+69687 237
+
+71
+71707 237
+
+73
+73726
+
+75
+75747 237
+
+77
+77767 265r¾
+
+10131*
+8
+ 
+(#
+
+10151*
+8 (
+
+10171*
+8 (
+
+10191*
+8 (
+
+10211*
+8 ()
+
+10231*
+8 (
+
+10251*
+8 (9
+
+29313*
+8	 (
+
+33353*
+8"	 "(
+
+33274*
+8"	 "(
+
+39413*
+8ž	 ž(%
+
+39434*
+8ž	 ž(%
+
+39434*
+8ž	 ž(%
+
+39314*
+8ž	 ž(%
+
+45413*
+8€	 €(
+
+45314*
+8€	 €(
+
+47413*
+8ƒ	 ƒ(
+
+47314*
+8ƒ	 ƒ(
+
+49413*
+8Ì	 Ì(
+
+49314*
+8Ì	 Ì(
+
+51533*
+8â	 â(
+
+55413*
+8	 (
+
+55314*
+8	 (
+
+57413*
+8Ì	 Ì("
+
+57414*
+8Ì	 Ì("
+
+57414*
+8Ì	 Ì("
+
+59414*
+8C	 C(
+
+59414*
+8C	 C(
+
+61413*
+8´	 ´("
+
+61314*
+8´	 ´("
+
+63653*
+8ã	 ã(
+
+67533*
+8¯	 ¯( 
+
+67354*
+8¯	 ¯( 
+
+69274*
+8p	 p(
+
+71733*
+8™	 ™(
+
+71354*
+8™	 ™(
+
+75413*
+8W	 W(!
+
+75314*
+8W	 W(!
+
+75314*
+8W	 W(!
+
+77533*
+84	 4(

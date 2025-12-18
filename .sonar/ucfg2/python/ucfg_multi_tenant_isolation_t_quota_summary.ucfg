@@ -1,0 +1,321 @@
+
+Psrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.get_quota_summaryR
+F/home/fahbrain/projects/omnimind/src/scaling/multi_tenant_isolation.pyß ß("2*Œ
+2
+à è(­ª
+
+é é(+
+%26*^
+
+__unknown_file (B@
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManager*)
+
+__unknown_file (
+
+	tenant_id2
+get_tenantC
+A
+
+é é(+
+tenant"__id*#
+
+__unknown_file (
+
+%26*
+7
+8**
+4
+ı ı("
+
+ı ı(
+	
+summary*†
+6
+ô û(
+
+ô+ û(
+%1"dictL
+J
+
+õ õ($
+%2"__id*0
+
+__unknown_file (*
+
+quota"
+limit
+‹
+
+õ õ($
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*%
+
+__unknown_file (	
+limit*"
+
+__unknown_file (
+
+%2T
+R
+
+ö! ö(4
+%4"__id*8
+
+__unknown_file (*
+
+quota"
+current_usage–
+“
+
+ö ö(4
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*-
+
+__unknown_file (
+current_usage*"
+
+__unknown_file (
+
+%4FD
+
+÷ ÷(.
+%6*%
+
+__unknown_file (	
+
+quota2	available’
+
+
+÷ ÷(.
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	available*"
+
+__unknown_file (
+
+%6MK
+
+ø$ ø(<
+%8*%
+
+__unknown_file (	
+
+quota2usage_percentage™
+–
+
+ø ø(<
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*0
+
+__unknown_file (
+usage_percentage*"
+
+__unknown_file (
+
+%8IG
+
+ù ù(/
+%10*%
+
+__unknown_file (	
+
+quota2is_exceeded“
+
+
+ù ù(/
+%11"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+exceeded*#
+
+__unknown_file (
+
+%10L
+J
+
+ú ú("
+%12"__id*/
+
+__unknown_file (*
+
+quota"
+unit
+Œ
+
+ú ú("
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*$
+
+__unknown_file (
+unit*#
+
+__unknown_file (
+
+%12Í
+Ê
+
+ô ô(
+%15"dsrc.scaling.multi_tenant_isolation.MultiTenantIsolationManager.get_quota_summary.summary.__getitem__*'
+
+__unknown_file (
+	
+summary*&
+
+__unknown_file (
+
+quotas©¦
+
+ô û(
+%14"dict.__setitem__*#
+
+__unknown_file (
+
+%15*)
+
+__unknown_file (
+
+	quota_key*"
+
+__unknown_file (
+
+%12__setitem__*
+4
+6*Î
+7
+í ñ(	
+
+í" ñ(	
+%16"dict›
+˜
+
+î î("
+%17"__mapSet*#
+
+__unknown_file (
+
+%16*)
+
+__unknown_file (
+	tenant_id*)
+
+__unknown_file (
+
+	tenant_idT
+R
+
+ï ï(-
+%18"__id*7
+
+__unknown_file (*
+
+tenant"
+tenant_name—
+”
+
+ï ï(-
+%19"__mapSet*#
+
+__unknown_file (
+
+%16*+
+
+__unknown_file (
+tenant_name*#
+
+__unknown_file (
+
+%18
+
+ğ ğ(
+%20"dict’
+
+
+ğ ğ(
+%21"__mapSet*#
+
+__unknown_file (
+
+%16*&
+
+__unknown_file (
+
+quotas*#
+
+__unknown_file (
+
+%20D
+B
+
+í ñ(		
+summary"__id*#
+
+__unknown_file (
+
+%16O
+M
+
+ó  ó(-
+%22"__id*2
+
+__unknown_file (*
+
+tenant"
+quotasA?
+
+ó  ó(5
+%23*#
+
+__unknown_file (
+
+%222items*
+4
+6*ä
+8
+ë ë(0
+
+ë ë(0
+%24"dict
+›
+
+ë ë(/
+%25"__mapSet*#
+
+__unknown_file (
+
+%24*%
+
+__unknown_file (	
+error*0
+
+__unknown_file (
+Tenant not found"
+
+ë ë(0
+
+%24:
+
+ß  ß(.
+	tenant_idBB@
+>src.scaling.multi_tenant_isolation.MultiTenantIsolationManagerH

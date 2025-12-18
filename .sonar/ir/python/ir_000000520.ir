@@ -1,0 +1,26 @@
+
+0.0float
+
+2int
+2)"Calculate variance in completion times."strself:% :()"¬6
+4
+< <()"#!#get-field# task_completion_times:*
+(
+< <(*"
+builtinslen*:Bint(
+&
+< <(."	#binop <#2<:Bbool"
+< <(. *< <(
+"
+= =("™6
+4
+># >(="#!#get-field# task_completion_times:!
+
+> >(>	"#unknown-value#*
+(
+> >(>
+"
+
+statisticsvariance:	
+> >(>
+*I/home/fahbrain/projects/omnimind/src/scaling/intelligent_load_balancer.py

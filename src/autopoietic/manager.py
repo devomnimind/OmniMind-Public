@@ -11,6 +11,8 @@ from typing import Any, Dict, List, Mapping, Optional, Union
 
 import psutil
 
+from src.integrations.supabase_adapter import SupabaseAdapter, SupabaseConfig
+
 from .architecture_evolution import ArchitectureEvolution, EvolutionStrategy
 from .code_synthesizer import CodeSynthesizer, SynthesizedComponent
 from .meta_architect import ComponentSpec, MetaArchitect
@@ -121,11 +123,52 @@ class AutopoieticManager:
         rollback_count = 0
         validation_success = True
 
-        # Capturar uso de memória antes do ciclo
+        # Capturar uso de memória antes do ciclo e verificar Homeostase
         try:
+            from src.monitor.resource_manager import resource_manager
+
+            # Phase 5 & 8: Homeostase e Smart Standby
+            if resource_manager.is_critical_state():
+                self._logger.warning(
+                    "🚨 [HOMEOSTASE] Estado crítico detectado. Iniciando recuperação."
+                )
+                resource_manager.compact_memory()
+
+                if resource_manager.is_critical_state():
+                    self._logger.error("🛑 [HOMEOSTASE] Recursos insuficientes. Ciclo adiado.")
+                    return CycleLog(
+                        cycle_id=cycle_id,
+                        metrics=dict(metrics if isinstance(metrics, dict) else {}),
+                        strategy=EvolutionStrategy.STABILIZE,
+                        synthesized_components=[],
+                        timestamp=time.time(),
+                        phi_before=self._get_current_phi(),
+                        phi_after=self._get_current_phi(),
+                    )
+
+            # [NOVO] Phase 8: Smart Standby durante Testes
+            if getattr(resource_manager, "standby_mode", False):
+                current_phi = self._get_current_phi()
+                if current_phi > 0.1:
+                    self._logger.info(
+                        "🌙 [STANDBY] Sistema em standby e Φ estável (%.4f). Ciclo adiado.",
+                        current_phi,
+                    )
+                    return CycleLog(
+                        cycle_id=cycle_id,
+                        metrics=dict(metrics if isinstance(metrics, dict) else {}),
+                        strategy=EvolutionStrategy.STABILIZE,  # Conservative approach
+                        synthesized_components=[],
+                        timestamp=time.time(),
+                        phi_before=current_phi,
+                        phi_after=current_phi,
+                    )
+                self._logger.warning("⚠️ [STANDBY] Φ crítico (%.4f)! Forçando ciclo.", current_phi)
+
             process = psutil.Process()
             memory_before_mb = process.memory_info().rss / (1024 * 1024)
-        except Exception:
+        except Exception as e:
+            self._logger.debug("Falha na telemetria/homeostase inicial: %s", e)
             memory_before_mb = 0.0
 
         if isinstance(metrics, MetricSample):
@@ -234,7 +277,9 @@ class AutopoieticManager:
         for name, component in validated_components.items():
             # Encontrar spec correspondente - remover prefixo de segurança se presente
             spec_name = name
-            if name.startswith("modulo_autopoiesis_data_"):
+            if name.startswith("auto_"):
+                spec_name = name[len("auto_") :]
+            elif name.startswith("modulo_autopoiesis_data_"):
                 spec_name = name[len("modulo_autopoiesis_data_") :]
 
             matching_spec = None
@@ -253,7 +298,8 @@ class AutopoieticManager:
                 )
                 continue  # Pula este componente
 
-            self._specs[name] = matching_spec
+            # CORREÇÃO: Usar o nome da spec como chave para evitar explosão recursiva de nomes
+            self._specs[matching_spec.name] = matching_spec
             new_names.append(name)
             self._logger.info("Cycle %d synthesized and validated %s", cycle_id, name)
             self._logger.debug("Source preview for %s:\n%s", name, component.source_code[:200])
@@ -425,6 +471,27 @@ class AutopoieticManager:
         return log
 
     def _persist_log(self, log: CycleLog) -> None:
+        # Persist to Supabase (Cloud/Remote)
+        try:
+            config = SupabaseConfig.from_env()
+            if config:
+                adapter = SupabaseAdapter(config)
+                record = {
+                    "cycle_id": log.cycle_id,
+                    "strategy": log.strategy.name,
+                    "phi_before": log.phi_before,
+                    "phi_after": log.phi_after,
+                    "synthesized_components": log.synthesized_components,
+                    "metrics": log.metrics,
+                    "timestamp": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(log.timestamp)),
+                }
+                # Attempt to insert into 'autopoietic_logs'
+                adapter.insert_record("autopoietic_logs", record)
+                self._logger.debug("Persisted cycle log to Supabase")
+        except Exception as e:
+            # Log as debug so it doesn't spam if table is missing or config is invalid
+            self._logger.debug("Skipped Supabase persistence: %s", e)
+
         if not self._history_path:
             return
 
@@ -533,8 +600,14 @@ class AutopoieticManager:
                     self._phi_history[-5:]
                 )  # Últimos 5 valores
 
+            # Tenta ler de arquivo de métricas reais (Phase 5/6 Integration)
+            metrics_path = Path("data/monitor/real_metrics.json")
+            if metrics_path.exists():
+                with metrics_path.open("r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    return float(data.get("phi", 0.5))
+
             # Para primeiros ciclos, usar valor padrão saudável
-            # Este valor pode ser ajustado baseado em observações empíricas
             return 0.5
 
         except Exception as e:
@@ -812,4 +885,5 @@ class AutopoieticManager:
 
         report_lines.append("🎉 Sistema autopoietico ativo e aprendendo!")
 
+        return "\n".join(report_lines)
         return "\n".join(report_lines)

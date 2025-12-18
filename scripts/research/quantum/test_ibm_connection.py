@@ -29,14 +29,16 @@ e testa a execução de um circuito simples no hardware real.
 import os
 import sys
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 
 def test_ibm_connection():
     """Testa conexão básica com IBM Quantum."""
     # Import here after path is configured in __main__
-    from src.quantum_consciousness.qpu_interface import QPUInterface
     from qiskit import QuantumCircuit
+
+    from src.quantum_consciousness.qpu_interface import QPUInterface
 
     print("🔗 Teste de Conexão IBM Quantum")
     print("=" * 40)

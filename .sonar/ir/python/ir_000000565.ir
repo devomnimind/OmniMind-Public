@@ -1,0 +1,18 @@
+
+��"
+        Verifica se representa sujeito para outro significante.
+
+        Relação fundamental: S1 → S2
+
+        Args:
+            other: Outro significante
+
+        Returns:
+            True se há relação de representação
+        "strselfM M(#otherM% M(/"j,
+*
+Y Y(("#get-field# connections:*
+(
+Y Y(("
+#binop in#2in:Bbool
+Y Y((*=/home/fahbrain/projects/omnimind/src/lacanian/desire_graph.py

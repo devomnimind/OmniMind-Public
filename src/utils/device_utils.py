@@ -155,7 +155,10 @@ def get_torch_device():
 
 def ensure_tensor_on_real_device(tensor_or_model) -> None:
     """
-    Garante que tensor ou modelo não está em meta device.
+    Garanta que tensor ou modelo não está em meta device.
+
+    CORREÇÃO (2025-12-17): Usa to_empty() ao invés de to() para evitar
+    "Cannot copy out of meta tensor" error ao migrar de meta device.
 
     Detecta se model/tensor está em meta device e migra para device real (cuda/cpu).
     Meta device é um device virtual usado durante inicialização, não pode ter dados reais.
@@ -181,15 +184,34 @@ def ensure_tensor_on_real_device(tensor_or_model) -> None:
 
         # Verificar se está em meta device
         if current_device.type == "meta":
-            logger.warning("⚠️ Detectado meta device! Migrando para device real...")
+            logger.warning("⚠️ Detectado meta device! Usando to_empty() para migrar...")
             real_device = get_torch_device()
 
-            # Migrar para device real
-            if hasattr(tensor_or_model, "to"):
-                tensor_or_model.to(real_device)
-                logger.info(f"✅ Modelo migrado para {real_device}")
+            # CORREÇÃO: Usar to_empty() ao invés de to() para evitar meta tensor copy error
+            if hasattr(tensor_or_model, "to_empty"):
+                # Método to_empty() disponível em nn.Module
+                try:
+                    tensor_or_model.to_empty(device=real_device)
+                    logger.info(f"✅ Modelo migrado com to_empty() para {real_device}")
+                except Exception as to_empty_exc:
+                    logger.debug(f"to_empty() falhou: {to_empty_exc}, tentando fallback...")
+                    # Fallback para to() se to_empty() não funcionar
+                    try:
+                        tensor_or_model.to(real_device)
+                        logger.info(f"✅ Modelo migrado com to() para {real_device}")
+                    except Exception as to_exc:
+                        logger.warning(f"Erro ao migrar modelo: {to_exc}")
+            elif hasattr(tensor_or_model, "to"):
+                # Fallback para to() se to_empty() não disponível
+                try:
+                    tensor_or_model.to(real_device)
+                    logger.info(f"✅ Modelo migrado para {real_device}")
+                except Exception as to_exc:
+                    logger.warning(f"Erro ao migrar modelo com to(): {to_exc}")
             else:
                 raise RuntimeError(f"Não consigo migrar {type(tensor_or_model)} de meta device")
+        else:
+            logger.debug(f"✓ Modelo já em device real: {current_device}")
 
     except Exception as e:
         logger.debug(f"Erro ao checar/migrar meta device: {e}")

@@ -1,0 +1,49 @@
+
+≈ª"
+        Avalia a√ß√£o baseada puramente em prazer.
+
+        Args:
+            action: A√ß√£o a avaliar
+
+        Returns:
+            Q-value (puro prazer, sem considera√ß√µes)
+        "strself
+° °(action
+° °(,"≥,
+*
+
+¨ ¨("#get-field# action_id:+
+)
+
+¨# ¨(0"#get-field# q_values:4
+2
+
+¨ ¨(0"#binop not in#2not in:Bbool "
+
+¨ ¨(0 *
+¨ ¨(
+"ø2
+0
+
+Æ. Æ(D"#get-field# pleasure_reward:+
+)
+
+Æ Æ("#get-field# q_values:,
+*
+
+Æ Æ(*	"#get-field# action_id:&
+$
+
+Æ Æ(D
+"#array-write#:	"ï+
+)
+
+∞ ∞("#get-field# q_values:,
+*
+
+∞ ∞(-"#get-field# action_id:$
+"
+
+∞ ∞(."#array-read#:
+
+∞ ∞(.*H/home/fahbrain/projects/omnimind/src/lacanian/freudian_metapsychology.py

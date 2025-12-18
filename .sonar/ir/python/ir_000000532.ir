@@ -1,0 +1,11 @@
+
+"platforms"str
+!"Convert to dictionary."strself, ,("“.
+,
+. .(data"
+dataclassesasdict:+
+)
+/ /(="?python-unknown?:Blist$
+"
+/ /(="#array-write#:
+0 0(*C/home/fahbrain/projects/omnimind/src/economics/marketplace_agent.py

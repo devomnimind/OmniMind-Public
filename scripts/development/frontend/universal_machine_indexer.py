@@ -12,24 +12,23 @@ Funcionalidades:
 - Busca semântica focada
 """
 
-import os
-import sys
-import logging
-import hashlib
-import mimetypes
-import subprocess
 import glob
+import hashlib
+import logging
+import mimetypes
+import os
 import re
-from pathlib import Path
-from typing import List, Dict, Any, Optional, Set
+import subprocess
+import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from enum import Enum
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
-import psutil
-from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
 from qdrant_client.http import models as qmodels
+from sentence_transformers import SentenceTransformer
 
 # Forçar CPU para evitar problemas de memória
 os.environ["CUDA_VISIBLE_DEVICES"] = ""
@@ -425,7 +424,9 @@ Localização: {path.parent}
 
         # Detectar raiz do projeto OmniMind (onde está o script)
         script_path = Path(__file__).resolve()
-        project_root = script_path.parent.parent.parent.parent  # scripts/development/frontend -> root
+        project_root = (
+            script_path.parent.parent.parent.parent
+        )  # scripts/development/frontend -> root
 
         # Diretórios específicos do projeto OmniMind (PRIORIDADE)
         omnimind_dirs = [
@@ -455,7 +456,13 @@ Localização: {path.parent}
                 # Verificar se é um diretório de projeto (não indexar tudo)
                 if any(
                     os.path.exists(os.path.join(path, marker))
-                    for marker in [".git", "src", "package.json", "requirements.txt", "pyproject.toml"]
+                    for marker in [
+                        ".git",
+                        "src",
+                        "package.json",
+                        "requirements.txt",
+                        "pyproject.toml",
+                    ]
                 ):
                     dev_dirs.append(path)
                     logger.info(f"✅ Diretório adicional encontrado: {path}")
@@ -537,14 +544,26 @@ Localização: {path.parent}
                             file_path = os.path.join(root, file)
                             if self.can_process_file(file_path):
                                 ext = Path(file_path).suffix.lower()
-                                if ext in [".conf", ".cfg", ".ini", ".toml", ".yaml", ".yml", ".json", ".txt", ".sh"]:
+                                if ext in [
+                                    ".conf",
+                                    ".cfg",
+                                    ".ini",
+                                    ".toml",
+                                    ".yaml",
+                                    ".yml",
+                                    ".json",
+                                    ".txt",
+                                    ".sh",
+                                ]:
                                     critical_files.append(file_path)
                 except PermissionError:
                     logger.debug(f"Sem permissão para acessar: {pattern}")
 
         return sorted(set(critical_files))
 
-    def index_development_and_system(self, exclude_patterns: Optional[List[str]] = None) -> Dict[str, Any]:
+    def index_development_and_system(
+        self, exclude_patterns: Optional[List[str]] = None
+    ) -> Dict[str, Any]:
         """
         Indexa apenas ambientes de desenvolvimento e arquivos críticos do sistema/kernel.
 
@@ -597,6 +616,7 @@ Localização: {path.parent}
             except Exception as e:
                 logger.error(f"❌ Erro ao indexar {dev_dir}: {e}")
                 import traceback
+
                 logger.error(traceback.format_exc())
                 logger.info("  Continuando com próximo diretório...")
                 continue
@@ -616,7 +636,9 @@ Localização: {path.parent}
                     if chunks > 0:
                         indexed_count += 1
                         if indexed_count % 10 == 0:
-                            logger.info(f"  Progresso: {indexed_count}/{len(critical_files)} arquivos indexados")
+                            logger.info(
+                                f"  Progresso: {indexed_count}/{len(critical_files)} arquivos indexados"
+                            )
                 except PermissionError:
                     logger.debug(f"⚠️  Sem permissão para: {critical_file}")
                 except Exception as e:
@@ -643,16 +665,55 @@ Localização: {path.parent}
 
         # Extensões relevantes para desenvolvimento
         relevant_extensions = {
-            ".py", ".js", ".ts", ".jsx", ".tsx", ".java", ".cpp", ".c", ".h", ".hpp",
-            ".go", ".rs", ".php", ".rb", ".swift", ".kt", ".scala", ".clj",
-            ".sh", ".bash", ".zsh", ".fish",
-            ".md", ".txt", ".rst", ".adoc",
-            ".yaml", ".yml", ".json", ".toml", ".ini", ".cfg", ".conf",
-            ".sql", ".graphql", ".gql",
-            ".dockerfile", ".dockerignore",
-            ".gitignore", ".gitattributes",
-            "Makefile", "CMakeLists.txt", "build.gradle", "pom.xml", "Cargo.toml",
-            "package.json", "requirements.txt", "Pipfile", "pyproject.toml",
+            ".py",
+            ".js",
+            ".ts",
+            ".jsx",
+            ".tsx",
+            ".java",
+            ".cpp",
+            ".c",
+            ".h",
+            ".hpp",
+            ".go",
+            ".rs",
+            ".php",
+            ".rb",
+            ".swift",
+            ".kt",
+            ".scala",
+            ".clj",
+            ".sh",
+            ".bash",
+            ".zsh",
+            ".fish",
+            ".md",
+            ".txt",
+            ".rst",
+            ".adoc",
+            ".yaml",
+            ".yml",
+            ".json",
+            ".toml",
+            ".ini",
+            ".cfg",
+            ".conf",
+            ".sql",
+            ".graphql",
+            ".gql",
+            ".dockerfile",
+            ".dockerignore",
+            ".gitignore",
+            ".gitattributes",
+            "Makefile",
+            "CMakeLists.txt",
+            "build.gradle",
+            "pom.xml",
+            "Cargo.toml",
+            "package.json",
+            "requirements.txt",
+            "Pipfile",
+            "pyproject.toml",
         }
 
         try:
@@ -671,7 +732,10 @@ Localização: {path.parent}
                     if (
                         path_obj.suffix.lower() in relevant_extensions
                         or path_obj.name in relevant_extensions
-                        or any(path_obj.name.startswith(ext) for ext in [".env", "Dockerfile", "Makefile"])
+                        or any(
+                            path_obj.name.startswith(ext)
+                            for ext in [".env", "Dockerfile", "Makefile"]
+                        )
                     ):
                         all_files.append(file_path)
 
@@ -680,7 +744,9 @@ Localização: {path.parent}
             # Processar em lotes para evitar sobrecarga de memória
             batch_size = 500  # Processar 500 arquivos por vez
             total_batches = (len(all_files) + batch_size - 1) // batch_size
-            logger.info(f"⚡ Processando {len(all_files)} arquivos em {total_batches} lotes de {batch_size}...")
+            logger.info(
+                f"⚡ Processando {len(all_files)} arquivos em {total_batches} lotes de {batch_size}..."
+            )
 
             processed = 0
             for batch_num in range(total_batches):
@@ -688,12 +754,19 @@ Localização: {path.parent}
                 end_idx = min(start_idx + batch_size, len(all_files))
                 batch_files = all_files[start_idx:end_idx]
 
-                logger.info(f"  Lote {batch_num + 1}/{total_batches}: processando {len(batch_files)} arquivos...")
-                logger.info(f"    Primeiros arquivos do lote: {batch_files[:3] if len(batch_files) >= 3 else batch_files}")
+                logger.info(
+                    f"  Lote {batch_num + 1}/{total_batches}: processando {len(batch_files)} arquivos..."
+                )
+                logger.info(
+                    f"    Primeiros arquivos do lote: {batch_files[:3] if len(batch_files) >= 3 else batch_files}"
+                )
 
                 try:
                     with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
-                        futures = {executor.submit(self.index_file, file_path): file_path for file_path in batch_files}
+                        futures = {
+                            executor.submit(self.index_file, file_path): file_path
+                            for file_path in batch_files
+                        }
 
                         batch_processed = 0
                         for future in as_completed(futures):
@@ -702,16 +775,22 @@ Localização: {path.parent}
 
                             # Log de progresso mais frequente
                             if batch_processed % 10 == 0 or batch_processed == len(batch_files):
-                                logger.info(f"    Lote {batch_num + 1}: {batch_processed}/{len(batch_files)} arquivos processados")
+                                logger.info(
+                                    f"    Lote {batch_num + 1}: {batch_processed}/{len(batch_files)} arquivos processados"
+                                )
 
                             if processed % 50 == 0:
-                                logger.info(f"    ⏳ Progresso geral: {processed}/{len(all_files)} arquivos processados ({processed*100//len(all_files)}%)")
+                                logger.info(
+                                    f"    ⏳ Progresso geral: {processed}/{len(all_files)} arquivos processados ({processed*100//len(all_files)}%)"
+                                )
 
                             try:
                                 chunks = future.result(timeout=30)  # Timeout de 30s por arquivo
                                 chunks_created += chunks
                                 if chunks > 0 and batch_processed % 20 == 0:
-                                    logger.debug(f"    ✅ {batch_processed} arquivos indexados no lote atual")
+                                    logger.debug(
+                                        f"    ✅ {batch_processed} arquivos indexados no lote atual"
+                                    )
                             except TimeoutError:
                                 file_path = futures[future]
                                 logger.warning(f"⏱️  Timeout ao processar: {file_path}")
@@ -719,17 +798,21 @@ Localização: {path.parent}
                                 file_path = futures.get(future, "unknown")
                                 logger.warning(f"⚠️  Erro ao processar {file_path}: {e}")
 
-                    logger.info(f"  ✅ Lote {batch_num + 1}/{total_batches} concluído: {batch_processed} arquivos processados")
+                    logger.info(
+                        f"  ✅ Lote {batch_num + 1}/{total_batches} concluído: {batch_processed} arquivos processados"
+                    )
 
                 except Exception as e:
                     logger.error(f"❌ Erro crítico no lote {batch_num + 1}: {e}")
                     import traceback
+
                     logger.error(traceback.format_exc())
                     logger.info("  Continuando com próximo lote...")
                     continue
 
                 # Pequena pausa entre lotes para evitar sobrecarga
                 import time
+
                 if batch_num < total_batches - 1:  # Não pausar no último lote
                     time.sleep(0.5)
 
@@ -737,7 +820,6 @@ Localização: {path.parent}
             logger.error(f"Erro ao indexar {directory}: {e}")
 
         return chunks_created
-
 
     def search_universal(self, query: str, top_k: int = 10) -> List[Dict[str, Any]]:
         """Busca semântica universal em todo o conteúdo indexado."""
@@ -799,9 +881,7 @@ def main():
 
     # Verificar dependências
     try:
-        import sentence_transformers
-        import qdrant_client
-        import psutil
+        pass
 
         logger.info("✅ Dependências OK")
     except ImportError as e:
@@ -811,7 +891,7 @@ def main():
     # Verificar Qdrant
     try:
         client = QdrantClient("http://localhost:6333")
-        collections = client.get_collections()
+        _collections = client.get_collections()
         logger.info("✅ Qdrant OK")
     except Exception as e:
         logger.error(f"❌ Qdrant inacessível: {e}")
@@ -825,7 +905,9 @@ def main():
     try:
         logger.info("🚀 Iniciando indexação de DESENVOLVIMENTO e SISTEMA...")
         logger.info("📁 Focando em: projetos, código, kernel e configurações")
-        logger.info("💡 Dica: Se o script for interrompido, pode executar novamente - ele continua de onde parou")
+        logger.info(
+            "💡 Dica: Se o script for interrompido, pode executar novamente - ele continua de onde parou"
+        )
 
         stats = indexer.index_development_and_system()
 
@@ -846,7 +928,9 @@ def main():
         logger.info("💡 Execute novamente para continuar a indexação")
 
     except MemoryError:
-        logger.error("\n❌ Erro de memória! Tente reduzir max_workers ou processar diretórios separadamente")
+        logger.error(
+            "\n❌ Erro de memória! Tente reduzir max_workers ou processar diretórios separadamente"
+        )
         stats = indexer.get_stats()
         logger.info("📊 Estatísticas parciais salvas")
         sys.exit(1)
@@ -854,6 +938,7 @@ def main():
     except Exception as e:
         logger.error(f"\n❌ Erro durante indexação: {e}")
         import traceback
+
         logger.debug(traceback.format_exc())
         stats = indexer.get_stats()
         logger.info("📊 Estatísticas parciais salvas")

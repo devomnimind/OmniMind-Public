@@ -1,0 +1,54 @@
+
+"S3518"bool
+%"Compute compression ratio."str
+"division by zero"bool
+1.0float
+
+	0int
+"a"boolself
+¿" ¿(&data
+¿( ¿(3"Ú;
+9
+
+Á Á(!original_size"
+builtinslen*:Bint(
+&
+
+Â Â(1"#unknown-value#Bint(
+&
+
+Â Â(1"#unknown-value#Bint.
+,
+
+Â Â(1"
+zlibcompress:Bbytes=
+;
+
+Â Â(2compressed_size"
+builtinslen*:Bint*
+(
+
+Ä2 Ä(C
+"	#binop >#2>:	Bbool,"*
+
+Ä2 Ä(C
+ *
+Ä/ Ä(12
+ÄD Ä(H"›,
+*
+
+Ä Ä(."
+#binop !=#2!=:	Bbool"
+ 
+
+Ä Ä(."
+#assert#:3
+1
+
+Ä Ä(."#dependent-value#*:Bfloat
+
+Ä Ä(L"
+
+Ä Ä(L"&*
+
+Ä Ä(L*:/home/fahbrain/projects/omnimind/src/desire_engine/core.py

@@ -24,12 +24,11 @@ ML Monitor - Monitora uso e limites de ML híbrido
 Executa verificações periódicas e alertas
 """
 
-import time
 import json
-import smtplib
-from datetime import datetime, timedelta
-from email.mime.text import MIMEText
+import time
+from datetime import datetime
 from pathlib import Path
+
 from hybrid_ml_optimizer import HybridMLOptimizer
 
 

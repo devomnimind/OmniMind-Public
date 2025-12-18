@@ -24,8 +24,8 @@ Contact: fabricioslv@hotmail.com.br
 Testa backends disponíveis com API corrigida do Qiskit Runtime
 """
 
-import os
 import json
+import os
 import time
 from datetime import datetime
 from pathlib import Path

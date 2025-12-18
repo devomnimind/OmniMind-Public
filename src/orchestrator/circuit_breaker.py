@@ -29,8 +29,6 @@ class CircuitState(Enum):
 class CircuitBreakerOpen(Exception):
     """Exceção lançada quando circuit breaker está aberto."""
 
-    pass
-
 
 class AgentCircuitBreaker:
     """Circuit breaker para proteção de chamadas a agentes."""

@@ -1,0 +1,113 @@
+{
+  "mcp": {
+    "operations": [
+      {
+        "name": "write",
+        "duration": 0.01844723999965936,
+        "success": true,
+        "result": {
+          "path": "/home/fahbrain/projects/omnimind/scripts/benchmarks/tmp_bench/phase8_mcp.txt",
+          "size": 24,
+          "hash": "d74bb43200eca889d616af2c3627d8dd56d6b5b15ba0666156330c8870ddabd6"
+        }
+      },
+      {
+        "name": "read",
+        "duration": 0.0027850299957208335,
+        "success": true,
+        "result": "phase8 benchmark payload"
+      },
+      {
+        "name": "list",
+        "duration": 0.002064113999949768,
+        "success": true,
+        "result": {
+          "path": "/home/fahbrain/projects/omnimind/scripts/benchmarks/tmp_bench",
+          "entries": [
+            {
+              "path": "/home/fahbrain/projects/omnimind/scripts/benchmarks/tmp_bench/phase8_mcp.txt",
+              "name": "phase8_mcp.txt",
+              "type": "file",
+              "size": 24
+            }
+          ]
+        }
+      },
+      {
+        "name": "stat",
+        "duration": 0.00204375600151252,
+        "success": true,
+        "result": {
+          "path": "/home/fahbrain/projects/omnimind/scripts/benchmarks/tmp_bench/phase8_mcp.txt",
+          "is_file": true,
+          "is_dir": false,
+          "size": 24,
+          "modified": 1764041004.9885252
+        }
+      }
+    ],
+    "metrics_call": {
+      "duration": 0.0015842639986658469,
+      "success": true,
+      "result": {
+        "server": "127.0.0.1:4321",
+        "allowed_roots": [
+          "/home/fahbrain/projects/omnimind/scripts/benchmarks",
+          "/home/fahbrain/projects/omnimind/scripts/benchmarks/tmp_bench"
+        ],
+        "metrics": {
+          "total_requests": 5,
+          "methods": {
+            "write_file": {
+              "calls": 1,
+              "avg_latency": 0.0020569049956975505,
+              "last_latency": 0.0020569049956975505
+            },
+            "read_file": {
+              "calls": 1,
+              "avg_latency": 0.00045504699664888903,
+              "last_latency": 0.00045504699664888903
+            },
+            "list_dir": {
+              "calls": 1,
+              "avg_latency": 0.0003014109970536083,
+              "last_latency": 0.0003014109970536083
+            },
+            "stat": {
+              "calls": 1,
+              "avg_latency": 0.0002922200001194142,
+              "last_latency": 0.0002922200001194142
+            },
+            "get_metrics": {
+              "calls": 1,
+              "avg_latency": 8.654998964630067e-06,
+              "last_latency": 8.654998964630067e-06
+            }
+          }
+        }
+      }
+    }
+  },
+  "dbus": {
+    "operations": [
+      {
+        "name": "network",
+        "duration": 0.00556559599499451,
+        "success": true,
+        "result": {
+          "state": "CONNECTED_GLOBAL",
+          "connectivity": "FULL",
+          "active_connections": 7
+        }
+      },
+      {
+        "name": "power",
+        "duration": 0.004329521005274728,
+        "success": true,
+        "result": {
+          "error": "org.freedesktop.DBus.Error.InvalidArgs: Nenhuma propriedade \u201cPercentage\u201d"
+        }
+      }
+    ]
+  }
+}

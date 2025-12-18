@@ -1,0 +1,192 @@
+
+?src.security.network_sensors.NetworkSensorGanglia._host_to_dictL
+@/home/fahbrain/projects/omnimind/src/security/network_sensors.pyÏ Ï("2*Ü
+2
+Ì Ì(0
+
+Ó ˆ(	
+%1"dictH
+F
+
+Ô Ô(
+%2"__id*,
+
+__unknown_file (*
+
+host"
+ipã
+à
+
+Ô Ô(
+%3"__mapSet*"
+
+__unknown_file (
+
+%1*"
+
+__unknown_file (
+ip*"
+
+__unknown_file (
+
+%2N
+L
+
+ (%
+%4"__id*2
+
+__unknown_file (*
+
+host"
+
+hostnameë
+é
+
+ (%
+%5"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+hostname*"
+
+__unknown_file (
+
+%4Q
+O
+
+Ò Ò(+
+%6"__id*5
+
+__unknown_file (*
+
+host"
+mac_addressî
+ë
+
+Ò Ò(+
+%7"__mapSet*"
+
+__unknown_file (
+
+%1*+
+
+__unknown_file (
+mac_address*"
+
+__unknown_file (
+
+%6N
+L
+
+Ú Ú(%
+%8"__id*2
+
+__unknown_file (*
+
+host"
+
+os_guessë
+é
+
+Ú Ú(%
+%9"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+os_guess*"
+
+__unknown_file (
+
+%8Q
+O
+
+Û Û()
+%10"__id*4
+
+__unknown_file (*
+
+host"
+
+open_portsï
+í
+
+Û Û()
+%11"__mapSet*"
+
+__unknown_file (
+
+%1**
+
+__unknown_file (
+
+open_ports*#
+
+__unknown_file (
+
+%10O
+M
+
+Ù Ù(%
+%12"__id*2
+
+__unknown_file (*
+
+host"
+
+servicesì
+ê
+
+Ù Ù(%
+%13"__mapSet*"
+
+__unknown_file (
+
+%1*(
+
+__unknown_file (
+
+services*#
+
+__unknown_file (
+
+%12P
+N
+
+ı ı('
+%14"__id*3
+
+__unknown_file (*
+
+host"
+	last_seenî
+ë
+
+ı ı('
+%15"__mapSet*"
+
+__unknown_file (
+
+%1*)
+
+__unknown_file (
+	last_seen*#
+
+__unknown_file (
+
+%14"
+
+Ó ˆ(	
+
+%1:
+
+Ï Ï(-
+hostB53
+1src.security.network_sensors.NetworkSensorGangliaH

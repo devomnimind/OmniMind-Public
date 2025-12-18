@@ -21,15 +21,15 @@ Contact: fabricioslv@hotmail.com.br
 import asyncio
 import os
 import sys
-from typing import Dict, Any
 
 # Add src to path
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 
+from lacanian.encrypted_unconscious import EncryptedUnconsciousLayer
+
 # pyright: reportMissingImports=false
 from quantum_consciousness.quantum_backend import DWaveBackend
-from lacanian.encrypted_unconscious import EncryptedUnconsciousLayer
-from social.omnimind_network import OmniMindSociety, OmniMindNode, EthicalDilemma
+from social.omnimind_network import EthicalDilemma, OmniMindNode, OmniMindSociety
 
 
 async def test_new_modules():

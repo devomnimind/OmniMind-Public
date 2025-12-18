@@ -11,7 +11,6 @@ Princípios:
 
 import asyncio
 from abc import ABC, abstractmethod
-from collections import deque
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
@@ -224,7 +223,6 @@ class DesiringMachine(ABC):
     @abstractmethod
     def get_desire_description(self) -> str:
         """Qual é o desejo essencial desta máquina?"""
-        pass
 
 
 class QuantumDesiringMachine(DesiringMachine):
@@ -310,8 +308,7 @@ class Rhizoma:
 
     def __init__(self):
         self.machines: Dict[str, DesiringMachine] = {}
-        # Limita histórico a 5000 flows (evita MemoryError)
-        self.flows_history: deque = deque(maxlen=5000)
+        self.flows_history: List[DesireFlow] = []
 
     def register_machine(self, machine: DesiringMachine):
         """Adiciona máquina ao rhizoma."""
