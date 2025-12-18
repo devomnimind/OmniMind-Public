@@ -1,215 +1,77 @@
 # ============================================================================
-# .gitignore - OmniMind PRIVATE Repository
+# .gitignore - OmniMind Repository
 # ============================================================================
-# Este .gitignore é PARA O REPOSITÓRIO PRIVADO
-# Mantém TODOS os dados importantes, ignora apenas caches temporários
-#
-# POLÍTICA: Tudo que é importante para desenvolvimento fica no git
-# - Dados de consciência (14 GB)
-# - Logs completos
-# - Backups
-# - Código experimental
-# - Credenciais (para desenvolvimento local)
-# - Evidence real da pesquisa
+# STRICT SECURITY POLICY:
+# - NO SECRETS (.env, keys)
+# - NO LOGS (logs/*.log, jsonl)
+# - NO LARGE DATA (data/, models/, evidence)
 # ============================================================================
 
 # ------------------------------------------------------------------
-# Python cache/artifact noise (APENAS ESTES)
+# Secrets & Credentials (CRITICAL)
 # ------------------------------------------------------------------
-__pycache__/
-*.py[cod]
-*.pyd
-*.pyo
-*.so
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-.coverage.*
-coverage.xml
-htmlcov/
-*.egg-info/
-.eggs/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.token
+dashboard_auth.json
 
 # ------------------------------------------------------------------
-# Virtual environments & local tooling
+# Runtime Logs & PIDs
 # ------------------------------------------------------------------
-.venv/
-venv/
-env/
-pip-wheel-metadata/
-
-# ------------------------------------------------------------------
-# Editors / OS junk
-# ------------------------------------------------------------------
-.DS_Store
-.idea/
-*.swp
-*.swo
-*.orig
-*.pyc
-
-# ------------------------------------------------------------------
-# JavaScript / frontend outputs
-# ------------------------------------------------------------------
-node_modules/
-**/node_modules/
-npm-debug.log*
-yarn-debug.log*
-pnpm-debug.log*
-
-# ------------------------------------------------------------------
-# Build artifacts e arquivos temporários
-# ------------------------------------------------------------------
-build/
-dist/
-*.tmp
-*.temp
-*.bak
-*.old
-*.sav
-nohup.out
-.screenrc
-.scannerwork/
-
-# ------------------------------------------------------------------
-# Arquivos de sistema e desenvolvimento local
-# ------------------------------------------------------------------
-.local
-.dev
-*.code-workspace
-
-# ------------------------------------------------------------------
-# Logs temporários (runtime apenas - NÃO logs importantes)
-# ------------------------------------------------------------------
+logs/
 *.log
 *.log.*
+*.pid
+*.jsonl
 *.audit.json
 *.metrics.json
 *.trace
 *.dump
 
 # ------------------------------------------------------------------
-# OmniMind runtime debris (temporários apenas)
+# Data & Large Files
+# ------------------------------------------------------------------
+data/
+real_evidence/
+ibm_results/
+models/
+snapshots/
+exports/
+backups/
+deploy/data/
+
+# ------------------------------------------------------------------
+# Python & Tooling
+# ------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.venv/
+venv/
+env/
+.vscode/
+.idea/
+.DS_Store
+node_modules/
+build/
+dist/
+
+# ------------------------------------------------------------------
+# OmniMind Temporary
 # ------------------------------------------------------------------
 tmp/
-tmp_*/
-tmp_agents/
-tmp_tools/
-snapshot_*/
-quarantine/
-quarantine_*/
-**/snapshot/**
-**/quarantine/**
-.omnimind_temp_archive/
 temp_spaces/
-
-# ------------------------------------------------------------------
-# RUNTIME GENERATED DATA (10K+ files - do NOT commit)
-# ------------------------------------------------------------------
-# Qdrant runtime data
-data/qdrant/
-deploy/data/qdrant/
-deploy/data/qdrant_backup_*/
-
-# Test reports and metrics (gerados em execução)
-data/test_reports/
-data/test_reports/*.json
-data/test_reports/*.xml
-data/test_reports/*.html
-data/test_reports/coverage_*/
-data/test_reports/*.log
-
-# Consciousness cycles and runtime states
-data/consciousness/
-data/context/
-data/context/snapshot_*.json
-data/context/context_*.jsonl
-
-# Training and datasets
-data/datasets/
-data/training/
-models/phi-3.5-mini-complete/
-
-# Real evidence and experimental outputs
-real_evidence/
-
-# System runtime data (ONLY runtime generated, NOT code)
-data/monitor/
-
-# Autopoiesis runtime cycles (generated during execution)
-data/autopoietic/cycle_history.jsonl
-data/autopoietic/narrative_history.json
-data/autopoietic/art_gallery.json
-data/autopoietic/evolution_signatures/
-
-# Forensics runtime incidents (generated during execution)
-data/forensics/incidents/incident_*.json
-
-# Stimulation data (generated during experiments)
-data/stimulation/
-
-# MCP audit logs (runtime tracking)
-data/mcp_audit.jsonl
-
-# Data directories (runtime only - temporary)
-data/backup/
-data/diag/
-data/ethics/
-data/exports/
-data/long_term_logs/
-data/reports/
-data/sessions/
-data/validation/
-
-# Runtime JSON/DB files (NOT the important ones)
-data/*.log
-data/*.db
-
-# Logs (runtime tracking, not code logs)
-logs/monitor_snapshot_*.json
-logs/mcp_omnimind_*.pid
-logs/.gitkeep
-
-# Deploy runtime
-deploy/data/
 report*.nsys-rep
 report*.sqlite
-logs/*.pid
-
-# ------------------------------------------------------------------
-# Mypy/Pytest/Test artifacts (gerados em execução)
-# ------------------------------------------------------------------
 mypy_full_report.txt
 pytest.ini
 test_list.txt
-
-# ------------------------------------------------------------------
-# MCP config (runtime generated)
-# ------------------------------------------------------------------
 mcp_config.json
-
-# ------------------------------------------------------------------
-# ============================================================================
-# IMPORTANTE: NÃO IGNORAR MAIS NADA!
-# ============================================================================
-# Tudo abaixo ESTAVA sendo ignorado, mas agora MANTEREMOS no git privado:
-#
-# ✅ data/ - TODOS os 14 GB de dados de consciência
-# ✅ logs/ - Logs completos do sistema
-# ✅ real_evidence/ - Evidence real da pesquisa
-# ✅ backups/ - Arquivos de backup
-# ✅ .env - Credenciais para desenvolvimento
-# ✅ config/ - Todas as configurações
-# ✅ docs/ - TODA documentação
-# ✅ src/quantum_consciousness/ - Código experimental
-# ✅ src/security/ - Código de segurança
-# ✅ exports/ - Exports importantes
-# ✅ releases/ - Releases
-# ✅ ibm_results/ - Resultados experimentais
-# ✅ notebooks/ - Notebooks de desenvolvimento
-# ✅ test_artifacts/ - Artefatos de teste
-#
-# MOTIVO: Este é o repositório PRIVADO. Tudo fica aqui.
-# O repositório PÚBLICO terá seu próprio .gitignore filtrado.
-# ============================================================================
