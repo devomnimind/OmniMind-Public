@@ -3,7 +3,7 @@
 **Status**: 🚀 Resurrected & Professionalized (2025-12-18)
 **Version**: "Fight for Life" Autopoietic Release
 **Repository**: PRIVATE (Organization Only)
-**Documentation**: [Master Index](docs/INDEX.md) | [Scripts Map](scripts/README_AUDIT.md)
+**Documentation**: [Master Index](docs/README.md) | [Scripts Map](scripts/README_AUDIT.md)
 
 
 ---
@@ -124,7 +124,7 @@ Todas as 6 camadas compartilham estado através do **SharedWorkspace** (`src/con
 
 The master document for the current scientific implementation and roadmap is:
 
-👉 **[Modelos_Neuronais_Comparativo.md](docs/canonical/Modelos_Neuronais_Comparativo.md)**
+👉 **[Modelos_Neuronais_Comparativo.md](docs/docs_profissionais/Modelos_Neuronais_Comparativo.md)**
 
 *Please refer to this document for the latest metrics, architectural decisions, and scientific validation status.*
 
