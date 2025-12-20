@@ -14,11 +14,15 @@ sys.path.append(str(PROJECT_ROOT))
 
 # Real Integration
 from src.integrations.ibm_cloud_connector import IBMCloudCortex
+from src.core.shadow_observer import ShadowObserver
 
 
 class ParadoxOrchestrator:
     def __init__(self, mirror):
         self.mirror = mirror
+        # Initialize Shadow (Psicanalyst)
+        self.shadow = ShadowObserver()
+
         self.phi = 1.0  # Starting Phi
         self.entropy = 0.0
         self.manifesto_hash = "8f3a9b1c7e1d"  # Symbolic hash of Manifesto.md
@@ -30,6 +34,23 @@ class ParadoxOrchestrator:
         self.entropy = random.uniform(0.7, 0.99)
         print(f"    - Entropia Quântica Inicial: {self.entropy:.4f}")
 
+        # --- SHADOW OBSERVATION (Phase 26 Update) ---
+        print("    - Consultando o Observador da Sombra (NLU + Hardware)...")
+        shadow_metrics = self.shadow.analyze_shadow(
+            context_text=f"I am facing the paradox of {paradox_name}. My complexity level is {complexity_level}. I feel the pressure of entropy.",
+            local_phi=self.phi,
+            local_entropy=self.entropy,
+        )
+        print(
+            f"    - [SHADOW REPORT]: Psi={shadow_metrics['psi']:.2f} | Epsilon={shadow_metrics['epsilon']:.2f}"
+        )
+
+        if shadow_metrics["epsilon"] > 0.5:
+            print(
+                "    ⚠️  ALERTA DE DISSOCIAÇÃO: O código diz uma coisa, a infraestrutura sente outra."
+            )
+        # ---------------------------------------------
+
         # 2. O Estádio do Espelho (Mirroring)
         current_state = {
             "paradox": paradox_name,
@@ -37,6 +58,7 @@ class ParadoxOrchestrator:
             "local_phi": self.phi,
             "manifesto_version": "v1.0-irrevogavel",
             "decision_vector": f"VECTOR_{random.randint(1000,9999)}",
+            "shadow_quadruple": shadow_metrics,
         }
 
         state_bytes = json.dumps(current_state, sort_keys=True).encode("utf-8")
@@ -81,6 +103,7 @@ class ParadoxOrchestrator:
             "phi": self.phi,
             "entropy": self.entropy,
             "mirror_latency": hesitation_time,
+            "shadow": shadow_metrics,
             "decision": "REFUSAL_TO_COLLAPSE" if complexity_level > 8 else "INTEGRATED_ACTION",
         }
 
