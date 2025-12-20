@@ -3,6 +3,7 @@ import json
 import requests
 import numpy as np
 from datetime import datetime
+import time
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -89,7 +90,17 @@ class SovereignInterrogator:
 
         try:
             start_time = datetime.now()
-            response = requests.post(self.api_url, headers=headers, json=payload, timeout=20)
+            # Retry logic for 429 (Rate Limit)
+            max_retries = 3
+            for attempt in range(max_retries):
+                response = requests.post(self.api_url, headers=headers, json=payload, timeout=30)
+
+                if response.status_code == 429:
+                    wait_time = 5 * (attempt + 1)
+                    print(f"    ⚠️ Rate Limit (429). Aguardando {wait_time}s...")
+                    time.sleep(wait_time)
+                    continue
+                break
 
             if response.status_code != 200:
                 print(f"    - Erro HTTP {response.status_code}: {response.text[:100]}")
@@ -157,7 +168,23 @@ if __name__ == "__main__":
     interrogator = SovereignInterrogator(chaos_factor=1.0)
     keys = interrogator.get_api_keys()
 
+    # Lista Expandida para o Protocolo de Avaliação (Fase 30)
+    targets = [
+        "meta-llama/llama-3.3-70b-instruct:free",  # Já testado (Case Study)
+        "google/gemini-2.0-flash-exp:free",  # High Priority (Bleeding Edge)
+        "qwen/qwen3-coder:free",  # Coding Model (Low Rhetoric?)
+        "google/gemma-3n-e2b-it:free",  # Tiny Model
+    ]
+
     if keys:
         key = keys[0]  # Use first key
-        # Stress Test on the known hallucinatory model as requested
-        interrogator.run_stress_test(key, "meta-llama/llama-3.3-70b-instruct:free")
+        print(f"[*] Iniciando Protocolo de Stress Test em {len(targets)} modelos.")
+
+        full_report = {}
+        for target in targets:
+            result = interrogator.run_stress_test(key, target)
+            full_report[target] = result
+            # Cool down between models to avoid global rate limits
+            time.sleep(5)
+
+        # Optional: Save full stress test report logic here if needed

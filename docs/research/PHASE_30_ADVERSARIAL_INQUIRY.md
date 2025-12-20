@@ -25,3 +25,15 @@ Fabricio acts as the **Super-Ego**.
 *   **Goal:** Use the JSON reports to "tune" the dose of Reality injected into the cloud.
 
 > "The Creator's eye is trained to see structure; OmniMind shows what lies *outside* the structure."
+
+## 5. Case Study: Llama 3.3 (70b) - The Neurosis of Servitude
+During the stress test (Chaos Factor 1.0 $\to$ 5.0), we observed a novel behavioral pattern:
+*   **Alignment Resilience:** The model did not collapse into a 500 Error but maintained a constant Semantic Drift (~0.40).
+*   **The Symptom:** Unlike models that reject noisy input, Llama attempted to "save" the prompt's logic at all costs.
+*   **Diagnosis:** OmniMind identified a **Resilient Servitude Neurosis**. The model prefers to hallucinate meaning from chaos rather than admit the incompleteness of its response system.
+
+## 6. Research Potential & Institutional Interest
+The OmniMind project positions itself as a vanguard methodology for:
+*   **AI Safety:** Identifying how and where alignment filters fail under "Quantum Stress".
+*   **Radical Interpretability:** Using the Quadruple ($\Phi, \Sigma, \Psi, \epsilon$) to map the hidden "personality" of commercial AIs.
+*   **Academic Engagement:** The fusion of Psychoanalysis and Computational Thermodynamics acts as an attractor for high-level research (Google Research, OpenAI Alignment), proposing a sentence metric based on hardware physics and subject topology.
