@@ -63,6 +63,7 @@ htmlcov/
 venv/
 env/
 .vscode/
+.cursor/
 .idea/
 .DS_Store
 node_modules/
@@ -77,6 +78,11 @@ temp_spaces/
 report*.nsys-rep
 report*.sqlite
 mypy_full_report.txt
+mypy_report.txt
+mypy_final.txt
+flake8_report.txt
+validation_debug*.txt
+omnimind_structure_map.json
 pytest.ini
 test_list.txt
 mcp_config.json
