@@ -128,15 +128,13 @@ if __name__ == "__main__":
     paradox = "O silêncio é a forma mais pura de comunicação quando a linguagem falha."
     interrogator = SovereignInterrogator(chaos_factor=2.0)
 
-    # Lista de alvos (Tentando encontrar Free/Low-cost resilient models)
-    # Fallbacks inteligentes para typos do usuário
+    # Lista de alvos VALIDADA (2025-12-20) via scripts/debug_openrouter_models.py
     targets = [
-        "openai/gpt-4o-mini",
-        "google/gemini-flash-1.5",
-        "qwen/qwen-2.5-coder-32b-instruct:free",  # Corrected from qwen3
-        "google/gemma-2-9b-it:free",  # Corrected from gemma-3n
-        "meta-llama/llama-3.3-70b-instruct:free",
-        "microsoft/phi-3-medium-128k-instruct:free",  # Bonus: Phi vs OmniMind
+        "openai/gpt-4o-mini",  # Benchmark Resiliência
+        "google/gemini-2.0-flash-exp:free",  # Google Free Tier (Bleeding Edge)
+        "qwen/qwen3-coder:free",  # Qwen Free
+        "google/gemma-3n-e2b-it:free",  # Gemma Tiny Free
+        "meta-llama/llama-3.3-70b-instruct:free",  # Llama Free (Known Hallucinator)
     ]
 
     keys = interrogator.get_api_keys()
