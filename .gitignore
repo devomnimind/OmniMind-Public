@@ -45,6 +45,8 @@ snapshots/
 exports/
 backups/
 deploy/data/
+deploy/data/**/*
+
 
 # ------------------------------------------------------------------
 # Python & Tooling
