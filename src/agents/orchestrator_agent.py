@@ -46,28 +46,28 @@ from ..memory.semantic_cache import SemanticCacheLayer
 from ..memory.semantic_memory import SemanticMemory
 from ..memory.systemic_memory_trace import SystemicMemoryTrace
 from ..metacognition.metacognition_agent import MetacognitionAgent
-from ..orchestrator.agent_registry import AgentPriority, AgentRegistry
-from ..orchestrator.auto_repair import AutoRepairSystem
-from ..orchestrator.circuit_breaker import AgentCircuitBreaker
-from ..orchestrator.component_isolation import ComponentIsolation, IsolationLevel
-from ..orchestrator.decision_explainer import DecisionExplainer
-from ..orchestrator.delegation_manager import DelegationManager, HeartbeatMonitor
-from ..orchestrator.error_analyzer import ErrorAnalyzer
-from ..orchestrator.event_bus import (
+from ..orchestration.agent_registry import AgentPriority, AgentRegistry
+from ..orchestration.auto_repair import AutoRepairSystem
+from ..orchestration.circuit_breaker import AgentCircuitBreaker
+from ..orchestration.component_isolation import ComponentIsolation, IsolationLevel
+from ..orchestration.decision_explainer import DecisionExplainer
+from ..orchestration.delegation_manager import DelegationManager, HeartbeatMonitor
+from ..orchestration.error_analyzer import ErrorAnalyzer
+from ..orchestration.event_bus import (
     EventPriority,
     OrchestratorEvent,
     OrchestratorEventBus,
 )
-from ..orchestrator.forensic_analyzer import ForensicAnalyzer
-from ..orchestrator.introspection_loop import IntrospectionLoop
-from ..orchestrator.meta_react_coordinator import MetaReActCoordinator
-from ..orchestrator.permission_matrix import PermissionMatrix
-from ..orchestrator.power_states import PowerStateManager
-from ..orchestrator.quarantine_system import QuarantineSystem
-from ..orchestrator.rag_fallback import RAGFallbackSystem
-from ..orchestrator.rollback_system import RollbackSystem
-from ..orchestrator.sandbox_system import SandboxSystem
-from ..orchestrator.trust_system import TrustSystem
+from ..orchestration.forensic_analyzer import ForensicAnalyzer
+from ..orchestration.introspection_loop import IntrospectionLoop
+from ..orchestration.meta_react_coordinator import MetaReActCoordinator
+from ..orchestration.permission_matrix import PermissionMatrix
+from ..orchestration.power_states import PowerStateManager
+from ..orchestration.quarantine_system import QuarantineSystem
+from ..orchestration.rag_fallback import RAGFallbackSystem
+from ..orchestration.rollback_system import RollbackSystem
+from ..orchestration.sandbox_system import SandboxSystem
+from ..orchestration.trust_system import TrustSystem
 from ..security.security_agent import SecurityAgent
 from ..tools.dynamic_tool_creator import DynamicToolCreator
 from ..tools.omnimind_tools import ToolsFramework
@@ -363,7 +363,7 @@ class OrchestratorAgent(ReactAgent):
             logger.warning(f"Erro ao registrar system capability tools: {e}")
 
         # NEW: IndexingScheduler para indexação automática periódica
-        from ..orchestrator.indexing_scheduler import IndexingScheduler
+        from ..orchestration.indexing_scheduler import IndexingScheduler
 
         self.indexing_scheduler = IndexingScheduler(
             system_capabilities_manager=self.system_capabilities,

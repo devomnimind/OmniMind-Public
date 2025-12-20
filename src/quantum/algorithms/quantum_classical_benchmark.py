@@ -90,7 +90,7 @@ class QuantumClassicalBenchmark:
         Returns:
             Resultado do benchmark
         """
-        from src.quantum_ai.quantum_algorithms import GroverSearch
+        from src.quantum.algorithms.quantum_algorithms import GroverSearch
 
         # 1. CLASSICAL: Busca linear
         logger.info(f"🖥️  Classical search (N={search_space_size})...")

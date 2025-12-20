@@ -551,7 +551,7 @@ class IntegrationLoop:
 
                     # 🎯 Sprint 2 Task 2.3.2: Extrair métricas RNN com correlação de Φ e ciclo
                     try:
-                        from src.observability.rnn_metrics_extractor import (
+                        from src.monitor.rnn_metrics_extractor import (
                             get_rnn_metrics_extractor,
                         )
 
@@ -989,7 +989,7 @@ class IntegrationLoop:
         # Registrar métricas do ciclo no coletor de métricas (CORREÇÃO: estava faltando)
         if collect_metrics:
             try:
-                from src.observability.module_metrics import get_module_metrics
+                from src.monitor.module_metrics import get_module_metrics
 
                 metrics_collector = get_module_metrics()
 
@@ -1049,7 +1049,7 @@ class IntegrationLoop:
         # Gerar relatório do ciclo (ModuleReporter)
         if collect_metrics:
             try:
-                from src.observability.module_reporter import get_module_reporter
+                from src.monitor.module_reporter import get_module_reporter
 
                 reporter = get_module_reporter()
 

@@ -181,7 +181,7 @@ class HybridPhiCalculator:
 
         Example:
             ```python
-            from src.quantum_consciousness.hybrid_phi_calculator import HybridPhiCalculator
+            from src.quantum.consciousness.hybrid_phi_calculator import HybridPhiCalculator
             result = await HybridPhiCalculator.from_phase24_json(
                 "exports/quantum_input_features.json"
             )
@@ -190,7 +190,7 @@ class HybridPhiCalculator:
         """
         import json
 
-        from src.quantum_consciousness.phi_trajectory_transformer import (
+        from src.quantum.consciousness.phi_trajectory_transformer import (
             QuantumInputFeatures,
         )
 
@@ -243,7 +243,7 @@ class HybridPhiCalculator:
 
         Example:
             ```python
-            from src.quantum_consciousness.hybrid_phi_calculator import HybridPhiCalculator
+            from src.quantum.consciousness.hybrid_phi_calculator import HybridPhiCalculator
             result = await HybridPhiCalculator.process_trajectory_from_json(
                 "exports/quantum_input_features.json",
                 blend_weight=0.6
@@ -254,7 +254,7 @@ class HybridPhiCalculator:
         """
         import json
 
-        from src.quantum_consciousness.phi_trajectory_transformer import (
+        from src.quantum.consciousness.phi_trajectory_transformer import (
             QuantumInputFeatures,
         )
 

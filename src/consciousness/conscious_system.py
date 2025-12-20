@@ -290,7 +290,7 @@ class ConsciousSystem:
 
         # 🎯 Sprint 2 Task 2.3.2: Extrair métricas RNN após atualização de pesos
         try:
-            from src.observability.rnn_metrics_extractor import get_rnn_metrics_extractor
+            from src.monitor.rnn_metrics_extractor import get_rnn_metrics_extractor
 
             extractor = get_rnn_metrics_extractor()
             # Phi será calculado após, então passamos None aqui

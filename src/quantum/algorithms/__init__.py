@@ -11,27 +11,27 @@ Note: This is a simulation-based implementation that doesn't require
 actual quantum hardware, using quantum-inspired classical algorithms.
 """
 
-from src.quantum_ai.quantum_algorithms import (
+from src.quantum.algorithms.quantum_algorithms import (
     GroverSearch,
     QuantumAnnealer,
     QuantumCircuit,
     QuantumGate,
     QuantumState,
 )
-from src.quantum_ai.quantum_ml import (
+from src.quantum.algorithms.quantum_ml import (
     QuantumClassifier,
     QuantumFeatureMap,
     QuantumKernel,
     QuantumNeuralNetwork,
     VariationalCircuit,
 )
-from src.quantum_ai.quantum_optimizer import (
+from src.quantum.algorithms.quantum_optimizer import (
     QAOAOptimizer,
     QuantumEvolutionStrategy,
     QuantumGradientDescent,
     QuantumOptimizer,
 )
-from src.quantum_ai.superposition_computing import (
+from src.quantum.algorithms.superposition_computing import (
     QuantumParallelism,
     StateAmplification,
     SuperpositionProcessor,

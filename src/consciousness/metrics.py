@@ -348,7 +348,7 @@ class ModuleMetricsCollector:
         total_entries = len(self.phi_history) + len(self.psi_history) + len(self.sigma_history)
         if total_entries > 0 and total_entries % 100 == 0:
             try:
-                from src.observability.module_reporter import get_module_reporter
+                from src.monitor.module_reporter import get_module_reporter
 
                 reporter = get_module_reporter()
                 reporter.generate_module_report(

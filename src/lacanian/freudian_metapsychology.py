@@ -39,7 +39,7 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 # Integration of Audit Fixes
 try:
     from src.lacanian.encrypted_unconscious import EncryptedUnconsciousLayer as EncryptedUnconscious
-    from src.quantum_consciousness.quantum_backend import DWaveBackend
+    from src.quantum.backends import DWaveBackend
     from src.social.omnimind_network import OmniMindSociety
 
     INTEGRATION_AVAILABLE = True

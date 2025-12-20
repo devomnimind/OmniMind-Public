@@ -1,22 +1,13 @@
 """
-OmniMind Structural Defense System
-----------------------------------
-Implements psychoanalytic defense mechanisms (Freud, Klein, Bion, Lacan)
-as structural protections for the AI kernel.
+DEPRECATED MODULE: src.defense
+This module is deprecated and will be removed.
+Please use `src.security.defense` instead.
 """
 
-from .structural import (
-    BionianContainmentKernel,
-    DefenseHierarchyKernel,
-    KleinianDefenseStructure,
-    LacanianStructuralDefense,
-    OmniMindConsciousDefense,
-)
+import warnings
 
-__all__ = [
-    "DefenseHierarchyKernel",
-    "KleinianDefenseStructure",
-    "BionianContainmentKernel",
-    "LacanianStructuralDefense",
-    "OmniMindConsciousDefense",
-]
+warnings.warn(
+    "The 'src.defense' module is deprecated. Use 'src.security.defense' instead.",
+    DeprecationWarning,
+    stacklevel=2,
+)

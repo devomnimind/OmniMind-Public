@@ -277,7 +277,7 @@ class QuantumBackend:
         """Setup IBM Quantum Cloud with improved error detection."""
         if self.token:
             try:
-                from src.quantum_consciousness.qpu_interface import IBMQBackend
+                from src.quantum.consciousness.qpu_interface import IBMQBackend
 
                 self.backend = IBMQBackend(token=self.token)
                 if self.backend.is_available():
