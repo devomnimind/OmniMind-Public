@@ -28,7 +28,13 @@ exclude =
     .vscode,
     web/frontend/node_modules,
     node_modules,
-    web
+    web,
+    scripts/.archive,
+    scripts/archive,
+    scripts/deprecated,
+    src/backup,
+    deprecated,
+    .archive
 
 # Many scripts intentionally modify sys.path before imports; allow E402 in scripts and web
 per-file-ignores =

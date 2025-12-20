@@ -157,6 +157,13 @@ check_untyped_defs = true
 disallow_untyped_defs = false
 warn_return_any = false
 warn_unused_ignores = false
+exclude = [
+    "^archive/.*",
+    "^scripts/\\.archive/.*",
+    "^scripts/archive/.*",
+    "^src/backup/.*",
+    ".*deprecated.*"
+]
 
 [[tool.mypy.overrides]]
 module = [
