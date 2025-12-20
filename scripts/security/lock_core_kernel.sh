@@ -19,6 +19,12 @@ declare -a CORE_FILES=(
     "tests/test_do_calculus.py"
     "src/autopoietic/sandbox.py"
     "src/quantum/integration.py"
+    # Audited Features (Phase 51)
+    "src/quantum/consciousness/quantum_backend.py"  # D-Wave/Latency Safe
+    "src/lacanian/encrypted_unconscious.py"       # Homomorphic Enc.
+    "src/social/ethics/production_ethics.py"      # Multi-Agent Ethics
+    # Refactored Engine (Phase 52)
+    "src/metacognition/causal_engine.py"          # Pearl's Do-Calculus
 )
 
 # 1. Verificar se rodando como sudo
