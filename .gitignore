@@ -75,3 +75,5 @@ mypy_full_report.txt
 pytest.ini
 test_list.txt
 mcp_config.json
+ibm_cloud_api_key.json
+ibm_cloud_service_key.json
