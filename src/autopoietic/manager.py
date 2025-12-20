@@ -352,7 +352,7 @@ class AutopoieticManager:
 
         # Registrar métricas do ciclo autopoiético (CORREÇÃO: estava faltando)
         try:
-            from src.observability.module_metrics import get_module_metrics
+            from src.monitor.module_metrics import get_module_metrics
 
             metrics_collector = get_module_metrics()
 
@@ -448,7 +448,7 @@ class AutopoieticManager:
 
         # Gerar relatório após cada ciclo autopoiético
         try:
-            from src.observability.module_reporter import get_module_reporter
+            from src.monitor.module_reporter import get_module_reporter
 
             reporter = get_module_reporter()
             reporter.generate_module_report(

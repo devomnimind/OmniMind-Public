@@ -14,7 +14,7 @@ import logging
 from dataclasses import dataclass
 from typing import Any, Dict, Optional
 
-from src.orchestrator.event_bus import OrchestratorEvent
+from src.orchestration.event_bus import OrchestratorEvent
 
 logger = logging.getLogger(__name__)
 
@@ -71,7 +71,7 @@ class EventMetricsListener:
         """
         if self._metrics_collector is None and self.enable_metrics:
             try:
-                from src.observability.module_metrics import get_module_metrics
+                from src.monitor.module_metrics import get_module_metrics
 
                 self._metrics_collector = get_module_metrics()
                 self._logger.debug("ModuleMetricsCollector carregado")

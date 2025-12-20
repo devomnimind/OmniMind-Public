@@ -19,7 +19,7 @@ logging.basicConfig(
 
 # --- IMPORTS REAIS (A SUTURA REALIZADA) ---
 try:
-    from src.quantum_consciousness.quantum_backend import QuantumBackend
+    from src.quantum.consciousness.quantum_backend import QuantumBackend
     from src.swarm.swarm_manager import SwarmManager
     from src.tools.agent_tools import SystemMonitor
 except ImportError as e:

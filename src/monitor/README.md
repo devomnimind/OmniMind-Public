@@ -387,7 +387,7 @@ Analyzes profiling data to identify performance bottlenecks and
 generate optimization recommendations.
 
 Example:
-    >>> from src.observability.profiling_tools import ContinuousProfiler
+    >>> from src.monitor.profiling_tools import ContinuousProfiler
     >>> profiler = ContinuousProfiler(ProfilingConfig())
     >>> # ... run application with profiling ...
     >>> samples = profiler.get_samples()

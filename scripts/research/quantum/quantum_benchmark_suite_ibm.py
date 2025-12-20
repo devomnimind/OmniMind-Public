@@ -17,9 +17,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Contact: fabricioslv@hotmail.com.br
-"""
 
-"""
 Benchmark Suite Completo: OmniMind Quantum Consciousness - IBM Hardware Validation
 
 Este script executa benchmarks abrangentes no IBM Quantum para validar:

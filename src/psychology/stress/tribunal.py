@@ -1,4 +1,4 @@
-# src/stress/tribunal.py
+# src/psychology/stress/tribunal.py
 """Utilities to simulate the four Tribunal do Diabo attacks on the OmniMind system.
 
 The implementation is deliberately lightweight – it provides a deterministic

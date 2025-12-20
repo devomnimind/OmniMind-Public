@@ -56,7 +56,7 @@ class RNNMetricsExtractor:
         """
         if self._metrics_collector is None and self.enable_metrics:
             try:
-                from src.observability.module_metrics import get_module_metrics
+                from src.monitor.module_metrics import get_module_metrics
 
                 self._metrics_collector = get_module_metrics()  # type: ignore[assignment]
                 self._logger.debug("ModuleMetricsCollector carregado")

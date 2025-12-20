@@ -20,7 +20,7 @@ from typing import Any, Dict, List, Optional
 from ..agents.code_agent import CodeAgent
 from ..observability.module_logger import get_module_logger
 from ..observability.module_metrics import get_metrics_collector
-from ..orchestrator.error_analyzer import (
+from ..orchestration.error_analyzer import (
     ErrorAnalysis,
     ErrorAnalyzer,
     ErrorType,

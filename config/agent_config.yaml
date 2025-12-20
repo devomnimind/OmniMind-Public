@@ -34,26 +34,38 @@ agents:
   orchestrator:
     enabled: true
     role: "Main coordinator"
-  
+
   coder:
     enabled: true
-    role: "Code generation"
+    role: "Code generation and refactoring"
     tools:
       - read_file
       - write_file
       - list_files
       - search_memory
-  
+      - codebase_search
+      - analyze_code
+
+  architect:
+    enabled: true
+    role: "System architecture and planning"
+    tools:
+      - read_file
+      - list_files
+      - codebase_search
+      - write_to_file (docs only)
+      - plan_task
+
   reviewer:
     enabled: true
     role: "Code review and scoring"
     score_threshold: 7.0  # Minimum acceptable score (0-10)
-  
+
   monitor:
     enabled: true
     role: "System resource monitoring"
     check_interval: 30  # seconds
-  
+
   learning:
     enabled: true
     role: "Experience consolidation"
@@ -63,12 +75,12 @@ system:
   dbus_enabled: true
   dbus_session: true
   dbus_system: false  # Requires root
-  
+
   mcp_enabled: true
   mcp_allowed_dirs:
     - "~/projects/omnimind"
     - "~/projects"
-  
+
   shell_isolation: "subprocess"
   shell_whitelist:
     - ls

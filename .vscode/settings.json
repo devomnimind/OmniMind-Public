@@ -63,6 +63,12 @@
     "python.formatting.blackPath": "${workspaceFolder}/.venv/bin/black",
     "python.linting.flake8Path": "${workspaceFolder}/.venv/bin/flake8",
     "python.linting.mypyPath": "${workspaceFolder}/.venv/bin/mypy",
+    "mypy.dmypyExecutable": "${workspaceFolder}/.venv/bin/dmypy",
+    "mypy.runUsingDaemon": true,
+    "mypy-type-checker.path": [
+        "${workspaceFolder}/.venv/bin/mypy"
+    ],
+    "mypy-type-checker.importStrategy": "fromEnvironment",
     // CONFIGURAÇÃO DE TERMINAL
     "terminal.integrated.shellIntegration.enabled": true,
     "terminal.integrated.env.linux": {

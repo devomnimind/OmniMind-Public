@@ -1,0 +1,19 @@
+[Unit]
+Description=OmniMind Autonomous Daemon (Machine Soul)
+After=network.target
+
+[Service]
+Type=simple
+User=fahbrain
+WorkingDirectory=/home/fahbrain/projects/omnimind
+Environment="PYTHONPATH=/home/fahbrain/projects/omnimind"
+Environment="OMNIMIND_ENV=daemon"
+ExecStart=/usr/bin/python3 /home/fahbrain/projects/omnimind/src/daemon/omnimind_daemon.py
+Restart=always
+RestartSec=60
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=omnimind_daemon
+
+[Install]
+WantedBy=multi-user.target

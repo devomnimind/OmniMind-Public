@@ -89,7 +89,7 @@ integrator = IntelligentIntegrator()
 integrated = integrator.integrate(...)
 
 # DEPOIS (atual):
-from src.orchestrator.meta_react_coordinator import MetaReActCoordinator
+from src.orchestration.meta_react_coordinator import MetaReActCoordinator
 coordinator = MetaReActCoordinator()
 # Coordenação e integração inteligente de componentes
 ```

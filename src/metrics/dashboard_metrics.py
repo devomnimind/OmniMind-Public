@@ -25,7 +25,7 @@ from src.metrics.real_baseline_system import RealBaselineSystem
 from src.metrics.real_consciousness_metrics import RealConsciousnessMetricsCollector
 from src.metrics.real_module_activity import RealModuleActivityTracker
 from src.metrics.real_system_health import RealSystemHealthAnalyzer, SystemHealthStatus
-from src.observability.module_metrics import (
+from src.monitor.module_metrics import (
     ModuleMetricsCollector,
     get_metrics_collector,
 )

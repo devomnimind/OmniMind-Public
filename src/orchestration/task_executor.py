@@ -8,7 +8,7 @@ import httpx
 # Import Quantum Backend (using the fixed version)
 QuantumBackendType: Optional[Type[Any]] = None
 try:
-    from src.quantum_consciousness.quantum_backend import QuantumBackend
+    from src.quantum.consciousness.quantum_backend import QuantumBackend
 
     QuantumBackendType = QuantumBackend
 except ImportError:

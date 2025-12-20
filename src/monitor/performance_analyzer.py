@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional
 
 import structlog
 
-from src.observability.profiling_tools import ProfileSample
+from src.monitor.profiling_tools import ProfileSample
 
 logger = structlog.get_logger(__name__)
 
@@ -128,7 +128,7 @@ class PerformanceAnalyzer:
     generate optimization recommendations.
 
     Example:
-        >>> from src.observability.profiling_tools import ContinuousProfiler
+        >>> from src.monitor.profiling_tools import ContinuousProfiler
         >>> profiler = ContinuousProfiler(ProfilingConfig())
         >>> # ... run application with profiling ...
         >>> samples = profiler.get_samples()

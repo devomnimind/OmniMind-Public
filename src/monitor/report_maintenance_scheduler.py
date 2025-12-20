@@ -13,7 +13,7 @@ import time
 from datetime import datetime, timezone
 from typing import Callable, Optional
 
-from src.observability.report_maintenance import get_report_maintenance_manager
+from src.monitor.report_maintenance import get_report_maintenance_manager
 
 logger = logging.getLogger(__name__)
 

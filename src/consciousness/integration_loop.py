@@ -1621,7 +1621,7 @@ class IntegrationLoop:
         # MOTIVO: ConsciousnessTriad requer epsilon como argumento obrigatório
         # Anteriormente estava no passo 11, causando 495 warnings desnecessários
         try:
-            from src.motivation.intrinsic_rewards import DesireEngine
+            from src.psychology.motivation.intrinsic_rewards import DesireEngine
 
             if not hasattr(self, "_desire_engine") or self._desire_engine is None:
                 self._desire_engine = DesireEngine()

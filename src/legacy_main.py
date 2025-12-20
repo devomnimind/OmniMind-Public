@@ -86,7 +86,7 @@ async def main():
         # Initialize Report Maintenance Scheduler (Automated Cleanup & Compression)
         try:
             # Scheduler initialization - currently not used but kept for future deployment
-            # from src.observability.report_maintenance_scheduler import (
+            # from src.monitor.report_maintenance_scheduler import (
             #     init_report_maintenance_scheduler,
             # )
             # maintenance_scheduler = init_report_maintenance_scheduler(

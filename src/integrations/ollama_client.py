@@ -21,7 +21,7 @@ class OllamaClient:
 
         # SOBERANO GOVERNANCE
         try:
-            from src.governance.npu_metrics import NpuMetrics
+            from src.social.governance.npu_metrics import NpuMetrics
 
             self.governance = NpuMetrics()
             logger.info("🛡️ [SOVEREIGN]: NPU Governance Active (Phi/Entropy)")

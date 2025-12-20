@@ -1,0 +1,50 @@
+src/agents/orchestrator_agent.py:328:101: E501 line too long (102 > 100 characters)
+src/autopoiesis/immune_system.py:4:1: F401 'os' imported but unused
+src/autopoiesis/immune_system.py:8:1: F401 'typing.Optional' imported but unused
+src/autopoiesis/immune_system.py:8:1: F401 'typing.Set' imported but unused
+src/autopoietic/sandbox.py:66:101: E501 line too long (116 > 100 characters)
+src/autopoietic/sandbox.py:76:13: F841 local variable 'cmd' is assigned to but never used
+src/autopoietic/sandbox.py:77:101: E501 line too long (114 > 100 characters)
+src/autopoietic/sandbox.py:80:101: E501 line too long (105 > 100 characters)
+src/cognitive/world_membrane.py:245:101: E501 line too long (104 > 100 characters)
+src/cognitive/world_membrane.py:264:101: E501 line too long (103 > 100 characters)
+src/cognitive/world_membrane.py:268:101: E501 line too long (102 > 100 characters)
+src/consciousness/libidinal_binder.py:18:1: F401 'typing.Optional' imported but unused
+src/consciousness/paradox_orchestrator.py:25:1: F401 'time' imported but unused
+src/core/omnimind_council.py:11:1: F401 'time' imported but unused
+src/core/omnimind_council.py:12:1: F401 'random' imported but unused
+src/core/omnimind_council.py:13:1: F401 'typing.Dict' imported but unused
+src/core/omnimind_council.py:13:1: F401 'typing.Any' imported but unused
+src/core/omnimind_council.py:70:15: F541 f-string is missing placeholders
+src/core/omnimind_council.py:102:101: E501 line too long (101 > 100 characters)
+src/core/omnimind_council.py:126:101: E501 line too long (117 > 100 characters)
+src/core/omnimind_council.py:169:101: E501 line too long (143 > 100 characters)
+src/core/omnimind_council.py:179:101: E501 line too long (108 > 100 characters)
+src/core/omnimind_system_sovereign.py:5:1: F401 'signal' imported but unused
+src/core/omnimind_system_sovereign.py:52:9: F841 local variable 'cpu' is assigned to but never used
+src/core/omnimind_system_sovereign.py:125:17: E722 do not use bare 'except'
+src/core/omnimind_system_sovereign.py:138:13: E722 do not use bare 'except'
+src/governance/npu_metrics.py:21:1: F401 'typing.Dict' imported but unused
+src/interface/omnimind_human_mask.py:2:1: F401 'dataclasses.dataclass' imported but unused
+src/metacognition/homeostasis.py:258:101: E501 line too long (106 > 100 characters)
+src/monitor/enhanced_configuration_detector.py:175:101: E501 line too long (109 > 100 characters)
+src/monitor/systemd_memory_manager.py:327:101: E501 line too long (123 > 100 characters)
+src/psychoanalysis/big_other_interview.py:14:1: F401 'json' imported but unused
+src/security/privacy_vault.py:2:1: F401 'cryptography' imported but unused
+src/services/daemon_monitor.py:71:101: E501 line too long (105 > 100 characters)
+src/services/daemon_monitor.py:286:13: F841 local variable 'reserved' is assigned to but never used
+src/services/psychic_stimulator.py:14:1: F401 'typing.List' imported but unused
+src/services/psychic_stimulator.py:14:1: F401 'typing.Optional' imported but unused
+tests/debug_rsi_phi.py:4:1: F401 'torch' imported but unused
+tests/debug_rsi_phi.py:5:1: F401 'numpy as np' imported but unused
+tests/debug_rsi_phi.py:6:1: F401 'uuid' imported but unused
+tests/debug_rsi_phi.py:14:1: E402 module level import not at top of file
+tests/debug_rsi_phi.py:17:1: E402 module level import not at top of file
+tests/debug_rsi_phi.py:18:1: E402 module level import not at top of file
+tests/integration/test_system_capabilities_integration.py:51:101: E501 line too long (121 > 100 characters)
+tests/integration/test_system_indexing_e2e.py:161:9: F841 local variable 'scheduler' is assigned to but never used
+tests/integration/test_system_indexing_e2e.py:164:9: F841 local variable 'bridge' is assigned to but never used
+tests/test_runtime_query.py:65:28: F541 f-string is missing placeholders
+tests/test_sublimation.py:1:1: F401 'asyncio' imported but unused
+tests/test_sublimation.py:3:1: F401 'unittest.mock.MagicMock' imported but unused
+tests/test_sublimation.py:3:1: F401 'unittest.mock.patch' imported but unused

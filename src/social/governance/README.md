@@ -38,7 +38,7 @@ O tempo percebido pelo sistema para formular o pensamento.
 
 ## 🛠️ Implementação
 
-- **Classe Principal**: `NpuMetrics` (`src/governance/npu_metrics.py`)
+- **Classe Principal**: `NpuMetrics` (`src/social/governance/npu_metrics.py`)
 - **Integração**: Injetado diretamente no `OllamaClient` (`src/integrations/ollama_client.py`).
 
 ### Exemplo de Log (Narrativa):

@@ -238,7 +238,7 @@ class QuantumDesiringMachine(DesiringMachine):
     async def _solve_quantum(self, circuit: Any, incoming_flows: Dict[str, Any]) -> Dict[str, Any]:
         """Produz solução quântica."""
         try:
-            from src.quantum_consciousness.quantum_backend import QuantumBackend
+            from src.quantum.consciousness.quantum_backend import QuantumBackend
 
             backend = QuantumBackend(prefer_local=True)
 

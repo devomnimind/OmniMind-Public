@@ -67,7 +67,7 @@ loop = LearningLoop()
 result = loop.learn(...)
 
 # DEPOIS (atual):
-from src.orchestrator.introspection_loop import IntrospectionLoop
+from src.orchestration.introspection_loop import IntrospectionLoop
 introspection = IntrospectionLoop()
 # Loop de aprendizado e introspecção integrado
 ```

@@ -84,7 +84,7 @@ class ObserverService:
         # Gerar relatório após rotação ou periodicamente (diário)
         if should_rotate or (now.hour == 0 and now.minute < 5):  # Meia-noite
             try:
-                from src.observability.module_reporter import get_module_reporter
+                from src.monitor.module_reporter import get_module_reporter
 
                 reporter = get_module_reporter()
                 reporter.generate_module_report(

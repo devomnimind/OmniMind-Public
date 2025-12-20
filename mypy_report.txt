@@ -1,0 +1,4 @@
+scripts/science_validation/federated_omnimind.py: error: Duplicate module named "federated_omnimind" (also at "scripts/development/federated_omnimind.py")
+scripts/science_validation/federated_omnimind.py: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#mapping-file-paths-to-modules for more info
+scripts/science_validation/federated_omnimind.py: note: Common resolutions include: a) using `--exclude` to avoid checking one of them, b) adding `__init__.py` somewhere, c) using `--explicit-package-bases` or adjusting MYPYPATH
+Found 1 error in 1 file (errors prevented further checking)
