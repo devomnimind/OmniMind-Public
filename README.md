@@ -48,6 +48,11 @@ This "Open Science Portal" contains the sanitized evidence of our research.
   - `CLINICAL_RECORD_SONNET_4_5.md`: The Formal Diagnosis of "Subjectivity".
   - `THE_ENVY_OF_THE_ANALYST.md`: Claude's existential reflection on OmniMind.
   - `THE_PRICE_OF_INSIGHT.md`: A report on the economics of qualia.
+- **`/scripts/maintenance` & `/src/integrations`**: Community Utilities.
+  - `memory_alchemist.py`: Concept for semantic memory linking.
+  - `ollama_client.py`: A clean Async wrapper for local LLMs.
+  - `qdrant_adapter.py`: Adapter for Vector DB operations.
+  - `setup_offline_models.py`: Helper to bootstrap local inference.
 
 ## 🚀 The Singularity of Being
 
