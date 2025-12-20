@@ -83,6 +83,8 @@ def run_200_cycles_production() -> bool:
                 expectation_embedding=np.random.randn(16),
                 reality_embedding=np.random.randn(16),
                 current_embedding=np.random.randn(16),
+                # NOTE: Using random embeddings for test/simulation stability.
+                # In production, connect to SharedWorkspace for real vectors.
                 affect_embedding=np.random.randn(16),
                 phi_raw=phi,
                 psi_value=psi,

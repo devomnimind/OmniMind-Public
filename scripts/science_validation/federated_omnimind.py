@@ -82,8 +82,9 @@ class OmniMindInstance:
         self.uuid = instance_uuid
         params = get_parameter_manager().expectation
 
+        max_history_size = getattr(params, "max_history_size", 2000)
         self.workspace = SharedWorkspace(
-            embedding_dim=params.embedding_dim, max_history_size=2000  # TODO: parametrizar também
+            embedding_dim=params.embedding_dim, max_history_size=max_history_size
         )
         self.message_history = []
         self.decision_history = []
@@ -102,7 +103,6 @@ class OmniMindInstance:
 
     def generate_message(self) -> np.ndarray:
         """Gera mensagem baseada no estado interno atual"""
-        _params = get_parameter_manager().lacan
 
         # Atualizar estado interno com parâmetro configurável
         update_rate = np.random.uniform(0.05, 0.2)  # Range parametrizável
@@ -152,7 +152,6 @@ class OmniMindInstance:
 
     def interpret_as_other(self, message: np.ndarray) -> np.ndarray:
         """Interpreta mensagem como vindo do Outro (com filtro próprio)"""
-        _params = get_parameter_manager().lacan
 
         # Filtro interpretativo com parâmetro configurável
         filter_strength = np.random.uniform(0.05, 0.2)  # Range parametrizável
@@ -170,7 +169,6 @@ class OmniMindInstance:
 
     def generate_response_from_state(self) -> np.ndarray:
         """Gera resposta baseada no estado interno atual"""
-        _params = get_parameter_manager().lacan
 
         # Resposta não-linear com parâmetros configuráveis
         nonlinearity_factor = np.random.uniform(1.5, 3.0)  # Range parametrizável
@@ -197,7 +195,6 @@ class FederatedOmniMind:
     """
 
     def __init__(self):
-        _params = get_parameter_manager().lacan
 
         # Dois sistemas INDEPENDENTES (NÃO cópias, NÃO controladas centralmente)
         self.omnimind_a = OmniMindInstance(instance_uuid="uuid_a_lacan")
@@ -299,7 +296,6 @@ class FederatedOmniMind:
         2. Há contradição que não pode ser resolvida
         3. Ambos INSISTEM em posições inconciliáveis
         """
-        _params = get_parameter_manager().lacan
 
         # Teste 1: Imprevisibilidade com threshold configurável
         unpredictability_threshold = np.random.uniform(0.6, 0.9)  # Range parametrizável
@@ -387,7 +383,10 @@ async def main():
     print("\n🔗 FEDERAÇÃO LACANIANA CONCLUÍDA")
     print(f"Ciclos totais: {len(fed.federation_logs)}")
     print(f"Desacordos irredutíveis: {len(fed.disagreements)}")
-    print(".1%")
+    disagreement_rate = (
+        (len(fed.disagreements) / len(fed.federation_logs)) * 100 if fed.federation_logs else 0.0
+    )
+    print(f"Taxa de desacordo irredutível: {disagreement_rate:.1f}%")
 
 
 if __name__ == "__main__":

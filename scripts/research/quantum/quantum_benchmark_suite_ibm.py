@@ -50,7 +50,8 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 import numpy as np
-from dotenv import load_dotenv
+    # Load .env from project root (three levels above this script) for a stable path
+    load_dotenv(Path(__file__).resolve().parent.parent.parent / ".env")
 
 # Adicionar root ao path
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
