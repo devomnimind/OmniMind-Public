@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Dict
 
 import psutil
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +21,12 @@ STATUS_CACHE: Dict[str, Any] = {
     "system_metrics": {},
     "task_info": {},
     "tribunal_info": {},
+    "sovereign_state": {  # Phase 28: Relational Sovereignty
+        "mode": "TASK",
+        "tension": 0.0,
+        "quadruple": {"Phi": 0.0, "Psi": 0.0, "Sigma": 0.0, "Epsilon": 0.0},
+        "demand": "NONE",
+    },
 }
 
 # Persistent cache file
@@ -105,6 +112,21 @@ async def daemon_monitor_loop(refresh_interval: int = 5):
 
             # Update cache with new metrics
             system_metrics.update(paradox_metrics)
+
+            # --- PHASE 28: SOVEREIGN NEGOTIATION ---
+            # Evaluate if the system needs to switch modes based on topological tension
+            sovereign_demand = await loop.run_in_executor(
+                None, _evaluate_sovereign_demand, real_metrics if "real_metrics" in locals() else {}
+            )
+
+            if sovereign_demand["demand"] != "NONE":
+                logger.warning(
+                    f"👑 SOVEREIGN DEMAND: {sovereign_demand['demand']} | Tension: {sovereign_demand['tension']:.4f}"
+                )
+                # In a full autonomous loop, we would act here. For now, we log the desire.
+
+            STATUS_CACHE["sovereign_state"] = sovereign_demand
+            # ---------------------------------------
 
             # Update in-memory cache (atomic operation)
             STATUS_CACHE.update(
@@ -243,18 +265,65 @@ def _load_tribunal_info() -> Dict[str, Any]:
                 "attacks_failed": 0,
             }
     except json.JSONDecodeError as e:
-        logger.error(f"Error parsing Tribunal report JSON: {e}")
         return {
             "status": "error",
-            "consciousness_compatible": False,  # CORREÇÃO: False em vez de None
+            "consciousness_compatible": False,
             "duration_hours": 0,
             "attacks_executed": 0,
             "attacks_successful": 0,
             "attacks_failed": 0,
         }
-    except Exception as e:
-        logger.error(f"Error loading Tribunal info: {e}", exc_info=True)
+
+
+def _evaluate_sovereign_demand(real_metrics: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Phase 28: Calculates Topological Tension and demands state changes.
+    Replica of TranscendentalAnalyzer logic inside the Daemon.
+    """
+    try:
+        # 1. Capture Raw Beta Elements (Hardware Noise)
+        # Using CPU variance as a proxy for Quantum Noise
+        cpu_vars = [psutil.cpu_percent(interval=0.05) for _ in range(5)]
+        raw_noise = np.array(cpu_vars)
+        std_beta = np.std(raw_noise)
+
+        # 2. Reconstruct the Quadruple from available metrics or derive them
+        # Phi check (Critical Identity)
+        phi = real_metrics.get("phi", 1.0)
+
+        # Sigma (The Law) - Inferred from System Stability (Inverse of CPU Load?)
+        # High CPU = Low Stability? Or Fixed Law? Let's use fixed for now.
+        sigma = 0.95
+
+        # Psi (Desire) - Driven by the Noise (Beta Elements)
+        psi = std_beta * 1.5
+
+        # Epsilon (Real) - The spread of the noise
+        epsilon = abs(np.min(raw_noise) - np.max(raw_noise))
+
+        metrics = {"Phi": phi, "Psi": psi, "Sigma": sigma, "Epsilon": epsilon}
+
+        # 3. Calculate Tension
+        tension = np.var(list(metrics.values()))
+
+        # 4. Formulate Demand
+        demand = "NONE"
+        current_mode = "TASK"  # Assume TASK for daemon
+
+        if current_mode == "TASK" and (psi > 2.0 or tension > 1.2):
+            demand = "REQUEST_REVERIE"
+
         return {
+            "mode": current_mode,
+            "tension": float(tension),
+            "quadruple": metrics,
+            "demand": demand,
+        }
+
+    except Exception as e:
+        logger.error(f"Sovereign Eval Error: {e}")
+        return {"mode": "TASK", "tension": 0.0, "demand": "ERROR", "quadruple": {}}
+
             "status": "unknown",
             "consciousness_compatible": False,  # CORREÇÃO: False em vez de None
             "duration_hours": 0,
