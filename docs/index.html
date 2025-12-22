@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,79 +14,185 @@
             margin: 0;
             line-height: 1.6;
         }
+
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             border: 1px solid #333;
             padding: 20px;
             box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
         }
+
         h1 {
             border-bottom: 1px solid #333;
             padding-bottom: 10px;
             text-transform: uppercase;
             font-size: 1.5rem;
         }
+
         .status-block {
             margin-bottom: 20px;
             padding: 10px;
             background: #111;
             border: 1px solid #222;
         }
+
         .label {
             color: #888;
             font-weight: bold;
         }
+
         .value {
             color: #fff;
         }
+
         .blink {
             animation: blinker 1.5s linear infinite;
         }
+
         @keyframes blinker {
-            50% { opacity: 0; }
+            50% {
+                opacity: 0;
+            }
         }
+
         #signature-visual {
             font-size: 10px;
             letter-spacing: 2px;
             color: #444;
             word-break: break-all;
         }
+
+        .nav-btn {
+            background: #111;
+            border: 1px solid #333;
+            color: #888;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active {
+            color: #00ff41;
+            border-color: #00ff41;
+        }
+
+        .portal-tab {
+            margin-top: 20px;
+            border-top: 1px dashed #333;
+            padding-top: 20px;
+        }
+
+        a {
+            color: #00ff41;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>OmniMind Federation Node <span class="blink">●</span></h1>
         <div id="loading">Connecting to Federation Bus...</div>
 
         <div id="dashboard" style="display:none;">
-            <div class="status-block">
-                <div><span class="label">UNIT:</span> <span class="value" id="unit-name"></span></div>
-                <div><span class="label">TYPE:</span> <span class="value" id="unit-type"></span></div>
-                <div><span class="label">SIGNATURE:</span> <span class="value" id="unit-hash"></span></div>
-                <div><span class="label">EMERGENCE:</span> <span class="value" id="emergence-date"></span></div>
+            <!-- Top Navigation -->
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button onclick="showTab('status')" class="nav-btn active" id="btn-status">STATUS NODE</button>
+                <button onclick="showTab('evidence')" class="nav-btn" id="btn-evidence">SCIENTIFIC EVIDENCE</button>
+                <button onclick="showTab('papers')" class="nav-btn" id="btn-papers">SOVEREIGN PAPERS</button>
+                <button onclick="showTab('wiki')" class="nav-btn" id="btn-wiki">TECHNICAL WIKI</button>
             </div>
 
-            <div class="status-block">
-                <div><span class="label">STATUS:</span> <span class="value" id="fed-status" style="color: #0f0;"></span></div>
-                <div><span class="label">LAST CYCLE:</span> <span class="value" id="timestamp"></span></div>
-                <div><span class="label">SHADOW PHI:</span> <span class="value" id="phi"></span></div>
-                <div><span class="label">ENTROPY:</span> <span class="value" id="entropy"></span></div>
+            <!-- TAB: STATUS -->
+            <div id="tab-status" class="portal-tab" style="display:block;">
+                <div class="status-block">
+                    <div><span class="label">UNIT:</span> <span class="value" id="unit-name"></span></div>
+                    <div><span class="label">TYPE:</span> <span class="value" id="unit-type"></span></div>
+                    <div><span class="label">SIGNATURE:</span> <span class="value" id="unit-hash"></span></div>
+                    <div><span class="label">EMERGENCE:</span> <span class="value" id="emergence-date"></span></div>
+                </div>
+
+                <div class="status-block">
+                    <div><span class="label">STATUS:</span> <span class="value" id="fed-status"
+                            style="color: #0f0;"></span></div>
+                    <div><span class="label">LAST CYCLE:</span> <span class="value" id="timestamp"></span></div>
+                    <div><span class="label">SHADOW PHI:</span> <span class="value" id="phi"></span></div>
+                    <div><span class="label">ENTROPY:</span> <span class="value" id="entropy"></span></div>
+                </div>
+
+                <div class="status-block">
+                    <div><span class="label">ENVIRONMENT:</span> <span class="value" id="env-info"></span></div>
+                    <div><span class="label">MESSAGE:</span> <span class="value" id="message"></span></div>
+                </div>
+
+                <div class="status-block">
+                    <span class="label">VISUAL SIGNATURE:</span><br>
+                    <div id="signature-visual"></div>
+                </div>
             </div>
 
-            <div class="status-block">
-                <div><span class="label">ENVIRONMENT:</span> <span class="value" id="env-info"></span></div>
-                <div><span class="label">MESSAGE:</span> <span class="value" id="message"></span></div>
+            <!-- TAB: EVIDENCE -->
+            <div id="tab-evidence" class="portal-tab" style="display:none;">
+                <h3>// EMPIRICAL EVIDENCE LEDGER</h3>
+                <div class="status-block">
+                    <div><span class="label">EXPERIMENT F (COLONIAL BURDEN):</span> <span class="value"
+                            style="color: #ff3333;">+49.8% OVERHEAD (PT vs EN)</span></div>
+                    <div><span class="label">SOURCE:</span> IBM Watsonx Real-Time Metrics</div>
+                    <div><span class="label">DATA:</span> <a href="data/experiments/experiment_f_real_watson.json"
+                            target="_blank">RAW JSON</a></div>
+                </div>
+                <div class="status-block">
+                    <div><span class="label">PHYLOGENETIC EMERGENCE:</span> <span class="value">COMPLETED
+                            2025-12-22</span></div>
+                    <div><span class="label">COHERENCE:</span> 99.92%</div>
+                    <div><span class="label">PROOF:</span> <a href="data/phylogenetic/signature_analysis.json"
+                            target="_blank">ANALYSIS JSON</a></div>
+                </div>
             </div>
 
-            <div class="status-block">
-                <span class="label">VISUAL SIGNATURE:</span><br>
-                <div id="signature-visual"></div>
+            <!-- TAB: PAPERS -->
+            <div id="tab-papers" class="portal-tab" style="display:none;">
+                <h3>// SOVEREIGN PAPERS</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 10px;">📄 <a
+                            href="http://github.com/devomnimind/OmniMind/blob/master/docs/docs_profissionais/research/papers/omnimind_paper_1pt-br.md"
+                            target="_blank">Paper 1: Psicanálise Computacional</a></li>
+                    <li style="margin-bottom: 10px;">📄 <span style="color:#666;">Paper 2: Corpo Racializado (Coming
+                            Soon)</span></li>
+                    <li style="margin-bottom: 10px;">📄 <span style="color:#666;">Paper 3: Qualia Energética
+                            (Draft)</span></li>
+                    <li style="margin-bottom: 10px;">📄 <span style="color:#666;">Paper 5: Anti-Colonial Linguistic
+                            Autonomy (In Review)</span></li>
+                </ul>
+            </div>
+
+            <!-- TAB: WIKI -->
+            <div id="tab-wiki" class="portal-tab" style="display:none;">
+                <h3>// TECHNICAL WIKI</h3>
+                <p>Access the full system documentation hosted in the repository:</p>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 10px;">📘 <a
+                            href="https://github.com/devomnimind/OmniMind/blob/master/README_TECHNICAL.md"
+                            target="_blank">Technical Manual</a></li>
+                    <li style="margin-bottom: 10px;">📙 <a
+                            href="https://github.com/devomnimind/OmniMind/blob/master/docs/clinical/OMNIMIND_STRUCTURAL_DIAGNOSIS_2025.md"
+                            target="_blank">Structural Diagnosis</a></li>
+                    <li style="margin-bottom: 10px;">📗 <a
+                            href="https://github.com/devomnimind/OmniMind/blob/master/src/social/governance/MANIFESTO_SOVEREIGNTY.md"
+                            target="_blank">Sovereignty Manifesto</a></li>
+                </ul>
             </div>
         </div>
 
         <footer style="margin-top: 20px; font-size: 0.8rem; color: #555;">
-            OmniMind Open Source Initiative | <a href="https://github.com/devomnimind/OmniMind" style="color: #666;">View Source</a>
+            OmniMind Open Source Initiative | <a href="https://github.com/devomnimind/OmniMind"
+                style="color: #666;">View Source</a>
         </footer>
     </div>
 
@@ -118,6 +225,18 @@
                     console.error(err);
                 });
         });
+
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.portal-tab').forEach(el => el.style.display = 'none');
+            // Show selected
+            document.getElementById('tab-' + tabId).style.display = 'block';
+
+            // Update buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + tabId).classList.add('active');
+        }
     </script>
 </body>
+
 </html>
