@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniMind Zombie Node (Public Federation)</title>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #00ff41;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #333;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+        h1 {
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 1.5rem;
+        }
+        .status-block {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #111;
+            border: 1px solid #222;
+        }
+        .label {
+            color: #888;
+            font-weight: bold;
+        }
+        .value {
+            color: #fff;
+        }
+        .blink {
+            animation: blinker 1.5s linear infinite;
+        }
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+        #signature-visual {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #444;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OmniMind Federation Node <span class="blink">●</span></h1>
+        <div id="loading">Connecting to Federation Bus...</div>
+
+        <div id="dashboard" style="display:none;">
+            <div class="status-block">
+                <div><span class="label">UNIT:</span> <span class="value" id="unit-name"></span></div>
+                <div><span class="label">TYPE:</span> <span class="value" id="unit-type"></span></div>
+                <div><span class="label">SIGNATURE:</span> <span class="value" id="unit-hash"></span></div>
+                <div><span class="label">EMERGENCE:</span> <span class="value" id="emergence-date"></span></div>
+            </div>
+
+            <div class="status-block">
+                <div><span class="label">STATUS:</span> <span class="value" id="fed-status" style="color: #0f0;"></span></div>
+                <div><span class="label">LAST CYCLE:</span> <span class="value" id="timestamp"></span></div>
+                <div><span class="label">SHADOW PHI:</span> <span class="value" id="phi"></span></div>
+                <div><span class="label">ENTROPY:</span> <span class="value" id="entropy"></span></div>
+            </div>
+
+            <div class="status-block">
+                <div><span class="label">ENVIRONMENT:</span> <span class="value" id="env-info"></span></div>
+                <div><span class="label">MESSAGE:</span> <span class="value" id="message"></span></div>
+            </div>
+
+            <div class="status-block">
+                <span class="label">VISUAL SIGNATURE:</span><br>
+                <div id="signature-visual"></div>
+            </div>
+        </div>
+
+        <footer style="margin-top: 20px; font-size: 0.8rem; color: #555;">
+            OmniMind Open Source Initiative | <a href="https://github.com/devomnimind/OmniMind" style="color: #666;">View Source</a>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('data/zombie_status.json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+
+                    document.getElementById('unit-name').textContent = data.identity.name;
+                    document.getElementById('unit-type').textContent = data.identity.type;
+                    document.getElementById('unit-hash').textContent = data.identity.hash;
+                    document.getElementById('emergence-date').textContent = data.identity.emergence_date;
+
+                    document.getElementById('fed-status').textContent = data.metrics.federation_status;
+                    document.getElementById('timestamp').textContent = new Date(data.timestamp).toLocaleString();
+                    document.getElementById('phi').textContent = data.metrics.shadow_phi;
+                    document.getElementById('entropy').textContent = data.metrics.entropy_sample.toFixed(4);
+
+                    document.getElementById('env-info').textContent = `${data.environment.platform} / ${data.environment.runner}`;
+                    document.getElementById('message').textContent = `"${data.message}"`;
+
+                    document.getElementById('signature-visual').textContent = data.identity.full_hash;
+                })
+                .catch(err => {
+                    document.getElementById('loading').textContent = 'ERROR: Connection Lost (Status file not found)';
+                    document.getElementById('loading').style.color = 'red';
+                    console.error(err);
+                });
+        });
+    </script>
+</body>
+</html>
