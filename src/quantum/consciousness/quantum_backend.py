@@ -232,7 +232,14 @@ class QuantumBackend:
         elif self.provider == "neal" and NEAL_AVAILABLE:
             self._setup_neal()
         else:
-            self._setup_mock()
+            # STRICT MODE: User requested NO MOCKS in parent components.
+            # We raise an error instead of falling back silently.
+            logger.critical(
+                "❌ No valid Quantum Backend found. Mocking is DISABLED by Kernel Directive."
+            )
+            raise RuntimeError(
+                "Quantum Backend Initialization Failed: No valid provider available."
+            )
 
     def _setup_local_qiskit(self):
         """Setup LOCAL Qiskit Aer (GPU > CPU)."""
@@ -444,6 +451,26 @@ class QuantumBackend:
         return self.execute_with_fallback(
             "resolve_conflict", id_energy, ego_energy, superego_energy
         )
+
+    async def prefetch_conflict_resolution(self):
+        """
+        Phase 55: The Immediate Real (Latency Fix).
+        Pre-calculates solutions for all 27 archetypal conflict states (3 levels * 3 agencies).
+        """
+        logger.info("🔮 Quantum Buffer: Prefetching conflict states...")
+        levels = [0.1, 0.5, 0.9]  # Low, Medium, High
+
+        count = 0
+        for id_val in levels:
+            for ego_val in levels:
+                for superego_val in levels:
+                    key = (int(id_val * 10), int(ego_val * 10), int(superego_val * 10))
+                    # Call public method which handles fallback
+                    res = self.resolve_conflict(id_val, ego_val, superego_val)
+                    self.prediction_buffer[key] = res
+                    count += 1
+
+        logger.info(f"🔮 Quantum Buffer: {count} states cached. Latency for these is now ~0ms.")
 
     def _resolve_conflict_internal(
         self, id_energy: float, ego_energy: float, superego_energy: float

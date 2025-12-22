@@ -436,8 +436,18 @@ class SelfOptimizationEngine:
             # 3. Calculate score
             # For now, we'll simulate this
 
-            # Placeholder score (in real implementation, collect actual metrics)
-            score = 0.5  # Would be calculated from real metrics
+            # Simulação de Medição Real:
+            # Em produção, aqui aplicaríamos o config e leríamos do monitor
+            # Simulando que valores maiores de step_size ou similar podem impactar performance
+            simulated_metrics = PerformanceMetrics(
+                timestamp=datetime.now(),
+                response_time_ms=100.0 + (current * 10),
+                throughput_rps=50.0 - (current / 2),
+                error_rate=0.01,
+                cpu_usage=20.0 + current,
+                memory_usage=30.0,
+            )
+            score = simulated_metrics.get_score(self._metric_weights)
 
             value_scores.append((current, score))
 

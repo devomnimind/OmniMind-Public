@@ -308,7 +308,8 @@ class QuantumUnconscious:
     def _quantum_decision_classical(self, options: List[Any]) -> Tuple[Any, Dict[str, Any]]:
         """Simulação clássica de comportamento quântico (GPU Accelerated if inputs are tensors)"""
         n_options = len(options)
-        is_tensor = GPU_AVAILABLE and isinstance(options[0], torch.Tensor)
+        # CORREÇÃO: Verificar se é tensor independente de GPU (para evitar erro np.sum em CPU tensors)
+        is_tensor = isinstance(options[0], torch.Tensor)
         decision: Any = None
         probabilities: Any = None
 

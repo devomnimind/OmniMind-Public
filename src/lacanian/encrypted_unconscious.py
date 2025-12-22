@@ -51,6 +51,16 @@ class EncryptedUnconsciousLayer:
         Returns the serialized encrypted vector.
         """
         if not TENSEAL_AVAILABLE or ts is None or self.context is None:
+            # Log for mock mode too
+            self.audit_log.append(
+                {
+                    "event": "repression (mock)",
+                    "content_hash": hashlib.sha256(b"MOCK_ENCRYPTED_DATA").hexdigest(),
+                    "metadata": metadata,
+                    "accessible_to_ego": False,
+                    "encryption": "MOCK",
+                }
+            )
             return b"MOCK_ENCRYPTED_DATA"
 
         # Convert to list of floats for CKKS

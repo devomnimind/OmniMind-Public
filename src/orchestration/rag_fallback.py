@@ -16,9 +16,9 @@ from typing import Any, Dict, List, Optional
 
 from ..memory.dataset_indexer import DatasetIndexer
 from ..memory.hybrid_retrieval import HybridRetrievalSystem, RetrievalResult
-from ..observability.module_logger import get_module_logger
-from ..observability.module_metrics import get_metrics_collector
-from ..orchestrator.error_analyzer import ErrorAnalysis, ErrorAnalyzer
+from ..monitor.module_logger import get_module_logger
+from ..monitor.module_metrics import get_metrics_collector
+from ..orchestration.error_analyzer import ErrorAnalysis, ErrorAnalyzer
 
 logger = logging.getLogger(__name__)
 structured_logger = get_module_logger("RAGFallbackSystem")

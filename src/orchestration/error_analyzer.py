@@ -16,8 +16,8 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
-from ..observability.module_logger import get_module_logger
-from ..observability.module_metrics import get_metrics_collector
+from ..monitor.module_logger import get_module_logger
+from ..monitor.module_metrics import get_metrics_collector
 
 logger = logging.getLogger(__name__)
 structured_logger = get_module_logger("ErrorAnalyzer")

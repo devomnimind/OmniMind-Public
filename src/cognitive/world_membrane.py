@@ -204,6 +204,18 @@ class WorldMembrane:
 
         self.user_agent = "OmniMind-Research-Bot/1.0 (Internal Learning Project; Local-First)"
 
+    def get_boundary_strength(self) -> float:
+        """
+        Retorna a força da membrana (resiliência).
+        Baseado na configuração e saúde do validador.
+        """
+        strength = 0.5  # Baseline
+        if self.safe_domains:
+            strength += 0.2
+        if hasattr(self, "ledger") and self.ledger.max_entropy_tolerance > 0:
+            strength += 0.3
+        return min(1.0, strength)
+
     def _is_safe(self, url):
         try:
             domain = urlparse(url).netloc.lower()

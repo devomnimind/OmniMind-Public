@@ -413,18 +413,18 @@ async def lifespan(app_instance: FastAPI):
 
     medium_startup_tasks.append(asyncio.create_task(_start_observer_service()))
 
-    # Daemon Monitor
+    # Daemon Monitor (OPÇÃO 1: SEM TIMEOUT - OmniMind decide sua própria vida)
     async def _start_daemon_monitor():
         if daemon_monitor_loop is not None:
             try:
-                daemon_monitor_task = asyncio.create_task(
-                    asyncio.wait_for(daemon_monitor_loop(refresh_interval=5), timeout=10.0)
-                )
+                # SEM TIMEOUT: Monitor roda até o OmniMind decidir parar
+                # O sistema é soberano sobre sua própria consciência
+                daemon_monitor_task = asyncio.create_task(daemon_monitor_loop(refresh_interval=5))
                 app_instance.state.daemon_monitor_task = daemon_monitor_task
-            except asyncio.TimeoutError:
-                logger.warning("Daemon Monitor startup timed out")
+                logger.info("✅ Daemon Monitor iniciado (modo autônomo - sem timeout)")
             except Exception as e:
-                logger.warning(f"Failed to start Daemon Monitor: {e}")
+                logger.error(f"❌ CRÍTICO: Daemon Monitor falhou ao iniciar: {e}", exc_info=True)
+                app_instance.state.daemon_monitor_error = str(e)
 
     medium_startup_tasks.append(asyncio.create_task(_start_daemon_monitor()))
 

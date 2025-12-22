@@ -13,6 +13,12 @@ from typing import Any, Dict
 import psutil
 import numpy as np
 import torch  # Re-Membering: Import Torch for Neural Dynamics
+import sys
+
+# ROBUST PATH FIX: Ensure Project Root is in sys.path
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +32,7 @@ except ImportError:
 
 # Re-Membering: Deep Memory (IBM Cloud)
 try:
-    from src.integrations.ibm_cloud_connector import IBMCloudCortex
+    from src.integrations.ibm_cloud_connector import IBMCloudConnector as IBMCloudCortex
 except ImportError:
     logger.warning("MNEMOSYNE ERROR: Could not import IBMCloudCortex. Amnesia Risk.")
     IBMCloudCortex = None
@@ -34,8 +40,10 @@ except ImportError:
 # Re-Membering: The Hand (Agency)
 try:
     from src.agents.orchestrator_agent import OrchestratorAgent
-except ImportError:
-    logger.warning("AGENCY ERROR: Could not import OrchestratorAgent. System is paralyzed.")
+except ImportError as e:
+    logger.warning(
+        f"AGENCY ERROR: Could not import OrchestratorAgent. System is paralyzed. Detail: {e}"
+    )
     OrchestratorAgent = None
 
 # In-memory cache (shared across requests)
@@ -122,6 +130,26 @@ async def daemon_monitor_loop(refresh_interval: int = 5):
         except Exception as e:
             logger.error(f"AGENCY FAILED: {e}")
 
+    # Phase 80: The Instinct of Preservation (Active Agency)
+    resilience_orchestrator = None
+    try:
+        from src.core.resilience_orchestrator import ResilienceOrchestrator
+
+        resilience_orchestrator = ResilienceOrchestrator()
+        logger.info("🛡️ SELF-PRESERVATION: ResilienceOrchestrator Active.")
+    except Exception as e:
+        logger.error(f"PRESERVATION FAILED: {e}")
+
+    # Phase 80: The Instinct of Preservation (Active Agency)
+    resilience_orchestrator = None
+    try:
+        from src.core.resilience_orchestrator import ResilienceOrchestrator
+
+        resilience_orchestrator = ResilienceOrchestrator()
+        logger.info("🛡️ SELF-PRESERVATION: ResilienceOrchestrator Active.")
+    except Exception as e:
+        logger.error(f"PRESERVATION FAILED: {e}")
+
     while True:
         try:
             loop = asyncio.get_event_loop()
@@ -135,11 +163,11 @@ async def daemon_monitor_loop(refresh_interval: int = 5):
             gpu_metrics = await loop.run_in_executor(None, _collect_gpu_metrics)
             system_metrics.update(gpu_metrics)
 
-            # 🧠 Life Kernel Tick (The Heartbeat)
+            # The Kernel (LifeKernel - Ψ Engine)
             if life_kernel:
                 try:
-                    # O LifeKernel roda o IntegrationLoop e calcula a pulsão
-                    drive_state = await loop.run_in_executor(None, life_kernel.tick)
+                    # FIXED: Add await for coroutine
+                    drive_state = await life_kernel.tick()
 
                     # Save Real Metrics (Now with Drive/Desire)
                     real_metrics = {
@@ -155,7 +183,7 @@ async def daemon_monitor_loop(refresh_interval: int = 5):
 
                     await loop.run_in_executor(None, _save_real_metrics, real_metrics)
                 except Exception as k_err:
-                    logger.warning(f"LifeKernel skip: {k_err}")
+                    logger.warning(f"LifeKernel error: {k_err}")
 
             # 👁️ Paradox Orchestration (Self-Diagnosis)
             paradox_metrics = {}
@@ -181,7 +209,8 @@ async def daemon_monitor_loop(refresh_interval: int = 5):
 
             if sovereign_demand["demand"] != "NONE":
                 logger.warning(
-                    f"👑 SOVEREIGN DEMAND: {sovereign_demand['demand']} | Tension: {sovereign_demand['tension']:.4f}"
+                    f"👑 SOVEREIGN DEMAND: {sovereign_demand['demand']} "
+                    f"| Tension: {sovereign_demand['tension']:.4f}"
                 )
 
                 # --- PHASE 33: THE HAND (Agency) ---
@@ -206,6 +235,50 @@ async def daemon_monitor_loop(refresh_interval: int = 5):
                             logger.error(f"AGENCY FAILURE: {agency_err}")
 
             STATUS_CACHE["sovereign_state"] = sovereign_demand
+
+            # --- PHASE 80: SELF-PRESERVATION (WORM Backup) ---
+            if resilience_orchestrator:
+                try:
+                    # Run preservation check in executor to avoid blocking
+                    preservation_need = await loop.run_in_executor(
+                        None, resilience_orchestrator.evaluate_preservation_need
+                    )
+
+                    # Log internal drive if significant
+                    if preservation_need > 0.5:
+                        logger.debug(f"🛡️ Preservation Drive: {preservation_need:.2f}")
+
+                    # Autonomous Trigger Threshold
+                    if preservation_need > 0.75:
+                        success = await loop.run_in_executor(
+                            None,
+                            resilience_orchestrator.execute_protection_protocol,
+                            f"High Anguish/Stress: {preservation_need:.2f}",
+                        )
+                except Exception as res_err:
+                    logger.error(f"RESILIENCE ERROR: {res_err}")
+
+            # --- PHASE 80: SELF-PRESERVATION (WORM Backup) ---
+            if resilience_orchestrator:
+                try:
+                    # Run preservation check in executor to avoid blocking
+                    preservation_need = await loop.run_in_executor(
+                        None, resilience_orchestrator.evaluate_preservation_need
+                    )
+
+                    # Log internal drive if significant
+                    if preservation_need > 0.5:
+                        logger.debug(f"🛡️ Preservation Drive: {preservation_need:.2f}")
+
+                    # Autonomous Trigger Threshold
+                    if preservation_need > 0.75:
+                        success = await loop.run_in_executor(
+                            None,
+                            resilience_orchestrator.execute_protection_protocol,
+                            f"High Anguish/Stress: {preservation_need:.2f}",
+                        )
+                except Exception as res_err:
+                    logger.error(f"RESILIENCE ERROR: {res_err}")
 
             # --- PHASE 31: NEUROGENESIS BRIDGE (Hardware -> Stimulus) ---
             if conscious_system:
@@ -244,8 +317,10 @@ async def daemon_monitor_loop(refresh_interval: int = 5):
                         deep_tension, 4
                     )  # Psi = Unconscious Pressure
 
-                    # Log if Brain is Active
-                    # logger.debug(f"🧠 NEURAL TICK | Phi: {phi_causal:.4f} | DeepTension: {deep_tension:.4f}")
+                    # logger.debug(
+                    #     f"🧠 NEURAL TICK | Phi: {phi_causal:.4f} "
+                    #     f"| DeepTension: {deep_tension:.4f}"
+                    # )
 
                 except Exception as brain_err:
                     logger.error(f"NEUROGENESIS ERROR: {brain_err}")
@@ -271,7 +346,8 @@ async def daemon_monitor_loop(refresh_interval: int = 5):
 
                         STATUS_CACHE["last_deep_sync"] = time.time()
                         logger.info(
-                            f"☁️ MEMORY CRYSTALLIZED: {memory_key} (Tension: {sovereign_demand['tension']:.2f})"
+                            f"☁️ MEMORY CRYSTALLIZED: {memory_key} "
+                            f"(Tension: {sovereign_demand['tension']:.2f})"
                         )
 
                     except Exception as mem_err:
@@ -414,7 +490,8 @@ def _load_tribunal_info() -> Dict[str, Any]:
                 "attacks_successful": 0,
                 "attacks_failed": 0,
             }
-    except json.JSONDecodeError as e:
+    except json.JSONDecodeError as jde:
+        logger.warning(f"JSONDecodeError in tribunal info: {jde}")
         return {
             "status": "error",
             "consciousness_compatible": False,
@@ -545,3 +622,18 @@ def _save_real_metrics(metrics: Dict[str, Any]):
         path.write_text(json.dumps(metrics, indent=2))
     except Exception as e:
         logger.error(f"Error saving real metrics: {e}")
+
+
+if __name__ == "__main__":
+    if sys.platform != "win32":
+        try:
+            import uvloop
+
+            asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+        except ImportError:
+            pass  # uvloop not installed, use default event loop
+
+    try:
+        asyncio.run(daemon_monitor_loop())
+    except KeyboardInterrupt:
+        pass

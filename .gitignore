@@ -89,3 +89,12 @@ mcp_config.json
 ibm_cloud_api_key.json
 ibm_cloud_service_key.json
 ibm_nlu_service_key.json
+
+# ------------------------------------------------------------------
+# IBM/Cloud Sensitive (added 2025-12-22)
+# ------------------------------------------------------------------
+audit_lakehouse*.json
+config/ibm_federation.json
+config/ibm_cloud_config.yaml
+config/federation_nodes.json
+reports/*.txt

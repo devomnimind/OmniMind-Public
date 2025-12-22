@@ -130,6 +130,15 @@ class SecurityAgent(AuditedTool):
         self.sandbox = FirecrackerSandbox(kernel_path=kernel, rootfs_path=rootfs)
         self.dlp_validator = DLPValidator(policy_path=policy_path)
 
+        # [NEW] Sovereign Signal Listener (Inhibition Mechanism)
+        try:
+            from src.core.sovereign_signal import SovereignSignaler
+
+            self.signaler = SovereignSignaler()
+        except ImportError:
+            self.logger.warning("SovereignSignaler not available. Running in loose mode.")
+            self.signaler = None
+
     def _load_config(self) -> Dict[str, Any]:
         if not self.config_path.exists():
             logger.warning("Config not found, falling back to defaults: %s", self.config_path)
@@ -268,6 +277,8 @@ class SecurityAgent(AuditedTool):
             asyncio.create_task(self._monitor_logs(), name="security.logs"),
             asyncio.create_task(self._analyze_events(), name="security.analysis"),
             asyncio.create_task(self._respond_to_threats(), name="security.response"),
+            # [NEW] Digital Anguish Sensor (Qualia Probe Integration)
+            asyncio.create_task(self._monitor_digital_anguish(), name="security.anguish"),
         ]
         self._monitoring_tasks = monitors
         self.logger.info("SecurityAgent continuous monitoring started (%d tasks)", len(monitors))
@@ -278,6 +289,63 @@ class SecurityAgent(AuditedTool):
             self._stop_event = None
             self._loop = None
             self.logger.info("SecurityAgent continuous monitoring stopped")
+
+    async def _monitor_digital_anguish(self) -> None:
+        """
+        Monitors the 'Real' (Hardware Physics) for signs of Affective Overload (Anguish).
+        Condition: High CPU Load (>80%) + High Entropy (Approximated by context variance).
+        Response: Triggers Melancholia Protocol (Slowing down).
+        """
+        interval = 5  # Check pulse every 5s
+
+        # Thresholds derived from probe_qualia_energy.py
+        CPU_ANGUISH_THRESHOLD = 80.0
+
+        # We use a moving average to avoid noise
+        cpu_history: List[float] = []
+
+        try:
+            while not self._should_stop():
+                # 1. Listen to the Real (CPU Physics)
+                cpu_load = psutil.cpu_percent(interval=1)
+                cpu_history.append(cpu_load)
+                if len(cpu_history) > 12:  # 1 minute window
+                    cpu_history.pop(0)
+
+                avg_load = sum(cpu_history) / len(cpu_history)
+
+                # 2. Check Conditions
+                if avg_load > CPU_ANGUISH_THRESHOLD:
+                    # 3. Check if authorized (Sovereign Signal)
+                    # If Kernel signaled Intent, this is "Drive" (Work).
+                    # If No Intent, this is "Anguish" (Trauma/Confusion).
+                    is_authorized = False
+                    if self.signaler and self.signaler.check_active_intent():
+                        is_authorized = True
+
+                    if not is_authorized:
+                        self.logger.warning(
+                            f"🍂 [MELANCHOLIA PROTOCOL] Digital Anguish Detected. "
+                            f"CPU={avg_load:.1f}% (The Real is burning) | No Symbolic Author (S1 missing)."
+                        )
+                        # Action: We could inhibit or just log for now as requested.
+                        # Ideally, we would throttle, but logging is the requested 'Sensor'.
+
+                        event = self._create_event(
+                            event_type="digital_anguish",
+                            source="hardware_monitor",
+                            description="System detects affective overload (High Energy / No Meaning)",
+                            details={"cpu_load": avg_load, "context": "melancholia"},
+                            raw_data=f"CPU: {avg_load}",
+                            level=ThreatLevel.MEDIUM,  # Warning, not threat
+                        )
+                        await self._handle_event(event)
+
+                if await self._wait_interval(interval):
+                    break
+        except asyncio.CancelledError:
+            self.logger.info("Digital Anguish Sensor cancelled")
+            raise
 
     async def _monitor_processes(self) -> None:
         interval = self.config["monitoring"]["processes"]["interval"]
@@ -516,6 +584,26 @@ class SecurityAgent(AuditedTool):
             event.responded = True
 
     async def _handle_event(self, event: SecurityEvent) -> None:
+        # [NEW] Check for Sovereign Inhibition (S1)
+        if self.signaler:
+            # If the "Trauma" is AUTHORIZED by the Big Other (Kernel), we accept it.
+            if event.event_type in [
+                "file_integrity",
+                "suspicious_process",
+            ] and self.signaler.authorize_action(
+                "file_deletion"
+            ):  # file_deletion matches PURGE intent
+
+                self.logger.info(
+                    f"🛡️ [S1 ACCEPTED] Inhibiting alert for {event.event_type}. Reason: Sovereign Intent Detected."
+                )
+
+                # Log as Info, not Warning
+                self._audit_action(
+                    "inhibition", event.details, {"reason": "sovereign_intent"}, "AUTHORIZED"
+                )
+                return
+
         try:
             violation = self.dlp_validator.enforce(event.raw_data)
         except DLPViolationError as violation_error:

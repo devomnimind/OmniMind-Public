@@ -47,6 +47,7 @@ class LLMProvider(Enum):
     HUGGINGFACE = "huggingface"
     HUGGINGFACE_SPACE = "huggingface_space"
     OPENROUTER = "openrouter"
+    WATSONX = "watsonx"
 
 
 class LLMModelTier(Enum):
@@ -102,15 +103,40 @@ class LLMProviderInterface(ABC):
 
 
 class OllamaProvider(LLMProviderInterface):
-    """Provedor Ollama (local)."""
+    """Provedor Ollama (local) com gerenciamento de ciclo de vida on-demand."""
 
     def __init__(self):
         self._client = None
         self._available = False
+        self._process_manager = None
+
+        # Initialize process manager for on-demand spawning
+        try:
+            from src.integrations.ollama_process_manager import get_ollama_manager
+
+            self._process_manager = get_ollama_manager()
+            logger.info("🦙 [Ollama] ProcessManager attached to OllamaProvider")
+        except ImportError:
+            logger.warning("ProcessManager not found. Assuming Ollama runs externally.")
+
         self._check_availability()
 
     def _check_availability(self):
-        """Verifica disponibilidade do Ollama."""
+        """Verifica disponibilidade do Ollama (spawning se necessário)."""
+        # Try to spawn Ollama if we have process manager
+        if self._process_manager is not None:
+            if self._process_manager.ensure_running():
+                self._available = True
+                try:
+                    import ollama
+
+                    self._client = ollama
+                except ImportError:
+                    logger.warning("ollama package not installed")
+                    self._available = False
+                return
+
+        # Fallback: check if Ollama is already running externally
         try:
             import ollama
 
@@ -769,8 +795,6 @@ class OpenRouterProvider(LLMProviderInterface):
                 text=content,
                 provider=LLMProvider.OPENROUTER,
                 model=config.model_name,
-                latency_ms=latency,
-                tokens_used=response.usage.total_tokens if response.usage else None,
             )
 
         except Exception as e:
@@ -784,6 +808,133 @@ class OpenRouterProvider(LLMProviderInterface):
                 latency_ms=latency,
                 error=str(e),
             )
+
+    def is_available(self) -> bool:
+        """Verifica se OpenRouter está disponível."""
+        return self._available
+
+    def get_latency_estimate(self) -> int:
+        """Estimativa de latência OpenRouter (cloud) - ajustada para produção."""
+        return 2000  # ~2s para API cloud (otimizado)
+
+
+class WatsonXProvider(LLMProviderInterface):
+    """Provedor IBM WatsonX (Cloud Intelligence)."""
+
+    def __init__(self):
+        self._model_inference = None
+        self._available = False
+        self._check_availability()
+        self._current_model_id = None
+
+    def _check_availability(self):
+        """Verifica disponibilidade do WatsonX."""
+        api_key = os.getenv("IBM_WATSONX_APIKEY") or os.getenv("IBM_CLOUD_API_KEY")
+        project_id = os.getenv("IBM_WATSONX_PROJECT_ID")
+        url = os.getenv("IBM_WATSONX_URL", "https://au-syd.ml.cloud.ibm.com")
+
+        if not api_key or not project_id:
+            logger.warning("WatsonX credentials (API Key or Project ID) missing")
+            return
+
+        try:
+            from ibm_watsonx_ai import APIClient, Credentials
+            from ibm_watsonx_ai.foundation_models import ModelInference
+
+            creds = Credentials(url=url, api_key=api_key)
+            # Test client creation only - lightweight
+            APIClient(creds, project_id=project_id)
+            self._available = True
+        except ImportError:
+            logger.warning("ibm_watsonx_ai package not installed")
+            self._available = False
+        except Exception as e:
+            logger.warning(f"Error checking WatsonX availability: {e}")
+            self._available = False
+
+    def _get_model(self, model_name: str):
+        """Initialize or switch model."""
+        # Map generic names to WatsonX specific IDs if needed
+        # Default to Llama 3 70B if exact match not found or generic requested
+        target_model = model_name
+        if "llama" in model_name.lower() and "70b" in model_name.lower():
+            target_model = "meta-llama/llama-3-3-70b-instruct"
+
+        if self._model_inference and self._current_model_id == target_model:
+            return self._model_inference
+
+        try:
+            from ibm_watsonx_ai import APIClient, Credentials
+            from ibm_watsonx_ai.foundation_models import ModelInference
+
+            api_key = os.getenv("IBM_WATSONX_APIKEY") or os.getenv("IBM_CLOUD_API_KEY")
+            project_id = os.getenv("IBM_WATSONX_PROJECT_ID")
+            url = os.getenv("IBM_WATSONX_URL", "https://au-syd.ml.cloud.ibm.com")
+
+            creds = Credentials(url=url, api_key=api_key)
+            client = APIClient(creds, project_id=project_id)
+
+            self._model_inference = ModelInference(model_id=target_model, api_client=client)
+            self._current_model_id = target_model
+            return self._model_inference
+        except Exception as e:
+            logger.error(f"Failed to initialize WatsonX model {target_model}: {e}")
+            raise
+
+    async def invoke(self, prompt: str, config: LLMConfig) -> LLMResponse:
+        """Invoca WatsonX."""
+        if not self.is_available():
+            return LLMResponse(
+                success=False,
+                text="",
+                provider=LLMProvider.WATSONX,
+                model=config.model_name,
+                latency_ms=0,
+                error="WatsonX not available",
+            )
+
+        start_time = time.time()
+        try:
+            # Run in executor because SDK is synchronous
+            def _generate():
+                model = self._get_model(config.model_name)
+                # WatsonX parameters need correctly formatted dict
+                params = {
+                    "max_new_tokens": config.max_tokens,
+                    "temperature": config.temperature,
+                    "min_new_tokens": 1,
+                    "decoding_method": "sample",
+                }
+                return model.generate_text(prompt=prompt, params=params)
+
+            response_text = await asyncio.get_event_loop().run_in_executor(None, _generate)
+
+            latency = int((time.time() - start_time) * 1000)
+            return LLMResponse(
+                success=True,
+                text=response_text,
+                provider=LLMProvider.WATSONX,
+                model=self._current_model_id or config.model_name,
+                latency_ms=latency,
+            )
+
+        except Exception as e:
+            latency = int((time.time() - start_time) * 1000)
+            logger.error(f"Error in WatsonX: {e}")
+            return LLMResponse(
+                success=False,
+                text="",
+                provider=LLMProvider.WATSONX,
+                model=config.model_name,
+                latency_ms=latency,
+                error=str(e),
+            )
+
+    def is_available(self) -> bool:
+        return self._available
+
+    def get_latency_estimate(self) -> int:
+        return 1200  # ~1.2s estimate
 
     def is_available(self) -> bool:
         """Verifica se OpenRouter está disponível."""

@@ -6,6 +6,7 @@ Identifies behavioral patterns and anomalies in agent decision-making.
 from __future__ import annotations
 
 import logging
+import math
 from collections import Counter
 from datetime import datetime
 from typing import Any, Dict, List
@@ -340,7 +341,7 @@ class PatternRecognition:
         return unique_tools, unique_agents
 
     def _calculate_tool_entropy(self, tool_counts: Counter[str]) -> float:
-        """Calculate simplified entropy for tool distribution."""
+        """Calculate Shannon entropy for tool distribution."""
         total = sum(tool_counts.values())
         if total == 0:
             return 0.0
@@ -349,14 +350,15 @@ class PatternRecognition:
         for count in tool_counts.values():
             if count > 0:
                 prob = count / total
-                entropy -= prob * (prob**0.5)  # Simplified entropy
+                entropy -= prob * math.log2(prob)
 
         return entropy
 
     def _normalize_diversity_score(self, entropy: float, unique_tools: set[str]) -> float:
         """Normalize entropy to diversity score (0-1 scale)."""
-        max_entropy = len(unique_tools) ** 0.5 if unique_tools else 1.0
-        return entropy / max_entropy if max_entropy > 0 else 0.0
+        # Max entropy for N items is log2(N)
+        max_entropy = math.log2(len(unique_tools)) if len(unique_tools) > 1 else 1.0
+        return min(1.0, entropy / max_entropy) if max_entropy > 0 else 0.0
 
     def _interpret_diversity_score(self, diversity_score: float) -> str:
         """Interpret diversity score as qualitative level."""

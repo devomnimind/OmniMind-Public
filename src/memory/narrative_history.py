@@ -14,7 +14,7 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 
-from memory.episodic_memory import EpisodicMemory
+from .episodic_memory import EpisodicMemory
 
 logger = logging.getLogger(__name__)
 

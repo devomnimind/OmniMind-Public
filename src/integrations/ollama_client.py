@@ -2,6 +2,7 @@
 Ollama Client Integration
 
 Provides a client for interacting with a local Ollama instance.
+Uses OllamaProcessManager for on-demand lifecycle management.
 """
 
 import logging
@@ -18,6 +19,16 @@ class OllamaClient:
     def __init__(self, base_url: str = "http://localhost:11434"):
         self.base_url = base_url.rstrip("/")
         self.session: Optional[aiohttp.ClientSession] = None
+
+        # On-demand process manager (spawns Ollama when needed)
+        try:
+            from src.integrations.ollama_process_manager import get_ollama_manager
+
+            self.process_manager = get_ollama_manager()
+            logger.info("🦙 [Ollama] ProcessManager attached (on-demand mode)")
+        except ImportError:
+            logger.warning("ProcessManager not found. Assuming Ollama runs externally.")
+            self.process_manager = None
 
         # SOBERANO GOVERNANCE
         try:
@@ -55,6 +66,12 @@ class OllamaClient:
 
     async def generate(self, model: str, prompt: str, **kwargs) -> Optional[str]:
         """Generate text using a model."""
+        # Ensure Ollama is running (on-demand spawn)
+        if self.process_manager is not None:
+            if not self.process_manager.ensure_running():
+                logger.error("Failed to start Ollama process")
+                return None
+
         session = await self._ensure_session()
         payload = {"model": model, "prompt": prompt, "stream": False, **kwargs}
 

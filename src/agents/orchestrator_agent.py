@@ -328,14 +328,27 @@ class OrchestratorAgent(ReactAgent):
         self.benchmark_evaluator = BenchmarkEvaluator()
         logger.info("BenchmarkEvaluator integrado ao Orquestrador.")
 
-        # NEW: ParadoxOrchestrator - Meta-orchestrator para integração de paradoxos (Fase 21-Extended)
+        # NEW: ParadoxOrchestrator - Meta-orchestrator para integração de paradoxos
+        # (Fase 21-Extended)
         self.paradox_orchestrator: Optional[ParadoxOrchestrator] = None
         try:
-            # Inicializar com workspace, quantum backend (se disponível), e MCP
+            # Connect to REAL Quantum Backend
+            from src.quantum.backends.ibm_real import IBMRealBackend
+
+            try:
+                quantum_backend = IBMRealBackend()
+                logger.info("⚛️ Quantum Reality coupled to Orchestrator via IBMRealBackend.")
+            except Exception as qe:
+                logger.warning(
+                    f"⚠️ Could not connect to the Real (IBM Quantum): {qe}. Falling back to simulated mode."
+                )
+                quantum_backend = None
+
+            # Inicializar com workspace, quantum backend, e MCP
             self.paradox_orchestrator = ParadoxOrchestrator(
                 workspace=workspace,
-                quantum_backend=None,  # TODO: Connect to quantum backend when available
-                mcp_orchestrator=None,  # Will be set after mcp_orchestrator init
+                quantum_backend=quantum_backend,
+                mcp_orchestrator=self.mcp_orchestrator,
             )
             logger.info("ParadoxOrchestrator inicializado (meta-mode para habitação de paradoxos)")
         except Exception as e:

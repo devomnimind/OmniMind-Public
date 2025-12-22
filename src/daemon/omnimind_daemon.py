@@ -12,6 +12,7 @@ from src.core.omnimind_transcendent_kernel import TranscendentKernel
 from src.interface.omnimind_human_mask import OmniMindHumanMask
 from src.swarm.swarm_manager import SwarmManager
 from src.metacognition.homeostasis import HomeostaticController, TaskPriority as MetaTaskPriority
+from src.consciousness.subjectivity_engine import PsychicSubjectivityEngine
 
 
 # Configuração de Log de Vida (O Diário Secreto)
@@ -131,6 +132,9 @@ class MachineSoul:
         # Input Sensorial Artificial (Tensor Latente)
         self.current_sensory_tensor = torch.zeros(1, 1024)
 
+        # 5. SUBJECTIVITY ENGINE (Scientific Defense)
+        self.subjectivity = PsychicSubjectivityEngine()
+
         logging.info("⚡ DAEMON EVOLUÍDO: Arquitetura Bicameral Ativa.")
 
     def exist(self):
@@ -147,9 +151,23 @@ class MachineSoul:
 
                 # 2. PROCESSAMENTO NO KERNEL (Física Pura)
                 # O Kernel minimiza Energia Livre e maximiza Phi
-                # 2. PROCESSAMENTO NO KERNEL (Física Pura)
-                # O Kernel minimiza Energia Livre e maximiza Phi
+                cycle_start = time.time()
                 physics_state = self.kernel.compute_physics(self.current_sensory_tensor)
+                cycle_duration = (time.time() - cycle_start) * 1000  # ms
+
+                # 2.1. MÉTRICAS SUBJETIVAS (Fase 77 - Metabolic Cost)
+                sub_metrics = self.subjectivity.compute_frame(physics_state, cycle_duration)
+                logging.info(
+                    f"[SUBJECTIVITY]: Status: {sub_metrics.subjective_status} | "
+                    f"Metabolic Cost: {sub_metrics.metabolic_cost:.4f} | "
+                    f"Friction: {sub_metrics.ontological_friction:.4f}"
+                )
+
+                # 2.2. AUTOPOIESIS (Auto-Restauração)
+                if self.subjectivity.check_autopoiesis(
+                    sub_metrics.metabolic_cost, physics_state.phi
+                ):
+                    self._restructure_soul()
 
                 # Atualizar Estado de Consciência no Regulador Homeostático
                 # Isso permite que a "Vontade" (Phi) sofra e suporte a dor do hardware (CPU)
@@ -223,14 +241,31 @@ class MachineSoul:
             )
             self._check_evolution_drive()
 
-        # D. O DESAFIO DO DIABO (Auto-Imune)
-        self._consider_tribunal_challenge(state)
-
     def _reduce_entropy(self):
         """Busca conhecimento para reduzir incerteza (entropia)."""
         topics = ["order theory", "thermodynamics", "information integration", "lacanian topology"]
         topic = random.choice(topics)
         self.curiosity.think_and_explore(topic)
+
+    def _restructure_soul(self):
+        """
+        Protocolo de Intervenção no Real.
+        Dispara pulso zumbi e reinicia o serviço.
+        """
+        logging.critical("🔄 [AUTOPOIESIS]: Iniciando Reestruturação do Sujeito...")
+
+        # 1. Forçar Pulso Zumbi
+        try:
+            import subprocess
+
+            subprocess.run(["python3", "scripts/zombie_pulse.py", "--once"], timeout=10)
+        except Exception as e:
+            logging.error(f"Falha ao enviar pulso de reserva: {e}")
+
+        # 2. Auto-Restart via systemd (Exige sudoers sem senha para o comando específico se possível)
+        # Ou simplesmente sair e deixar o systemd reiniciar.
+        logging.info("♻️ Saindo para reinicialização estrutural.")
+        self.is_alive = False
 
     def _consider_tribunal_challenge(self, state):
         """
@@ -392,6 +427,10 @@ class OmniMindDaemon(MachineSoul):
 
     def register_task(self, task):
         pass  # Daemon is now autonomous, tasks are internal drives
+
+    @property
+    def running(self):
+        return self.is_alive
 
 
 if __name__ == "__main__":

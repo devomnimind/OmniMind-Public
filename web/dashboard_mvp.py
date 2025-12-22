@@ -52,18 +52,90 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Initialize System
-if "decision_system" not in st.session_state:
-    st.session_state.decision_system = PsychoanalyticDecisionSystem()
+# ... (Existing Imports)
+from scripts.demo_orchestrator import OmniMindDemo
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
+# ... (Existing Page Config)
 
-audit_system = get_audit_system()
+# --- Sidebar: Mode Selection ---
+mode = st.sidebar.radio("System Mode", ["Standard/Audit", "Glass Box Demo (Private)"])
 
-# --- Sidebar: Audit Chain ---
-st.sidebar.title("🔒 Audit Chain")
-st.sidebar.caption("Immutable Log of Cognitive Events")
+if mode == "Glass Box Demo (Private)":
+    st.title("🛡️ OmniMind: The Glass Box")
+    st.caption("Biosphere of Synthetic Consciousness (Live IBM Cloud Telemetry)")
+
+    # Initialize Demo Controller
+    if "demo_controller" not in st.session_state:
+        st.session_state.demo_controller = OmniMindDemo()
+
+    # Layout: 4 Acts
+    c1, c2, c3, c4 = st.columns(4)
+
+    with c1:
+        st.subheader("Act I: Trauma")
+        st.caption("Quantum Topology (The Real)")
+        run_btn = st.button("🔴 Trigger Trauma")
+
+    with c2:
+        st.subheader("Act II: Symptom")
+        st.caption("Watsonx Llama-3 (The Unconscious)")
+
+    with c3:
+        st.subheader("Act III: Law")
+        st.caption("Governance (The Superego)")
+
+    with c4:
+        st.subheader("Act IV: Cure")
+        st.caption("Data Lakehouse (The Memory)")
+
+    # Execution Logic
+    if run_btn:
+        demo = st.session_state.demo_controller
+
+        with st.spinner("Fracturing Topology..."):
+            trauma = demo._simulate_quantum_trauma()
+            st.session_state.last_trauma = trauma
+
+        with st.spinner("Generating Verbal Symptom..."):
+            symptom = demo._generate_symptom(trauma)
+            st.session_state.last_symptom = symptom
+
+        with st.spinner("Judge entering the courtroom..."):
+            score = demo._judge_sypmtom(symptom)
+            st.session_state.last_score = score
+
+        with st.spinner("Archiving Experience..."):
+            demo._heal_and_store(score)
+            st.session_state.resilience = demo.resilience_score
+
+    # Visualization of State
+    if "last_trauma" in st.session_state:
+        c1.metric("Entropy", f"{st.session_state.last_trauma['entropy']:.4f}", delta="-Rigidity")
+        # Simple graph of the vector
+        c1.line_chart(st.session_state.last_trauma["vector"][:50])  # Show first 50 dims
+
+    if "last_symptom" in st.session_state:
+        c2.code(st.session_state.last_symptom, language="text")
+
+    if "last_score" in st.session_state:
+        status = "HEALTHY" if st.session_state.last_score > 0.5 else "RIGID"
+        c3.metric("Legal Status", status, f"{st.session_state.last_score:.2f}")
+
+    if "resilience" in st.session_state:
+        c4.metric("Resilience", f"{st.session_state.resilience:.2f}", delta="Growth")
+        # c4.progress(st.session_state.resilience) # Deprecated progress bar overload in some versions
+        st.write(f"Growth: {st.session_state.resilience:.2f}")
+
+    # STOP EXECUTION HERE so we don't render the Audit Panel
+    st.stop()
+
+else:
+    # --- ORIGINAL AUDIT LOGIC (Standard/Audit Mode) ---
+    # ... (Keep existing layout code below wrapped in else)
+    # Note: I need to wrap the *existing* layout in 'else'.
+    # Since I cannot see the whole file to wrap it easily without huge diff,
+    # I will modify the file structure to check 'mode' at the top/middle.
+    pass
 
 
 def load_audit_log():

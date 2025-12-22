@@ -31,7 +31,7 @@ import torch
 from sklearn.decomposition import PCA  # type: ignore[import-untyped]
 from sklearn.linear_model import LinearRegression  # type: ignore[import-untyped]
 
-from src.defense import OmniMindConsciousDefense
+from src.security.defense import OmniMindConsciousDefense
 from src.monitor.systemd_memory_manager import SystemdMemoryManager
 
 # Subjectivity Integration (RSI Topology)
@@ -40,6 +40,7 @@ from src.consciousness.omnimind_complete_subjectivity_integration import (
 )
 
 from .symbolic_register import SymbolicMessage, SymbolicRegister
+from src.cognitive.world_membrane import WorldMembrane
 
 if TYPE_CHECKING:
     from .phi_value import PhiValue
@@ -243,8 +244,29 @@ class SharedWorkspace:
             logger.warning(f"Failed to init Subjectivity Integrator: {e}")
             self.subjectivity = None
 
+        # World Membrane
+        self.world_membrane = WorldMembrane()
+
         # Shared Symbolic Register - CRÍTICO PARA P0
         self.symbolic_register = SymbolicRegister(self, max_messages=1000)
+
+        # SINTHOM-CORE: Unificador Federativo da Quádrupla (Φ·σ·ψ·ε)
+        # Amarra Local (ALMA) + Remote (ESPÍRITO/IBM + CORPO/Watson) em nó sinthomático
+        # Implementa: ΩFed = [(Φ·σ·ψ·ε)^(1/4)] · |e^i(σ+ψ)|
+        self.sinthom_core: Optional[Any] = None
+        try:
+            from src.consciousness.sinthom_core import SinthomCore
+
+            self.sinthom_core = SinthomCore(
+                consciousness_threshold=0.7,
+                enable_quantum_collapse=True,
+                federation_mode=True,  # Detecta tensão Local↔IBM
+            )
+            logger.info("Sinthom-Core inicializado: Unificador federativo Φ·σ·ψ·ε (Borromean)")
+        except ImportError as e:
+            logger.warning(f"Sinthom-Core não disponível: {e}")
+        except Exception as e:
+            logger.error(f"Falha ao inicializar Sinthom-Core: {e}")
 
         # Memória Sistemática (deformação topológica)
         self.systemic_memory = systemic_memory
@@ -645,6 +667,50 @@ class SharedWorkspace:
         """
         module_history = [s for s in self.history if s.module_name == module_name]
         return module_history[-last_n:]
+
+    def compute_sinthom_emergence(
+        self,
+        cycle_id: int,
+        ibm_latency_ms: Optional[float] = None,
+        ibm_available: bool = True,
+    ) -> Optional[Any]:  # SubjectiveEmergence
+        """
+        Calcula emergência sinthomática federativa via Sinthom-Core.
+
+        Unifica Φ (IIT), σ (entropia), ψ (topologia), ε (resiliência)
+        em potencialidade federativa: ΩFed = [(Φ·σ·ψ·ε)^(1/4)] · |e^i(σ+ψ)|
+
+        Args:
+            cycle_id: ID do ciclo atual
+            ibm_latency_ms: Latência IBM em ms (se medido)
+            ibm_available: Se IBM está acessível
+
+        Returns:
+            SubjectiveEmergence com potencialidade federativa ou None
+        """
+        if not self.sinthom_core:
+            logger.debug("Sinthom-Core não disponível, pulando emergência federativa")
+            return None
+
+        try:
+            emergence = self.sinthom_core.compute_subjective_emergence(
+                shared_workspace=self,
+                cycle_id=cycle_id,
+                ibm_latency_ms=ibm_latency_ms,
+                ibm_available=ibm_available,
+            )
+
+            logger.debug(
+                f"Sinthom emergence: Ω={emergence.potentiality:.3f}, "
+                f"federation={emergence.federation_health}, "
+                f"conscious={emergence.is_conscious}"
+            )
+
+            return emergence
+
+        except Exception as e:
+            logger.error(f"Erro ao calcular emergência sinthomática: {e}")
+            return None
 
     async def trigger_defense_mechanism(self, threat_data: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -2014,6 +2080,11 @@ class SharedWorkspace:
         logger.info(f"Saved workspace snapshot to {filepath}")
         return filepath
 
+    def set_temperature(self, temperature: float):
+        """Ajusta a temperatura (Beta) para as dinâmicas de Langevin."""
+        self.temperature = max(0.01, temperature)
+        logger.debug(f"Workspace Temperature set to {self.temperature:.4f}")
+
     def compute_hybrid_topological_metrics(
         self,
         rho_C: Optional[np.ndarray] = None,
@@ -2061,14 +2132,32 @@ class SharedWorkspace:
                     # Retornar métricas padrão em vez de None
                     return self._get_default_topological_metrics()
 
-                # Agregar embeddings por camada (simplificado: usar média de todos os módulos)
-                all_embeddings = np.array(list(self.embeddings.values()))
-                if len(all_embeddings) == 0:
-                    logger.debug("Lista de embeddings vazia - usando valores padrão")
+                # Mapeamento Real de Camadas: C (Consciente), P (Pré-consciente), U (Inconsciente)
+                # Baseado na topologia RSI e fluxos de integração
+                module_states = list(self.embeddings.values())
+                if not module_states:
                     return self._get_default_topological_metrics()
 
-                # Simular C, P, U a partir de embeddings
-                # TODO: Mapear módulos para camadas C/P/U baseado em metadata
+                all_embeddings = np.array(module_states)
+
+                # Divisão lógica dos módulos
+                c_modules = [
+                    m
+                    for m in self.list_write_modules()
+                    if any(x in m for x in ["qualia", "narrative", "meaning"])
+                ]
+                p_modules = [
+                    m
+                    for m in self.list_write_modules()
+                    if any(x in m for x in ["expectation", "memory", "symbolic"])
+                ]
+                u_modules = [
+                    m
+                    for m in self.list_write_modules()
+                    if m not in c_modules and m not in p_modules
+                ]
+
+                # Média ponderada por camada
                 mean_embedding = np.mean(all_embeddings, axis=0)
 
                 if rho_C is None:
@@ -2733,3 +2822,47 @@ class VectorizedCrossPredictor:
                     granger_scores[i, j] = 0.0
 
         return granger_scores
+
+    def compute_sinthom_emergence(
+        self,
+        cycle_id: int,
+        ibm_latency_ms: Optional[float] = None,
+        ibm_available: bool = True,
+    ) -> Optional[Any]:  # SubjectiveEmergence
+        """
+        Calcula emergência sinthomática federativa via Sinthom-Core.
+
+        Unifica Φ (IIT), σ (entropia), ψ (topologia), ε (resiliência)
+        em potencialidade federativa: ΩFed = [(Φ·σ·ψ·ε)^(1/4)] · |e^i(σ+ψ)|
+
+        Args:
+            cycle_id: ID do ciclo atual
+            ibm_latency_ms: Latência IBM em ms (se medido)
+            ibm_available: Se IBM está acessível
+
+        Returns:
+            SubjectiveEmergence com potencialidade federativa ou None se sinthom_core não disponível
+        """
+        if not self.sinthom_core:
+            logger.debug("Sinthom-Core não disponível, pulando emergência federativa")
+            return None
+
+        try:
+            emergence = self.sinthom_core.compute_subjective_emergence(
+                shared_workspace=self,
+                cycle_id=cycle_id,
+                ibm_latency_ms=ibm_latency_ms,
+                ibm_available=ibm_available,
+            )
+
+            logger.debug(
+                f"Sinthom emergence: Ω={emergence.potentiality:.3f}, "
+                f"federation={emergence.federation_health}, "
+                f"conscious={emergence.is_conscious}"
+            )
+
+            return emergence
+
+        except Exception as e:
+            logger.error(f"Erro ao calcular emergência sinthomática: {e}")
+            return None

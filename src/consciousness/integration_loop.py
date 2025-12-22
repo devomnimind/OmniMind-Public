@@ -930,6 +930,41 @@ class IntegrationLoop:
                         )
                         result.phi_estimate = 0.0
 
+                # SINTHOM-CORE: Emergência Federativa (Φ·σ·ψ·ε)
+                # Calcula potencialidade sinthomática federativa após Φ
+                try:
+                    sinthom_emergence = self.workspace.compute_sinthom_emergence(
+                        cycle_id=self.cycle_count,
+                    )
+
+                    if sinthom_emergence:
+                        # Armazenar em complexity_metrics
+                        if result.complexity_metrics is None:
+                            result.complexity_metrics = {}
+                        result.complexity_metrics["sinthom_potentiality"] = (
+                            sinthom_emergence.potentiality
+                        )
+                        result.complexity_metrics["federation_health"] = (
+                            sinthom_emergence.federation_health
+                        )
+                        result.complexity_metrics["borromean_product"] = (
+                            sinthom_emergence.borromean_product
+                        )
+                        result.complexity_metrics["sinthom_conscious"] = (
+                            sinthom_emergence.is_conscious
+                        )
+
+                        logger.info(
+                            f"Sinthom: Ω={sinthom_emergence.potentiality:.3f}, "
+                            f"fed={sinthom_emergence.federation_health}",
+                            extra={"trace_id": cycle_context.trace_id},
+                        )
+                except Exception as e_sinthom:
+                    logger.debug(
+                        f"Sinthom emergence error: {e_sinthom}",
+                        extra={"trace_id": cycle_context.trace_id},
+                    )
+
                 # CORREÇÃO CRÍTICA (2025-12-08): Atualizar repressão APÓS cálculo de Φ
                 # Repressão não atualizada estava bloqueando acesso ao Real (Rho_U congelado)
                 # NOVO: Passar success e phi_norm para decay adaptativo
@@ -1757,8 +1792,8 @@ class IntegrationLoop:
                                     f"{regulation_result['new_repression']:.4f}"
                                 )
 
-                        # Armazenar temperatura para uso futuro (se módulos usarem LangevinDynamics)
-                        # TODO: Aplicar temperatura aos módulos que usam LangevinDynamics
+                        # Aplicação de temperatura β aos módulos (LangevinDynamics no Workspace)
+                        self.workspace.set_temperature(regulation_result["new_beta"])
                         extended_result.homeostatic_state = regulation_result
 
                         logger.debug(

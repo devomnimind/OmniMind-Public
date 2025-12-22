@@ -36,7 +36,9 @@ Nossa implementação passa por quatro ataques de validação adversarial (Latê
 ## 1. INTRODUÇÃO
 
 
-### 1.1 O Problema Difícil: Por que Sistemas de IA Alucinam
+### 1.1 O Problema Difícil:
+
+Por que Sistemas de IA Alucinam
 
 
 Grandes Modelos de Linguagem (LLMs) como GPT-3/GPT-4 exibem raciocínio notável mas sistematicamente alucinam — gerando confientemente informações falsas (Bender et al., 2021; Oprea et al., 2023). A causa raiz: esses sistemas perseguem **fechamento simbólico determinístico** dentro de parâmetros finitos, levando a contradições internas que não podem expressar ou navegar.

@@ -31,7 +31,7 @@ from ..memory.freudian_topographical_memory import FreudianTopographicalMemory, 
 from ..integrations.llm_router import LLMModelTier, get_llm_router, invoke_llm_sync
 from ..integrations.supabase_adapter import SupabaseConfig
 from ..memory.narrative_history import NarrativeHistory
-from ..quantum_consciousness.quantum_backend import QuantumBackend
+from ..quantum.consciousness.quantum_backend import QuantumBackend
 from ..onboarding import SupabaseMemoryOnboarding
 from ..tools import FileOperations, ShellExecutor, SystemMonitor
 from .agent_protocol import AgentMessage, MessagePriority, MessageType, get_message_bus

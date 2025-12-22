@@ -12,6 +12,7 @@ import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import aiohttp
@@ -462,12 +463,22 @@ class CopilotProvider(ExternalAIProvider):
         }
 
     async def _get_oauth_token(self) -> str:
-        """Obtém token via OAuth flow (placeholder)"""
-        # Implementar fluxo OAuth completo
-        # Por enquanto, assume que o token já está disponível via env
+        """Obtém token de acesso para o GitHub Copilot."""
+        # 1. Tentar via Env Var
         token = os.getenv(self.config.get("github_token_env", "GITHUB_TOKEN"))
+
+        # 2. Tentar via Arquivo Local (Local-First Pattern)
         if not token:
-            raise ValueError("GitHub OAuth token não disponível")
+            token_file = Path.home() / ".github_token"
+            if token_file.exists():
+                token = token_file.read_text().strip()
+                logger.debug("GitHub token carregado de ~/.github_token")
+
+        if not token:
+            raise ValueError(
+                "GitHub Token não encontrado (Env: GITHUB_TOKEN ou File: ~/.github_token). "
+                "O Real exige autenticação para o Copilot."
+            )
         return token
 
     def _prepare_copilot_payload(self, task: TaskSpec) -> Dict[str, Any]:

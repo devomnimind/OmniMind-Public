@@ -146,10 +146,24 @@ class HomeostaticController:
     def get_current_state(self) -> SystemState:
         """Get current system state."""
         metrics = self._collect_metrics()
+
+        # Real Hardware Temperature Sensing (Linux/psutil)
+        temp = 45.0
+        try:
+            temps = psutil.sensors_temperatures()
+            if temps:
+                # Try coretemp or thermal-conf
+                for name, entries in temps.items():
+                    if entries:
+                        temp = entries[0].current
+                        break
+        except Exception:
+            pass
+
         return SystemState(
             cpu_usage=metrics.cpu_percent,
             memory_usage=metrics.memory_percent,
-            temperature=50.0,  # Placeholder - would need actual temperature sensor
+            temperature=temp,
             timestamp=metrics.timestamp,
         )
 

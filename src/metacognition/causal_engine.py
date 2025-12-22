@@ -29,7 +29,7 @@ class CausalEngine:
 
     def __init__(self, confidence_level: float = 0.95):
         self.confidence_level = confidence_level
-        self.logger = logger.bind(component="causal_engine")
+        self.logger = logger  # logger.bind(component="causal_engine") fixed for standard logging
 
     def compute_causal_effect(
         self, observational_data: List[float], interventional_data: List[float]
@@ -98,3 +98,27 @@ class CausalEngine:
         # Num sistema real, isso usaria histórico.
         # Aqui, é um placeholder para integração futura com Meta-Learning.
         return True
+
+    def register_event(self, cause: str, effect: str, metadata: Dict[str, Any] = None) -> None:
+        """
+        Regista um evento causal validado pelo sistema.
+        Isso serve como 'memória forense' de decisões tomadas por efeitos quânticos.
+        """
+        if metadata is None:
+            metadata = {}
+
+        event_record = {
+            "timestamp": np.datetime64("now"),
+            "cause": cause,
+            "effect": effect,
+            "metadata": metadata,
+            "is_valid_causality": True,  # Assumed true if registered by trusted component
+        }
+
+        # In a real system, this would write to an immutable ledger or database
+        # For now, we log it formally
+        try:
+            self.logger.info(f"CAUSAL_REGISTRY: {cause} -> {effect}", extra={"metadata": metadata})
+        except Exception:
+            # Fallback if logger doesn't support extra or fails
+            print(f"CAUSAL_REGISTRY: {cause} -> {effect} | {metadata}")

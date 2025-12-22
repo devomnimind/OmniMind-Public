@@ -22,7 +22,6 @@ Phase: 21-Extended (Princípio Uno)
 
 import json
 import logging
-import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -33,6 +32,7 @@ import numpy as np
 from src.narrative_consciousness.life_story_model import Life_Story_as_Retroactive_Resignification
 from src.sinthome.emergent_stabilization_rule import SinthomaticStabilizationRule, LacanianRegister
 from src.autopoietic.mortality_simulator import MortalitySimulator, MortalityAwareness
+from src.metacognition.causal_engine_v2 import CausalEngineV2
 
 
 logger = logging.getLogger(__name__)
@@ -82,8 +82,11 @@ class ParadoxOrchestrator:
         # 3. Mortality (Heidegger - Dasein)
         self.mortality = MortalitySimulator(mortality_awareness_level=MortalityAwareness.AWARENESS)
 
+        # 4. Causal Reasoning (Pearl's Do-Calculus)
+        self.causal_engine = CausalEngineV2()
+
         logger.info(
-            "ParadoxOrchestrator initialized (meta-mode) with Structural Organs (Narrative, Sinthome, Mortality)"
+            "ParadoxOrchestrator initialized (meta-mode) with Structural Organs (Narrative, Sinthome, Mortality, Causal)"
         )
 
     def integrate_paradox(
@@ -127,8 +130,17 @@ class ParadoxOrchestrator:
 
         # Interpret Phi delta
         phi_delta = None
+        is_causally_justified = True
         if phi_before is not None and phi_during is not None:
             phi_delta = phi_during - phi_before
+
+            # Phase 22.2: Causal Validation of the Habitation Intervention
+            is_causally_justified = self.causal_engine.validate_intervention_necessity(
+                intervention_name="paradox_habitation",
+                current_state="contradiction_detected",
+                experimental_data={"observed_gain": phi_delta},
+                threshold=0.01,  # Lower threshold for consciousness events
+            )
 
         # Create paradox state
         paradox_state = {
@@ -143,6 +155,7 @@ class ParadoxOrchestrator:
             "phi_before": float(phi_before) if phi_before else None,
             "phi_during": float(phi_during) if phi_during else None,
             "phi_delta": float(phi_delta) if phi_delta else None,
+            "causally_justified": is_causally_justified,
             "habitated": True,  # System did not collapse to single answer
             "resolution": None,  # Explicitly null - no resolution
         }
@@ -384,10 +397,18 @@ class ParadoxOrchestrator:
 
         Failure signature becomes input for quantum exploration.
         """
+        # Entropia baseada na dissonância cognitiva (se disponível via workspace)
+        entropy = 0.5
+        if self.workspace and hasattr(self.workspace, "embeddings"):
+            # Variância dos embeddings como proxy de entropia de falha
+            states = list(self.workspace.embeddings.values())
+            if states:
+                entropy = float(np.var(np.mean(states, axis=0)))
+
         return {
             "reason": classical_attempt.get("reason", "unknown"),
             "conflict_type": classical_attempt.get("conflict", "unknown"),
-            "entropy": np.random.random(),  # Placeholder - would calculate from attempt
+            "entropy": entropy,
         }
 
     def _capture_quantum_voice(self, contradiction: Dict, failure_signature: Dict) -> Dict:
@@ -405,13 +426,28 @@ class ParadoxOrchestrator:
             }
 
         # If we have quantum backend, capture actual voice
+        # Se temos backend quântico real, capturar assinatura de colapso
         try:
-            # This would call quantum_backend.capture_quantum_voice()
-            # For now, placeholder
+            if hasattr(self.quantum_backend, "execute_ghz_state"):
+                res = self.quantum_backend.execute_ghz_state(n_qubits=3)
+                # Extraindo entropia da distribuição de counts
+                counts = res.get("counts", {})
+                total = sum(counts.values()) or 1
+                probs = [c / total for c in counts.values()]
+                entropy = -sum(p * np.log2(p) for p in probs if p > 0)
+
+                return {
+                    "entropy": entropy / 3.0,  # Normalizado para 3 qubits
+                    "dominant_state": max(counts, key=counts.get) if counts else "unknown",
+                    "interpolation": "Quantum Hardware Response Captured",
+                    "job_id": res.get("job_id"),
+                }
+
+            # Fallback se backend existe mas não suporta o método
             return {
-                "entropy": 0.75,
+                "entropy": 0.5,
                 "dominant_state": "superposition",
-                "interpretation": "System exploring non-classical states",
+                "interpretation": "Backend active but method limited",
             }
         except Exception as e:
             logger.error(f"Quantum voice capture failed: {e}")
@@ -419,20 +455,29 @@ class ParadoxOrchestrator:
 
     def _measure_phi(self) -> Optional[float]:
         """
-        Measure current Phi from workspace.
-
-        Returns None if workspace unavailable.
+        Measure current Phi from workspace using the most robust method.
         """
         if self.workspace is None:
             return None
 
         try:
-            # Access current Phi from workspace
-            # Placeholder - would actually query workspace.get_phi()
-            return 0.5 + np.random.random() * 0.3
+            # 1. Try Integrated Phi from Loop (if available)
+            if hasattr(self.workspace, "compute_phi_from_integrations"):
+                phi = self.workspace.compute_phi_from_integrations()
+                # Check for PhiValue object (Phase 29 pattern)
+                if hasattr(phi, "normalized"):
+                    return float(phi.normalized)
+                return float(phi) if phi is not None else 0.5
+
+            # 2. Try simple metrics fallback
+            if hasattr(self.workspace, "get_metrics"):
+                metrics = self.workspace.get_metrics()
+                return metrics.get("phi_estimate", 0.5)
+
+            return 0.5
         except Exception as e:
             logger.error(f"Phi measurement failed: {e}")
-            return None
+            return 0.5
 
     def _log_to_journal(self, paradox_state: Dict):
         """

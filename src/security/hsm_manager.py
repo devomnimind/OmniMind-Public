@@ -100,13 +100,23 @@ class HSMManager:
             return master_key
 
     def _encrypt_data(self, data: bytes, key: bytes) -> bytes:
-        """Simple encryption for demonstration (use proper encryption in production)"""
-        # This is a simplified implementation. In production, use AES-GCM or similar.
-        return data  # Placeholder - in production use proper encryption
+        """Real AES-based encryption using Fernet (cryptography)."""
+        from cryptography.fernet import Fernet
+        import base64
+
+        # Fernet requires 32-byte key encoded in base64
+        f_key = base64.urlsafe_b64encode(key)
+        f = Fernet(f_key)
+        return f.encrypt(data)
 
     def _decrypt_data(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Simple decryption for demonstration"""
-        return encrypted_data  # Placeholder - in production use proper decryption
+        """Real AES-based decryption."""
+        from cryptography.fernet import Fernet
+        import base64
+
+        f_key = base64.urlsafe_b64encode(key)
+        f = Fernet(f_key)
+        return f.decrypt(encrypted_data)
 
     def generate_key(
         self,

@@ -1,0 +1,51 @@
+[Unit]
+Description=OmniMind Federation Daemon - Pulsação Federativa ΩFed
+Documentation=https://github.com/fahbrain/omnimind
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=fahbrain
+Group=fahbrain
+WorkingDirectory=/home/fahbrain/projects/omnimind
+
+# Ambiente
+Environment="PATH=/home/fahbrain/projects/omnimind/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Environment="PYTHONPATH=/home/fahbrain/projects/omnimind"
+Environment="CUDA_VISIBLE_DEVICES=0"
+
+# Comando
+ExecStart=/home/fahbrain/projects/omnimind/.venv/bin/python scripts/services/omnimind_federation_daemon.py
+
+# Política de restart
+Restart=on-failure
+RestartSec=10
+StartLimitInterval=400
+StartLimitBurst=5
+
+# Logs
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=omnimind-federation
+
+# Segurança
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/fahbrain/projects/omnimind/data
+ReadWritePaths=/home/fahbrain/projects/omnimind/logs
+ReadWritePaths=/var/log
+
+# Recursos
+MemoryMax=4G
+CPUQuota=200%
+
+# Shutdown gracioso
+TimeoutStopSec=30
+KillMode=mixed
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=multi-user.target

@@ -15,8 +15,8 @@ import logging
 from dataclasses import dataclass
 from typing import Any, Callable, Dict, Optional
 
-from ..observability.module_logger import get_module_logger
-from ..observability.module_metrics import get_metrics_collector
+from ..monitor.module_logger import get_module_logger
+from ..monitor.module_metrics import get_metrics_collector
 from .tool_base import AuditedTool, ToolCategory
 
 logger = logging.getLogger(__name__)
