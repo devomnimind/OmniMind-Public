@@ -11,7 +11,7 @@ from __future__ import annotations
 import logging
 from typing import Any, Dict, List
 
-from memory.semantic_memory_layer import SemanticMemoryLayer
+from src.memory.semantic_memory_layer import SemanticMemoryLayer
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +26,7 @@ class PaperSearch:
             semantic_memory: SemanticMemoryLayer instance
         """
         if semantic_memory is None:
-            from memory.semantic_memory_layer import get_semantic_memory
+            from src.memory.semantic_memory_layer import get_semantic_memory
 
             semantic_memory = get_semantic_memory()
 

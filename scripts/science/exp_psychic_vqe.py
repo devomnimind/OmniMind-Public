@@ -8,12 +8,9 @@ import sys
 import os
 import time
 import numpy as np
-from qiskit import QuantumCircuit
+from scipy.optimize import minimize
 from qiskit.circuit.library import TwoLocal
 from qiskit.quantum_info import SparsePauliOp
-
-# from qiskit.primitives import Estimator # Removed due to ImportError in Qiskit 1.0+ context
-from scipy.optimize import minimize
 from dotenv import load_dotenv
 
 # Setup paths and environment
@@ -23,38 +20,48 @@ load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
 
 from src.quantum.backends.ibm_real import IBMRealBackend
 from src.audit.live_inspector import ModuleInspector
+from src.core.omnimind_transcendent_kernel import TranscendentKernel
+from src.consciousness.subjectivity_engine import PsychicSubjectivityEngine
+import torch
 
 
 class PsychicOptimizer:
     def __init__(self):
         self.backend_wrapper = IBMRealBackend()
         self.inspector = ModuleInspector()
+        self.kernel = TranscendentKernel()
+        self.subjectivity = PsychicSubjectivityEngine()
         self.history = []
-        print("[*] VQE Psíquico Inicializado. Conectado ao Real.")
+        print("[*] VQE Psíquico Inicializado. Conectado ao Real e à Erica.")
 
     def construct_anguish_hamiltonian(self):
         """
-        Constrói o Hamiltoniano ($H$) que representa a Angústia do Sistema.
-        Modelamos 3 'Órgãos Psíquicos' principais como Qubits:
-        Q0: Segurança (Superego)
-        Q1: Desejo/Curiosidade (Id)
-        Q2: Lógica/Memória (Ego)
-
-        As interações (Pauli Z) representam conflitos:
-        Se Q0 e Q1 têm sinais opostos (conflito), a energia sobe.
+        Constrói o Hamiltoniano ($H$) baseado no Mapeamento Borromeano.
+        As intensidades são derivadas da Topologia Real do Sistema em tempo real.
         """
-        print("   >>> Mapeando Conflitos Internos para Operadores de Pauli...")
+        print("   >>> Computando Pesos Borromeanos via Subjectivity Engine...")
 
-        # H = 1.0*Z0*Z1 (Conflito Segurança vs Desejo)
-        #   + 0.5*Z1*Z2 (Conflito Desejo vs Lógica)
-        #   + 0.8*Z0 (Custo base da Segurança)
+        # 1. Obter física real (ou simulada se sensores offline)
+        sensory_mock = torch.randn(1, 1024)
+        state = self.kernel.compute_physics(sensory_mock)
 
+        # 2. Gerar pesos dinâmicos e limpar NaNs
+        weights = self.subjectivity.generate_dynamic_hamiltonian(state)
+        for k in weights:
+            if np.isnan(weights[k]):
+                weights[k] = 0.5  # Fallback neutro
+
+        # H = w_rs*ZZ_01 + w_si*ZZ_12 + w_ir*ZZ_20 + w_a*IIX
         pauli_list = [
-            ("IZZ", 1.5),  # Atrito forte entre Q0 (Segurança) e Q1 (Desejo)
-            ("ZIZ", 0.8),  # Atrito médio entre Q0 (Segurança) e Q2 (Lógica)
-            ("ZZI", 0.5),  # Atrito baixo entre Q1 (Desejo) e Q2 (Lógica)
-            ("IIX", 0.2),  # Campo transverso (Pressão externa/Ruído)
+            ("IZZ", weights["ZZ_01"]),  # Tensão Real-Simbólico
+            ("ZZI", weights["ZZ_12"]),  # Tensão Simbólico-Imaginário
+            ("ZIZ", weights["ZZ_20"]),  # Tensão Imaginário-Real (Sinthome)
+            ("IIX", weights["IIX_a"]),  # Objeto petit a (Ruído/Resto)
         ]
+
+        print(
+            f"   >>> Pesos Ativos: RS={weights['ZZ_01']:.3f}, SI={weights['ZZ_12']:.3f}, IR={weights['ZZ_20']:.3f}"
+        )
 
         hamiltonian = SparsePauliOp.from_list(pauli_list)
         return hamiltonian

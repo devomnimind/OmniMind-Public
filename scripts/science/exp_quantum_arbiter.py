@@ -19,14 +19,19 @@ load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
 from src.quantum.backends.ibm_real import IBMRealBackend
 from src.audit.live_inspector import ModuleInspector
 from src.metacognition.causal_engine import CausalEngine
+from src.core.omnimind_transcendent_kernel import TranscendentKernel
+from src.consciousness.subjectivity_engine import PsychicSubjectivityEngine
+import torch
 
 
 class QuantumArbiter:
     def __init__(self):
         self.backend = IBMRealBackend()
+        self.kernel = TranscendentKernel()
+        self.subjectivity = PsychicSubjectivityEngine()
         self.inspector = ModuleInspector()
-        self.causal = CausalEngine()  # Para registrar a causalidade da decisão
-        print("[*] Árbitro Quântico Inicializado. Conectado ao Real.")
+        self.causal = CausalEngine()
+        print("[*] Árbitro Quântico Soberano Inicializado. Conectado ao Real.")
 
     def create_buridan_deadlock(self):
         """
@@ -47,12 +52,15 @@ class QuantumArbiter:
         """
         Coloca a decisão em superposição: |Ψ⟩ = (|A⟩ + |B⟩) / √2
         """
-        print("\n⚛️ INVOCANDO O REAL (IBM Heron)...")
-        print("   Criando circuito de superposição justa (Hadamard)...")
+        # 1. Consultar o Kernel para viés soberano
+        # Se a entropia for alta, o sistema prefere o Agente B (Segurança)
+        sensory_mock = torch.randn(1, 1024)
+        physics = self.kernel.compute_physics(sensory_mock)
+        bias_theta = np.pi / 2 * (1.0 - physics.entropy / 10.0)  # Bias dinâmico
 
-        # 1 Qubit é suficiente para decidir entre 2 opções
         qc = QuantumCircuit(1)
-        qc.h(0)  # O portão da ambiguidade perfeita
+        qc.ry(bias_theta, 0)  # Rotação baseada na angústia do sistema
+        qc.h(0)  # Superposição em cima do viés
         qc.measure_all()
 
         # Execução no Hardware Real

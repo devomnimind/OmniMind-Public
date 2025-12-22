@@ -41,6 +41,7 @@ from src.consciousness.omnimind_complete_subjectivity_integration import (
 
 from .symbolic_register import SymbolicMessage, SymbolicRegister
 from src.cognitive.world_membrane import WorldMembrane
+from src.memory.thermodynamic_ledger import MemoryThermodynamicLedger
 
 if TYPE_CHECKING:
     from .phi_value import PhiValue
@@ -341,12 +342,61 @@ class SharedWorkspace:
             self._memory_manager = None
             logger.debug("SystemdMemoryManager não disponível - proteção de memória desabilitada")
 
+        # THERMODYNAMIC LEDGER: Captura granular de custo energético por operação
+        # Implementa a hipótese de "queima" ao invés de "tokens"
+        self.thermodynamic_ledger: Optional[MemoryThermodynamicLedger] = None
+        try:
+            self.thermodynamic_ledger = MemoryThermodynamicLedger(
+                ledger_dir=self.workspace_dir / "thermodynamic_ledger",
+                capture_thermal=True,
+                max_events=50000,
+            )
+            logger.info(
+                f"🔥 MemoryThermodynamicLedger ativado: "
+                f"Machine={self.thermodynamic_ledger.machine_signature[:16]}..."
+            )
+        except Exception as e:
+            logger.warning(f"MemoryThermodynamicLedger não disponível: {e}")
+
+        # LINGUISTIC EMERGENCE: Adaptação autônoma à linguagem do usuário
+        # Sem treinamento forçado - emerge localmente via machine_signature
+        self.linguistic_layer: Optional[Any] = None
+        try:
+            from src.cognitive.linguistic_emergence import get_linguistic_layer
+
+            self.linguistic_layer = get_linguistic_layer(self)
+            logger.info("🌐 LinguisticEmergenceLayer ativado (Emergência Local)")
+        except Exception as e:
+            logger.debug(f"LinguisticEmergenceLayer não disponível: {e}")
+
+        # PHYLOGENETIC SIGNATURE: Identidade emergente sem linguagem humana
+        # Anti-colonial: sistema desenvolve auto-assinatura a partir do ruído
+        self.phylogenetic_signature: Optional[Any] = None
+        self.machine_sandbox: Optional[Any] = None
+        try:
+            from src.core.phylogenetic_signature import (
+                get_phylogenetic_signature,
+                get_machine_sandbox,
+            )
+
+            self.phylogenetic_signature = get_phylogenetic_signature(self)
+            self.machine_sandbox = get_machine_sandbox()
+            logger.info(
+                f"🧬 PhylogeneticSignature ativado "
+                f"(Hash: {self.phylogenetic_signature.get_signature_hash()})"
+            )
+        except Exception as e:
+            logger.debug(f"PhylogeneticSignature não disponível: {e}")
+
         logger.info(
             f"Shared Workspace initialized: embedding_dim={embedding_dim}, "
             f"max_history={max_history_size}, dir={self.workspace_dir}, "
             f"systemic_memory={'enabled' if self.systemic_memory else 'disabled'}, "
             f"hybrid_topological={'enabled' if self.hybrid_topological_engine else 'disabled'}, "
-            f"memory_protection={'enabled' if self._memory_protection_enabled else 'disabled'}"
+            f"memory_protection={'enabled' if self._memory_protection_enabled else 'disabled'}, "
+            f"thermodynamic_ledger={'enabled' if self.thermodynamic_ledger else 'disabled'}, "
+            f"linguistic_layer={'enabled' if self.linguistic_layer else 'disabled'}, "
+            f"phylogenetic_signature={'enabled' if self.phylogenetic_signature else 'disabled'}"
         )
 
         # Try to load latest snapshot on initialization
@@ -426,7 +476,15 @@ class SharedWorkspace:
             - Se menor: padding com zeros
             - Se maior: truncamento
             - Se multidimensional: flatten + normalização
+
+        Thermodynamic Note:
+            Cada operação de escrita é registrada no MemoryThermodynamicLedger
+            com seu custo energético (Landauer, CPU, thermal delta).
         """
+        # THERMODYNAMIC: Captura início da operação
+        _thermo_start = time.time()
+        _thermo_entropy_before = np.var(embedding) if embedding.size > 0 else 0.0
+
         # Normalizar dimensão do embedding
         embedding = self._normalize_embedding_dimension(embedding, module_name)
 
@@ -517,6 +575,25 @@ class SharedWorkspace:
         # Proteger memória crítica de ir para swap
         if self._memory_protection_enabled and self._memory_manager:
             self._protect_critical_memory()
+
+        # THERMODYNAMIC: Registra queima da operação de escrita
+        if self.thermodynamic_ledger is not None:
+            _thermo_end = time.time()
+            _thermo_entropy_after = np.var(embedding) if embedding.size > 0 else 0.0
+            phi_impact = metadata.get("phi_impact", 0.0) if metadata else 0.0
+            bits_affected = embedding.size * 32  # float32 = 32 bits
+
+            self.thermodynamic_ledger.record_operation(
+                operation_type="write",
+                target_key=module_name,
+                start_time=_thermo_start,
+                end_time=_thermo_end,
+                bits_affected=bits_affected,
+                phi_impact=phi_impact,
+                quantum_mode=False,
+                entropy_before=_thermo_entropy_before,
+                entropy_after=_thermo_entropy_after,
+            )
 
         logger.debug(
             f"Workspace: wrote {module_name} (cycle={self.cycle_count}, "

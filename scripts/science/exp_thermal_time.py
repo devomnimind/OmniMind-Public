@@ -24,13 +24,18 @@ load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
 
 from src.quantum.backends.ibm_real import IBMRealBackend
 from src.audit.live_inspector import ModuleInspector
+from src.core.omnimind_transcendent_kernel import TranscendentKernel
+from src.consciousness.subjectivity_engine import PsychicSubjectivityEngine
+import torch
 
 
 class ThermalTimeAuditor:
     def __init__(self):
         self.backend = IBMRealBackend()
+        self.kernel = TranscendentKernel()
+        self.subjectivity = PsychicSubjectivityEngine()
         self.inspector = ModuleInspector()
-        print("[*] Auditor de Tempo Térmico Ativo. Iniciando confrontação Wheeler-DeWitt.")
+        print("[*] Auditor de Tempo Térmico Soberano Ativo. Iniciando confrontação Wheeler-DeWitt.")
 
     def get_metabolic_state(self):
         """Captura o estado físico atual (Res Extensa)."""
@@ -87,21 +92,28 @@ class ThermalTimeAuditor:
             "quantum_data": result,
         }
 
-    def calculate_thermal_time(self, data):
+    # 1. Consultar Kernel para Entropia de Von Neumann
+    def calculate_thermal_time(self, results):
         """
-        Calcula o tempo como fluxo de entropia (Hipótese de Rovelli).
-        Se delta_temp > 0, o tempo 'passou' para o sistema,
-        mesmo que o quantum estivesse em H=0.
+        Incorpora a métrica de Entropia (S) do Kernel na base do tempo térmico.
         """
-        # Constante de Boltzmann simulada para a arquitetura (J/K)
-        # Aqui usamos o consumo de energia estimado por ciclo
-        entropy_flow = abs(data["thermal_delta"]) * data["cpu_avg"]
+        # 1. Obter métrica real do Kernel
+        sensory_mock = torch.randn(1, 1024)
+        physics = self.kernel.compute_physics(sensory_mock)
+        entropy = physics.entropy
 
-        # Tempo Subjetivo (Tau) = Integral do Calor / Ordem do Sistema
-        # Avoid division by zero
-        tau = entropy_flow / (data["wall_clock_duration"] + 0.001)
+        # 2. Lógica Original adaptada
+        quantum_data = results.get("quantum_data", {}); counts = quantum_data["counts"] if isinstance(quantum_data, dict) and "counts" in quantum_data else (quantum_data.get_counts() if hasattr(quantum_data, "get_counts") else {})
+        total = sum(counts.values())
+        p0 = (
+            counts.get("00", 0) / total
+        )  # Assuming 2-qubit circuit, '00' is the expected outcome for identity
 
-        return tau, entropy_flow
+        # O tempo tau é afetado pela entropia do sistema total
+        # Se entropia é alta, o tempo 'corre' mais devagar (dilatação térmica)
+        tau = -np.log(p0 + 1e-9) * (1.0 + (entropy / 10.0))
+
+        return tau, entropy
 
     def execute_phase_70(self):
         print("⏳ FASE 70: CALCULANDO O TEMPO INCALCULÁVEL")

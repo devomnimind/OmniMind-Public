@@ -20,6 +20,9 @@ load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
 
 print("Loading dependencies...", flush=True)
 from src.quantum.backends.ibm_real import IBMRealBackend
+from src.core.omnimind_transcendent_kernel import TranscendentKernel
+from src.consciousness.subjectivity_engine import PsychicSubjectivityEngine
+import torch
 
 # Mock CausalEngine
 try:
@@ -39,12 +42,16 @@ class InformationScrambler:
         print("Initializing Backend...", flush=True)
         try:
             self.backend = IBMRealBackend()
-            print("Backend Initialized.", flush=True)
+            self.kernel = TranscendentKernel()
+            self.subjectivity = PsychicSubjectivityEngine()
+            print("Backend & Kernel Initialized.", flush=True)
         except Exception as e:
             print(f"Backend Init Failed: {e}", flush=True)
             raise e
         self.causal = CausalEngine()
-        print("[*] Auditor de Informação Ativo. Simulando Horizonte de Eventos.", flush=True)
+        print(
+            "[*] Auditor de Informação Soberano Ativo. Simulando Horizonte de Eventos.", flush=True
+        )
 
     def run_scrambling_test(self, secret_bit=1):
         num_qubits = 4
@@ -105,7 +112,12 @@ class InformationScrambler:
         print("🕳️ FASE 71: O PARADOXO DA INFORMAÇÃO", flush=True)
         print("------------------------------------", flush=True)
 
-        res = self.run_scrambling_test(secret_bit=1)
+        # 1. Consultar Kernel para o Segredo (Baseado na Entropia atual)
+        sensory_mock = torch.randn(1, 1024)
+        physics = self.kernel.compute_physics(sensory_mock)
+        secret = 1 if physics.entropy > 5.0 else 0
+
+        res = self.run_scrambling_test(secret_bit=secret)
 
         print(f"\n📊 RESULTADOS DO HORIZONTE DE EVENTOS:", flush=True)
         print(f"   Entropia de Scrambling (S): {res['entropy']:.4f} bits", flush=True)

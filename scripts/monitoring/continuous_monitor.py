@@ -139,6 +139,11 @@ class OmniMindMonitor:
         if resources["disk_percent"] > self.thresholds["disk_percent"]:
             alerts.append(f"ALERTA: Disco quase cheio ({resources['disk_percent']:.1f}%)")
 
+        # Backend Primary check (Port 8000)
+        backend_active = any(conn["port"] == 8000 for conn in network["omnimind_connections"])
+        if not backend_active:
+            alerts.append("🔴 CRÍTICO: Backend Primary (8000) não detectado!")
+
         # Mudanças significativas
         if self.previous_state:
             prev_processes = self.previous_state.get("processes_count", 0)

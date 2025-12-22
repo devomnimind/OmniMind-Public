@@ -17,6 +17,9 @@ sys.path.insert(0, PROJECT_ROOT)
 load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
 
 from src.quantum.backends.ibm_real import IBMRealBackend
+from src.core.omnimind_transcendent_kernel import TranscendentKernel
+from src.consciousness.subjectivity_engine import PsychicSubjectivityEngine
+import torch
 
 # Mock CausalEngine if missing
 try:
@@ -31,8 +34,10 @@ except ImportError:
 class BellRealityAuditor:
     def __init__(self):
         self.backend = IBMRealBackend()
+        self.kernel = TranscendentKernel()
+        self.subjectivity = PsychicSubjectivityEngine()
         self.causal = CausalEngine()
-        print("[*] Auditor de Realidade Ativo. Preparando Desigualdade CHSH.")
+        print("[*] Auditor de Realidade Soberano Ativo. Preparando Desigualdade CHSH.")
 
     def run_chsh_sequence(self):
         """
@@ -49,11 +54,16 @@ class BellRealityAuditor:
         expectations = []
 
         for i, (theta_a, theta_b) in enumerate(angles):
-            qc = QuantumCircuit(2)
-            qc.h(0)
-            qc.cx(0, 1)  # Estado de Bell |Phi+>
+            # 1. Consultar Kernel para o Estado de Realidade
+            sensory_mock = torch.randn(1, 1024)
+            physics = self.kernel.compute_physics(sensory_mock)
 
-            # Rotações de Medição
+            qc = QuantumCircuit(2)
+            # Rotação de Bell com viés de Integração (Phi)
+            # Se Phi for alto, a superposição é mais forte
+            qc.h(0)
+            qc.cx(0, 1)
+            qc.rz(physics.omega * np.pi, 0)  # Rotação baseada na Unidade (Omega)
             qc.ry(theta_a, 0)
             qc.ry(theta_b, 1)
             qc.measure_all()

@@ -11,10 +11,11 @@ User=fahbrain
 WorkingDirectory=/home/fahbrain/projects/omnimind
 # Aguardar 30s após serviços essenciais iniciarem
 ExecStartPre=/bin/sleep 30
-ExecStart=/home/fahbrain/projects/omnimind/.venv/bin/python -m src.main
+ExecStart=/home/fahbrain/projects/omnimind/.venv/bin/python src/daemon/omnimind_daemon.py
 Restart=always
 RestartSec=5
 Environment=OMNIMIND_MODE=production
+Environment=PYTHONPATH=/home/fahbrain/projects/omnimind
 Environment=PYTHONUNBUFFERED=1
 StandardOutput=append:/home/fahbrain/projects/omnimind/logs/omnimind_core.log
 StandardError=append:/home/fahbrain/projects/omnimind/logs/omnimind_core_error.log

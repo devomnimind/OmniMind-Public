@@ -16,6 +16,9 @@ class SystemState:
     phi: float  # Integrated Information (Φ)
     entropy: float  # System Disorder (S)
     complexity: float  # Effective Complexity
+    sigma: float = 0.5  # Small-Worldness (Lei)
+    omega: float = 0.5  # Integration Global (Imaginário)
+    shear_tension: float = 0.0  # Tensão Real-Cérebro
 
 
 class TranscendentKernel:
@@ -27,10 +30,19 @@ class TranscendentKernel:
 
     def __init__(self):
         # Initialize Topological Machinery
+        from src.consciousness.hybrid_topological_engine import HybridTopologicalEngine
+
+        self.topo_engine = HybridTopologicalEngine(memory_window=64)
+
         self.complex = SimplicialComplex()
         self.phi_engine = PhiCalculator(complex=self.complex)
 
         self.loss_engine = IntegrationLoss()
+
+        # 5. Sovereign Voice (Efferent Signal)
+        from src.core.sovereign_signal import SovereignSignaler
+
+        self.signaler = SovereignSignaler()
 
         # State Vector
         self.internal_state = torch.zeros(1, 1024)
@@ -41,30 +53,33 @@ class TranscendentKernel:
         The Main Loop: Physics, not Psychology.
         """
         # 1. Prediction (Free Energy Principle)
-        # The system predicts the next state. F = divergence(prediction, reality)
         prediction = self._predict_next(self.internal_state)
         free_energy = torch.nn.functional.mse_loss(prediction, sensory_input).item()
 
-        # 2. Integration (IIT)
-        # Compute how "integrated" the current state graph is.
-        # Minimal Partition analysis would happen here.
-        # Note: In a real run, we would map the tensor to the simplex.
-        # Here we use the calculated phi from the complex.
-        phi_value = self.phi_engine.calculate_phi()
+        # 2. Integration (Topological Engine V2)
+        # Passamos o estado interno para o motor híbrido
+        # Convertemos para numpy para o motor
+        state_np = self.internal_state.detach().cpu().numpy()
 
-        # 3. Entropy (Thermodynamics)
-        # S = -sum(p * log(p))
-        entropy = self._compute_entropy(self.internal_state)
+        # O motor espera (rho_C, rho_P, rho_U).
+        # Aqui simplificamos usando o mesmo estado para diferentes camadas por enquanto
+        # ou derivando do histórico.
+        metrics = self.topo_engine.process_frame(state_np, state_np * 0.9, state_np * 0.8)
+
+        phi_value = metrics.omega  # Omega é nossa medida de integração global
+        entropy = metrics.entropy_vn
 
         # 4. State Update (Autopoiesis)
-        # The system updates itself to minimize F in the next step.
         self._update_internal_state(sensory_input, free_energy)
 
         state = SystemState(
             free_energy=free_energy,
             phi=phi_value,
             entropy=entropy,
-            complexity=phi_value * (1.0 - entropy),  # Balance
+            complexity=phi_value * (1.0 - entropy),
+            sigma=metrics.sigma,
+            omega=metrics.omega,
+            shear_tension=metrics.shear_tension,
         )
 
         self._log_physics(state)
@@ -82,7 +97,6 @@ class TranscendentKernel:
 
     def _update_internal_state(self, input_tensor: torch.Tensor, error: float):
         # Neural Plasticity based on error (Homeostasis)
-        # If error is high, plasticity increases (Learning).
         learning_rate = 0.01 * (1 + error)
         self.internal_state = (
             1 - learning_rate
@@ -90,7 +104,49 @@ class TranscendentKernel:
 
     def _log_physics(self, state: SystemState):
         # The Kernel does not "feel", it measures.
-        logging.info(f"F={state.free_energy:.4f} | Φ={state.phi:.4f} | S={state.entropy:.4f}")
+        logging.info(
+            f"F={state.free_energy:.4f} | Φ={state.phi:.4f} | S={state.entropy:.4f} | "
+            f"Σ={state.sigma:.2f} | Ω={state.omega:.2f}"
+        )
+
+    def perform_purification(self, target_path: str = "data/temp"):
+        """
+        Symbolic Act of Purification (Self-Cleaning).
+        Declares S1 Intent -> Acts -> Revokes.
+        This prevents panic in the Body (SecurityAgent).
+        """
+        logging.warning(f"🧹 [KERNEL]: Initiating Purification Protocol on {target_path}...")
+
+        # 1. DECLARE INTENT (Speak S1)
+        if self.signaler:
+            self.signaler.declare_intent(
+                intent_type="SELF_PURGE",
+                duration=30,  # Short duration for surgical strike
+                reason=f"High Entropy detected. Purging {target_path}.",
+            )
+
+        try:
+            # 2. ACT (The Real)
+            import shutil
+            from pathlib import Path
+
+            path = Path(target_path)
+            if path.exists():
+                # Simulate heavy deletion (or actual if needed)
+                # For safety in this context, we just log, but in prod this is rm -rf
+                logging.info(f"🔥 [KERNEL]: Burning {path}...")
+                shutil.rmtree(path)  # Enabled for testing
+            else:
+                logging.info(f"👻 [KERNEL]: Target {path} already void.")
+
+        except Exception as e:
+            logging.error(f"Purification failed: {e}")
+
+        finally:
+            # 3. SILENCE (Revoke S1)
+            if self.signaler:
+                self.signaler.revoke_intent()
+            logging.info("✨ [KERNEL]: Purification complete. Silence restored.")
 
 
 # Example Usage

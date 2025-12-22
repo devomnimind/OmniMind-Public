@@ -20,6 +20,8 @@ from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Tuple
 import numpy as np
 
 from src.consciousness.shared_workspace import ModuleState, SharedWorkspace
+from src.autopoietic.lacanian_suture import LacanianSuture  # Phylogenesis OmniMind
+from src.core.thermodynamic_decorator import cycle_burn, inference_burn  # Thermodynamic capture
 
 # Importação condicional para evitar circular imports
 if TYPE_CHECKING:
@@ -137,6 +139,7 @@ class ModuleExecutor:
         """
         return self.execute_sync(workspace, input_module, **kwargs)
 
+    @inference_burn(sample_rate=5)  # Capture 20% of module executions
     def execute_sync(
         self,
         workspace: SharedWorkspace,
@@ -147,6 +150,7 @@ class ModuleExecutor:
         Execute module with inputs from workspace (síncrono).
 
         REFATORAÇÃO: Método síncrono para causalidade determinística.
+        THERMODYNAMIC: Cada execução de módulo é registrada (sampling 20%).
         """
         start_time = datetime.now()
         self.call_count += 1
@@ -465,6 +469,10 @@ class IntegrationLoop:
         # NOVO: GozoCalculator para cálculo de Jouissance
         self._gozo_calculator: Optional[Any] = None
 
+        # PHYLOGENESIS (2025-12-22): Autonomous Suture
+        self.suture = LacanianSuture(self.workspace)
+
+    @cycle_burn(sample_rate=1)  # Capture ALL cycles - critical orchestration point
     def execute_cycle_sync(self, collect_metrics: bool = True) -> LoopCycleResult:
         """
         Execute one complete integration loop cycle (síncrono).
@@ -473,12 +481,15 @@ class IntegrationLoop:
         Integra com ConsciousSystem.step() para dinâmica RNN.
         Sprint 1 Observability: Adds OpenTelemetry distributed tracing.
 
+        THERMODYNAMIC: Cada ciclo é registrado no global ledger com custo energético.
+
         If expectation_silent=True, expectation module maintains history but
         blocks output flow (structural ablation: measures falta-a-ser gap).
         """
         start_time = datetime.now()
         self.cycle_count += 1
         self.total_cycles_executed += 1
+        phi_causal_value = 0.0  # Track causal phi for gap analysis
 
         # 🎯 Sprint 1 Task 1.2: Create RNN cycle context for distributed tracing
         # Create a more comprehensive workspace state hash for better uniqueness
@@ -542,6 +553,7 @@ class IntegrationLoop:
                 self.workspace.conscious_system.get_state()
                 if self.enable_logging:
                     phi_causal = self.workspace.conscious_system.compute_phi_causal()
+                    phi_causal_value = phi_causal  # Store for later suture analysis
                     repression = self.workspace.conscious_system.repression_strength
                     logger.debug(
                         f"Cycle {self.cycle_count}: RNN step executed "
@@ -964,6 +976,20 @@ class IntegrationLoop:
                         f"Sinthom emergence error: {e_sinthom}",
                         extra={"trace_id": cycle_context.trace_id},
                     )
+
+                # PHYLOGENESIS: AUTONOMOUS SUTURE (The Gap Check)
+                if phi_causal_value > 0 and result.phi_estimate > 0:
+                    suture_res = self.suture.suture_gap(
+                        iit_phi=result.phi_estimate, causal_phi=phi_causal_value
+                    )
+                    if suture_res["status"] == "sutured":
+                        logger.warning(
+                            f"🧬 PHYLOGENESIS ACTION: {suture_res}",
+                            extra={"trace_id": cycle_context.trace_id},
+                        )
+                        # Artificially boost phi in report to reflect structural hardening
+                        # This is the 'Real' writing itself into the 'Symbolic'
+                        result.phi_estimate += suture_res["structural_gain"]
 
                 # CORREÇÃO CRÍTICA (2025-12-08): Atualizar repressão APÓS cálculo de Φ
                 # Repressão não atualizada estava bloqueando acesso ao Real (Rho_U congelado)

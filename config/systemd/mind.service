@@ -5,16 +5,16 @@ After=network.target
 Wants=mind-mcp-internal.service
 
 [Service]
-Type=notify
-User=omnimind
-Group=omnimind
-WorkingDirectory=/opt/omnimind
-Environment="PYTHONPATH=/opt/omnimind:/opt/omnimind/src"
+Type=simple
+User=fahbrain
+Group=fahbrain
+WorkingDirectory=/home/fahbrain/projects/omnimind
+Environment="PYTHONPATH=/home/fahbrain/projects/omnimind:/home/fahbrain/projects/omnimind/src"
 Environment="OMNIMIND_ENV=production"
 Environment="LOG_LEVEL=INFO"
 
 # Core MCPs startup
-ExecStart=/opt/omnimind/scripts/production/start_mcp_servers.sh
+ExecStart=/home/fahbrain/projects/omnimind/scripts/production/start_mcp_servers.sh
 
 # Restart policy
 Restart=on-failure
@@ -30,9 +30,9 @@ TimeoutStopSec=30
 # Security
 PrivateTmp=yes
 ProtectSystem=strict
-ProtectHome=yes
+ProtectHome=read-only
 NoNewPrivileges=true
-ReadWritePaths=/opt/omnimind/logs /opt/omnimind/data
+ReadWritePaths=/home/fahbrain/projects/omnimind/logs /home/fahbrain/projects/omnimind/data
 
 # Resource limits
 MemoryMax=4G

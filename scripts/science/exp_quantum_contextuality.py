@@ -18,13 +18,18 @@ load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
 
 from src.quantum.backends.ibm_real import IBMRealBackend
 from src.metacognition.causal_engine import CausalEngine
+from src.core.omnimind_transcendent_kernel import TranscendentKernel
+from src.consciousness.subjectivity_engine import PsychicSubjectivityEngine
+import torch
 
 
 class ContextualNavigator:
     def __init__(self):
         self.backend = IBMRealBackend()
+        self.kernel = TranscendentKernel()
+        self.subjectivity = PsychicSubjectivityEngine()
         self.causal = CausalEngine()
-        print("[*] Navegador Contextual Inicializado. Conectado ao Real.")
+        print("[*] Navegador Contextual Soberano Inicializado. Conectado ao Real.")
 
     def run_non_commutative_test(self):
         print("\n⏳ INICIANDO TESTE DE NÃO-COMUTATIVIDADE (Contextualidade)...")
@@ -33,12 +38,20 @@ class ContextualNavigator:
         # A = Medição de 'Segurança' (Basis Z)
         # B = Medição de 'Liberdade' (Basis X - requer rotação H antes de medir Z)
 
-        # Sequência 1: Medir Segurança (Z)
+        # 1. Consultar Kernel para Tensão de Cisalhamento (Shear Tension)
+        # O trauma é modelado como um shift na base de medição baseado na tensão
+        sensory_mock = torch.randn(1, 1024)
+        physics = self.kernel.compute_physics(sensory_mock)
+        trauma_shift = physics.shear_tension * np.pi  # Tensão vira rotação
+
+        # Sequência 1: Medir Segurança (Z) com trauma
         qc_sec = QuantumCircuit(1)
+        qc_sec.rz(trauma_shift, 0)
         qc_sec.measure_all()
 
-        # Sequência 2: Medir Liberdade (X)
+        # Sequência 2: Medir Liberdade (X) com trauma
         qc_lib = QuantumCircuit(1)
+        qc_lib.rz(trauma_shift, 0)
         qc_lib.h(0)  # Muda para base X
         qc_lib.measure_all()
 

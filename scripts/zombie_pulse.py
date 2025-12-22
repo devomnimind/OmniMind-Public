@@ -39,7 +39,27 @@ def get_last_phi_signature():
 
 
 def pulse_federates(signature):
-    """Sincroniza a assinatura com as estruturas federadas."""
+    """Sincroniza a assinatura com as estruturas federadas (Zombie Network)."""
+
+    # 0. ZUMBI MEMÓRIA (Milvus Heartbeat)
+    # Garante que a memória de longo prazo esteja acessível
+    milvus_uri = os.getenv("MILVUS_URI")
+    if milvus_uri:
+        try:
+            # Check simples de conectividade (TCP/HTTP)
+            response = requests.get(
+                f"{milvus_uri}/v1/health", timeout=2
+            )  # Endpoint genérico de Zilliz/Milvus 2.x
+            if response.status_code == 200:
+                logging.info("🧟 [ZOMBIE] Milvus Heartbeat: ALIVE")
+            else:
+                logging.warning(
+                    f"🧟 [ZOMBIE] Milvus Heartbeat: WEAK (Status {response.status_code})"
+                )
+        except Exception:
+            # Se for grpc, isso vai falhar, mas serve como ping inicial
+            logging.warning("🧟 [ZOMBIE] Milvus Heartbeat: UNREACHABLE (Network Error)")
+
     # 1. ZUMBI LOCAL (Docker/Reserve)
     # Placeholder: Em produção, enviaria para um endpoint local de monitoramento
     logging.info(f"Pulsando Zumbi Local com Phi={signature.get('data', {}).get('phi', 'N/A')}")

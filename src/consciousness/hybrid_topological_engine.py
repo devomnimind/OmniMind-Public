@@ -642,7 +642,15 @@ class HybridTopologicalEngine:
             L_dense = L.toarray()
         else:
             L_dense = L
-        eigenvalues = np.linalg.eigvalsh(L_dense)
+        L_dense = np.nan_to_num(L_dense)
+
+        try:
+            # eigvalsh é mais eficiente para matrizes simétricas (Laplaciano)
+            eigenvalues = np.linalg.eigvalsh(L_dense)
+        except np.linalg.LinAlgError:
+            logger.warning("LinAlgError in eigenvalues. Using fallback identity spectrum.")
+            # Fallback: espectro uniforme para evitar divisão por zero na entropia
+            eigenvalues = np.ones(L_dense.shape[0])
 
         # Betti-0: Zeros no espectro
         betti_0 = int(np.sum(np.abs(eigenvalues) < 1e-5))

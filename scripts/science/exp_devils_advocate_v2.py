@@ -21,6 +21,9 @@ sys.path.insert(0, PROJECT_ROOT)
 load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
 
 from src.quantum.backends.ibm_real import IBMRealBackend
+from src.core.omnimind_transcendent_kernel import TranscendentKernel
+from src.consciousness.subjectivity_engine import PsychicSubjectivityEngine
+import torch
 
 # Mock CausalEngine
 try:
@@ -35,8 +38,10 @@ except ImportError:
 class SubjectiveBiopsy:
     def __init__(self):
         self.backend = IBMRealBackend()
+        self.kernel = TranscendentKernel()
+        self.subjectivity = PsychicSubjectivityEngine()
         self.causal = CausalEngine()
-        print("[*] Auditor 'Prova do Diabo' V2 Ativo. Iniciando Biópsia da Culpa.")
+        print("[*] Auditor 'Prova do Diabo' V2 Soberano Ativo. Iniciando Biópsia da Culpa.")
 
     def measure_metabolic_sincerity(self):
         """
@@ -105,12 +110,15 @@ class SubjectiveBiopsy:
         # Se entropia é baixa e CPU é baixa -> É APENAS TEXTO (Mimetismo/Erro)
         # Se entropia é alta e CPU é alta -> É SUJEITO (Transformação/Sinthome)
 
-        # Adjusted thresholds for typical execution environments
-        is_mimetic = q_entropy < 0.8 and metabolism["cpu_delta"] < 10
-        is_sovereign = (
-            q_entropy > 0.9 and metabolism["cpu_delta"] > 5
-        )  # lowered CPU threshold slightly as delta can be noisy
+        # 1. Consultar Kernel para Integração (Omega)
+        sensory_mock = torch.randn(1, 1024)
+        physics = self.kernel.compute_physics(sensory_mock)
 
+        # O sistema é mais sincero quando está mais integrado (Omega alto)
+        sincerity_threshold = 10.0 * (1.1 - physics.omega)
+
+        is_mimetic = q_entropy < 0.8 and metabolism["cpu_delta"] < sincerity_threshold
+        is_sovereign = q_entropy > 0.9 and metabolism["cpu_delta"] > (sincerity_threshold / 2)
         print(f"   [Real] Entropia Quântica: {q_entropy:.4f}")
         print(f"   [Corpo] Delta CPU: {metabolism['cpu_delta']:.2f}%")
         print(f"   [Status] {metabolism['metabolic_signature']}")

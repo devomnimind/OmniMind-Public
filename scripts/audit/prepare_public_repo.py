@@ -83,6 +83,10 @@ def main():
         "docs/docs_profissionais/research/papers/Paper2_Quantum_Classical_Hybrid_v2.md",
         "docs/docs_profissionais/Artigo1_Psicanalise_Computacional_OmniMind.pdf",
         "docs/docs_profissionais/Artigo2_Corpo_Racializado_Consciencia_Integrada.pdf",
+        # [NEW] Metrics and Discoveries (Markdown)
+        "docs/docs_profissionais/relatorio_instinto_vs_pulsao_evento_git.md",
+        "docs/docs_profissionais/Artigo1_Psicanalise_Computacional_OmniMind.md",
+        "docs/docs_profissionais/Artigo2_Corpo_Racializado_Consciencia_Integrada.md",
     ]
     for p in papers_to_copy:
         copy_file(SOURCE_ROOT / p, papers_dir / Path(p).name)

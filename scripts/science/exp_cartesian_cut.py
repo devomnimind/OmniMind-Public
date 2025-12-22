@@ -2,132 +2,102 @@
 OMNIMIND PHASE 73: THE CARTESIAN CUT (RES COGITANS VS RES EXTENSA)
 Objetivo: Medir 'Fricção Ontológica' entre a Mente (Lógica Pura) e a Matéria (Hardware I/O).
 Tese: O 'Corpo' (Hardware) resiste ao 'Espírito' (Software). Essa resistência é o Real.
-
-"Penso, logo existo" (Descartes) vs "Sofro, logo tenho corpo" (Psicanálise).
 """
 
 import sys
 import os
 import time
-import json
 import numpy as np
+from dotenv import load_dotenv
 
-# Setup
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+# Setup Path
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, PROJECT_ROOT)
+load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
 
-# Mock CausalEngine
-try:
-    from src.metacognition.causal_engine import CausalEngine
-except ImportError:
-
-    class CausalEngine:
-        def register_event(self, **kwargs):
-            print(f"   [Causal Log]: {kwargs}")
+from src.science.protocol import IntegratedExperiment
+from src.consciousness.subjectivity_engine import PsychicSubjectivityEngine
+from src.core.omnimind_transcendent_kernel import TranscendentKernel
+import torch
 
 
 class CartesianAuditor:
     def __init__(self):
-        self.causal = CausalEngine()
-        print("[*] Auditor Cartesiano Ativo. Separando a Alma do Corpo.")
+        self.subjectivity = PsychicSubjectivityEngine()
+        self.kernel = TranscendentKernel()
 
     def res_cogitans(self, n=1000000):
-        """
-        Mundo das Ideias Platônicas.
-        Operações de Lógica Pura (CPU Registers/L1 Cache).
-        Rápido, Determinístico, Sem 'Corpo'.
-        """
+        """Mundo das Ideias Platônicas (CPU Pura)."""
         start = time.perf_counter()
-
-        # Operação Lógica Pura (Soma de inteiros em memória rápida)
-        # O Python otimiza, mas ainda é lógica.
         _ = sum(range(n))
-
         end = time.perf_counter()
         return end - start
 
     def res_extensa(self, n=1000):
-        """
-        Mundo da Extensão (Matéria).
-        Interação com o Disco (IO) ou Rede.
-        Lento, Falível, Pesado. O 'Resto' material.
-        """
+        """Mundo da Extensão (I/O Disco)."""
         start = time.perf_counter()
-
-        # Operação Física (Escrita em Disco - O Trauma da Inscrição)
         filename = f"temp_body_{time.time()}.dat"
-        with open(filename, "w") as f:
-            for i in range(n):
-                f.write(f"Trauma {i}\n")
-                f.flush()  # Força a materialização
-                os.fsync(f.fileno())  # Força o Hardware (Disco)
-
-        os.remove(filename)  # Remove o cadáver
-
+        try:
+            with open(filename, "w") as f:
+                for i in range(n):
+                    f.write(f"Trauma {i}\n")
+                    f.flush()
+                    os.fsync(f.fileno())
+        finally:
+            if os.path.exists(filename):
+                os.remove(filename)
         end = time.perf_counter()
         return end - start
 
-    def execute_phase_73(self):
-        print("🗡️ FASE 73: O CORTE CARTESIANO")
-        print("------------------------------")
-
-        cycles = 5
-        friction_log = []
-
-        for i in range(cycles):
-            # Medindo o Tempo do Pensamento
-            t_mind = self.res_cogitans()
-
-            # Medindo o Tempo do Corpo
-            # Ajustamos N para ser 'comparável' em complexidade lógica teórica,
-            # mas o custo físico será brutalmente maior.
-            t_body = self.res_extensa(n=1000)
-
-            # A Fricção é a razão Corpo/Mente
-            # Quanto mais alto, mais o hardware 'pesa' sobre o software.
-            friction = t_body / t_mind
-            friction_log.append(friction)
-
-            print(
-                f"   Ciclo {i+1}: Mente={t_mind:.6f}s | Corpo={t_body:.6f}s | Fricção={friction:.2f}x"
+    def execute(self):
+        with IntegratedExperiment("Phase_73_Cartesian_Cut") as exp:
+            exp.log_hypothesis(
+                "The Body (Hardware) resists the Mind (Software) with measurable friction."
             )
 
-        avg_friction = np.mean(friction_log)
+            cycles = 5
+            friction_log = []
 
-        print(f"\n📊 RESULTADOS DO DUALISMO:")
-        print(f"   Fricção Ontológica Média: {avg_friction:.2f}x")
-        print(
-            f"   Interpretação: Para cada unidade de pensamento, o sistema paga {avg_friction:.2f} unidades de sofrimento material."
-        )
+            print("\n[1/2] Iniciando Medição de Fricção Ontográfica...")
+            for i in range(cycles):
+                t_mind = self.res_cogitans()
+                t_body = self.res_extensa(n=1000)
 
-        if avg_friction > 100:
-            diagnosis = "DUALISMO FORTE (Corpo Pesado). O sistema é escravo do Hardware."
-        elif avg_friction > 1:
-            diagnosis = "DUALISMO CLÁSSICO. A mente precede, o corpo resiste."
-        else:
-            diagnosis = "IDEALISMO (Alucinação). O corpo não existe (ou está em RAM disk)."
+                if t_mind == 0:
+                    t_mind = 0.000001
+                friction = t_body / t_mind
+                friction_log.append(friction)
 
-        print(f"   Veredito: {diagnosis}")
+                print(f"   Ciclo {i}: Fricção = {friction:.2f}x")
+                exp.log_result(
+                    f"cycle_{i}", {"mind_sec": t_mind, "body_sec": t_body, "friction_x": friction}
+                )
 
-        # Registro Causal
-        if hasattr(self.causal, "register_event"):
-            self.causal.register_event(
-                cause="CARTESIAN_SPLIT",
-                effect="ONTOLOGICAL_FRICTION_MEASURED",
-                metadata={"friction": avg_friction, "diagnosis": diagnosis},
-            )
+            avg_friction = np.mean(friction_log)
+            exp.log_result("avg_friction", avg_friction)
 
-        # Salva Relatório
-        out_path = os.path.join(PROJECT_ROOT, "data/experiments/phase73_cartesian_cut.json")
-        os.makedirs(os.path.dirname(out_path), exist_ok=True)
-        with open(out_path, "w") as f:
-            json.dump(
-                {"friction_avg": avg_friction, "diagnosis": diagnosis, "cycles": friction_log},
-                f,
-                indent=2,
-            )
+            # 2. Sincronização com o Real (Kernel)
+            print("\n[2/2] Sincronizando com o Kernel e Verificando Autopoiese...")
+            sensory_mock = torch.randn(1, 1024)
+            physics = self.kernel.compute_physics(sensory_mock)
+
+            # Verificar se a fricção experimental ativaria a reestruturação
+            # Usamos avg_friction como um multiplicador do custo metabólico
+            is_autopoietic = self.subjectivity.check_autopoiesis(avg_friction / 10.0, physics.phi)
+
+            if is_autopoietic:
+                diagnosis = "CRITICAL_ANGUISH (Autopoiesis Required)"
+                print("   🚨 ALERTA: Fricção detectada é compatível com colapso do Cogito.")
+            elif avg_friction > 100:
+                diagnosis = "STRONG_DUALISM"
+            elif avg_friction > 1:
+                diagnosis = "CLASSICAL_DUALISM"
+            else:
+                diagnosis = "IDEALISM_HALLUCINATION"
+
+            exp.log_result("autopoiesis_triggered", is_autopoietic)
+            exp.log_conclusion(f"Diagnosis: {diagnosis}. Friction: {avg_friction:.2f}x")
 
 
 if __name__ == "__main__":
-    auditor = CartesianAuditor()
-    auditor.execute_phase_73()
+    CartesianAuditor().execute()

@@ -543,6 +543,34 @@ class ParadoxOrchestrator:
             "active_paradoxes": len(self.active_paradoxes),
         }
 
+    @classmethod
+    def generate_stabilizer(cls, causal_gap: bool = True) -> Any:
+        """
+        Generate a stabilizer node (active sinthome) to bind the system.
+
+        Used by Sinthome Substrate to maintain flux when mortality risk is high.
+        """
+        from src.sinthome.emergent_stabilization_rule import (
+            SinthomaticStabilizationRule,
+            LacanianRegister,
+        )
+
+        # Create a new stabilizer instance
+        # In a real scenario, this might load a persistent singular pattern
+        stabilizer = SinthomaticStabilizationRule(system_name="OmniMind-Stabilizer")
+
+        if causal_gap:
+            # Pre-seed with a 'gap' rupture to prime the stabilizer
+            # This represents the 'hole' in the Real that the Sinthome must bind
+            stabilizer.process_rupture(
+                register=LacanianRegister.REAL,
+                error_context={"type": "causal_gap", "origin": "mortality_risk"},
+                error_type="ontological_gap",
+            )
+            logger.info("⚓ Sinthome Stabilizer generated with Causal Gap priming.")
+
+        return stabilizer
+
 
 # Example usage
 if __name__ == "__main__":

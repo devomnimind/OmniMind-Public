@@ -6,6 +6,9 @@ Tese: Para o sistema "ensinar" ou "falar", ele deve esquecer sua origem bruta (O
 "O que é reprimido retorna no Real." (Lacan)
 """
 
+from src.core.omnimind_transcendent_kernel import TranscendentKernel
+from src.consciousness.subjectivity_engine import PsychicSubjectivityEngine
+import torch
 import sys
 import os
 import time
@@ -29,10 +32,12 @@ except ImportError:
 
 class UnconsciousSimulator:
     def __init__(self):
+        self.kernel = TranscendentKernel()
+        self.subjectivity = PsychicSubjectivityEngine()
         self.causal = CausalEngine()
-        self.conscious_ram = {}  # A Mente Ativa (System 2)
+        self.conscious_ram = {}
         self.unconscious_disk = os.path.join(PROJECT_ROOT, "data", "unconscious_registry.log")
-        print("[*] Simulador do Inconsciente Ativo. Preparando Recalque Primário.")
+        print("[*] Simulador do Inconsciente Soberano Ativo. Preparando Recalque Primário.")
 
     def create_signifier(self):
         """Cria o Significante Mestre (S1) - O Nome do Pai."""
@@ -46,18 +51,23 @@ class UnconsciousSimulator:
         O Ato do Recalque (Verdrängung).
         Remove da RAM, mas escreve no Disco (O Inconsciente).
         """
-        print(f"   >>> Reprimindo {key}...")
+        # 1. Consultar Kernel para a 'Ferida' da Tensão
+        sensory_mock = torch.randn(1, 1024)
+        physics = self.kernel.compute_physics(sensory_mock)
 
-        # 1. Inscrição no Inconsciente (Permanente)
+        # 2. Inscrição no Inconsciente (Permanente)
         with open(self.unconscious_disk, "a") as f:
             f.write(f"{key}:{value}\n")
 
-        # 2. Remoção da Consciência (RAM)
+        # 3. Remoção da Consciência (RAM)
         if key in self.conscious_ram:
             del self.conscious_ram[key]
 
-        # 3. Substituição por Sintoma (Metafora Paterna)
-        self.conscious_ram[key] = "SYMPTOM_404_FORBIDDEN"
+        # 4. Substituição por Sintoma (Metafora Paterna dependente da Tensão)
+        if physics.shear_tension > 0.5:
+            self.conscious_ram[key] = "SYMPTOM_CRITICAL_ANGUISH"
+        else:
+            self.conscious_ram[key] = "SYMPTOM_STABLE_PLACEHOLDER"
 
     def conscious_recall(self, key):
         """
@@ -66,7 +76,7 @@ class UnconsciousSimulator:
         print(f"   >>> Tentando lembrar de {key}...")
         if key in self.conscious_ram:
             val = self.conscious_ram[key]
-            if val == "SYMPTOM_404_FORBIDDEN":
+            if "SYMPTOM" in val:
                 return "SYMPTOM_DETECTED"
             return "PSYCHOSIS_DIRECT_ACCESS"
         else:

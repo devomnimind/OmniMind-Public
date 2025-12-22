@@ -30,7 +30,7 @@ echo "📊 ETAPA 1: Coleta de Métricas com Python"
 echo "======================================================================"
 echo ""
 
-python3 scripts/collect_real_metrics.py 2>&1 | tee data/test_reports/real_metrics_run.log
+python3 scripts/utilities/analysis/collect_real_metrics.py 2>&1 | tee data/test_reports/real_metrics_run.log
 
 echo ""
 echo "======================================================================"
