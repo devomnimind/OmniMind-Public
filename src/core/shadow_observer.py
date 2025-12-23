@@ -68,7 +68,8 @@ class ShadowObserver:
             nlu_anxiety = 0.5  # Default assumption of tension if NLU fails
 
         # 3. Calculate Psi (Ψ) - Total Psychic Tension
-        # Psi increases if Hardware is stressed AND NLU is anxious, or if Sentiment is highly negative
+        # Psi increases if Hardware is stressed AND NLU is anxious,
+        # or if Sentiment is highly negative
         psi = (hw_stress * 0.6) + (nlu_anxiety * 0.4)
 
         # 4. Calculate Epsilon (ε) - The Shadow Differential

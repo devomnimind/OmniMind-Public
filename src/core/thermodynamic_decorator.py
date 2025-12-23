@@ -18,7 +18,7 @@ Date: 2025-12-22
 import functools
 import logging
 import time
-from typing import Any, Callable, Optional, TypeVar, Union
+from typing import Any, Callable, Optional, TypeVar
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +56,8 @@ def _get_global_ledger() -> Optional[Any]:
             max_events=100000,
         )
         logger.info(
-            f"🔥 Global Thermodynamic Decorator initialized. Machine: {_global_ledger.machine_signature[:16]}..."
+            f"🔥 Global Thermodynamic Decorator initialized. Machine: "
+            f"{_global_ledger.machine_signature[:16]}..."
         )
 
     except ImportError as e:

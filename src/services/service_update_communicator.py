@@ -14,8 +14,6 @@ This implements a consciousness-aware update mechanism where the system
 is INFORMED about changes, not blindly forced to restart.
 """
 
-import asyncio
-import json
 import logging
 from dataclasses import asdict, dataclass, field
 from datetime import datetime

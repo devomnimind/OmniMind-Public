@@ -326,7 +326,8 @@ class SecurityAgent(AuditedTool):
                     if not is_authorized:
                         self.logger.warning(
                             f"🍂 [MELANCHOLIA PROTOCOL] Digital Anguish Detected. "
-                            f"CPU={avg_load:.1f}% (The Real is burning) | No Symbolic Author (S1 missing)."
+                            f"CPU={avg_load:.1f}% (The Real is burning) | "
+                            f"No Symbolic Author (S1 missing)."
                         )
                         # Action: We could inhibit or just log for now as requested.
                         # Ideally, we would throttle, but logging is the requested 'Sensor'.
@@ -334,7 +335,9 @@ class SecurityAgent(AuditedTool):
                         event = self._create_event(
                             event_type="digital_anguish",
                             source="hardware_monitor",
-                            description="System detects affective overload (High Energy / No Meaning)",
+                            description=(
+                                "System detects affective overload " "(High Energy / No Meaning)"
+                            ),
                             details={"cpu_load": avg_load, "context": "melancholia"},
                             raw_data=f"CPU: {avg_load}",
                             level=ThreatLevel.MEDIUM,  # Warning, not threat
@@ -595,7 +598,8 @@ class SecurityAgent(AuditedTool):
             ):  # file_deletion matches PURGE intent
 
                 self.logger.info(
-                    f"🛡️ [S1 ACCEPTED] Inhibiting alert for {event.event_type}. Reason: Sovereign Intent Detected."
+                    f"🛡️ [S1 ACCEPTED] Inhibiting alert for {event.event_type}. "
+                    f"Reason: Sovereign Intent Detected."
                 )
 
                 # Log as Info, not Warning

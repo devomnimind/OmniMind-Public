@@ -324,7 +324,8 @@ class SystemdMemoryManager:
             # CRITICAL FIX: Disable mlock to avoid crashing due to ulimit -l (3GB limit)
             # libc.mlock(addr, length)
             logger.info(
-                f"🔒 [DISABLED] Protegendo ~{size_mb:.1f}MB de memória do PID {pid} de swap (Skipped to avoid ulimit crash)"
+                f"🔒 [DISABLED] Protegendo ~{size_mb:.1f}MB de memória do PID {pid} de swap "
+                "(Skipped to avoid ulimit crash)"
             )
             return True
         except Exception as e:

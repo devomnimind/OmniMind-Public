@@ -172,7 +172,10 @@ class EnhancedConfigurationDetector:
                     config_name="phi_threshold",
                     severity="MEDIUM",
                     phi_impact=0.0,  # Não afeta Φ mas afeta detecção
-                    description=f"phi_threshold={phi_threshold} muito baixo, detecta ruído como consciência",
+                    description=(
+                        f"phi_threshold={phi_threshold} muito baixo, "
+                        "detecta ruído como consciência"
+                    ),
                     recommendation=f"Aumentar para ≥{safe['min']} (padrão: {safe['optimal']})",
                 )
             )

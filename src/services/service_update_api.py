@@ -11,7 +11,7 @@ Provides REST API for:
 import logging
 from typing import Any, Dict, List
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 
 from src.services.service_update_communicator import get_communicator

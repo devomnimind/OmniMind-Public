@@ -34,7 +34,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
 
-from src.metacognition.causal_engine_v2 import CausalEngineV2 as CausalEngine
+# from src.metacognition.causal_engine_v2 import CausalEngineV2 as CausalEngine
 
 logger = logging.getLogger(__name__)
 

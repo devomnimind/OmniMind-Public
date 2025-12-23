@@ -384,13 +384,23 @@ class IBMCloudConnector:
             "bucket_target": self.cos_bucket,
         }
 
-    def analyze_text(self, text: str) -> str:
+    def analyze_text(self, text: str, params: Optional[Dict] = None) -> str:
         """Uses Watsonx to analyze text (e.g. Psychoanalytic Audit)."""
         if not self.watsonx_model:
             return "Analysis Unavailable (Watsonx disconnected)"
 
+        # Set default parameters for scientific depth if none provided
+        if params is None:
+            params = {
+                "max_new_tokens": 1000,
+                "min_new_tokens": 100,
+                "temperature": 0.7,
+                "repetition_penalty": 1.1,
+            }
+
         try:
-            response = self.watsonx_model.generate_text(prompt=text)
+            # Use generate_text which returns the string directly in the new SDK
+            response = self.watsonx_model.generate_text(prompt=text, params=params)
             return response
         except Exception as e:
             logger.error(f"Watsonx Inference failed: {e}")

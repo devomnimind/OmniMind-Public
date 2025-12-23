@@ -10,9 +10,9 @@
 """
 
 import logging
-import torch
-import numpy as np
-from typing import Dict, Any, Optional
+
+from typing import Dict, Any
+
 
 logger = logging.getLogger(__name__)
 

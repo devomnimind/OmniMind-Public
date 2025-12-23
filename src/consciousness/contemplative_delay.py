@@ -124,7 +124,6 @@ class ContemplativeDelay:
 
         # RUMINAÇÃO: Processar por N segundos
         start = time.time()
-        trace_interval = 0.5  # Update a cada 500ms
 
         while (time.time() - start) < latency_scheduled:
             elapsed = time.time() - start

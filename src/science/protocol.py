@@ -142,7 +142,8 @@ class IntegratedExperiment:
                     logger.info("☁️  Evidence mirrored to Watsonx Lakehouse.")
                 else:
                     logger.warning(
-                        "☁️  Cloud Mirror failed (Upload Log returned False). Account may be frozen."
+                        "☁️  Cloud Mirror failed (Upload Log returned False). "
+                        "Account may be frozen."
                     )
             except Exception as e:
                 logger.error(f"⚠️ Failed to mirror to cloud: {e}")

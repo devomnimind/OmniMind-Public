@@ -2217,24 +2217,12 @@ class SharedWorkspace:
 
                 all_embeddings = np.array(module_states)
 
-                # Divisão lógica dos módulos
-                c_modules = [
-                    m
-                    for m in self.list_write_modules()
-                    if any(x in m for x in ["qualia", "narrative", "meaning"])
-                ]
-                p_modules = [
-                    m
-                    for m in self.list_write_modules()
-                    if any(x in m for x in ["expectation", "memory", "symbolic"])
-                ]
-                u_modules = [
-                    m
-                    for m in self.list_write_modules()
-                    if m not in c_modules and m not in p_modules
-                ]
+                # Divisão lógica dos módulos (Placeholder para integração futura)
+                # c_modules = [m for m in self.list_write_modules() if any(x in m for x in ["qualia", "narrative", "meaning"])]
+                # p_modules = [m for m in self.list_write_modules() if any(x in m for x in ["expectation", "memory", "symbolic"])]
+                # u_modules = [m for m in self.list_write_modules() if m not in c_modules and m not in p_modules]
 
-                # Média ponderada por camada
+                # Média ponderada por camada (Usa média global como baseline)
                 mean_embedding = np.mean(all_embeddings, axis=0)
 
                 if rho_C is None:

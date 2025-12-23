@@ -23,14 +23,15 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # Use GPU 0 only
 os.environ["QISKIT_SETTINGS"] = '{"circuit_library": true}'
 
 try:
-    import numpy as np
-    from qiskit import QuantumCircuit
+    import numpy as np  # noqa: F811
+    from qiskit import QuantumCircuit  # noqa: F811
     from qiskit_aer import AerSimulator
 except ImportError as e:
     logging.warning(f"Qiskit import error: {e}. Will use fallback CPU mode.")
     AerSimulator = None
-    np = None  # type: ignore[assignment]
-    QuantumCircuit = None  # type: ignore[assignment]
+    if not TYPE_CHECKING:
+        np = None  # noqa: F811
+        QuantumCircuit = None  # noqa: F811
 
 logger = logging.getLogger(__name__)
 

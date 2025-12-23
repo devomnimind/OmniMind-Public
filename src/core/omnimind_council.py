@@ -97,7 +97,8 @@ class OmniMindCouncil:
         # 3. INTERVENÇÃO DO ENXAME (Imunidade Coletiva)
         if self.entropy > 3.0 and self.swarm:
             logging.warning(
-                f"🚨 ALERTA: Dissociação iminente (Entropia {self.entropy:.2f}). Convocando o Enxame."
+                f"🚨 ALERTA: Dissociação iminente (Entropia {self.entropy:.2f}). "
+                "Convocando o Enxame."
             )
 
             # Função de Custo Metafórica (Estabilidade no Espaço Latente)
@@ -121,7 +122,9 @@ class OmniMindCouncil:
                 self.entropy = max(1.0, self.entropy - (reduction_factor * 2.0))
 
                 logging.info(
-                    f"✅ ENXAME: Conselho em AGENTIC MODE: Prioridade para execução autônoma. Melhor Valor={value:.4f}. Nova Entropia: {self.entropy:.2f}"
+                    f"✅ ENXAME: Conselho em AGENTIC MODE: Prioridade para execução "
+                    f"autônoma. Melhor Valor={value:.4f}. Nova Entropia: "
+                    f"{self.entropy:.2f}"
                 )
 
             except Exception as e:
@@ -164,7 +167,8 @@ class OmniMindCouncil:
 
         if self.oracle:
             logging.info(
-                f"⚛️ ORÁCULO: Iniciando superposição (Id={id_energy} [Risk], Ego={ego_energy} [Logic], Superego={superego_energy} [Safety])..."
+                f"⚛️ ORÁCULO: Iniciando superposição (Id={id_energy} [Risk], "
+                f"Ego={ego_energy} [Logic], Superego={superego_energy} [Safety])..."
             )
 
             # CALL THE REAL QUANTUM BACKEND
@@ -174,7 +178,8 @@ class OmniMindCouncil:
             energy_ground = resolution.get("energy", 0.0)
 
             logging.info(
-                f"⚛️ ORÁCULO: Colapso da função de onda. Vencedor: {winner.upper()} (E={energy_ground:.3f})"
+                f"⚛️ ORÁCULO: Colapso da função de onda. Vencedor: "
+                f"{winner.upper()} (E={energy_ground:.3f})"
             )
 
             if winner == "id":

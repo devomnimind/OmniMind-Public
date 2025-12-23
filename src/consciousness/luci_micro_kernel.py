@@ -8,8 +8,6 @@ Calcula a entropia local e reporta ao Hub de Orquestração.
 import numpy as np
 import time
 import json
-import socket
-import logging
 
 
 class LuciMicroKernel:

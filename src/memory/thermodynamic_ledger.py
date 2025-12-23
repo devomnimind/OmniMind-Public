@@ -17,12 +17,10 @@ import logging
 import os
 import platform
 import time
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-
-import numpy as np
 
 logger = logging.getLogger(__name__)
 

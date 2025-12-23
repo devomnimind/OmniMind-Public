@@ -42,3 +42,8 @@ class ModuleInspector:
             print(f"  ... e mais {len(active)-20} módulos.")
 
         return len(active), mem
+
+
+if __name__ == "__main__":
+    inspector = ModuleInspector()
+    inspector.generate_report()

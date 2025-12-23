@@ -269,8 +269,9 @@ class HomeostaticController:
 
                     if is_sublimated:
                         logger.info(
-                            f"🔥 WILLPOWER ENGAGED: Ignoring Emergency State (CPU {metrics.cpu_percent}%) "
-                            f"for Critical Task (Phi={self.current_phi:.2f})"
+                            f"🔥 WILLPOWER ENGAGED: Ignoring Emergency State "
+                            f"(CPU {metrics.cpu_percent}%) for Critical Task "
+                            f"(Phi={self.current_phi:.2f})"
                         )
                         if self._throttled:
                             self._deactivate_throttling()

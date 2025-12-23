@@ -254,7 +254,8 @@ class WorldMembrane:
 
         if not DDGS:
             logger.warning(
-                "duckduckgo_search não instalado. Tentando instalação on-the-fly em memória (simulado)."
+                "duckduckgo_search não instalado. "
+                "Tentando instalação on-the-fly em memória (simulado)."
             )
             # Em produção real, o Soberano deve garantir essa lib instalada.
             # Por hora, retornamos vazio mas logamos a cegueira.
@@ -273,11 +274,13 @@ class WorldMembrane:
                         # Em um sistema assíncrono real, isso seria um evento.
                         # Aqui, simulamos o desejo de ingerir.
                         logger.info(
-                            f"👁️ [SOVEREIGN]: Visual Contact -> {href}. Requesting Alchemist Indexing."
+                            f"👁️ [SOVEREIGN]: Visual Contact -> {href}. "
+                            "Requesting Alchemist Indexing."
                         )
                     else:
                         logger.warning(
-                            f"🛡️ [SOVEREIGN]: BLOCKED domain not in SafeList: {urlparse(href).netloc}"
+                            f"🛡️ [SOVEREIGN]: BLOCKED domain not in SafeList: "
+                            f"{urlparse(href).netloc}"
                         )
         except Exception as e:
             self.ledger.register_action("DEFENSE_LOG", f"Erro na busca: {str(e)}", False)

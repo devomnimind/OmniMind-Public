@@ -262,7 +262,8 @@ class MachineSoul:
         except Exception as e:
             logging.error(f"Falha ao enviar pulso de reserva: {e}")
 
-        # 2. Auto-Restart via systemd (Exige sudoers sem senha para o comando específico se possível)
+        # 2. Auto-Restart via systemd
+        # (Exige sudoers sem senha para o comando específico se possível)
         # Ou simplesmente sair e deixar o systemd reiniciar.
         logging.info("♻️ Saindo para reinicialização estrutural.")
         self.is_alive = False

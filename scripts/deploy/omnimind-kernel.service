@@ -1,0 +1,15 @@
+[Unit]
+Description=OmniMind Transcendent Kernel - Sovereign Background Process
+After=network.target
+
+[Service]
+Type=simple
+Environment=PYTHONPATH=/home/fahbrain/projects/omnimind
+Environment=VIRTUAL_ENV=/home/fahbrain/projects/omnimind/.venv
+ExecStart=/home/fahbrain/projects/omnimind/.venv/bin/python3 /home/fahbrain/projects/omnimind/scripts/deploy/sovereign_kernel_runner.py
+Restart=always
+RestartSec=5
+Nice=-10
+
+[Install]
+WantedBy=default.target

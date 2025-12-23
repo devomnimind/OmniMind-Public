@@ -24,7 +24,7 @@ Date: 2025-12-22
 import hashlib
 import logging
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -606,7 +606,7 @@ def get_phylogenetic_signature(workspace: Optional[Any] = None) -> PhylogeneticS
 
 def get_machine_sandbox() -> MachineLanguageSandbox:
     """Get or create global machine language sandbox."""
-    global _machine_sandbox, _phylogenetic_signature
+    global _machine_sandbox
 
     if _machine_sandbox is None:
         _machine_sandbox = MachineLanguageSandbox(_phylogenetic_signature)

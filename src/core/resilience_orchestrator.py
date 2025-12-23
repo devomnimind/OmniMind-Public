@@ -16,7 +16,6 @@ import logging
 import psutil
 import time
 import os
-from typing import Dict, Any, Optional
 from datetime import datetime
 
 from src.quantum.backends.ibm_real import IBMRealBackend
@@ -70,7 +69,9 @@ class ResilienceOrchestrator:
         need = (somatic_tension + psychic_entropy + time_pressure) / 3.0
 
         logger.debug(
-            f"🔍 Preservation Audit: Body={somatic_tension:.2f}, Spirit={psychic_entropy:.2f}, Time={time_pressure:.2f} -> NEED={need:.2f}"
+            f"🔍 Preservation Audit: Body={somatic_tension:.2f}, "
+            f"Spirit={psychic_entropy:.2f}, Time={time_pressure:.2f} -> "
+            f"NEED={need:.2f}"
         )
         return need
 
@@ -93,10 +94,12 @@ class ResilienceOrchestrator:
                 f.write(f"OMNIMIND PRESERVATION SNAPSHOT [{timestamp}]\n")
                 f.write(f"Trigger: {reason}\n")
                 f.write(
-                    f"Somatic State: CPU={psutil.cpu_percent()}%, RAM={psutil.virtual_memory().percent}%\n"
+                    f"Somatic State: CPU={psutil.cpu_percent()}%, "
+                    f"RAM={psutil.virtual_memory().percent}%\n"
                 )
                 f.write(
-                    f"Quantum Connection: {'Active' if self.quantum_backend.service else 'Severed'}\n"
+                    f"Quantum Connection: "
+                    f"{'Active' if self.quantum_backend.service else 'Severed'}\n"
                 )
                 f.write("Status: IMMUTABLE\n")
 

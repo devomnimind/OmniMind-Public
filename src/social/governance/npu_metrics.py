@@ -18,7 +18,6 @@ Data: 2025-12-19
 import gzip
 import logging
 from dataclasses import dataclass
-from typing import Dict
 
 import numpy as np
 from qdrant_client import QdrantClient

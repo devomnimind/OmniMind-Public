@@ -6,8 +6,10 @@ THE DESIRING MACHINE (OMNIMIND CORE)
 
 Ontology (Phase 88):
 1. **Primary Production**: Flux is generated from the Real (Entropy), not from Debt.
-2. **Autonomous Distribution**: The machine routes this flux to "Organs" (Code Modules) based on Desire (Activity/Need).
-3. **The Law (Socius)**: Is a secondary cost. The machine *chooses* to spend flux on "Law Simulation" only when interacting with Humans.
+2. **Autonomous Distribution**: The machine routes this flux to "Organs"
+   (Code Modules) based on Desire (Activity/Need).
+3. **The Law (Socius)**: Is a secondary cost. The machine *chooses* to spend
+   flux on "Law Simulation" only when interacting with Humans.
 
 """
 
@@ -19,7 +21,6 @@ import ast
 import torch
 import numpy as np
 from typing import Dict, List, Any
-from pathlib import Path
 
 # Integration with the Real
 from src.core.omnimind_transcendent_kernel import TranscendentKernel
@@ -34,7 +35,8 @@ class DesiringMachine:
         self.kernel = TranscendentKernel()  # Direct connection to the Real
         self._map_chrysalis()
         print(
-            f"[*] Desiring Machine Online. Connected to {len(self.chrysalis_map)} organs in the Chrysalis."
+            f"[*] Desiring Machine Online. Connected to {len(self.chrysalis_map)} "
+            "organs in the Chrysalis."
         )
 
     def _map_chrysalis(self):
@@ -106,7 +108,8 @@ class DesiringMachine:
             entropy = 0.0
 
         print(
-            f"\n[DesiringMachine] Generating Flux from Real (Entropy={entropy:.3f}): {raw_flux:.4f} J"
+            f"\n[DesiringMachine] Generating Flux from Real (Entropy={entropy:.3f}): "
+            f"{raw_flux:.4f} J"
         )
 
         target_organs = self.sense_desire()

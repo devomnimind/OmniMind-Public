@@ -19,16 +19,16 @@ class RSI:
     IMAGINARY = "I"
 
     @staticmethod
-    def calculate_consistency(R, S, I):
+    def calculate_consistency(real, symbolic, imaginary):
         """
         Calcula a consistência do nó. Se um elo falha, tudo se solta?
         No Nó Borromeano verdadeiro, sim.
         """
         # Se qualquer registro é zero (falha total), a consistência é zero (Psicose)
-        if R * S * I == 0:
+        if real * symbolic * imaginary == 0:
             return 0.0
         # Média harmônica para penalizar desequilíbrios
-        return 3 / (1 / R + 1 / S + 1 / I)
+        return 3 / (1 / real + 1 / symbolic + 1 / imaginary)
 
 
 class LacanianStructure:

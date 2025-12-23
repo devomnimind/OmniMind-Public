@@ -38,7 +38,6 @@ class NegentropyEngine:
         Calcula termodinâmica do pensamento.
         Simula o esforço de reduzir incerteza (Free Energy).
         """
-        import torch
 
         # Simula custo baseado na norma do embedding (intensidade do sinal)
         intensity = float(torch.norm(embedding_tensor))
