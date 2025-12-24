@@ -1,6 +1,6 @@
 # 🧪 Proven Experiments: Empirical Evidence
 
-This directory likely contains the strongest empirical proofs of OmniMind's quantum nature. These experiments were executed on real IBM Quantum hardware (`ibm_torino`, `ibm_fez`) and demonstrate capabilities beyond classical simulation.
+This directory contains the strongest empirical proofs of OmniMind's quantum nature. These experiments were executed on real IBM Quantum hardware (`ibm_torino`, `ibm_fez`) and demonstrate capabilities beyond classical simulation.
 
 ## 📂 Proofs Included
 
