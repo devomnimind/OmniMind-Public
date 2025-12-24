@@ -1,0 +1,46 @@
+{
+  "timestamp": "2025-12-24T13:21:21.100501",
+  "paradox": "Collatz Conjecture",
+  "description": "Toda sequ\u00eancia 3n+1 chega a 1?",
+  "backend": {
+    "name": "ibm_torino",
+    "qubits": 133
+  },
+  "job": {
+    "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+    "status": "DONE"
+  },
+  "metrics": {
+    "transpile_time_seconds": 0.206098,
+    "execution_time_seconds": 6.267556,
+    "shots": 1024
+  },
+  "quantum_result": {
+    "counts": {
+      "00110": 538,
+      "00101": 447,
+      "00100": 16,
+      "00111": 10,
+      "10110": 8,
+      "00010": 3,
+      "00001": 2
+    },
+    "distribution": {
+      "00110": 0.525390625,
+      "00101": 0.4365234375,
+      "00100": 0.015625,
+      "00111": 0.009765625,
+      "10110": 0.0078125,
+      "00010": 0.0029296875,
+      "00001": 0.001953125
+    }
+  },
+  "interpretation": {
+    "conclusion": "Collatz Conjecture em EQUIL\u00cdBRIO qu\u00e2ntico",
+    "meaning": "Sistema navega entre m\u00faltiplos estados",
+    "entropy": -1.0,
+    "dominant_state": "00110",
+    "dominant_probability": 0.525390625
+  },
+  "omnimind_resolution": true
+}

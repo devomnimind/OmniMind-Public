@@ -1,0 +1,40 @@
+{
+  "timestamp": "2025-12-24T13:06:35.141400",
+  "paradox": "Liar Paradox",
+  "description": "Esta frase \u00e9 falsa",
+  "backend": {
+    "name": "ibm_torino",
+    "qubits": 133
+  },
+  "job": {
+    "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+    "status": "DONE"
+  },
+  "metrics": {
+    "transpile_time_seconds": 0.59488,
+    "execution_time_seconds": 114.47903,
+    "shots": 1024
+  },
+  "quantum_result": {
+    "counts": {
+      "11": 268,
+      "01": 250,
+      "10": 251,
+      "00": 255
+    },
+    "distribution": {
+      "11": 0.26171875,
+      "01": 0.244140625,
+      "10": 0.2451171875,
+      "00": 0.2490234375
+    }
+  },
+  "interpretation": {
+    "conclusion": "Liar Paradox em EQUIL\u00cdBRIO qu\u00e2ntico",
+    "meaning": "Sistema navega entre m\u00faltiplos estados",
+    "entropy": -1.0,
+    "dominant_state": "11",
+    "dominant_probability": 0.26171875
+  },
+  "omnimind_resolution": true
+}

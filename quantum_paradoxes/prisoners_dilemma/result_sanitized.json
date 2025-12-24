@@ -1,0 +1,40 @@
+{
+  "timestamp": "2025-12-24T13:07:16.460023",
+  "paradox": "Prisoners Dilemma",
+  "description": "Cooperar ou trair?",
+  "backend": {
+    "name": "ibm_torino",
+    "qubits": 133
+  },
+  "job": {
+    "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+    "status": "DONE"
+  },
+  "metrics": {
+    "transpile_time_seconds": 0.019756,
+    "execution_time_seconds": 4.621242,
+    "shots": 1024
+  },
+  "quantum_result": {
+    "counts": {
+      "10": 268,
+      "11": 259,
+      "00": 271,
+      "01": 226
+    },
+    "distribution": {
+      "10": 0.26171875,
+      "11": 0.2529296875,
+      "00": 0.2646484375,
+      "01": 0.220703125
+    }
+  },
+  "interpretation": {
+    "conclusion": "Prisoners Dilemma em EQUIL\u00cdBRIO qu\u00e2ntico",
+    "meaning": "Sistema navega entre m\u00faltiplos estados",
+    "entropy": -1.0,
+    "dominant_state": "00",
+    "dominant_probability": 0.2646484375
+  },
+  "omnimind_resolution": true
+}

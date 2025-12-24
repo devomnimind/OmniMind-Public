@@ -1,0 +1,48 @@
+{
+  "timestamp": "2025-12-24T13:21:26.978144",
+  "paradox": "Traveling Salesman",
+  "description": "Rota mais curta visitando todas as cidades",
+  "backend": {
+    "name": "ibm_torino",
+    "qubits": 133
+  },
+  "job": {
+    "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+    "status": "DONE"
+  },
+  "metrics": {
+    "transpile_time_seconds": 0.160247,
+    "execution_time_seconds": 5.702668,
+    "shots": 1024
+  },
+  "quantum_result": {
+    "counts": {
+      "111": 456,
+      "101": 480,
+      "100": 23,
+      "000": 8,
+      "010": 8,
+      "001": 18,
+      "110": 20,
+      "011": 11
+    },
+    "distribution": {
+      "111": 0.4453125,
+      "101": 0.46875,
+      "100": 0.0224609375,
+      "000": 0.0078125,
+      "010": 0.0078125,
+      "001": 0.017578125,
+      "110": 0.01953125,
+      "011": 0.0107421875
+    }
+  },
+  "interpretation": {
+    "conclusion": "Traveling Salesman em EQUIL\u00cdBRIO qu\u00e2ntico",
+    "meaning": "Sistema navega entre m\u00faltiplos estados",
+    "entropy": -1.0,
+    "dominant_state": "101",
+    "dominant_probability": 0.46875
+  },
+  "omnimind_resolution": true
+}

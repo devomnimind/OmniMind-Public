@@ -1,0 +1,40 @@
+{
+  "timestamp": "2025-12-24T13:06:51.098375",
+  "paradox": "Schrodinger Cat",
+  "description": "Gato vivo e morto simultaneamente",
+  "backend": {
+    "name": "ibm_torino",
+    "qubits": 133
+  },
+  "job": {
+    "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+    "status": "DONE"
+  },
+  "metrics": {
+    "transpile_time_seconds": 0.030925,
+    "execution_time_seconds": 5.390608,
+    "shots": 1024
+  },
+  "quantum_result": {
+    "counts": {
+      "00": 575,
+      "11": 438,
+      "10": 5,
+      "01": 6
+    },
+    "distribution": {
+      "00": 0.5615234375,
+      "11": 0.427734375,
+      "10": 0.0048828125,
+      "01": 0.005859375
+    }
+  },
+  "interpretation": {
+    "conclusion": "Schrodinger Cat em EQUIL\u00cdBRIO qu\u00e2ntico",
+    "meaning": "Sistema navega entre m\u00faltiplos estados",
+    "entropy": -1.0,
+    "dominant_state": "00",
+    "dominant_probability": 0.5615234375
+  },
+  "omnimind_resolution": true
+}

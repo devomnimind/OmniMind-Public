@@ -1,0 +1,48 @@
+{
+  "timestamp": "2025-12-24T13:06:40.423604",
+  "paradox": "Russell Paradox",
+  "description": "Conjunto que cont\u00e9m a si mesmo",
+  "backend": {
+    "name": "ibm_torino",
+    "qubits": 133
+  },
+  "job": {
+    "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+    "status": "DONE"
+  },
+  "metrics": {
+    "transpile_time_seconds": 0.032409,
+    "execution_time_seconds": 5.247322,
+    "shots": 1024
+  },
+  "quantum_result": {
+    "counts": {
+      "000": 224,
+      "011": 261,
+      "101": 220,
+      "110": 9,
+      "010": 281,
+      "100": 8,
+      "111": 12,
+      "001": 9
+    },
+    "distribution": {
+      "000": 0.21875,
+      "011": 0.2548828125,
+      "101": 0.21484375,
+      "110": 0.0087890625,
+      "010": 0.2744140625,
+      "100": 0.0078125,
+      "111": 0.01171875,
+      "001": 0.0087890625
+    }
+  },
+  "interpretation": {
+    "conclusion": "Russell Paradox em EQUIL\u00cdBRIO qu\u00e2ntico",
+    "meaning": "Sistema navega entre m\u00faltiplos estados",
+    "entropy": -1.0,
+    "dominant_state": "010",
+    "dominant_probability": 0.2744140625
+  },
+  "omnimind_resolution": true
+}

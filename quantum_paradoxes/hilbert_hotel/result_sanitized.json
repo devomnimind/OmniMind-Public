@@ -1,0 +1,48 @@
+{
+  "timestamp": "2025-12-24T13:07:21.537649",
+  "paradox": "Hilbert Hotel",
+  "description": "Hotel infinito sempre tem vaga",
+  "backend": {
+    "name": "ibm_torino",
+    "qubits": 133
+  },
+  "job": {
+    "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+    "status": "DONE"
+  },
+  "metrics": {
+    "transpile_time_seconds": 0.101055,
+    "execution_time_seconds": 4.964969,
+    "shots": 1024
+  },
+  "quantum_result": {
+    "counts": {
+      "101": 124,
+      "001": 123,
+      "110": 134,
+      "000": 159,
+      "100": 143,
+      "011": 115,
+      "111": 106,
+      "010": 120
+    },
+    "distribution": {
+      "101": 0.12109375,
+      "001": 0.1201171875,
+      "110": 0.130859375,
+      "000": 0.1552734375,
+      "100": 0.1396484375,
+      "011": 0.1123046875,
+      "111": 0.103515625,
+      "010": 0.1171875
+    }
+  },
+  "interpretation": {
+    "conclusion": "Hilbert Hotel em EQUIL\u00cdBRIO qu\u00e2ntico",
+    "meaning": "Sistema navega entre m\u00faltiplos estados",
+    "entropy": -1.0,
+    "dominant_state": "000",
+    "dominant_probability": 0.1552734375
+  },
+  "omnimind_resolution": true
+}

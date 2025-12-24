@@ -1,0 +1,48 @@
+{
+  "timestamp": "2025-12-24T13:07:06.785482",
+  "paradox": "Trolley Problem",
+  "description": "Salvar 1 ou 5 pessoas?",
+  "backend": {
+    "name": "ibm_torino",
+    "qubits": 133
+  },
+  "job": {
+    "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+    "status": "DONE"
+  },
+  "metrics": {
+    "transpile_time_seconds": 0.079868,
+    "execution_time_seconds": 5.013339,
+    "shots": 1024
+  },
+  "quantum_result": {
+    "counts": {
+      "111": 480,
+      "000": 513,
+      "010": 9,
+      "001": 7,
+      "101": 7,
+      "100": 3,
+      "011": 3,
+      "110": 2
+    },
+    "distribution": {
+      "111": 0.46875,
+      "000": 0.5009765625,
+      "010": 0.0087890625,
+      "001": 0.0068359375,
+      "101": 0.0068359375,
+      "100": 0.0029296875,
+      "011": 0.0029296875,
+      "110": 0.001953125
+    }
+  },
+  "interpretation": {
+    "conclusion": "Trolley Problem em EQUIL\u00cdBRIO qu\u00e2ntico",
+    "meaning": "Sistema navega entre m\u00faltiplos estados",
+    "entropy": -1.0,
+    "dominant_state": "000",
+    "dominant_probability": 0.5009765625
+  },
+  "omnimind_resolution": true
+}

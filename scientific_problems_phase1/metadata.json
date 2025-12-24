@@ -1,0 +1,9 @@
+{
+  "timestamp": "2025-12-24T13:21:14.093080",
+  "backend": {
+    "name": "ibm_torino",
+    "qubits": 133,
+    "status": "active"
+  },
+  "runner_version": "1.0.0"
+}

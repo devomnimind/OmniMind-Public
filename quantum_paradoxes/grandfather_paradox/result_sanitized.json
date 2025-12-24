@@ -1,0 +1,48 @@
+{
+  "timestamp": "2025-12-24T13:07:11.814240",
+  "paradox": "Grandfather Paradox",
+  "description": "Matar o pr\u00f3prio av\u00f4",
+  "backend": {
+    "name": "ibm_torino",
+    "qubits": 133
+  },
+  "job": {
+    "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+    "status": "DONE"
+  },
+  "metrics": {
+    "transpile_time_seconds": 0.022683,
+    "execution_time_seconds": 5.004083,
+    "shots": 1024
+  },
+  "quantum_result": {
+    "counts": {
+      "000": 512,
+      "111": 477,
+      "011": 12,
+      "110": 4,
+      "100": 6,
+      "101": 8,
+      "001": 3,
+      "010": 2
+    },
+    "distribution": {
+      "000": 0.5,
+      "111": 0.4658203125,
+      "011": 0.01171875,
+      "110": 0.00390625,
+      "100": 0.005859375,
+      "101": 0.0078125,
+      "001": 0.0029296875,
+      "010": 0.001953125
+    }
+  },
+  "interpretation": {
+    "conclusion": "Grandfather Paradox em EQUIL\u00cdBRIO qu\u00e2ntico",
+    "meaning": "Sistema navega entre m\u00faltiplos estados",
+    "entropy": -1.0,
+    "dominant_state": "000",
+    "dominant_probability": 0.5
+  },
+  "omnimind_resolution": true
+}

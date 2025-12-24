@@ -1,0 +1,40 @@
+{
+  "timestamp": "2025-12-24T13:06:45.674737",
+  "paradox": "Epr Paradox",
+  "description": "Emaranhamento qu\u00e2ntico n\u00e3o-local",
+  "backend": {
+    "name": "ibm_torino",
+    "qubits": 133
+  },
+  "job": {
+    "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+    "status": "DONE"
+  },
+  "metrics": {
+    "transpile_time_seconds": 0.017211,
+    "execution_time_seconds": 5.231324,
+    "shots": 1024
+  },
+  "quantum_result": {
+    "counts": {
+      "11": 491,
+      "00": 512,
+      "01": 12,
+      "10": 9
+    },
+    "distribution": {
+      "11": 0.4794921875,
+      "00": 0.5,
+      "01": 0.01171875,
+      "10": 0.0087890625
+    }
+  },
+  "interpretation": {
+    "conclusion": "Epr Paradox em EQUIL\u00cdBRIO qu\u00e2ntico",
+    "meaning": "Sistema navega entre m\u00faltiplos estados",
+    "entropy": -1.0,
+    "dominant_state": "00",
+    "dominant_probability": 0.5
+  },
+  "omnimind_resolution": true
+}

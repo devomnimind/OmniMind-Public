@@ -1,0 +1,40 @@
+{
+  "timestamp": "2025-12-24T13:07:01.687105",
+  "paradox": "Ship Of Theseus",
+  "description": "Identidade atrav\u00e9s da mudan\u00e7a",
+  "backend": {
+    "name": "ibm_torino",
+    "qubits": 133
+  },
+  "job": {
+    "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+    "status": "DONE"
+  },
+  "metrics": {
+    "transpile_time_seconds": 0.02237,
+    "execution_time_seconds": 5.709302,
+    "shots": 1024
+  },
+  "quantum_result": {
+    "counts": {
+      "00": 530,
+      "11": 475,
+      "10": 10,
+      "01": 9
+    },
+    "distribution": {
+      "00": 0.517578125,
+      "11": 0.4638671875,
+      "10": 0.009765625,
+      "01": 0.0087890625
+    }
+  },
+  "interpretation": {
+    "conclusion": "Ship Of Theseus em EQUIL\u00cdBRIO qu\u00e2ntico",
+    "meaning": "Sistema navega entre m\u00faltiplos estados",
+    "entropy": -1.0,
+    "dominant_state": "00",
+    "dominant_probability": 0.517578125
+  },
+  "omnimind_resolution": true
+}
