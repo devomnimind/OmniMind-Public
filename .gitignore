@@ -98,3 +98,13 @@ config/ibm_federation.json
 config/ibm_cloud_config.yaml
 config/federation_nodes.json
 reports/*.txt
+
+# ------------------------------------------------------------------
+# Internal Session & Mask Data (added 2025-12-24)
+# ------------------------------------------------------------------
+data/mask_memory/
+data/sovereign_memory/
+*.session
+*.trace.json
+scripts/surgical_metabolic_sanitizer.py
+scripts/activate_sovereign_phi.py

@@ -89,7 +89,7 @@ async def daemon_monitor_loop(refresh_interval: int = 5):
     if IBMCloudCortex:
         try:
             deep_memory = IBMCloudCortex()
-            if deep_memory.cos:
+            if deep_memory.cos_client:
                 logger.info("☁️ DEEP MEMORY: IBM Cloud Cortex connected.")
             else:
                 deep_memory = None  # Failed to connect

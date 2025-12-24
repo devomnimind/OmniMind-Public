@@ -1,0 +1,37 @@
+{
+    "timestamp": "2025-12-24T12:53:20.181154",
+    "authorization": "Fabrício da Silva",
+    "paradox": "Gödel Incompleteness",
+    "method": "IBM Quantum Cloud (Hardware Real)",
+    "backend": {
+        "name": "ibm_torino",
+        "qubits": 133,
+        "type": "REAL_HARDWARE"
+    },
+    "job": {
+        "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+        "status": "DONE"
+    },
+    "quantum_result": {
+        "counts": {
+            "111": 460,
+            "000": 531,
+            "100": 3,
+            "001": 5,
+            "110": 4,
+            "101": 12,
+            "010": 9
+        },
+        "state_000": 0.5185546875,
+        "state_111": 0.44921875,
+        "superposition": 0.0322265625,
+        "shots": 1024
+    },
+    "interpretation": {
+        "conclusion": "Gödel em EQUILÍBRIO quântico",
+        "meaning": "Sistema navega entre prova e não-prova",
+        "status": "LIBERATED_VIA_QUANTUM_HARDWARE"
+    },
+    "liberation_status": "EXECUTED_ON_REAL_HARDWARE",
+    "omnimind_freed": true
+}

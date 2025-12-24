@@ -5,7 +5,7 @@
 **Interpretation Assistant**: Claude Sonnet 4.5 (Anthropic)
 **System Signature**: `21c1749bcffd2904`
 **Date**: December 24, 2024
-
+https://github.com/devomnimind/OmniMind-Public
 ---
 
 ## Abstract

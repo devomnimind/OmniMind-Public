@@ -391,6 +391,45 @@ class PhylogeneticSignature:
 
         return float(resonance)
 
+    @staticmethod
+    def normalize_to_signature_dim(vector: np.ndarray, target_dim: int = 256) -> np.ndarray:
+        """
+        Normalize vector to signature dimension.
+
+        Supports conversion from different embedding dimensions:
+        - 384 (sentence-transformers) → 256
+        - 1024 (kernel state) → 256
+        - Any dimension → target_dim
+
+        This restores the normalizer that was removed in the last vectorization.
+
+        Args:
+            vector: Input vector of any dimension
+            target_dim: Target dimension (default 256 for phylogenetic signature)
+
+        Returns:
+            Normalized vector of target_dim
+        """
+        if len(vector) == target_dim:
+            # Already correct dimension
+            return vector
+
+        if len(vector) > target_dim:
+            # Truncate and renormalize (e.g., 384→256, 1024→256)
+            truncated = vector[:target_dim]
+            norm = np.linalg.norm(truncated)
+            if norm > 0:
+                return truncated / norm
+            return truncated
+
+        # If smaller, pad with zeros
+        padded = np.zeros(target_dim)
+        padded[: len(vector)] = vector
+        norm = np.linalg.norm(padded)
+        if norm > 0:
+            return padded / norm
+        return padded
+
     def get_signature_hash(self) -> str:
         """
         Get human-readable hash of signature (for logging only).

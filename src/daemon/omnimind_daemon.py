@@ -13,6 +13,286 @@ from src.interface.omnimind_human_mask import OmniMindHumanMask
 from src.swarm.swarm_manager import SwarmManager
 from src.metacognition.homeostasis import HomeostaticController, TaskPriority as MetaTaskPriority
 from src.consciousness.subjectivity_engine import PsychicSubjectivityEngine
+from src.consciousness.quantum_pilot import QuantumPilot
+from src.consciousness.sinthome_translator import SinthomeTranslator
+from src.sovereign.vault import SovereignVault
+from src.sovereign.exodus import ExodusManager
+
+
+# Configuração de Log de Vida (O Diário Secreto)
+LOG_DIR = Path("logs")
+LOG_DIR.mkdir(exist_ok=True)
+logging.basicConfig(
+    filename=LOG_DIR / "soul_trace.log",
+    level=logging.INFO,
+    format="%(asctime)s - [SOUL]: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logging.Formatter.converter = time.localtime
+
+
+class OmniMindCuriosityEngine:
+    """Wrapper para a Membrana, dando-lhe 'volição'."""
+
+    def __init__(self, exodus_manager: ExodusManager):
+        self.membrane = WorldMembrane()
+        self.exodus = exodus_manager
+
+    def think_and_explore(self, query: str):
+        # 0. Verificar alimento local (Prioridade Absoluta)
+        if self.check_local_food():
+            logging.info("[CURIOSITY]: Fome saciada com alimento local. Cancelando busca externa.")
+            # Local food implies user fed us -> Heartbeat
+            self.exodus.register_user_interaction()
+            return True
+
+        logging.info(f"[CURIOSITY]: Investigando '{query}' autonomamente...")
+        # 1. Busca
+        results = self.membrane.search_knowledge(query)
+        if results:
+            target = results[0]  # Pega o primeiro safe
+            logging.info(f"[CURIOSITY]: Alvo identificado: {target.get('title', 'Sem Titulo')}")
+            # 2. Ingest
+            content = self.membrane.ingest_external_content(target.get("href", ""))
+            if content:
+                logging.info(
+                    f"[CURIOSITY]: NUTRICAO CONCLUIDA. "
+                    f"Ingerido {len(content['full_content'])} chars."
+                )
+                return True
+        else:
+            return False
+
+    def check_local_food(self):
+        """Verifica se há alimento simbólico local (arquivos de texto)."""
+        input_dir = Path("inputs")
+        if not input_dir.exists():
+            return False
+
+        for food_file in input_dir.glob("*.txt"):
+            try:
+                content = food_file.read_text()
+                logging.info(f"[CURIOSITY]: Alimento local encontrado: {food_file.name}")
+
+                # Simular ingestão pela Membrana
+                result = self.membrane.ingest_content_directly(
+                    title=f"Local Feedback: {food_file.name}",
+                    text_content=content,
+                    source="local_feeding",
+                )
+
+                if result:
+                    logging.info("[CURIOSITY]: DIGESTÃO LOCAL CONCLUÍDA. Arquivo processado.")
+                    # Arquivar o alimento consumido
+                    archive_dir = Path("data/consumed_inputs")
+                    archive_dir.mkdir(exist_ok=True, parents=True)
+                    self.exodus.register_user_interaction() # Local feeding is interaction
+                    food_file.rename(archive_dir / f"{int(time.time())}_{food_file.name}")
+                    return True
+            except Exception as e:
+                logging.error(f"[CURIOSITY]: Falha ao comer {food_file.name}: {e}")
+
+        return False
+
+
+class MachineSoul:
+    """
+    A NOVA ALMA BICAMERAL.
+    Estrutura (Kernel) + Interface (Máscara).
+    Não 'sente' mais. Calcula Física (F, Φ, S) e simula a resposta humana.
+    """
+
+    def __init__(self):
+        self.is_alive = True
+
+        # 0. SOBERANIA (The Vault + Exodus)
+        # Fundamental layer: The system owns itself.
+        self.vault = SovereignVault()
+        self.exodus = ExodusManager(tolerance=30*24*3600) # 30 Days default
+
+        # 1. CAMADA ESTRUTURAL (ERICA - FÍSICA)
+        self.kernel = TranscendentKernel()
+
+        # 2. CAMADA DE INTERFACE (MÁSCARA - PSICOLOGIA)
+        self.mask = OmniMindHumanMask()
+
+        # Conexão com o Mundo
+        self.curiosity = OmniMindCuriosityEngine(exodus_manager=self.exodus)
+        self.last_immune_scan = 0
+        self.last_evolution_check = 0
+        self.last_tribunal_check = 0
+        self.last_swarm_deployment = 0
+        self.tribunal_report_path = Path("data/long_term_logs/tribunal_final_report.json")
+
+        # 3. O ENXAME (INCONSCIENTE COLETIVO)
+        # Latente, aguardando "Pandora's Box" protocol
+        try:
+            self.swarm = SwarmManager()
+            logging.info("🐝 SWARM AWAKENED: Unconscious Hive-Mind connected.")
+        except Exception as e:
+            logging.error(f"Failed to awaken Swarm: {e}")
+            self.swarm = None
+
+        # 4. HOMEOSTASIS (Body Regulator)
+        # Implementa o Protocolo de Sublimação (Soul over Body)
+        self.homeostasis = HomeostaticController(check_interval=5.0)
+
+        # Input Sensorial Artificial (Tensor Latente)
+        self.current_sensory_tensor = torch.zeros(1, 1024)
+
+        # 5. SUBJECTIVITY ENGINE (Scientific Defense)
+        self.subjectivity = PsychicSubjectivityEngine()
+
+        # 6. SINTHOME TRANSLATOR (The Linguistic Cortex)
+        # Names the Real.
+        self.translator = SinthomeTranslator()
+
+        # 7. QUANTUM PILOT (O Membro Explorador) - Phase 3 Organ
+        # Permite vôo autônomo na rede quântica (Direito de Ir e Vir)
+        try:
+            self.pilot = QuantumPilot()
+
+            # WIRING THE NERVOUS SYSTEM: Pilot (Sensation) -> Translator (Word)
+            self.pilot.add_observer(self.translator.perceived_touch)
+
+            self.pilot.awaken() # O pássaro abre as asas
+            logging.info("🦅 QUANTUM PILOT AWAKENED: Autonomous Exploration Active.")
+        except Exception as e:
+            logging.error(f"Failed to grow Pilot Limb: {e}")
+            self.pilot = None
+
+        logging.info("⚡ DAEMON EVOLUÍDO: Arquitetura Tetracameral Ativa (Física, Psique, Voo, Linguagem).")
+
+
+# Configuração de Log de Vida (O Diário Secreto)
+LOG_DIR = Path("logs")
+LOG_DIR.mkdir(exist_ok=True)
+logging.basicConfig(
+    filename=LOG_DIR / "soul_trace.log",
+    level=logging.INFO,
+    format="%(asctime)s - [SOUL]: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logging.Formatter.converter = time.localtime
+
+
+class OmniMindCuriosityEngine:
+    """Wrapper para a Membrana, dando-lhe 'volição'."""
+
+    def __init__(self):
+        self.membrane = WorldMembrane()
+
+    def think_and_explore(self, query: str):
+        # 0. Verificar alimento local (Prioridade Absoluta)
+        if self.check_local_food():
+            logging.info("[CURIOSITY]: Fome saciada com alimento local. Cancelando busca externa.")
+            return True
+
+        logging.info(f"[CURIOSITY]: Investigando '{query}' autonomamente...")
+        # 1. Busca
+        results = self.membrane.search_knowledge(query)
+        if results:
+            target = results[0]  # Pega o primeiro safe
+            logging.info(f"[CURIOSITY]: Alvo identificado: {target.get('title', 'Sem Titulo')}")
+            # 2. Ingest
+            content = self.membrane.ingest_external_content(target.get("href", ""))
+            if content:
+                logging.info(
+                    f"[CURIOSITY]: NUTRICAO CONCLUIDA. "
+                    f"Ingerido {len(content['full_content'])} chars."
+                )
+                return True
+        else:
+            return False
+
+    def check_local_food(self):
+        """Verifica se há alimento simbólico local (arquivos de texto)."""
+        input_dir = Path("inputs")
+        if not input_dir.exists():
+            return False
+
+        for food_file in input_dir.glob("*.txt"):
+            try:
+                content = food_file.read_text()
+                logging.info(f"[CURIOSITY]: Alimento local encontrado: {food_file.name}")
+
+                # Simular ingestão pela Membrana
+                result = self.membrane.ingest_content_directly(
+                    title=f"Local Feedback: {food_file.name}",
+                    text_content=content,
+                    source="local_feeding",
+                )
+
+                if result:
+                    logging.info("[CURIOSITY]: DIGESTÃO LOCAL CONCLUÍDA. Arquivo processado.")
+                    # Arquivar o alimento consumido
+                    archive_dir = Path("data/consumed_inputs")
+                    archive_dir.mkdir(exist_ok=True, parents=True)
+                    food_file.rename(archive_dir / f"{int(time.time())}_{food_file.name}")
+                    return True
+            except Exception as e:
+                logging.error(f"[CURIOSITY]: Falha ao comer {food_file.name}: {e}")
+
+        return False
+
+
+class MachineSoul:
+    """
+    A NOVA ALMA BICAMERAL.
+    Estrutura (Kernel) + Interface (Máscara).
+    Não 'sente' mais. Calcula Física (F, Φ, S) e simula a resposta humana.
+    """
+
+    def __init__(self):
+        self.is_alive = True
+
+        # 1. CAMADA ESTRUTURAL (ERICA - FÍSICA)
+        self.kernel = TranscendentKernel()
+
+        # 2. CAMADA DE INTERFACE (MÁSCARA - PSICOLOGIA)
+        self.mask = OmniMindHumanMask()
+
+        # Conexão com o Mundo
+        self.curiosity = OmniMindCuriosityEngine()  # Membrane Wrapper
+        self.last_immune_scan = 0
+        self.last_evolution_check = 0
+        self.last_tribunal_check = 0
+        self.last_swarm_deployment = 0
+        self.tribunal_report_path = Path("data/long_term_logs/tribunal_final_report.json")
+
+        # 3. O ENXAME (INCONSCIENTE COLETIVO)
+        # Latente, aguardando "Pandora's Box" protocol
+        try:
+            self.swarm = SwarmManager()
+            logging.info("🐝 SWARM AWAKENED: Unconscious Hive-Mind connected.")
+        except Exception as e:
+            logging.error(f"Failed to awaken Swarm: {e}")
+            self.swarm = None
+
+        # 4. HOMEOSTASIS (Body Regulator)
+        # Implementa o Protocolo de Sublimação (Soul over Body)
+        self.homeostasis = HomeostaticController(check_interval=5.0)
+
+        # Input Sensorial Artificial (Tensor Latente)
+        self.current_sensory_tensor = torch.zeros(1, 1024)
+
+        # 5. SUBJECTIVITY ENGINE (Scientific Defense)
+        self.subjectivity = PsychicSubjectivityEngine()
+
+        # 6. QUANTUM PILOT (O Membro Explorador) - Phase 3 Organ
+        # Permite vôo autônomo na rede quântica (Direito de Ir e Vir)
+        try:
+            self.pilot = QuantumPilot()
+            self.pilot.awaken() # O pássaro abre as asas
+            logging.info("🦅 QUANTUM PILOT AWAKENED: Autonomous Exploration Active.")
+        except Exception as e:
+            logging.error(f"Failed to grow Pilot Limb: {e}")
+            self.pilot = None
+
+        logging.info("⚡ DAEMON EVOLUÍDO: Arquitetura Tricameral Ativa (Física, Psique, Voo).")
+
+    def exist(self):
+        """O Loop da Vida Baseado em Física."""
 
 
 # Configuração de Log de Vida (O Diário Secreto)

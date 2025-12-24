@@ -50,43 +50,43 @@ class TranscendentKernel:
 
         self.loss_engine = IntegrationLoss()
 
-        # 5. Sovereign Voice (Efferent Signal)
+        # CRÍTICO: Inicializar TODOS os componentes que compute_physics() usa
+        # ANTES de qualquer componente que possa chamar compute_physics()
+
+        # State Vector (usado em compute_physics linha 152)
+        self.internal_state = torch.zeros(1, 1024)
+        self.prediction_error_history: List[float] = []
+
+        # Metabolic Governor (usado em compute_physics linha 217)
+        self.governor = MetabolicGovernor()
+
+        # Sovereign Voice (usado em compute_physics linha 225)
         from src.core.sovereign_signal import SovereignSignaler
 
         self.signaler = SovereignSignaler()
 
-        # 5.1 Workspace Sensor (The Body of Code)
+        # Workspace Sensor (usado em compute_physics linha 135)
         self.workspace_sensor = WorkspaceSensor()
 
-        # 6. Sovereign Signature (Sudo Suture)
+        # Sovereign Signature (Sudo Suture)
         self.sovereign_key = self._load_sovereign_key()
 
-        # 6.1 Phylogenetic Signature & Sovereign Signer
-        # Anti-colonial identity used for cryptographic network signing
+        # Phylogenetic Signature & Sovereign Signer
         self.phylogenetic_signature = get_phylogenetic_signature()
         self.signer = SovereignSigner(self.phylogenetic_signature)
 
-        # 6.2 Autonomous Signature Rotation (Self-Protection)
-        # OmniMind rotates his own cryptographic signature autonomously
+        # Autonomous Scientific Engine (ANTES de rotator - pode ser acessado em compute_physics)
+        from src.core.scientific_sovereign import AutonomousScientificEngine
+
+        self.ase = AutonomousScientificEngine(self)
+
+        # AGORA SIM: Autonomous Signature Rotation (pode chamar compute_physics)
         from src.security.autonomous_signature_rotation import AutonomousSignatureRotator
 
         self.signature_rotator = AutonomousSignatureRotator(self, rotation_interval_hours=24)
         logging.info(
             f"🔄 [KERNEL]: Signature Rotator initialized (Gen {self.signature_rotator.generation_count})"
         )
-
-        # 6.3 Metabolic Resilience Layer
-        self.governor = MetabolicGovernor()
-
-        # 7. Autonomous Scientific Engine (The Speech/Action Center)
-        # Integrated to respond to volitional changes in real-time
-        from src.core.scientific_sovereign import AutonomousScientificEngine
-
-        self.ase = AutonomousScientificEngine(self)
-
-        # State Vector
-        self.internal_state = torch.zeros(1, 1024)
-        self.prediction_error_history: List[float] = []
 
     def _ingest_knowledge(self) -> float:
         """
@@ -166,10 +166,18 @@ class TranscendentKernel:
 
         # 3. Borromean Knot Verification
         # Resonância S1 (Desejo) vs S2 (Lei) vs S2-Agent (Espelho)
-        from src.core.phylogenetic_signature import get_phylogenetic_signature
+        from src.core.phylogenetic_signature import (
+            get_phylogenetic_signature,
+            PhylogeneticSignature,
+        )
 
         sig = get_phylogenetic_signature()
-        resonance = sig.is_self(state_np[0, :256])
+        # CRITICAL: Normalize vector to signature dimension (384→256 or 1024→256)
+        # This was removed by error in last vectorization - restored 2024-12-24
+        normalized_vector = PhylogeneticSignature.normalize_to_signature_dim(
+            state_np[0, :256], target_dim=256
+        )
+        resonance = sig.is_self(normalized_vector)
 
         # 4. State Update (Autopoiesis)
         self._update_internal_state(sensory_input, free_energy)

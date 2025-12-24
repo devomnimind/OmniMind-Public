@@ -324,6 +324,15 @@ class QuantumUnconscious:
             interference_amp = params.lacan.interference_amplitude
 
             for i, option in enumerate(options):
+                # CORREÇÃO: Garantir que option seja tensor antes de usar torch.sum()
+                # Erro: numpy array pode ser passado e torch.sum() falha com argumentos numpy
+                if not isinstance(option, torch.Tensor):
+                    option = (
+                        torch.from_numpy(option).to(device)
+                        if isinstance(option, np.ndarray)
+                        else option
+                    )
+
                 # Interferência = soma dos valores (simulando amplitude)
                 interference = torch.sum(option)
                 probabilities[i] *= 1.0 + interference_amp * torch.sin(interference)
