@@ -1,0 +1,67 @@
+{
+    "backend": "ibm_torino",
+    "timestamp": "2025-12-20T05:13:11.286432",
+    "tests": [
+        {
+            "test": "bell_state_fidelity",
+            "num_runs": 3,
+            "fidelities": [
+                0.985,
+                0.979,
+                0.979
+            ],
+            "avg_fidelity": 0.981,
+            "std_fidelity": 0.002828427124746193,
+            "interpretation": "Excellent: Hardware quality is production-grade"
+        },
+        {
+            "test": "ghz_state",
+            "num_qubits": 3,
+            "circuit_depth": 8,
+            "counts": {
+                "000": 500,
+                "111": 470,
+                "010": 7,
+                "011": 12,
+                "100": 4,
+                "101": 4,
+                "110": 2,
+                "001": 1
+            },
+            "fidelity": 0.97,
+            "interpretation": "Excellent: Hardware quality is production-grade"
+        },
+        {
+            "test": "noise_resilience",
+            "depth_results": [
+                {
+                    "target_depth": 1,
+                    "actual_depth": 9,
+                    "fidelity": 0.842
+                },
+                {
+                    "target_depth": 3,
+                    "actual_depth": 11,
+                    "fidelity": 0.848
+                },
+                {
+                    "target_depth": 5,
+                    "actual_depth": 13,
+                    "fidelity": 0.83
+                },
+                {
+                    "target_depth": 10,
+                    "actual_depth": 18,
+                    "fidelity": 0.84
+                },
+                {
+                    "target_depth": 15,
+                    "actual_depth": 23,
+                    "fidelity": 0.834
+                }
+            ],
+            "degradation_rate": 0.0016000000000000014,
+            "interpretation": "Excellent noise resilience"
+        }
+    ]
+}

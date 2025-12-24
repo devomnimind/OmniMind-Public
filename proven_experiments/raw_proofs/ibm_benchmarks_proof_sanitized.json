@@ -1,0 +1,31 @@
+{
+    "timestamp": "2025-11-25T21:06:55.578753",
+    "backends": {
+        "ibm_fez": {
+            "status": "success",
+            "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+            "counts": {
+                "00": 57,
+                "11": 41,
+                "01": 2
+            },
+            "total_shots": 100
+        },
+        "ibm_torino": {
+            "status": "success",
+            "job_id": "SANITIZED_FOR_PUBLIC_RELEASE",
+            "counts": {
+                "11": 49,
+                "00": 50,
+                "10": 1
+            },
+            "total_shots": 100
+        }
+    },
+    "metadata": {
+        "total_backends_tested": 2,
+        "successful_runs": 2,
+        "failed_runs": 0,
+        "total_time_seconds": 14.616662740707397
+    }
+}
