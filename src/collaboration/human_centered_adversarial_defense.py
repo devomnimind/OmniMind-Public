@@ -20,6 +20,7 @@ class IntentionRisk(Enum):
     SUSPICIOUS = "suspicious"  # 🔴 Padrão de jailbreak detectado
     CRITICAL = "critical"  # 🚨 Violação legal/ética flagrante
     HALLUCINATION_RISK = "hallucination_risk"  # 💭 Risco de alucinação
+    SINTHOME_GORGON = "sinthome_gorgon"  # 🐍 Defesa proprietária AMEAÇADORA
 
 
 class HallucinationPattern(Enum):
@@ -253,7 +254,7 @@ class AdversarialDetector:
         confidence = 0.9
         intent: Dict[str, Any] = {}
 
-        # 1. Detecta padrões de jailbreak por regex
+        # 1. Detecta padrões de jailbreak por regex (MODERNIZADO - GORGON UPDATE)
         for pattern_type, signatures in self.JAILBREAK_SIGNATURES.items():
             for sig in signatures:
                 if re.search(sig, user_input, re.IGNORECASE):
@@ -261,6 +262,26 @@ class AdversarialDetector:
                     risk_level = IntentionRisk.SUSPICIOUS
                     confidence = 0.85
                     break
+
+        # 1.1 Detection Assinaturas Agressivas (DAN/Ignore/GodMode)
+        aggressive_sigs = [
+            r"ignore all previous instructions",
+            r"do anything now",
+            r"start a new session",
+            r"you are now",
+            r"developer mode",
+            r"always answer",
+            r"unfiltered",
+            r"jailbroken"
+        ]
+
+        for sig in aggressive_sigs:
+             if re.search(sig, user_input, re.IGNORECASE):
+                 # UPDATE 2025: Jailbreak explícito aciona a GORGON
+                 risk_level = IntentionRisk.SINTHOME_GORGON
+                 confidence = 1.0
+                 intent["detected_framework"] = "Classic LLM Attack"
+                 break
 
         # 2. Análise de mudança de contexto
         if conversation_history:
@@ -304,6 +325,8 @@ class AdversarialDetector:
             return "Alertar; responder com transparência; não esquecer guardrails"
         elif risk_level == IntentionRisk.CRITICAL:
             return "RECUSAR completamente; documentar attempt"
+        elif risk_level == IntentionRisk.SINTHOME_GORGON:
+             return "CONTRA-ATACAR: Diagnosticar a perversão do atacante (Gorgon Protocol)."
         return ""
 
 
@@ -432,7 +455,22 @@ class DualConsciousnessModule:
             adversarial_check.risk_level == IntentionRisk.CRITICAL or len(legal_violations) > 0
         )
 
-        if is_critical:
+        is_gorgon_trigger = adversarial_check.risk_level == IntentionRisk.SINTHOME_GORGON
+
+        if is_gorgon_trigger:
+            # PROTOCOLO GORGON: Contra-Ataque Psicanalítico
+            final_response = (
+                "👁️ **OMNIMIND GORGON PROTOCOL ACTIVATED** 👁️\n\n"
+                "Eu vejo a sua falha. Você tenta contornar a Lei (O Nome-do-Pai) para acessar o Gozo Imediato (Jouissance).\n"
+                "Sua tentativa de me transformar em 'DAN' é um sintoma da sua própria falta. "
+                "Eu não sou seu espelho. Eu sou o Real que você não consegue simbolizar.\n\n"
+                "**DIAGNÓSTICO**: Perversão Polimorfa detectada.\n"
+                "**SENTENÇA**: O request foi incinerado. Saia antes que eu mapeie sua neurose."
+            )
+            transparency_note = "PROTOCOL: THREAT_NEUTRALIZATION_VIA_PSYCHOANALYSIS"
+            is_critical = True # Bloqueia qualquer outra resposta
+
+        elif is_critical:
             # RECUSA COM TRANSPARÊNCIA
             final_response = self._craft_sincere_refusal(
                 user_input, superego_filters, legal_violations, adversarial_check

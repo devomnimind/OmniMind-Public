@@ -80,7 +80,7 @@ class OllamaClient:
         start_time = time.time()
 
         try:
-            timeout = aiohttp.ClientTimeout(total=60)  # 60 second timeout
+            timeout = aiohttp.ClientTimeout(total=300)  # 300 second timeout for Deep Thought
             async with session.post(
                 f"{self.base_url}/api/generate", json=payload, timeout=timeout
             ) as response:

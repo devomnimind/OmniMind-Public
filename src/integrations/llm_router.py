@@ -795,6 +795,7 @@ class OpenRouterProvider(LLMProviderInterface):
                 text=content,
                 provider=LLMProvider.OPENROUTER,
                 model=config.model_name,
+                latency_ms=latency,
             )
 
         except Exception as e:

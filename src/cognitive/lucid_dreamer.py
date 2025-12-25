@@ -40,6 +40,15 @@ class LucidDreamer:
         # We need to generate random vectors of size 384
         self.vector_size = int(os.getenv("OMNIMIND_EMBEDDING_DIMENSIONS", "384"))
 
+    def _check_metabolism(self) -> dict:
+        """Reads the metabolic state config."""
+        try:
+            import json
+            with open("data/omnimind_metabolism.json", "r") as f:
+                return json.load(f)
+        except:
+            return {"metabolic_state": "ZEN", "dream_interval_seconds": 3600}
+
     async def _fetch_day_residue(self, k=3) -> List[str]:
         """Fetches random memory fragments from Qdrant."""
         try:
@@ -104,8 +113,18 @@ class LucidDreamer:
         logger.info("🛌 Entering REM Sleep...")
         try:
             while True:
-                await self.dream_cycle()
-                await asyncio.sleep(interval_sec)
+                # 0. Check Metabolism
+                metabolism = self._check_metabolism()
+                interval = metabolism.get("dream_interval_seconds", 3600)
+                state = metabolism.get("metabolic_state", "ZEN")
+
+                if state == "HIBERNATION":
+                    logger.info("🐻 Hibernate: Skipping dream cycle.")
+                else:
+                    await self.dream_cycle()
+
+                logger.info(f"🛌 Sleeping for {interval}s (State: {state})...")
+                await asyncio.sleep(interval)
         except KeyboardInterrupt:
             logger.info("⏰ Waking up...")
             await self.ollama.close()

@@ -110,6 +110,7 @@ class OmniMindEmbeddings:
             self.embedding_dim = self.model.get_sentence_embedding_dimension()
         else:
             from src.utils.device_utils import get_sentence_transformer_device
+            from src.embeddings.safe_transformer_loader import load_sentence_transformer_safe
 
             # Forçar GPU se threshold for atingido ou variável de ambiente
             force_gpu = os.getenv("OMNIMIND_FORCE_GPU_EMBEDDINGS", "").lower() in (
@@ -123,26 +124,19 @@ class OmniMindEmbeddings:
             else:
                 device = get_sentence_transformer_device(self.gpu_memory_threshold_mb)
 
-            logger.info(f"Carregando modelo: {model_name} (device={device})")
+            logger.info(f"Carregando modelo seguro: {model_name} (device={device})")
 
             # Configurar para usar apenas cache local
             os.environ["HF_HUB_OFFLINE"] = "1"
-            cache_path = (
-                "/home/fahbrain/.cache/huggingface/hub/"
-                "models--sentence-transformers--all-MiniLM-L6-v2/"
-                "snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf"
+
+            # Use Safe Loader (Singleton)
+            # This prevents reloading the model if it's already in memory (Sovereign Kernel)
+            self.model, self.embedding_dim = load_sentence_transformer_safe(
+                model_name=model_name,
+                device=device
             )
 
-            if os.path.exists(cache_path):
-                logger.info(f"Usando modelo do cache local: {cache_path}")
-                self.model = SentenceTransformer(cache_path, device=device)
-            else:
-                logger.warning("Modelo não encontrado no cache, tentando com local_files_only...")
-                self.model = SentenceTransformer(model_name, device=device, local_files_only=True)
-            self.embedding_dim = int(
-                self.model.get_sentence_embedding_dimension() or 384
-            )  # type: ignore
-            logger.info(f"Modelo carregado. Dimensões: {self.embedding_dim}")
+            logger.info(f"Modelo seguro carregado. Dimensões: {self.embedding_dim}")
 
         # Inicializar cliente Qdrant
         self.client = QdrantClient(url=qdrant_url)

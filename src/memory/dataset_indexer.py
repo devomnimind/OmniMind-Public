@@ -83,59 +83,22 @@ class DatasetIndexer:
         # Inicializar modelo de embeddings
         if embedding_model is not None:
             self.embedding_model = embedding_model
+            self.embedding_dim = int(self.embedding_model.get_sentence_embedding_dimension() or 384)
         else:
-            from src.utils.device_utils import (
-                ensure_tensor_on_real_device,
-                get_sentence_transformer_device,
-            )
-
-            # Resolve model name for offline compatibility
-            try:
-                from src.utils.offline_mode import resolve_sentence_transformer_name
-
-                resolved_model_name = resolve_sentence_transformer_name(embedding_model_name)
-            except ImportError:
-                resolved_model_name = embedding_model_name
+            from src.utils.device_utils import get_sentence_transformer_device
+            from src.embeddings.safe_transformer_loader import load_sentence_transformer_safe
 
             device = get_sentence_transformer_device()
-            logger.info(f"Carregando modelo de embeddings: {resolved_model_name} (device={device})")
+            logger.info(f"Carregando modelo de embeddings seguro: {embedding_model_name} (device={device})")
 
-            # CORREÇÃO (2025-12-17): Carregar SEMPRE em CPU primeiro para evitar meta tensor
-            embedding_model = SentenceTransformer(resolved_model_name, device="cpu")
+            # Use Safe Loader (Singleton)
+            self.embedding_model, self.embedding_dim = load_sentence_transformer_safe(
+                model_name=embedding_model_name,
+                device=device
+            )
 
-            # Garantir que modelo não está em meta device
-            ensure_tensor_on_real_device(embedding_model)
+            logger.info("Modelo carregado e validado no device correto (via Singleton)")
 
-            # Se device desejado não é CPU, tentar mover
-            if device != "cpu":
-                try:
-                    # Verificação explícita de meta tensors
-                    has_meta_tensors = any(
-                        p.device.type == "meta" for p in embedding_model.parameters()
-                    )
-
-                    if has_meta_tensors:
-                        logger.warning("Meta tensors detectados, usando to_empty()")
-                        embedding_model = embedding_model.to_empty(device=device)
-                    else:
-                        embedding_model = embedding_model.to(device)
-
-                    logger.debug(f"✓ Modelo movido para {device}")
-                except Exception as e:
-                    logger.warning(f"Erro ao mover para {device}: {e}, mantendo em CPU")
-                    # Se falhou ao mover (ex: meta tensor não resolvido), tenta recuperar em CPU
-                    if "meta" in str(e).lower():
-                        try:
-                            embedding_model = embedding_model.to_empty(device="cpu")
-                        except Exception:
-                            pass
-                    else:
-                        embedding_model = embedding_model.to("cpu")
-
-            self.embedding_model = embedding_model
-            logger.info("Modelo carregado e validado no device correto")
-
-        self.embedding_dim = int(self.embedding_model.get_sentence_embedding_dimension() or 384)
         logger.info(f"Dimensão do embedding: {self.embedding_dim}")
 
         # Inicializar Qdrant

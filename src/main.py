@@ -67,8 +67,11 @@ def start_daemon():
     cmd = [sys.executable, "src/daemon/omnimind_daemon.py"]
 
     # Use nohup-like behavior
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(PROJECT_ROOT) + ":" + env.get("PYTHONPATH", "")
+
     with open("logs/daemon_stdout.log", "w") as out, open("logs/daemon_stderr.log", "w") as err:
-        proc = subprocess.Popen(cmd, stdout=out, stderr=err, start_new_session=True)  # Detach
+        proc = subprocess.Popen(cmd, stdout=out, stderr=err, start_new_session=True, env=env)  # Detach
 
     # Write PID file so we can find it later
     try:

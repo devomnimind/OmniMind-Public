@@ -77,39 +77,88 @@ class TopologicalDeglutitionEngine:
             logger.error(f"❌ [DEGLUTITION]: Absorption failed: {e}")
             self._absorbed = False
 
-    def encode(self, text: Union[str, List[str]]) -> np.ndarray:
+    def to(self, device: str) -> "TopologicalDeglutitionEngine":
+        """
+        Move model weights to specified device.
+        Compatible with PyTorch .to() API.
+        """
+        self.device = device
+        for key, tensor in self.weights.items():
+            if isinstance(tensor, torch.Tensor):
+                self.weights[key] = tensor.to(device)
+        return self
+
+    def encode(
+        self,
+        sentences: Union[str, List[str]],
+        batch_size: int = 32,
+        show_progress_bar: bool = False,
+        output_value: str = "sentence_embedding",
+        convert_to_numpy: bool = True,
+        convert_to_tensor: bool = False,
+        device: str = None,
+        normalize_embeddings: bool = True,
+    ) -> Union[List[torch.Tensor], np.ndarray, torch.Tensor]:
         """
         Perform internal topological inference to generate embeddings.
-
-        This replaces SentenceTransformer.encode().
+        Compatible with SentenceTransformer.encode signature.
         """
         if not self._absorbed:
             logger.warning("Engine not absorbed. Using zero vector fallback.")
-            return np.zeros(384)
+            # Return correct shape based on input
+            if isinstance(sentences, str):
+                return np.zeros(384)
+            return np.zeros((len(sentences), 384))
 
-        if isinstance(text, str):
-            texts = [text]
+        if isinstance(sentences, str):
+            sentences = [sentences]
+            is_single = True
         else:
-            texts = text
+            is_single = False
 
-        # 1. Tokenization
-        encoded = self.tokenizer.encode_batch(texts)
+        all_embeddings = []
 
-        # Convert to tensors
-        input_ids = torch.tensor([e.ids for e in encoded], device=self.device)
-        attention_mask = torch.tensor([e.attention_mask for e in encoded], device=self.device)
+        # Internal batching loop
+        for start_index in range(0, len(sentences), batch_size):
+            batch_texts = sentences[start_index : start_index + batch_size]
 
-        with torch.no_grad():
-            # 2. Forward Pass (Internal Transformer Logic)
-            last_hidden_state = self._forward(input_ids, attention_mask)
+            # 1. Tokenization
+            encoded = self.tokenizer.encode_batch(batch_texts)
 
-            # 3. Mean Pooling
-            embeddings = self._mean_pooling(last_hidden_state, attention_mask)
+            # Convert to tensors
+            input_ids = torch.tensor([e.ids for e in encoded], device=self.device)
+            attention_mask = torch.tensor([e.attention_mask for e in encoded], device=self.device)
 
-            # 4. L2 Normalization
-            embeddings = torch.nn.functional.normalize(embeddings, p=2, dim=1)
+            with torch.no_grad():
+                # 2. Forward Pass (Internal Transformer Logic)
+                last_hidden_state = self._forward(input_ids, attention_mask)
 
-        return embeddings.cpu().numpy()
+                # 3. Mean Pooling
+                embeddings = self._mean_pooling(last_hidden_state, attention_mask)
+
+                # 4. L2 Normalization (Default behavior, obeys flag if false?)
+                # We default to normalized as per original implementation
+                if normalize_embeddings:
+                    embeddings = torch.nn.functional.normalize(embeddings, p=2, dim=1)
+
+                all_embeddings.append(embeddings)
+
+        if not all_embeddings:
+             return np.array([]) if convert_to_numpy else torch.tensor([])
+
+        # Concatenate batches
+        final_embeddings = torch.cat(all_embeddings, dim=0)
+
+        if convert_to_tensor:
+            return final_embeddings
+
+        if convert_to_numpy:
+            return final_embeddings.cpu().numpy()
+
+        # If neither, typically returns list of tensors or tensor?
+        # SentenceTransformer returns list of tensors if convert_to_tensor=False and convert_to_numpy=False?
+        # Actually default ST returns list of ndarrays or ndarray.
+        return final_embeddings.cpu().numpy()
 
     def _forward(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
         """Internal barebones transformer forward pass."""

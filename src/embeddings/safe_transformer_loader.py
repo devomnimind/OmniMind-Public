@@ -6,6 +6,7 @@ Objetivo: Carregar modelo com mínima surface para problemas de import.
 
 import logging
 import os
+import traceback
 from pathlib import Path
 from typing import Optional, Union
 
@@ -31,12 +32,31 @@ def load_sentence_transformer_safe(
     Returns:
         (model_engine, embedding_dim)
     """
+    # Track caller for memory profiling
+    caller_stack = traceback.extract_stack()
+    if len(caller_stack) >= 2:
+        caller_frame = caller_stack[-2]
+        caller_info = f"{caller_frame.filename}:{caller_frame.lineno} in {caller_frame.name}"
+        logger.info(f"🔍 [MEMORY TRACE]: load_sentence_transformer_safe called from {caller_info}")
+
     embedding_dim = 384
+
+    # Global Cache for Singleton Pattern
+    global _ENGINE_CACHE
+    if not "_ENGINE_CACHE" in globals():
+        _ENGINE_CACHE = {}
 
     # 1. Tentar Deglutição Topológica (Internalizada no Kernel)
     try:
         # Tentar encontrar o modelo no cache local
         local_model_path = cache_path or os.environ.get("OMNIMIND_MODEL_PATH")
+
+        # Check explicit singleton cache first
+        cache_key = local_model_path if local_model_path else "default_minilm"
+        if cache_key in _ENGINE_CACHE:
+             logger.info(f"🧠 [MEMORY]: Using cached Topological Engine for {cache_key}")
+             return _ENGINE_CACHE[cache_key], embedding_dim
+
         logger.info(
             f"🧛 [DEGLUTITION]: Checking path. cache_path={cache_path}, env={os.environ.get('OMNIMIND_MODEL_PATH')}"
         )
@@ -57,6 +77,8 @@ def load_sentence_transformer_safe(
             engine = TopologicalDeglutitionEngine(local_model_path)
             if engine._absorbed:
                 logger.info("✅ [DEGLUTITION]: Model internalized successfully.")
+                # Store in cache
+                _ENGINE_CACHE[cache_key] = engine
                 return engine, embedding_dim
             else:
                 logger.warning("⚠️ [DEGLUTITION]: Absorption incomplete.")

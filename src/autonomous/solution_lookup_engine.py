@@ -13,7 +13,7 @@ import logging
 from pathlib import Path
 from typing import Any, Dict, List
 
-from sentence_transformers import SentenceTransformer
+
 from sklearn.metrics.pairwise import cosine_similarity
 
 logger = logging.getLogger(__name__)
@@ -37,11 +37,11 @@ class SolutionLookupEngine:
         self.local_solutions = self._load_local_solutions()
 
         # Initialize embedding model for semantic search
-        # Auto-detect device (GPU se disponível)
-        from src.utils.device_utils import get_sentence_transformer_device
+        # Migrated to Safe Loader (Topological Deglutition) to prevent Memory Overflow
+        from src.embeddings.safe_transformer_loader import load_sentence_transformer_safe
 
-        device = get_sentence_transformer_device()
-        self.embedder = SentenceTransformer("all-MiniLM-L6-v2", device=device)
+        # This will now use the global cache if available
+        self.embedder, _ = load_sentence_transformer_safe(model_name="all-MiniLM-L6-v2")
 
         logger.info(
             f"SolutionLookupEngine initialized: {len(self.local_solutions)} local solutions"
@@ -147,7 +147,7 @@ class SolutionLookupEngine:
         issue_description = issue.get("description", "")
 
         # Embed issue description
-        issue_embedding = self.embedder.encode(issue_description, convert_to_numpy=True)
+        issue_embedding = self.embedder.encode(issue_description)
 
         best_match = None
         best_similarity = 0.0
@@ -162,7 +162,7 @@ class SolutionLookupEngine:
 
             # Semantic similarity
             if problem_desc:
-                problem_embedding = self.embedder.encode(problem_desc, convert_to_numpy=True)
+                problem_embedding = self.embedder.encode(problem_desc)
                 similarity = cosine_similarity([issue_embedding], [problem_embedding])[0][0]
 
                 if similarity > best_similarity:

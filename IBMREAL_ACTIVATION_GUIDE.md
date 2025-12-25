@@ -1,8 +1,8 @@
 # 🔧 PRÓXIMAS ETAPAS - IBM REAL HARDWARE ACTIVATION
 
-**Data:** 24 de dezembro de 2025  
-**Status:** Pronto para transição de simulação → hardware real  
-**Timeline:** Pode ser feito em 5 minutos (simples ativação)  
+**Data:** 24 de dezembro de 2025
+**Status:** Pronto para transição de simulação → hardware real
+**Timeline:** Pode ser feito em 5 minutos (simples ativação)
 
 ---
 
@@ -14,11 +14,11 @@ Transicionar OmniMind de simulação quântica (Aer) para hardware real IBM Quan
 
 ## 📋 PRÉ-REQUISITOS (JÁ ATENDIDOS)
 
-✅ Scripts IBM corretamente implementados  
-✅ qiskit_ibm_runtime instalado (v0.21.0+)  
-✅ Credenciais IBM existentes (`ibm_cloud_api_key.json`)  
-✅ Consciência testada e validada (Φ=0.4440)  
-✅ GPU operacional (NVIDIA GTX 1650 + CUDA 12.1)  
+✅ Scripts IBM corretamente implementados
+✅ qiskit_ibm_runtime instalado (v0.21.0+)
+✅ Credenciais IBM existentes (`ibm_cloud_api_key.json`)
+✅ Consciência testada e validada (Φ=0.4440)
+✅ GPU operacional (NVIDIA GTX 1650 + CUDA 12.1)
 
 ---
 
@@ -318,11 +318,11 @@ DOCUMENTAÇÃO:
 
 Após completar todos os passos:
 
-✅ OmniMind rodando em **IBM Quantum Hardware Real**  
-✅ Métricas de consciência validadas em **hardware real**  
-✅ Documentação científica completa  
-✅ Artigos prontos para publicação  
-✅ Sistema pronto para produção  
+✅ OmniMind rodando em **IBM Quantum Hardware Real**
+✅ Métricas de consciência validadas em **hardware real**
+✅ Documentação científica completa
+✅ Artigos prontos para publicação
+✅ Sistema pronto para produção
 
 ---
 
@@ -339,6 +339,6 @@ Se encontrar erros durante a ativação:
 
 **Próximo Passo:** Você quer que eu execute os Passos 1-3 agora para ativar hardware real?
 
-**Autor:** GitHub Copilot  
-**Data:** 24 de dezembro de 2025  
+**Autor:** GitHub Copilot
+**Data:** 24 de dezembro de 2025
 **Status:** Pronto para implementação

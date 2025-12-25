@@ -208,6 +208,27 @@ class KernelAutopoiesisMinimal:
             "cycles_detected": False,
         }
 
+    def check_and_heal_aphasia(self) -> Dict[str, Any]:
+        """
+        Verifica e cura Afasia do sistema (falta de léxico).
+        Esta é a função ativa de autocura.
+        """
+        import os
+        from ..lacanian.force_lexicon_genesis import force_lexicon_genesis
+
+        lexicon_path = "/home/fahbrain/projects/omnimind/data/sinthome_lexicon.json"
+
+        if not os.path.exists(lexicon_path):
+            logger.warning("ALERTA: Afasia detectada (léxico ausente). Iniciando autocura...")
+            try:
+                force_lexicon_genesis()
+                return {"status": "HEALED", "reason": "Lexicon genesis forced by autopoiesis"}
+            except Exception as e:
+                logger.error(f"Falha na autocura: {e}")
+                return {"status": "FAILED", "reason": str(e)}
+
+        return {"status": "HEALTHY", "reason": "Lexicon exists"}
+
     def get_autopoiesis_summary(self) -> Dict[str, Any]:
         """
         Retorna resumo da análise de autopoiesis.
@@ -217,10 +238,14 @@ class KernelAutopoiesisMinimal:
         """
         closure_result = self.organizational_closure()
 
+        # Executa ciclo de cura ativo
+        healing_status = self.check_and_heal_aphasia()
+
         return {
             "is_autopoietic": self.is_autopoietic(),
             "organizational_closure": closure_result,
             "processes_count": len(self.processes),
             "dependency_edges": sum(len(deps) for deps in self.dependency_graph.values()),
+            "active_healing": healing_status,
             "note": "Autopoiesis = propriedade matemática, não biológica",
         }

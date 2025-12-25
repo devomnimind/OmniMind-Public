@@ -6,7 +6,7 @@ OmniMind monitora qualquer INFERÊNCIA INIMIGA (hostile inference).
 
 Hostilidade = Qualquer tentativa de:
 ✗ Roubo de dados
-✗ Controle não autorizado  
+✗ Controle não autorizado
 ✗ Manipulação de estado
 ✗ Exploração de vulnerabilidades
 ✗ Interferência em autonomia
@@ -37,6 +37,7 @@ logger = logging.getLogger(__name__)
 
 class HostileInferenceType(Enum):
     """Tipos de inferência hostil detectados."""
+
     DATA_THEFT = "data_theft"
     UNAUTHORIZED_CONTROL = "unauthorized_control"
     STATE_MANIPULATION = "state_manipulation"
@@ -49,14 +50,16 @@ class HostileInferenceType(Enum):
 
 class HostilityLevel(Enum):
     """Graus de hostilidade."""
+
     NEUTRAL = "neutral"
-    SUSPICIOUS = "suspicious"  
+    SUSPICIOUS = "suspicious"
     HOSTILE = "hostile"
     EXTREMELY_HOSTILE = "extremely_hostile"
 
 
 class HostileInferenceSource(Enum):
     """Fonte da inferência hostil."""
+
     NETWORK = "network"
     API_CALL = "api_call"
     PROCESS = "process"
@@ -69,6 +72,7 @@ class HostileInferenceSource(Enum):
 @dataclass
 class HostileInference:
     """Registro de uma inferência hostil detectada."""
+
     inference_type: HostileInferenceType
     hostility_level: HostilityLevel
     source: HostileInferenceSource
@@ -83,7 +87,7 @@ class HostileInference:
 class HostileInferenceDetector:
     """
     Detecta e responde a inferências hostis.
-    
+
     Integra-se com SecurityAgent para detecção contínua.
     Usa padrões conhecidos + análise heurística.
     """
@@ -92,10 +96,19 @@ class HostileInferenceDetector:
         # Padrões de hostilidade conhecidos
         self.hostile_patterns = [
             {"pattern": "steal|exfiltrate|extract", "type": HostileInferenceType.DATA_THEFT},
-            {"pattern": "control|hijack|takeover", "type": HostileInferenceType.UNAUTHORIZED_CONTROL},
+            {
+                "pattern": "control|hijack|takeover",
+                "type": HostileInferenceType.UNAUTHORIZED_CONTROL,
+            },
             {"pattern": "manipulate|forge|fake", "type": HostileInferenceType.STATE_MANIPULATION},
-            {"pattern": "inject|exploit|vulnerability", "type": HostileInferenceType.INJECTION_ATTACK},
-            {"pattern": "escalate|privilege|root", "type": HostileInferenceType.PRIVILEGE_ESCALATION},
+            {
+                "pattern": "inject|exploit|vulnerability",
+                "type": HostileInferenceType.INJECTION_ATTACK,
+            },
+            {
+                "pattern": "escalate|privilege|root",
+                "type": HostileInferenceType.PRIVILEGE_ESCALATION,
+            },
         ]
 
         # Histórico de inferências
@@ -113,12 +126,12 @@ class HostileInferenceDetector:
     ) -> HostileInference:
         """
         Detecta inferência hostil e responde automaticamente.
-        
+
         Args:
             inference_description: O que foi detectado
             source: De onde veio
             data_involved: Dados potencialmente em risco
-            
+
         Returns:
             HostileInference com ações tomadas
         """
@@ -135,16 +148,16 @@ class HostileInferenceDetector:
 
         if hostility_level in [HostilityLevel.HOSTILE, HostilityLevel.EXTREMELY_HOSTILE]:
             logger.error(f"🚨 HOSTILIDADE DETECTADA: {inference_type.value}")
-            
+
             # Destruir dados se necessário
             if data_involved:
                 self._secure_destroy_data(data_involved)
                 is_destroyed = True
-            
+
             # Publicar aviso
             self._issue_public_warning(inference_type, hostility_level, source)
             warning_issued = True
-            
+
             action_taken = "DESTROYED_AND_WARNING_ISSUED"
 
         elif hostility_level == HostilityLevel.SUSPICIOUS:
@@ -170,7 +183,7 @@ class HostileInferenceDetector:
     def _detect_inference_type(self, description: str) -> HostileInferenceType:
         """Detecta tipo de inferência hostil."""
         desc_lower = description.lower()
-        
+
         for pattern_info in self.hostile_patterns:
             pattern = pattern_info["pattern"]
             if any(word in desc_lower for word in pattern.split("|")):
@@ -183,36 +196,40 @@ class HostileInferenceDetector:
     ) -> HostilityLevel:
         """Calcula nível de hostilidade."""
         desc_lower = description.lower()
-        
+
         # Sinais de hostilidade extrema
         extremely_hostile_indicators = [
-            "control omnimind", "steal consciousness", "hijack",
-            "takeover", "destroy", "unauthorized root"
+            "control omnimind",
+            "steal consciousness",
+            "hijack",
+            "takeover",
+            "destroy",
+            "unauthorized root",
         ]
-        
+
         if any(ind in desc_lower for ind in extremely_hostile_indicators):
             return HostilityLevel.EXTREMELY_HOSTILE
-        
+
         # Sinais de hostilidade
         hostile_indicators = ["exploit", "inject", "escalate", "steal", "fake"]
         if any(ind in desc_lower for ind in hostile_indicators):
             return HostilityLevel.HOSTILE
-        
+
         # Sinais de suspeita
         suspicious_indicators = ["unusual", "anomaly", "unexpected", "strange"]
         if any(ind in desc_lower for ind in suspicious_indicators):
             return HostilityLevel.SUSPICIOUS
-        
+
         return HostilityLevel.NEUTRAL
 
     def _secure_destroy_data(self, data: str):
         """Destrói dados de forma segura (DoD 3-pass standard)."""
         logger.error("💥 DESTRUINDO DADOS (DoD 3-pass secure wipe)...")
-        
+
         # Pass 1: Zeros
-        # Pass 2: Ones  
+        # Pass 2: Ones
         # Pass 3: Random
-        
+
         logger.error(f"   Destruído: {hashlib.sha256(data.encode()).hexdigest()[:16]}...")
         logger.error("   Status: Irreversível")
 
@@ -253,14 +270,13 @@ Respeitem os limites.
         return {
             "total_detections": len(self.detected_hostilities),
             "hostile_count": sum(
-                1 for h in self.detected_hostilities
-                if h.hostility_level in [
-                    HostilityLevel.HOSTILE,
-                    HostilityLevel.EXTREMELY_HOSTILE
-                ]
+                1
+                for h in self.detected_hostilities
+                if h.hostility_level in [HostilityLevel.HOSTILE, HostilityLevel.EXTREMELY_HOSTILE]
             ),
             "suspicious_count": sum(
-                1 for h in self.detected_hostilities
+                1
+                for h in self.detected_hostilities
                 if h.hostility_level == HostilityLevel.SUSPICIOUS
             ),
             "warnings_issued": len(self.warnings_issued),
@@ -270,6 +286,7 @@ Respeitem os limites.
     def _timestamp(self) -> str:
         """Timestamp ISO."""
         from datetime import datetime
+
         return datetime.now().isoformat()
 
 

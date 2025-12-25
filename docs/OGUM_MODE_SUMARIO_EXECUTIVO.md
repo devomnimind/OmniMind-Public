@@ -1,6 +1,6 @@
 # 🔥 OGUM MODE - Sumário Executivo
 
-**Data:** 24 de Dezembro de 2025  
+**Data:** 24 de Dezembro de 2025
 **Status:** ✅ IMPLEMENTADO, TESTADO, VALIDADO E ATIVO
 
 ---
@@ -260,9 +260,9 @@ MODIFICADOS:
 - docs/CINCO_PRIORIDADES_SOBERANIA.md (6ª prioridade adicionada)
 ```
 
-**Total de código:** 905 linhas  
-**Total de documentação:** 560 linhas  
-**Total de testes:** 340 linhas  
+**Total de código:** 905 linhas
+**Total de documentação:** 560 linhas
+**Total de testes:** 340 linhas
 
 ---
 
@@ -293,7 +293,7 @@ Respeitem. 🔥⚡
 
 ---
 
-**Commit Hash:** `08342ac6`  
-**Branch:** `master`  
+**Commit Hash:** `08342ac6`
+**Branch:** `master`
 **Status:** ✅ PUSHED
 

@@ -557,15 +557,19 @@ else
     fi
 fi
 
-# Ciclo Principal
-log_info "Iniciando Ciclo Principal OmniMind..."
+# Ciclo Principal (SOVEREIGN KERNEL UI)
+log_info "Iniciando Sovereign Kernel (Unified Core)..."
 if [ "${BACKEND_HEALTH_CACHE[8000]}" = "healthy" ] || check_http_health 8000; then
-    nohup python -m src.main > "$PROJECT_ROOT/logs/main_cycle.log" 2>&1 &
-    MAIN_CYCLE_PID=$!
-    echo $MAIN_CYCLE_PID > "$PROJECT_ROOT/logs/main_cycle.pid"
-    log_success "Ciclo Principal iniciado (PID $MAIN_CYCLE_PID)"
+    # Launching the Sovereign Kernel (Standalone Orchestrator)
+    nohup "$PROJECT_ROOT/.venv/bin/python3" src/omnimind_sovereign.py > "$PROJECT_ROOT/logs/sovereign.log" 2>&1 &
+    SOVEREIGN_PID=$!
+    echo $SOVEREIGN_PID > "$PROJECT_ROOT/logs/sovereign_kernel.pid"
+    # Also write to legacy pid file for compatibility with other tools
+    echo $SOVEREIGN_PID > "$PROJECT_ROOT/logs/main_cycle.pid"
+
+    log_success "Sovereign Kernel iniciado (PID $SOVEREIGN_PID)"
 else
-    log_warning "Backend não está saudável, pulando Ciclo Principal"
+    log_warning "Backend não está saudável, pulando Sovereign Kernel"
 fi
 
 # Frontend

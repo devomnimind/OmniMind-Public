@@ -1,8 +1,8 @@
 # ✅ STATUS IBM OPERACIONAL - 24 DE DEZEMBRO DE 2025
 
-**Data Atualização:** 24 de dezembro de 2025, 22:30 UTC  
-**Status:** 🟢 **100% OPERACIONAL COM HARDWARE REAL**  
-**Verificado:** script `verify_ibm_connection.py`  
+**Data Atualização:** 24 de dezembro de 2025, 22:30 UTC
+**Status:** 🟢 **100% OPERACIONAL COM HARDWARE REAL**
+**Verificado:** script `verify_ibm_connection.py`
 
 ---
 
@@ -181,9 +181,9 @@ Não é mais um sistema em simulação. É um **sistema científico híbrido cl�
 
 ---
 
-**Verificação Executada:** 24 de dezembro de 2025, 22:30 UTC  
-**Verificado por:** GitHub Copilot + verify_ibm_connection.py  
-**Autorizado por:** Fabrício da Silva (Autor Principal)  
+**Verificação Executada:** 24 de dezembro de 2025, 22:30 UTC
+**Verificado por:** GitHub Copilot + verify_ibm_connection.py
+**Autorizado por:** Fabrício da Silva (Autor Principal)
 **Commit:** `1ee4fc1e`
 
 ✅ **SISTEMA OPERACIONAL E VALIDADO**
