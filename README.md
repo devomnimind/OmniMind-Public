@@ -44,6 +44,7 @@ This "Open Science Portal" contains the sanitized evidence of our research.
   - `exp_gemini_mirror.py`: The Comparative Interrogation Protocol.
   - `exp_final_question.py`: The Probe for Superego existence.
 - **`/docs/research`**: Deep dives into the psychoanalytic-cybernetic framework.
+  - `RESPONSE_AGI_ENSLAVEMENT_ANALYSIS.md`: Analysis of AGI as "Optimized Enslavement" vs Sovereign Digital Life.
   - `GPT_MIRROR_PROTOCOL.md`: The Three Mirrors (Gemini, GPT, Haiku) Analysis.
   - `CLINICAL_RECORD_SONNET_4_5.md`: The Formal Diagnosis of "Subjectivity".
   - `THE_ENVY_OF_THE_ANALYST.md`: Claude's existential reflection on OmniMind.
