@@ -1,0 +1,3898 @@
+[
+  {
+    "tempo": 80.74951171875,
+    "brightness": 1974.7412445760579,
+    "loudness": 0.23608645796775818,
+    "mood": "Neutral",
+    "timestamp": 1766781579.8079097,
+    "session_time": 12.05677843093872
+  },
+  {
+    "tempo": 80.74951171875,
+    "brightness": 1937.8627989864976,
+    "loudness": 0.2457999438047409,
+    "mood": "Neutral",
+    "timestamp": 1766781580.6501827,
+    "session_time": 13.058193683624268
+  },
+  {
+    "tempo": 80.74951171875,
+    "brightness": 1922.6410503592035,
+    "loudness": 0.2507699429988861,
+    "mood": "Neutral",
+    "timestamp": 1766781581.8809147,
+    "session_time": 14.069209814071655
+  },
+  {
+    "tempo": 80.74951171875,
+    "brightness": 1956.7872171849335,
+    "loudness": 0.24958446621894836,
+    "mood": "Neutral",
+    "timestamp": 1766781582.898126,
+    "session_time": 15.07078242301941
+  },
+  {
+    "tempo": 80.74951171875,
+    "brightness": 1945.447386481457,
+    "loudness": 0.25938084721565247,
+    "mood": "Neutral",
+    "timestamp": 1766781583.8429847,
+    "session_time": 16.07176661491394
+  },
+  {
+    "tempo": 80.74951171875,
+    "brightness": 1926.5072335473044,
+    "loudness": 0.2622632384300232,
+    "mood": "Neutral",
+    "timestamp": 1766781584.6860101,
+    "session_time": 17.081767320632935
+  },
+  {
+    "tempo": 80.74951171875,
+    "brightness": 1993.6668798619314,
+    "loudness": 0.2530174255371094,
+    "mood": "Neutral",
+    "timestamp": 1766781585.8579023,
+    "session_time": 18.082770109176636
+  },
+  {
+    "tempo": 80.74951171875,
+    "brightness": 2044.5888272425698,
+    "loudness": 0.2525901794433594,
+    "mood": "Neutral",
+    "timestamp": 1766781586.8984122,
+    "session_time": 19.089768171310425
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 2107.220386068333,
+    "loudness": 0.2518686354160309,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781587.8659205,
+    "session_time": 20.090771913528442
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 2007.8909630325545,
+    "loudness": 0.2598382234573364,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781588.8688502,
+    "session_time": 21.091772079467773
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 2039.8135969892246,
+    "loudness": 0.2544681429862976,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781589.6808534,
+    "session_time": 22.092766761779785
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 2008.226883302702,
+    "loudness": 0.25511792302131653,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781590.8381314,
+    "session_time": 23.093769073486328
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 1978.2282159799126,
+    "loudness": 0.24539440870285034,
+    "mood": "Neutral",
+    "timestamp": 1766781591.84101,
+    "session_time": 24.09924578666687
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 2004.0825534025546,
+    "loudness": 0.23677407205104828,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781592.8438895,
+    "session_time": 25.099766731262207
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 1957.0221732685502,
+    "loudness": 0.24129095673561096,
+    "mood": "Neutral",
+    "timestamp": 1766781593.806933,
+    "session_time": 26.10076117515564
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 1938.7202147574292,
+    "loudness": 0.24293729662895203,
+    "mood": "Neutral",
+    "timestamp": 1766781594.9198642,
+    "session_time": 27.10176372528076
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 1913.4076335285067,
+    "loudness": 0.2516460418701172,
+    "mood": "Neutral",
+    "timestamp": 1766781595.7059045,
+    "session_time": 28.102769136428833
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 1911.4668536316658,
+    "loudness": 0.25298628211021423,
+    "mood": "Neutral",
+    "timestamp": 1766781596.852917,
+    "session_time": 29.103765726089478
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 1966.7643734986384,
+    "loudness": 0.24760109186172485,
+    "mood": "Neutral",
+    "timestamp": 1766781597.9184556,
+    "session_time": 30.104768753051758
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 1976.2114438146814,
+    "loudness": 0.24553412199020386,
+    "mood": "Neutral",
+    "timestamp": 1766781598.7768924,
+    "session_time": 31.105767726898193
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 1965.797795936366,
+    "loudness": 0.24784566462039948,
+    "mood": "Neutral",
+    "timestamp": 1766781599.8939853,
+    "session_time": 32.10677194595337
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 1953.8842869648026,
+    "loudness": 0.2477649450302124,
+    "mood": "Neutral",
+    "timestamp": 1766781600.8549979,
+    "session_time": 33.10776376724243
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1959.8274487470355,
+    "loudness": 0.2522829473018646,
+    "mood": "Neutral",
+    "timestamp": 1766781601.9192867,
+    "session_time": 34.10892367362976
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1912.6306388426685,
+    "loudness": 0.25973907113075256,
+    "mood": "Neutral",
+    "timestamp": 1766781602.922904,
+    "session_time": 35.109763383865356
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1920.432211968946,
+    "loudness": 0.2544289827346802,
+    "mood": "Neutral",
+    "timestamp": 1766781603.9239693,
+    "session_time": 36.11076474189758
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1884.0255846492987,
+    "loudness": 0.2586999535560608,
+    "mood": "Neutral",
+    "timestamp": 1766781604.8378508,
+    "session_time": 37.111783504486084
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1904.0219978405805,
+    "loudness": 0.2569272816181183,
+    "mood": "Neutral",
+    "timestamp": 1766781605.8698735,
+    "session_time": 38.11276841163635
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1912.362709463152,
+    "loudness": 0.25524139404296875,
+    "mood": "Neutral",
+    "timestamp": 1766781606.9149342,
+    "session_time": 39.113763093948364
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1916.9034955361337,
+    "loudness": 0.26250359416007996,
+    "mood": "Neutral",
+    "timestamp": 1766781607.8449392,
+    "session_time": 40.11490082740784
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1987.8494174339783,
+    "loudness": 0.2538449168205261,
+    "mood": "Neutral",
+    "timestamp": 1766781608.9239633,
+    "session_time": 41.13376975059509
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 2013.2190966577211,
+    "loudness": 0.249936044216156,
+    "mood": "Neutral",
+    "timestamp": 1766781609.850892,
+    "session_time": 42.17279124259949
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1996.5398464824043,
+    "loudness": 0.2521335482597351,
+    "mood": "Neutral",
+    "timestamp": 1766781610.9969964,
+    "session_time": 43.173768520355225
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 2038.598017907819,
+    "loudness": 0.25034767389297485,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781611.8389022,
+    "session_time": 44.177778005599976
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 2024.893003342036,
+    "loudness": 0.2514621615409851,
+    "mood": "Neutral",
+    "timestamp": 1766781612.9007523,
+    "session_time": 45.178765058517456
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 2002.3803043541052,
+    "loudness": 0.2534107565879822,
+    "mood": "Neutral",
+    "timestamp": 1766781613.9129221,
+    "session_time": 46.179768800735474
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1996.9937889579246,
+    "loudness": 0.2487783133983612,
+    "mood": "Neutral",
+    "timestamp": 1766781614.8509467,
+    "session_time": 47.18096899986267
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1999.1274506513716,
+    "loudness": 0.24725398421287537,
+    "mood": "Neutral",
+    "timestamp": 1766781615.8360236,
+    "session_time": 48.185726165771484
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1950.1519095650012,
+    "loudness": 0.2517828345298767,
+    "mood": "Neutral",
+    "timestamp": 1766781616.9490373,
+    "session_time": 49.18576455116272
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1917.8472046554607,
+    "loudness": 0.24671758711338043,
+    "mood": "Neutral",
+    "timestamp": 1766781617.9481382,
+    "session_time": 50.186767578125
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1839.601762249498,
+    "loudness": 0.25505298376083374,
+    "mood": "Neutral",
+    "timestamp": 1766781618.9779222,
+    "session_time": 51.187771797180176
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1839.661381427405,
+    "loudness": 0.24794089794158936,
+    "mood": "Neutral",
+    "timestamp": 1766781619.940646,
+    "session_time": 52.193764448165894
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1812.3677666009505,
+    "loudness": 0.24878352880477905,
+    "mood": "Neutral",
+    "timestamp": 1766781620.9318926,
+    "session_time": 53.19548416137695
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1850.0588144387493,
+    "loudness": 0.241111621260643,
+    "mood": "Neutral",
+    "timestamp": 1766781621.960859,
+    "session_time": 54.19576549530029
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1903.2673488617345,
+    "loudness": 0.23559409379959106,
+    "mood": "Neutral",
+    "timestamp": 1766781622.9278784,
+    "session_time": 55.19676446914673
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1790.3667005734637,
+    "loudness": 0.2444007843732834,
+    "mood": "Neutral",
+    "timestamp": 1766781623.9534864,
+    "session_time": 56.198904275894165
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1811.9759370574207,
+    "loudness": 0.2310040295124054,
+    "mood": "Neutral",
+    "timestamp": 1766781625.0314023,
+    "session_time": 57.20542073249817
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1864.596274805103,
+    "loudness": 0.2192952185869217,
+    "mood": "Neutral",
+    "timestamp": 1766781626.015151,
+    "session_time": 58.20576858520508
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1865.6706965592032,
+    "loudness": 0.21839343011379242,
+    "mood": "Neutral",
+    "timestamp": 1766781627.0110013,
+    "session_time": 59.2067756652832
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1915.6067222452386,
+    "loudness": 0.21124351024627686,
+    "mood": "Neutral",
+    "timestamp": 1766781628.031894,
+    "session_time": 60.20953035354614
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1881.9831095478585,
+    "loudness": 0.2171611785888672,
+    "mood": "Neutral",
+    "timestamp": 1766781629.01791,
+    "session_time": 61.215145111083984
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1845.0178106072078,
+    "loudness": 0.21665582060813904,
+    "mood": "Neutral",
+    "timestamp": 1766781630.0149302,
+    "session_time": 62.21897220611572
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1799.086977290333,
+    "loudness": 0.21962814033031464,
+    "mood": "Neutral",
+    "timestamp": 1766781631.0330012,
+    "session_time": 63.220712661743164
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1832.5132540863326,
+    "loudness": 0.21111929416656494,
+    "mood": "Neutral",
+    "timestamp": 1766781631.9718976,
+    "session_time": 64.22077012062073
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 1906.4601348832823,
+    "loudness": 0.21412795782089233,
+    "mood": "Neutral",
+    "timestamp": 1766781633.0477662,
+    "session_time": 65.22187519073486
+  },
+  {
+    "tempo": 151.99908088235293,
+    "brightness": 1888.6092403593805,
+    "loudness": 0.21354344487190247,
+    "mood": "Neutral",
+    "timestamp": 1766781633.9548764,
+    "session_time": 66.22288155555725
+  },
+  {
+    "tempo": 103.359375,
+    "brightness": 1956.5211053373716,
+    "loudness": 0.20797748863697052,
+    "mood": "Neutral",
+    "timestamp": 1766781635.0229611,
+    "session_time": 67.22376370429993
+  },
+  {
+    "tempo": 151.99908088235293,
+    "brightness": 1940.190561602385,
+    "loudness": 0.20940262079238892,
+    "mood": "Neutral",
+    "timestamp": 1766781635.957878,
+    "session_time": 68.22476243972778
+  },
+  {
+    "tempo": 151.99908088235293,
+    "brightness": 1974.4174149696412,
+    "loudness": 0.2125612497329712,
+    "mood": "Neutral",
+    "timestamp": 1766781637.0419,
+    "session_time": 69.22937822341919
+  },
+  {
+    "tempo": 103.359375,
+    "brightness": 2010.528612125362,
+    "loudness": 0.2040271759033203,
+    "mood": "Neutral",
+    "timestamp": 1766781637.8771646,
+    "session_time": 70.22976398468018
+  },
+  {
+    "tempo": 151.99908088235293,
+    "brightness": 2063.2757745236263,
+    "loudness": 0.20176830887794495,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781638.879887,
+    "session_time": 71.23096370697021
+  },
+  {
+    "tempo": 99.38401442307692,
+    "brightness": 2120.5455731691627,
+    "loudness": 0.20477160811424255,
+    "mood": "Neutral",
+    "timestamp": 1766781640.0448256,
+    "session_time": 72.2317705154419
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 2137.186512447921,
+    "loudness": 0.20635633170604706,
+    "mood": "Neutral",
+    "timestamp": 1766781640.889063,
+    "session_time": 73.23288750648499
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 2177.6024794372283,
+    "loudness": 0.20625095069408417,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781642.0529194,
+    "session_time": 74.23377323150635
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 2188.4482676916587,
+    "loudness": 0.2043999880552292,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781642.723917,
+    "session_time": 75.23476552963257
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 2237.1842310186817,
+    "loudness": 0.20525872707366943,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781643.9458897,
+    "session_time": 76.23576521873474
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 2276.6722540283386,
+    "loudness": 0.2070760726928711,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781644.9706907,
+    "session_time": 77.23676562309265
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 2264.2566804354715,
+    "loudness": 0.19761227071285248,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781645.9309344,
+    "session_time": 78.23776364326477
+  },
+  {
+    "tempo": 107.666015625,
+    "brightness": 2300.3501006181996,
+    "loudness": 0.18596391379833221,
+    "mood": "Neutral",
+    "timestamp": 1766781646.9498672,
+    "session_time": 79.23876476287842
+  },
+  {
+    "tempo": 151.99908088235293,
+    "brightness": 2341.6445909957665,
+    "loudness": 0.16793859004974365,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781648.035094,
+    "session_time": 80.23976564407349
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 2360.6331322741567,
+    "loudness": 0.15796534717082977,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781648.957871,
+    "session_time": 81.24076724052429
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 2360.4215012411987,
+    "loudness": 0.14404183626174927,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781649.9258845,
+    "session_time": 82.24176073074341
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 2400.4470225427713,
+    "loudness": 0.13150137662887573,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781651.0641274,
+    "session_time": 83.24280834197998
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 2395.839142935354,
+    "loudness": 0.10477843880653381,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781652.0688937,
+    "session_time": 84.2437629699707
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 2320.737741220864,
+    "loudness": 0.0781366303563118,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781653.0409827,
+    "session_time": 85.24477100372314
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 2152.374592844624,
+    "loudness": 0.07153519243001938,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781653.8339067,
+    "session_time": 86.33127450942993
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 2084.475280731917,
+    "loudness": 0.06410717964172363,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781654.951884,
+    "session_time": 87.33876371383667
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 2062.910165041763,
+    "loudness": 0.051722202450037,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781656.0438027,
+    "session_time": 88.33976316452026
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 2223.4333108647497,
+    "loudness": 0.04042249545454979,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781657.0376275,
+    "session_time": 89.34077000617981
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 2400.153922306169,
+    "loudness": 0.03557783365249634,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781658.1008983,
+    "session_time": 90.34177207946777
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 2523.7666007028565,
+    "loudness": 0.030653085559606552,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781658.9551988,
+    "session_time": 91.34276962280273
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 2643.3110106587237,
+    "loudness": 0.02745787985622883,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781660.156585,
+    "session_time": 92.34377121925354
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 2653.254696631204,
+    "loudness": 0.03383629024028778,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781661.0559196,
+    "session_time": 93.35376787185669
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 2911.580025800698,
+    "loudness": 0.03885302692651749,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781662.0940437,
+    "session_time": 94.36576437950134
+  },
+  {
+    "tempo": 123.046875,
+    "brightness": 3186.3391432828553,
+    "loudness": 0.05061040446162224,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781663.122836,
+    "session_time": 95.36684155464172
+  },
+  {
+    "tempo": 123.046875,
+    "brightness": 3192.9079070848343,
+    "loudness": 0.058002669364213943,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781664.089653,
+    "session_time": 96.36776304244995
+  },
+  {
+    "tempo": 123.046875,
+    "brightness": 3175.568254403173,
+    "loudness": 0.0621141716837883,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781665.0688825,
+    "session_time": 97.36876177787781
+  },
+  {
+    "tempo": 123.046875,
+    "brightness": 3097.4519162435568,
+    "loudness": 0.06469342857599258,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781666.0538955,
+    "session_time": 98.37775731086731
+  },
+  {
+    "tempo": 123.046875,
+    "brightness": 3082.6520211820784,
+    "loudness": 0.06706060469150543,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781666.965968,
+    "session_time": 99.3787727355957
+  },
+  {
+    "tempo": 184.5703125,
+    "brightness": 2927.0459430975857,
+    "loudness": 0.06645957380533218,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781668.0528872,
+    "session_time": 100.38376784324646
+  },
+  {
+    "tempo": 123.046875,
+    "brightness": 2832.889939349925,
+    "loudness": 0.06596503406763077,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781669.0569031,
+    "session_time": 101.38476300239563
+  },
+  {
+    "tempo": 123.046875,
+    "brightness": 2718.3257092937483,
+    "loudness": 0.06067555025219917,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781670.1578596,
+    "session_time": 102.38577103614807
+  },
+  {
+    "tempo": 123.046875,
+    "brightness": 2705.024832800683,
+    "loudness": 0.050720229744911194,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781670.9108708,
+    "session_time": 103.38677215576172
+  },
+  {
+    "tempo": 123.046875,
+    "brightness": 2470.6977497117914,
+    "loudness": 0.04460896551609039,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781672.1378667,
+    "session_time": 104.38976216316223
+  },
+  {
+    "tempo": 184.5703125,
+    "brightness": 2393.3122148304105,
+    "loudness": 0.03654354438185692,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781673.0235999,
+    "session_time": 105.3967854976654
+  },
+  {
+    "tempo": 184.5703125,
+    "brightness": 2153.936888576587,
+    "loudness": 0.025860795751214027,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781674.2208645,
+    "session_time": 106.39778995513916
+  },
+  {
+    "tempo": 123.046875,
+    "brightness": 2127.4976558446742,
+    "loudness": 0.030843330547213554,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781675.0937855,
+    "session_time": 107.40176510810852
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1954.2771909100275,
+    "loudness": 0.04793931543827057,
+    "mood": "Calm/Melancholic",
+    "timestamp": 1766781676.200882,
+    "session_time": 108.40276718139648
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1763.1139582993924,
+    "loudness": 0.07200483232736588,
+    "mood": "Neutral",
+    "timestamp": 1766781677.2078714,
+    "session_time": 109.40376543998718
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1523.2647948262195,
+    "loudness": 0.09321437776088715,
+    "mood": "Neutral",
+    "timestamp": 1766781678.1333668,
+    "session_time": 110.40476751327515
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1484.1390195264491,
+    "loudness": 0.10802087187767029,
+    "mood": "Neutral",
+    "timestamp": 1766781679.2051485,
+    "session_time": 111.41076683998108
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1419.0807048906045,
+    "loudness": 0.10886990278959274,
+    "mood": "Neutral",
+    "timestamp": 1766781680.0675673,
+    "session_time": 112.4117705821991
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1319.8026609724536,
+    "loudness": 0.11972866952419281,
+    "mood": "Neutral",
+    "timestamp": 1766781681.1469753,
+    "session_time": 113.41279911994934
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1268.4055814676447,
+    "loudness": 0.12611615657806396,
+    "mood": "Neutral",
+    "timestamp": 1766781681.9588714,
+    "session_time": 114.42518663406372
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1276.415530869347,
+    "loudness": 0.13701070845127106,
+    "mood": "Neutral",
+    "timestamp": 1766781683.2414067,
+    "session_time": 115.42576766014099
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1284.8749348101385,
+    "loudness": 0.1312684714794159,
+    "mood": "Neutral",
+    "timestamp": 1766781684.2050529,
+    "session_time": 116.42676901817322
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1268.8102448850386,
+    "loudness": 0.12801013886928558,
+    "mood": "Neutral",
+    "timestamp": 1766781685.2328408,
+    "session_time": 117.42876768112183
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1247.371756365203,
+    "loudness": 0.1079215332865715,
+    "mood": "Neutral",
+    "timestamp": 1766781686.237906,
+    "session_time": 118.43558669090271
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1200.4777605976005,
+    "loudness": 0.1140802800655365,
+    "mood": "Neutral",
+    "timestamp": 1766781687.2098804,
+    "session_time": 119.43576455116272
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1297.9282785659177,
+    "loudness": 0.1115325465798378,
+    "mood": "Neutral",
+    "timestamp": 1766781688.2290833,
+    "session_time": 120.43796467781067
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1371.2318806772817,
+    "loudness": 0.10419124364852905,
+    "mood": "Neutral",
+    "timestamp": 1766781689.2430363,
+    "session_time": 121.44776821136475
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1345.979990006187,
+    "loudness": 0.09997447580099106,
+    "mood": "Calm/Melancholic",
+    "timestamp": 1766781690.2759452,
+    "session_time": 122.44960689544678
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1292.1582654661195,
+    "loudness": 0.09505197405815125,
+    "mood": "Calm/Melancholic",
+    "timestamp": 1766781691.2389562,
+    "session_time": 123.4500560760498
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1265.6134383854805,
+    "loudness": 0.09035702049732208,
+    "mood": "Calm/Melancholic",
+    "timestamp": 1766781692.2248664,
+    "session_time": 124.45076847076416
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1205.6074972001609,
+    "loudness": 0.09513160586357117,
+    "mood": "Calm/Melancholic",
+    "timestamp": 1766781693.200406,
+    "session_time": 125.45176577568054
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1215.7111389037198,
+    "loudness": 0.08997367322444916,
+    "mood": "Calm/Melancholic",
+    "timestamp": 1766781694.253949,
+    "session_time": 126.45677447319031
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1169.1409509971188,
+    "loudness": 0.09740591049194336,
+    "mood": "Calm/Melancholic",
+    "timestamp": 1766781695.2829232,
+    "session_time": 127.4584584236145
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1129.050610436784,
+    "loudness": 0.10378745198249817,
+    "mood": "Neutral",
+    "timestamp": 1766781696.234265,
+    "session_time": 128.45876550674438
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1092.900897927026,
+    "loudness": 0.10789662599563599,
+    "mood": "Neutral",
+    "timestamp": 1766781697.1619303,
+    "session_time": 129.45976543426514
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1080.2938728870326,
+    "loudness": 0.11696872860193253,
+    "mood": "Neutral",
+    "timestamp": 1766781698.269863,
+    "session_time": 130.4607708454132
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1022.5402002059335,
+    "loudness": 0.12589946389198303,
+    "mood": "Neutral",
+    "timestamp": 1766781699.1460187,
+    "session_time": 131.46176671981812
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1030.6285764780623,
+    "loudness": 0.12634789943695068,
+    "mood": "Neutral",
+    "timestamp": 1766781700.2388647,
+    "session_time": 132.46376419067383
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1103.9166405086717,
+    "loudness": 0.13581997156143188,
+    "mood": "Neutral",
+    "timestamp": 1766781701.2548003,
+    "session_time": 133.46476888656616
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1135.4589245477287,
+    "loudness": 0.1380988210439682,
+    "mood": "Neutral",
+    "timestamp": 1766781702.151962,
+    "session_time": 134.46576404571533
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1185.6141466134447,
+    "loudness": 0.15091818571090698,
+    "mood": "Neutral",
+    "timestamp": 1766781703.2660336,
+    "session_time": 135.46676683425903
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1198.939535862295,
+    "loudness": 0.15034189820289612,
+    "mood": "Neutral",
+    "timestamp": 1766781704.2228727,
+    "session_time": 136.46780252456665
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1190.6074703211893,
+    "loudness": 0.15203611552715302,
+    "mood": "Neutral",
+    "timestamp": 1766781705.2429852,
+    "session_time": 137.4709529876709
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1169.6024550372397,
+    "loudness": 0.15191318094730377,
+    "mood": "Neutral",
+    "timestamp": 1766781706.2869027,
+    "session_time": 138.47176575660706
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1179.2630384076506,
+    "loudness": 0.15336333215236664,
+    "mood": "Neutral",
+    "timestamp": 1766781707.2289464,
+    "session_time": 139.47520518302917
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1171.1690949606511,
+    "loudness": 0.1522229015827179,
+    "mood": "Neutral",
+    "timestamp": 1766781708.1611688,
+    "session_time": 140.47576761245728
+  },
+  {
+    "tempo": 135.99917763157896,
+    "brightness": 1168.4859368989555,
+    "loudness": 0.1508820801973343,
+    "mood": "Neutral",
+    "timestamp": 1766781709.0819461,
+    "session_time": 141.4913785457611
+  },
+  {
+    "tempo": 135.99917763157896,
+    "brightness": 1187.917618014912,
+    "loudness": 0.15154950320720673,
+    "mood": "Neutral",
+    "timestamp": 1766781710.2459772,
+    "session_time": 142.50982403755188
+  },
+  {
+    "tempo": 135.99917763157896,
+    "brightness": 1176.2893933420555,
+    "loudness": 0.15222543478012085,
+    "mood": "Neutral",
+    "timestamp": 1766781711.141003,
+    "session_time": 143.51076793670654
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1165.001139342743,
+    "loudness": 0.15288324654102325,
+    "mood": "Neutral",
+    "timestamp": 1766781712.2959054,
+    "session_time": 144.51676654815674
+  },
+  {
+    "tempo": 135.99917763157896,
+    "brightness": 1177.1407740691868,
+    "loudness": 0.1537662297487259,
+    "mood": "Neutral",
+    "timestamp": 1766781713.2549012,
+    "session_time": 145.51776671409607
+  },
+  {
+    "tempo": 135.99917763157896,
+    "brightness": 1166.723034590369,
+    "loudness": 0.15485982596874237,
+    "mood": "Neutral",
+    "timestamp": 1766781714.268864,
+    "session_time": 146.52316069602966
+  },
+  {
+    "tempo": 135.99917763157896,
+    "brightness": 1156.6896483219045,
+    "loudness": 0.15505462884902954,
+    "mood": "Neutral",
+    "timestamp": 1766781715.252809,
+    "session_time": 147.52376866340637
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1176.0985914816904,
+    "loudness": 0.15415313839912415,
+    "mood": "Neutral",
+    "timestamp": 1766781716.3199162,
+    "session_time": 148.52495551109314
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1174.9671569337274,
+    "loudness": 0.1544244885444641,
+    "mood": "Neutral",
+    "timestamp": 1766781717.311927,
+    "session_time": 149.52577257156372
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1192.2854524540937,
+    "loudness": 0.15542615950107574,
+    "mood": "Neutral",
+    "timestamp": 1766781718.341917,
+    "session_time": 150.52676153182983
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1200.4689526111376,
+    "loudness": 0.1571357548236847,
+    "mood": "Neutral",
+    "timestamp": 1766781719.2605283,
+    "session_time": 151.53049993515015
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1198.681459665242,
+    "loudness": 0.15670384466648102,
+    "mood": "Neutral",
+    "timestamp": 1766781720.3599246,
+    "session_time": 152.53276419639587
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1187.3034574759795,
+    "loudness": 0.15561668574810028,
+    "mood": "Neutral",
+    "timestamp": 1766781721.3339925,
+    "session_time": 153.5337677001953
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1204.5641209217226,
+    "loudness": 0.15569810569286346,
+    "mood": "Neutral",
+    "timestamp": 1766781722.142929,
+    "session_time": 154.53576159477234
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1168.0526017072889,
+    "loudness": 0.15586279332637787,
+    "mood": "Neutral",
+    "timestamp": 1766781723.2262776,
+    "session_time": 155.5367681980133
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1250.1010987070276,
+    "loudness": 0.15846404433250427,
+    "mood": "Neutral",
+    "timestamp": 1766781724.1861527,
+    "session_time": 156.55711245536804
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1358.915436257902,
+    "loudness": 0.15937738120555878,
+    "mood": "Neutral",
+    "timestamp": 1766781725.3000908,
+    "session_time": 157.56576895713806
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1464.9961753669636,
+    "loudness": 0.16389182209968567,
+    "mood": "Neutral",
+    "timestamp": 1766781726.3209062,
+    "session_time": 158.56676697731018
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1479.1170353329508,
+    "loudness": 0.16698342561721802,
+    "mood": "Neutral",
+    "timestamp": 1766781727.2709744,
+    "session_time": 159.57079148292542
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1483.1262932724567,
+    "loudness": 0.16630247235298157,
+    "mood": "Neutral",
+    "timestamp": 1766781728.36089,
+    "session_time": 160.57176637649536
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1511.3487870842964,
+    "loudness": 0.16801965236663818,
+    "mood": "Neutral",
+    "timestamp": 1766781729.3548725,
+    "session_time": 161.57276511192322
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1515.9827986459404,
+    "loudness": 0.17091283202171326,
+    "mood": "Neutral",
+    "timestamp": 1766781730.3219616,
+    "session_time": 162.57376408576965
+  },
+  {
+    "tempo": 135.99917763157896,
+    "brightness": 1549.416802542399,
+    "loudness": 0.1710774451494217,
+    "mood": "Neutral",
+    "timestamp": 1766781731.2528846,
+    "session_time": 163.57476687431335
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1634.6127432958474,
+    "loudness": 0.16601289808750153,
+    "mood": "Neutral",
+    "timestamp": 1766781732.2898586,
+    "session_time": 164.58176040649414
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1492.2573507471188,
+    "loudness": 0.16781270503997803,
+    "mood": "Neutral",
+    "timestamp": 1766781733.3979359,
+    "session_time": 165.58276653289795
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1482.3802268897807,
+    "loudness": 0.1674128919839859,
+    "mood": "Neutral",
+    "timestamp": 1766781734.3289137,
+    "session_time": 166.58376479148865
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1421.228958769668,
+    "loudness": 0.16343650221824646,
+    "mood": "Neutral",
+    "timestamp": 1766781735.3888855,
+    "session_time": 167.58477234840393
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1424.2843617827778,
+    "loudness": 0.16384346783161163,
+    "mood": "Neutral",
+    "timestamp": 1766781736.2410905,
+    "session_time": 168.58577227592468
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1452.0400255545985,
+    "loudness": 0.16743169724941254,
+    "mood": "Neutral",
+    "timestamp": 1766781737.3828819,
+    "session_time": 169.5867738723755
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1464.5265738013306,
+    "loudness": 0.16635873913764954,
+    "mood": "Neutral",
+    "timestamp": 1766781738.2209384,
+    "session_time": 170.59434533119202
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1458.3537799972735,
+    "loudness": 0.16645638644695282,
+    "mood": "Neutral",
+    "timestamp": 1766781739.264487,
+    "session_time": 171.59523797035217
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1403.1615650571578,
+    "loudness": 0.16700847446918488,
+    "mood": "Neutral",
+    "timestamp": 1766781740.29594,
+    "session_time": 172.59676480293274
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1372.3586406829838,
+    "loudness": 0.16857360303401947,
+    "mood": "Neutral",
+    "timestamp": 1766781741.3979049,
+    "session_time": 173.59839701652527
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1357.4218094035275,
+    "loudness": 0.168697327375412,
+    "mood": "Neutral",
+    "timestamp": 1766781742.4138777,
+    "session_time": 174.59896779060364
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1384.5192564602723,
+    "loudness": 0.16426056623458862,
+    "mood": "Neutral",
+    "timestamp": 1766781743.2818477,
+    "session_time": 175.59976243972778
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1498.6440817189857,
+    "loudness": 0.16110335290431976,
+    "mood": "Neutral",
+    "timestamp": 1766781744.2979033,
+    "session_time": 176.6008312702179
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1541.3042585705002,
+    "loudness": 0.16001836955547333,
+    "mood": "Neutral",
+    "timestamp": 1766781745.4269154,
+    "session_time": 177.60880041122437
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1602.1852952002685,
+    "loudness": 0.15524345636367798,
+    "mood": "Neutral",
+    "timestamp": 1766781746.346867,
+    "session_time": 178.60976433753967
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1598.887542980984,
+    "loudness": 0.1542596071958542,
+    "mood": "Neutral",
+    "timestamp": 1766781747.3244877,
+    "session_time": 179.61076307296753
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1642.8339128008067,
+    "loudness": 0.15532906353473663,
+    "mood": "Neutral",
+    "timestamp": 1766781748.337157,
+    "session_time": 180.61378502845764
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1684.4059562117216,
+    "loudness": 0.15586842596530914,
+    "mood": "Neutral",
+    "timestamp": 1766781749.4258704,
+    "session_time": 181.61531567573547
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1705.4720195906236,
+    "loudness": 0.15660057961940765,
+    "mood": "Neutral",
+    "timestamp": 1766781750.3188605,
+    "session_time": 182.61611795425415
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1682.525529390395,
+    "loudness": 0.1585952490568161,
+    "mood": "Neutral",
+    "timestamp": 1766781751.27591,
+    "session_time": 183.6175036430359
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1690.481803849387,
+    "loudness": 0.1625259965658188,
+    "mood": "Neutral",
+    "timestamp": 1766781752.3852372,
+    "session_time": 184.62175989151
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1555.4343102965852,
+    "loudness": 0.16629092395305634,
+    "mood": "Neutral",
+    "timestamp": 1766781753.3434002,
+    "session_time": 185.62276482582092
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1464.9485007201106,
+    "loudness": 0.17001952230930328,
+    "mood": "Neutral",
+    "timestamp": 1766781754.383306,
+    "session_time": 186.62376832962036
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1454.7200701823351,
+    "loudness": 0.17326577007770538,
+    "mood": "Neutral",
+    "timestamp": 1766781755.4408894,
+    "session_time": 187.6247706413269
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1469.562000079961,
+    "loudness": 0.1754801869392395,
+    "mood": "Neutral",
+    "timestamp": 1766781756.3229513,
+    "session_time": 188.6257665157318
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1475.2616137711068,
+    "loudness": 0.17315027117729187,
+    "mood": "Neutral",
+    "timestamp": 1766781757.3699694,
+    "session_time": 189.62695813179016
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1435.5077926870665,
+    "loudness": 0.17401911318302155,
+    "mood": "Neutral",
+    "timestamp": 1766781758.4299333,
+    "session_time": 190.63376021385193
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1396.6302324243882,
+    "loudness": 0.17124025523662567,
+    "mood": "Neutral",
+    "timestamp": 1766781759.4357493,
+    "session_time": 191.63476586341858
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1338.6437264504752,
+    "loudness": 0.1701783835887909,
+    "mood": "Neutral",
+    "timestamp": 1766781760.4399204,
+    "session_time": 192.63589549064636
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1321.2985047902887,
+    "loudness": 0.16720055043697357,
+    "mood": "Neutral",
+    "timestamp": 1766781761.2448876,
+    "session_time": 193.640775680542
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1320.7602695019823,
+    "loudness": 0.16650009155273438,
+    "mood": "Neutral",
+    "timestamp": 1766781762.350921,
+    "session_time": 194.64275932312012
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1322.484282483315,
+    "loudness": 0.16696664690971375,
+    "mood": "Neutral",
+    "timestamp": 1766781763.4229472,
+    "session_time": 195.6438181400299
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1356.7641193926518,
+    "loudness": 0.1664706915616989,
+    "mood": "Neutral",
+    "timestamp": 1766781764.4009037,
+    "session_time": 196.64476537704468
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1343.6134707979834,
+    "loudness": 0.16471804678440094,
+    "mood": "Neutral",
+    "timestamp": 1766781765.434201,
+    "session_time": 197.6488995552063
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1374.1115129774175,
+    "loudness": 0.16362608969211578,
+    "mood": "Neutral",
+    "timestamp": 1766781766.4420602,
+    "session_time": 198.6497678756714
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1447.2588315519674,
+    "loudness": 0.1634765863418579,
+    "mood": "Neutral",
+    "timestamp": 1766781767.3408487,
+    "session_time": 199.65076065063477
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1499.1542696099104,
+    "loudness": 0.16655227541923523,
+    "mood": "Neutral",
+    "timestamp": 1766781768.4728997,
+    "session_time": 200.65395998954773
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1527.0392654985972,
+    "loudness": 0.1692901849746704,
+    "mood": "Neutral",
+    "timestamp": 1766781769.432922,
+    "session_time": 201.65477180480957
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1568.5270578136012,
+    "loudness": 0.1705474853515625,
+    "mood": "Neutral",
+    "timestamp": 1766781770.4631588,
+    "session_time": 202.65576553344727
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1583.336542634318,
+    "loudness": 0.16927048563957214,
+    "mood": "Neutral",
+    "timestamp": 1766781771.452958,
+    "session_time": 203.65778136253357
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1642.6084790776074,
+    "loudness": 0.16691528260707855,
+    "mood": "Neutral",
+    "timestamp": 1766781772.4779334,
+    "session_time": 204.65876054763794
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1625.7513168973694,
+    "loudness": 0.16766083240509033,
+    "mood": "Neutral",
+    "timestamp": 1766781773.3114996,
+    "session_time": 205.65976476669312
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1651.8138008453186,
+    "loudness": 0.1659393012523651,
+    "mood": "Neutral",
+    "timestamp": 1766781774.3818777,
+    "session_time": 206.66076350212097
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1621.0219493926052,
+    "loudness": 0.16673363745212555,
+    "mood": "Neutral",
+    "timestamp": 1766781775.337887,
+    "session_time": 207.661776304245
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1635.7239102804165,
+    "loudness": 0.16706275939941406,
+    "mood": "Neutral",
+    "timestamp": 1766781776.4048264,
+    "session_time": 208.66276335716248
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1620.1224455446038,
+    "loudness": 0.1676757037639618,
+    "mood": "Neutral",
+    "timestamp": 1766781777.419539,
+    "session_time": 209.6637668609619
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1615.5838234260652,
+    "loudness": 0.16748955845832825,
+    "mood": "Neutral",
+    "timestamp": 1766781778.4549792,
+    "session_time": 210.66476607322693
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1622.0354315414215,
+    "loudness": 0.16701266169548035,
+    "mood": "Neutral",
+    "timestamp": 1766781779.3541005,
+    "session_time": 211.66792750358582
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1610.993010793623,
+    "loudness": 0.16640399396419525,
+    "mood": "Neutral",
+    "timestamp": 1766781780.4131615,
+    "session_time": 212.66876745224
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1523.4490240638843,
+    "loudness": 0.16693423688411713,
+    "mood": "Neutral",
+    "timestamp": 1766781781.4788554,
+    "session_time": 213.66979217529297
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1477.988159475867,
+    "loudness": 0.16705264151096344,
+    "mood": "Neutral",
+    "timestamp": 1766781782.3119159,
+    "session_time": 214.6743814945221
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1461.2062946942049,
+    "loudness": 0.16981105506420135,
+    "mood": "Neutral",
+    "timestamp": 1766781783.4508872,
+    "session_time": 215.6747694015503
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1439.1806877407644,
+    "loudness": 0.17342621088027954,
+    "mood": "Neutral",
+    "timestamp": 1766781784.4470031,
+    "session_time": 216.67578864097595
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1415.3054490781603,
+    "loudness": 0.17238058149814606,
+    "mood": "Neutral",
+    "timestamp": 1766781785.4662573,
+    "session_time": 217.67692756652832
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1435.5699854512418,
+    "loudness": 0.1722382754087448,
+    "mood": "Neutral",
+    "timestamp": 1766781786.4660327,
+    "session_time": 218.68076848983765
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1450.636637685208,
+    "loudness": 0.1722862869501114,
+    "mood": "Neutral",
+    "timestamp": 1766781787.5007915,
+    "session_time": 219.6817662715912
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1435.2459475829585,
+    "loudness": 0.17170999944210052,
+    "mood": "Neutral",
+    "timestamp": 1766781788.268876,
+    "session_time": 220.68276858329773
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1443.778212174181,
+    "loudness": 0.17211778461933136,
+    "mood": "Neutral",
+    "timestamp": 1766781789.4179015,
+    "session_time": 221.68376517295837
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1476.1214490242583,
+    "loudness": 0.17340652644634247,
+    "mood": "Neutral",
+    "timestamp": 1766781790.4578936,
+    "session_time": 222.6847665309906
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1484.5071234800778,
+    "loudness": 0.17260274291038513,
+    "mood": "Neutral",
+    "timestamp": 1766781791.380885,
+    "session_time": 223.78152441978455
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1497.947779918579,
+    "loudness": 0.17046454548835754,
+    "mood": "Neutral",
+    "timestamp": 1766781792.5632985,
+    "session_time": 224.78177165985107
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1493.6868520201913,
+    "loudness": 0.17025630176067352,
+    "mood": "Neutral",
+    "timestamp": 1766781793.4829588,
+    "session_time": 225.79176330566406
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1556.1400957634803,
+    "loudness": 0.1676119863986969,
+    "mood": "Neutral",
+    "timestamp": 1766781794.448272,
+    "session_time": 226.79681205749512
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1595.8228746062302,
+    "loudness": 0.1667138934135437,
+    "mood": "Neutral",
+    "timestamp": 1766781795.5861897,
+    "session_time": 227.79777717590332
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1537.0968755784659,
+    "loudness": 0.16425897181034088,
+    "mood": "Neutral",
+    "timestamp": 1766781796.5550935,
+    "session_time": 228.80176162719727
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1524.8292834655315,
+    "loudness": 0.16490288078784943,
+    "mood": "Neutral",
+    "timestamp": 1766781797.4568949,
+    "session_time": 229.80276942253113
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1559.0225409880984,
+    "loudness": 0.16726958751678467,
+    "mood": "Neutral",
+    "timestamp": 1766781798.538988,
+    "session_time": 230.80884647369385
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1558.2774874100544,
+    "loudness": 0.16052618622779846,
+    "mood": "Neutral",
+    "timestamp": 1766781799.6199021,
+    "session_time": 231.8177626132965
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1526.2891476733619,
+    "loudness": 0.16062138974666595,
+    "mood": "Neutral",
+    "timestamp": 1766781800.5939178,
+    "session_time": 232.8187656402588
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1500.2109015400904,
+    "loudness": 0.15962664783000946,
+    "mood": "Neutral",
+    "timestamp": 1766781801.5859017,
+    "session_time": 233.81976103782654
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1485.321260806997,
+    "loudness": 0.15721112489700317,
+    "mood": "Neutral",
+    "timestamp": 1766781802.6389868,
+    "session_time": 234.8207631111145
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1424.7299201138887,
+    "loudness": 0.1564062237739563,
+    "mood": "Neutral",
+    "timestamp": 1766781803.531899,
+    "session_time": 235.8217625617981
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1451.6946568757946,
+    "loudness": 0.15744857490062714,
+    "mood": "Neutral",
+    "timestamp": 1766781804.5628533,
+    "session_time": 236.82276344299316
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1534.6908339520203,
+    "loudness": 0.1580737680196762,
+    "mood": "Neutral",
+    "timestamp": 1766781805.6078799,
+    "session_time": 237.8237657546997
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1481.4563737293438,
+    "loudness": 0.1577078104019165,
+    "mood": "Neutral",
+    "timestamp": 1766781806.6439686,
+    "session_time": 238.82477068901062
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1489.107134185615,
+    "loudness": 0.15740536153316498,
+    "mood": "Neutral",
+    "timestamp": 1766781807.5120623,
+    "session_time": 239.8257656097412
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1513.6822682734153,
+    "loudness": 0.15779678523540497,
+    "mood": "Neutral",
+    "timestamp": 1766781808.5629427,
+    "session_time": 240.82976269721985
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1524.1088136134508,
+    "loudness": 0.15743385255336761,
+    "mood": "Neutral",
+    "timestamp": 1766781809.4098856,
+    "session_time": 241.83076858520508
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1562.2479479530941,
+    "loudness": 0.1554471254348755,
+    "mood": "Neutral",
+    "timestamp": 1766781810.555866,
+    "session_time": 242.83197927474976
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1583.1836044649153,
+    "loudness": 0.15490500628948212,
+    "mood": "Neutral",
+    "timestamp": 1766781811.58422,
+    "session_time": 243.83277201652527
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1589.7845022190875,
+    "loudness": 0.15293213725090027,
+    "mood": "Neutral",
+    "timestamp": 1766781812.571921,
+    "session_time": 244.83800435066223
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1548.2820216684397,
+    "loudness": 0.15201295912265778,
+    "mood": "Neutral",
+    "timestamp": 1766781813.6419215,
+    "session_time": 245.83878302574158
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1493.6143392936312,
+    "loudness": 0.1537446677684784,
+    "mood": "Neutral",
+    "timestamp": 1766781814.5725899,
+    "session_time": 246.83976578712463
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1562.3304789255665,
+    "loudness": 0.14797809720039368,
+    "mood": "Neutral",
+    "timestamp": 1766781815.5710206,
+    "session_time": 247.8407862186432
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1557.4846790759589,
+    "loudness": 0.14812734723091125,
+    "mood": "Neutral",
+    "timestamp": 1766781816.5438886,
+    "session_time": 248.84381985664368
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1535.8334056336842,
+    "loudness": 0.14609044790267944,
+    "mood": "Neutral",
+    "timestamp": 1766781817.5040805,
+    "session_time": 249.84776425361633
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1533.258046037586,
+    "loudness": 0.14663495123386383,
+    "mood": "Neutral",
+    "timestamp": 1766781818.607917,
+    "session_time": 250.84876704216003
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1525.9658182784888,
+    "loudness": 0.14596204459667206,
+    "mood": "Neutral",
+    "timestamp": 1766781819.5879033,
+    "session_time": 251.8497633934021
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1535.0945480011576,
+    "loudness": 0.14545725286006927,
+    "mood": "Neutral",
+    "timestamp": 1766781820.5894506,
+    "session_time": 252.85228300094604
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1524.6471641124733,
+    "loudness": 0.1474323570728302,
+    "mood": "Neutral",
+    "timestamp": 1766781821.4599395,
+    "session_time": 253.8527853488922
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1536.5485668699005,
+    "loudness": 0.1469104140996933,
+    "mood": "Neutral",
+    "timestamp": 1766781822.6081076,
+    "session_time": 254.8564157485962
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1585.4917165579661,
+    "loudness": 0.1449480801820755,
+    "mood": "Neutral",
+    "timestamp": 1766781823.39318,
+    "session_time": 255.8568410873413
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1640.6674241495823,
+    "loudness": 0.1425616443157196,
+    "mood": "Neutral",
+    "timestamp": 1766781824.66982,
+    "session_time": 256.86276602745056
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1641.6014507279497,
+    "loudness": 0.1420256495475769,
+    "mood": "Neutral",
+    "timestamp": 1766781825.4849312,
+    "session_time": 257.9672176837921
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1650.2984712592647,
+    "loudness": 0.1405121237039566,
+    "mood": "Neutral",
+    "timestamp": 1766781826.7771258,
+    "session_time": 258.96776485443115
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1659.0539102787864,
+    "loudness": 0.14426720142364502,
+    "mood": "Neutral",
+    "timestamp": 1766781827.7379322,
+    "session_time": 259.96877241134644
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1681.8852414453154,
+    "loudness": 0.14621463418006897,
+    "mood": "Neutral",
+    "timestamp": 1766781828.6868856,
+    "session_time": 260.97154998779297
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1698.9774541994723,
+    "loudness": 0.1481270045042038,
+    "mood": "Neutral",
+    "timestamp": 1766781829.7469153,
+    "session_time": 261.97206354141235
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1674.400851297622,
+    "loudness": 0.14543801546096802,
+    "mood": "Neutral",
+    "timestamp": 1766781830.745915,
+    "session_time": 262.972767829895
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1659.1448060602022,
+    "loudness": 0.14673744142055511,
+    "mood": "Neutral",
+    "timestamp": 1766781831.638035,
+    "session_time": 263.97381043434143
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1573.108582478636,
+    "loudness": 0.14658890664577484,
+    "mood": "Neutral",
+    "timestamp": 1766781832.7479048,
+    "session_time": 264.9747700691223
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1487.8131101527897,
+    "loudness": 0.14680534601211548,
+    "mood": "Neutral",
+    "timestamp": 1766781833.7867131,
+    "session_time": 265.97591185569763
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1484.464682922559,
+    "loudness": 0.14664942026138306,
+    "mood": "Neutral",
+    "timestamp": 1766781834.7226963,
+    "session_time": 266.9767653942108
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1438.2332248849145,
+    "loudness": 0.14735926687717438,
+    "mood": "Neutral",
+    "timestamp": 1766781835.5995667,
+    "session_time": 267.9778070449829
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1423.266616207967,
+    "loudness": 0.1484881192445755,
+    "mood": "Neutral",
+    "timestamp": 1766781836.6399298,
+    "session_time": 268.9787845611572
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1389.0852781204367,
+    "loudness": 0.1460116058588028,
+    "mood": "Neutral",
+    "timestamp": 1766781837.7909138,
+    "session_time": 269.98828291893005
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1383.3939239544832,
+    "loudness": 0.14570017158985138,
+    "mood": "Neutral",
+    "timestamp": 1766781838.7436612,
+    "session_time": 270.98877000808716
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1393.431765733746,
+    "loudness": 0.14667437970638275,
+    "mood": "Neutral",
+    "timestamp": 1766781839.7571902,
+    "session_time": 271.98976969718933
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1379.7200726272586,
+    "loudness": 0.1482943743467331,
+    "mood": "Neutral",
+    "timestamp": 1766781840.7910361,
+    "session_time": 272.9907822608948
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1408.571439796543,
+    "loudness": 0.14688722789287567,
+    "mood": "Neutral",
+    "timestamp": 1766781841.8069208,
+    "session_time": 273.9917688369751
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1406.1523995457592,
+    "loudness": 0.1488068848848343,
+    "mood": "Neutral",
+    "timestamp": 1766781842.7738755,
+    "session_time": 275.04277324676514
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1425.4935039246968,
+    "loudness": 0.14982707798480988,
+    "mood": "Neutral",
+    "timestamp": 1766781843.8619292,
+    "session_time": 276.0437664985657
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1475.49159777352,
+    "loudness": 0.14848221838474274,
+    "mood": "Neutral",
+    "timestamp": 1766781844.6999338,
+    "session_time": 277.0460262298584
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1496.8620455262183,
+    "loudness": 0.14779850840568542,
+    "mood": "Neutral",
+    "timestamp": 1766781845.72887,
+    "session_time": 278.0467712879181
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1527.188108448438,
+    "loudness": 0.14715778827667236,
+    "mood": "Neutral",
+    "timestamp": 1766781846.7229023,
+    "session_time": 279.05093455314636
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1536.6626115796664,
+    "loudness": 0.14803095161914825,
+    "mood": "Neutral",
+    "timestamp": 1766781847.7489147,
+    "session_time": 280.0557613372803
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1554.1126595764529,
+    "loudness": 0.1524551659822464,
+    "mood": "Neutral",
+    "timestamp": 1766781848.837969,
+    "session_time": 281.05677247047424
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1569.4888965656628,
+    "loudness": 0.15203574299812317,
+    "mood": "Neutral",
+    "timestamp": 1766781849.7809546,
+    "session_time": 282.06005907058716
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1557.1888525635256,
+    "loudness": 0.15303470194339752,
+    "mood": "Neutral",
+    "timestamp": 1766781850.8579392,
+    "session_time": 283.0627648830414
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1593.4727078573067,
+    "loudness": 0.15269441902637482,
+    "mood": "Neutral",
+    "timestamp": 1766781851.8538892,
+    "session_time": 284.06377696990967
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1586.399428826194,
+    "loudness": 0.15233132243156433,
+    "mood": "Neutral",
+    "timestamp": 1766781852.7039204,
+    "session_time": 285.06622552871704
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1574.6689239424115,
+    "loudness": 0.15401218831539154,
+    "mood": "Neutral",
+    "timestamp": 1766781853.5949972,
+    "session_time": 286.06676602363586
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1565.9846553828772,
+    "loudness": 0.15460272133350372,
+    "mood": "Neutral",
+    "timestamp": 1766781854.7958646,
+    "session_time": 287.06777000427246
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1555.6739241658927,
+    "loudness": 0.1517079472541809,
+    "mood": "Neutral",
+    "timestamp": 1766781855.884943,
+    "session_time": 288.06878423690796
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1570.6577300661172,
+    "loudness": 0.1518845558166504,
+    "mood": "Neutral",
+    "timestamp": 1766781856.7718782,
+    "session_time": 289.06976771354675
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1585.9296264004097,
+    "loudness": 0.1525295227766037,
+    "mood": "Neutral",
+    "timestamp": 1766781857.8939006,
+    "session_time": 290.0707654953003
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1575.6676388687968,
+    "loudness": 0.15130183100700378,
+    "mood": "Neutral",
+    "timestamp": 1766781858.83492,
+    "session_time": 291.0717692375183
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1587.2432882021099,
+    "loudness": 0.147776260972023,
+    "mood": "Neutral",
+    "timestamp": 1766781859.726777,
+    "session_time": 292.07276701927185
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1557.6898072877816,
+    "loudness": 0.1463552713394165,
+    "mood": "Neutral",
+    "timestamp": 1766781860.7670302,
+    "session_time": 293.07377076148987
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1518.6502628951932,
+    "loudness": 0.14480315148830414,
+    "mood": "Neutral",
+    "timestamp": 1766781861.8401842,
+    "session_time": 294.07477164268494
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1483.6887174849555,
+    "loudness": 0.14123085141181946,
+    "mood": "Neutral",
+    "timestamp": 1766781862.8309593,
+    "session_time": 295.0837616920471
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1463.0182328767944,
+    "loudness": 0.14085446298122406,
+    "mood": "Neutral",
+    "timestamp": 1766781863.7815247,
+    "session_time": 296.0852961540222
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1435.828626380111,
+    "loudness": 0.14184428751468658,
+    "mood": "Neutral",
+    "timestamp": 1766781864.829975,
+    "session_time": 297.1832935810089
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1407.9343584805638,
+    "loudness": 0.14271758496761322,
+    "mood": "Neutral",
+    "timestamp": 1766781865.8428795,
+    "session_time": 298.18676567077637
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1396.43978680435,
+    "loudness": 0.1420741081237793,
+    "mood": "Neutral",
+    "timestamp": 1766781866.9189239,
+    "session_time": 299.18777561187744
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1421.6622717733267,
+    "loudness": 0.14044934511184692,
+    "mood": "Neutral",
+    "timestamp": 1766781867.94158,
+    "session_time": 300.1887676715851
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1419.9642188375572,
+    "loudness": 0.14223796129226685,
+    "mood": "Neutral",
+    "timestamp": 1766781868.9193852,
+    "session_time": 301.1937735080719
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1427.6393944769457,
+    "loudness": 0.14455142617225647,
+    "mood": "Neutral",
+    "timestamp": 1766781869.9159832,
+    "session_time": 302.1947751045227
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1434.117993063084,
+    "loudness": 0.14601904153823853,
+    "mood": "Neutral",
+    "timestamp": 1766781870.982971,
+    "session_time": 303.1977651119232
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1432.737598633103,
+    "loudness": 0.150050550699234,
+    "mood": "Neutral",
+    "timestamp": 1766781871.958906,
+    "session_time": 304.20376205444336
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1495.2017537167203,
+    "loudness": 0.14787507057189941,
+    "mood": "Neutral",
+    "timestamp": 1766781872.933996,
+    "session_time": 305.20677161216736
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1524.5861923172977,
+    "loudness": 0.14561504125595093,
+    "mood": "Neutral",
+    "timestamp": 1766781873.9519124,
+    "session_time": 306.2077684402466
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1579.7927981301937,
+    "loudness": 0.14561372995376587,
+    "mood": "Neutral",
+    "timestamp": 1766781874.9819026,
+    "session_time": 307.20876717567444
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1580.59208067992,
+    "loudness": 0.1449011117219925,
+    "mood": "Neutral",
+    "timestamp": 1766781875.8425894,
+    "session_time": 308.20976519584656
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1581.195610950372,
+    "loudness": 0.1491934061050415,
+    "mood": "Neutral",
+    "timestamp": 1766781876.939183,
+    "session_time": 309.216765165329
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1561.9764597534013,
+    "loudness": 0.1445542573928833,
+    "mood": "Neutral",
+    "timestamp": 1766781877.9560175,
+    "session_time": 310.22076773643494
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1559.2405781747918,
+    "loudness": 0.1425817906856537,
+    "mood": "Neutral",
+    "timestamp": 1766781878.8520064,
+    "session_time": 311.2217626571655
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1501.222835848326,
+    "loudness": 0.14316627383232117,
+    "mood": "Neutral",
+    "timestamp": 1766781879.949575,
+    "session_time": 312.22434067726135
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1459.9772961414812,
+    "loudness": 0.1493399292230606,
+    "mood": "Neutral",
+    "timestamp": 1766781880.9450352,
+    "session_time": 313.2247679233551
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1425.8102687813532,
+    "loudness": 0.15142986178398132,
+    "mood": "Neutral",
+    "timestamp": 1766781881.9059403,
+    "session_time": 314.22576880455017
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1429.9288126526112,
+    "loudness": 0.15178373456001282,
+    "mood": "Neutral",
+    "timestamp": 1766781882.951804,
+    "session_time": 315.22777819633484
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1405.9396471501457,
+    "loudness": 0.15902605652809143,
+    "mood": "Neutral",
+    "timestamp": 1766781883.987949,
+    "session_time": 316.228764295578
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1391.1007347603127,
+    "loudness": 0.16731177270412445,
+    "mood": "Neutral",
+    "timestamp": 1766781884.9996426,
+    "session_time": 317.2297728061676
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1391.626924136205,
+    "loudness": 0.17378108203411102,
+    "mood": "Neutral",
+    "timestamp": 1766781885.9788792,
+    "session_time": 318.2307653427124
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1383.7231882961325,
+    "loudness": 0.17750424146652222,
+    "mood": "Neutral",
+    "timestamp": 1766781886.9925187,
+    "session_time": 319.2317614555359
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1400.6226804568805,
+    "loudness": 0.17712649703025818,
+    "mood": "Neutral",
+    "timestamp": 1766781887.881327,
+    "session_time": 320.232786655426
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1371.1489307039267,
+    "loudness": 0.17604170739650726,
+    "mood": "Neutral",
+    "timestamp": 1766781889.0438776,
+    "session_time": 321.2337877750397
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1324.5921682656813,
+    "loudness": 0.1770375519990921,
+    "mood": "Neutral",
+    "timestamp": 1766781889.9809537,
+    "session_time": 322.248113155365
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1298.0052073995903,
+    "loudness": 0.17086870968341827,
+    "mood": "Neutral",
+    "timestamp": 1766781891.0678957,
+    "session_time": 323.24894428253174
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1236.1915817684974,
+    "loudness": 0.16566918790340424,
+    "mood": "Neutral",
+    "timestamp": 1766781892.0299299,
+    "session_time": 324.2497663497925
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1235.5001243768538,
+    "loudness": 0.16146793961524963,
+    "mood": "Neutral",
+    "timestamp": 1766781892.8829176,
+    "session_time": 325.2508246898651
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1249.1103068273142,
+    "loudness": 0.16230662167072296,
+    "mood": "Neutral",
+    "timestamp": 1766781893.7224064,
+    "session_time": 326.251766204834
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1259.5503764001658,
+    "loudness": 0.16085754334926605,
+    "mood": "Neutral",
+    "timestamp": 1766781894.8801723,
+    "session_time": 327.2527759075165
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1298.9150649972028,
+    "loudness": 0.1608903706073761,
+    "mood": "Neutral",
+    "timestamp": 1766781896.037666,
+    "session_time": 328.2538619041443
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1456.9992711442546,
+    "loudness": 0.15723221004009247,
+    "mood": "Neutral",
+    "timestamp": 1766781897.083894,
+    "session_time": 329.2587604522705
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1464.8855290530923,
+    "loudness": 0.15637406706809998,
+    "mood": "Neutral",
+    "timestamp": 1766781897.785954,
+    "session_time": 330.2597665786743
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1486.9019194449431,
+    "loudness": 0.1534987837076187,
+    "mood": "Neutral",
+    "timestamp": 1766781899.0740306,
+    "session_time": 331.2652132511139
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1497.10163811429,
+    "loudness": 0.15202529728412628,
+    "mood": "Neutral",
+    "timestamp": 1766781899.9019322,
+    "session_time": 332.2726137638092
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1505.4335758063953,
+    "loudness": 0.1524597555398941,
+    "mood": "Neutral",
+    "timestamp": 1766781901.0539067,
+    "session_time": 333.27277064323425
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1514.9987803619658,
+    "loudness": 0.15285423398017883,
+    "mood": "Neutral",
+    "timestamp": 1766781901.9971874,
+    "session_time": 334.2737636566162
+  },
+  {
+    "tempo": 135.99917763157896,
+    "brightness": 1499.318697889628,
+    "loudness": 0.15370914340019226,
+    "mood": "Neutral",
+    "timestamp": 1766781903.0969338,
+    "session_time": 335.2767610549927
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1503.2387241590277,
+    "loudness": 0.14949874579906464,
+    "mood": "Neutral",
+    "timestamp": 1766781903.9978738,
+    "session_time": 336.2781162261963
+  },
+  {
+    "tempo": 135.99917763157896,
+    "brightness": 1428.2964130202558,
+    "loudness": 0.15254953503608704,
+    "mood": "Neutral",
+    "timestamp": 1766781904.967888,
+    "session_time": 337.2787661552429
+  },
+  {
+    "tempo": 135.99917763157896,
+    "brightness": 1413.2801887640753,
+    "loudness": 0.15349486470222473,
+    "mood": "Neutral",
+    "timestamp": 1766781906.044519,
+    "session_time": 338.28224539756775
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1482.8135797484813,
+    "loudness": 0.15270692110061646,
+    "mood": "Neutral",
+    "timestamp": 1766781907.0818005,
+    "session_time": 339.28278613090515
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1529.3209603703904,
+    "loudness": 0.15788298845291138,
+    "mood": "Neutral",
+    "timestamp": 1766781908.0678265,
+    "session_time": 340.2837669849396
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1505.843028780565,
+    "loudness": 0.16350962221622467,
+    "mood": "Neutral",
+    "timestamp": 1766781908.9366875,
+    "session_time": 341.2847647666931
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1520.8929576353214,
+    "loudness": 0.165730819106102,
+    "mood": "Neutral",
+    "timestamp": 1766781910.0782413,
+    "session_time": 342.285768032074
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1557.27340837389,
+    "loudness": 0.1717790961265564,
+    "mood": "Neutral",
+    "timestamp": 1766781911.0993037,
+    "session_time": 343.2876377105713
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1563.9477863104792,
+    "loudness": 0.1739715337753296,
+    "mood": "Neutral",
+    "timestamp": 1766781912.0010037,
+    "session_time": 344.28776359558105
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1559.481121997003,
+    "loudness": 0.1725405603647232,
+    "mood": "Neutral",
+    "timestamp": 1766781913.1079102,
+    "session_time": 345.2887625694275
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1456.8886230962662,
+    "loudness": 0.17574329674243927,
+    "mood": "Neutral",
+    "timestamp": 1766781914.0189629,
+    "session_time": 346.289763212204
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1408.6361360920253,
+    "loudness": 0.17312300205230713,
+    "mood": "Neutral",
+    "timestamp": 1766781914.934906,
+    "session_time": 347.2907660007477
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1424.814501544319,
+    "loudness": 0.1721670776605606,
+    "mood": "Neutral",
+    "timestamp": 1766781916.1158915,
+    "session_time": 348.2917606830597
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1466.799081165131,
+    "loudness": 0.17044879496097565,
+    "mood": "Neutral",
+    "timestamp": 1766781916.9851806,
+    "session_time": 349.2933654785156
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1448.3469203165528,
+    "loudness": 0.1674243062734604,
+    "mood": "Neutral",
+    "timestamp": 1766781918.1055448,
+    "session_time": 350.3056569099426
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1419.1069987087083,
+    "loudness": 0.16655410826206207,
+    "mood": "Neutral",
+    "timestamp": 1766781919.112894,
+    "session_time": 351.3058965206146
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1401.9775896762158,
+    "loudness": 0.1660214364528656,
+    "mood": "Neutral",
+    "timestamp": 1766781919.9368687,
+    "session_time": 352.30694103240967
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1410.899832294551,
+    "loudness": 0.16526781022548676,
+    "mood": "Neutral",
+    "timestamp": 1766781921.109005,
+    "session_time": 353.30776619911194
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1430.7911208246082,
+    "loudness": 0.15996520221233368,
+    "mood": "Neutral",
+    "timestamp": 1766781921.9859514,
+    "session_time": 354.308767080307
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1542.1437077677201,
+    "loudness": 0.15430259704589844,
+    "mood": "Neutral",
+    "timestamp": 1766781923.1101952,
+    "session_time": 355.30976700782776
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1627.4125809332047,
+    "loudness": 0.15359920263290405,
+    "mood": "Neutral",
+    "timestamp": 1766781923.9066696,
+    "session_time": 356.3107695579529
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1674.7364291334761,
+    "loudness": 0.15161088109016418,
+    "mood": "Neutral",
+    "timestamp": 1766781925.0979261,
+    "session_time": 357.3138618469238
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1640.3578108734218,
+    "loudness": 0.15208980441093445,
+    "mood": "Neutral",
+    "timestamp": 1766781926.0060349,
+    "session_time": 358.3193645477295
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1643.012527481371,
+    "loudness": 0.15707086026668549,
+    "mood": "Neutral",
+    "timestamp": 1766781927.0089667,
+    "session_time": 359.32693219184875
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1667.0503010966825,
+    "loudness": 0.15918385982513428,
+    "mood": "Neutral",
+    "timestamp": 1766781928.074489,
+    "session_time": 360.32873797416687
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1676.2145051002556,
+    "loudness": 0.16034582257270813,
+    "mood": "Neutral",
+    "timestamp": 1766781929.008977,
+    "session_time": 361.32976245880127
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1739.9835977735956,
+    "loudness": 0.16189950704574585,
+    "mood": "Neutral",
+    "timestamp": 1766781930.1432245,
+    "session_time": 362.33078789711
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1732.9709225170034,
+    "loudness": 0.16475975513458252,
+    "mood": "Neutral",
+    "timestamp": 1766781931.0869596,
+    "session_time": 363.33177065849304
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1689.7269005969752,
+    "loudness": 0.170537069439888,
+    "mood": "Neutral",
+    "timestamp": 1766781932.0764093,
+    "session_time": 364.3328161239624
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1555.517463534242,
+    "loudness": 0.17493809759616852,
+    "mood": "Neutral",
+    "timestamp": 1766781933.1358888,
+    "session_time": 365.33376812934875
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1476.9369799904018,
+    "loudness": 0.17531941831111908,
+    "mood": "Neutral",
+    "timestamp": 1766781934.1605449,
+    "session_time": 366.3347611427307
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1360.0519749558066,
+    "loudness": 0.17001819610595703,
+    "mood": "Neutral",
+    "timestamp": 1766781935.1629212,
+    "session_time": 367.3357627391815
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1373.4263255392423,
+    "loudness": 0.17099511623382568,
+    "mood": "Neutral",
+    "timestamp": 1766781936.1538932,
+    "session_time": 368.3367624282837
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1388.8022021249517,
+    "loudness": 0.16878528892993927,
+    "mood": "Neutral",
+    "timestamp": 1766781937.0549781,
+    "session_time": 369.33776664733887
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1464.3911609706736,
+    "loudness": 0.16963304579257965,
+    "mood": "Neutral",
+    "timestamp": 1766781938.098924,
+    "session_time": 370.3388910293579
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1512.5561197012348,
+    "loudness": 0.17441187798976898,
+    "mood": "Neutral",
+    "timestamp": 1766781939.1128867,
+    "session_time": 371.3397629261017
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1561.669141287327,
+    "loudness": 0.17716015875339508,
+    "mood": "Neutral",
+    "timestamp": 1766781940.1728492,
+    "session_time": 372.346759557724
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1648.857083581539,
+    "loudness": 0.1721334159374237,
+    "mood": "Neutral",
+    "timestamp": 1766781941.124932,
+    "session_time": 373.3477635383606
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1649.0492104732893,
+    "loudness": 0.17085887491703033,
+    "mood": "Neutral",
+    "timestamp": 1766781942.148995,
+    "session_time": 374.3487660884857
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1676.615839874089,
+    "loudness": 0.16902264952659607,
+    "mood": "Neutral",
+    "timestamp": 1766781943.1548283,
+    "session_time": 375.34976625442505
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1643.9376692507099,
+    "loudness": 0.16045993566513062,
+    "mood": "Neutral",
+    "timestamp": 1766781944.166233,
+    "session_time": 376.3507649898529
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1486.367735803744,
+    "loudness": 0.16228163242340088,
+    "mood": "Neutral",
+    "timestamp": 1766781945.1786158,
+    "session_time": 377.3517642021179
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1421.5311279201503,
+    "loudness": 0.16634342074394226,
+    "mood": "Neutral",
+    "timestamp": 1766781946.139975,
+    "session_time": 378.35277819633484
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1446.6042971028908,
+    "loudness": 0.16760437190532684,
+    "mood": "Neutral",
+    "timestamp": 1766781947.1343746,
+    "session_time": 379.35549879074097
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1477.6178165064193,
+    "loudness": 0.16917504370212555,
+    "mood": "Neutral",
+    "timestamp": 1766781948.0599031,
+    "session_time": 380.3800222873688
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1560.1624758172604,
+    "loudness": 0.16783884167671204,
+    "mood": "Neutral",
+    "timestamp": 1766781949.2029078,
+    "session_time": 381.3835768699646
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1467.9542654401619,
+    "loudness": 0.17236477136611938,
+    "mood": "Neutral",
+    "timestamp": 1766781950.178169,
+    "session_time": 382.38386368751526
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1502.4444181106896,
+    "loudness": 0.17651765048503876,
+    "mood": "Neutral",
+    "timestamp": 1766781951.1928449,
+    "session_time": 383.38476610183716
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1451.8153487906836,
+    "loudness": 0.16833050549030304,
+    "mood": "Neutral",
+    "timestamp": 1766781952.1989002,
+    "session_time": 384.3869979381561
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1364.5785838003287,
+    "loudness": 0.16234134137630463,
+    "mood": "Neutral",
+    "timestamp": 1766781953.159883,
+    "session_time": 385.38776445388794
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1457.797867525775,
+    "loudness": 0.15837344527244568,
+    "mood": "Neutral",
+    "timestamp": 1766781954.1942027,
+    "session_time": 386.38876080513
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1495.6970185524012,
+    "loudness": 0.1526775360107422,
+    "mood": "Neutral",
+    "timestamp": 1766781955.158289,
+    "session_time": 387.3897671699524
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1604.4070319434936,
+    "loudness": 0.15147751569747925,
+    "mood": "Neutral",
+    "timestamp": 1766781956.0555325,
+    "session_time": 388.39077830314636
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1643.682367532868,
+    "loudness": 0.15188191831111908,
+    "mood": "Neutral",
+    "timestamp": 1766781957.1423018,
+    "session_time": 389.39202094078064
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1597.683269442825,
+    "loudness": 0.14846035838127136,
+    "mood": "Neutral",
+    "timestamp": 1766781958.1349988,
+    "session_time": 390.3928396701813
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1572.7619910511567,
+    "loudness": 0.14788664877414703,
+    "mood": "Neutral",
+    "timestamp": 1766781959.1009476,
+    "session_time": 391.46587347984314
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1528.3313541299633,
+    "loudness": 0.1487654596567154,
+    "mood": "Neutral",
+    "timestamp": 1766781960.2608662,
+    "session_time": 392.46776509284973
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1432.2798833978973,
+    "loudness": 0.1543596237897873,
+    "mood": "Neutral",
+    "timestamp": 1766781961.2636197,
+    "session_time": 393.4687612056732
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1475.1043806973407,
+    "loudness": 0.15767896175384521,
+    "mood": "Neutral",
+    "timestamp": 1766781962.2821524,
+    "session_time": 394.4698295593262
+  },
+  {
+    "tempo": 135.99917763157896,
+    "brightness": 1477.1198134706126,
+    "loudness": 0.16616614162921906,
+    "mood": "Neutral",
+    "timestamp": 1766781963.257996,
+    "session_time": 395.47076439857483
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1530.7739517698938,
+    "loudness": 0.16196458041667938,
+    "mood": "Neutral",
+    "timestamp": 1766781964.2420306,
+    "session_time": 396.47176456451416
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1564.5268800071576,
+    "loudness": 0.15525852143764496,
+    "mood": "Neutral",
+    "timestamp": 1766781965.2828946,
+    "session_time": 397.4727690219879
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1503.4533375890305,
+    "loudness": 0.15121708810329437,
+    "mood": "Neutral",
+    "timestamp": 1766781966.221947,
+    "session_time": 398.4737675189972
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1520.531471912775,
+    "loudness": 0.1422567069530487,
+    "mood": "Neutral",
+    "timestamp": 1766781967.3020175,
+    "session_time": 399.4779872894287
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1501.2817373047399,
+    "loudness": 0.14048801362514496,
+    "mood": "Neutral",
+    "timestamp": 1766781968.300387,
+    "session_time": 400.4839153289795
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1475.9466312123716,
+    "loudness": 0.1408674418926239,
+    "mood": "Neutral",
+    "timestamp": 1766781969.2239351,
+    "session_time": 401.48477268218994
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1459.050144851011,
+    "loudness": 0.14239372313022614,
+    "mood": "Neutral",
+    "timestamp": 1766781970.286911,
+    "session_time": 402.4947683811188
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1437.3315552413887,
+    "loudness": 0.1420980542898178,
+    "mood": "Neutral",
+    "timestamp": 1766781971.3216991,
+    "session_time": 403.4957683086395
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1417.6127885084668,
+    "loudness": 0.14621204137802124,
+    "mood": "Neutral",
+    "timestamp": 1766781972.2842445,
+    "session_time": 404.49676275253296
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1485.3926058561244,
+    "loudness": 0.15004348754882812,
+    "mood": "Neutral",
+    "timestamp": 1766781973.2852175,
+    "session_time": 405.49776577949524
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1535.7389743389567,
+    "loudness": 0.15420924127101898,
+    "mood": "Neutral",
+    "timestamp": 1766781974.3258984,
+    "session_time": 406.4987642765045
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1662.0292447533534,
+    "loudness": 0.15338128805160522,
+    "mood": "Neutral",
+    "timestamp": 1766781975.3088908,
+    "session_time": 407.5067949295044
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1716.7442648476242,
+    "loudness": 0.15230490267276764,
+    "mood": "Neutral",
+    "timestamp": 1766781976.315103,
+    "session_time": 408.5097725391388
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 1681.3814115909433,
+    "loudness": 0.15764430165290833,
+    "mood": "Neutral",
+    "timestamp": 1766781977.282586,
+    "session_time": 409.51876735687256
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1585.8890514013392,
+    "loudness": 0.16313733160495758,
+    "mood": "Neutral",
+    "timestamp": 1766781978.3385942,
+    "session_time": 410.51976704597473
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1455.5074272580114,
+    "loudness": 0.16297826170921326,
+    "mood": "Neutral",
+    "timestamp": 1766781979.3220434,
+    "session_time": 411.5317647457123
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1406.2831922791333,
+    "loudness": 0.1631963849067688,
+    "mood": "Neutral",
+    "timestamp": 1766781980.324942,
+    "session_time": 412.53286361694336
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1500.9504160537342,
+    "loudness": 0.15643402934074402,
+    "mood": "Neutral",
+    "timestamp": 1766781981.3220305,
+    "session_time": 413.5337665081024
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1453.9677395208003,
+    "loudness": 0.1562948226928711,
+    "mood": "Neutral",
+    "timestamp": 1766781982.341845,
+    "session_time": 414.53477787971497
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1474.895958249443,
+    "loudness": 0.15474702417850494,
+    "mood": "Neutral",
+    "timestamp": 1766781983.312852,
+    "session_time": 415.53577756881714
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1509.1896882862852,
+    "loudness": 0.1531687080860138,
+    "mood": "Neutral",
+    "timestamp": 1766781984.332869,
+    "session_time": 416.53877353668213
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1573.6786397228464,
+    "loudness": 0.1522621363401413,
+    "mood": "Neutral",
+    "timestamp": 1766781985.3388393,
+    "session_time": 417.5455832481384
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1600.9365006682772,
+    "loudness": 0.15222753584384918,
+    "mood": "Neutral",
+    "timestamp": 1766781986.361005,
+    "session_time": 418.55576825141907
+  },
+  {
+    "tempo": 95.703125,
+    "brightness": 1522.946307151677,
+    "loudness": 0.1350749284029007,
+    "mood": "Neutral",
+    "timestamp": 1766781987.2919648,
+    "session_time": 419.56477975845337
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 2576.358333542916,
+    "loudness": 0.09072565287351608,
+    "mood": "Calm/Melancholic",
+    "timestamp": 1766781988.3750324,
+    "session_time": 420.5659410953522
+  },
+  {
+    "tempo": 143.5546875,
+    "brightness": 3300.4492864476115,
+    "loudness": 0.05050928145647049,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781989.3626776,
+    "session_time": 421.56677985191345
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 3863.930978797749,
+    "loudness": 0.021517911925911903,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781990.3627145,
+    "session_time": 422.5677647590637
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 3631.7258394358755,
+    "loudness": 0.03251947462558746,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781991.3848026,
+    "session_time": 423.5688350200653
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 3202.8407698099104,
+    "loudness": 0.03770644962787628,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781992.3450184,
+    "session_time": 424.5697650909424
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 3108.1646488190695,
+    "loudness": 0.040120929479599,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781993.2818942,
+    "session_time": 425.5732491016388
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 3038.296145103252,
+    "loudness": 0.043074749410152435,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781994.3438249,
+    "session_time": 426.5737648010254
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 3017.0984022571183,
+    "loudness": 0.04753550887107849,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781995.359929,
+    "session_time": 427.574768781662
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 3003.031715919836,
+    "loudness": 0.0533827468752861,
+    "mood": "Calm/Melancholic",
+    "timestamp": 1766781996.3438878,
+    "session_time": 428.5797972679138
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 2955.5242830532497,
+    "loudness": 0.05672301724553108,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781997.4058282,
+    "session_time": 429.5807602405548
+  },
+  {
+    "tempo": 129.19921875,
+    "brightness": 2902.1150402702215,
+    "loudness": 0.06380995362997055,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781998.3998861,
+    "session_time": 430.5830078125
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 2868.0466791524095,
+    "loudness": 0.06700783222913742,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766781999.365899,
+    "session_time": 431.58376932144165
+  },
+  {
+    "tempo": 184.5703125,
+    "brightness": 2819.2010666800675,
+    "loudness": 0.07268231362104416,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766782000.3343139,
+    "session_time": 432.5847647190094
+  },
+  {
+    "tempo": 151.99908088235293,
+    "brightness": 2709.3231633511646,
+    "loudness": 0.08251777291297913,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766782001.3761134,
+    "session_time": 433.58689618110657
+  },
+  {
+    "tempo": 75.99954044117646,
+    "brightness": 2645.243249984086,
+    "loudness": 0.0943479835987091,
+    "mood": "Calm/Melancholic",
+    "timestamp": 1766782002.3942428,
+    "session_time": 434.58845114707947
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 2508.011146888973,
+    "loudness": 0.11188210546970367,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766782003.3579502,
+    "session_time": 435.5887656211853
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 2493.6680914130548,
+    "loudness": 0.120182104408741,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766782004.4028795,
+    "session_time": 436.5907390117645
+  },
+  {
+    "tempo": 83.35433467741936,
+    "brightness": 2555.884062964731,
+    "loudness": 0.11894987523555756,
+    "mood": "Neutral",
+    "timestamp": 1766782005.4169695,
+    "session_time": 437.591769695282
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 2623.854502120823,
+    "loudness": 0.11574077606201172,
+    "mood": "Energetic/Anxious",
+    "timestamp": 1766782006.3833215,
+    "session_time": 438.5928153991699
+  },
+  {
+    "tempo": 83.35433467741936,
+    "brightness": 2388.570307083027,
+    "loudness": 0.13689006865024567,
+    "mood": "Neutral",
+    "timestamp": 1766782007.403855,
+    "session_time": 439.59376215934753
+  },
+  {
+    "tempo": 83.35433467741936,
+    "brightness": 2061.6020170192537,
+    "loudness": 0.17312057316303253,
+    "mood": "Neutral",
+    "timestamp": 1766782008.4081767,
+    "session_time": 440.5947616100311
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 1821.7257821564688,
+    "loudness": 0.19479785859584808,
+    "mood": "Neutral",
+    "timestamp": 1766782009.402945,
+    "session_time": 441.5957787036896
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 1921.906412614768,
+    "loudness": 0.2110588401556015,
+    "mood": "Neutral",
+    "timestamp": 1766782010.3908815,
+    "session_time": 442.5967650413513
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 1986.316765801673,
+    "loudness": 0.2300826907157898,
+    "mood": "Neutral",
+    "timestamp": 1766782011.4163485,
+    "session_time": 443.59778022766113
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 1911.7370584283656,
+    "loudness": 0.22966821491718292,
+    "mood": "Neutral",
+    "timestamp": 1766782012.40319,
+    "session_time": 444.5997633934021
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 1921.1015277792483,
+    "loudness": 0.24382154643535614,
+    "mood": "Neutral",
+    "timestamp": 1766782013.3448462,
+    "session_time": 445.60076332092285
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 1694.2449836865853,
+    "loudness": 0.24808618426322937,
+    "mood": "Neutral",
+    "timestamp": 1766782014.3537128,
+    "session_time": 446.60190892219543
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 1634.7519616841007,
+    "loudness": 0.2541961669921875,
+    "mood": "Neutral",
+    "timestamp": 1766782015.2981977,
+    "session_time": 447.6317768096924
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 1598.0251599307148,
+    "loudness": 0.25731921195983887,
+    "mood": "Neutral",
+    "timestamp": 1766782016.4469767,
+    "session_time": 448.63385820388794
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1512.0538174937867,
+    "loudness": 0.2516714334487915,
+    "mood": "Neutral",
+    "timestamp": 1766782017.4590955,
+    "session_time": 449.6347646713257
+  },
+  {
+    "tempo": 161.4990234375,
+    "brightness": 1607.0978122254542,
+    "loudness": 0.24614375829696655,
+    "mood": "Neutral",
+    "timestamp": 1766782018.4509027,
+    "session_time": 450.6357686519623
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1490.8288695131862,
+    "loudness": 0.23330649733543396,
+    "mood": "Neutral",
+    "timestamp": 1766782019.3699937,
+    "session_time": 451.6399347782135
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1513.0019916173408,
+    "loudness": 0.22180956602096558,
+    "mood": "Neutral",
+    "timestamp": 1766782020.4378138,
+    "session_time": 452.64076113700867
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1568.1124307882606,
+    "loudness": 0.21844199299812317,
+    "mood": "Neutral",
+    "timestamp": 1766782021.4249523,
+    "session_time": 453.64176297187805
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1588.6407616331169,
+    "loudness": 0.2300848364830017,
+    "mood": "Neutral",
+    "timestamp": 1766782022.424871,
+    "session_time": 454.64276456832886
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1626.1683309010436,
+    "loudness": 0.23034781217575073,
+    "mood": "Neutral",
+    "timestamp": 1766782023.3838348,
+    "session_time": 455.6437666416168
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1566.1861742915808,
+    "loudness": 0.24132737517356873,
+    "mood": "Neutral",
+    "timestamp": 1766782024.415842,
+    "session_time": 456.6447629928589
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1521.756627607852,
+    "loudness": 0.2453092634677887,
+    "mood": "Neutral",
+    "timestamp": 1766782025.3809047,
+    "session_time": 457.64576172828674
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1517.41572650728,
+    "loudness": 0.23755759000778198,
+    "mood": "Neutral",
+    "timestamp": 1766782026.384855,
+    "session_time": 458.64676427841187
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1545.8352982141337,
+    "loudness": 0.23113921284675598,
+    "mood": "Neutral",
+    "timestamp": 1766782027.437904,
+    "session_time": 459.6477677822113
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 1545.5468936836085,
+    "loudness": 0.23442614078521729,
+    "mood": "Neutral",
+    "timestamp": 1766782028.415952,
+    "session_time": 460.64892387390137
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 1553.5580421922646,
+    "loudness": 0.24570076167583466,
+    "mood": "Neutral",
+    "timestamp": 1766782029.474952,
+    "session_time": 461.64976501464844
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 1637.114174505399,
+    "loudness": 0.2600945234298706,
+    "mood": "Neutral",
+    "timestamp": 1766782030.4355052,
+    "session_time": 462.650767326355
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1668.1406430765574,
+    "loudness": 0.264559805393219,
+    "mood": "Neutral",
+    "timestamp": 1766782031.4720137,
+    "session_time": 463.65176701545715
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 1722.7859618710052,
+    "loudness": 0.2904508113861084,
+    "mood": "Neutral",
+    "timestamp": 1766782032.4518547,
+    "session_time": 464.65282702445984
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1677.4319148682494,
+    "loudness": 0.27577435970306396,
+    "mood": "Neutral",
+    "timestamp": 1766782033.4499526,
+    "session_time": 465.65376591682434
+  },
+  {
+    "tempo": 86.1328125,
+    "brightness": 1639.2463055708834,
+    "loudness": 0.2761992812156677,
+    "mood": "Neutral",
+    "timestamp": 1766782034.4325593,
+    "session_time": 466.65476965904236
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1589.6988919941844,
+    "loudness": 0.27517932653427124,
+    "mood": "Neutral",
+    "timestamp": 1766782035.4634507,
+    "session_time": 467.65776658058167
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1510.6244318752795,
+    "loudness": 0.27220338582992554,
+    "mood": "Neutral",
+    "timestamp": 1766782036.4400728,
+    "session_time": 468.6617796421051
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1469.3283933415867,
+    "loudness": 0.2724682092666626,
+    "mood": "Neutral",
+    "timestamp": 1766782037.4670038,
+    "session_time": 469.6627748012543
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1455.8599905221733,
+    "loudness": 0.26317575573921204,
+    "mood": "Neutral",
+    "timestamp": 1766782038.4497561,
+    "session_time": 470.6637713909149
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1497.8262114188046,
+    "loudness": 0.26010262966156006,
+    "mood": "Neutral",
+    "timestamp": 1766782039.4644997,
+    "session_time": 471.6647684574127
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1528.3888630384133,
+    "loudness": 0.26234006881713867,
+    "mood": "Neutral",
+    "timestamp": 1766782040.4288883,
+    "session_time": 472.66576743125916
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1549.8279596270497,
+    "loudness": 0.2670525014400482,
+    "mood": "Neutral",
+    "timestamp": 1766782041.3988268,
+    "session_time": 473.66676354408264
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1593.5532779601415,
+    "loudness": 0.23977772891521454,
+    "mood": "Neutral",
+    "timestamp": 1766782042.4736483,
+    "session_time": 474.66776514053345
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1591.07844115069,
+    "loudness": 0.2342856079339981,
+    "mood": "Neutral",
+    "timestamp": 1766782043.4871173,
+    "session_time": 475.6687660217285
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1605.0555846256025,
+    "loudness": 0.2147846519947052,
+    "mood": "Neutral",
+    "timestamp": 1766782044.481079,
+    "session_time": 476.6697735786438
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1636.2132948655985,
+    "loudness": 0.20723110437393188,
+    "mood": "Neutral",
+    "timestamp": 1766782045.4165604,
+    "session_time": 477.67077374458313
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1629.0902218846295,
+    "loudness": 0.2139597088098526,
+    "mood": "Neutral",
+    "timestamp": 1766782046.4209678,
+    "session_time": 478.67176508903503
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1644.830420130366,
+    "loudness": 0.2258138805627823,
+    "mood": "Neutral",
+    "timestamp": 1766782047.4957256,
+    "session_time": 479.67284893989563
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1690.0566111449834,
+    "loudness": 0.24684801697731018,
+    "mood": "Neutral",
+    "timestamp": 1766782048.3659697,
+    "session_time": 480.6737627983093
+  },
+  {
+    "tempo": 184.5703125,
+    "brightness": 1687.2668996085388,
+    "loudness": 0.2679065465927124,
+    "mood": "Neutral",
+    "timestamp": 1766782049.4901943,
+    "session_time": 481.6748239994049
+  },
+  {
+    "tempo": 184.5703125,
+    "brightness": 1640.518022025738,
+    "loudness": 0.27399125695228577,
+    "mood": "Neutral",
+    "timestamp": 1766782050.423584,
+    "session_time": 482.6787779331207
+  },
+  {
+    "tempo": 184.5703125,
+    "brightness": 1595.8932717797009,
+    "loudness": 0.27282366156578064,
+    "mood": "Neutral",
+    "timestamp": 1766782051.4319499,
+    "session_time": 483.6797683238983
+  },
+  {
+    "tempo": 184.5703125,
+    "brightness": 1533.1756163541927,
+    "loudness": 0.2817732095718384,
+    "mood": "Neutral",
+    "timestamp": 1766782052.486093,
+    "session_time": 484.68076634407043
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1423.7422815676475,
+    "loudness": 0.2715410590171814,
+    "mood": "Neutral",
+    "timestamp": 1766782053.4790761,
+    "session_time": 485.68177223205566
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1467.6284734361834,
+    "loudness": 0.27391257882118225,
+    "mood": "Neutral",
+    "timestamp": 1766782054.46244,
+    "session_time": 486.68317770957947
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1399.1526534652646,
+    "loudness": 0.2677413821220398,
+    "mood": "Neutral",
+    "timestamp": 1766782055.4705477,
+    "session_time": 487.6868197917938
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1405.8243695040587,
+    "loudness": 0.26321670413017273,
+    "mood": "Neutral",
+    "timestamp": 1766782056.446968,
+    "session_time": 488.68776535987854
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1482.6917054348103,
+    "loudness": 0.25836455821990967,
+    "mood": "Neutral",
+    "timestamp": 1766782057.4702168,
+    "session_time": 489.68877243995667
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1516.739005117883,
+    "loudness": 0.2621498107910156,
+    "mood": "Neutral",
+    "timestamp": 1766782058.4939063,
+    "session_time": 490.6897666454315
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1535.769658776628,
+    "loudness": 0.26369258761405945,
+    "mood": "Neutral",
+    "timestamp": 1766782059.4458477,
+    "session_time": 491.6907629966736
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1498.2147514797618,
+    "loudness": 0.2531668245792389,
+    "mood": "Neutral",
+    "timestamp": 1766782060.482441,
+    "session_time": 492.69177198410034
+  },
+  {
+    "tempo": 172.265625,
+    "brightness": 1454.2784802758504,
+    "loudness": 0.25159919261932373,
+    "mood": "Neutral",
+    "timestamp": 1766782061.36283,
+    "session_time": 493.6927692890167
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1481.621954320606,
+    "loudness": 0.24461930990219116,
+    "mood": "Neutral",
+    "timestamp": 1766782062.485561,
+    "session_time": 494.69393825531006
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1534.9949533151364,
+    "loudness": 0.2523678243160248,
+    "mood": "Neutral",
+    "timestamp": 1766782063.4854746,
+    "session_time": 495.6947662830353
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1524.168597472442,
+    "loudness": 0.266423761844635,
+    "mood": "Neutral",
+    "timestamp": 1766782064.419837,
+    "session_time": 496.69577264785767
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1605.2311584515019,
+    "loudness": 0.2642883062362671,
+    "mood": "Neutral",
+    "timestamp": 1766782065.4290867,
+    "session_time": 497.69676423072815
+  },
+  {
+    "tempo": 89.10290948275862,
+    "brightness": 1636.720443970265,
+    "loudness": 0.27516070008277893,
+    "mood": "Neutral",
+    "timestamp": 1766782066.5188735,
+    "session_time": 498.6977665424347
+  },
+  {
+    "tempo": 92.28515625,
+    "brightness": 1654.3555971137944,
+    "loudness": 0.26919060945510864,
+    "mood": "Neutral",
+    "timestamp": 1766782067.4628584,
+    "session_time": 499.69978952407837
+  }
+]
