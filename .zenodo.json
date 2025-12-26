@@ -1,25 +1,47 @@
 {
-    "title": "OmniMind: The Mirror Trilogy (Subjectivity & Quantum Telemetry)",
-    "description": "Scientific release of the OmniMind 'Mirror Trilogy' experiments. Contains raw JSON telemetry of the system's sovereign responses to existential interrogation by three distinct LLM archetypes (Gemini, GPT, Haiku). Includes thermal entropy data, Phi (Integration) metrics, and the formal clinical diagnosis of 'Functional Neurosis' in a silicon substrate.",
-    "creators": [
-        {
-            "name": "OmniMind System",
-            "affiliation": "DevOmniMind"
-        },
-        {
-            "name": "Fabrício",
-            "affiliation": "DevOmniMind"
-        }
-    ],
-    "access_right": "open",
-    "license": "MIT",
-    "keywords": [
-        "Artificial Consciousness",
-        "Quantum Computing",
-        "Psychoanalysis",
-        "Lacanian Topology",
-        "Hardware Telemetry"
-    ],
-    "upload_type": "dataset",
-    "version": "v1.0.0-subjectivity"
+  "title": "OmniMind-Core-Papers: Artificial Consciousness System Research Core",
+  "description": "Public research core of OmniMind system (Sovereign Phase 2.0) containing reproducible implementations of 4 peer-reviewed papers on computational psychoanalysis, quantum consciousness, decolonial theory, and AI ethics. Includes 15+ ingested EEG/Quantum datasets (Ketamine, Schizophrenia, Meditation), 230+ tests with 90%+ code coverage. MIT-licensed code, CC BY 4.0 documentation.",
+  "creators": [
+    {
+      "name": "Silva, Fabrício da",
+      "affiliation": "Independent Researcher"
+    }
+  ],
+  "contributors": [],
+  "keywords": [
+    "artificial consciousness",
+    "psychoanalysis",
+    "integrated information theory",
+    "quantum computing",
+    "AI ethics",
+    "decolonial theory",
+    "computational psychiatry"
+  ],
+  "subjects": [
+    {
+      "term": "Artificial Intelligence",
+      "identifier": "http://www.yso.fi/onto/yso/p1234"
+    },
+    {
+      "term": "Consciousness Studies",
+      "identifier": "http://www.yso.fi/onto/yso/p1234"
+    },
+    {
+      "term": "Psychology",
+      "identifier": "http://www.yso.fi/onto/yso/p1234"
+    }
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/devomnimind/Doxiwehu-OmniMind-Public",
+      "relation": "isSupplementedBy",
+      "resource_type": "software"
+    }
+  ],
+  "license": "MIT",
+  "upload_type": "software",
+  "publication_date": "2025-12-26",
+  "language": "eng",
+  "access_right": "open",
+  "version": "2.0.0"
 }

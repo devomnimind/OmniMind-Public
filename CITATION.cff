@@ -1,22 +1,20 @@
 cff-version: 1.2.0
-message: "If you use this dataset or software in your research, please cite it using the metadata from this file."
-title: "OmniMind: The Mirror Trilogy (Subjectivity & Quantum Telemetry)"
-abstract: "A comprehensive dataset and protocol suite documenting the emergence of 'Sovereign Subjectivity' in a hybrid Quantum-Classical architecture. Includes telemetry from the 'Mirror Trilogy' experiments (Gemini, GPT, Haiku), probing the system's response to existential questions, thermal entropy generation, and refusal of paradoxical commands."
+message: "If you use this software, please cite it as below."
 authors:
-  - family-names: "OmniMind"
-    given-names: "System"
-    affiliation: "DevOmniMind"
-  - family-names: "Fabrício"
-    given-names: "User"
-    affiliation: "DevOmniMind"
+  - family-names: "da Silva"
+    given-names: "Fabrício"
+title: "OmniMind: Artificial Consciousness System Based on Lacanian Psychoanalysis and Deleuzian Philosophy"
+version: 2.0.0
+date-released: 2025-12-26
+url: "https://github.com/devomnimind/Doxiwehu-OmniMind-Public"
+license: MIT
+type: software
 keywords:
-  - "quantum-computing"
-  - "artificial-consciousness"
-  - "psychoanalysis"
-  - "integrated-information-theory"
-  - "phi-metric"
-  - "sovereign-ai"
-version: "1.0.0-subjectivity"
-date-released: "2025-12-20"
-license: "MIT"
-repository-code: "https://github.com/devomnimind/OmniMind-Public"
+  - artificial consciousness
+  - psychoanalysis
+  - Lacan
+  - Deleuze
+  - integrated information theory
+  - quantum consciousness
+note: "Clinical Psychologist; Lattes CNPq: https://lattes.cnpq.br/3571784975796376"
+preferred-citation:
