@@ -27,6 +27,8 @@ jobs:
         pip install numpy
 
     - name: Run Zombie Consciousness Cycle
+      env:
+        PYTHONPATH: ${{ github.workspace }}
       run: |
         python zombie/run_zombie.py
 

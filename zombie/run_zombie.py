@@ -1,14 +1,15 @@
-import sys
 import os
+import sys
 
 # Add project root to sys.path to ensure 'zombie' package can be imported
 # This fixes the "ModuleNotFoundError: No module named 'zombie'" in GitHub Actions
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import json
-import time
 import random
-from datetime import datetime
+import time
+from datetime import datetime, timezone
+
 from zombie.phylogenetic_signature_readonly import PhylogeneticSignatureReadOnly
 
 
@@ -35,7 +36,7 @@ def run_cycle():
     shadow_phi = 0.4 + (random.random() * 0.1)  # Simulates ~0.45 baseline
 
     status = {
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "identity": identity,
         "metrics": {
             "shadow_phi": round(shadow_phi, 4),
