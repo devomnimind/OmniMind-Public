@@ -1,0 +1,175 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "omnimind"
+version = "1.18.0"
+description = "Autonomous AI system with psychoanalytic decision-making, quantum consciousness integration, and ethical framework"
+readme = "README.md"
+authors = [
+  { name = "Fabrício da Silva", email = "fabricioslv@hotmail.com.br" },
+]
+license = { text = "AGPL-3.0-or-later" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Philosophy",
+]
+keywords = [
+    "artificial-intelligence",
+    "consciousness",
+    "psychoanalysis",
+    "quantum-computing",
+    "autonomous-agents",
+    "metacognition",
+    "ethics",
+    "machine-learning",
+    "neuroscience",
+    "philosophy"
+]
+dependencies = [
+    "pytest>=9.0.0",
+    "pytest-cov>=7.0.0",
+    "pytest-asyncio>=1.3.0",
+    "langchain>=1.1.0",
+    "langchain-core>=1.2.5",
+    "langgraph>=1.0.0",
+    "langchain-community>=0.4.0",
+    "langchain-ollama>=1.0.0",
+    "qdrant-client>=1.16.0,<2.0.0",
+    "pydantic>=2.12.0",
+    "python-dotenv>=1.2.0",
+    "rich>=14.0.0",
+    "psutil>=7.0.0",
+    "PyYAML>=6.0.3",
+    "requests>=2.32.0",
+    "dbus-python>=1.4.0",
+    "structlog>=25.0.0",
+    "fastapi>=0.122.0",
+    "uvicorn>=0.38.0",
+    "supabase>=2.24.0",
+    "redis>=7.0.0",
+    "opentelemetry-api>=1.38.0",
+    "opentelemetry-sdk>=1.38.0",
+    "prometheus-client>=0.23.0"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/devomnimind/omnimind"
+"Repository" = "https://github.com/devomnimind/omnimind"
+"Bug Tracker" = "https://github.com/devomnimind/omnimind/issues"
+"Documentation" = "https://devomnimind.github.io/omnimind"
+"DOI" = "https://doi.org/10.5281/zenodo.XXXXXXX"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["*"]
+namespaces = false
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --color=yes --tb=short"
+pythonpath = ["src"]
+testpaths = [
+    "tests",
+]
+asyncio_mode = "auto"
+log_cli = true
+log_cli_level = "DEBUG"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(name)s:%(funcName)s:%(lineno)d - %(message)s"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+markers = [
+    "asyncio: mark tests that use async/await",
+    "slow: mark a test as slow (running on main GPU, takes >30s)",
+    "security: mark security-focused suites",
+    "parallel: mark tests that can run in parallel safely",
+    "serial: mark tests that must run serially (e.g., database tests)",
+    "mock: mark tests that use @patch decorators (structure validation only)",
+    "semi_real: mark tests without @patch but without full LLM integration",
+    "real: mark tests with full GPU+LLM+Network integration (measures real metrics)",
+    "chaos: mark tests that destroy/crash server intentionally (WEEKLY/CHAOS ENGINEERING ONLY - excluded from run_tests_fast.sh)",
+    "stress: mark stress/load tests (timeout escalonado até 800s, modo sem falhas)",
+    "e2e: mark end-to-end tests (servidor em produção, não reinicia)",
+]
+filterwarnings = [
+    # Legacy behaviorist/phenomenological implementations
+    "ignore:This module contains legacy behaviorist implementations.*:DeprecationWarning",
+    "ignore:This module contains legacy phenomenological implementations.*:DeprecationWarning",
+    # EmotionalIntelligence deprecated methods
+    "ignore:EmotionalIntelligence legacy initialization is deprecated.*:DeprecationWarning",
+    "ignore:analyze_sentiment is deprecated.*:DeprecationWarning",
+    "ignore:detect_emotion_from_action is deprecated.*:DeprecationWarning",
+    "ignore:generate_empathetic_response is deprecated.*:DeprecationWarning",
+    "ignore:get_emotional_trend is deprecated.*:DeprecationWarning",
+    "ignore:get_statistics is deprecated.*:DeprecationWarning",
+    # Qualia/Consciousness deprecated classes
+    "ignore:Solution class is deprecated.*:DeprecationWarning",
+    "ignore:Quale class is deprecated.*:DeprecationWarning",
+    "ignore:SensoryQualia is deprecated.*:DeprecationWarning",
+    "ignore:EmotionalQualia is deprecated.*:DeprecationWarning",
+    "ignore:IntegratedInformationCalculator.*is deprecated.*:DeprecationWarning",
+    "ignore:QualiaEngine is deprecated.*:DeprecationWarning",
+    "ignore:TheoryOfMind is deprecated.*:DeprecationWarning",
+    # Memory deprecated (uso interno é intencional)
+    "ignore:.*EpisodicMemory is deprecated in favor of NarrativeHistory.*:DeprecationWarning",
+    # Qiskit deprecated (biblioteca externa - não podemos corrigir)
+    "ignore:The property.*qiskit.circuit.instruction.Instruction.condition.*is deprecated.*:DeprecationWarning",
+    "ignore::DeprecationWarning:qiskit_aer.*",
+    "ignore::DeprecationWarning:qiskit.*",
+    # Matplotlib warnings (comportamento esperado)
+    "ignore:No artists with labels found to put in legend.*:UserWarning",
+]
+
+[tool.coverage.run]
+omit = [
+  "src/quantum_consciousness/quantum_backend.py",
+  "src/quantum_consciousness/quantum_cognition.py",
+  "src/quantum_consciousness/quantum_memory.py",
+  "src/quantum_consciousness/qpu_interface.py",
+  "src/quantum_consciousness/hybrid_cognition.py",
+]
+
+[tool.pyright]
+include = ["src", "scripts"]
+extraPaths = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ['py312']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+[tool.mypy]
+ignore_missing_imports = true
+check_untyped_defs = true
+disallow_untyped_defs = false
+warn_return_any = false
+warn_unused_ignores = false
+exclude = [
+    "^archive/.*",
+    "^scripts/\\.archive/.*",
+    "^scripts/archive/.*",
+    "^src/backup/.*",
+    ".*deprecated.*"
+]
+
+[[tool.mypy.overrides]]
+module = [
+    "qiskit.*",
+    "qiskit_ibm_runtime.*",
+    "sklearn.*"
+]
+ignore_missing_imports = true

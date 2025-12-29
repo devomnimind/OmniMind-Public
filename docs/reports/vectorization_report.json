@@ -1,0 +1,39 @@
+{
+  "timestamp": "2025-12-16T16:40:57.981102",
+  "vectorization": {
+    "total_chunks": 16217,
+    "total_vectors": 15602,
+    "chunks_by_type": {
+      "code": 12337,
+      "documentation": 3847,
+      "configuration": 1,
+      "dataset": 6,
+      "system_log": 15,
+      "kernel_metadata": 3,
+      "system_packages": 2,
+      "vscode_config": 3,
+      "security": 3,
+      "external_code": 0,
+      "external_docs": 0
+    },
+    "model": "all-MiniLM-L6-v2",
+    "embedding_dim": 384,
+    "distance_metric": "COSINE"
+  },
+  "collections": {
+    "omnimind_codebase": 12252,
+    "omnimind_docs": 3323,
+    "omnimind_config": 7,
+    "omnimind_system_logs": 20
+  },
+  "sanitization": {
+    "total_redactions": 21157,
+    "chunks_with_redactions": 3094
+  },
+  "project_info": {
+    "root": "/home/fahbrain/projects/omnimind",
+    "src_dir": "/home/fahbrain/projects/omnimind/src",
+    "docs_dir": "/home/fahbrain/projects/omnimind/docs",
+    "config_dir": "/home/fahbrain/projects/omnimind/config"
+  }
+}

@@ -4,10 +4,10 @@ authors:
   - family-names: "da Silva"
     given-names: "Fabrício"
 title: "OmniMind: Artificial Consciousness System Based on Lacanian Psychoanalysis and Deleuzian Philosophy"
-version: 2.0.0
-date-released: 2025-12-26
-url: "https://github.com/devomnimind/Doxiwehu-OmniMind-Public"
-license: MIT
+version: 1.18.0
+date-released: 2025-11-28
+url: "https://github.com/devomnimind/omnimind"
+license: AGPL-3.0-or-later
 type: software
 keywords:
   - artificial consciousness
@@ -18,3 +18,13 @@ keywords:
   - quantum consciousness
 note: "Clinical Psychologist; Lattes CNPq: https://lattes.cnpq.br/3571784975796376"
 preferred-citation:
+  type: article
+  authors:
+    - family-names: "da Silva"
+      given-names: "Fabrício"
+  title: "Computational Psychoanalysis: Implementing Lacanian and Deleuzian Theories in Artificial Consciousness"
+  year: 2025
+  journal: "arXiv preprint"
+repository-code: "https://github.com/devomnimind/omnimind"
+contact:
+  - email: fabricioslv@hotmail.com.br
