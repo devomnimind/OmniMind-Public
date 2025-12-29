@@ -1,2 +1,0 @@
-"Start","End","Instance CRN","Instance name","QPU time (minutes)","Job workloads","Session workloads","Batch workloads","Avg job workload time (minutes)","Avg session workload time (minutes)","Avg batch workload time (minutes)","Queue time (minutes)","Avg queue time (minutes)"
-"2025-01-01T00:00:00.000Z","2025-11-26T17:34:10.528Z","crn:v1:bluemix:public:quantum-computing:us-east:a/cab2f4af86fe467e815b3f9a0a440e80:4e44d55f-0c18-4d17-ac91-304e4f00d589::","Omnimind","0.4166666666666667","12","0","0","0.034722222222222224","0","0","0.8040557333333334","0.06700464444444446"
