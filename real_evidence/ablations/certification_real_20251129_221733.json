@@ -1,0 +1,93 @@
+{
+  "certification_timestamp": "2025-11-29T22:15:57.944399",
+  "certification_unix_timestamp": 1764465357.9444125,
+  "hardware": {
+    "gpu_available": true,
+    "gpu_name": "NVIDIA GeForce GTX 1650",
+    "gpu_vram_gb": 4.0861696
+  },
+  "quantum": {
+    "service_available": true,
+    "num_backends": 3
+  },
+  "metrics": {
+    "gpu": {
+      "backend": "GPU",
+      "num_cycles": 50,
+      "start_timestamp": "2025-11-29T22:15:59.624687",
+      "end_timestamp": "2025-11-29T22:17:26.731684",
+      "total_time_seconds": 87.10699677467346,
+      "phi_mean": 0.77,
+      "phi_min": 0.0,
+      "phi_max": 1.0,
+      "phi_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.3,
+        0.3,
+        0.3,
+        0.3,
+        0.3,
+        0.6,
+        0.6,
+        0.6,
+        0.6,
+        0.6,
+        0.6,
+        0.6,
+        0.6,
+        0.6,
+        0.6,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "quantum": {
+      "backend": "Quantum_Simulator",
+      "num_shots": 200,
+      "start_timestamp": "2025-11-29T22:17:27.074714",
+      "end_timestamp": "2025-11-29T22:17:27.077560",
+      "total_time_seconds": 0.0028471946716308594,
+      "num_outcomes": 8,
+      "outcomes_possible": 8
+    },
+    "ibm_real": {
+      "error": "'QiskitRuntimeService' object has no attribute 'run'"
+    }
+  },
+  "system_info": {
+    "python_version": "3.12.8",
+    "pytorch_version": "2.9.1+cu128"
+  }
+}

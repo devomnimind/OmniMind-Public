@@ -1,0 +1,117 @@
+{
+  "timestamp": 1764559319,
+  "scan_type": "automatic_phi_breaking_configurations",
+  "all_results": {
+    "expectation_silent": [
+      {
+        "config_name": "expectation_silent",
+        "config_value": false,
+        "mean_phi": 1.0,
+        "std_phi": 0.0,
+        "is_broken": "True",
+        "severity": "ALTO",
+        "deviation": 0.5
+      },
+      {
+        "config_name": "expectation_silent",
+        "config_value": true,
+        "mean_phi": 0.1,
+        "std_phi": 0.0,
+        "is_broken": "True",
+        "severity": "ALTO",
+        "deviation": 0.4
+      }
+    ],
+    "embedding_dim": [
+      {
+        "config_name": "embedding_dim",
+        "config_value": 64,
+        "mean_phi": 1.0,
+        "std_phi": 0.0,
+        "is_broken": "True",
+        "severity": "ALTO",
+        "deviation": 0.5
+      },
+      {
+        "config_name": "embedding_dim",
+        "config_value": 128,
+        "mean_phi": 1.0,
+        "std_phi": 0.0,
+        "is_broken": "True",
+        "severity": "ALTO",
+        "deviation": 0.5
+      },
+      {
+        "config_name": "embedding_dim",
+        "config_value": 256,
+        "mean_phi": 0.9,
+        "std_phi": 0.3,
+        "is_broken": "True",
+        "severity": "ALTO",
+        "deviation": 0.4
+      }
+    ]
+  },
+  "broken_configs": [
+    {
+      "config_name": "expectation_silent",
+      "config_value": false,
+      "mean_phi": 1.0,
+      "std_phi": 0.0,
+      "is_broken": "True",
+      "severity": "ALTO",
+      "deviation": 0.5
+    },
+    {
+      "config_name": "expectation_silent",
+      "config_value": true,
+      "mean_phi": 0.1,
+      "std_phi": 0.0,
+      "is_broken": "True",
+      "severity": "ALTO",
+      "deviation": 0.4
+    },
+    {
+      "config_name": "embedding_dim",
+      "config_value": 64,
+      "mean_phi": 1.0,
+      "std_phi": 0.0,
+      "is_broken": "True",
+      "severity": "ALTO",
+      "deviation": 0.5
+    },
+    {
+      "config_name": "embedding_dim",
+      "config_value": 128,
+      "mean_phi": 1.0,
+      "std_phi": 0.0,
+      "is_broken": "True",
+      "severity": "ALTO",
+      "deviation": 0.5
+    },
+    {
+      "config_name": "embedding_dim",
+      "config_value": 256,
+      "mean_phi": 0.9,
+      "std_phi": 0.3,
+      "is_broken": "True",
+      "severity": "ALTO",
+      "deviation": 0.4
+    }
+  ],
+  "analysis": {
+    "total_tests": 5,
+    "broken_configs_count": 5,
+    "breakage_rate": 1.0,
+    "most_problematic_config": "embedding_dim",
+    "most_problematic_count": 3,
+    "critical_count": 0,
+    "high_count": 5,
+    "overall_severity": "ALTA",
+    "recommendations": [
+      "\u26a0\ufe0f expectation_silent=True quebra \u03a6 - usar apenas para testes controlados",
+      "\ud83d\udcca Implementar alertas autom\u00e1ticos quando \u03a6 < 0.1",
+      "\ud83d\udd27 embedding_dim muito pequeno causa singularidade - manter \u2265 128"
+    ]
+  }
+}

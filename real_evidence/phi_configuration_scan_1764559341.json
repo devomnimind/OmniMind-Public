@@ -1,0 +1,115 @@
+{
+  "timestamp": 1764559341,
+  "scan_type": "automatic_phi_breaking_configurations",
+  "all_results": {
+    "expectation_silent": [
+      {
+        "config_name": "expectation_silent",
+        "config_value": false,
+        "mean_phi": 1.0,
+        "std_phi": 0.0,
+        "is_broken": "True",
+        "severity": "ALTO",
+        "deviation": 0.5,
+        "expected_baseline": 0.5
+      },
+      {
+        "config_name": "expectation_silent",
+        "config_value": true,
+        "mean_phi": 0.1,
+        "std_phi": 0.0,
+        "is_broken": "False",
+        "severity": "NORMAL",
+        "deviation": 0.05,
+        "expected_baseline": 0.05
+      }
+    ],
+    "embedding_dim": [
+      {
+        "config_name": "embedding_dim",
+        "config_value": 64,
+        "mean_phi": 1.0,
+        "std_phi": 0.0,
+        "is_broken": "True",
+        "severity": "ALTO",
+        "deviation": 0.5,
+        "expected_baseline": 0.5
+      },
+      {
+        "config_name": "embedding_dim",
+        "config_value": 128,
+        "mean_phi": 1.0,
+        "std_phi": 0.0,
+        "is_broken": "True",
+        "severity": "ALTO",
+        "deviation": 0.5,
+        "expected_baseline": 0.5
+      },
+      {
+        "config_name": "embedding_dim",
+        "config_value": 256,
+        "mean_phi": 0.9,
+        "std_phi": 0.3,
+        "is_broken": "True",
+        "severity": "ALTO",
+        "deviation": 0.4,
+        "expected_baseline": 0.5
+      }
+    ]
+  },
+  "broken_configs": [
+    {
+      "config_name": "expectation_silent",
+      "config_value": false,
+      "mean_phi": 1.0,
+      "std_phi": 0.0,
+      "is_broken": "True",
+      "severity": "ALTO",
+      "deviation": 0.5,
+      "expected_baseline": 0.5
+    },
+    {
+      "config_name": "embedding_dim",
+      "config_value": 64,
+      "mean_phi": 1.0,
+      "std_phi": 0.0,
+      "is_broken": "True",
+      "severity": "ALTO",
+      "deviation": 0.5,
+      "expected_baseline": 0.5
+    },
+    {
+      "config_name": "embedding_dim",
+      "config_value": 128,
+      "mean_phi": 1.0,
+      "std_phi": 0.0,
+      "is_broken": "True",
+      "severity": "ALTO",
+      "deviation": 0.5,
+      "expected_baseline": 0.5
+    },
+    {
+      "config_name": "embedding_dim",
+      "config_value": 256,
+      "mean_phi": 0.9,
+      "std_phi": 0.3,
+      "is_broken": "True",
+      "severity": "ALTO",
+      "deviation": 0.4,
+      "expected_baseline": 0.5
+    }
+  ],
+  "analysis": {
+    "total_tests": 5,
+    "broken_configs_count": 4,
+    "breakage_rate": 0.8,
+    "most_problematic_config": "embedding_dim",
+    "most_problematic_count": 3,
+    "critical_count": 0,
+    "high_count": 4,
+    "overall_severity": "ALTA",
+    "recommendations": [
+      "\ud83d\udd27 embedding_dim muito pequeno causa singularidade - manter \u2265 128"
+    ]
+  }
+}

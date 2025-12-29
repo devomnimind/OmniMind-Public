@@ -1,0 +1,21 @@
+{
+  "timestamp": "2025-12-16T20:12:33.227765",
+  "backend_status": "offline",
+  "qdrant_status": "healthy",
+  "consciousness_metrics": [],
+  "errors": [
+    "HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /health (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [Errno 111] Connection refused\"))"
+  ],
+  "qdrant_collections": [
+    "omnimind_system_logs",
+    "omnimind_embeddings",
+    "omnimind_config",
+    "omnimind_episodes",
+    "omnimind_narratives",
+    "omnimind_memories",
+    "omnimind_codebase",
+    "omnimind_consciousness",
+    "orchestrator_semantic_cache",
+    "omnimind_docs"
+  ]
+}

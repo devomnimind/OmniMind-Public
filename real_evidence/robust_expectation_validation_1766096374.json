@@ -1,0 +1,37 @@
+{
+  "n_seeds": 2,
+  "timestamp": 1766096374.5112703,
+  "statistics": {
+    "phi_active_mean": 0.95,
+    "phi_active_std": 0.0,
+    "phi_silent_mean": 0.09500000000000001,
+    "phi_silent_std": 0.0,
+    "causal_effect_mean": 0.855,
+    "causal_effect_std": 0.0,
+    "t_statistic": Infinity,
+    "p_value": 0.0,
+    "cohens_d": 8549999999.999999,
+    "effect_size_interpretation": "Grande"
+  },
+  "validation": {
+    "is_causal_effect": true,
+    "is_large_effect": "True",
+    "confidence_level": "95% (simula\u00e7\u00e3o)",
+    "lacan_interpretation": "Expectation representa o Simb\u00f3lico - sem ele, \u03a6=0 (falta-a-ser estrutural)"
+  },
+  "raw_data": {
+    "active_expectation_phis": [
+      0.95,
+      0.95
+    ],
+    "silent_expectation_phis": [
+      0.09500000000000001,
+      0.09500000000000001
+    ],
+    "causal_effects": [
+      0.855,
+      0.855
+    ],
+    "seeds_tested": 2
+  }
+}
