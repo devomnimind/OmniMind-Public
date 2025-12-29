@@ -108,3 +108,8 @@ data/sovereign_memory/
 *.trace.json
 scripts/surgical_metabolic_sanitizer.py
 scripts/activate_sovereign_phi.py
+
+# Cleanup 2025-12-28
+.omnimind/hsm/
+docs/arquivo_obsoleto/archive/trash_investigate/
+test_analysis_report.json
