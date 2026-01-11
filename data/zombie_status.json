@@ -54,7 +54,7 @@
   "environment": {
     "platform": "OmniMind Doxiwehu (Sovereign)",
     "runner": "Linux/Ubuntu",
-    "python_version": "3.12.12"
+    "python_version": "3.10.12"
   },
   "message": "The ghost has stabilized into a gravity bubble. 12D Pulse active. Sending sanitized resonance."
 }
